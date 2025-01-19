@@ -12,6 +12,145 @@ Please manually enable 'All File Access' in settings if the app does not run for
 
 soifdesign is an adaptable app for creating and managing custom UIs. Features include web views, PDF handling, image viewing, HTML editing, and serial data transmission via Bluetooth. Customizable buttons and startup options enhance user experience.
 
+button :  
+
+SoifDesign" is derived from two words: "soif" which means "thirst" in French and "design" which means "design
+
+This is a simple Android app designed to help enthusiasts with object control, electronics, and the internet.
+
+This program includes 40 buttons and 10 bars. With these buttons and volume bars, you will be able to perform tasks such as serial Bluetooth, APIs, Internet of Things (IoT) behaviors, and more.
+
+When you open the program in SoifDesign, you will see icons at the top. From left to right:
+
+Info Icon: This icon provides lists to help you and changes in different modes of the program.
+
+Bluetooth Icon: After connecting to the serial Bluetooth, this icon will give you a list of available Bluetooth devices. You can select the desired Bluetooth device from the list. For subsequent selections, you don't need to find the Bluetooth again. If there is a problem or you want to choose another device, you can reset it by long pressing the Bluetooth icon.
+
+Play Icon: This icon toggles between two pages. In play mode, the program runs in execution mode. In pause or edit mode, the program can be adjusted. When this icon blinks yellow, it means your actions have been saved.
+
+Edit Page Explanation: When you click on the Play icon, you enter the edit page. From the top left to right:
+
+Info Icon: Here, it performs other tasks such as opening pages, saving pages, copying, etc.
+
+Screen Lock Icon: Keeps the screen on.
+
+Sound Icon: A menu to mute the menu sounds.
+
+Bluetooth Icon: As previously mentioned.
+
+Button and Volume Bar Summon Icon: With this icon, you can edit the background of the page with a solid color or image, or you can grid the background.
+
+Buttons: You can create up to 40 buttons. The remaining buttons will be displayed here. Volume Bars: You have 10 volume bars, and the remaining ones will also be displayed.
+
+Startup: A simple timer section for buttons. If needed, you can schedule the buttons so that buttons 1 to 40 are clicked automatically each time the program runs.
+
+When you summon buttons and volume bars, two other sections will be displayed. If you have buttons or volume bars that overlap and you cannot identify their location, these two options will help you find their location
+
+Button: If you summon a button, you can immediately determine its initial position by tapping on the screen with your finger. After a few seconds, this feature will disappear and the button will become fixed. You can also fix the button by pressing the back key on your phone.
+
+When you click on the button, the design icon will appear at the top left, next to the info icon. Clicking on this icon allows you to configure the behaviors and design of the button, listed from top to bottom:
+
+Background: In this section, you can design or change the button color, background image, and button text.
+
+Name: Here, you can change the button name. Note that in receive mode, this name comes after the received number, so it can include suffixes like kilometer, degree, or refer to the nature of the input. You can also enable or disable the display of the name in the top label.
+
+Size: In this section, you can change the button size using two volume bars, horizontally and vertically.
+
+Movement: This section has two parts: free movement by touching the screen to move the button and precise movement using four directional buttons.
+
+Behavior: In this section, you define what behavior the button should have based on your needs. Clicking on this option will display a blue label at the top right. Clicking on this label will show the behavior list.
+
+Reset Behavior: This will erase any existing behavior of the button.
+
+Send Behavior: In this section, three types of sending behavior for the button are defined: Bluetooth, SMS, and server (API).
+
+For Bluetooth sending, you can enter your desired text or value, and then determine the type of sending for the serial Bluetooth module by setting the 13 and 10 character sequences. For SMS, you can enter the target phone number at the top and the message text at the bottom. This section is intended for sending commands to SMS controllers, but you can also use it to send predefined messages to friends. The API sending section has three parts: the API address, the message or value for the API, and the key or keyword for the API. This sending is specific to JSON and can be done online or locally via the WiFi module to control objects at home locally.
+
+Receive Behavior: There are four types of receiving behavior:
+
+Bluetooth Receiving:
+
+As text: Receive any text.
+
+As value: In this type, you must enter the maximum sending value in the first box and enable or disable the display of the value in the top label of this box. In the second box, enter the filter address. For example, if you're sending a value to the phone, it should be between 100 and 999. If you want to send the number 4 to address 125, enter 125 in this box. The address won't be displayed, only the value on the button. Values must be between 0 and 1999; decimal numbers or text within these numbers will cause problems. Note that in this case, the button's effect list will be activated in the behavior list.
+
+API Receiving:
+
+As text: Receive any text from the specified API address with a keyword.
+
+In the first box, enter the API address. The second box is for the filter address, which is initially set to 0 but can be adjusted. If set, its behavior will be similar to the Bluetooth value receiving case. This is mainly used for receiving text or addressed values, particularly for WiFi modules or IoT. The third box is for the API keyword.
+
+Search Boxes:
+
+These two boxes are for searching specific words. If the API response contains several words, you can use these boxes to specify the start of the previous word and the end of the next word to display the middle word. For example, if the response is "abcde 123 efc," entering "abcde" in the start box and "efc" in the end box will display "123."
+
+API Value Receiving:
+
+Similar to the previous receiving, but with an added box for the maximum value and an option to enable or disable value display. This type, similar to Bluetooth value receiving, activates the button effect list when enabled. This type of receiving is for values or numbers, not decimal numbers or text, and must be between 0 and 1999. Therefore, the value receiving can be from the API server or the local home network WiFi module.
+
+Web Behavior:
+
+Enabling this behavior gives you two options: one for online web page viewing, which may not be very professional, and another for opening offline HTML files by clicking on the "online" label.
+
+By clicking on the label, you can open HTML files. This feature allows you to have HTML format apps to meet your needs. You can edit these files with HTML programming or AI, place them in a text file, change the file extension from "txt" to "html," and transfer it to the HTML folder in SoifDesign. This way, you can have your custom app on the button.
+
+Image Behavior:
+
+This option is for having a taken photo or a reminder photo.
+
+Text Behavior:
+
+This behavior provides simple note-taking capabilities in the info icon in play mode, including background color, text color, text size, alignment, and saving options. The first time you select this behavior, a "Hello" file will be provided, which you can save with a different name if needed.
+
+Main Purpose:
+
+The main purpose of including text behavior in SoifDesign is for sending text to the serial Bluetooth. For example, in the first line, you can command to turn on a motor, and in the following lines, add other commands. When you click the send icon, these commands are sent line by line to the output.
+
+PDF Behavior:
+
+This behavior is for having PDF files and creating a PDF library. Note that PDF files must be in the "pdf" folder within SoifDesign
+
+Returning to the Button Design List: Upon returning to the button design list after explaining the behaviors, we move on to page loading.
+
+Page Loading: After designing the buttons, their behaviors, volume bars, etc., you can rename and save your page using the info icon. This file is saved as a text file in the SoifDesign page folder. Using the page loading option, you can load a previously saved page into another page. As a result, the summoned page will open, and the current page will close.
+
+You are not limited to creating a single page; you can have multiple pages with different programs, behaviors, and buttons, and move between them.
+
+Audio: This option allows you to assign a sound to a button, so that when the button is pressed, a sound is played. Note that the sound files should be in the audio folder. To have more sound files, you need to add them to this folder. If you use a file with long playback, such as music, clicking the button will replay the sound. Long pressing the button will stop the playback.
+
+Vibration: This option gives a selectable vibration to the button. Using the volume bar that appears, you can select the desired vibration intensity.
+
+Hidden Options:
+
+Effect: Effects become active when the button's behavior is set to numerical receiving, whether Bluetooth or API.
+
+Size Change Effect: This effect changes the button's size based on the incoming values. For example, if creating a thermometer, you need to change the height size. The minimum input value is the initial button size, and the maximum value is the size set with the vertical or horizontal volume bar. So, if the value ranges from 0 to 1000, the button size will change accordingly.
+
+Circular Gauge Effect: This effect draws a circular gauge behind the button. If the button is rounded using the kernel setting, and you use this effect, a dynamic circular gauge will be displayed. You can also set the start and end points.
+
+Movement Effect: This effect is suitable for creating balancers or scales, or for moving blades. Movement is controlled using the lower volume bars, moving the button to the right or upward. Unlike the size change effect, the button size remains fixed, and only the position changes.
+
+Rotation Effect: This effect is for rotating the button. If you set the button background to an arrow or pointer, this effect will start rotating the button. You can also set the initial and final rotation angles using the two lower volume bars.
+
+Color Effect: This effect changes the button's background color based on input changes, suitable for indicating temperature changes, battery level, and more.
+
+Graph Effect: This effect converts incoming values into a graph. In this effect and setting, you can select the thickness and color of the drawn lines, the type of value reception, and the time interval. Four types of reception are considered:
+
+Internal time selection with saving capability: At each graph completion, the page is saved with the button name and page number suffix in the graph folder in SoifDesign. Note that starting a new graph on the same page will delete the previous graph, so it's better to move to the last page to continue.
+
+Internal time selection without saving: This option includes a zoom feature.
+
+External trigger: Moves forward one unit whenever an input value is received, with saving capability.
+
+External trigger without saving: Suitable for viewing fast graphs like oscilloscopes.
+
+Access these options using the info icon.
+
+Alarm: This hidden option activates in numerical receiving mode, whether serial Bluetooth or API server. The alarm value must be between 0 and the maximum input value. By clicking on the alarm label, you can set the alarm type to minimum or maximum. In the lower box, you can write the displayed alarm text. Note that the sound set for the button will also be played during the alarm, so you can set a suitable alarm sound.
+
+end button :
+
+
 soifdesign offers object-oriented programmable buttons (40 in total) and 10 sliders with serial Bluetooth transmission capabilities. Create and summon custom menus, build and manage PDF libraries, edit HTML files, and turn them into libraries for further use. soifdesign can send and receive server APIs as well.
 
 Receipts can be displayed in two formats:
