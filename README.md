@@ -538,3 +538,185 @@ With a click on any running graph, a list view (Run/Stop View) will be displayed
 -Integration with soifdesign
 -Seamlessly integrates with soifdesign for enhanced functionality
 
+
+Rangmang Project
+Rangmang is a project designed to control RGB LED strips via Bluetooth serial commands using SoifDesign. This project allows users to program and control WS2812B LED strips to create stunning lighting effects.
+
+Features
+Control up to 255 pixels
+
+Parallelize up to 98 modules
+
+Define channels from 01 to 99
+
+Receive commands as serial UART based on TTL
+
+Support for both classic Bluetooth and BLE
+
+Channel Definition (CH)
+Each Rangmang module can be assigned to a specific channel, allowing for precise control of LED strips. You can define channels from 01 to 99:
+
+Channel Definition:
+
+To define a channel, connect the MISO_CH pin to GND.
+
+Send the channel command, indicating that the module is ready to receive and define the address or channel.
+
+The address definition should be two digits from 01 to 98.
+
+Channel 99 sends commands to all modules.
+
+Channel Inquiries:
+
+MM: Displays the memory count.
+
+LN: Shows the maximum number of pixels.
+
+BR: Indicates the baud rate of the module.
+
+DN: Displays the number of light dance modes.
+
+VR: Introduces the version and chip.
+
+WR: Shows the work cycle count of the module.
+
+Example Channel Settings
+Setting channel 3: Send: 03 Receive: CH03
+
+Setting channel 49: Send: 49 Receive: CH49
+
+Working Modes (MOD)
+The second house refers to the type of working mode:
+
+Mode 00: Manual color order
+
+Modes 01 to 13: Default light dance modes
+
+Mode 14: Randomly selects modes 01 to 13 of the light dance
+
+Color Settings
+The third house refers to the red color (R):
+
+000: Off
+
+004 to 255: Color intensity
+
+001, 002, 003: Random values in dance mode (001: Pale random, 002: Medium random, 003: Random)
+
+The fourth house refers to the green color (G):
+
+000: Off
+
+004 to 255: Color intensity
+
+001, 002, 003: Random values in dance mode (001: Pale random, 002: Medium random, 003: Random)
+
+The fifth house refers to the blue color (B):
+
+000: Off
+
+004 to 255: Color intensity
+
+001, 002, 003: Random values in dance mode (001: Pale random, 002: Medium random, 003: Random)
+
+Pixel Settings
+The sixth house in mode 00 refers to the start of the pixel, and in light dance mode, it refers to the first time or pixel interval:
+
+Values for mode 00: 000 to 255 LEDs
+
+Values for light dance mode 01 to 14: Time in milliseconds from 000 to 999
+
+The seventh house in mode 00 refers to the end of the pixel, and in light dance mode, it refers to the second time:
+
+Values for mode 00: 000 to 255 LEDs
+
+Values for light dance mode 01 to 14: Time in milliseconds from 000 to 999
+
+Memory Settings (MEM)
+The eighth house in mode 00 (001 to 010) is for keeping the color and number of pixels in the memory. If the memory is not needed, set it to 000.
+
+In modes 01 to 15, the number of pixels involved is 001 to 255.
+
+Example Commands
+Setting all LEDs to red and storing in memory 4 on channel 01: 0100255000000000100004
+
+Light dance example with 100 pixels, very fast light dance, and medium random colors: 0101002002002000000100
+
+Example :
+
+Question: "I have a strip connected to the Rangmang module with 98 pixels. I want to color it in four separate sections so that each time I turn it on, they appear. So, divide it into four equal or nearly equal parts. The first section should be red, the second section green, the third section blue, and the fourth section white."
+
+Answer: To set the LED strip into four separate sections with red, green, blue, and white colors, you can use the following commands. Each section will have approximately 24 or 25 pixels.
+
+First Section: Red 0100255000000000240001
+
+Channel: 01
+
+Mode: 00 (Manual color order)
+
+Red (R): 255
+
+Green (G): 000
+
+Blue (B): 000
+
+Start Pixel: 000
+
+End Pixel: 024
+
+Memory: 001
+
+Second Section: Green 0100000255002500490002
+
+Channel: 01
+
+Mode: 00 (Manual color order)
+
+Red (R): 000
+
+Green (G): 255
+
+Blue (B): 000
+
+Start Pixel: 025
+
+End Pixel: 049
+
+Memory: 002
+
+Third Section: Blue 0100000025505000740003
+
+Channel: 01
+
+Mode: 00 (Manual color order)
+
+Red (R): 000
+
+Green (G): 000
+
+Blue (B): 255
+
+Start Pixel: 050
+
+End Pixel: 074
+
+Memory: 003
+
+Fourth Section: White 010025525575750980004
+
+Channel: 01
+
+Mode: 00 (Manual color order)
+
+Red (R): 255
+
+Green (G): 255
+
+Blue (B): 255
+
+Start Pixel: 075
+
+End Pixel: 098
+
+Memory: 004
+
