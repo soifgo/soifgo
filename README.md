@@ -174,6 +174,8 @@ The ESP8266 WiFi module creates a two-way connection between soifdesign and the 
 Rangmang Project
 
 Rangmang is a project designed to control RGB LED strips via Bluetooth serial commands using soifdesign. This project allows users to program and control WS2812B LED strips to create stunning lighting effects. soifdesign acts as the interface to send commands to the microcontrollers, enabling dynamic color changes and patterns. The source files of the Rangmang project are available and unrestricted for you to enhance and improve.
+At the end of the README, you can learn more about Rangmang in detail. Additionally, there is a PDF file available for setup inside the Rangmang compressed file. You can also visit the SoifDesign channel on YouTube to watch a video of the Rangmang project.
+
 
 To download soifdesign, you can visit the following resources:
 
