@@ -1,6 +1,11 @@
 
 Download 
-blob:https://github.com/3c07a878-39b8-48e4-bfc1-7d3e739ec685
+
+https://drive.usercontent.google.com/download?id=17YyAkehXi9yJsomCJNS9DfSHyL3hHiMH&export=download&authuser=0&confirm=t&uuid=8378f085-8258-4f4c-90de-a8b763186aaa&at=AIrpjvPt4p7wy7Qb3KC4Zd1QKm0S%3A1737836402825
+
+https://github.com/soifdesign/soifdesign/blob/82746290360391a839f92bd9bb34ca4ad30f558b/soifdesign.apk
+
+https://drive.google.com/file/d/17YyAkehXi9yJsomCJNS9DfSHyL3hHiMH/view?usp=sharing
 
 # soifdesign
 Welcome to the SwiftDesign repository, your go-to tool for creating and managing Android UI designs.
