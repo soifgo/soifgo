@@ -732,7 +732,9 @@ End Pixel: 098
 Memory: 004
 
 ###########################################
+
 note out :
+
 When the button is configured in behavior note mode, you can use the info icon in the top left corner. By selecting the task option from the info list, you can choose between two types of tasks: sending via Bluetooth or sending via API/Server.
 
 Task: Send via Bluetooth
