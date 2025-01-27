@@ -731,3 +731,60 @@ End Pixel: 098
 
 Memory: 004
 
+###########################################
+note out :
+When the button is configured in behavior note mode, you can use the info icon in the top left corner. By selecting the task option from the info list, you can choose between two types of tasks: sending via Bluetooth or sending via API/Server.
+
+Task: Send via Bluetooth
+In this mode, you can send your text to the Bluetooth serial output. The send icon will appear at the top of the screen. By long-pressing this icon, you can access the send type settings, listed from top to bottom:
+
+Delay: After selecting the delay, a time selection bar will appear at the bottom of the screen. Note that the times depend on the phone's internal timer. Ensure the custom wait option is turned off. In this mode, the first line of your text is sent as the command, and subsequent lines wait for the delay time to elapse before being sent. The delay time is the same for all lines.
+
+LF RF: This setting defines the data send method and how it is received by the recipient. It includes characters 10 and 13 or the absence thereof, sequential reception, or next line reception. This setting should be configured according to the recipient's method.
+
+Automatic Sending: This setting determines whether the sending is manual or automatic. In manual mode, an icon appears for each send, which you click to send the line. In automatic mode, the sending is done automatically based on delay settings, custom delays, or input checks.
+
+Input Check: This setting is for serial echo or verifying the correctness of the sent value. The recipient should resend what it receives, and the data is checked. If the received and sent data match, the next line is sent. If not, it checks 5 times and gives an error if the send is not confirmed.
+
+Next Word Check: If the word "next" is received, the next line is sent. This setting is suitable for actions with unspecified durations. For example, in a loader where start and end times vary, the next word triggers the next command when a switch is defined at the end.
+
+Custom Wait: This method allows you to set custom times for sending lines. The times must be written in the text, following this format:
+
+First line: Command
+
+Second line: Time in seconds (only numbers) Example:
+
+motor ON
+23
+Fan ON
+11
+Vacuum OFF
+5
+If there is an error in your text, it will give an error.
+
+Loop: This setting repeats your text or commands. Once activated, your text starts again from the first line after the last line is completed.
+
+Task: Send via Server/API
+All functionalities of this method are similar to the Bluetooth send method, with the following differences:
+
+The input check and next word options are removed.
+
+Writing method when using delay:
+
+First line: Address with port
+
+Second line: Key or keyword
+
+Third line: Data value or sending value
+
+Writing method when using custom delay:
+
+First line: Address with port
+
+Second line: Key or keyword
+
+Third line: Data value or sending value
+
+Fourth line: Delay time in seconds (only numbers)
+
+
