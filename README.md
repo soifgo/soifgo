@@ -7,6 +7,11 @@ https://github.com/soifdesign/soifdesign/blob/82746290360391a839f92bd9bb34ca4ad3
 
 https://drive.google.com/file/d/17YyAkehXi9yJsomCJNS9DfSHyL3hHiMH/view?usp=sharing
 
+
+Apkpure Market
+
+https://apkpure.com/p/soifdesign.ssm20985
+
 # soifdesign
 Welcome to the SwiftDesign repository, your go-to tool for creating and managing Android UI designs.
 
