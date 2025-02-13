@@ -818,3 +818,26 @@ Third line: Data value or sending value
 Fourth line: Delay time in seconds (only numbers)
 
 
+############################################################
+
+Phone Sensor :
+
+In the Sensor Phone section, you can use the sensors inside the phone in soifdesign. These sensors work normally, and if you select the active options of these sensors, the program can use the values of these sensors. By enabling the Display Sensor Values option, you can see the values and addresses of these sensors.
+
+Preferably, these sensors are included in the ending addresses 991 to 994 so that buttons can read and display them through these addresses. The application of reading these sensors can lead to button effects. To read the sensors, just set the button behavior to the Bluetooth Receive mode and then enter the sensor address:
+
+Address 991 for the light sensor with a maximum value of 5200.
+
+Address 992 for the X-axis rotation sensor with a maximum value of 210.
+
+Address 993 for the Y-axis rotation sensor with a maximum value of 210.
+
+Address 994 for the magnetic sensor with a maximum value of 33000.
+
+Now you can have your desired programs such as light measurement, graphs, and movements by selecting button effects. Create programs like a scale or metal detector.
+
+If you want to move a device or toy using the phone's internal rotation sensors, just set the button behavior to Bluetooth Send mode. Then, using the Sensor option, select the desired sensor. The sensor value will be sent to the Bluetooth serial output, and if you wish to have a suffix or address appended to the sent value, just enter that sentence or address inside the textbox.
+
+With sensor value changes, the sensor values will be automatically sent to the Bluetooth serial output.
+
+
