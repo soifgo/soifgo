@@ -820,24 +820,24 @@ Fourth line: Delay time in seconds (only numbers)
 
 ############################################################
 
-Phone Sensor :
-
-In the Sensor Phone section, you can use the sensors inside the phone in soifdesign. These sensors work normally, and if you select the active options of these sensors, the program can use the values of these sensors. By enabling the Display Sensor Values option, you can see the values and addresses of these sensors.
+Phone Sensor:
+In the Phone Sensor section, you can use the sensors inside the phone in soifdesign. These sensors work normally, and if you select the active options of these sensors, the program can use the values of these sensors. By enabling the Display Sensor Values option, you can see the values and addresses of these sensors.
 
 Preferably, these sensors are included in the ending addresses 991 to 994 so that buttons can read and display them through these addresses. The application of reading these sensors can lead to button effects. To read the sensors, just set the button behavior to the Bluetooth Receive mode and then enter the sensor address:
 
-Address 991 for the light sensor with a maximum value of 5200.
+- Address 991 for the light sensor, you can get the maximum value from the sensor display section by shining a lot of light like the sun.
+- 
+- Address 992 for the X-axis rotation sensor, you can get the maximum value from the sensor display section by rotating the phone until the maximum positive is visible. The sensor value may be decimal and negative. Note that the buttons work from 0 upwards, so by multiplying the number, correct the decimal part and by adding a suitable number, make the negative part positive. For example, if the sensor shows 1.52, this number must be multiplied by 100 to be read as 152. Now, for example, we have a maximum negative of -2.11, which becomes -211. So, multiply by 10 and add 211. Now the sensor's minimum value is 0 and the maximum is 422, and 210 is the balance or median.
 
-Address 992 for the X-axis rotation sensor with a maximum value of 210.
+- Address 993 for the Y-axis rotation sensor, similar to the explanation above.
 
-Address 993 for the Y-axis rotation sensor with a maximum value of 210.
-
-Address 994 for the magnetic sensor with a maximum value of 33000.
+- Address 994 for the magnetic sensor, pay attention that the output may vary slightly in different phones. With the help of a coefficient and a magnet, you can find the highest resolution. The type of multiplication and addition is similar to the explanation above.
 
 Now you can have your desired programs such as light measurement, graphs, and movements by selecting button effects. Create programs like a scale or metal detector.
 
 If you want to move a device or toy using the phone's internal rotation sensors, just set the button behavior to Bluetooth Send mode. Then, using the Sensor option, select the desired sensor. The sensor value will be sent to the Bluetooth serial output, and if you wish to have a suffix or address appended to the sent value, just enter that sentence or address inside the textbox.
 
-With sensor value changes, the sensor values will be automatically sent to the Bluetooth serial output.
+With sensor value changes, the sensor values will be automatically sent to the Bluetooth serial output. Note that in this feature, the sent number is not negative; it is 0 and above.
+
 
 
