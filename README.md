@@ -10,7 +10,7 @@ https://drive.google.com/file/d/17YyAkehXi9yJsomCJNS9DfSHyL3hHiMH/view?usp=shari
 
 Apkpure Market
 
-https://apkpure.com/p/soifdesign.ssm20985
+http://apkpure.com/soifdesign/soifdesign.ssm20985/downloading
 
 # soifdesign
 Welcome to the SwiftDesign repository, your go-to tool for creating and managing Android UI designs.
