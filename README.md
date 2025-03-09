@@ -32,7 +32,7 @@ Please manually enable 'All File Access' in settings if the app does not run for
 
 soifdesign is an adaptable app for creating and managing custom UIs. Features include web views, PDF handling, image viewing, HTML editing, and serial data transmission via Bluetooth. Customizable buttons and startup options enhance user experience.
 
-button :  
+
 
 SoifDesign" is derived from two words: "soif" which means "thirst" in French and "design" which means "design
 
