@@ -664,7 +664,29 @@ Setting all LEDs to red and storing in memory 4 on channel 01: 01002550000000001
 
 Light dance example with 100 pixels, very fast light dance, and medium random colors: 0101002002002000000100
 
-Example :
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+For WS2811 (12V strips):
+
+The color code for data transmission is in the order Red, Blue, Green (RBG).
+
+Therefore, in your design, for the volume bar or any other interface sending colors, you should change the RGB label to RBG to match the strip's configuration.
+
+For WS2812 and WS2813 (5V strips):
+
+These strips follow the standard Red, Green, Blue (RGB) color order.
+
+No changes to the default design are necessary for these LED strips, as they already align with the standard color arrangement.
+
+Manual Code Writing:
+
+If you plan to write the code manually, you must pay close attention to the difference in color data order.
+
+For WS2811 (12V), use the RBG order.
+
+For WS2812 and WS2813 (5V), stick to the RGB order.
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+Example :ws2812  ws2813  rgb 
 
 Question: "I have a strip connected to the Rangmang module with 98 pixels. I want to color it in four separate sections so that each time I turn it on, they appear. So, divide it into four equal or nearly equal parts. The first section should be red, the second section green, the third section blue, and the fourth section white."
 
