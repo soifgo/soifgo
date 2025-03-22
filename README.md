@@ -588,24 +588,18 @@ The address definition should be two digits from 01 to 98.
 
 Channel 99 sends commands to all modules.
 
-Channel Inquiries:
 
-MM: Displays the memory count.
 
-LN: Shows the maximum number of pixels.
 
-BR: Indicates the baud rate of the module.
 
-DN: Displays the number of light dance modes.
-
-VR: Introduces the version and chip.
-
-WR: Shows the work cycle count of the module.
-
+ !! connect the miso_ch  pin to the gnd    send command   >>  set channel!!
 Example Channel Settings
 Setting channel 3: Send: 03 Receive: CH03
 
 Setting channel 49: Send: 49 Receive: CH49
+
+After setting the channel or address on the module, now remove the jumper that you connected.
+
 
 Working Modes (MOD)
 The second house refers to the type of working mode:
