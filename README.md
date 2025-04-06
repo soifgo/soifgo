@@ -278,7 +278,7 @@ With Custom Wait:
 Note: An empty line will terminate the program.
 
 
-Sending Notes via Bluetooth or Internet:
+Sending Notes via Bluetooth or Internet:(note to serial _ note out _note to api _note to bluetooth )
 
 In soifdesign, you can easily send your notes to a Bluetooth port or an API. Here, we will explain the Bluetooth section.
 
