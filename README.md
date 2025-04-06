@@ -277,23 +277,38 @@ With Custom Wait:
 - 2
 Note: An empty line will terminate the program.
 
-Settings:
 
-Delay: Set a delay between 0 to 1000 milliseconds for line-by-line sending.
+Sending Notes via Bluetooth or Internet:
 
-CR LF or NULL Character: Configure the end character of the sent value as needed.
+In soifdesign, you can easily send your notes to a Bluetooth port or an API. Here, we will explain the Bluetooth section.
 
-Auto or Manual Sending: In manual mode, an icon will appear for line-by-line sending.
+Before sending, ensure that your phone's Bluetooth is paired with the desired module or device.
 
-Check-In: To verify received confirmation. For example, send "123" and if "123" is received, it proceeds to the next line. Otherwise, it repeats a few times and stops if "123" is not received. This is similar to serial echo, ensuring correct receipt.
+Step One: Click on the soifdesign Bluetooth icon. From the list that appears, click on the desired device to establish the connection.
+Step Two: Click the play icon to switch it to edit or pause mode. Then, click on the 3D cube icon. From the list, bring up a button and click it. Next, click on the top left menu and select “Behavior” from the list. A blue icon will appear on the right; click it to display the list of behaviors and select the "Note Behavior" option.
 
-Next Reception: Sensitive to the word "next" in the reception. Useful when the microcontroller's operation time is unknown. For example, a motor moving a load may take different times to reach the destination based on the load. If a micro switch at the destination sends "next" to the Bluetooth module upon completion, soifdesign will send the next line. Each "next" waits for up to 600 seconds; if exceeded, the program stops.
+Choose the default note hello.text. Then, click on the paused play icon to switch to live/play mode. Now, click the button to display the note.
 
-Custom Wait: Previously mentioned for setting custom stops between lines.
+Write your desired text. To save the note with a different name, click on the top left menu. From the "Note Job" menu, select "Send via Bluetooth."
 
-Loop: Enables continuous cyclic operation.
+When you click on the note, a send icon will appear at the top beside the menu. Long press this icon. From the list, configure the sending behavior:
 
-To start sending, click the Note Out icon. For additional settings, long-click on the icon. To stop, you can click "Close" or press the phone's back button.
+Cancel: Cancel or exit the list.
+Delay: Selecting this brings up a volume bar to set line-by-line delay increments, with each step being 0.125 milliseconds. This delay applies to manual mode but does not work in custom line-by-line delays.
+Send Format: Choose standard sending formats depending on your needs, such as next line, sequential lines, etc. Options include CR+LF, CR, LF, STX/ETX, NULL, or NON.
+Manual or Automatic Line Sending:
+- In manual mode, an icon appears for line-by-line sending. There is no delay in this mode; only the format can be selected.
+- Clicking the send icon enables manual line sending. Each click sends the first line, and subsequent clicks send the following lines one by one until the icon disappears. To repeat, click the send icon again and repeat the process.
+- In automatic mode, clicking the send icon sends lines automatically based on your configuration. You can pause or stop by clicking the send icon again, and clicking it once more resumes the process.
+
+Check-In: Activate check-in to ensure that each sent line returns an exact match before allowing the next line to be sent. This functions as a serial echo.
+Next Check: This option is similar to "Check-In" but only reacts to the word NEXT (or next). It waits longer for this response before sending the next line. This feature is useful for tasks with uncertain completion times (e.g., robotic arms, conveyors, or heating elements). The system sends the next line only after receiving the NEXT response.
+Custom Wait: This special mode requires careful note writing, as it follows a specific format. For example:
+- Line 1: Desired text (sent immediately).
+- Line 2: Wait time in seconds (e.g., "8" for an 8-second delay).
+- Line 3: Next text to send after the delay.
+In this mode, the second option in the delay list is deactivated.
+Loop: Enabling this option repeats the lines automatically in a loop after reaching the end. It works in automatic sending mode.
 
 Important:
 
