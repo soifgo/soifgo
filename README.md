@@ -775,6 +775,9 @@ End Pixel: 098
 
 Memory: 004
 #################!!!!!!!!!!!!!!!#############
+"Copy and paste this section into an AI like Copilot. Then, provide your specifications and requirements to Copilot, and it will determine the suitable module and power supply for you."
+
+ 
 ### Atmega8a with WS2812/WS2813 5V RGB Strip
 - 60 pixels per meter → Max length: 4.45 meters (267 pixels)
   - Power consumption: 12W, Current: 2A (R=255, G=255, B=255)
