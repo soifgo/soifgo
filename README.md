@@ -774,6 +774,54 @@ Start Pixel: 075
 End Pixel: 098
 
 Memory: 004
+#################!!!!!!!!!!!!!!!#############
+### Atmega8a with WS2812/WS2813 5V RGB Strip
+- 60 pixels per meter → Max length: 4.45 meters (267 pixels)
+  - Power consumption: 12W, Current: 2A (R=255, G=255, B=255)
+- 30 pixels per meter → Max length: 8.9 meters (267 pixels)
+  - Power consumption: 6W, Current: 1A (R=255, G=255, B=255)
+
+### Atmega8a with WS2811 12V RGB Strip
+- 60 pixels per meter → Actual controlled pixels: 20 pixels per meter
+  - Max length: 13.35 meters (267 pixels), Power consumption: 12W, Current: 1A
+- 30 pixels per meter → Actual controlled pixels: 10 pixels per meter
+  - Max length: 26.7 meters (267 pixels), Power consumption: 6W, Current: 0.5A
+
+### Atmega328p with WS2812/WS2813 5V RGB Strip
+- 60 pixels per meter → Max length: 10.13 meters (608 pixels)
+  - Power consumption: 12W, Current: 2A (R=255, G=255, B=255)
+- 30 pixels per meter → Max length: 20.26 meters (608 pixels)
+  - Power consumption: 6W, Current: 1A (R=255, G=255, B=255)
+
+### Atmega328p with WS2811 12V RGB Strip
+- 60 pixels per meter → Actual controlled pixels: 20 pixels per meter
+  - Max length: 30.4 meters (608 pixels), Power consumption: 12W, Current: 1A
+- 30 pixels per meter → Actual controlled pixels: 10 pixels per meter
+  - Max length: 60.8 meters (608 pixels), Power consumption: 6W, Current: 0.5A
+
+### Atmega64 with WS2812/WS2813 5V RGB Strip
+- 60 pixels per meter → Max length: 16.65 meters (999 pixels)
+  - Power consumption: 12W, Current: 2A (R=255, G=255, B=255)
+- 30 pixels per meter → Max length: 33.3 meters (999 pixels)
+  - Power consumption: 6W, Current: 1A (R=255, G=255, B=255)
+
+### Atmega64 with WS2811 12V RGB Strip
+- 60 pixels per meter → Actual controlled pixels: 20 pixels per meter
+  - Max length: 49.95 meters (999 pixels), Power consumption: 12W, Current: 1A
+- 30 pixels per meter → Actual controlled pixels: 10 pixels per meter
+  - Max length: 99.99 meters (999 pixels), Power consumption: 6W, Current: 0.5A
+
+If you are using two 5-meter LED strip loops, the best place to inject or connect the power supply is in the middle. This way, you will have minimal voltage drop. Therefore, the midpoint is the ideal location for power supply connection. 
+
+If you can also run an auxiliary wire to the ends of the strips, the voltage drop will be even lower, improving the overall quality and uniformity of the strip. 
+
+Each pixel consumes 240 milliwatts, so for a density of 60 pixels per meter, the total power consumption is 14.4 watts. 
+
+For a 5V strip, this equals 2.88A. However, due to voltage drop, the effective current per meter is around 2A. 
+
+So, when selecting a power supply, ensure you choose one with at least 30% additional capacity. For example:
+- **For a 10-meter, 5V, 60-pixel-per-meter strip**, the **minimum** power supply should be **5V 20A**, while a **30A power supply** would be ideal. 
+- **For a 10-meter, 12V, 60-pixel-per-meter strip**, the **minimum** required power supply is **12V 10A**, while a **15A power supply** would be more suitable. 
 
 ###########################################
 
