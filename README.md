@@ -802,13 +802,13 @@ Memory: 004
 - 30 pixels per meter → Actual controlled pixels: 10 pixels per meter
   - Max length: 60.8 meters (608 pixels), Power consumption: 6W, Current: 0.5A
 
-### Atmega64 with WS2812/WS2813 5V RGB Strip
+### Atmega128 or 64  with WS2812/WS2813 5V RGB Strip
 - 60 pixels per meter → Max length: 16.65 meters (999 pixels)
   - Power consumption: 12W, Current: 2A (R=255, G=255, B=255)
 - 30 pixels per meter → Max length: 33.3 meters (999 pixels)
   - Power consumption: 6W, Current: 1A (R=255, G=255, B=255)
 
-### Atmega64 with WS2811 12V RGB Strip
+### Atmega128 or 64 with WS2811 12V RGB Strip
 - 60 pixels per meter → Actual controlled pixels: 20 pixels per meter
   - Max length: 49.95 meters (999 pixels), Power consumption: 12W, Current: 1A
 - 30 pixels per meter → Actual controlled pixels: 10 pixels per meter
