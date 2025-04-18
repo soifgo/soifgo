@@ -29,6 +29,26 @@ https://www.youtube.com/@soifdesign
 
 # soifdesign
 
+# Supported Languages in SoifDesign
+
+- English (EN)  
+- Spanish (Español)  
+- Chinese (简体中文)  
+- French (Français)  
+- German (Deutsch)  
+- Japanese (日本語)  
+- Russian (Русский)  
+- Arabic (العربية)  
+- Persian (فارسی)  
+- Italian (Italiano)  
+- Hindi (हिन्दी)  
+- Turkish (Türkçe)  
+- Korean (한국어)  
+- Portuguese (Português)  
+- Hebrew (עברית)  
+- Kurdish (کوردی)  
+
+
 soifdesign
 Please manually enable 'All File Access' in settings if the app does not run for Android 13 and above.
 
