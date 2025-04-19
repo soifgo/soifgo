@@ -686,9 +686,18 @@ Values for mode 00: 000 to 255 LEDs
 Values for light dance mode 01 to 14: Time in milliseconds from 000 to 999
 
 Memory Settings (MEM)
-The eighth house in mode 00 (001 to 010) is for keeping the color and number of pixels in the memory. If the memory is not needed, set it to 000.
 
-In modes 01 to 15, the number of pixels involved is 001 to 255.
+If 001 to 010 are selected, you can divide the strip into 10 separate sections, each with its own independent color.
+
+If 996 is selected, all 10 memory slots will be cleared, and the entire strip will turn off.
+
+If 997 is selected, the strip will turn off, but the memory will remain intact.
+
+If 998 is selected, the entire strip will be colored, but without saving the data in memory.
+
+If 999 is selected, the entire strip will be colored, and the information will be stored in memory slot 10.
+If the memory is not needed, set it to 000
+
 
 Example Commands
 Setting all LEDs to red and storing in memory 4 on channel 01: 0100255000000000100004
