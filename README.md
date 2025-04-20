@@ -808,16 +808,16 @@ Memory: 004
 
  
 ### Atmega8a with WS2812/WS2813 5V RGB Strip
-- 60 pixels per meter → Max length: 4.45 meters (267 pixels)
+- 60 pixels per meter → Max length: 4.25 meters (255 pixels)
   - Power consumption: 12W, Current: 2A (R=255, G=255, B=255)
-- 30 pixels per meter → Max length: 8.9 meters (267 pixels)
+- 30 pixels per meter → Max length: 8.5 meters (267 pixels)
   - Power consumption: 6W, Current: 1A (R=255, G=255, B=255)
 
 ### Atmega8a with WS2811 12V RGB Strip
 - 60 pixels per meter → Actual controlled pixels: 20 pixels per meter
-  - Max length: 13.35 meters (267 pixels), Power consumption: 12W, Current: 1A
+  - Max length: 12.75 meters (255 pixels), Power consumption: 12W, Current: 1A
 - 30 pixels per meter → Actual controlled pixels: 10 pixels per meter
-  - Max length: 26.7 meters (267 pixels), Power consumption: 6W, Current: 0.5A
+  - Max length: 25.5 meters (255 pixels), Power consumption: 6W, Current: 0.5A
 
 ### Atmega328p with WS2812/WS2813 5V RGB Strip
 - 60 pixels per meter → Max length: 10.13 meters (608 pixels)
