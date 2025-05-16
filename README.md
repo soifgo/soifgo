@@ -17,15 +17,6 @@ https://github.com/soifdesign/soifdesign/blob/82746290360391a839f92bd9bb34ca4ad3
 
 https://drive.google.com/file/d/17YyAkehXi9yJsomCJNS9DfSHyL3hHiMH/view?usp=sharing
 
-!:
-
-Starting from version 1.07, folder separation has been added to SoifDesign. This algorithm helps prevent project clutter and makes sharing and sending files to other devices easier.
-
-So, if you're using version 1.06 or earlier, you can manually organize the contents of the SoifDesign folder into a separate folder before updating. This way, it will be properly integrated into the application's folder structure. 🚀
-
-Additionally, in version 1.07 and above, you can use the Folder item to set your project folder inside the main SoifDesign directory or open an existing folder. The folder structuring feature is exclusive to this version, while the rest remains the same as the previous one.
-
-
 # soifdesign
 Welcome to the SwiftDesign repository, your go-to tool for creating and managing Android UI designs.
 
@@ -54,9 +45,6 @@ https://www.youtube.com/@soifdesign
 - Hebrew (עברית)  
 - Kurdish (کوردی)  
 
-
-soifdesign
-Please manually enable 'All File Access' in settings if the app does not run for Android 13 and above.
 
 soifdesign is an adaptable app for creating and managing custom UIs. Features include web views, PDF handling, image viewing, HTML editing, and serial data transmission via Bluetooth. Customizable buttons and startup options enhance user experience.
 
