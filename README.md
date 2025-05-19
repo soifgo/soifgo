@@ -575,279 +575,92 @@ With a click on any running graph, a list view (Run/Stop View) will be displayed
 - HC-05
 - Bluetooth UART
 - RGB program
-- WS2811
-- WS2812
-- Arduino Bluetooth
-- HC-06
-- ESP32
-- Bluetooth Serial
-- WS2812B
-- Rangmang
-- Bluetooth Serial Communication
--Control RGB LED strips wirelessly.
--Customize buttons to send specific commands
--Dynamic Lighting Effects
--Create and save custom lighting patterns
--Integration with soifdesign
--Seamlessly integrates with soifdesign for enhanced functionality
 
 
 Rangmang Project
-Rangmang is a project designed to control RGB LED strips via Bluetooth serial commands using SoifDesign. This project allows users to program and control WS2812B LED strips to create stunning lighting effects.
 
-Features
-Control up to 255 pixels
+# LED Strip Control Algorithm for RANGMANG Module
 
-Parallelize up to 98 modules
+## Overview
+The RANGMANG color module controls RGB LED strips (WS2811, WS2812, and WS2813) using Bluetooth and programmable serial commands. The module operates on Mega8, Mega128, and Mega64 microcontrollers and requires a 22-digit input code for precise LED control.
 
-Define channels from 01 to 99
+## Microcontroller Capabilities
+- The **Mega8** microcontroller supports **255 pixels** and **13 lighting patterns** due to its limited memory.  
+- The **Mega128 & Mega64** microcontrollers support **990 pixels** and **24 lighting effects** for larger LED configurations.  
 
-Receive commands as serial UART based on TTL
+## Programming via Bluetooth
+A **serial Bluetooth adapter** connects to the module, allowing control via Android applications such as **Soifesign**. Commands are transmitted in a **structured 22-digit format**.
 
-Support for both classic Bluetooth and BLE
+## Transmission Code Structure
+Each command consists of **22 digits**, divided into the following components:
 
-Channel Definition (CH)
-Each Rangmang module can be assigned to a specific channel, allowing for precise control of LED strips. You can define channels from 01 to 99:
+1. **Module Address (2 digits)**  
+   - `01–98` → Address for individual modules  
+   - `99` → Broadcast command for all modules  
 
-Channel Definition:
+2. **Mode Type (2 digits)**  
+   - `00` → Static Color Mode  
+   - `01–24` → Dynamic Lighting Effects  
 
-To define a channel, connect the MISO_CH pin to GND.
+3. **Red Color Value (3 digits)**  
+   - `000–255` → Intensity level (000 = Off, 255 = Full)  
 
-Send the channel command, indicating that the module is ready to receive and define the address or channel.
+4. **Green Color Value (3 digits)**  
+   - `000–255` → Intensity level  
 
-The address definition should be two digits from 01 to 98.
+5. **Blue Color Value (3 digits)**  
+   - `000–255` → Intensity level  
 
-Channel 99 sends commands to all modules.
+6. **Start Pixel Address (3 digits)**  
+   - `000–255` → First pixel to be colored  
 
+7. **Finish Pixel Address (3 digits)**  
+   - `001–255` → Last pixel to be colored  
 
+8. **Memory Slot (3 digits)**  
+   - `001–010` → Stores predefined colors  
 
+## Algorithm Breakdown
 
+### **Step 1: Receive User Input**
+- The system listens for **22-digit serial input** via Bluetooth.  
+- If the input length is **not 22 digits**, return an error.  
 
- !! connect the miso_ch  pin to the gnd    send command   >>  set channel!!
-Example Channel Settings
-Setting channel 3: Send: 03 Receive: CH03
+### **Step 2: Parse the Data**
+- Extract **Module Address** (digits 1–2).  
+- Extract **Mode Type** (digits 3–4).  
+- Extract **Color Values** (digits 5–13).  
+- Extract **Pixel Range** (digits 14–19).  
+- Extract **Memory Slot** (digits 20–22).  
 
-Setting channel 49: Send: 49 Receive: CH49
+### **Step 3: Validate Input**
+- Ensure **Module Address** is between `01–99`.  
+- Validate **Mode Type** (`00–24`).  
+- Ensure **Color Values** are between `000–255`.  
+- Check if **Start Pixel < Finish Pixel** within hardware constraints.  
+- Verify **Memory Slot** (`001–010` for color storage).  
 
-After setting the channel or address on the module, now remove the jumper that you connected.
+### **Step 4: Apply Settings**
+- If `Mode = 00`, set the specified pixels to a static color.  
+- If `Mode > 00`, trigger corresponding **lighting effects**.  
+- Update the LED strip's **memory slot** if applicable.  
 
+### **Step 5: Special Cases**
+- `996` → Clears memory slots **1 to 10**.  
+- `997` → Temporarily turn off LED strip (without erasing memory).  
+- `998` → Apply a uniform color without saving.  
+- `999` → Apply a uniform color **and save it** to memory.  
 
-Working Modes (MOD)
-The second house refers to the type of working mode:
+### **Step 6: Execute & Update**
+- Transmit updated values to the LED strip.  
+- Apply changes dynamically or store values for future execution.  
+- Provide feedback via serial Bluetooth communication.
 
-Mode 00: Manual color order
+## Example Commands
 
-Modes 01 to 13: Default light dance modes
+1. **Set first half of strip to Green (Mega8, 150 Pixels)**  
 
-Mode 14: Randomly selects modes 01 to 13 of the light dance
 
-Color Settings
-The third house refers to the red color (R):
-
-000: Off
-
-004 to 255: Color intensity
-
-001, 002, 003: Random values in dance mode (001: Pale random, 002: Medium random, 003: Random)
-
-The fourth house refers to the green color (G):
-
-000: Off
-
-004 to 255: Color intensity
-
-001, 002, 003: Random values in dance mode (001: Pale random, 002: Medium random, 003: Random)
-
-The fifth house refers to the blue color (B):
-
-000: Off
-
-004 to 255: Color intensity
-
-001, 002, 003: Random values in dance mode (001: Pale random, 002: Medium random, 003: Random)
-
-Pixel Settings
-The sixth house in mode 00 refers to the start of the pixel, and in light dance mode, it refers to the first time or pixel interval:
-
-Values for mode 00: 000 to 255 LEDs
-
-Values for light dance mode 01 to 14: Time in milliseconds from 000 to 999
-
-The seventh house in mode 00 refers to the end of the pixel, and in light dance mode, it refers to the second time:
-
-Values for mode 00: 000 to 255 LEDs
-
-Values for light dance mode 01 to 14: Time in milliseconds from 000 to 999
-
-Memory Settings (MEM)
-
-If 001 to 010 are selected, you can divide the strip into 10 separate sections, each with its own independent color.
-
-If 996 is selected, all 10 memory slots will be cleared, and the entire strip will turn off.
-
-If 997 is selected, the strip will turn off, but the memory will remain intact.
-
-If 998 is selected, the entire strip will be colored, but without saving the data in memory.
-
-If 999 is selected, the entire strip will be colored, and the information will be stored in memory slot 10.
-If the memory is not needed, set it to 000
-
-
-Example Commands
-Setting all LEDs to red and storing in memory 4 on channel 01: 0100255000000000100004
-
-Light dance example with 100 pixels, very fast light dance, and medium random colors: 0101002002002000000100
-
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-For WS2811 (12V strips):
-
-The color code for data transmission is in the order Red, Blue, Green (RBG).
-
-Therefore, in your design, for the volume bar or any other interface sending colors, you should change the RGB label to RBG to match the strip's configuration.
-
-For WS2812 and WS2813 (5V strips):
-
-These strips follow the standard Red, Green, Blue (RGB) color order.
-
-No changes to the default design are necessary for these LED strips, as they already align with the standard color arrangement.
-
-Manual Code Writing:
-
-If you plan to write the code manually, you must pay close attention to the difference in color data order.
-
-For WS2811 (12V), use the RBG order.
-
-For WS2812 and WS2813 (5V), stick to the RGB order.
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-
-Example :ws2812  ws2813  rgb 
-
-Question: "I have a strip connected to the Rangmang module with 98 pixels. I want to color it in four separate sections so that each time I turn it on, they appear. So, divide it into four equal or nearly equal parts. The first section should be red, the second section green, the third section blue, and the fourth section white."
-
-Answer: To set the LED strip into four separate sections with red, green, blue, and white colors, you can use the following commands. Each section will have approximately 24 or 25 pixels.
-
-First Section: Red 0100255000000000240001
-
-Channel: 01
-
-Mode: 00 (Manual color order)
-
-Red (R): 255
-
-Green (G): 000
-
-Blue (B): 000
-
-Start Pixel: 000
-
-End Pixel: 024
-
-Memory: 001
-
-Second Section: Green 0100000255002500490002
-
-Channel: 01
-
-Mode: 00 (Manual color order)
-
-Red (R): 000
-
-Green (G): 255
-
-Blue (B): 000
-
-Start Pixel: 025
-
-End Pixel: 049
-
-Memory: 002
-
-Third Section: Blue 0100000025505000740003
-
-Channel: 01
-
-Mode: 00 (Manual color order)
-
-Red (R): 000
-
-Green (G): 000
-
-Blue (B): 255
-
-Start Pixel: 050
-
-End Pixel: 074
-
-Memory: 003
-
-Fourth Section: White 010025525575750980004
-
-Channel: 01
-
-Mode: 00 (Manual color order)
-
-Red (R): 255
-
-Green (G): 255
-
-Blue (B): 255
-
-Start Pixel: 075
-
-End Pixel: 098
-
-Memory: 004
-#################!!!!!!!!!!!!!!!#############
-"Copy and paste this section into an AI like Copilot. Then, provide your specifications and requirements to Copilot, and it will determine the suitable module and power supply for you."
-
- 
-### Atmega8a with WS2812/WS2813 5V RGB Strip
-- 60 pixels per meter → Max length: 4.25 meters (255 pixels)
-  - Power consumption: 12W, Current: 2A (R=255, G=255, B=255)
-- 30 pixels per meter → Max length: 8.5 meters (267 pixels)
-  - Power consumption: 6W, Current: 1A (R=255, G=255, B=255)
-
-### Atmega8a with WS2811 12V RGB Strip
-- 60 pixels per meter → Actual controlled pixels: 20 pixels per meter
-  - Max length: 12.75 meters (255 pixels), Power consumption: 12W, Current: 1A
-- 30 pixels per meter → Actual controlled pixels: 10 pixels per meter
-  - Max length: 25.5 meters (255 pixels), Power consumption: 6W, Current: 0.5A
-
-### Atmega328p with WS2812/WS2813 5V RGB Strip
-- 60 pixels per meter → Max length: 10.13 meters (608 pixels)
-  - Power consumption: 12W, Current: 2A (R=255, G=255, B=255)
-- 30 pixels per meter → Max length: 20.26 meters (608 pixels)
-  - Power consumption: 6W, Current: 1A (R=255, G=255, B=255)
-
-### Atmega328p with WS2811 12V RGB Strip
-- 60 pixels per meter → Actual controlled pixels: 20 pixels per meter
-  - Max length: 30.4 meters (608 pixels), Power consumption: 12W, Current: 1A
-- 30 pixels per meter → Actual controlled pixels: 10 pixels per meter
-  - Max length: 60.8 meters (608 pixels), Power consumption: 6W, Current: 0.5A
-
-### Atmega128 or 64  with WS2812/WS2813 5V RGB Strip
-- 60 pixels per meter → Max length: 16.65 meters (999 pixels)
-  - Power consumption: 12W, Current: 2A (R=255, G=255, B=255)
-- 30 pixels per meter → Max length: 33.3 meters (999 pixels)
-  - Power consumption: 6W, Current: 1A (R=255, G=255, B=255)
-
-### Atmega128 or 64 with WS2811 12V RGB Strip
-- 60 pixels per meter → Actual controlled pixels: 20 pixels per meter
-  - Max length: 49.95 meters (999 pixels), Power consumption: 12W, Current: 1A
-- 30 pixels per meter → Actual controlled pixels: 10 pixels per meter
-  - Max length: 99.99 meters (999 pixels), Power consumption: 6W, Current: 0.5A
-
-If you are using two 5-meter LED strip loops, the best place to inject or connect the power supply is in the middle. This way, you will have minimal voltage drop. Therefore, the midpoint is the ideal location for power supply connection. 
-
-If you can also run an auxiliary wire to the ends of the strips, the voltage drop will be even lower, improving the overall quality and uniformity of the strip. 
-
-Each pixel consumes 240 milliwatts, so for a density of 60 pixels per meter, the total power consumption is 14.4 watts. 
-
-For a 5V strip, this equals 2.88A. However, due to voltage drop, the effective current per meter is around 2A. 
-
-So, when selecting a power supply, ensure you choose one with at least 30% additional capacity. For example:
-- **For a 10-meter, 5V, 60-pixel-per-meter strip**, the **minimum** power supply should be **5V 20A**, while a **30A power supply** would be ideal. 
-- **For a 10-meter, 12V, 60-pixel-per-meter strip**, the **minimum** required power supply is **12V 10A**, while a **15A power supply** would be more suitable. 
 
 ###########################################
 
