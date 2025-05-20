@@ -585,8 +585,8 @@ Rangmang Project
 The RANGMANG color module controls RGB LED strips (WS2811, WS2812, and WS2813) using Bluetooth and programmable serial commands. The module operates on Mega8, Mega128, and Mega64 microcontrollers and requires a 22-digit input code for precise LED control.
 
 ## Microcontroller Capabilities
-- The **Mega8** microcontroller supports **255 pixels** and **13 lighting patterns** due to its limited memory.  
-- The **Mega128 & Mega64** microcontrollers support **990 pixels** and **24 lighting effects** for larger LED configurations.  
+- The **Mega8** microcontroller supports **255 pixels** and **12 lighting patterns** due to its limited memory.  
+- The **Mega128 & Mega64** microcontrollers support **990 pixels** and **30 lighting effects** for larger LED configurations.  
 
 ## Programming via Bluetooth
 A **serial Bluetooth adapter** connects to the module, allowing control via Android applications such as **Soifesign**. Commands are transmitted in a **structured 22-digit format**.
@@ -600,7 +600,7 @@ Each command consists of **22 digits**, divided into the following components:
 
 2. **Mode Type (2 digits)**  
    - `00` → Static Color Mode  
-   - `01–24` → Dynamic Lighting Effects  
+   - `01–30` → Dynamic Lighting Effects  
 
 3. **Red Color Value (3 digits)**  
    - `000–255` → Intensity level (000 = Off, 255 = Full)  
@@ -635,7 +635,7 @@ Each command consists of **22 digits**, divided into the following components:
 
 ### **Step 3: Validate Input**
 - Ensure **Module Address** is between `01–99`.  
-- Validate **Mode Type** (`00–24`).  
+- Validate **Mode Type** (`00–12`) mega 8    (`00–30`) mega64 or mega128 
 - Ensure **Color Values** are between `000–255`.  
 - Check if **Start Pixel < Finish Pixel** within hardware constraints.  
 - Verify **Memory Slot** (`001–010` for color storage).  
@@ -646,7 +646,7 @@ Each command consists of **22 digits**, divided into the following components:
 - Update the LED strip's **memory slot** if applicable.  
 
 ### **Step 5: Special Cases**
-- `996` → Clears memory slots **1 to 10**.  
+- `996` → Clears memory slots **001 to 010**.  
 - `997` → Temporarily turn off LED strip (without erasing memory).  
 - `998` → Apply a uniform color without saving.  
 - `999` → Apply a uniform color **and save it** to memory.  
@@ -658,10 +658,17 @@ Each command consists of **22 digits**, divided into the following components:
 
 ## Example Commands
 
-1. **Set first half of strip to Green (Mega8, 150 Pixels)**  
+1. **Set first half of strip to solid Green and  memory = 2 (Mega8, ws2812 5 meter  150 Pixels)**
+ adress  mod    Red   Green    Blue   pixel Start   pixel End       memory
+ 01      00     000   255      000    000              075           002
 
+send serial or bluetooth serial  >   0100000255000000075002  
 
+2. **Set Random Dance  color medium need 125 pixel for dance ! fast dance timing  (Mega128,ws2812 10 meter  300 Pixels)** 
+ adress  mod    Red   Green    Blue   time1    time2     pixel
+ 01      30     002    002       002     001        001      125
 
+send serial or bluetooth serial  >   0130002002002001001125 
 ###########################################
 
 note out :
