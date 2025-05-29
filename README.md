@@ -207,10 +207,10 @@ ESP8266 Project
 
 The ESP8266 WiFi module creates a two-way connection between soifdesign and the microcontroller with a local server. If needed, you can extract the package and server files from the server folder and upload them to your online server for a remote online control experience. The source files of the ESP8266 server project are available and unrestricted for you to enhance and improve.
 
-Rangmang Project
+rangmang209 Project
 
-Rangmang is a project designed to control RGB LED strips via Bluetooth serial commands using soifdesign. This project allows users to program and control WS2812B LED strips to create stunning lighting effects. soifdesign acts as the interface to send commands to the microcontrollers, enabling dynamic color changes and patterns. The source files of the Rangmang project are available and unrestricted for you to enhance and improve.
-At the end of the README, you can learn more about Rangmang in detail. Additionally, there is a PDF file available for setup inside the Rangmang compressed file. You can also visit the SoifDesign channel on YouTube to watch a video of the Rangmang project.
+rangmang209 is a project designed to control RGB LED strips via Bluetooth serial commands using soifdesign. This project allows users to program and control WS2812B LED strips to create stunning lighting effects. soifdesign acts as the interface to send commands to the microcontrollers, enabling dynamic color changes and patterns. The source files of the rangmang209 project are available and unrestricted for you to enhance and improve.
+At the end of the README, you can learn more about rangmang209 in detail. Additionally, there is a PDF file available for setup inside the rangmang209 compressed file. You can also visit the SoifDesign channel on YouTube to watch a video of the rangmang209 project.
 
 
 To download soifdesign, you can visit the following resources:
@@ -576,100 +576,6 @@ With a click on any running graph, a list view (Run/Stop View) will be displayed
 - Bluetooth UART
 - RGB program
 
-
-Rangmang Project
-
-# LED Strip Control Algorithm for RANGMANG Module
-
-## Overview
-The RANGMANG color module controls RGB LED strips (WS2811, WS2812, and WS2813) using Bluetooth and programmable serial commands. The module operates on Mega8, Mega128, and Mega64 microcontrollers and requires a 22-digit input code for precise LED control.
-
-## Microcontroller Capabilities
-- The **Mega8** microcontroller supports **255 pixels** and **12 lighting patterns** due to its limited memory.  
-- The **Mega128 & Mega64** microcontrollers support **990 pixels** and **30 lighting effects** for larger LED configurations.  
-
-## Programming via Bluetooth
-A **serial Bluetooth adapter** connects to the module, allowing control via Android applications such as **Soifesign**. Commands are transmitted in a **structured 22-digit format**.
-
-## Transmission Code Structure
-Each command consists of **22 digits**, divided into the following components:
-
-1. **Module Address (2 digits)**  
-   - `01–98` → Address for individual modules  
-   - `99` → Broadcast command for all modules  
-
-2. **Mode Type (2 digits)**  
-   - `00` → Static Color Mode  
-   - `01–30` → Dynamic Lighting Effects  
-
-3. **Red Color Value (3 digits)**  
-   - `000–255` → Intensity level (000 = Off, 255 = Full)  
-
-4. **Green Color Value (3 digits)**  
-   - `000–255` → Intensity level  
-
-5. **Blue Color Value (3 digits)**  
-   - `000–255` → Intensity level  
-
-6. **Start Pixel Address (3 digits)**  
-   - `000–255` → First pixel to be colored  
-
-7. **Finish Pixel Address (3 digits)**  
-   - `001–255` → Last pixel to be colored  
-
-8. **Memory Slot (3 digits)**  
-   - `001–010` → Stores predefined colors  
-
-## Algorithm Breakdown
-
-### **Step 1: Receive User Input**
-- The system listens for **22-digit serial input** via Bluetooth.  
-- If the input length is **not 22 digits**, return an error.  
-
-### **Step 2: Parse the Data**
-- Extract **Module Address** (digits 1–2).  
-- Extract **Mode Type** (digits 3–4).  
-- Extract **Color Values** (digits 5–13).  
-- Extract **Pixel Range** (digits 14–19).  
-- Extract **Memory Slot** (digits 20–22).  
-
-### **Step 3: Validate Input**
-- Ensure **Module Address** is between `01–99`.  
-- Validate **Mode Type** (`00–12`) mega 8    (`00–30`) mega64 or mega128 
-- Ensure **Color Values** are between `000–255`.  
-- Check if **Start Pixel < Finish Pixel** within hardware constraints.  
-- Verify **Memory Slot** (`001–010` for color storage).  
-
-### **Step 4: Apply Settings**
-- If `Mode = 00`, set the specified pixels to a static color.  
-- If `Mode > 00`, trigger corresponding **lighting effects**.  
-- Update the LED strip's **memory slot** if applicable.  
-
-### **Step 5: Special Cases**
-- `996` → Clears memory slots **001 to 010**.  
-- `997` → Temporarily turn off LED strip (without erasing memory).  
-- `998` → Apply a uniform color without saving.  
-- `999` → Apply a uniform color **and save it** to memory.  
-
-### **Step 6: Execute & Update**
-- Transmit updated values to the LED strip.  
-- Apply changes dynamically or store values for future execution.  
-- Provide feedback via serial Bluetooth communication.
-
-## Example Commands
-
-1. **Set first half of strip to solid Green and  memory = 2 (Mega8, ws2812 5 meter  150 Pixels)**
- adress  mod    Red   Green    Blue   pixel Start   pixel End       memory
- 01      00     000   255      000    000              075           002
-
-send serial or bluetooth serial  >   0100000255000000075002  
-
-2. **Set Random Dance  color medium need 125 pixel for dance ! fast dance timing  (Mega128,ws2812 10 meter  300 Pixels)** 
- adress  mod    Red   Green    Blue   time1    time2     pixel
- 01      30     002    002       002     001        001      125
-
-send serial or bluetooth serial  >   0130002002002001001125 
-###########################################
 
 note out :
 
