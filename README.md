@@ -1,6 +1,8 @@
 The developer :  Saeid Moghadam
 ###  SoifDesign is an Android app in development. It is completely free, without ads, and has no publishing restrictions. If you notice any issues or bugs, we would be honored to receive your feedback, and we will address them as soon as possible.
 
+### Translation files are available. If you feel that a sentence or word does not match your language correctly, please leave a message with the correct translation so it can be corrected as soon as possible.
+
 Download :
 
 Apkpure Market
