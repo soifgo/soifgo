@@ -1,32 +1,4 @@
-The developer :  Saeid Moghadam
-###  SoifDesign is an Android app in development. It is completely free, without ads, and has no publishing restrictions. If you notice any issues or bugs, we would be honored to receive your feedback, and we will address them as soon as possible.
-
-### Translation files are available. If you feel that a sentence or word does not match your language correctly, please leave a message with the correct translation so it can be corrected as soon as possible.
-
-Download :
-
-Apkpure Market
-
-http://apkpure.com/soifdesign/soifdesign.ssm20985/downloading
-
-
-
-google drive
-
-https://drive.usercontent.google.com/download?id=17YyAkehXi9yJsomCJNS9DfSHyL3hHiMH&export=download&authuser=0&confirm=t&uuid=8378f085-8258-4f4c-90de-a8b763186aaa&at=AIrpjvPt4p7wy7Qb3KC4Zd1QKm0S%3A1737836402825
-
-https://github.com/soifdesign/soifdesign/blob/82746290360391a839f92bd9bb34ca4ad30f558b/soifdesign.apk
-
-https://drive.google.com/file/d/17YyAkehXi9yJsomCJNS9DfSHyL3hHiMH/view?usp=sharing
-
-# soifdesign
-Welcome to the SwiftDesign repository, your go-to tool for creating and managing Android UI designs.
-
-# soifdesign
-YouTube channel link
-https://www.youtube.com/@soifdesign
-
-# soifdesign
+###  The developer :  Saeid Moghadam
 
 # Supported Languages in SoifDesign
 
@@ -47,284 +19,432 @@ https://www.youtube.com/@soifdesign
 - Hebrew (עברית)  
 - Kurdish (کوردی)  
 
+# SoifDesign  
+SoifDesign is an Android application that provides users with advanced capabilities using **buttons and seek bars**. It offers features such as:  
+
+- **Bluetooth communication:** Sending and receiving serial Bluetooth data.  
+- **API server interaction & web browsing:** Seamless website access and API requests.  
+- **Managing HTML files & notes:** Open, edit, and send note lines directly via Bluetooth serial.  
+- **Shortcut & library management for PDFs and images:** Buttons can open files and store them separately from their source.  
+- **Seek bar control:** Display values, adjust them, and transmit the updated data via serial Bluetooth.  
+- **Customizable buttons:** Change **size, color, name, shape, vibration, and behavior** to match user preferences.  
+- **Dynamic effects based on Bluetooth input:** Modify **size, position, rotation, color changes, circular visual effects, and graph rendering** based on input values.  
+- **Graph storage & review:** Store and review received graphical data directly inside buttons.  
+- **Predefined seek bar values:** Send preset values before and after any modification to enhance interaction.  
+- **Optimized RGB color control:** Seek bars support precise RGB adjustments for **WS2812, WS2813, WS2815, and WS2811**.  
+- **Bluetooth format selection:** Supports multiple formats such as `CR + LF`, `CR`, `LF`, `NULL`, and more.  
+- **Smart Bluetooth resend (Check-in):** If **no response is received**, data is **automatically resent up to three times** for reliability.  
+## **Installation & Setup**  
+### **Download & Access**  
+SoifDesign is available for download from multiple sources:  
+- [Apkpure](https://apkpure.com/soifdesign)  
+- [GitHub Repository](https://github.com/soifdesign/soifdesign)  
+- [Google Drive](https://drive.google.com/open?id=17YyAkehXi9yJsomCJNS9DfSHyL3hHiMH&usp=drive_fs)  
+
+### **Storage Requirements & Permissions**  
+- SoifDesign is designed to work with **external storage**, ensuring **easy access to folders for editing, sharing, and backups**.  
+- Upon installation, the app **requests permission** to create and manage **its dedicated folder**. This is necessary for **file organization, Bluetooth updates, and proper functionality**.  
+- Without granting storage access, users may encounter limitations in **saving, retrieving, or managing their designs**.  
+
+---
+
+### **Startup Screen (Play Mode)**  
+Upon launching SoifDesign, users are welcomed by the **Play Mode screen**, featuring:  
+- **Top-left:** A turquoise **Play Icon**, indicating active interaction.  
+- **Top-right:** A **Bluetooth Icon**, providing access to the list of available devices.  
+  - On first use, the **Bluetooth device list appears** for connection selection.  
+  - After the initial pairing, the app **automatically reconnects to the last-used device** unless modified.  
+  - To **change the Bluetooth device**, **long-press the Bluetooth icon** to re-open the selection list.  
+
+### **Play Mode Menu Options**  
+By clicking on the **list icon**, users gain access to key functions:  
+1. **Edit Mode:** Opens the design and customization page.  
+2. **Language Selection:** Supports multiple languages including **English, Spanish, Chinese, French, German, Japanese, Russian, Arabic, Persian, Italian, Hindi, Turkish, Korean, Portuguese, Hebrew, Kurdish**.  
+3. **YouTube Access:** Redirects users to the app's YouTube page.  
+4. **Donate:** Displays a **QR code and crypto wallet address** for supporting the project with Bitcoin.  
+5. **Update Options:** Provides **direct update links** for [Apkpure](https://apkpure.com/soifdesign) and [GitHub](https://github.com/soifdesign/soifdesign).  
+6. **Enable Simulation Mode:** Simulates input values from **0 to 1024** using **address 123**, allowing users to test effects **without physical hardware**.  
+7. **Display Simulation Values:** Shows incoming simulated values.  
+8. **Phone Sensor Integration:** Opens a window featuring motion and magnetism sensors.  
+   - **Light Sensor:** Address **991**  
+   - **X-Axis Motion:** Address **992**  
+   - **Y-Axis Motion:** Address **993**  
+   - **Magnetism:** Address **994**  
+   - These addresses can be mapped to buttons for **effect triggering**.  
+9. **Send Bluetooth Data:** Activates a **textbox & send button** for entering and transmitting custom data.  
+10. **Bluetooth Format Selection:** Allows users to choose between **CR + LF, CR, LF, STX/ETX, NULL, NON-NULL formats**.  
+11. **Reset Bluetooth:** Long-press the Bluetooth icon to **reset connection settings**.  
+12. **Display Received Bluetooth Data:** Enables the **display of incoming Bluetooth values**.  
+
+---
+
+### **Navigating to Edit Mode**  
+By clicking **Edit** in Play Mode, users transition into **Design Mode**, where:  
+- The **Bluetooth icon disappears**, focusing solely on design features.  
+- The **Play icon changes to a Pause icon**, indicating editing mode is active.  
+- Users can modify buttons, seek bars, backgrounds, layouts, and interactions.  
+
+---
+
+This concludes **Section 2: Installation & Setup**! Let me know when you're ready for **Section 3: Design Mode & Button Configuration**. 🚀
+
+## **Design Mode & Button Configuration**  
+### **Entering Edit Mode**  
+Once inside Edit Mode, several adjustments can be made to **buttons and seek bars**:  
+- **Play icon changes to Pause**, indicating editing mode is active.  
+- **Bluetooth features disappear**, focusing exclusively on customization options.  
+
+### **Quick Edit: Shadow Assistant**  
+- A temporary **shadow assistant icon** appears for about **one minute** in the design screen.  
+- Clicking on this icon **applies the last editing settings to new buttons**, saving time.  
+- To use this feature:  
+  1. Select a button.  
+  2. Click the **Shadow Assistant** icon.  
+  3. The most recent **size, movement, rotation, and visual effects** will be copied to the next selected button.  
+
+---
+
+### **Button Editing Menu**  
+Clicking a button and selecting the **Pause icon** opens **three key sections**:  
+1. **Play Mode:** Returns to the execution screen.  
+2. **Design Mode:** Accesses button customization options.  
+3. **Settings:** Modifies general app behaviors.  
+
+Beyond the standard navigation, here’s the **full list of button customization options**:  
+#### **1. Copy Features**  
+- Copies **all properties** of a button except its position.  
+
+#### **2. Paste Features**  
+- After copying a button, selecting another button and pasting will apply **size, color, text, behavior, and visual effects**.  
+
+#### **3. Delete Button**  
+- Removes the selected button **after confirmation**.  
+
+#### **4. Background Configuration**  
+- **Button color**  
+- **Corner rounding** (soft edges)  
+- **Adding an icon or background image**  
+- **Text color & size**  
+
+#### **5. Button Name & Visibility**  
+- A **textbox appears**, allowing text input.  
+- Users can toggle the **show/hide** option to control text visibility on the button.  
+
+#### **6. Adjusting Size**  
+- Two **seek bars** control **width and height** of the button.  
+
+#### **7. Button Movement Options**  
+- **Touch movement:** The button **follows the finger's movement** across the screen.  
+- **Precision adjustment:** Provides **four directional controls** for **fine-tuning placement**.  
+
+#### **8. Defining Button Behavior**  
+- A large **turquoise label** appears with `"non"` (indicating no behavior set).  
+- Clicking this label reveals **behavior options** such as:  
+  - **Send Bluetooth data**  
+  - **Send SMS or API request**  
+  - **Receive Bluetooth or API data**  
+  - **Load web content (Online & Offline HTML)**  
+  - **Display images, notes, or PDFs**  
+  - **Modify seek bar values** (+1, -1, display value)  
 
-soifdesign is an adaptable app for creating and managing custom UIs. Features include web views, PDF handling, image viewing, HTML editing, and serial data transmission via Bluetooth. Customizable buttons and startup options enhance user experience.
+#### **9. Open Pages & Folders**  
+- Buttons can be configured to **switch between different pages or folders** inside SoifDesign.  
 
+#### **10. Sound Effects**  
+- Users can assign **click sounds, error sounds, or custom sounds** from storage.  
+- **Stopping long sounds:**  
+  - **Long press** the button to stop playback.  
+  - **Tap again** to restart from the beginning.  
 
+#### **11. Vibration Settings**  
+- Enable vibration feedback for button presses.  
+- Adjust **intensity via a seek bar**.  
 
-SoifDesign" is derived from two words: "soif" which means "thirst" in French and "design" which means "design
+#### **12. Button Effects (Triggered by Received Data)**  
+- If a button **receives numerical input via Bluetooth or API**, effects can be enabled:  
+  - **Size change**  
+  - **Position shift**  
+  - **Color adjustment**  
+  - **Circular visual effect**  
+  - **Rotation**  
+  - **Graph plotting & storage**  
+
+#### **13. Button Alarms (Threshold Alerts)**  
+- If configured for **data reception**, alarms can be set based on input values:  
+  - Define **minimum/maximum thresholds** for triggering alerts.  
+  - Specify **alarm text**.  
+  - **Sound plays upon alert activation** if a sound is assigned to the button.  
 
-This is a simple Android app designed to help enthusiasts with object control, electronics, and the internet.
+---
+
+That wraps up **Section 3: Design Mode & Button Configuration**! 🚀  
+
+Now, are you ready for **Section 4: Seek Bar Settings & Bluetooth Communication**? 😃  
+
+## **Seek Bar Settings & Bluetooth Communication**  
+### **Editing Seek Bars**  
+Seek bars have slightly different editing options compared to buttons. After clicking **Pause Mode**, users can access the following settings:  
+#### **1. Copy Features**  
+- Copies all attributes of a seek bar **except its position**.  
+
+#### **2. Paste Features**  
+- After copying from one seek bar, pasting onto another will apply **size, color, value settings, and behavior**.  
+
+#### **3. Delete Seek Bar**  
+- Removes the selected seek bar after confirmation.  
+
+#### **4. Adjusting Size**  
+- Controls **width and height** using seek bars.  
+
+#### **5. Movement**  
+- Seek bars support **touch movement only** (no fine directional controls).  
 
-This program includes 40 buttons and 10 bars. With these buttons and volume bars, you will be able to perform tasks such as serial Bluetooth, APIs, Internet of Things (IoT) behaviors, and more.
+#### **6. Background Configuration**  
+- Users can modify **seek bar color or apply a background image**.  
 
-When you open the program in SoifDesign, you will see icons at the top. From left to right:
+#### **7. Value Settings (Key Feature)**  
+Each seek bar acts as a **Bluetooth data sender**, and has three key textboxes:  
+- **Fixed Initial Value:** If left empty, the seek bar does not send any value until manually changed.  
+- **Maximum Variable Value:** Determines the **upper limit** for dynamic value changes.  
+- **Final Value or Ending Text:** Optional; useful for labeling transmitted values (e.g., `"Position: [value] cm"`).  
 
-Info Icon: This icon provides lists to help you and changes in different modes of the program.
+Users can set specific **prefixes and suffixes** to structure outgoing data—for instance, sending `"Sensor [value]"` where **"Sensor" is the prefix**, and **the numerical value is dynamic**.  
 
-Bluetooth Icon: After connecting to the serial Bluetooth, this icon will give you a list of available Bluetooth devices. You can select the desired Bluetooth device from the list. For subsequent selections, you don't need to find the Bluetooth again. If there is a problem or you want to choose another device, you can reset it by long pressing the Bluetooth icon.
+---
 
-Play Icon: This icon toggles between two pages. In play mode, the program runs in execution mode. In pause or edit mode, the program can be adjusted. When this icon blinks yellow, it means your actions have been saved.
+### **Advanced Seek Bar Features**  
+#### **8. Leading Zero Formatting**  
+- Converts numbers into **consistent three-digit format** (`1 → 001`, `10 → 010`, `100 → 100`).  
 
-Edit Page Explanation: When you click on the Play icon, you enter the edit page. From the top left to right:
+#### **9. Bluetooth Format Selection**  
+- Users can select different transmission formats:  
+  - `CR + LF`  
+  - `CR`  
+  - `LF`  
+  - `NULL`  
 
-Info Icon: Here, it performs other tasks such as opening pages, saving pages, copying, etc.
+#### **10. Check-in Resend Mechanism**  
+- **If Bluetooth feedback is not received**, the seek bar **automatically resends the same value up to three times** to ensure proper transmission.  
 
-Screen Lock Icon: Keeps the screen on.
+#### **11. RGB Control for Lighting Modules**  
+- Designed for **WS2812, WS2813, WS2815, and WS2811** lighting systems.  
+- Uses **three consecutive values** (`000 000 000` → `255 255 255`), where each part represents a **color intensity (Red, Green, Blue)**.  
+- Adjusting the seek bar **modifies real-time RGB lighting values**.  
 
-Sound Icon: A menu to mute the menu sounds.
+#### **12. Custom Color Picker**  
+- Users can select **specific RGB values** for advanced color control.  
 
-Bluetooth Icon: As previously mentioned.
+#### **13. Display Seek Bar Changes**  
+- Shows real-time modifications **as numerical values** to track adjustments visually.  
 
-Button and Volume Bar Summon Icon: With this icon, you can edit the background of the page with a solid color or image, or you can grid the background.
+#### **14. Background Image Support**  
+- Allows **custom seek bar backgrounds** for enhanced UI customization.  
 
-Buttons: You can create up to 40 buttons. The remaining buttons will be displayed here. Volume Bars: You have 10 volume bars, and the remaining ones will also be displayed.
+---
 
-Startup: A simple timer section for buttons. If needed, you can schedule the buttons so that buttons 1 to 40 are clicked automatically each time the program runs.
+This wraps up **Section 4: Seek Bar Settings & Bluetooth Communication**! 🚀  
 
-When you summon buttons and volume bars, two other sections will be displayed. If you have buttons or volume bars that overlap and you cannot identify their location, these two options will help you find their location
+Let me know when you’re ready for **Section 5: Interaction with Sensors & API Servers**! 😃  
 
-Button: If you summon a button, you can immediately determine its initial position by tapping on the screen with your finger. After a few seconds, this feature will disappear and the button will become fixed. You can also fix the button by pressing the back key on your phone.
+## **Interaction with Sensors & API Servers**  
+### **Integrating Phone Sensors**  
+SoifDesign allows users to interact with **motion and magnetism sensors**, enhancing interactive designs with **real-time sensor data**.  
 
-When you click on the button, the design icon will appear at the top left, next to the info icon. Clicking on this icon allows you to configure the behaviors and design of the button, listed from top to bottom:
+#### **1. Available Sensors & Data Addresses**  
+Each sensor operates with a **specific data address**, which buttons can be mapped to:  
+- **Light Sensor:** Address `991`  
+- **X-Axis Motion:** Address `992`  
+- **Y-Axis Motion:** Address `993`  
+- **Magnetism Sensor:** Address `994`  
 
-Background: In this section, you can design or change the button color, background image, and button text.
+#### **2. Applying Sensor Data to Buttons**  
+Buttons can be **configured to receive sensor values** and trigger **visual effects** based on movement or environmental changes.  
+For example:  
+- **Button resizing** based on brightness levels.  
+- **Button rotation** linked to phone tilt.  
+- **Color shifts** depending on surrounding magnetic fields.  
 
-Name: Here, you can change the button name. Note that in receive mode, this name comes after the received number, so it can include suffixes like kilometer, degree, or refer to the nature of the input. You can also enable or disable the display of the name in the top label.
+#### **3. Sending Sensor Data via Bluetooth**  
+Users can configure **automatic Bluetooth transmissions** based on sensor readings.  
+- If the phone **detects motion**, the app can **broadcast the detected value** through Bluetooth.  
+- Sensor data can be combined with seek bar values to enhance **interactive control systems**.  
 
-Size: In this section, you can change the button size using two volume bars, horizontally and vertically.
+---
 
-Movement: This section has two parts: free movement by touching the screen to move the button and precise movement using four directional buttons.
+### **API Server Interaction & Web Requests**  
+SoifDesign integrates with **API servers** to enable **automated communication with external platforms**.  
 
-Behavior: In this section, you define what behavior the button should have based on your needs. Clicking on this option will display a blue label at the top right. Clicking on this label will show the behavior list.
+#### **1. Sending API Requests**  
+- Buttons can be configured to **send HTTP requests** to API endpoints.  
+- Users can **define request formats**, including:  
+  - **GET requests** for fetching data.  
+  - **POST requests** for submitting information.  
+  - **Custom headers and parameters** for advanced API communication.  
 
-Reset Behavior: This will erase any existing behavior of the button.
+#### **2. Receiving API Data**  
+- API responses can be **processed dynamically**, allowing users to:  
+  - **Display received data** inside buttons.  
+  - **Trigger effects based on API responses** (e.g., visual feedback when receiving sensor data).  
+  - **Modify seek bar values** based on API-controlled variables.  
 
-Send Behavior: In this section, three types of sending behavior for the button are defined: Bluetooth, SMS, and server (API).
+---
 
-For Bluetooth sending, you can enter your desired text or value, and then determine the type of sending for the serial Bluetooth module by setting the 13 and 10 character sequences. For SMS, you can enter the target phone number at the top and the message text at the bottom. This section is intended for sending commands to SMS controllers, but you can also use it to send predefined messages to friends. The API sending section has three parts: the API address, the message or value for the API, and the key or keyword for the API. This sending is specific to JSON and can be done online or locally via the WiFi module to control objects at home locally.
+### **Real-Time Web Interaction**  
+Users can configure buttons to **open webpages**, either:  
+- **Online (Live Webpages)**  
+- **Offline (Local HTML Files)**  
 
-Receive Behavior: There are four types of receiving behavior:
+By tapping a button configured for web interaction, users can **quickly access stored pages or live URLs** without leaving the app.  
 
-Bluetooth Receiving:
+---
 
-As text: Receive any text.
+That concludes **Section 5: Interaction with Sensors & API Servers**! 🚀  
 
-As value: In this type, you must enter the maximum sending value in the first box and enable or disable the display of the value in the top label of this box. In the second box, enter the filter address. For example, if you're sending a value to the phone, it should be between 100 and 999. If you want to send the number 4 to address 125, enter 125 in this box. The address won't be displayed, only the value on the button. Values must be between 0 and 1999; decimal numbers or text within these numbers will cause problems. Note that in this case, the button's effect list will be activated in the behavior list.
+Next up is **Section 6: File Management & Shortcuts**—let me know when you’re ready! 😃  
 
-API Receiving:
+## **File Management & Shortcuts**  
+### **Managing Notes & HTML Files**  
+SoifDesign supports **opening, editing, and storing notes and HTML files** directly within the app.  
 
-As text: Receive any text from the specified API address with a keyword.
+#### **1. Editing Notes & HTML Documents**  
+- Users can **open text-based documents**, modify content, and save changes seamlessly.  
+- Each note can be **sent line by line via Bluetooth**, allowing interaction with connected devices.  
+- **HTML files** can be **opened, modified, and previewed** for offline or online use.  
 
-In the first box, enter the API address. The second box is for the filter address, which is initially set to 0 but can be adjusted. If set, its behavior will be similar to the Bluetooth value receiving case. This is mainly used for receiving text or addressed values, particularly for WiFi modules or IoT. The third box is for the API keyword.
+#### **2. Storing Notes & HTML Files**  
+- Notes and HTML files can be **added to the app's internal library**, ensuring quick access later.  
+- Storing files separately from their source allows **dynamic modifications without affecting original files**.  
 
-Search Boxes:
+---
 
-These two boxes are for searching specific words. If the API response contains several words, you can use these boxes to specify the start of the previous word and the end of the next word to display the middle word. For example, if the response is "abcde 123 efc," entering "abcde" in the start box and "efc" in the end box will display "123."
+### **PDF & Image Management**  
+SoifDesign offers **shortcut creation and internal storage** for PDFs and images.  
 
-API Value Receiving:
+#### **1. Shortcut Creation for PDFs**  
+- Buttons can be **configured as shortcuts** to open **specific PDF files** directly.  
+- Users can **organize PDFs** within the app, creating a **customized document library**.  
 
-Similar to the previous receiving, but with an added box for the maximum value and an option to enable or disable value display. This type, similar to Bluetooth value receiving, activates the button effect list when enabled. This type of receiving is for values or numbers, not decimal numbers or text, and must be between 0 and 1999. Therefore, the value receiving can be from the API server or the local home network WiFi module.
+#### **2. Image Library Management**  
+- Users can **store images within SoifDesign**, detaching them from their original source.  
+- Images remain accessible **even if the original file is deleted**, ensuring long-term storage inside the app.  
 
-Web Behavior:
+---
 
-Enabling this behavior gives you two options: one for online web page viewing, which may not be very professional, and another for opening offline HTML files by clicking on the "online" label.
+### **Shortcut-Based Navigation**  
+Buttons can be programmed to **open specific pages, folders, or documents**:  
+- **Folder Shortcuts:** Direct access to internal directories.  
+- **Page Shortcuts:** Instant transitions between design pages.  
+- **File Shortcuts:** One-click access to stored PDFs, notes, and images.  
 
-By clicking on the label, you can open HTML files. This feature allows you to have HTML format apps to meet your needs. You can edit these files with HTML programming or AI, place them in a text file, change the file extension from "txt" to "html," and transfer it to the HTML folder in SoifDesign. This way, you can have your custom app on the button.
+Users can **structure their workspace efficiently**, eliminating manual searches for frequently accessed files.  
 
-Image Behavior:
+---
 
-This option is for having a taken photo or a reminder photo.
+That concludes **Section 6: File Management & Shortcuts**! 🚀  
 
-Text Behavior:
+Let me know when you're ready for **Section 7: System Behaviors & Customization Settings**! 😃  
 
-This behavior provides simple note-taking capabilities in the info icon in play mode, including background color, text color, text size, alignment, and saving options. The first time you select this behavior, a "Hello" file will be provided, which you can save with a different name if needed.
+## **System Behaviors & Customization Settings**  
+### **Global Settings Configuration**  
+SoifDesign provides various system-wide customization options to enhance user control.  
 
-Main Purpose:
+#### **1. Enabling Menu Sounds**  
+- Users can **activate/deactivate sound effects** when navigating menus.  
+- Sounds provide **audible feedback**, helping users confirm interactions.  
 
-The main purpose of including text behavior in SoifDesign is for sending text to the serial Bluetooth. For example, in the first line, you can command to turn on a motor, and in the following lines, add other commands. When you click the send icon, these commands are sent line by line to the output.
+#### **2. Keep Screen Awake Mode**  
+- When enabled, the screen remains **active without dimming** during use.  
+- Prevents accidental interruptions when designing layouts or interacting with Bluetooth data.  
 
-PDF Behavior:
+---
 
-This behavior is for having PDF files and creating a PDF library. Note that PDF files must be in the "pdf" folder within SoifDesign
+### **Behavioral Customization for Buttons & Seek Bars**  
+#### **1. Defining Interactive Actions**  
+Users can **customize how buttons and seek bars respond** to external signals.  
+For instance:  
+- **Seek bars can automatically transmit Bluetooth data** when adjusted.  
+- **Buttons can trigger timed actions** instead of requiring manual presses.  
+- **Sensor-based interactions** allow for dynamic adjustments based on environmental feedback.  
 
-Returning to the Button Design List: Upon returning to the button design list after explaining the behaviors, we move on to page loading.
+#### **2. Timed Execution for Buttons**  
+- Users can configure **buttons to trigger actions automatically** based on time intervals.  
+- Example: Pressing a button **once** can cause it to **repeat execution** at specific intervals.  
 
-Page Loading: After designing the buttons, their behaviors, volume bars, etc., you can rename and save your page using the info icon. This file is saved as a text file in the SoifDesign page folder. Using the page loading option, you can load a previously saved page into another page. As a result, the summoned page will open, and the current page will close.
+#### **3. Button-Linked Seek Bar Adjustments**  
+- Users can **set buttons to control seek bar values**, modifying numbers dynamically.  
+- Example: A button can **increase or decrease seek bar values** step-by-step or continuously.  
 
-You are not limited to creating a single page; you can have multiple pages with different programs, behaviors, and buttons, and move between them.
+---
 
-Audio: This option allows you to assign a sound to a button, so that when the button is pressed, a sound is played. Note that the sound files should be in the audio folder. To have more sound files, you need to add them to this folder. If you use a file with long playback, such as music, clicking the button will replay the sound. Long pressing the button will stop the playback.
+### **Handling Bluetooth Data & Storage**  
+#### **1. Data Buffering & Error Handling**  
+- If Bluetooth **data transmission fails**, the system will:  
+  1. **Retry sending data** automatically.  
+  2. Notify users **if acknowledgment signals aren’t received**.  
+  3. Allow users to **manually reset Bluetooth settings** when necessary.  
 
-Vibration: This option gives a selectable vibration to the button. Using the volume bar that appears, you can select the desired vibration intensity.
+#### **2. Organizing Received Bluetooth Data**  
+- Incoming Bluetooth values can be **stored and reviewed** within the app.  
+- Users can **visualize data in graphical form** for tracking received transmissions.  
 
-Hidden Options:
+---
 
-Effect: Effects become active when the button's behavior is set to numerical receiving, whether Bluetooth or API.
+### **Customizing UI Layout & Themes**  
+Users can tailor **the overall look and feel** of the app interface, including:  
+- **Color schemes**  
+- **Icon adjustments**  
+- **Text visibility & formatting**  
+- **Background customization**  
 
-Size Change Effect: This effect changes the button's size based on the incoming values. For example, if creating a thermometer, you need to change the height size. The minimum input value is the initial button size, and the maximum value is the size set with the vertical or horizontal volume bar. So, if the value ranges from 0 to 1000, the button size will change accordingly.
+Each layout is optimized to provide an **intuitive and responsive** experience.  
 
-Circular Gauge Effect: This effect draws a circular gauge behind the button. If the button is rounded using the kernel setting, and you use this effect, a dynamic circular gauge will be displayed. You can also set the start and end points.
+---
 
-Movement Effect: This effect is suitable for creating balancers or scales, or for moving blades. Movement is controlled using the lower volume bars, moving the button to the right or upward. Unlike the size change effect, the button size remains fixed, and only the position changes.
+That concludes **Section 7: System Behaviors & Customization Settings**! 🚀  
 
-Rotation Effect: This effect is for rotating the button. If you set the button background to an arrow or pointer, this effect will start rotating the button. You can also set the initial and final rotation angles using the two lower volume bars.
+Let me know when you're ready for **Section 8: Final Notes & Version Updates**! 😃  
+## **Final Notes & Version Updates**  
+### **Maintaining Up-to-Date Versions**  
+SoifDesign offers **multiple update sources**, ensuring users always have the latest version:  
+- [Apkpure](https://apkpure.com/soifdesign)  
+- [GitHub Repository](https://github.com/soifdesign/soifdesign)  
+- [Google Drive](https://drive.google.com/open?id=17YyAkehXi9yJsomCJNS9DfSHyL3hHiMH&usp=drive_fs)  
 
-Color Effect: This effect changes the button's background color based on input changes, suitable for indicating temperature changes, battery level, and more.
+### **Future Features & Improvements**  
+Upcoming updates will focus on:  
+- **Enhanced Bluetooth stability** to minimize disconnection issues.  
+- **Additional button behaviors** for expanded interaction control.  
+- **UI improvements** to streamline navigation and customization.  
+- **Extended API integration** for more flexible server communication.  
 
-Graph Effect: This effect converts incoming values into a graph. In this effect and setting, you can select the thickness and color of the drawn lines, the type of value reception, and the time interval. Four types of reception are considered:
+### **Supporting the Project**  
+SoifDesign is **free, ad-free, and open to community feedback** for continuous improvement. Users can support the project via:  
+- **Feature requests** and suggestions on GitHub.  
+- **Bug reports** to enhance app stability.  
+- **Donations** via cryptocurrency for development sustainability.  
 
-Internal time selection with saving capability: At each graph completion, the page is saved with the button name and page number suffix in the graph folder in SoifDesign. Note that starting a new graph on the same page will delete the previous graph, so it's better to move to the last page to continue.
+---
 
-Internal time selection without saving: This option includes a zoom feature.
+### **Final Thoughts**  
+SoifDesign is designed for **flexibility, customization, and advanced control** over UI, Bluetooth interactions, and data processing.  
+With an intuitive editing system, powerful seek bar functions, and dynamic button behaviors, users can optimize their workflows seamlessly.  
 
-External trigger: Moves forward one unit whenever an input value is received, with saving capability.
+Thank you for using **SoifDesign! 🚀**  
 
-External trigger without saving: Suitable for viewing fast graphs like oscilloscopes.
 
-Access these options using the info icon.
 
-Alarm: This hidden option activates in numerical receiving mode, whether serial Bluetooth or API server. The alarm value must be between 0 and the maximum input value. By clicking on the alarm label, you can set the alarm type to minimum or maximum. In the lower box, you can write the displayed alarm text. Note that the sound set for the button will also be played during the alarm, so you can set a suitable alarm sound.
 
-end button :
 
 
-soifdesign offers object-oriented programmable buttons (40 in total) and 10 sliders with serial Bluetooth transmission capabilities. Create and summon custom menus, build and manage PDF libraries, edit HTML files, and turn them into libraries for further use. soifdesign can send and receive server APIs as well.
 
-Receipts can be displayed in two formats:
 
-Textual
 
-Addressed values, where each address can have a defined maximum value.
 
-This feature allows the creation of various effects on the buttons, including rotation, resizing, moving, color changes, and graphics. For example, you can create a rotating analog needle with input values from 0 to 1000, a graphical thermometer with size change effects, or a balancer with moving effects. You can even create a battery icon that changes color with voltage drop. Remember, to achieve noticeable changes, you should consider minimum input values; for instance, values from 0 to 5 won't show significant effects, but higher values like 0 to 500 or 1000 will. For a complete rotation, at least values from 0 to 360 should be applied, or for proper color changes, remember that color values range up to 255.
 
-soifdesign also supports copy-paste for repetitive tasks. Just create a detailed button and paste its properties to other buttons.
 
-Additionally, soifdesign allows for navigation between created pages. You can create numerous menus and pages, adding sound and vibration to buttons for a pleasant feel. You can share your designs by sharing the text files of the pages. If documents, images, and PDFs are included, it's better to share the related folders as well.
 
-Notes in soifdesign do more than just note-taking. They also serve various tasks such as saving notes, recalling notes, converting to HTML in HTML file editing, and sending commands in serial output in two ways: line by line or with a command line followed by a timer. This enables you to create programmable processes. You can write scenarios as notes and send them to the microcontroller in Note Out to execute your desired operations.
 
-ESP8266 Project
 
-The ESP8266 WiFi module creates a two-way connection between soifdesign and the microcontroller with a local server. If needed, you can extract the package and server files from the server folder and upload them to your online server for a remote online control experience. The source files of the ESP8266 server project are available and unrestricted for you to enhance and improve.
-
-rangmang209 Project
-
-rangmang209 is a project designed to control RGB LED strips via Bluetooth serial commands using soifdesign. This project allows users to program and control WS2812B LED strips to create stunning lighting effects. soifdesign acts as the interface to send commands to the microcontrollers, enabling dynamic color changes and patterns. The source files of the rangmang209 project are available and unrestricted for you to enhance and improve.
-At the end of the README, you can learn more about rangmang209 in detail. Additionally, there is a PDF file available for setup inside the rangmang209 compressed file. You can also visit the SoifDesign channel on YouTube to watch a video of the rangmang209 project.
-
-
-To download soifdesign, you can visit the following resources:
-
-GitHub
-
-
-Example of Sending Commands or Custom Messages to the Serial Terminal in soifdesign
-Open soifdesign: Click on the play icon in the top right corner. From the play page, switch to the stop or edit page; the icon will display as a stop symbol. Locate the design icon (a 6-grid icon) in the top right and click on it. Choose the third option to summon a button.
-
-Summon a Button: Click on the button, and now the button design icon will appear. Click on the design icon and choose the sixth option, "Behavior." A light blue label will appear on the page; click on it. Then, select the sixth option, "Note." Choose the initial note "hello" and confirm, so a note appears.
-
-Switch to Play Mode: Now, you can switch from stop to play mode by clicking on the edit icon. Click on the icon whose behavior you set to the note.
-
-Notes Can Be Converted to Output Commands for Bluetooth and Server
-To enable this, follow the instructions below:
-
-For Bluetooth Mode:
-
-Ensure Bluetooth sending is enabled in the settings.
-
-When Bluetooth is connected, the "Note Out" or sending icon will be displayed. Long-click on it to access the Bluetooth sending settings.
-
-In Serial Bluetooth Mode: There are two writing modes: dellay
-
-Without Custom Wait:
-
-- Value 1
-- Value 2
-- Value 3
-
-- Example:
-
-- LED1_ON
-- LED1_OF
-- LED2_ON
-- LED2_OF
-- LED3_ON
-- LED3_OF
-- LED4_ON
-- LED4_OF
-- LED5_ON
-- LED5_OF
-- LED6_ON
-- LED6_OF
-With Custom Wait:
-
-- Value
-- Timer (in seconds, between 0 to 3600)
-- Value
-- Timer
-
-- Example:
-  
-- LED1_ON
-- 3
-- LED1_OF
-- 2
-- LED2_ON
-- 1
-- LED2_OF
-- 6
-- LED3_ON
-- 4
-- LED3_OF
-- 2
-- LED4_ON
-- 1
-- LED4_OF
-- 8
-- LED5_ON
-- 2
-- LED5_OF
-- 1
-- LED6_ON
-- 1
-- LED6_OF
-- 2
-Note: An empty line will terminate the program.
-
-
-Sending Notes via Bluetooth or Internet:(note to serial _ note out _note to api _note to bluetooth )
-
-In soifdesign, you can easily send your notes to a Bluetooth port or an API. Here, we will explain the Bluetooth section.
-
-Before sending, ensure that your phone's Bluetooth is paired with the desired module or device.
-
-Step One: Click on the soifdesign Bluetooth icon. From the list that appears, click on the desired device to establish the connection.
-Step Two: Click the play icon to switch it to edit or pause mode. Then, click on the 3D cube icon. From the list, bring up a button and click it. Next, click on the top left menu and select “Behavior” from the list. A blue icon will appear on the right; click it to display the list of behaviors and select the "Note Behavior" option.
-
-Choose the default note hello.text. Then, click on the paused play icon to switch to live/play mode. Now, click the button to display the note.
-
-Write your desired text. To save the note with a different name, click on the top left menu. From the "Note Job" menu, select "Send via Bluetooth."
-
-When you click on the note, a send icon will appear at the top beside the menu. Long press this icon. From the list, configure the sending behavior:
-
-Cancel: Cancel or exit the list.
-Delay: Selecting this brings up a volume bar to set line-by-line delay increments, with each step being 0.125 milliseconds. This delay applies to manual mode but does not work in custom line-by-line delays.
-Send Format: Choose standard sending formats depending on your needs, such as next line, sequential lines, etc. Options include CR+LF, CR, LF, STX/ETX, NULL, or NON.
-Manual or Automatic Line Sending:
-- In manual mode, an icon appears for line-by-line sending. There is no delay in this mode; only the format can be selected.
-- Clicking the send icon enables manual line sending. Each click sends the first line, and subsequent clicks send the following lines one by one until the icon disappears. To repeat, click the send icon again and repeat the process.
-- In automatic mode, clicking the send icon sends lines automatically based on your configuration. You can pause or stop by clicking the send icon again, and clicking it once more resumes the process.
-
-Check-In: Activate check-in to ensure that each sent line returns an exact match before allowing the next line to be sent. This functions as a serial echo.
-Next Check: This option is similar to "Check-In" but only reacts to the word NEXT (or next). It waits longer for this response before sending the next line. This feature is useful for tasks with uncertain completion times (e.g., robotic arms, conveyors, or heating elements). The system sends the next line only after receiving the NEXT response.
-Custom Wait: This special mode requires careful note writing, as it follows a specific format. For example:
-- Line 1: Desired text (sent immediately).
-- Line 2: Wait time in seconds (e.g., "8" for an 8-second delay).
-- Line 3: Next text to send after the delay.
-In this mode, the second option in the delay list is deactivated.
-Loop: Enabling this option repeats the lines automatically in a loop after reaching the end. It works in automatic sending mode.
 
 Important:
 
