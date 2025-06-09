@@ -37,7 +37,7 @@ SoifDesign is an Android application that provides users with advanced capabilit
 ## **Installation & Setup**  
 ### **Download & Access**  
 SoifDesign is available for download from multiple sources:  
-- [Apkpure](https://apkpure.com/soifdesign)  
+- [Apkpure](https://apkpure.com/soifdesign/soifdesign.ssm20985)  
 - [GitHub Repository](https://github.com/soifdesign/soifdesign)  
 - [Google Drive](https://drive.google.com/open?id=17YyAkehXi9yJsomCJNS9DfSHyL3hHiMH&usp=drive_fs)  
 
