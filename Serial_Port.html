@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Serial Port Communication</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 20px;
+        }
+        h2 {
+            color: #333;
+        }
+        select, input, button, textarea {
+            margin: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #connectBtn {
+            background-color: red;
+        }
+        #connectBtn.connected {
+            background-color: green;
+        }
+        textarea {
+            width: 80%;
+            height: 100px;
+            resize: none;
+            background-color: #fff;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Serial Port Manager</h2>
+
+        <label for="baudRate">Baud Rate:</label>
+        <select id="baudRate">
+            <option value="9600">9600</option>
+            <option value="115200">115200</option>
+            <option value="4800">4800</option>
+        </select>
+
+        <label for="parity">Parity:</label>
+        <select id="parity">
+            <option value="none">None</option>
+            <option value="even">Even</option>
+            <option value="odd">Odd</option>
+        </select>
+
+        <label for="dataBits">Data Bits:</label>
+        <select id="dataBits">
+            <option value="8">8</option>
+            <option value="7">7</option>
+            <option value="6">6</option>
+        </select>
+
+        <label for="stopBits">Stop Bits:</label>
+        <select id="stopBits">
+            <option value="1">1</option>
+            <option value="2">2</option>
+        </select>
+
+        <button id="connectBtn" onclick="connectSerial()">Connect</button>
+        <button onclick="disconnectSerial()">Disconnect</button>
+
+        <br><br>
+        <label for="sendBox">Send Data:</label>
+        <input type="text" id="sendBox">
+        <button onclick="sendData()">Send</button>
+
+        <br><br>
+        <label>Received Data:</label>
+        <textarea id="receiveBox" readonly></textarea>
+        <button onclick="clearReceiveBox()">Clear</button>
+    </div>
+
+    <script>
+        let port, reader, writer;
+
+        async function connectSerial() {
+            try {
+                port = await navigator.serial.requestPort();
+
+                await port.open({
+                    baudRate: parseInt(document.getElementById("baudRate").value),
+                    parity: document.getElementById("parity").value,
+                    dataBits: parseInt(document.getElementById("dataBits").value),
+                    stopBits: parseInt(document.getElementById("stopBits").value),
+                });
+
+                writer = port.writable.getWriter();
+                reader = port.readable.getReader();
+
+                document.getElementById("connectBtn").classList.add("connected");
+                alert("Connected!");
+                readData();
+
+            } catch (error) {
+                alert("Error connecting to the port: " + error);
+            }
+        }
+
+        async function disconnectSerial() {
+            try {
+                reader.releaseLock();
+                writer.releaseLock();
+                await port.close();
+                document.getElementById("connectBtn").classList.remove("connected");
+                alert("Disconnected!");
+            } catch (error) {
+                alert("Error disconnecting: " + error);
+            }
+        }
+
+        async function sendData() {
+            try {
+                const data = document.getElementById("sendBox").value;
+                await writer.write(new TextEncoder().encode(data + "\n"));
+            } catch (error) {
+                alert("Error sending data: " + error);
+            }
+        }
+
+        async function readData() {
+            try {
+                while (true) {
+                    const { value, done } = await reader.read();
+                    if (done) break;
+                    document.getElementById("receiveBox").value += new TextDecoder().decode(value);
+                }
+            } catch (error) {
+                alert("Error receiving data: " + error);
+            }
+        }
+
+        function clearReceiveBox() {
+            document.getElementById("receiveBox").value = "";
+        }
+    </script>
+</body>
+</html>
