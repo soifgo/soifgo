@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signal Generator with Adjusted Button Order</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            color: white;
+        }
+        .controls {
+            margin: 20px;
+        }
+        input[type="range"] {
+            width: 300px;
+        }
+        button {
+            padding: 10px;
+            font-size: 18px;
+            margin: 5px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #0072ff;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        button:hover:not(:disabled) {
+            background-color: #0056cc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Signal Generator with Adjusted Button Order</h1>
+    <div class="controls">
+        <label for="waveType">Wave Type:</label>
+        <select id="waveType">
+            <option value="sine">Sine</option>
+            <option value="square">Square</option>
+            <option value="sawtooth">Sawtooth</option>
+        </select>
+    </div>
+    <div class="controls">
+        <label for="frequency">Frequency (Hz):</label>
+        <input type="range" id="frequency" min="0" max="20000" value="440">
+        <button onclick="decreaseFrequency()">-</button>
+        <button onclick="increaseFrequency()">+</button>
+        <span id="freqValue">440</span> Hz
+    </div>
+    <div class="controls">
+        <label for="volume">Volume:</label>
+        <input type="range" id="volume" min="0" max="1" step="0.01" value="0.5">
+        <button onclick="decreaseVolume()">-</button>
+        <button onclick="increaseVolume()">+</button>
+        <span id="volValue">0.5</span>
+    </div>
+    <button id="startButton" onclick="startSignal()">Start</button>
+    <button id="stopButton" onclick="stopSignal()" disabled>Stop</button>
+
+    <script>
+        let audioCtx;
+        let oscillator;
+        let gainNode;
+
+        function startSignal() {
+            const startButton = document.getElementById("startButton");
+            const stopButton = document.getElementById("stopButton");
+
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+
+            // Create oscillator and gain node
+            oscillator = audioCtx.createOscillator();
+            gainNode = audioCtx.createGain();
+
+            // Set initial wave type, frequency, and volume
+            const waveType = document.getElementById("waveType").value;
+            const frequency = document.getElementById("frequency").value;
+            const volume = document.getElementById("volume").value;
+
+            oscillator.type = waveType;
+            oscillator.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+            gainNode.gain.setValueAtTime(volume, audioCtx.currentTime);
+
+            // Connect nodes
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+
+            // Start the oscillator
+            oscillator.start();
+
+            // Disable start button and enable stop button
+            startButton.disabled = true;
+            stopButton.disabled = false;
+
+            // Update wave type in real-time
+            document.getElementById("waveType").addEventListener("change", (e) => {
+                oscillator.type = e.target.value;
+            });
+
+            // Update frequency in real-time
+            document.getElementById("frequency").addEventListener("input", (e) => {
+                const freq = parseFloat(e.target.value);
+                oscillator.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                document.getElementById("freqValue").innerText = freq;
+            });
+
+            // Update volume in real-time
+            document.getElementById("volume").addEventListener("input", (e) => {
+                const vol = parseFloat(e.target.value);
+                gainNode.gain.setValueAtTime(vol, audioCtx.currentTime);
+                document.getElementById("volValue").innerText = vol.toFixed(2);
+            });
+        }
+
+        function stopSignal() {
+            const startButton = document.getElementById("startButton");
+            const stopButton = document.getElementById("stopButton");
+
+            if (oscillator) {
+                oscillator.stop();
+                oscillator.disconnect();
+                gainNode.disconnect();
+            }
+            oscillator = null;
+            gainNode = null;
+
+            // Enable start button and disable stop button
+            startButton.disabled = false;
+            stopButton.disabled = true;
+        }
+
+        // Frequency Control Functions
+        function increaseFrequency() {
+            const frequencySlider = document.getElementById("frequency");
+            let currentFrequency = parseFloat(frequencySlider.value);
+            if (currentFrequency < 20000) {
+                currentFrequency += 1;
+                frequencySlider.value = currentFrequency;
+                oscillator.frequency.setValueAtTime(currentFrequency, audioCtx.currentTime);
+                document.getElementById("freqValue").innerText = currentFrequency;
+            }
+        }
+
+        function decreaseFrequency() {
+            const frequencySlider = document.getElementById("frequency");
+            let currentFrequency = parseFloat(frequencySlider.value);
+            if (currentFrequency > 0) {
+                currentFrequency -= 1;
+                frequencySlider.value = currentFrequency;
+                oscillator.frequency.setValueAtTime(currentFrequency, audioCtx.currentTime);
+                document.getElementById("freqValue").innerText = currentFrequency;
+            }
+        }
+
+        // Volume Control Functions
+        function increaseVolume() {
+            const volumeSlider = document.getElementById("volume");
+            let currentVolume = parseFloat(volumeSlider.value);
+            if (currentVolume < 1) {
+                currentVolume += 0.01;
+                volumeSlider.value = currentVolume.toFixed(2);
+                gainNode.gain.setValueAtTime(currentVolume, audioCtx.currentTime);
+                document.getElementById("volValue").innerText = currentVolume.toFixed(2);
+            }
+        }
+
+        function decreaseVolume() {
+            const volumeSlider = document.getElementById("volume");
+            let currentVolume = parseFloat(volumeSlider.value);
+            if (currentVolume > 0) {
+                currentVolume -= 0.01;
+                volumeSlider.value = currentVolume.toFixed(2);
+                gainNode.gain.setValueAtTime(currentVolume, audioCtx.currentTime);
+                document.getElementById("volValue").innerText = currentVolume.toFixed(2);
+            }
+        }
+    </script>
+</body>
+</html>

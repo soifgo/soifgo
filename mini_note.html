@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Note Maker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: ltr;
+            text-align: left;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .controls {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f0f0f0;
+        }
+        .note {
+            flex: 1;
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <label for="alignment">Alignment:</label>
+        <select id="alignment">
+            <option value="left">Left</option>
+            <option value="center">Center</option>
+            <option value="right">Right</option>
+        </select>
+        <label for="fontSize">Font Size:</label>
+        <input type="number" id="fontSize" value="16">
+        <label for="fontColor">Font Color:</label>
+        <input type="color" id="fontColor" value="#000000">
+        <label for="bgColor">Background Color:</label>
+        <input type="color" id="bgColor" value="#ffffff">
+        <button onclick="saveNote()">Save</button>
+    </div>
+    <textarea id="note" class="note"></textarea>
+    <script>
+        document.getElementById('alignment').addEventListener('change', function() {
+            document.getElementById('note').style.textAlign = this.value;
+            localStorage.setItem('alignment', this.value);
+        });
+        document.getElementById('fontSize').addEventListener('input', function() {
+            document.getElementById('note').style.fontSize = this.value + 'px';
+            localStorage.setItem('fontSize', this.value);
+        });
+        document.getElementById('fontColor').addEventListener('input', function() {
+            document.getElementById('note').style.color = this.value;
+            localStorage.setItem('fontColor', this.value);
+        });
+        document.getElementById('bgColor').addEventListener('input', function() {
+            document.getElementById('note').style.backgroundColor = this.value;
+            localStorage.setItem('bgColor', this.value);
+        });
+        document.getElementById('note').addEventListener('input', function() {
+            localStorage.setItem('noteContent', this.value);
+        });
+
+        function saveNote() {
+            alert('Changes saved!');
+        }
+
+        window.onload = function() {
+            if (localStorage.getItem('alignment')) {
+                document.getElementById('alignment').value = localStorage.getItem('alignment');
+                document.getElementById('note').style.textAlign = localStorage.getItem('alignment');
+            }
+            if (localStorage.getItem('fontSize')) {
+                document.getElementById('fontSize').value = localStorage.getItem('fontSize');
+                document.getElementById('note').style.fontSize = localStorage.getItem('fontSize') + 'px';
+            }
+            if (localStorage.getItem('fontColor')) {
+                document.getElementById('fontColor').value = localStorage.getItem('fontColor');
+                document.getElementById('note').style.color = localStorage.getItem('fontColor');
+            }
+            if (localStorage.getItem('bgColor')) {
+                document.getElementById('bgColor').value = localStorage.getItem('bgColor');
+                document.getElementById('note').style.backgroundColor = localStorage.getItem('bgColor');
+            }
+            if (localStorage.getItem('noteContent')) {
+                document.getElementById('note').value = localStorage.getItem('noteContent');
+            }
+        }
+    </script>
+</body>
+</html>

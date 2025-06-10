@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Picker</title>
+    <style>
+        .color-picker {
+            border: 2px solid black;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+        }
+        .slider {
+            width: 100%;
+        }
+        .rgb-values {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+        .rgb-value {
+            border: 1px solid black;
+            padding: 5px;
+            width: 50px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .color-display {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid black;
+            background-color: white;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="color-picker">
+        <div class="title">
+            <h1>Click Here</h1>
+            <input type="color" id="colorInput" oninput="updateColor()">
+        </div>
+        <br><br>
+        <label for="red">Red: <span id="redValue">0</span></label>
+        <input type="range" id="red" class="slider" min="0" max="255" oninput="updateColor()">
+        <br>
+        <label for="green">Green: <span id="greenValue">0</span></label>
+        <input type="range" id="green" class="slider" min="0" max="255" oninput="updateColor()">
+        <br>
+        <label for="blue">Blue: <span id="blueValue">0</span></label>
+        <input type="range" id="blue" class="slider" min="0" max="255" oninput="updateColor()">
+        <br><br>
+        <div class="rgb-values">
+            <div class="rgb-value" id="displayRed">0</div>
+            <div class="rgb-value" id="displayGreen">0</div>
+            <div class="rgb-value" id="displayBlue">0</div>
+        </div>
+        <button class="color-display" id="colorDisplay">____________________</button>
+    </div>
+
+    <script>
+        function updateColor() {
+            const red = document.getElementById('red').value;
+            const green = document.getElementById('green').value;
+            const blue = document.getElementById('blue').value;
+            const color = `rgb(${red}, ${green}, ${blue})`;
+
+            document.getElementById('colorInput').value = rgbToHex(red, green, blue);
+            document.getElementById('redValue').textContent = red;
+            document.getElementById('greenValue').textContent = green;
+            document.getElementById('blueValue').textContent = blue;
+            document.getElementById('displayRed').textContent = red;
+            document.getElementById('displayGreen').textContent = green;
+            document.getElementById('displayBlue').textContent = blue;
+            document.getElementById('colorDisplay').style.backgroundColor = color;
+            document.getElementById('colorDisplay').style.color = getContrastYIQ(red, green, blue);
+        }
+
+        function rgbToHex(r, g, b) {
+            return "#" + [r, g, b].map(x => {
+                const hex = parseInt(x).toString(16);
+                return hex.length === 1 ? "0" + hex : hex;
+            }).join('');
+        }
+
+        function getContrastYIQ(r, g, b) {
+            const yiq = ((r*299)+(g*587)+(b*114))/1000;
+            return (yiq >= 128) ? 'black' : 'white';
+        }
+    </script>
+</body>
+</html>
