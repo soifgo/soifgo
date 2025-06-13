@@ -406,7 +406,7 @@ Let me know when you're ready for **Section 8: Final Notes & Version Updates**! 
 ## **Final Notes & Version Updates**  
 ### **Maintaining Up-to-Date Versions**  
 SoifDesign offers **multiple update sources**, ensuring users always have the latest version:  
-- [Apkpure](https://apkpure.com/soifdesign)  
+- [Apkpure](https://apkpure.com/soifdesign/soifdesign.ssm20985)  
 - [GitHub Repository](https://github.com/soifdesign/soifdesign)  
 - [Google Drive](https://drive.google.com/open?id=17YyAkehXi9yJsomCJNS9DfSHyL3hHiMH&usp=drive_fs)  
 
