@@ -62,7 +62,7 @@ By clicking on the **list icon**, users gain access to key functions:
 2. **Language Selection:** Supports multiple languages including **English, Spanish, Chinese, French, German, Japanese, Russian, Arabic, Persian, Italian, Hindi, Turkish, Korean, Portuguese, Hebrew, Kurdish**.  
 3. **YouTube Access:** Redirects users to the app's YouTube page.  
 4. **Donate:** Displays a **QR code and crypto wallet address** for supporting the project with Bitcoin.  
-5. **Update Options:** Provides **direct update links** for [Apkpure](https://apkpure.com/soifdesign) and [GitHub](https://github.com/soifdesign/soifdesign).  
+5. **Update Options:** Provides **direct update links** for  [Apkpure](https://apkpure.com/soifdesign/soifdesign.ssm20985) and [GitHub](https://github.com/soifdesign/soifdesign).  
 6. **Enable Simulation Mode:** Simulates input values from **0 to 1024** using **address 123**, allowing users to test effects **without physical hardware**.  
 7. **Display Simulation Values:** Shows incoming simulated values.  
 8. **Phone Sensor Integration:** Opens a window featuring motion and magnetism sensors.  
