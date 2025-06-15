@@ -17,7 +17,12 @@
 - Korean (한국어)  
 - Portuguese (Português)  
 - Hebrew (עברית)  
-- Kurdish (کوردی)  
+- Kurdish (کوردی)
+- Urdu (اردو)
+- Bengali (বাংলা) 
+- Indonesian (Bahasa Indonesia) 
+- Tamil (தமிழ்)
+- Thai (ไทย)  
 
 # SoifDesign  
 SoifDesign is an Android application that provides users with advanced capabilities using **buttons and seek bars**. It offers features such as:  
