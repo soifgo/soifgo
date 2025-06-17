@@ -36,7 +36,7 @@ SoifDesign is an Android application that provides users with advanced capabilit
 - **Dynamic effects based on Bluetooth input:** Modify **size, position, rotation, color changes, circular visual effects, and graph rendering** based on input values.  
 - **Graph storage & review:** Store and review received graphical data directly inside buttons.  
 - **Predefined seek bar values:** Send preset values before and after any modification to enhance interaction.  
-- **Optimized RGB color control:** Seek bars support precise RGB adjustments for **WS2812, WS2813, WS2815, and WS2811**.  
+- **Optimized RGB color control:** Seek bars support precise RGB adjustments for **WS2812, WS2813, WS2815, and  SET RBG WS2811**.  
 - **Bluetooth format selection:** Supports multiple formats such as `CR + LF`, `CR`, `LF`, `NULL`, and more.  
 - **Smart Bluetooth resend (Check-in):** If **no response is received**, data is **automatically resent up to three times** for reliability.  
 ## **Installation & Setup**  
@@ -232,7 +232,7 @@ Users can set specific **prefixes and suffixes** to structure outgoing data—fo
 - **If Bluetooth feedback is not received**, the seek bar **automatically resends the same value up to three times** to ensure proper transmission.  
 
 #### **11. RGB Control for Lighting Modules**  
-- Designed for **WS2812, WS2813, WS2815, and WS2811** lighting systems.  
+- Designed for  RGB **WS2812, WS2813, WS2815, and SET RBG WS2811** lighting systems.  
 - Uses **three consecutive values** (`000 000 000` → `255 255 255`), where each part represents a **color intensity (Red, Green, Blue)**.  
 - Adjusting the seek bar **modifies real-time RGB lighting values**.  
 
