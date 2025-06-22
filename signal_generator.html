@@ -47,6 +47,12 @@
     button:hover:not(:disabled) {
       background-color: #0056cc;
     }
+	    #waveCanvas {
+      margin-left: 15px;
+      background: white;
+      border: 1px solid #ccc;
+      vertical-align: middle;
+    }
   </style>
 </head>
 <body>
@@ -59,7 +65,10 @@
       <option value="square">Square</option>
       <option value="sawtooth">Sawtooth</option>
     </select>
+    <canvas id="waveCanvas" width="200" height="60"></canvas>
   </div>
+
+
 
   <div class="controls">
     <label for="freqInput">Enter Frequency (Hz):</label>
@@ -214,6 +223,58 @@
       if (gainNode) gainNode.gain.setValueAtTime(current, audioCtx.currentTime);
       volValue.innerText = current.toFixed(2);
     }
+	
+	
+	
+	
+	    function drawStaticWaveform(type) {
+      const canvas = document.getElementById("waveCanvas");
+      const ctx = canvas.getContext("2d");
+      const w = canvas.width;
+      const h = canvas.height;
+
+      ctx.clearRect(0, 0, w, h);
+      ctx.strokeStyle = "black";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+
+      if (type === "sine") {
+        for (let x = 0; x <= w; x++) {
+          const y = h / 2 + Math.sin((x / w) * 4 * Math.PI) * (h / 2.5);
+          x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+        }
+      } else if (type === "square") {
+        const step = w / 4;
+        ctx.moveTo(0, h * 0.25);
+        ctx.lineTo(step, h * 0.25);
+        ctx.lineTo(step, h * 0.75);
+        ctx.lineTo(2 * step, h * 0.75);
+        ctx.lineTo(2 * step, h * 0.25);
+        ctx.lineTo(3 * step, h * 0.25);
+        ctx.lineTo(3 * step, h * 0.75);
+        ctx.lineTo(4 * step, h * 0.75);
+      } else if (type === "sawtooth") {
+        const segments = 2;
+        for (let i = 0; i < segments; i++) {
+          const startX = (i / segments) * w;
+          const endX = ((i + 1) / segments) * w;
+          ctx.moveTo(startX, h);
+          ctx.lineTo(endX, 0);
+          ctx.lineTo(endX, h);
+        }
+      }
+
+      ctx.stroke();
+    }
+
+    const waveTypeSelector = document.getElementById("waveType");
+    waveTypeSelector.addEventListener("change", () => {
+      drawStaticWaveform(waveTypeSelector.value);
+    });
+    drawStaticWaveform(waveTypeSelector.value); 
+	
+	
+	
   </script>
 </body>
 </html>
