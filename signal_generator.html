@@ -1,189 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Signal Generator with Adjusted Button Order</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
-            background: linear-gradient(to right, #00c6ff, #0072ff);
-            color: white;
-        }
-        .controls {
-            margin: 20px;
-        }
-        input[type="range"] {
-            width: 300px;
-        }
-        button {
-            padding: 10px;
-            font-size: 18px;
-            margin: 5px;
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
-            background-color: #0072ff;
-            color: white;
-            transition: background-color 0.3s ease;
-        }
-        button:disabled {
-            background-color: #cccccc;
-            cursor: not-allowed;
-        }
-        button:hover:not(:disabled) {
-            background-color: #0056cc;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Signal Generator - Final Edition</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      color: white;
+    }
+    .controls {
+      margin: 20px;
+    }
+    input[type="range"],
+    input[type="number"] {
+      font-size: 16px;
+      padding: 5px;
+      border-radius: 5px;
+      border: none;
+    }
+    input.narrow {
+      width: 100px;
+    }
+    #countdownDisplay {
+      font-weight: bold;
+      margin-left: 10px;
+    }
+    button {
+      padding: 10px;
+      font-size: 18px;
+      margin: 5px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      background-color: #0072ff;
+      color: white;
+      transition: background-color 0.3s ease;
+    }
+    button:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+    button:hover:not(:disabled) {
+      background-color: #0056cc;
+    }
+  </style>
 </head>
 <body>
-    <h1>Signal Generator with Adjusted Button Order</h1>
-    <div class="controls">
-        <label for="waveType">Wave Type:</label>
-        <select id="waveType">
-            <option value="sine">Sine</option>
-            <option value="square">Square</option>
-            <option value="sawtooth">Sawtooth</option>
-        </select>
-    </div>
-    <div class="controls">
-        <label for="frequency">Frequency (Hz):</label>
-        <input type="range" id="frequency" min="0" max="20000" value="440">
-        <button onclick="decreaseFrequency()">-</button>
-        <button onclick="increaseFrequency()">+</button>
-        <span id="freqValue">440</span> Hz
-    </div>
-    <div class="controls">
-        <label for="volume">Volume:</label>
-        <input type="range" id="volume" min="0" max="1" step="0.01" value="0.5">
-        <button onclick="decreaseVolume()">-</button>
-        <button onclick="increaseVolume()">+</button>
-        <span id="volValue">0.5</span>
-    </div>
-    <button id="startButton" onclick="startSignal()">Start</button>
-    <button id="stopButton" onclick="stopSignal()" disabled>Stop</button>
+  <h1>Signal Generator</h1>
 
-    <script>
-        let audioCtx;
-        let oscillator;
-        let gainNode;
+  <div class="controls">
+    <label for="waveType">Wave Type:</label>
+    <select id="waveType">
+      <option value="sine">Sine</option>
+      <option value="square">Square</option>
+      <option value="sawtooth">Sawtooth</option>
+    </select>
+  </div>
 
-        function startSignal() {
-            const startButton = document.getElementById("startButton");
-            const stopButton = document.getElementById("stopButton");
+  <div class="controls">
+    <label for="freqInput">Enter Frequency (Hz):</label>
+    <input type="number" class="narrow" id="freqInput" min="0" max="20000" value="440">
+  </div>
 
-            if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            }
+  <div class="controls">
+    <label for="frequency">Frequency (Slider):</label>
+    <input type="range" id="frequency" min="0" max="20000" value="440">
+    <button onclick="decreaseFrequency()">-</button>
+    <button onclick="increaseFrequency()">+</button>
+    <span id="freqValue">440</span> Hz
+  </div>
 
-            // Create oscillator and gain node
-            oscillator = audioCtx.createOscillator();
-            gainNode = audioCtx.createGain();
+  <div class="controls">
+    <label for="volume">Volume:</label>
+    <input type="range" id="volume" min="0" max="1" step="0.01" value="0.5">
+    <button onclick="decreaseVolume()">-</button>
+    <button onclick="increaseVolume()">+</button>
+    <span id="volValue">0.5</span>
+  </div>
 
-            // Set initial wave type, frequency, and volume
-            const waveType = document.getElementById("waveType").value;
-            const frequency = document.getElementById("frequency").value;
-            const volume = document.getElementById("volume").value;
+  <div class="controls">
+    <label for="autoStop">Auto Stop (seconds):</label>
+    <input type="number" class="narrow" id="autoStop" min="1" value="5">
+    <span id="countdownDisplay">5s</span>
+  </div>
 
-            oscillator.type = waveType;
-            oscillator.frequency.setValueAtTime(frequency, audioCtx.currentTime);
-            gainNode.gain.setValueAtTime(volume, audioCtx.currentTime);
+  <button id="startButton" onclick="startSignal()">Start</button>
+  <button id="stopButton" onclick="stopSignal()" disabled>Stop</button>
 
-            // Connect nodes
-            oscillator.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
+  <script>
+    let audioCtx;
+    let oscillator;
+    let gainNode;
+    let stopTimer;
+    let countdownInterval;
+    let latestFrequency = 440;
 
-            // Start the oscillator
-            oscillator.start();
+    function startSignal() {
+      const startButton = document.getElementById("startButton");
+      const stopButton = document.getElementById("stopButton");
 
-            // Disable start button and enable stop button
-            startButton.disabled = true;
-            stopButton.disabled = false;
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
 
-            // Update wave type in real-time
-            document.getElementById("waveType").addEventListener("change", (e) => {
-                oscillator.type = e.target.value;
-            });
+      oscillator = audioCtx.createOscillator();
+      gainNode = audioCtx.createGain();
 
-            // Update frequency in real-time
-            document.getElementById("frequency").addEventListener("input", (e) => {
-                const freq = parseFloat(e.target.value);
-                oscillator.frequency.setValueAtTime(freq, audioCtx.currentTime);
-                document.getElementById("freqValue").innerText = freq;
-            });
+      const waveType = document.getElementById("waveType").value;
+      const volume = parseFloat(document.getElementById("volume").value);
 
-            // Update volume in real-time
-            document.getElementById("volume").addEventListener("input", (e) => {
-                const vol = parseFloat(e.target.value);
-                gainNode.gain.setValueAtTime(vol, audioCtx.currentTime);
-                document.getElementById("volValue").innerText = vol.toFixed(2);
-            });
-        }
+      oscillator.type = waveType;
+      oscillator.frequency.setValueAtTime(latestFrequency, audioCtx.currentTime);
+      gainNode.gain.setValueAtTime(volume, audioCtx.currentTime);
 
-        function stopSignal() {
-            const startButton = document.getElementById("startButton");
-            const stopButton = document.getElementById("stopButton");
+      oscillator.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+      oscillator.start();
 
-            if (oscillator) {
-                oscillator.stop();
-                oscillator.disconnect();
-                gainNode.disconnect();
-            }
-            oscillator = null;
-            gainNode = null;
+      startButton.disabled = true;
+      stopButton.disabled = false;
 
-            // Enable start button and disable stop button
-            startButton.disabled = false;
-            stopButton.disabled = true;
-        }
+      const stopAfter = parseInt(document.getElementById("autoStop").value);
+      let remaining = stopAfter;
+      countdownDisplay.innerText = `${remaining}s`;
 
-        // Frequency Control Functions
-        function increaseFrequency() {
-            const frequencySlider = document.getElementById("frequency");
-            let currentFrequency = parseFloat(frequencySlider.value);
-            if (currentFrequency < 20000) {
-                currentFrequency += 1;
-                frequencySlider.value = currentFrequency;
-                oscillator.frequency.setValueAtTime(currentFrequency, audioCtx.currentTime);
-                document.getElementById("freqValue").innerText = currentFrequency;
-            }
-        }
+      countdownInterval = setInterval(() => {
+        remaining--;
+        countdownDisplay.innerText = `${remaining}s`;
+        if (remaining <= 0) clearInterval(countdownInterval);
+      }, 1000);
 
-        function decreaseFrequency() {
-            const frequencySlider = document.getElementById("frequency");
-            let currentFrequency = parseFloat(frequencySlider.value);
-            if (currentFrequency > 0) {
-                currentFrequency -= 1;
-                frequencySlider.value = currentFrequency;
-                oscillator.frequency.setValueAtTime(currentFrequency, audioCtx.currentTime);
-                document.getElementById("freqValue").innerText = currentFrequency;
-            }
-        }
+      stopTimer = setTimeout(stopSignal, stopAfter * 1000);
+    }
 
-        // Volume Control Functions
-        function increaseVolume() {
-            const volumeSlider = document.getElementById("volume");
-            let currentVolume = parseFloat(volumeSlider.value);
-            if (currentVolume < 1) {
-                currentVolume += 0.01;
-                volumeSlider.value = currentVolume.toFixed(2);
-                gainNode.gain.setValueAtTime(currentVolume, audioCtx.currentTime);
-                document.getElementById("volValue").innerText = currentVolume.toFixed(2);
-            }
-        }
+    function stopSignal() {
+      if (oscillator) {
+        oscillator.stop();
+        oscillator.disconnect();
+        gainNode.disconnect();
+      }
 
-        function decreaseVolume() {
-            const volumeSlider = document.getElementById("volume");
-            let currentVolume = parseFloat(volumeSlider.value);
-            if (currentVolume > 0) {
-                currentVolume -= 0.01;
-                volumeSlider.value = currentVolume.toFixed(2);
-                gainNode.gain.setValueAtTime(currentVolume, audioCtx.currentTime);
-                document.getElementById("volValue").innerText = currentVolume.toFixed(2);
-            }
-        }
-    </script>
+      oscillator = null;
+      gainNode = null;
+
+      startButton.disabled = false;
+      stopButton.disabled = true;
+
+      clearTimeout(stopTimer);
+      clearInterval(countdownInterval);
+      countdownDisplay.innerText = `0s`;
+    }
+
+    document.getElementById("freqInput").addEventListener("input", (e) => {
+      const freq = parseFloat(e.target.value);
+      frequency.value = freq;
+      latestFrequency = freq;
+      freqValue.innerText = freq;
+      if (oscillator) oscillator.frequency.setValueAtTime(freq, audioCtx.currentTime);
+    });
+
+    document.getElementById("frequency").addEventListener("input", (e) => {
+      const freq = parseFloat(e.target.value);
+      freqInput.value = freq;
+      latestFrequency = freq;
+      freqValue.innerText = freq;
+      if (oscillator) oscillator.frequency.setValueAtTime(freq, audioCtx.currentTime);
+    });
+
+    document.getElementById("volume").addEventListener("input", (e) => {
+      const vol = parseFloat(e.target.value);
+      if (gainNode) {
+        gainNode.gain.setValueAtTime(vol, audioCtx.currentTime);
+        volValue.innerText = vol.toFixed(2);
+      }
+    });
+
+    function increaseFrequency() {
+      let current = parseFloat(frequency.value);
+      if (current < 20000) current += 1;
+      frequency.value = current;
+      freqInput.value = current;
+      latestFrequency = current;
+      if (oscillator) oscillator.frequency.setValueAtTime(current, audioCtx.currentTime);
+      freqValue.innerText = current;
+    }
+
+    function decreaseFrequency() {
+      let current = parseFloat(frequency.value);
+      if (current > 0) current -= 1;
+      frequency.value = current;
+      freqInput.value = current;
+      latestFrequency = current;
+      if (oscillator) oscillator.frequency.setValueAtTime(current, audioCtx.currentTime);
+      freqValue.innerText = current;
+    }
+
+    function increaseVolume() {
+      let current = parseFloat(volume.value);
+      if (current < 1) current += 0.01;
+      volume.value = current.toFixed(2);
+      if (gainNode) gainNode.gain.setValueAtTime(current, audioCtx.currentTime);
+      volValue.innerText = current.toFixed(2);
+    }
+
+    function decreaseVolume() {
+      let current = parseFloat(volume.value);
+      if (current > 0) current -= 0.01;
+      volume.value = current.toFixed(2);
+      if (gainNode) gainNode.gain.setValueAtTime(current, audioCtx.currentTime);
+      volValue.innerText = current.toFixed(2);
+    }
+  </script>
 </body>
 </html>
