@@ -812,3 +812,54 @@ Important: In the section for setting the sensor to be sent, configuring another
 
 
 
+# 🔌 Real-Time Input Injection into HTML via SoifDesign
+
+SoifDesign empowers developers to create dynamic, sensor-driven interfaces with minimal effort. One of its core features is the ability to bind HTML elements to real-time input sources such as Bluetooth, APIs, and phone sensors — without writing complex JavaScript.
+
+---
+
+## 🚀 How It Works
+
+After loading your HTML into SoifDesign:
+
+### 1. click Edit 
+- Tap on **Edit** from the main interface.(play icon=menu)
+- In the **Edit Menu**, select the **Connect** option.
+
+### 2. Connect Buttons to Inputs
+- Once **Connect** is active, SoifDesign will scan for buttons that are eligible for input binding (e.g. number or text receivers).
+- These buttons can be linked to:
+  - 📶 Bluetooth input
+  - 🌐 API values
+  - 📱 Phone sensors (e.g., accelerometer, GPS)
+
+### 3. View Active Inputs
+- Still in the **Edit Menu**, choose **Show Recive Value**.
+- This will list all detected buttons and their linked input type.
+- Example:  
+  - **Button 8** is bound to a Bluetooth receiver.
+
+---
+
+## 🧩 Keyword Integration
+
+Each input-bound button has a unique keyword in the format:
+
+
+
+---
+
+## 🔧 In Your HTML
+
+To integrate real-time data into your HTML interface, identify any **static value** you want to replace with **dynamic input**.
+
+### 🔄 Example Transformation:
+
+Before (static value):
+
+```html
+<span>32</span>  <!-- Hardcoded number -->
+
+<span>*val8#</span>  <!-- Will be replaced live with incoming data -->
+
+
