@@ -814,52 +814,67 @@ Important: In the section for setting the sensor to be sent, configuring another
 
 # 🔌 Real-Time Input Injection into HTML via SoifDesign
 
-SoifDesign empowers developers to create dynamic, sensor-driven interfaces with minimal effort. One of its core features is the ability to bind HTML elements to real-time input sources such as Bluetooth, APIs, and phone sensors — without writing complex JavaScript.
+
+### 🌟 SoifDesign: Dynamic HTML Interaction Framework
+
+SoifDesign allows users to connect real-time data sources—like sensors, APIs, or Bluetooth—to dynamic HTML views. Here's how the system works step-by-step:
 
 ---
 
-## 🚀 How It Works
-
-After loading your HTML into SoifDesign:
-
-### 1. click Edit 
-- Tap on **Edit** from the main interface.(play icon=menu)
-- In the **Edit Menu**, select the **Connect** option.
-
-### 2. Connect Buttons to Inputs
-- Once **Connect** is active, SoifDesign will scan for buttons that are eligible for input binding (e.g. number or text receivers).
-- These buttons can be linked to:
-  - 📶 Bluetooth input
-  - 🌐 API values
-  - 📱 Phone sensors (e.g., accelerometer, GPS)
-
-### 3. View Active Inputs
-- Still in the **Edit Menu**, choose **Show Recive Value**.
-- This will list all detected buttons and their linked input type.
-- Example:  
-  - **Button 8** is bound to a Bluetooth receiver.
+#### ⚙️ Step 1: Configure Input Sources
+Within the SoifDesign interface, the user defines what each button represents:
+- **Button 1** might be linked to the phone's light sensor.
+- **Button 2** could be set to receive data from Bluetooth.
+- And so on up to Button 40.
 
 ---
 
-## 🧩 Keyword Integration
+#### 🧩 Step 2: Link HTML Display
+In the second section, the user selects a custom HTML layout and enables variable injection.
 
-Each input-bound button has a unique keyword in the format:
-
-
+Once activated, the HTML view opens, showing its original structure. The user can begin editing directly, but **variable injection must follow a precise syntax**:
 
 ---
 
-## 🔧 In Your HTML
+#### 📌 Injecting Variables
+To insert dynamic data from a button source into HTML:
 
-To integrate real-time data into your HTML interface, identify any **static value** you want to replace with **dynamic input**.
+- Simply type:  
+  ```html
+  *val1#
+  ```
+- This refers to **Button 1's value**.
 
-### 🔄 Example Transformation:
-
-Before (static value):
-
+Example before transformation:
 ```html
-<span>32</span>  <!-- Hardcoded number -->
+<h2>*val1#</h2>
+```
 
-<span>*val8#</span>  <!-- Will be replaced live with incoming data -->
+After SoifDesign processes it (either automatically or via your ApplyHTMLVal function):
+```html
+<h2><span id='*val1#'>*val1#</span></h2>
+```
+
+This allows JavaScript to interact with it using:
+```javascript
+function setVal(index, value) {
+  var el = document.getElementById('*val' + index + '#');
+  if (el) {
+    el.innerText = value;
+  }
+}
+```
+
+And from B4A, values are injected like so:
+```b4a
+wvExtra.executeJavascript("setVal(" & 1 & ", '" & lightSensorValue & "')")
+```
+
+---
+
+#### 🎯 Result
+- The light sensor value appears dynamically in the HTML without refreshing the page.
+- The rest of the interface (e.g. signal generator, controls) **remains intact**, avoiding reinitialization.
+- This lets you process, visualize, and manipulate sensor data, all inside HTML—smoothly and live.
 
 
