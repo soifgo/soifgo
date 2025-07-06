@@ -834,7 +834,7 @@ In the second section, the user selects a custom HTML layout and enables variabl
 
 Once activated, the HTML view opens, showing its original structure. The user can begin editing directly, but **variable injection must follow a precise syntax**:
 
----
+--- *val1#   Button 1   to   *val40#   Button 40    
 
 #### 📌 Injecting Variables
 To insert dynamic data from a button source into HTML:
@@ -855,6 +855,16 @@ After SoifDesign processes it (either automatically or via your ApplyHTMLVal fun
 <h2><span id='*val1#'>*val1#</span></h2>
 ```
 
+Example before transformation:
+```html
+<h2>*val1#  *val3#</h2>
+```
+
+After SoifDesign processes it (either automatically or via your ApplyHTMLVal function):
+```html
+<h2><span id='*val1#'>*val1#</span>  <span id='*val3#'>*val3#</span></h2>
+```
+
 This allows JavaScript to interact with it using:
 ```javascript
 function setVal(index, value) {
@@ -864,13 +874,6 @@ function setVal(index, value) {
   }
 }
 ```
-
-And from B4A, values are injected like so:
-```b4a
-wvExtra.executeJavascript("setVal(" & 1 & ", '" & lightSensorValue & "')")
-```
-
----
 
 #### 🎯 Result
 - The light sensor value appears dynamically in the HTML without refreshing the page.
