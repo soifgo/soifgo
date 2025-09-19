@@ -174,6 +174,16 @@ Beyond the standard navigation, here’s the **full list of button customization
   - **Circular visual effect**  
   - **Rotation**  
   - **Graph plotting & storage**  
+  - **Formula-based transformation**
+
+- You can apply mathematical operations to the received value before triggering effects.  
+  For example, to convert a value from `0–1024` to a voltage range of `0–5`, use:  
+  `val / 204.8`  
+  The result will be reflected in the button’s behavior or appearance.
+
+- If you're looking to apply rounding, scaling, or other transformations, click the **`?` label** next to the formula field to open the **Formula Guide**.  
+  The guide includes supported operators, math functions, and examples for value mapping and UI control.
+
 
 #### **13. Button Alarms (Threshold Alerts)**  
 - If configured for **data reception**, alarms can be set based on input values:  
