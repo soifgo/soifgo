@@ -1,75 +1,92 @@
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        padding: 20px;
-        text-align: center;
-    }
-    .container {
-        display: flex;
-        justify-content: flex-start; /*  */
-        align-items: stretch;
-        gap: 20px;
-        max-width: 1000px; /*  */
-        margin: auto;
-    }
-    .panel {
-        background: white;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        text-align: left;
-        display: flex;
-        flex-direction: column;
-    }
-    .left-panel {
-        width: 350px; /*  */
-    }
-    .right-panel {
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-        height: auto;
-    }
-    h2 {
-        color: #333;
-        font-size: 20px;
-        margin-bottom: 10px;
-    }
-    select, input, button {
-        margin: 5px;
-        padding: 10px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-        width: 100%;
-    }
-    button {
-        background-color: #007bff;
-        color: white;
-        border: none;
-        cursor: pointer;
-        transition: 0.3s;
-    }
-    button:hover {
-        background-color: #0056b3;
-    }
-    #connectBtn {
-        background-color: red;
-    }
-    #connectBtn.connected {
-        background-color: green;
-    }
-    .btn-group {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 10px;
-    }
-    textarea {
-        width: 100%;
-        flex-grow: 1;
-        resize: none;
-    }
-</style>
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>Serial Port Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            justify-content: flex-start;
+            align-items: stretch;
+            gap: 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+        .panel {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+        }
+        .left-panel {
+            width: 350px;
+        }
+        .right-panel {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            height: auto;
+        }
+        h2 {
+            color: #333;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        select, input, button {
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #connectBtn {
+            background-color: red;
+        }
+        #connectBtn.connected {
+            background-color: green;
+        }
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        textarea {
+            width: 100%;
+            flex-grow: 1;
+            resize: none;
+            height: 400px;
+        }
+        .options {
+            margin-top: 10px;
+        }
+        .options label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
 
 <div class="container">
     <div class="panel left-panel">
@@ -110,6 +127,10 @@
             <button onclick="sendData()">Send</button>
             <button onclick="clearReceiveBox()">Clear</button>
         </div>
+
+        <div class="options">
+            <label><input type="checkbox" id="autoClear"> Auto Clear</label>
+        </div>
     </div>
 
     <div class="panel right-panel">
@@ -120,6 +141,7 @@
 
 <script>
     let port, reader, writer, isConnected = false;
+    const MAX_LENGTH = 10000;
 
     async function connectSerial() {
         try {
@@ -150,7 +172,7 @@
             reader.releaseLock();
             writer.releaseLock();
             await port.close();
-            
+
             document.getElementById("connectBtn").innerText = "Connect";
             document.getElementById("connectBtn").classList.remove("connected");
             isConnected = false;
@@ -183,14 +205,30 @@
             while (true) {
                 const { value, done } = await reader.read();
                 if (done) break;
-                document.getElementById("receiveBox").value += new TextDecoder().decode(value);
+                appendToReceiveBox(new TextDecoder().decode(value));
             }
         } catch (error) {
             alert("Error receiving data: " + error);
         }
     }
 
+    function appendToReceiveBox(text) {
+        const receiveBox = document.getElementById("receiveBox");
+        const autoClear = document.getElementById("autoClear").checked;
+
+        receiveBox.value += text;
+
+        if (autoClear && receiveBox.value.length > MAX_LENGTH) {
+            receiveBox.value = receiveBox.value.slice(-MAX_LENGTH);
+        }
+
+        receiveBox.scrollTop = receiveBox.scrollHeight;
+    }
+
     function clearReceiveBox() {
         document.getElementById("receiveBox").value = "";
     }
 </script>
+
+</body>
+</html>
