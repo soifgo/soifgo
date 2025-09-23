@@ -25,6 +25,26 @@
 - Thai (ไทย)
 - Swahili (Kiswahili) 
 
+📌 Important Notice:
+
+Image and text files in this folder have been renamed as follows:
+
+- `.jpg` files → `.jpgs`
+- `.txt` files → `.data`
+
+✅ Purpose of this change:
+To prevent accidental deletion or unwanted visibility in gallery apps, note editors, or file explorers that may misinterpret these files as user content.
+
+🔒 These files are part of the internal structure of the SoifDesign application. Removing or modifying them may disrupt the app’s functionality or appearance.
+
+👁️ To view or edit these files manually, simply rename them back to their original extensions:
+
+- `.jpgs` → `.jpg`
+- `.data` → `.txt`
+
+Please proceed with caution and only if you understand the purpose of each file.
+
+
 # soifdesign  
 soifdesign is an Android application that provides users with advanced capabilities using **buttons and seek bars**. It offers features such as:  
 
