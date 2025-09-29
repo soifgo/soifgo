@@ -71,13 +71,13 @@ By clicking on the **list icon**, users gain access to key functions:
 3. **YouTube Access:** Redirects users to the app's YouTube page.  
 4. **Donate:** Displays a **QR code and crypto wallet address** for supporting the project with Bitcoin.  
 5. **Update Options:** Provides **direct update links** for  [Apkpure](https://apkpure.com/soifdesign/soifdesign.ssm20985) and [GitHub](https://github.com/soifdesign/soifdesign).  
-6. **Enable Simulation Mode:** Simulates input values from **0 to 1024** using **address 123**, allowing users to test effects **without physical hardware**.  
+6. Enable Simulation Mode: Simulates input values from 0 to 1024 using address: 123, allowing users to test effects without physical hardware  "Value:Address   value=0 to 1024  Address=123". 
 7. **Display Simulation Values:** Shows incoming simulated values.  
 8. **Phone Sensor Integration:** Opens a window featuring motion and magnetism sensors.  
-   - **Light Sensor:** Address **991**  
-   - **X-Axis Motion:** Address **992**  
-   - **Y-Axis Motion:** Address **993**  
-   - **Magnetism:** Address **994**  
+   - **Light Sensor:** Address **991**   Value:Address  145:991 
+   - **X-Axis Motion:** Address **992**    Value:Address  145:992
+   - **Y-Axis Motion:** Address **993**    Value:Address   145:993 
+   - **Magnetism:** Address **994**        Value:Address    145:994 
    - These addresses can be mapped to buttons for **effect triggering**.  
 9. **Send Bluetooth Data:** Activates a **textbox & send button** for entering and transmitting custom data.  
 10. **Bluetooth Format Selection:** Allows users to choose between **CR + LF, CR, LF, STX/ETX, NULL, NON-NULL formats**.  
@@ -270,10 +270,10 @@ soifdesign allows users to interact with **motion and magnetism sensors**, enhan
 
 #### **1. Available Sensors & Data Addresses**  
 Each sensor operates with a **specific data address**, which buttons can be mapped to:  
-- **Light Sensor:** Address `991`  
-- **X-Axis Motion:** Address `992`  
-- **Y-Axis Motion:** Address `993`  
-- **Magnetism Sensor:** Address `994`  
+- **Light Sensor:** Address `991`   Value:Address
+- **X-Axis Motion:** Address `992`    Value:Address
+- **Y-Axis Motion:** Address `993`    Value:Address
+- **Magnetism Sensor:** Address `994`    Value:Address
 
 #### **2. Applying Sensor Data to Buttons**  
 Buttons can be **configured to receive sensor values** and trigger **visual effects** based on movement or environmental changes.  
