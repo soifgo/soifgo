@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ARGB Color Picker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      background-color: #222;
+      color: #eee;
+      margin: 0;
+      padding: 20px;
+    }
+    input[type="file"] {
+      margin: 10px 0;
+    }
+    canvas {
+      border: 2px solid #fff;
+      margin-top: 10px;
+      max-width: 100%;
+      height: auto;
+      cursor: crosshair;
+    }
+    #output {
+      margin-top: 20px;
+      font-size: 16px;
+      background-color: #333;
+      padding: 12px;
+      border-radius: 8px;
+      display: inline-block;
+      width: 90%;
+      max-width: 400px;
+    }
+    .channel {
+      margin: 6px 0;
+      font-weight: bold;
+    }
+    .preview {
+      width: 40px;
+      height: 20px;
+      display: inline-block;
+      border: 1px solid #fff;
+      vertical-align: middle;
+    }
+    .copyBtn {
+      margin: 8px 4px;
+      padding: 8px 16px;
+      font-size: 15px;
+      background-color: #555;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .copyBtn:hover {
+      background-color: #777;
+    }
+  </style>
+</head>
+<body>
+  <h2>ARGB Color Picker</h2>
+  <p>Upload an image and tap anywhere to get ARGB values and HEX code.</p>
+  <input type="file" id="imageLoader" accept="image/*">
+  <br>
+  <canvas id="imageCanvas"></canvas>
+  <div id="output">
+    <div class="channel">📍 Coordinates: X=<span id="xVal">?</span>, Y=<span id="yVal">?</span></div>
+    <div class="channel">Alpha (A): <span id="aVal">?</span></div>
+    <div class="channel">Red (R): <span id="rVal">?</span></div>
+    <div class="channel">Green (G): <span id="gVal">?</span></div>
+    <div class="channel">Blue (B): <span id="bVal">?</span></div>
+    <div class="channel">Preview: <span class="preview" id="previewBox"></span></div>
+    <div class="channel">HEX (ARGB): <span id="hexVal">?</span></div>
+    <button class="copyBtn" id="copyArgbBtn">📋 Copy ARGB</button>
+    <button class="copyBtn" id="copyHexBtn">📋 Copy HEX</button>
+  </div>
+
+  <script>
+    const imageLoader = document.getElementById('imageLoader');
+    const canvas = document.getElementById('imageCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const xVal = document.getElementById('xVal');
+    const yVal = document.getElementById('yVal');
+    const aVal = document.getElementById('aVal');
+    const rVal = document.getElementById('rVal');
+    const gVal = document.getElementById('gVal');
+    const bVal = document.getElementById('bVal');
+    const hexVal = document.getElementById('hexVal');
+    const previewBox = document.getElementById('previewBox');
+    const copyArgbBtn = document.getElementById('copyArgbBtn');
+    const copyHexBtn = document.getElementById('copyHexBtn');
+
+    let currentARGB = '';
+    let currentHEX = '';
+
+    imageLoader.addEventListener('change', handleImage, false);
+
+    function handleImage(e) {
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const img = new Image();
+        img.onload = function() {
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
+        }
+        img.src = event.target.result;
+      }
+      reader.readAsDataURL(e.target.files[0]);
+    }
+
+    canvas.addEventListener('click', function(e) {
+      const rect = canvas.getBoundingClientRect();
+      const x = Math.floor(e.clientX - rect.left);
+      const y = Math.floor(e.clientY - rect.top);
+      const pixel = ctx.getImageData(x, y, 1, 1).data;
+      const a = pixel[3];
+      const r = pixel[0];
+      const g = pixel[1];
+      const b = pixel[2];
+
+      xVal.textContent = x;
+      yVal.textContent = y;
+      aVal.textContent = a;
+      rVal.textContent = r;
+      gVal.textContent = g;
+      bVal.textContent = b;
+
+      currentARGB = `${a},${r},${g},${b}`;
+      currentHEX = `#${toHex(a)}${toHex(r)}${toHex(g)}${toHex(b)}`;
+      hexVal.textContent = currentHEX;
+      previewBox.style.backgroundColor = `rgba(${r},${g},${b},${a/255})`;
+    });
+
+    copyArgbBtn.addEventListener('click', function() {
+      if (currentARGB) {
+        navigator.clipboard.writeText(currentARGB)
+          .then(() => {
+            copyArgbBtn.textContent = '✅ ARGB copied!';
+            setTimeout(() => copyArgbBtn.textContent = '📋 Copy ARGB', 1500);
+          });
+      }
+    });
+
+    copyHexBtn.addEventListener('click', function() {
+      if (currentHEX) {
+        navigator.clipboard.writeText(currentHEX)
+          .then(() => {
+            copyHexBtn.textContent = '✅ HEX copied!';
+            setTimeout(() => copyHexBtn.textContent = '📋 Copy HEX', 1500);
+          });
+      }
+    });
+
+    function toHex(n) {
+      return n.toString(16).padStart(2, '0').toUpperCase();
+    }
+  </script>
+</body>
+</html>
