@@ -1,6 +1,6 @@
 ###  The developer :  Saeid Moghadam
 
-# Supported Languages in soifdesign
+# Supported Languages in soifgo
 
 - English (EN)  
 - Spanish (Español)  
@@ -27,8 +27,8 @@
 
 
 
-# soifdesign  
-soifdesign is an Android application that provides users with advanced capabilities using **buttons and seek bars**. It offers features such as:  
+# soifgo  
+soifgo is an Android application that provides users with advanced capabilities using **buttons and seek bars**. It offers features such as:  
 
 - **Bluetooth communication:** Sending and receiving serial Bluetooth data.  
 - **API server interaction & web browsing:** Seamless website access and API requests.  
@@ -44,20 +44,20 @@ soifdesign is an Android application that provides users with advanced capabilit
 - **Smart Bluetooth resend (Check-in):** If **no response is received**, data is **automatically resent up to three times** for reliability.  
 ## **Installation & Setup**  
 ### **Download & Access**  
-soifdesign is available for download from multiple sources:  
-- [Apkpure](https://apkpure.com/soifdesign/soifdesign.ssm20985)  
-- [GitHub Repository](https://github.com/soifdesign/soifdesign)  
+soifgo is available for download from multiple sources:  
+- [Apkpure](https://apkpure.com/soifgo/soifgo.ssm20985)  
+- [GitHub Repository](https://github.com/soifgo/soifgo)  
 - [Google Drive](https://drive.google.com/open?id=17YyAkehXi9yJsomCJNS9DfSHyL3hHiMH&usp=drive_fs)  
 
 ### **Storage Requirements & Permissions**  
-- soifdesign is designed to work with **external storage**, ensuring **easy access to folders for editing, sharing, and backups**.  
+- soifgo is designed to work with **external storage**, ensuring **easy access to folders for editing, sharing, and backups**.  
 - Upon installation, the app **requests permission** to create and manage **its dedicated folder**. This is necessary for **file organization, Bluetooth updates, and proper functionality**.  
 - Without granting storage access, users may encounter limitations in **saving, retrieving, or managing their designs**.  
 
 ---
 
 ### **Startup Screen (Play Mode)**  
-Upon launching soifdesign, users are welcomed by the **Play Mode screen**, featuring:  
+Upon launching soifgo, users are welcomed by the **Play Mode screen**, featuring:  
 - **Top-left:** A turquoise **Play Icon**, indicating active interaction.  
 - **Top-right:** A **Bluetooth Icon**, providing access to the list of available devices.  
   - On first use, the **Bluetooth device list appears** for connection selection.  
@@ -70,7 +70,7 @@ By clicking on the **list icon**, users gain access to key functions:
 2. **Language Selection:** Supports multiple languages including **English, Spanish, Chinese, French, German, Japanese, Russian, Arabic, Persian, Italian, Hindi, Turkish, Korean, Portuguese, Hebrew, Kurdish**.  
 3. **YouTube Access:** Redirects users to the app's YouTube page.  
 4. **Donate:** Displays a **QR code and crypto wallet address** for supporting the project with Bitcoin.  
-5. **Update Options:** Provides **direct update links** for  [Apkpure](https://apkpure.com/soifdesign/soifdesign.ssm20985) and [GitHub](https://github.com/soifdesign/soifdesign).  
+5. **Update Options:** Provides **direct update links** for  [Apkpure](https://apkpure.com/soifgo/soifgo.ssm20985) and [GitHub](https://github.com/soifgo/soifgo).  
 6. Enable Simulation Mode: Simulates input values from 0 to 1024 using address: 123, allowing users to test effects without physical hardware  "Value:Address   value=0 to 1024  Address=123". 
 7. **Display Simulation Values:** Shows incoming simulated values.  
 8. **Phone Sensor Integration:** Opens a window featuring motion and magnetism sensors.  
@@ -156,7 +156,7 @@ Beyond the standard navigation, here’s the **full list of button customization
   - **Modify seek bar values** (+1, -1, display value)  
 
 #### **9. Open Pages & Folders**  
-- Buttons can be configured to **switch between different pages or folders** inside soifdesign.  
+- Buttons can be configured to **switch between different pages or folders** inside soifgo.  
 
 #### **10. Sound Effects**  
 - Users can assign **click sounds, error sounds, or custom sounds** from storage.  
@@ -266,7 +266,7 @@ Let me know when you’re ready for **Section 5: Interaction with Sensors & API 
 
 ## **Interaction with Sensors & API Servers**  
 ### **Integrating Phone Sensors**  
-soifdesign allows users to interact with **motion and magnetism sensors**, enhancing interactive designs with **real-time sensor data**.  
+soifgo allows users to interact with **motion and magnetism sensors**, enhancing interactive designs with **real-time sensor data**.  
 
 #### **1. Available Sensors & Data Addresses**  
 Each sensor operates with a **specific data address**, which buttons can be mapped to:  
@@ -290,7 +290,7 @@ Users can configure **automatic Bluetooth transmissions** based on sensor readin
 ---
 
 ### **API Server Interaction & Web Requests**  
-soifdesign integrates with **API servers** to enable **automated communication with external platforms**.  
+soifgo integrates with **API servers** to enable **automated communication with external platforms**.  
 
 #### **1. Sending API Requests**  
 - Buttons can be configured to **send HTTP requests** to API endpoints.  
@@ -322,7 +322,7 @@ Next up is **Section 6: File Management & Shortcuts**—let me know when you’r
 
 ## **File Management & Shortcuts**  
 ### **Managing Notes & HTML Files**  
-soifdesign supports **opening, editing, and storing notes and HTML files** directly within the app.  
+soifgo supports **opening, editing, and storing notes and HTML files** directly within the app.  
 
 #### **1. Editing Notes & HTML Documents**  
 - Users can **open text-based documents**, modify content, and save changes seamlessly.  
@@ -336,14 +336,14 @@ soifdesign supports **opening, editing, and storing notes and HTML files** direc
 ---
 
 ### **PDF & Image Management**  
-soifdesign offers **shortcut creation and internal storage** for PDFs and images.  
+soifgo offers **shortcut creation and internal storage** for PDFs and images.  
 
 #### **1. Shortcut Creation for PDFs**  
 - Buttons can be **configured as shortcuts** to open **specific PDF files** directly.  
 - Users can **organize PDFs** within the app, creating a **customized document library**.  
 
 #### **2. Image Library Management**  
-- Users can **store images within soifdesign**, detaching them from their original source.  
+- Users can **store images within soifgo**, detaching them from their original source.  
 - Images remain accessible **even if the original file is deleted**, ensuring long-term storage inside the app.  
 
 ---
@@ -364,7 +364,7 @@ Let me know when you're ready for **Section 7: System Behaviors & Customization 
 
 ## **System Behaviors & Customization Settings**  
 ### **Global Settings Configuration**  
-soifdesign provides various system-wide customization options to enhance user control.  
+soifgo provides various system-wide customization options to enhance user control.  
 
 #### **1. Enabling Menu Sounds**  
 - Users can **activate/deactivate sound effects** when navigating menus.  
@@ -423,9 +423,9 @@ That concludes **Section 7: System Behaviors & Customization Settings**! 🚀
 Let me know when you're ready for **Section 8: Final Notes & Version Updates**! 😃  
 ## **Final Notes & Version Updates**  
 ### **Maintaining Up-to-Date Versions**  
-soifdesign offers **multiple update sources**, ensuring users always have the latest version:  
-- [Apkpure](https://apkpure.com/soifdesign/soifdesign.ssm20985)  
-- [GitHub Repository](https://github.com/soifdesign/soifdesign)  
+soifgo offers **multiple update sources**, ensuring users always have the latest version:  
+- [Apkpure](https://apkpure.com/soifgo/soifgo.ssm20985)  
+- [GitHub Repository](https://github.com/soifgo/soifgo)  
 - [Google Drive](https://drive.google.com/open?id=17YyAkehXi9yJsomCJNS9DfSHyL3hHiMH&usp=drive_fs)  
 
 ### **Future Features & Improvements**  
@@ -436,7 +436,7 @@ Upcoming updates will focus on:
 - **Extended API integration** for more flexible server communication.  
 
 ### **Supporting the Project**  
-soifdesign is **free, ad-free, and open to community feedback** for continuous improvement. Users can support the project via:  
+soifgo is **free, ad-free, and open to community feedback** for continuous improvement. Users can support the project via:  
 - **Feature requests** and suggestions on GitHub.  
 - **Bug reports** to enhance app stability.  
 - **Donations** via cryptocurrency for development sustainability.  
@@ -444,10 +444,10 @@ soifdesign is **free, ad-free, and open to community feedback** for continuous i
 ---
 
 ### **Final Thoughts**  
-soifdesign is designed for **flexibility, customization, and advanced control** over UI, Bluetooth interactions, and data processing.  
+soifgo is designed for **flexibility, customization, and advanced control** over UI, Bluetooth interactions, and data processing.  
 With an intuitive editing system, powerful seek bar functions, and dynamic button behaviors, users can optimize their workflows seamlessly.  
 
-Thank you for using **soifdesign! 🚀**  
+Thank you for using **soifgo! 🚀**  
 
 
 
@@ -623,14 +623,14 @@ All these steps are explained on YouTube.
 
 https://youtu.be/PV-M5d7y2hA
 
-Paste the main file into the page folder of the Android software to display the soifdesign program
+Paste the main file into the page folder of the Android software to display the soifgo program
 
 !!!!!
-Note: If you don't want to keep a computer running as a local server, you can use another ESP8266 module with the first method described but this time using the ESP8266_Server_solo_just_need_power.txt code. Configure this code on another module using Arduino. Note that this module also requires the modem name and password. After uploading the code, the module will announce its MAC address and its own address on each restart. You will need this address for the first module or the reporter connected to the microcontroller. This server module doesn't need anything else except for 3.3 volts to continue operating. Now you can issue your commands in soifdesign; the server module will receive them and transfer them to the reporter module. You can network several soifdesigns with several reporters, but there will be only one server module
+Note: If you don't want to keep a computer running as a local server, you can use another ESP8266 module with the first method described but this time using the ESP8266_Server_solo_just_need_power.txt code. Configure this code on another module using Arduino. Note that this module also requires the modem name and password. After uploading the code, the module will announce its MAC address and its own address on each restart. You will need this address for the first module or the reporter connected to the microcontroller. This server module doesn't need anything else except for 3.3 volts to continue operating. Now you can issue your commands in soifgo; the server module will receive them and transfer them to the reporter module. You can network several soifgos with several reporters, but there will be only one server module
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 GET API
-In soifdesign, you can easily make GET API requests. To do this, you first need to find the hosting site, obtain the key and address, and then configure the button behavior and server request. Set the address field, filter field, and key field so that in the soifdesign run mode, the request is automatically sent, and the result is displayed on the created button. Note that there are two types of responses:
+In soifgo, you can easily make GET API requests. To do this, you first need to find the hosting site, obtain the key and address, and then configure the button behavior and server request. Set the address field, filter field, and key field so that in the soifgo run mode, the request is automatically sent, and the result is displayed on the created button. Note that there are two types of responses:
 
 Text Response: Set the filter field to 0. If you have a custom response
 
@@ -679,7 +679,7 @@ Go to the play page and see the updated price. For other APIs, you need to get t
 
 Graph :
 
-Graphs in soifdesign receive values from the button's behavior on the receiver, whether through Bluetooth, API, or server, and they only accept integers between 0 and 99,999. Graphs work with three schedules: internal, external, and oscilloscope. Each graph can have its own specific address, color, and schedule. Graphs are saved in the soifdesign Graph folder with the page folder name and the initial button name at the bottom of the graph, and this process continues until the graph is fully drawn and then saved. If the connection is interrupted, the graphing stops but will resume once reconnected. However, if you exit the program, graphing will not continue, and upon restarting the program, the first page will replace the previously named page. To avoid overwriting, you can take a backup or change the button name so that new files are saved separately from the previous ones. If you have multiple graphs with different names for the same button, don't worry. In the end, in graph review mode, simply change the button name to the corresponding graph name to summon and review that graph.
+Graphs in soifgo receive values from the button's behavior on the receiver, whether through Bluetooth, API, or server, and they only accept integers between 0 and 99,999. Graphs work with three schedules: internal, external, and oscilloscope. Each graph can have its own specific address, color, and schedule. Graphs are saved in the soifgo Graph folder with the page folder name and the initial button name at the bottom of the graph, and this process continues until the graph is fully drawn and then saved. If the connection is interrupted, the graphing stops but will resume once reconnected. However, if you exit the program, graphing will not continue, and upon restarting the program, the first page will replace the previously named page. To avoid overwriting, you can take a backup or change the button name so that new files are saved separately from the previous ones. If you have multiple graphs with different names for the same button, don't worry. In the end, in graph review mode, simply change the button name to the corresponding graph name to summon and review that graph.
 
 In graphs, four modes are considered:
 
@@ -698,7 +698,7 @@ With a click on any running graph, a list view (Run/Stop View) will be displayed
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 ## Keywords
-- soifdesign
+- soifgo
 - swift-design
 - custom-html
 - android-app
@@ -801,7 +801,7 @@ Fourth line: Delay time in seconds (only numbers)
 
 Phone Sensor:
 
-In the Phone Sensor section, you can use the sensors inside the phone in soifdesign. These sensors work normally, and if you select the active options of these sensors, the program can use the values of these sensors. By enabling the Display Sensor Values option, you can see the values and addresses of these sensors.
+In the Phone Sensor section, you can use the sensors inside the phone in soifgo. These sensors work normally, and if you select the active options of these sensors, the program can use the values of these sensors. By enabling the Display Sensor Values option, you can see the values and addresses of these sensors.
 
 Preferably, these sensors are included in the ending addresses 991 to 994 so that buttons can read and display them through these addresses. The application of reading these sensors can lead to button effects. To read the sensors, just set the button behavior to the Bluetooth Receive mode and then enter the sensor address:
 
@@ -825,17 +825,17 @@ Important: In the section for setting the sensor to be sent, configuring another
 
 
 
-# 🔌 Real-Time Input Injection into HTML via soifdesign
+# 🔌 Real-Time Input Injection into HTML via soifgo
 
 
-### 🌟 soifdesign: Dynamic HTML Interaction Framework
+### 🌟 soifgo: Dynamic HTML Interaction Framework
 
-soifdesign allows users to connect real-time data sources—like sensors, APIs, or Bluetooth—to dynamic HTML views. Here's how the system works step-by-step:
+soifgo allows users to connect real-time data sources—like sensors, APIs, or Bluetooth—to dynamic HTML views. Here's how the system works step-by-step:
 
 ---
 
 #### ⚙️ Step 1: Configure Input Sources
-Within the soifdesign interface, the user defines what each button represents:
+Within the soifgo interface, the user defines what each button represents:
 - **Button 1** might be linked to the phone's light sensor.
 - **Button 2** could be set to receive data from Bluetooth.
 - And so on up to Button 40.
@@ -863,7 +863,7 @@ Example before transformation:
 <h2>*val1#</h2>
 ```
 
-After soifdesign processes it (either automatically or via your ApplyHTMLVal function):
+After soifgo processes it (either automatically or via your ApplyHTMLVal function):
 ```html
 <h2><span id='*val1#'>*val1#</span></h2>
 ```
@@ -873,7 +873,7 @@ Example before transformation:
 <h2>*val1#  *val3#</h2>
 ```
 
-After soifdesign processes it (either automatically or via your ApplyHTMLVal function):
+After soifgo processes it (either automatically or via your ApplyHTMLVal function):
 ```html
 <h2><span id='*val1#'>*val1#</span>  <span id='*val3#'>*val3#</span></h2>
 ```
