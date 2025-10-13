@@ -45,7 +45,7 @@ soifgo is an Android application that provides users with advanced capabilities 
 ## **Installation & Setup**  
 ### **Download & Access**  
 soifgo is available for download from multiple sources:  
-- [Apkpure](https://apkpure.com/soifgo/soifgo.ssm20985)  
+- [Apkpure](https://apkpure.com/soifgo/soifgo.saeidmoghadam)  
 - [GitHub Repository](https://github.com/soifgo/soifgo)  
 - [Google Drive]([https://drive.google.com/open?id=17YyAkehXi9yJsomCJNS9DfSHyL3hHiMH&usp=drive_fs](https://drive.google.com/file/d/1VwCc8S-vnl2r8UlI4RhWkUh228GJG53-/view?usp=drive_link)
 
