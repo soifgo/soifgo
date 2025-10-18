@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>SoifGo – Simple Page</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     body {
       font-family: sans-serif;
@@ -15,6 +16,17 @@
       color: white;
       padding: 1em;
       text-align: center;
+    }
+    h1 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 1.8em;
+    }
+    h1 img {
+      height: 40px;
+      vertical-align: middle;
     }
     nav {
       display: flex;
@@ -38,11 +50,21 @@
     section.active {
       display: block;
     }
+    a {
+      color: #0055aa;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1>SoifGo</h1>
+    <h1>
+      <img src="soifgo-logo.png" alt="SoifGo Logo">
+      SoifGo
+    </h1>
     <p>Simple interface with download links and optional README</p>
   </header>
 
@@ -55,27 +77,30 @@
   <section id="download" class="active">
     <h2>Download SoifGo</h2>
     <ul>
-      <li><a href="#">Apkpure</a></li>
+      <li><a href="https://apkpure.com/soifgo/soifgo.saeidmoghadam">Apkpure</a></li>
       <li><a href="https://github.com/soifgo/soifgo/releases">GitHub Releases</a></li>
-      <li><a href="#">Google Drive</a></li>
+      <li><a href="https://drive.google.com/file/d/1GLcN6C-ZvAkIKzcbBj1doKdjpmnFDEZg/view?usp=drive_link">Google Drive</a></li>
     </ul>
+    <p><strong>Note:</strong> Enable “Install from unknown sources” in your Android settings before installing the APK.</p>
   </section>
 
   <section id="readme">
     <h2>README</h2>
     <p><strong>SoifGo</strong> is the natural evolution of SoifDesign—focused on usability, interaction, and respect for the user.</p>
     <ul>
-      <li>Bluetooth serial communication</li>
+      <li>Bluetooth serial communication with customizable formats</li>
       <li>RGB control for WS281x modules</li>
-      <li>File and sensor management</li>
+      <li>File management for HTML, PDF, images, and notes</li>
+      <li>Sensor-based effects using phone sensors</li>
+      <li>Graph plotting with zoom, pause, and resume</li>
     </ul>
     <p>For full documentation, visit the <a href="https://github.com/soifgo/soifgo">GitHub repository</a>.</p>
   </section>
 
   <section id="about">
     <h2>About the Developer</h2>
-    <p>Saeid Moghadam – passionate about clarity, usability, and real-world testing.</p>
-    <p>Email: SSMQQMSS@gmail.com</p>
+    <p><strong>Saeid Moghadam</strong> is a documentation perfectionist and user-focused developer who builds with empathy and precision.</p>
+    <p>Email: <a href="mailto:SSMQQMSS@gmail.com">SSMQQMSS@gmail.com</a></p>
   </section>
 
   <script>
