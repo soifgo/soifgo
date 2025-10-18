@@ -2,49 +2,87 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>SoifGo – Official Project by Saeid Moghadam</title>
+  <title>SoifGo – Simple Page</title>
   <style>
     body {
       font-family: sans-serif;
-      background-color: #f9f9f9;
-      color: #333;
-      max-width: 800px;
-      margin: auto;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #0055aa;
+      color: white;
+      padding: 1em;
+      text-align: center;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: #eee;
+    }
+    nav button {
+      margin: 0.5em;
+      padding: 0.5em 1em;
+      border: none;
+      background-color: #ddd;
+      cursor: pointer;
+    }
+    nav button:hover {
+      background-color: #ccc;
+    }
+    section {
       padding: 2em;
-      line-height: 1.8;
+      display: none;
     }
-    h1 {
-      color: #0055aa;
-    }
-    .signature {
-      margin-top: 3em;
-      font-style: italic;
-      color: #666;
+    section.active {
+      display: block;
     }
   </style>
 </head>
 <body>
-  <h1>SoifGo</h1>
-  <p><strong>SoifGo</strong> is the natural evolution of the SoifDesign project—focused on usability, interaction, and respect for the user.</p>
-  <p>This Android application offers advanced Bluetooth communication, RGB control, file management, and sensor-based interactions, all designed to deliver a real, tested experience for users.</p>
-  <p>All documentation is crafted with clarity, precision, and print-friendly formatting to ensure no user is left confused or frustrated.</p>
+  <header>
+    <h1>SoifGo</h1>
+    <p>Simple interface with download links and optional README</p>
+  </header>
 
-  <h2>Features</h2>
-  <ul>
-    <li>Serial Bluetooth communication with customizable formats</li>
-    <li>RGB lighting control for WS2812, WS2813, WS2815, and WS2811 modules</li>
-    <li>File management for HTML, PDF, images, and notes</li>
-    <li>API and server interaction via GET/POST requests</li>
-    <li>Sensor-based effects using phone's light, motion, and magnetic sensors</li>
-    <li>Graph plotting with zoom, pause, and resume capabilities</li>
-  </ul>
+  <nav>
+    <button onclick="showSection('download')">Download</button>
+    <button onclick="showSection('readme')">README</button>
+    <button onclick="showSection('about')">About</button>
+  </nav>
 
-  <h2>About the Developer</h2>
-  <p><strong>Saeid Moghadam</strong> is a documentation perfectionist and user-focused developer who builds with empathy and precision. SoifGo reflects his commitment to clarity, usability, and real-world testing.</p>
+  <section id="download" class="active">
+    <h2>Download SoifGo</h2>
+    <ul>
+      <li><a href="#">Apkpure</a></li>
+      <li><a href="https://github.com/soifgo/soifgo/releases">GitHub Releases</a></li>
+      <li><a href="#">Google Drive</a></li>
+    </ul>
+  </section>
 
-  <div class="signature">
-    © SoifGo by Saeid Moghadam – Official Edition<br>
-    Email: SSMQQMSS@gmail.com
-  </div>
+  <section id="readme">
+    <h2>README</h2>
+    <p><strong>SoifGo</strong> is the natural evolution of SoifDesign—focused on usability, interaction, and respect for the user.</p>
+    <ul>
+      <li>Bluetooth serial communication</li>
+      <li>RGB control for WS281x modules</li>
+      <li>File and sensor management</li>
+    </ul>
+    <p>For full documentation, visit the <a href="https://github.com/soifgo/soifgo">GitHub repository</a>.</p>
+  </section>
+
+  <section id="about">
+    <h2>About the Developer</h2>
+    <p>Saeid Moghadam – passionate about clarity, usability, and real-world testing.</p>
+    <p>Email: SSMQQMSS@gmail.com</p>
+  </section>
+
+  <script>
+    function showSection(id) {
+      document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+  </script>
 </body>
 </html>
