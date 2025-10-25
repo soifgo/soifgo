@@ -697,24 +697,7 @@ With a click on any running graph, a list view (Run/Stop View) will be displayed
 
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-## Keywords
-- soifgo
-- swift-design
-- custom-html
-- android-app
-- bluetooth-serial
-- apk
-- API
-- Programmable Buttons
-- android
-- swift
-- Graph
-- custom-ui
-- Bluetooth-microcontrollers
-- Bluetooth Serial Interface to Send data to microcontrollers
-- HC-05
-- Bluetooth UART
-- RGB program
+
 
 
 note out :
@@ -893,4 +876,21 @@ function setVal(index, value) {
 - The rest of the interface (e.g. signal generator, controls) **remains intact**, avoiding reinitialization.
 - This lets you process, visualize, and manipulate sensor data, all inside HTML—smoothly and live.
 
-
+## Keywords
+- soifgo
+- swift-design
+- custom-html
+- android-app
+- bluetooth-serial
+- apk
+- API
+- Programmable Buttons
+- android
+- swift
+- Graph
+- custom-ui
+- Bluetooth-microcontrollers
+- Bluetooth Serial Interface to Send data to microcontrollers
+- HC-05
+- Bluetooth UART
+- RGB program
