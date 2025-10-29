@@ -33,14 +33,20 @@
       justify-content: center;
       background-color: #eee;
     }
-    nav button {
+    nav button, nav a.button-link {
       margin: 0.5em;
       padding: 0.5em 1em;
       border: none;
       background-color: #ddd;
       cursor: pointer;
+      font-size: 1em;
+      text-align: center;
+      text-decoration: none;
+      color: black;
+      border-radius: 4px;
+      display: inline-block;
     }
-    nav button:hover {
+    nav button:hover, nav a.button-link:hover {
       background-color: #ccc;
     }
     section {
@@ -72,6 +78,7 @@
     <button onclick="showSection('download')">Download</button>
     <button onclick="showSection('readme')">README</button>
     <button onclick="showSection('about')">About</button>
+    <a href="tutorials\list.html" class="button-link">Tutorial</a>
   </nav>
 
   <section id="download" class="active">
