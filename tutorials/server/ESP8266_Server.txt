@@ -1,0 +1,121 @@
+#include <ESP8266WiFi.h>
+#include <ESP8266WebServer.h>
+#include <ArduinoJson.h>
+
+const char* ssid = "TPLINK";
+const char* password = "abcd1234";
+
+IPAddress ip(192, 168, 1, 104);
+IPAddress gateway(192, 168, 1, 1);
+IPAddress subnet(255, 255, 255, 0);
+
+ESP8266WebServer server(80);
+StaticJsonDocument<2048> dataStore;
+
+unsigned long lastCheckTime = 0;
+
+void setup() {
+  Serial.begin(115200);
+
+  WiFi.config(ip, gateway, subnet);
+  WiFi.begin(ssid, password);
+
+  Serial.println("Connecting to WiFi...");
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("Connected to WiFi"); 
+  Serial.print("IP Address: ");
+   Serial.println(WiFi.localIP());
+    Serial.print("MAC Address: ");
+     Serial.println(WiFi.macAddress());
+
+  server.on("/", HTTP_GET, []() {
+    server.send(200, "application/json", "{\"message\":\"ESP8266 dynamic key server active\"}");
+  });
+
+  server.on("/keys", HTTP_GET, []() {
+    JsonArray keys = dataStore.createNestedArray("_keys");
+    for (JsonPair kv : dataStore.as<JsonObject>()) {
+      if (String(kv.key().c_str()) != "_keys") {
+        keys.add(kv.key());
+      }
+    }
+    String response;
+    serializeJson(keys, response);
+    server.send(200, "application/json", response);
+  });
+
+  server.onNotFound([]() {
+    String uri = server.uri();
+
+    if (server.method() == HTTP_POST) {
+      if (server.hasArg("plain")) {
+        String body = server.arg("plain");
+        StaticJsonDocument<512> incoming;
+        DeserializationError error = deserializeJson(incoming, body);
+        if (error) {
+          server.send(400, "application/json", "{\"status\":\"error\", \"message\":\"Invalid JSON\"}");
+          return;
+        }
+
+        JsonObject stored;
+        if (dataStore[uri].is<JsonObject>()) {
+          stored = dataStore[uri].as<JsonObject>();
+        } else {
+          stored = dataStore.createNestedObject(uri);
+        }
+
+        for (JsonPair kv : incoming.as<JsonObject>()) {
+          stored[kv.key()] = kv.value();
+        }
+
+        String response;
+        serializeJson(stored, response);
+        server.send(200, "application/json", response);
+
+      } else {
+        server.send(400, "application/json", "{\"status\":\"error\", \"message\":\"No data received\"}");
+      }
+
+    } else if (server.method() == HTTP_GET) {
+      if (dataStore.containsKey(uri)) {
+        String response;
+        serializeJson(dataStore[uri], response);
+        server.send(200, "application/json", response);
+      } else {
+        server.send(404, "application/json", "{\"status\":\"error\", \"message\":\"Key not found\"}");
+      }
+
+    } else if (server.method() == HTTP_DELETE) {
+      if (dataStore.containsKey(uri)) {
+        dataStore.remove(uri);
+        server.send(200, "application/json", "{\"status\":\"success\", \"message\":\"Key deleted\"}");
+      } else {
+        server.send(404, "application/json", "{\"status\":\"error\", \"message\":\"Key not found\"}");
+      }
+
+    } else {
+      server.send(405, "application/json", "{\"status\":\"error\", \"message\":\"Method not allowed\"}");
+    }
+  });
+
+  server.begin();
+}
+
+void loop() {
+  server.handleClient();
+  checkWiFiConnection();
+  yield();
+}
+
+void checkWiFiConnection() {
+  unsigned long currentTime = millis();
+  if (currentTime - lastCheckTime >= 10000) {
+    lastCheckTime = currentTime;
+    if (WiFi.status() != WL_CONNECTED) {
+      WiFi.begin(ssid, password);
+    }
+  }
+}
