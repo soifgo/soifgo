@@ -22,6 +22,7 @@ unsigned long lastCheckTime = 0;
 void saveStringToEEPROM(int start, const String& str) {
   for (int i = 0; i < str.length(); i++) {
     EEPROM.write(start + i, str[i]);
+    yield();
   }
   EEPROM.write(start + str.length(), '\0');
 }
@@ -33,6 +34,7 @@ String readStringFromEEPROM(int start) {
     char c = EEPROM.read(start + i);
     if (c == '\0') break;
     data[i++] = c;
+    yield();
   }
   data[i] = '\0';
   return String(data);
@@ -79,16 +81,22 @@ void setup() {
   WiFi.begin(wifiName.c_str(), wifiPass.c_str());
 
   Serial.println("Connecting to WiFi...");
-  while (WiFi.status() != WL_CONNECTED) {
+  unsigned long startAttemptTime = millis();
+  while (WiFi.status() != WL_CONNECTED && millis() - startAttemptTime < 10000) {
     delay(500);
     Serial.print(".");
+    yield();
   }
 
-  Serial.println("\nConnected to WiFi");
-  Serial.print("IP Address: ");
-  Serial.println(WiFi.localIP());
-  Serial.print("MAC Address: ");
-  Serial.println(WiFi.macAddress());
+  if (WiFi.status() == WL_CONNECTED) {
+    Serial.println("\nConnected to WiFi");
+    Serial.print("IP Address: ");
+    Serial.println(WiFi.localIP());
+    Serial.print("MAC Address: ");
+    Serial.println(WiFi.macAddress());
+  } else {
+    Serial.println("\nFailed to connect to WiFi.");
+  }
 
   server.on("/", HTTP_GET, []() {
     server.send(200, "application/json", "{\"message\":\"ESP8266 dynamic key server active\"}");
@@ -135,6 +143,10 @@ void setup() {
 
       for (JsonPair kv : incoming.as<JsonObject>()) {
         stored[kv.key()] = kv.value();
+        if (WiFi.status() == WL_CONNECTED) {
+          Serial.println(" " + String(kv.key().c_str()) + ":" + String(kv.value().as<String>()));
+        }
+        yield();
       }
 
       String response;
@@ -169,6 +181,8 @@ void handleSerialFromMicro() {
   static String serialBuffer = "";
   while (Serial.available()) {
     char c = Serial.read();
+    serialBuffer += c;
+    yield();
 
     if (c == '\n') {
       serialBuffer.trim();
@@ -231,11 +245,10 @@ void handleSerialFromMicro() {
       }
 
       serialBuffer = "";
-    } else {
-      serialBuffer += c;
-      if (serialBuffer.length() > 256) {
-        serialBuffer = "";
-      }
+    }
+
+    if (serialBuffer.length() > 256) {
+      serialBuffer = "";
     }
   }
 }
