@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RANGMANG RGB Controller</title>
+</head>
+<body>
+  <h1>RANGMANG</h1>
+  <p><strong>RANGMANG</strong> is an RGB controller based on the ATmega128 microcontroller, programmed using BASCOM.</p>
+
+
+  <img src="rangmang.png" alt="Wiring 1">
+
+  <h2>LED Strip Types and Features</h2>
+  <p>The following table introduces various LED strips and their specifications:</p>
+
+  <table border="1" cellspacing="0" cellpadding="8">
+    <thead>
+      <tr>
+        <th>LED Strip Model</th>
+        <th>Operating Voltage</th>
+        <th>Control Type</th>
+        <th>Addressable</th>
+        <th>Special Features</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>WS2811</td>
+        <td>12V</td>
+        <td>Digital</td>
+        <td>Yes</td>
+        <td>Suitable for long strips</td>
+      </tr>
+      <tr>
+        <td>WS2812B</td>
+        <td>5V</td>
+        <td>Digital</td>
+        <td>Yes</td>
+        <td>Built-in chip in each LED</td>
+      </tr>
+      <tr>
+        <td>WS2813</td>
+        <td>5V</td>
+        <td>Digital</td>
+        <td>Yes</td>
+        <td>Resistant to data line failure</td>
+      </tr>
+      <tr>
+        <td>WS2815</td>
+        <td>12V</td>
+        <td>Digital</td>
+        <td>Yes</td>
+        <td>Industrial-grade, low voltage drop</td>
+      </tr>
+      <tr>
+        <td>SK6812</td>
+        <td>5V</td>
+        <td>Digital</td>
+        <td>Yes</td>
+        <td>Supports RGBW (white channel)</td>
+      </tr>
+      <tr>
+        <td>SK9822</td>
+        <td>5V</td>
+        <td>Digital</td>
+        <td>Yes</td>
+        <td>High-speed, similar to APA102</td>
+      </tr>
+      <tr>
+        <td>APA102</td>
+        <td>5V</td>
+        <td>Digital (Clock + Data)</td>
+        <td>Yes</td>
+        <td>Fast animations, dual-wire control</td>
+      </tr>
+      <tr>
+        <td>TM1814</td>
+        <td>12V</td>
+        <td>Digital</td>
+        <td>Yes</td>
+        <td>RGBW, high-power applications</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Source Code</h2>
+  <p>You can access the BASCOM source code from the ZIP file below:</p>
+  <p><a href="Bascom_Rangmang.zip">Download BASCOM Source ZIP</a></p>
+
+  <h2>Programming the Microcontroller</h2>
+  <p>Using USBasp or other programmers, you can easily flash the microcontroller using the file below:</p>
+  <p><a href="dude 6.4_mega128_999 pixel.zip">Download Programmer ZIP</a></p>
+
+  <h2>PCB and Schematic Files</h2>
+  <ul>
+    <li><a href="RANGMANG209 pcb   (Atmega 128).pdf">Download PCB (PDF)</a></li>
+    <li><a href="RANGMANG209 shematic (Atmega128 ).pdf">Download Schematic (PDF)</a></li>
+    <li><a href="RANGMANG Proteus(Atmega128A).zip">Download Proteus File</a></li>
+  </ul>
+
+  <h2>UART Programming Guide</h2>
+  <p>Refer to the following document for serial UART programming standards and instructions:</p>
+  <p><a href="RANGMANG209.pdf">Download UART Guide (PDF)</a></p>
+
+  <h2>Power Regulation Notes</h2>
+  <p>
+    You may customize the microcontroller's power regulation section based on your needs:
+    <ul>
+      <li>For 5V LED strips: You can remove the regulator and directly power the microcontroller from the strip's 5V socket.</li>
+      <li>For 12V LED strips: You must use a 12V-to-5V regulator to power the microcontroller safely.</li>
+<li>Note: To prevent reverse connection of the LED strip to the module, use a properly keyed connector. If necessary, add a diode in series with the microcontroller's power input to protect against polarity reversal</li>
+    </ul>
+  </p>
+</body>
+</html>
