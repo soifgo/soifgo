@@ -3,36 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <title>SoifGo – Tutorial List</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Mobile scaling -->
   <style>
     body {
       font-family: sans-serif;
       background-color: #f9f9f9;
-      padding: 2em;
+      padding: 1em;
+      margin: 0;
     }
     h1 {
       color: #0055aa;
       text-align: center;
+      font-size: 1.6em;
+      margin: 1em 0;
     }
     ul {
       list-style-type: none;
       padding: 0;
+      margin: 0 auto;
       max-width: 600px;
-      margin: 2em auto;
     }
     li {
       background-color: #eee;
-      margin: 1em 0;
-      padding: 1em;
-      border-radius: 6px;
+      margin: 0.7em 0;
+      padding: 1.2em;
+      border-radius: 8px;
       font-size: 1.1em;
     }
     a {
       color: #0055aa;
       text-decoration: none;
       font-weight: bold;
+      display: block; /* makes the whole box clickable */
     }
     a:hover {
       text-decoration: underline;
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.3em;
+      }
+      li {
+        font-size: 1em;
+        padding: 1em;
+      }
     }
   </style>
 </head>
@@ -41,11 +57,11 @@
   <h1>📚 SoifGo Tutorial List</h1>
 
   <ul>
-    <li><a href="server\Local-server.html">Local Server Setup (Fastify on PC)</a></li>
-    <li><a href="server\ESP8266_wifi.html">ESP32 Server (Using WiFiServer or WebServer)</a></li>
-    <li><a href="server\Api-fetching.html">Fetching APIs (From External Servers)</a></li>
-    <li><a href="server\Bluetooth_Send_Receive.html">Bluetooth Send Receive</a></li>
-    <li><a href="server\Rangmang.html">RANGMANG</a></li>
+    <li><a href="server/Local-server.html">Local Server Setup (Fastify on PC)</a></li>
+    <li><a href="server/ESP8266_wifi.html">ESP32 Server (Using WiFiServer or WebServer)</a></li>
+    <li><a href="server/Api-fetching.html">Fetching APIs (From External Servers)</a></li>
+    <li><a href="server/Bluetooth_Send_Receive.html">Bluetooth Send Receive</a></li>
+    <li><a href="server/Rangmang.html">RANGMANG</a></li>
   </ul>
 
 </body>
