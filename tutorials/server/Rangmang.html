@@ -97,7 +97,107 @@
 
   <h2>UART Programming Guide</h2>
   <p><a href="RANGMANG209.pdf">Download UART Guide (PDF)</a></p>
+ <p>Download the soifgo file:</p>
 
+
+
+<video controls width="80%" height="500">
+  <source src="https://media.githubusercontent.com/media/soifgo/soifgo/refs/heads/main/tutorials/server/rangmang_dance.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+
+  <h2>RANGMANG Dance Mode Configuration</h2>
+
+<p>
+This configuration defines how the RANGMANG module controls LED dance modes.  
+Each row encodes the following parameters:
+</p>
+
+<ul>
+  <li><strong>Channel</strong> – 2 digits identifying the channel.</li>
+  <li><strong>Mode</strong> – 2 digits (01–38). Each mode represents a dance style.</li>
+  <li><strong>Red / Green / Blue</strong> – 3 digits each. Normal range is 0–250.  
+    Special values:  
+    <ul>
+      <li>251 → Random selection from lower range</li>
+      <li>252 → Random slightly above 250</li>
+      <li>253 → Random mid-range</li>
+      <li>254 → Random higher than mid-range</li>
+      <li>255 → Random maximum</li>
+    </ul>
+  </li>
+  <li><strong>Dance Time 1</strong> – 3 digits, milliseconds per pixel move (first timing).</li>
+  <li><strong>Dance Time 2</strong> – 3 digits, milliseconds per pixel move (second timing).</li>
+  <li><strong>Pixel Count</strong> – 3 digits, number of dancing pixels.</li>
+</ul>
+
+<table border="1" cellpadding="6">
+  <tr>
+    <th>Channel</th>
+    <th>Mode</th>
+    <th>Red</th>
+    <th>Green</th>
+    <th>Blue</th>
+    <th>Dance Time 1 (ms)</th>
+    <th>Dance Time 2 (ms)</th>
+    <th>Pixel Count</th>
+  </tr>
+  <tr>
+    <td>01</td>
+    <td>12</td>
+    <td>251</td>
+    <td>251</td>
+    <td>251</td>
+    <td>001</td>
+    <td>001</td>
+    <td>128</td>
+  </tr>
+</table>
+
+<a href="soifgo_rangmang_design.zip" download>📦 Download soifgo_rangmang_design.zip</a>
+
+
+  <h2>RANGMANG Fixed Color Mode Configuration</h2>
+
+<p>
+In fixed color mode, the configuration format is slightly different:
+</p>
+
+<ul>
+  <li><strong>Channel</strong> – 2 digits (e.g., 01 for module 1).</li>
+  <li><strong>Mode</strong> – must always be 00.</li>
+  <li><strong>Red / Green / Blue</strong> – 3 digits each, range 000–255.</li>
+  <li><strong>Start Pixel</strong> – 3 digits, the first pixel to color.</li>
+  <li><strong>End Pixel</strong> – 3 digits, the last pixel to color.</li>
+  <li><strong>Memory Slot</strong> – 3 digits, memory index (001–100 available).</li>
+</ul>
+
+<table border="1" cellpadding="6">
+  <tr>
+    <th>Channel</th>
+    <th>Mode</th>
+    <th>Red</th>
+    <th>Green</th>
+    <th>Blue</th>
+    <th>Start Pixel</th>
+    <th>End Pixel</th>
+    <th>Memory Slot</th>
+  </tr>
+  <tr>
+    <td>01</td>
+    <td>00</td>
+    <td>123</td>
+    <td>123</td>
+    <td>123</td>
+    <td>001</td>
+    <td>045</td>
+    <td>001</td>
+  </tr>
+</table>
+
+
+  
   <h2>Power Regulation Notes</h2>
   <ul>
     <li>For 5V LED strips: You can remove the regulator and directly power the microcontroller from the strip's 5V socket.</li>
@@ -106,3 +206,4 @@
   </ul>
 </body>
 </html>
+
