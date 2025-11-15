@@ -4,101 +4,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>SoifGo – Simple Page</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    body {
-      font-family: sans-serif;
-      background-color: #f4f4f4;
-      margin: 0;
-      padding: 0;
-      font-size: 16px;
-      line-height: 1.5;
-    }
-    header {
-      background-color: #0055aa;
-      color: white;
-      padding: 1em;
-      text-align: center;
-    }
-    h1 {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      font-size: 1.8em;
-      flex-wrap: wrap;
-    }
-    h1 img {
-      height: 40px;
-      max-width: 100%;
-      vertical-align: middle;
-    }
-    nav {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      background-color: #eee;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
+    body { font-family: sans-serif; background:#f4f4f4; margin:0; font-size:16px; line-height:1.5; }
+    header { background:#0055aa; color:white; padding:1em; text-align:center; }
+    h1 { display:flex; align-items:center; justify-content:center; gap:10px; font-size:1.8em; flex-wrap:wrap; }
+    h1 img { height:40px; max-width:100%; }
+    nav { display:flex; justify-content:center; flex-wrap:wrap; background:#eee; position:sticky; top:0; z-index:1000; }
     nav button, nav a.button-link {
-      margin: 0.5em;
-      padding: 0.5em 1em;
-      border: none;
-      background-color: #ddd;
-      cursor: pointer;
-      font-size: 1em;
-      text-align: center;
-      text-decoration: none;
-      color: black;
-      border-radius: 4px;
-      display: inline-block;
+      margin:0.5em; padding:0.5em 1em; border:none; background:#ddd; cursor:pointer;
+      font-size:1em; border-radius:4px; text-decoration:none; color:black;
     }
-    nav button:hover, nav a.button-link:hover {
-      background-color: #ccc;
-    }
-    section {
-      padding: 1.5em;
-      max-width: 800px;
-      margin: auto;
-      display: none;
-    }
-    section.active {
-      display: block;
-    }
-    a {
-      color: #0055aa;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-      margin: 1em auto;
-    }
-
-    /* 📱 Mobile responsiveness */
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 1.4em;
-        flex-direction: column;
-      }
-      nav {
-        flex-direction: column;
-        align-items: center;
-      }
-      nav button, nav a.button-link {
-        width: 95%;
-        font-size: 1.1em;
-        margin: 0.3em 0;
-      }
-      section {
-        padding: 0.8em;
-      }
+    nav button:hover, nav a.button-link:hover { background:#ccc; }
+    section { display:none; padding:1.5em; max-width:800px; margin:auto; }
+    section.active { display:block; }
+    img { max-width:100%; height:auto; display:block; margin:1em auto; }
+    @media (max-width:600px) {
+      h1 { font-size:1.4em; flex-direction:column; }
+      nav { flex-direction:column; align-items:center; }
+      nav button, nav a.button-link { width:95%; font-size:1.1em; margin:0.3em 0; }
+      section { padding:0.8em; }
     }
   </style>
 </head>
@@ -112,13 +36,13 @@
   </header>
 
   <nav>
-    <button onclick="showSection('download')">Download</button>
+    <button id="downloadBtn" onclick="showDownload()" style="display:none;">Download</button>
     <button onclick="showSection('readme')">README</button>
     <button onclick="showSection('about')">About</button>
-    <a href="tutorials/list.html" class="button-link">Tutorial</a>
+    <a href="tutorials/list.html" class="button-link" onclick="showTutorial()">Tutorial</a>
   </nav>
 
-  <section id="download" class="active">
+  <section id="download">
     <h2>Download SoifGo</h2>
     <ul>
       <li><a href="https://github.com/soifgo/soifgo/releases/download/1.16/soifgo.apk">Direct</a></li>
@@ -130,19 +54,11 @@
   <section id="readme">
     <h2>README</h2>
     <p><strong>SoifGo</strong> is the natural evolution of SoifDesign—focused on usability, interaction, and respect for the user.</p>
-    <ul>
-      <li>Bluetooth serial communication with customizable formats</li>
-      <li>RGB control for WS281x modules</li>
-      <li>File management for HTML, PDF, images, and notes</li>
-      <li>Sensor-based effects using phone sensors</li>
-      <li>Graph plotting with zoom, pause, and resume</li>
-    </ul>
-    <p>For full documentation, visit the <a href="https://github.com/soifgo/soifgo">GitHub repository</a>.</p>
   </section>
 
   <section id="about">
     <h2>About the Developer</h2>
-    <p><strong>Saeid Moghadam</strong> is a documentation perfectionist and user-focused developer who builds with empathy and precision.</p>
+    <p><strong>Saeid Moghadam</strong> is a documentation perfectionist and user-focused developer.</p>
     <p>Email: <a href="mailto:SSMQQMSS@gmail.com">SSMQQMSS@gmail.com</a></p>
   </section>
 
@@ -150,6 +66,20 @@
     function showSection(id) {
       document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
+
+      document.getElementById('downloadBtn').style.display = 'inline-block';
+    }
+
+    function showDownload() {
+      document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+      document.getElementById('download').classList.add('active');
+
+      document.getElementById('downloadBtn').style.display = 'none';
+    }
+
+    function showTutorial() {
+
+      document.getElementById('downloadBtn').style.display = 'inline-block';
     }
   </script>
 
