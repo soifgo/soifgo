@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>SoifGo – Simple Page</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
@@ -11,6 +11,8 @@
       background-color: #f4f4f4;
       margin: 0;
       padding: 0;
+      font-size: 16px;
+      line-height: 1.5;
     }
     header {
       background-color: #0055aa;
@@ -28,6 +30,7 @@
     }
     h1 img {
       height: 40px;
+      max-width: 100%;
       vertical-align: middle;
     }
     nav {
@@ -35,6 +38,9 @@
       justify-content: center;
       flex-wrap: wrap;
       background-color: #eee;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
     nav button, nav a.button-link {
       margin: 0.5em;
@@ -53,7 +59,9 @@
       background-color: #ccc;
     }
     section {
-      padding: 2em;
+      padding: 1.5em;
+      max-width: 800px;
+      margin: auto;
       display: none;
     }
     section.active {
@@ -65,6 +73,12 @@
     }
     a:hover {
       text-decoration: underline;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 1em auto;
     }
 
     /* 📱 Mobile responsiveness */
@@ -78,11 +92,12 @@
         align-items: center;
       }
       nav button, nav a.button-link {
-        width: 90%;
+        width: 95%;
         font-size: 1.1em;
+        margin: 0.3em 0;
       }
       section {
-        padding: 1em;
+        padding: 0.8em;
       }
     }
   </style>
@@ -106,9 +121,8 @@
   <section id="download" class="active">
     <h2>Download SoifGo</h2>
     <ul>
-        <li><a href="https://github.com/soifgo/soifgo/releases/download/1.16/soifgo.apk">Direct</a></li>
+      <li><a href="https://github.com/soifgo/soifgo/releases/download/1.16/soifgo.apk">Direct</a></li>
       <li><a href="https://apkpure.com/soifgo/soifgo.saeidmoghadam">Apkpure</a></li>
-    
     </ul>
     <p><strong>Note:</strong> Enable “Install from unknown sources” in your Android settings before installing the APK.</p>
   </section>
