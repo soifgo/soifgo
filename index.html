@@ -7,7 +7,16 @@
   <style>
     body { font-family: sans-serif; background:#f4f4f4; margin:0; font-size:16px; line-height:1.5; }
     header { background:#0055aa; color:white; padding:1em; text-align:center; }
-    h1 { display:flex; align-items:center; justify-content:center; gap:10px; font-size:1.8em; flex-wrap:wrap; }
+    h1 {
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      font-size:1.8em;
+      flex-wrap:wrap;
+      text-align:center;   
+      direction:ltr;      
+    }
     h1 img { height:40px; max-width:100%; }
     nav { display:flex; justify-content:center; flex-wrap:wrap; background:#eee; position:sticky; top:0; z-index:1000; }
     nav button, nav a.button-link {
@@ -30,7 +39,7 @@
   <header>
     <h1>
       <img src="soifgo-logo.png" alt="SoifGo Logo">
-      SoifGo
+      <span>SoifGo</span>
     </h1>
     <p>Simple interface with download links and optional README</p>
   </header>
@@ -66,7 +75,7 @@
     function showSection(id) {
       document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
-
+ 
       document.getElementById('downloadBtn').style.display = 'inline-block';
     }
 
