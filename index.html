@@ -5,33 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>SoifGo – Simple Page</title>
   <style>
-    body { font-family: sans-serif; background:#f4f4f4; margin:0; font-size:16px; line-height:1.5; }
-    header { background:#0055aa; color:white; padding:1em; text-align:center; }
+    body { font-family: sans-serif; background:#f4f4f4; margin:0; font-size:17px; line-height:1.6; }
+    header { background:#0055aa; color:white; padding:1.2em; text-align:center; }
     h1 {
       display:flex;
       align-items:center;
       justify-content:center;
-      gap:10px;
-      font-size:1.8em;
+      gap:12px;
+      font-size:2em;
       flex-wrap:wrap;
-      text-align:center;   
-      direction:ltr;      
+      text-align:center;
+      direction:ltr;
     }
-    h1 img { height:40px; max-width:100%; }
+    h1 img { height:48px; max-width:100%; }
     nav { display:flex; justify-content:center; flex-wrap:wrap; background:#eee; position:sticky; top:0; z-index:1000; }
     nav button, nav a.button-link {
-      margin:0.5em; padding:0.5em 1em; border:none; background:#ddd; cursor:pointer;
-      font-size:1em; border-radius:4px; text-decoration:none; color:black;
+      margin:0.6em; padding:0.7em 1.4em; border:none; background:#ddd; cursor:pointer;
+      font-size:1.1em; border-radius:5px; text-decoration:none; color:black;
     }
     nav button:hover, nav a.button-link:hover { background:#ccc; }
-    section { display:none; padding:1.5em; max-width:800px; margin:auto; }
+    section { display:none; padding:1.8em; max-width:800px; margin:auto; font-size:1.05em; }
     section.active { display:block; }
-    img { max-width:100%; height:auto; display:block; margin:1em auto; }
+    h2 { font-size:1.4em; margin-bottom:0.8em; }
+    img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
     @media (max-width:600px) {
-      h1 { font-size:1.4em; flex-direction:column; }
+      h1 { font-size:1.6em; flex-direction:column; }
       nav { flex-direction:column; align-items:center; }
-      nav button, nav a.button-link { width:95%; font-size:1.1em; margin:0.3em 0; }
-      section { padding:0.8em; }
+      nav button, nav a.button-link { width:95%; font-size:1.2em; margin:0.4em 0; }
+      section { padding:1em; }
     }
   </style>
 </head>
@@ -75,21 +76,23 @@
     function showSection(id) {
       document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
- 
       document.getElementById('downloadBtn').style.display = 'inline-block';
     }
 
     function showDownload() {
       document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
       document.getElementById('download').classList.add('active');
-
       document.getElementById('downloadBtn').style.display = 'none';
     }
 
     function showTutorial() {
-
       document.getElementById('downloadBtn').style.display = 'inline-block';
     }
+
+    // اجرای خودکار در اولین بار لود
+    window.onload = function() {
+      showDownload();
+    };
   </script>
 
   <img src="soifgo_pic01.png" alt="Recommended Converter">
