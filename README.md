@@ -32,7 +32,7 @@
 
 ## 📱 About SoifGo
 SoifGo is an Android application that provides users with advanced capabilities using **buttons and seek bars**.  
-
+[SoifGo](https://soifgo.github.io/soifgo/)
 ### 🔧 Features
 - 📡 **Bluetooth communication:** Sending and receiving serial Bluetooth data  
 - 🌐 **API server interaction & web browsing**  
