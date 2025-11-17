@@ -1,4 +1,4 @@
-[![Logo]([https://example.com/logo.png](https://github.com/soifgo/soifgo/blob/main/soifgo-logo.png))](https://github.com/soifgo)
+[![soifgo]([https://example.com/logo.png](https://github.com/soifgo/soifgo/blob/main/soifgo-logo.png))](https://github.com/soifgo)
 
 
 # 👋 Welcome to SoifGo
