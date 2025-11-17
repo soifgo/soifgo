@@ -5,52 +5,123 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>SoifGo – Simple Page</title>
   <style>
-    body { font-family: sans-serif; background:#f4f4f4; margin:0; font-size:17px; line-height:1.6; }
-    header { background:#0055aa; color:white; padding:1.2em; text-align:center; }
-    h1 {
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:12px;
-      font-size:2em;
-      flex-wrap:wrap;
-      text-align:center;
-      direction:ltr;
+    body {
+      font-family: sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.6;
     }
-    h1 img { height:48px; max-width:100%; }
-    nav { display:flex; justify-content:center; flex-wrap:wrap; background:#eee; position:sticky; top:0; z-index:1000; }
-    nav button, nav a.button-link {
-      margin:0.6em; padding:0.7em 1.4em; border:none; background:#ddd; cursor:pointer;
-      font-size:1.1em; border-radius:5px; text-decoration:none; color:black;
+
+    header {
+      background: #0055aa;
+      color: white;
+      padding: 1.2em;
+      text-align: center;
     }
-    nav button:hover, nav a.button-link:hover { background:#ccc; }
-    section { display:none; padding:1.8em; max-width:800px; margin:auto; font-size:1.05em; }
-    section.active { display:block; }
-    h2 { font-size:1.4em; margin-bottom:0.8em; }
-    img { max-width:100%; height:auto; display:block; margin:1.2em auto; }
-    @media (max-width:600px) {
-      h1 { font-size:1.6em; flex-direction:column; }
-      nav { flex-direction:column; align-items:center; }
-      nav button, nav a.button-link { width:95%; font-size:1.2em; margin:0.4em 0; }
-      section { padding:1em; }
+
+    header h1 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      font-size: 2em;
+      flex-wrap: wrap;
+      margin: 0;
+    }
+
+    header h1 img {
+      height: 36px;
+      max-width: 100%;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      background: #eee;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav button {
+      margin: 0.6em;
+      padding: 0.7em 1.4em;
+      border: none;
+      background: #ddd;
+      cursor: pointer;
+      font-size: 1.1em;
+      border-radius: 5px;
+      color: black;
+    }
+
+    nav button:hover {
+      background: #ccc;
+    }
+
+    section {
+      display: none;
+      padding: 1.8em;
+      max-width: 800px;
+      margin: auto;
+      font-size: 1.05em;
+    }
+
+    section.active {
+      display: block;
+    }
+
+    h2 {
+      font-size: 1.4em;
+      margin-bottom: 0.8em;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 1.2em auto;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.6em;
+        flex-direction: column;
+      }
+
+      nav {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      nav button {
+        width: 95%;
+        font-size: 1.2em;
+        margin: 0.4em 0;
+      }
+
+      section {
+        padding: 1em;
+        margin: 0 12px;
+      }
     }
   </style>
 </head>
 <body>
   <header>
     <h1>
-      <h1>SoifGo</h1>
+      SoifGo
       <img src="soifgo-logo.png" alt="SoifGo Logo">
-      <span></span>
     </h1>
-    <p>soifgo is an Android application that provides users with advanced capabilities using buttons and seek bars</p>
+    <p>SoifGo is an Android application that provides users with advanced capabilities using buttons and seek bars.</p>
   </header>
 
   <nav>
     <button id="downloadBtn" onclick="showDownload()" style="display:none;">Download</button>
     <button onclick="showSection('readme')">README</button>
     <button onclick="showSection('about')">About</button>
-    <a href="tutorials/list.html" class="button-link" onclick="showTutorial()">SoifGo Tutorial</a>
+    <button onclick="openTutorial()">SoifGo Tutorial</button>
   </nav>
 
   <section id="download">
@@ -62,14 +133,13 @@
     <p><strong>Note:</strong> Enable “Install from unknown sources” in your Android settings before installing the APK.</p>
   </section>
 
-<section id="readme">
-  <h2>README</h2>
-  <p><strong>SoifGo</strong> is the natural evolution of SoifDesign—focused on usability, interaction, and respect for the user.</p>
-  <p>For full README, visit 
-     <a href="https://github.com/soifgo/soifgo#readme" target="_blank">GitHub README</a>.
-  </p>
-</section>
-
+  <section id="readme">
+    <h2>README</h2>
+    <p><strong>SoifGo</strong> is the natural evolution of SoifDesign—focused on usability, interaction, and respect for the user.</p>
+    <p>For full README, visit 
+       <a href="https://github.com/soifgo/soifgo#readme" target="_blank">GitHub README</a>.
+    </p>
+  </section>
 
   <section id="about">
     <h2>About the Developer</h2>
@@ -90,10 +160,9 @@
       document.getElementById('downloadBtn').style.display = 'none';
     }
 
-    function showTutorial() {
-      document.getElementById('downloadBtn').style.display = 'inline-block';
+    function openTutorial() {
+      window.location.href = "tutorials/list.html";
     }
-
 
     window.onload = function() {
       showDownload();
