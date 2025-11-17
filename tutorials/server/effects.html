@@ -29,7 +29,6 @@
       }
     }
 
-    /* Base layout */
     html, body {
       background: var(--bg);
       color: var(--fg);
@@ -45,23 +44,32 @@
       padding: 16px;
     }
 
-    /* Mobile-first typography */
     h1 { font-size: 1.6rem; margin: 0.75rem 0 0.5rem; color: var(--accent); }
     h2 { font-size: 1.25rem; margin: 1.25rem 0 0.5rem; color: var(--accent); }
     h3 { font-size: 1.1rem; margin: 1rem 0 0.5rem; color: var(--accent); }
     p, li { font-size: 1rem; }
     small { color: var(--muted); }
 
-    /* Cards */
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 14px;
-      margin: 12px 0;
-    }
+.card {
+  max-width: 100%;
+  overflow-x: auto;  
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
 
-    /* Navigation */
+.card table {
+  width: 100%;      
+  border-collapse: collapse;
+}
+
+.card th, .card td {
+  padding: 8px;
+  text-align: left;
+  word-break: break-word;  
+}
+
+
     .nav {
       position: sticky;
       top: 0;
@@ -72,80 +80,45 @@
     }
     .nav-inner {
       display: flex;
+      flex-wrap: wrap;
       gap: 10px;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
+      justify-content: center;
       padding: 10px 16px;
     }
     .nav a {
-      flex: 0 0 auto;
+      flex: 1 1 auto;
+      text-align: center;
+      font-size: clamp(0.8rem, 2.5vw, 1rem);
+      padding: 8px 10px;
       text-decoration: none;
       color: var(--link);
       background: var(--card-bg);
       border: 1px solid var(--border);
-      padding: 10px 12px;
       border-radius: 10px;
-      font-size: 0.95rem;
     }
 
-    /* Lists */
-    ul { padding-left: 1.2rem; }
-    li { margin: 4px 0; }
-
-    /* Code inline */
-    code {
-      background: var(--code-bg);
-      padding: 2px 6px;
-      border-radius: 8px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      font-size: 0.95em;
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
     }
 
-    /* Details/accordion for mobile scannability */
-    details {
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 10px 12px;
-      background: var(--card-bg);
-      margin: 10px 0;
+    /* جدول واکنش‌گرا */
+    .table-wrapper {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
-    details > summary {
-      cursor: pointer;
-      font-weight: 600;
-      color: var(--accent);
-      list-style: none;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 600px;
     }
-    details > summary::marker { display: none; }
-
-    /* Touch targets */
-    a, button, summary {
-      min-height: 44px; /* recommended touch target */
-      display: inline-flex;
-      align-items: center;
+    table th, table td {
+      padding: 6px 8px;
+      text-align: left;
+      word-break: break-word;
     }
 
-    /* Motion preference */
-    @media (prefers-reduced-motion: reduce) {
-      * { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
-    }
-
-
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-
-.nav a {
-  flex: 1 1 auto;        
-  text-align: center;   
-  font-size: clamp(0.8rem, 2.5vw, 1rem);  
-  padding: 8px 10px;     
-}
-
-
-    /* Spacing helpers */
     .muted { color: var(--muted); }
   </style>
 </head>
