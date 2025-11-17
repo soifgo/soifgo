@@ -42,8 +42,7 @@ soifgo is an Android application that provides users with advanced capabilities 
 - **Optimized RGB color control:** Seek bars support precise RGB adjustments for **WS2812, WS2813, WS2815, and  SET RBG WS2811**.  
 - **Bluetooth format selection:** Supports multiple formats such as `CR + LF`, `CR`, `LF`, `NULL`, and more.  
 - **Smart Bluetooth resend (Check-in):** If **no response is received**, data is **automatically resent up to three times** for reliability.  
-## **Installation & Setup**  
-### **Download & Access**  
+
 
 ## Keywords
 - soifgo
