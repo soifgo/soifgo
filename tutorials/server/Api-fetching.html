@@ -3,54 +3,47 @@
 <head>
   <meta charset="UTF-8">
   <title>Online API Extraction – SoifGo</title>
+ 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       font-family: sans-serif;
       background-color: #f9f9f9;
-      padding: 2em;
-      max-width: 800px;
+      padding: 1em;
       margin: auto;
+      max-width: 100%;
+      line-height: 1.6;
     }
     h1 {
       color: #0055aa;
       text-align: center;
+      font-size: 2em;
     }
     h2 {
       color: #333;
       margin-top: 2em;
+      font-size: 1.5em;
     }
     p {
-      line-height: 1.6;
+      margin-bottom: 1em;
     }
     code {
       background-color: #eee;
       padding: 2px 6px;
       border-radius: 4px;
     }
-<style>
-pre {
-  background-color: #eee;
-  padding: 1em;
-  border-radius: 8px;
-  overflow-x: auto;
-  font-size: 20px;          
-  font-family: Consolas, monospace;
-  line-height: 1.9;
-}
-
- 
-@media (max-width: 600px) {
-  pre {
-    font-size: 24px;        
-    line-height: 1.9;
-    white-space: pre-wrap;   
-    word-wrap: break-word;   
-  }
-}
-</style>
-
+    pre {
+      background-color: #eee;
+      padding: 1em;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 1em;
+      font-family: Consolas, monospace;
+      line-height: 1.6;
+    }
     img {
       max-width: 100%;
+      height: auto;
       margin: 1em 0;
       border-radius: 6px;
     }
@@ -60,6 +53,25 @@ pre {
     }
     a:hover {
       text-decoration: underline;
+    }
+     
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 5px;
+      color: #fff;
+      text-decoration: none;
+      margin: 5px;
+    }
+    .btn-blue { background: #0066cc; }
+    .btn-brown { background: #8B4513; }
+
+ 
+    @media (max-width: 600px) {
+      body { font-size: 18px; line-height: 1.8; }
+      h1 { font-size: 24px; }
+      h2 { font-size: 20px; }
+      pre { font-size: 18px; line-height: 1.8; white-space: pre-wrap; word-wrap: break-word; }
     }
   </style>
 </head>
@@ -97,35 +109,13 @@ pre {
   <p>To trigger visual effects, set button behavior to <strong>Receive Server Value</strong>.</p>
   <p>Define a <strong>Maximum Value</strong> and configure effects in the menu.</p>
   <p>For more on effects, visit:</p>
-   <p><a href="https://soifgo.github.io/soifgo/tutorials/server/effects.html" >🎨 Button Effects Tutorial</a></p>
+  <p><a href="https://soifgo.github.io/soifgo/tutorials/server/effects.html">🎨 Button Effects Tutorial</a></p>
 
-    <hr>
-<p style="text-align:center;">
-  <a href="https://soifgo.github.io/soifgo/tutorials/list.html" 
-     style="display:inline-block; padding:10px 20px; background:#0066cc; color:#fff; text-decoration:none; border-radius:5px;">
-    ⬅ Back to Tutorial
-  </a>
-</p>
+  <hr>
+  <p style="text-align:center;">
+    <a href="https://soifgo.github.io/soifgo/tutorials/list.html" class="btn btn-blue">⬅ Back to Tutorial</a>
+    <a href="https://soifgo.github.io/soifgo/index.html" class="btn btn-brown">⬅ Back to Home</a>
+  </p>
 
-
-
-<hr>
-<p style="text-align:center;">
-  <a href="https://soifgo.github.io/soifgo/index.html" 
-     style="display:inline-block; padding:10px 20px; background:#8B4513; color:#fff; text-decoration:none; border-radius:5px;">
-    ⬅ Back to Home
-  </a>
-</p>
-
-
-  
 </body>
 </html>
-
-
-
-
-
-
-
-
