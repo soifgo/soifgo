@@ -27,12 +27,21 @@
       margin: 1em 0;
       border-radius: 6px;
     }
-    pre {
-      background-color: #eee;
-      padding: 1em;
-      border-radius: 6px;
-      overflow-x: auto;
-    }
+pre {
+  background-color: #eee;
+  padding: 1em;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-size: 14px;       
+  font-family: monospace;
+}
+
+@media (max-width: 600px) {
+  pre {
+    font-size: 16px;
+    line-height: 1.4;
+  }
+}
   </style>
 </head>
 <body>
@@ -157,6 +166,7 @@ userPath = "report";
   
 </body>
 </html>
+
 
 
 
