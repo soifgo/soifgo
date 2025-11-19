@@ -27,12 +27,21 @@
       padding: 2px 6px;
       border-radius: 4px;
     }
-    pre {
-      background-color: #eee;
-      padding: 1em;
-      border-radius: 6px;
-      overflow-x: auto;
-    }
+pre {
+  background-color: #eee;
+  padding: 1em;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-size: 14px;       
+  font-family: monospace;
+}
+
+@media (max-width: 600px) {
+  pre {
+    font-size: 16px;
+    line-height: 1.4;
+  }
+}
     img {
       max-width: 100%;
       margin: 1em 0;
