@@ -107,94 +107,106 @@
 </video>
 
 
-  <h2>RANGMANG Dance Mode Configuration</h2>
+<h2>RANGMANG Dance Mode Configuration</h2>
 
 <p>
 This configuration defines how the RANGMANG module controls LED dance modes.  
-Each row encodes the following parameters:
+Each row encodes the following parameters (ADRGBSEM format):
 </p>
 
 <ul>
-  <li><strong>Channel</strong> – 2 digits identifying the channel.</li>
-  <li><strong>Mode</strong> – 2 digits (01–38). Each mode represents a dance style.</li>
-  <li><strong>Red / Green / Blue</strong> – 3 digits each. Normal range is 0–250.  
+  <li><strong>A (Address)</strong> – 2 digits (A01–A98 for module, A99 for all).</li>
+  <li><strong>D (Mode)</strong> – D01–D38 for dance styles, D39 for random dance selection.</li>
+  <li><strong>R / G / B</strong> – 3 digits each. Normal range R000–R250, G000–G250, B000–B250.  
     Special values:  
     <ul>
-      <li>251 → Random selection from lower range</li>
-      <li>252 → Random slightly above 250</li>
-      <li>253 → Random mid-range</li>
-      <li>254 → Random higher than mid-range</li>
-      <li>255 → Random maximum</li>
+      <li>R251–R255 → Random Red</li>
+      <li>G251–G255 → Random Green</li>
+      <li>B251–B255 → Random Blue</li>
     </ul>
   </li>
-  <li><strong>Dance Time 1</strong> – 3 digits, milliseconds per pixel move (first timing).</li>
-  <li><strong>Dance Time 2</strong> – 3 digits, milliseconds per pixel move (second timing).</li>
-  <li><strong>Pixel Count</strong> – 3 digits, number of dancing pixels.</li>
+  <li><strong>S (Dance Time 1)</strong> – 3 digits, milliseconds per pixel move (first timing), range S000–S999.</li>
+  <li><strong>E (Dance Time 2)</strong> – 3 digits, milliseconds per pixel move (second timing), range E000–E999.</li>
+  <li><strong>M (Pixel Count)</strong> – 3 digits, number of dancing pixels.  
+    - ATmega328: M001–M480  
+    - ATmega128: M001–M999  
+  </li>
 </ul>
 
 <table border="1" cellpadding="6">
   <tr>
-    <th>Channel</th>
-    <th>Mode</th>
-    <th>Red</th>
-    <th>Green</th>
-    <th>Blue</th>
-    <th>Dance Time 1 (ms)</th>
-    <th>Dance Time 2 (ms)</th>
-    <th>Pixel Count</th>
+    <th>A (Channel)</th>
+    <th>D (Mode)</th>
+    <th>R (Red)</th>
+    <th>G (Green)</th>
+    <th>B (Blue)</th>
+    <th>S (Dance Time 1)</th>
+    <th>E (Dance Time 2)</th>
+    <th>M (Pixel Count)</th>
   </tr>
   <tr>
-    <td>01</td>
-    <td>12</td>
-    <td>251</td>
-    <td>251</td>
-    <td>251</td>
-    <td>001</td>
-    <td>001</td>
-    <td>128</td>
+    <td>A01</td>
+    <td>D12</td>
+    <td>R251</td>
+    <td>G251</td>
+    <td>B251</td>
+    <td>S001</td>
+    <td>E001</td>
+    <td>M128</td>
   </tr>
 </table>
+
 
 <a href="soifgo_rangmang_design.zip" download>📦 Download soifgo_rangmang_design.zip</a>
 
 
-  <h2>RANGMANG Fixed Color Mode Configuration</h2>
 
-<p>
-In fixed color mode, the configuration format is slightly different:
-</p>
+
+
+
+
+
+
+<h2>RANGMANG Fixed Color Mode Configuration (ATmega128 – 999 Pixels)</h2>
 
 <ul>
-  <li><strong>Channel</strong> – 2 digits (e.g., 01 for module 1).</li>
-  <li><strong>Mode</strong> – must always be 00.</li>
-  <li><strong>Red / Green / Blue</strong> – 3 digits each, range 000–255.</li>
-  <li><strong>Start Pixel</strong> – 3 digits, the first pixel to color.</li>
-  <li><strong>End Pixel</strong> – 3 digits, the last pixel to color.</li>
-  <li><strong>Memory Slot</strong> – 3 digits, memory index (001–100 available).</li>
+  <li><strong>A (Address)</strong> – 2 digits (A01–A98 for module, A99 for all).</li>
+  <li><strong>D (Mode)</strong> – must always be D00 for solid color.</li>
+  <li><strong>R / G / B</strong> – 3 digits each, range R000–R255, G000–G255, B000–B255.</li>
+  <li><strong>S (Start Pixel)</strong> – 3 digits, range S000–S999.</li>
+  <li><strong>E (End Pixel)</strong> – 3 digits, range E000–E999.</li>
+  <li><strong>M (Memory Slot)</strong> – 3 digits, M000 without save, M001–M999 for slots.</li>
 </ul>
 
 <table border="1" cellpadding="6">
   <tr>
-    <th>Channel</th>
-    <th>Mode</th>
-    <th>Red</th>
-    <th>Green</th>
-    <th>Blue</th>
-    <th>Start Pixel</th>
-    <th>End Pixel</th>
-    <th>Memory Slot</th>
+    <th>A (Channel)</th>
+    <th>D (Mode)</th>
+    <th>R (Red)</th>
+    <th>G (Green)</th>
+    <th>B (Blue)</th>
+    <th>S (Start Pixel)</th>
+    <th>E (End Pixel)</th>
+    <th>M (Memory Slot)</th>
   </tr>
   <tr>
-    <td>01</td>
-    <td>00</td>
-    <td>123</td>
-    <td>123</td>
-    <td>123</td>
-    <td>001</td>
-    <td>045</td>
-    <td>001</td>
+    <td>A01</td>
+    <td>D00</td>
+    <td>R200</td>
+    <td>G050</td>
+    <td>B100</td>
+    <td>S001</td>
+    <td>E120</td>
+    <td>M010</td>
   </tr>
 </table>
+
+
+
+
+
+
+
 
 
   
@@ -208,6 +220,57 @@ In fixed color mode, the configuration format is slightly different:
    <img src="rangmang_pic_328p.png" alt="Wiring 1">
     <h2>In this version, the microcontroller is ATmega328P with the same specifications, but with support for 480 pixels</h2>
   <p><a href="Atmega_328_480 pixel.zip"> 📦 Download Atmega 329P ZIP</a></p>
+
+
+<h2>RANGMANG ATmega328 – 480 Pixels</h2>
+<pre>
+' 30 inputs
+' ADRGBSEM
+' A00D00R000G000B000S000E000M000
+' A01 TO A98   FOR ADDRESS MODULE   A99 FOR ALL
+' IF D00 THEN SOLID COLOR
+' R000 TO R255   RED COLOR
+' G000 TO G255   GREEN COLOR
+' B000 TO B255   BLUE COLOR
+' S000 TO S480   RGB STRIP START POSITION FOR COLORED PIXEL
+' E000 TO E480   RGB STRIP END POSITION FOR COLORED PIXEL
+' M000 TO M098   M000 WITHOUT MEMORY SAVE   M001 SAVE SLOT 1 MEMORY
+
+' IF D01 TO D38   DANCE
+' D39   FOR RANDOM SELECT D01 TO D38 DANCE
+' R000 TO R250   RED COLOR   R251 TO R255 FOR RANDOM RED COLOR
+' G000 TO G250   GREEN COLOR   G251 TO G255 FOR RANDOM GREEN COLOR
+' B000 TO B250   BLUE COLOR   B251 TO B255 FOR RANDOM BLUE COLOR
+' S000 TO S999   RGB STRIP FIRST DELAY EFFECT (ms)
+' E000 TO E999   RGB STRIP SECOND DELAY EFFECT (ms)
+' M001 TO M480   SET HOW MANY PIXELS DANCING
+</pre>
+
+<h2>RANGMANG ATmega128 – 999 Pixels</h2>
+<pre>
+' 30 inputs
+' ADRGBSEM
+' A00D00R000G000B000S000E000M000
+' A01 TO A98   FOR ADDRESS MODULE   A99 FOR ALL
+' IF D00 THEN SOLID COLOR
+' R000 TO R255   RED COLOR
+' G000 TO G255   GREEN COLOR
+' B000 TO B255   BLUE COLOR
+' S000 TO S480   RGB STRIP START POSITION FOR COLORED PIXEL
+' E000 TO E480   RGB STRIP END POSITION FOR COLORED PIXEL
+' M000 TO M098   M000 WITHOUT MEMORY SAVE   M001 SAVE SLOT 1 MEMORY
+
+' IF D01 TO D38   DANCE
+' D39   FOR RANDOM SELECT D01 TO D38 DANCE
+' R000 TO R250   RED COLOR   R251 TO R255 FOR RANDOM RED COLOR
+' G000 TO G250   GREEN COLOR   G251 TO G255 FOR RANDOM GREEN COLOR
+' B000 TO B250   BLUE COLOR   B251 TO B255 FOR RANDOM BLUE COLOR
+' S000 TO S999   RGB STRIP FIRST DELAY EFFECT (ms)
+' E000 TO E999   RGB STRIP SECOND DELAY EFFECT (ms)
+' M001 TO M999   SET HOW MANY PIXELS DANCING
+</pre>
+
+
 
     <hr>
 <p style="text-align:center;">
@@ -229,6 +292,7 @@ In fixed color mode, the configuration format is slightly different:
 
 </body>
 </html>
+
 
 
 
