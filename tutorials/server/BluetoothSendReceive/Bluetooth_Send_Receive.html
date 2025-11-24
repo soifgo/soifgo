@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bluetooth Send Receive – SoifGo</title>
+ 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f9f9f9;
+      padding: 1em;
+      margin: auto;
+      max-width: 100%;
+      line-height: 1.6;
+    }
+    h1, h2 {
+      color: #0055aa;
+    }
+    .highlight {
+      color: #004715;
+      font-weight: 900;
+    }
+    a { color: #0077cc; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img {
+      max-width: 100%;
+      height: auto;
+      margin: 1em 0;
+      border-radius: 6px;
+    }
+    pre {
+      background-color: #eee;
+      padding: 1em;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-size: 1em;
+      font-family: Consolas, monospace;
+      line-height: 1.6;
+    }
+    code {
+      background-color: #eee;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    video {
+      max-width: 100%;
+      border-radius: 6px;
+      margin: 1em 0;
+    }
+ 
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 5px;
+      color: #fff;
+      text-decoration: none;
+      margin: 5px;
+    }
+    .btn-blue { background: #0066cc; }
+    .btn-brown { background: #8B4513; }
+
+    @media (max-width: 600px) {
+      body { font-size: 18px; line-height: 1.8; }
+      h1 { font-size: 24px; }
+      h2 { font-size: 20px; }
+      pre { font-size: 18px; line-height: 1.8; white-space: pre-wrap; word-wrap: break-word; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🚀 Bluetooth Send Receive SoifGo</h1>
+  <p class="highlight">This tutorial helps you Bluetooth Send Receive</p>
+
+
+<p><strong>Soifgo</strong> has the capability to send and receive serial Bluetooth data in a controlled manner. Therefore, each transmission and reception must include a <strong>key or address</strong>—either a number or a text string.</p>
+
+<ul>
+  <li><strong>Sending:</strong> The format should include something like <code>port:1</code>   </li>
+  <li><strong>Receiving:</strong> It should be similar, such as <code>volt:24</code>    </li>
+</ul>
+
+<p>There are no limitations on sending; this format is used when transmitting data to the microcontroller. However, receiving must include a key or address so that the corresponding configuration button can be displayed.</p>
+
+<hr>
+
+<p>In the image below, you can see two examples of data transmission:</p>
+
+<ul>
+  <li><strong>Free-form transmission:</strong> An arbitrary format used for general purposes.</li>
+  <li><strong>Microcontroller-compatible transmission:</strong> A structured format used in this example for communication with the microcontroller.</li>
+</ul>
+
+
+<img src="blue01.png" alt="Recommended Converter">
+<img src="blue02.png" alt="Recommended Converter">
+
+
+
+
+<p>There are two types of Bluetooth data reception:</p>
+<ul>
+  <li><strong>Free-form reception</strong><br>
+    Mainly used to display the received value.<br>
+    Requires an address or keyword to identify the data.
+  </li>
+
+   <img src="blue03.png" alt="Recommended Converter">
+
+  <li><strong>Numeric (value-based) reception</strong><br>
+    Used to receive integer values.<br>
+    Requires an address or keyword, just like free-form reception.<br>
+    You must define a maximum threshold for the received value.<br>
+    The minimum value is 0, and the maximum is the limit you define.<br>
+    Only integer values are accepted—decimal values are not allowed.<br>
+    In this mode, effects are activated based on the received value.
+  </li>
+</ul>
+
+   <img src="blue04.png" alt="Recommended Converter">
+
+
+<section>
+  <h2>Bluetooth Serial Data Format in SoiftGo</h2>
+  <p>When sending serial Bluetooth data to <strong>SoiftGo</strong>—whether from a microcontroller or any other device—you must use a structured format like:</p>
+  <pre><code>temp1:128</code></pre>
+  <p>SoiftGo interprets <code>temp1:</code> as the <strong>address</strong> of the configured button, and <code>128</code> as the <strong>value</strong> to be displayed.</p>
+
+  <h3>Display Behavior</h3>
+  <ul>
+    <li>The value is shown <strong>attached to the button name</strong>.</li>
+    <li>You can disable the name display or add a suffix (e.g., degrees).</li>
+    <li>For example, if the name is <code>#@@</code>, you will see: <code>128#@@</code>.</li>
+    <li>The name is purely visual and <strong>does not affect effects or logic</strong>.</li>
+  </ul>
+
+  <h3>Effect-Only Mode</h3>
+  <p>If you want to activate effects without showing the name or value:</p>
+  <ol>
+    <li>Disable the <strong>name display</strong> in the button settings.</li>
+    <li>Disable the <strong>value display</strong> in the value settings.</li>
+  </ol>
+  <p>In this mode, the button can act like a <strong>gauge or needle</strong>, functioning with its effect while hiding both label and numeric value.</p>
+</section>
+
+
+
+
+<section>
+  <h2>Sensor Data Transmission via Bluetooth in SoifGo</h2>
+  <p>Another method of Bluetooth transmission in <strong>SoifGo</strong> allows sending <strong>smartphone sensor values</strong> to a microcontroller. Currently, three types of sensors are supported:</p>
+  <ul>
+    <li><strong>Light sensor</strong></li>
+    <li><strong>Motion sensor</strong></li>
+    <li><strong>Magnetic field sensor</strong></li>
+  </ul>
+
+
+
+
+
+
+
+
+<section>
+  <h2>Configuring a Button to Send Sensor Data via Bluetooth</h2>
+  <p>In the next step, go to the <strong>Edit</strong> mode and add a new <strong>button</strong> to the interface.</p>
+
+  <h3>Step-by-Step Setup</h3>
+  <ol>
+    <li>Set the button’s behavior to <strong>Bluetooth Send</strong>.</li>
+    <li>In the <strong>Address</strong> field, enter a label such as: <code>pwm1a:</code> (used here to control motor speed).</li>
+    <li>Click on the <strong>Sensor</strong> icon and choose the desired input—for example, <strong>X-axis motion</strong>.</li>
+    <li>Then click on the <strong>Address Label</strong> (usually titled “Address Value Name”) and select the same address: <code>pwm1a:</code>.</li>
+  </ol>
+
+  <h3>Live Output Format</h3>
+  <p>Once connected to Bluetooth and in <strong>Play Mode</strong>, the output will be sent in this format:</p>
+  <pre><code>pwm1a:513</code></pre>
+  <p>This means the X-axis motion value has been scaled and offset (as configured earlier) and is now transmitted to the microcontroller under the address <code>pwm1a:  </code>  </p>
+</section>
+
+<img src="blue05.png" Phone Sensor "">
+
+
+  <h3>Value Adjustment Logic</h3>
+  <p>To ensure compatibility with microcontrollers that do not support decimals or negative numbers, you can configure a <strong>scaling factor</strong> and <strong>offset</strong>:</p>
+  <pre><code>adjusted_value = (original_value × scale) + offset</code></pre>
+  <p>For example, to send X-axis motion data:</p>
+  <ul>
+    <li>Multiply the value by <code>40</code></li>
+    <li>Add <code>512</code> to shift the range</li>
+    <li>This maps the value into a range of <code>0–1024</code>, suitable for most microcontrollers</li>
+  </ul>
+  <p>The result is shown in the <strong>middle section</strong> of the window under "Calculated Value".</p>
+</section>
+
+<img src="blue06.png" Phone Sensor "">
+<img src="blue07.png" Phone Sensor "">
+<img src="blue08.png" Phone Sensor "">
+<img src="blue09.png" Phone Sensor "">
+
+<video controls width="100%" height="500">
+<source src="https://raw.githubusercontent.com/soifgo/soifgo/refs/heads/main/tutorials/server/BluetoothSendReceive/Pwm1a.mp4" type="video/mp4">
+</video>
+<h3>Practical Example: Bluetooth Send & Receive</h3>
+<p>
+This file provides a working example of Bluetooth communication. After extracting the ZIP archive:
+</p>
+<ul>
+  <li>If you do <strong>not</strong> already have a project, you can simply replace the entire <code>soifgo</code> folder in your phone’s storage.</li>
+  <li>If you <strong>do</strong> have an existing project, it is sufficient to copy only the contents of the <code>page</code> and <code>icon</code> folders for integration.</li>
+</ul>
+<p>
+This ensures that the Bluetooth send/receive example is properly configured and ready to use within your environment.
+</p>
+</section>
+
+ <p>Download the soifgo file:</p>
+
+<a href="soifgo_design_Bluetooth.zip" download>📦 Download soifgo_design_Bluetooth.zip</a>
+
+<h3>Microcontroller BASCOM & HEX Files</h3>
+<p>
+The following file contains both the <strong>BASCOM source</strong> and the compiled <strong>HEX file</strong> for the microcontroller. 
+Remember to use the HEX file when programming the device.
+</p>
+<ul>
+  <li>Do not forget to configure the <strong>fuse bits</strong> for an external crystal oscillator.</li>
+  <li>If you encounter issues with BASCOM, you can provide the BASCOM source code to an AI assistant to convert it into <strong>Arduino C</strong> or any other language of your choice.</li>
+  <li>This allows you to <strong>customize</strong> the firmware for your specific project requirements.</li>
+</ul>
+<p>
+With these files, you can either directly program the microcontroller or adapt the source for alternative development environments.
+</p>
+</section>
+
+
+ <p>Download the Bascom and hex file:</p>
+
+<a href="Bascom_Bluetooth.zip" download>📦 Download the Bascom and hex file.zip</a>
+
+<h3>Microcontroller & Bluetooth Module Schematic</h3>
+<p>
+The following file contains the <strong>schematic diagram</strong> of the microcontroller and the Bluetooth module. 
+This schematic illustrates the wiring and connections required for proper communication between the two components.
+</p>
+<ul>
+  <li>Use the schematic as a reference when assembling your hardware.</li>
+  <li>Ensure that the power supply and ground lines are correctly connected.</li>
+  <li>Verify the TX/RX pins between the microcontroller and Bluetooth module for reliable data transfer.</li>
+</ul>
+<p>
+With this schematic, you can confidently set up the hardware portion of your project and integrate it with the provided software examples.
+</p>
+</section>
+
+<img src="Atmega16_Bluetooth_3.3v.png" Phone Sensor "">
+<h3>Bluetooth Module Variants</h3>
+<p>
+The images illustrate two different versions of the Bluetooth module:
+</p>
+<ul>
+  <li><strong>Top image:</strong> Bluetooth module without an auxiliary board, operating directly at <code>3.3V</code>.</li>
+  <li><strong>Bottom image:</strong> Bluetooth module with an auxiliary board, adapted for <code>5V</code> operation.</li>
+</ul>
+<p>
+Use the appropriate version depending on your microcontroller’s voltage requirements and available power supply.
+</p>
+</section>
+
+<img src="Atmega16_Bluetooth_5V.png" Phone Sensor "">
+
+
+<h3>Proteus Project ZIP File</h3>
+<p>
+The provided ZIP archive contains the <strong>Proteus simulation project</strong>. You can use this file to 
+<strong>customize</strong> and adapt the schematic or layout according to your specific requirements.
+</p>
+<ul>
+  <li>Extract the ZIP archive to access the full Proteus project.</li>
+  <li>Open the project in Proteus to modify the schematic, wiring, or component settings.</li>
+  <li>This allows you to simulate and test your microcontroller and Bluetooth module setup before building the hardware.</li>
+</ul>
+<p>
+By customizing the Proteus project, you can experiment with different configurations and ensure compatibility with your design goals.
+</p>
+</section>
+
+ <p>Download the Proteuse_Bluetooth file:</p>
+
+<a href="Proteuse_Bluetooth.zip" download>📦 Download the Proteuse_Bluetooth file.zip</a>
+
+
+<h2>Practical Video: SoifGo Communication with Microcontroller</h2>
+<p>
+The video below demonstrates the <strong>real-world operation</strong> and <strong>interaction</strong> between the SoifGo system and the microcontroller. 
+It provides a hands-on example of how data is exchanged and processed in practice.
+</p>
+</section>
+
+<video controls width="100%" height="500">
+<source src="https://raw.githubusercontent.com/soifgo/soifgo/refs/heads/main/tutorials/server/BluetoothSendReceive/sample_bluetooth_01.mp4" type="video/mp4">
+
+</video>
+
+    <hr>
+<p style="text-align:center;">
+  <a href="https://soifgo.github.io/soifgo/tutorials/list.html" 
+     style="display:inline-block; padding:10px 20px; background:#0066cc; color:#fff; text-decoration:none; border-radius:5px;">
+    ⬅ Back to Tutorial
+  </a>
+</p>
+
+
+
+<hr>
+<p style="text-align:center;">
+  <a href="https://soifgo.github.io/soifgo/index.html" 
+     style="display:inline-block; padding:10px 20px; background:#8B4513; color:#fff; text-decoration:none; border-radius:5px;">
+    ⬅ Back to Home
+  </a>
+</p>
+
+</body>
+</html>

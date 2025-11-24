@@ -2,11 +2,215 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Hello World - Soifgo</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <script data-goatcounter="https://soifgo.goatcounter.com/count" 
+        async src="//gc.zgo.at/count.js"></script>
+
+  <title>SoifGo – Simple Page</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.6;
+    }
+
+    header {
+      background: #8B4513;
+      color: white;
+      padding: 1.2em;
+      text-align: center;
+    }
+
+    header h1 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      font-size: 2em;
+      flex-wrap: wrap;
+      margin: 0;
+    }
+
+    header h1 img {
+      height: 36px;
+      max-width: 100%;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      background: #eee;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav button {
+      margin: 0.6em;
+      padding: 0.7em 1.4em;
+      border: none;
+      background: #ddd;
+      cursor: pointer;
+      font-size: 1.1em;
+      border-radius: 5px;
+      color: black;
+      transition: transform 0.1s ease, background 0.2s ease;
+    }
+
+    nav button:hover {
+      background: #ccc;
+    }
+
+    nav button:active,
+    nav button.clicked {
+      transform: translateY(3px);
+      background: #bbb;
+    }
+
+    section {
+      display: none;
+      padding: 1.8em;
+      max-width: 800px;
+      margin: auto;
+      font-size: 1.05em;
+    }
+
+    section.active {
+      display: block;
+    }
+
+    h2 {
+      font-size: 1.4em;
+      margin-bottom: 0.8em;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 1.2em auto;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.6em;
+        flex-direction: column;
+      }
+
+      nav {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      nav button {
+        width: 95%;
+        font-size: 1.2em;
+        margin: 0.4em 0;
+      }
+
+      section {
+        padding: 1em;
+        margin: 0 12px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h1>Hello World from Soifgo!</h1>
-  <script src="index.js"></script>
+  <header>
+    <h1>
+      SoifGo
+      <img src="soifgo-logo.png" alt="SoifGo Logo">
+    </h1>
+    <p>SoifGo is an Android application that provides users with advanced capabilities using buttons and seek bars.</p>
+  </header>
+
+  <nav>
+    <button id="downloadBtn" onclick="showDownload()">Download</button>
+    <button onclick="showSection('readme')">README</button>
+    <button onclick="showSection('about')">About</button>
+    <button onclick="openTutorial()">SoifGo Tutorial</button>
+  </nav>
+
+  <section id="download">
+    <h2>Download SoifGo</h2>
+    <ul>
+      <li><a href="https://github.com/soifgo/soifgo/releases/download/1.18/soifgo.apk">Direct</a></li>
+      <li><a href="https://apkpure.com/soifgo/soifgo.saeidmoghadam">Apkpure</a></li>
+    </ul>
+    <p><strong>Note:</strong> Enable “Install from unknown sources” in your Android settings before installing the APK.</p>
+  </section>
+
+  <section id="readme">
+    <h2>README</h2>
+    <h3>The developer: Saeid Moghadam</h3>
+    <h3>Supported Languages in SoifGo</h3>
+    <ul>
+      <li>English (EN)</li>
+      <li>Spanish (Español)</li>
+      <li>Chinese (简体中文)</li>
+      <li>French (Français)</li>
+      <li>German (Deutsch)</li>
+      <li>Japanese (日本語)</li>
+      <li>Russian (Русский)</li>
+      <li>Arabic (العربية)</li>
+      <li>Persian (فارسی)</li>
+      <li>Italian (Italiano)</li>
+      <li>Hindi (हिन्दी)</li>
+      <li>Turkish (Türkçe)</li>
+      <li>Korean (한국어)</li>
+      <li>Portuguese (Português)</li>
+      <li>Hebrew (עברית)</li>
+      <li>Kurdish (کوردی)</li>
+      <li>Urdu (اردو)</li>
+      <li>Bengali (বাংলা)</li>
+      <li>Indonesian (Bahasa Indonesia)</li>
+      <li>Tamil (தமிழ்)</li>
+      <li>Thai (ไทย)</li>
+      <li>Swahili (Kiswahili)</li>
+    </ul>
+    <h3>About SoifGo</h3>
+    <p><strong>SoifGo</strong> is an Android application that provides users with advanced capabilities using <strong>buttons and seek bars</strong>.</p>
+  </section>
+
+  <section id="about">
+    <h2>About the Developer</h2>
+    <p><strong>Saeid Moghadam</strong> is a documentation perfectionist and user-focused developer.</p>
+    <p>Email: <a href="mailto:SSMQQMSS@gmail.com">SSMQQMSS@gmail.com</a></p>
+  </section>
+
+  <script>
+    document.querySelectorAll('nav button').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('nav button').forEach(b => b.classList.remove('clicked'));
+        this.classList.add('clicked');
+      });
+    });
+
+    function showSection(id) {
+      document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    function showDownload() {
+      document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+      document.getElementById('download').classList.add('active');
+      document.querySelectorAll('nav button').forEach(b => b.classList.remove('clicked'));
+      document.getElementById('downloadBtn').classList.add('clicked');
+    }
+
+    function openTutorial() {
+      window.location.href = "tutorials/list.html";
+    }
+
+    window.onload = function() {
+      document.getElementById('downloadBtn').click();
+    };
+  </script>
+
+  <img src="soifgo_pic01.png" alt="Recommended Converter">
 </body>
 </html>

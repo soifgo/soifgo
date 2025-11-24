@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RANGMANG RGB Controller</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 10px;
+      line-height: 1.6;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 10px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+    }
+    th, td {
+      border: 1px solid #333;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    ul li {
+      margin: 5px 0;
+    }
+    a {
+      color: #0066cc;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .table-container {
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>RANGMANG</h1>
+  <p><strong>RANGMANG</strong> is an RGB controller based on the ATmega128 microcontroller, programmed using BASCOM.</p>
+
+  <img src="rangmang_pic.png" alt="Wiring 1">
+
+  <h2>LED Strip Types and Features</h2>
+  <p>The following table introduces various LED strips and their specifications:</p>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>LED Strip Model</th>
+          <th>Operating Voltage</th>
+          <th>Control Type</th>
+          <th>Addressable</th>
+          <th>Special Features</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>WS2811</td><td>12V</td><td>Digital</td><td>Yes</td><td>Suitable for long strips</td></tr>
+        <tr><td>WS2812B</td><td>5V</td><td>Digital</td><td>Yes</td><td>Built-in chip in each LED</td></tr>
+        <tr><td>WS2813</td><td>5V</td><td>Digital</td><td>Yes</td><td>Resistant to data line failure</td></tr>
+        <tr><td>WS2815</td><td>12V</td><td>Digital</td><td>Yes</td><td>Industrial-grade, low voltage drop</td></tr>
+        <tr><td>SK6812</td><td>5V</td><td>Digital</td><td>Yes</td><td>Supports RGBW (white channel)</td></tr>
+        <tr><td>SK9822</td><td>5V</td><td>Digital</td><td>Yes</td><td>High-speed, similar to APA102</td></tr>
+        <tr><td>APA102</td><td>5V</td><td>Digital (Clock + Data)</td><td>Yes</td><td>Fast animations, dual-wire control</td></tr>
+        <tr><td>TM1814</td><td>12V</td><td>Digital</td><td>Yes</td><td>RGBW, high-power applications</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Atmega 128   support for 999 pixels </h2>
+  <h2>Source Code</h2>
+  <p><a href="Bascom_Rangmang.zip">Download BASCOM Source ZIP</a></p>
+
+  <h2>Programming the Microcontroller</h2>
+  <p><a href="dude 6.4_mega128_999 pixel.zip">Download Programmer ZIP</a></p>
+
+  <h2>PCB and Schematic Files</h2>
+  <img src="rangmang_schematics.png" alt="Recommended Converter">
+  <ul>
+    <li><a href="RANGMANG_pcb(Atmega_128).PDF">Download PCB (PDF)</a></li>
+    <li><a href="RANGMANG_schematic(Atmega_128).PDF">Download Schematic (PDF)</a></li>
+    <li><a href="RANGMANG_Proteus(Atmega_128A).zip">Download Proteus File</a></li>
+  </ul>
+
+
+
+<video controls width="80%" height="500">
+  <source src="https://raw.githubusercontent.com/soifgo/soifgo/main/tutorials/server/rangmang/rangmang_dance.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+
+<h2>RANGMANG Dance Mode Configuration</h2>
+
+<p>
+This configuration defines how the RANGMANG module controls LED dance modes.  
+Each row encodes the following parameters (ADRGBSEM format):
+</p>
+
+<ul>
+  <li><strong>A (Address)</strong> – 2 digits (A01–A98 for module, A99 for all).</li>
+  <li><strong>D (Mode)</strong> – D01–D38 for dance styles, D39 for random dance selection.</li>
+  <li><strong>R / G / B</strong> – 3 digits each. Normal range R000–R250, G000–G250, B000–B250.  
+    Special values:  
+    <ul>
+      <li>R251–R255 → Random Red</li>
+      <li>G251–G255 → Random Green</li>
+      <li>B251–B255 → Random Blue</li>
+    </ul>
+  </li>
+  <li><strong>S (Dance Time 1)</strong> – 3 digits, milliseconds per pixel move (first timing), range S000–S999.</li>
+  <li><strong>E (Dance Time 2)</strong> – 3 digits, milliseconds per pixel move (second timing), range E000–E999.</li>
+  <li><strong>M (Pixel Count)</strong> – 3 digits, number of dancing pixels.  
+    - ATmega328: M001–M480  
+    - ATmega128: M001–M999  
+  </li>
+</ul>
+
+<table border="1" cellpadding="6">
+  <tr>
+    <th>A (Channel)</th>
+    <th>D (Mode)</th>
+    <th>R (Red)</th>
+    <th>G (Green)</th>
+    <th>B (Blue)</th>
+    <th>S (Dance Time 1)</th>
+    <th>E (Dance Time 2)</th>
+    <th>M (Pixel Count)</th>
+  </tr>
+  <tr>
+    <td>A01</td>
+    <td>D12</td>
+    <td>R251</td>
+    <td>G251</td>
+    <td>B251</td>
+    <td>S001</td>
+    <td>E001</td>
+    <td>M128</td>
+  </tr>
+</table>
+
+
+<p><a href="soifgo_rangmang_design.zip"> 📦 Download soifgo_rangmang_design</a></p>
+
+  
+<h2>RANGMANG Fixed Color Mode Configuration (ATmega128 – 999 Pixels)</h2>
+
+<ul>
+  <li><strong>A (Address)</strong> – 2 digits (A01–A98 for module, A99 for all).</li>
+  <li><strong>D (Mode)</strong> – must always be D00 for solid color.</li>
+  <li><strong>R / G / B</strong> – 3 digits each, range R000–R255, G000–G255, B000–B255.</li>
+  <li><strong>S (Start Pixel)</strong> – 3 digits, range S000–S999.</li>
+  <li><strong>E (End Pixel)</strong> – 3 digits, range E000–E999.</li>
+  <li><strong>M (Memory Slot)</strong> – 3 digits, M000 without save, M001–M999 for slots.</li>
+</ul>
+
+<table border="1" cellpadding="6">
+  <tr>
+    <th>A (Channel)</th>
+    <th>D (Mode)</th>
+    <th>R (Red)</th>
+    <th>G (Green)</th>
+    <th>B (Blue)</th>
+    <th>S (Start Pixel)</th>
+    <th>E (End Pixel)</th>
+    <th>M (Memory Slot)</th>
+  </tr>
+  <tr>
+    <td>A01</td>
+    <td>D00</td>
+    <td>R200</td>
+    <td>G050</td>
+    <td>B100</td>
+    <td>S001</td>
+    <td>E120</td>
+    <td>M010</td>
+  </tr>
+</table>
+
+
+  <h2>Power Regulation Notes</h2>
+  <ul>
+    <li>For 5V LED strips: You can remove the regulator and directly power the microcontroller from the strip's 5V socket.</li>
+    <li>For 12V LED strips: You must use a 12V-to-5V regulator to power the microcontroller safely.</li>
+    <li>Note: To prevent reverse connection of the LED strip to the module, use a properly keyed connector. If necessary, add a diode in series with the microcontroller's power input to protect against polarity reversal.</li>
+  </ul>
+
+   <img src="rangmang_pic_328p.png" alt="Wiring 1">
+    <h2>In this version, the microcontroller is ATmega328P with the same specifications, but with support for 480 pixels</h2>
+  <p><a href="Atmega_328_480 pixel.zip"> 📦 Download Atmega 329P ZIP</a></p>
+
+
+<h2>RANGMANG ATmega328 – 480 Pixels</h2>
+<pre>
+' 30 inputs
+' ADRGBSEM
+' A00D00R000G000B000S000E000M000
+' A01 TO A98   FOR ADDRESS MODULE   A99 FOR ALL
+' IF D00 THEN SOLID COLOR
+' R000 TO R255   RED COLOR
+' G000 TO G255   GREEN COLOR
+' B000 TO B255   BLUE COLOR
+' S000 TO S480   RGB STRIP START POSITION FOR COLORED PIXEL
+' E000 TO E480   RGB STRIP END POSITION FOR COLORED PIXEL
+' M000 TO M098   M000 WITHOUT MEMORY SAVE   M001 SAVE SLOT 1 MEMORY
+
+' IF D01 TO D38   DANCE
+' D39   FOR RANDOM SELECT D01 TO D38 DANCE
+' R000 TO R250   RED COLOR   R251 TO R255 FOR RANDOM RED COLOR
+' G000 TO G250   GREEN COLOR   G251 TO G255 FOR RANDOM GREEN COLOR
+' B000 TO B250   BLUE COLOR   B251 TO B255 FOR RANDOM BLUE COLOR
+' S000 TO S999   RGB STRIP FIRST DELAY EFFECT (ms)
+' E000 TO E999   RGB STRIP SECOND DELAY EFFECT (ms)
+' M001 TO M480   SET HOW MANY PIXELS DANCING
+</pre>
+
+<h2>RANGMANG ATmega128 – 999 Pixels</h2>
+<pre>
+' 30 inputs
+' ADRGBSEM
+' A00D00R000G000B000S000E000M000
+' A01 TO A98   FOR ADDRESS MODULE   A99 FOR ALL
+' IF D00 THEN SOLID COLOR
+' R000 TO R255   RED COLOR
+' G000 TO G255   GREEN COLOR
+' B000 TO B255   BLUE COLOR
+' S000 TO S480   RGB STRIP START POSITION FOR COLORED PIXEL
+' E000 TO E480   RGB STRIP END POSITION FOR COLORED PIXEL
+' M000 TO M098   M000 WITHOUT MEMORY SAVE   M001 SAVE SLOT 1 MEMORY
+
+' IF D01 TO D38   DANCE
+' D39   FOR RANDOM SELECT D01 TO D38 DANCE
+' R000 TO R250   RED COLOR   R251 TO R255 FOR RANDOM RED COLOR
+' G000 TO G250   GREEN COLOR   G251 TO G255 FOR RANDOM GREEN COLOR
+' B000 TO B250   BLUE COLOR   B251 TO B255 FOR RANDOM BLUE COLOR
+' S000 TO S999   RGB STRIP FIRST DELAY EFFECT (ms)
+' E000 TO E999   RGB STRIP SECOND DELAY EFFECT (ms)
+' M001 TO M999   SET HOW MANY PIXELS DANCING
+</pre>
+
+
+
+    <hr>
+<p style="text-align:center;">
+  <a href="https://soifgo.github.io/soifgo/tutorials/list.html" 
+     style="display:inline-block; padding:10px 20px; background:#0066cc; color:#fff; text-decoration:none; border-radius:5px;">
+    ⬅ Back to Tutorial
+  </a>
+</p>
+
+
+
+<hr>
+<p style="text-align:center;">
+  <a href="https://soifgo.github.io/soifgo/index.html" 
+     style="display:inline-block; padding:10px 20px; background:#8B4513; color:#fff; text-decoration:none; border-radius:5px;">
+    ⬅ Back to Home
+  </a>
+</p>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

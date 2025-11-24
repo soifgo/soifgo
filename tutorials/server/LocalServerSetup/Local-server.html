@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Local Server Setup – SoifGo</title>
+ 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f9f9f9;
+      padding: 1em;
+      margin: auto;
+      max-width: 100%;
+      line-height: 1.6;
+    }
+    h1 {
+      color: #0055aa;
+      text-align: center;
+      font-size: 2em;
+    }
+    h2 {
+      color: #333;
+      margin-top: 2em;
+      font-size: 1.5em;
+    }
+    p { margin-bottom: 1em; }
+    a { color: #0055aa; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img {
+      max-width: 100%;
+      height: auto;
+      margin: 1em 0;
+      border-radius: 6px;
+    }
+    pre {
+      background-color: #eee;
+      padding: 1em;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-size: 1em;
+      font-family: Consolas, monospace;
+      line-height: 1.6;
+    }
+    code {
+      background-color: #eee;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+ 
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 5px;
+      color: #fff;
+      text-decoration: none;
+      margin: 5px;
+    }
+    .btn-blue { background: #0066cc; }
+    .btn-brown { background: #8B4513; }
+
+ 
+    @media (max-width: 600px) {
+      body { font-size: 18px; line-height: 1.8; }
+      h1 { font-size: 24px; }
+      h2 { font-size: 20px; }
+      pre { font-size: 18px; line-height: 1.8; white-space: pre-wrap; word-wrap: break-word; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🖥️ Local Server Setup for SoifGo</h1>
+  <h2>Step 1: Download and Start the Server</h2>
+  <p>Download the following ZIP file and extract it:</p>
+  <p><a href="Local-server.zip" download>📦 Download Local-server.zip</a></p>
+  <p>After extraction, click on <code>Start server.bat</code> to launch the Local server on your computer.</p>
+  <p>If successful, you will see a message like this:</p>
+  <pre><code>{"level":30,"time":1761753122527,"pid":9856,"hostname":"ssm","msg":"Server listening at http://192.168.224.1:3000"}</code></pre>
+
+  <img src="Local-server1.png" alt="Server Start Screenshot">
+
+  <h2>Step 2: Sending Data from SoifGo</h2>
+  <p>Open SoifGo and create a button. Set its behavior to <strong>Send Server</strong>.</p>
+  <p>In play mode, clicking this button will send the value <code>1234</code> to the server.</p>
+  <p>You can verify the result by visiting the following address in your browser:</p>
+  <p><a href="http://192.168.224.1:3000/mydata">http://192.168.224.1:3000/mydata</a></p>
+  <pre><code>{"key3":"1234"}</code></pre>
+  <p>✅ Upload successful.</p>
+
+  <img src="Local-server2.png" alt="Send Server Screenshot">
+
+  <h2>Step 3: Receiving Data in SoifGo</h2>
+  <p>Create another button and set its behavior to <strong>Receive Server Text</strong>.</p>
+  <p>If your server response includes extra characters, you can use the <code>Start Filter</code> and <code>End Filter</code> fields to extract the desired part.</p>
+  <p>If no filtering is needed, leave those fields empty.</p>
+
+  <img src="Local-server3.png" alt="Receive Server Screenshot">
+
+  <h2>Step 4: Using Effects with Received Values</h2>
+  <p>If you want to trigger visual effects based on received values, set the button behavior to <strong>Receive Server Value</strong> and specify the <strong>Maximum Value</strong>.</p>
+  <p>Once configured, effects will appear in the menu.</p>
+  <p>To learn more about applying effects to buttons, visit the following link:</p>
+  <p><a href="https://soifgo.github.io/soifgo/tutorials/server/Effect/effects.html">🎨 Effects Tutorial</a></p>
+
+  <hr>
+  <p style="text-align:center;">
+    <a href="https://soifgo.github.io/soifgo/tutorials/list.html" class="btn btn-blue">⬅ Back to Tutorial</a>
+    <a href="https://soifgo.github.io/soifgo/index.html" class="btn btn-brown">⬅ Back to Home</a>
+  </p>
+
+</body>
+</html>

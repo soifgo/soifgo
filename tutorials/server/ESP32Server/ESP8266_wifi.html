@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ESP8266 Setup – SoifGo</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f9f9f9;
+      padding: 1em;
+      margin: auto;
+      max-width: 100%;
+      line-height: 1.6;
+    }
+    h1 {
+      color: #0055aa;
+      text-align: center;
+      font-size: 2em;
+    }
+    h2 {
+      color: #0055aa;
+      margin-top: 2em;
+      font-size: 1.5em;
+    }
+    p { margin-bottom: 1em; }
+    a { color: #0077cc; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img {
+      max-width: 100%;
+      height: auto;
+      margin: 1em 0;
+      border-radius: 6px;
+    }
+    pre {
+      background-color: #eee;
+      padding: 1em;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 1em;
+      font-family: Consolas, monospace;
+      line-height: 1.6;
+    }
+    code {
+      background-color: #eee;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    video {
+      max-width: 100%;
+      border-radius: 6px;
+      margin: 1em 0;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 5px;
+      color: #fff;
+      text-decoration: none;
+      margin: 5px;
+    }
+    .btn-blue { background: #0066cc; }
+    .btn-brown { background: #8B4513; }
+
+    @media (max-width: 600px) {
+      body { font-size: 18px; line-height: 1.8; }
+      h1 { font-size: 24px; }
+      h2 { font-size: 20px; }
+      pre { font-size: 18px; line-height: 1.8; white-space: pre-wrap; word-wrap: break-word; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🚀 ESP8266 Setup with SoifGo</h1>
+
+
+  <h2>Step 1: Introduction</h2>
+  <p>This tutorial helps you set up the ESP8266 Wi-Fi module and connect it to SoifGo.</p>
+
+  <h2>Step 2: Preparing the Module</h2>
+  <p>Use a USB to TTL converter. It can be a single USB-to-TTL board or a combination of USB-to-UART and UART-to-TTL.</p>
+  <p>You’ll need both 5V and 3.3V power sources. Recommended converter:</p>
+  <img src="converter.png" alt="Recommended Converter">
+
+  <h2>Step 3: Arduino IDE Setup</h2>
+  <p>Install the required libraries and check the port and board settings:</p>
+  <img src="arduino1.png" alt="Library Install">
+  <img src="arduino2.png" alt="Port Check">
+  <img src="arduino3.png" alt="Board Selection">
+   <img src="arduino4.png" alt="Board Selection">
+
+  <h2>Step 4: Uploading the Program</h2>
+  <p>Download the program file:</p>
+  <a href="esp8266.zip" download>📦 Download esp8266.zip</a>
+  <p>Paste the code into Arduino IDE. You can configure Wi-Fi settings before upload:</p>
+  <pre><code>
+wifiName = "TPLINK";
+wifiPass = "abcd1234";
+portLastByte = 104;
+userPath = "report";
+  </code></pre>
+  <p>Or send commands via serial after upload:</p>
+  <pre><code>
+#wifi=TPLINK*
+#pass=abcd1234*
+#port=104*
+#user=report*
+  </code></pre>
+
+  <h2>Step 5: Wiring and Upload</h2>
+  <img src="wiring1.png" alt="Wiring 1">
+  <img src="wiring2.png" alt="Wiring 2">
+  <img src="wiring3.png" alt="Wiring 3">
+  <img src="wiring4.png" alt="Wiring 4">
+  <p>Click <strong>Verify</strong> and then <strong>Upload</strong> in Arduino:</p>
+  <img src="upload1.png" alt="Verify and Upload">
+  <img src="upload2.png" alt="Upload Complete">
+
+
+  <h2>Step 6: Serial Monitor</h2>
+  <img src="serial1.png" alt="Open Serial Monitor">
+ <img src="serial2.png" alt="Open Serial Monitor">
+ <img src="wiring5.png" alt="Open Serial Monitor">
+  <p>Restart the module. You should see output like:</p>
+  <img src="output1.png" alt="Serial Output">
+
+  <h2>Step 7: Microcontroller Connection</h2>
+  <img src="micro1.png" alt="Microcontroller Wiring">
+  <p>Program your ATmega16 using a compatible programmer:</p>
+  <a href="hexfile_esp8266.zip" download>📦 Download HEX File</a>
+  <a href="bascom_esp8266.zip" download>📦 Download BASCOM Setup</a>
+  <img src="fusebits.png" alt="Fuse Bit Settings">
+
+  <h2>Step 8: Testing in Browser</h2>
+  <p>Visit:</p>
+  <p>  http://192.168.1.104/report</p>  
+  <p>You should see:</p>
+  <pre><code>{"volt":"3.16","temp1":"3","temp2":"513","portb":"00000000"}</code></pre>
+
+  <h2>Step 9: SoifGo Integration</h2>
+  <img src="soifgo-receive.png" alt="Receive Setup">
+  <img src="soifgo-send.png" alt="Send Setup">
+
+<h2>Step 10: ESP8266 Setup Video</h2>
+<video controls width="100%">
+  <source src="https://raw.githubusercontent.com/soifgo/soifgo/refs/heads/main/tutorials/server/ESP32Server/Esp8266_Setup.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+  <a href="https://raw.githubusercontent.com/soifgo/soifgo/refs/heads/main/tutorials/server/ESP32Server/Esp8266_Setup.mp4" download>📥 Download ESP8266 Setup Video</a>
+
+<h2>Step 11: SoifGo Design – Part 1</h2>
+<video controls width="100%">
+  <source src="https://raw.githubusercontent.com/soifgo/soifgo/refs/heads/main/tutorials/server/ESP32Server/Design_1.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+   <a href="https://raw.githubusercontent.com/soifgo/soifgo/refs/heads/main/tutorials/server/ESP32Server/Design_1.mp4" download>📥 Download SoifGo Design – Part 1</a>
+
+<h2>Step 12: SoifGo Design – Part 2</h2>
+<video controls width="100%">
+  <source src="https://raw.githubusercontent.com/soifgo/soifgo/refs/heads/main/tutorials/server/ESP32Server/Design_2.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+  <a href="https://raw.githubusercontent.com/soifgo/soifgo/refs/heads/main/tutorials/server/ESP32Server/Design_2.mp4" download>📥 Download SoifGo Design – Part 2</a>
+
+  <h2>Bonus: RANGMANG Module</h2>
+
+<li><a href="https://soifgo.github.io/soifgo/tutorials//server/rangmang/Rangmang.html"> 🌈 RANGMANG Module</a></li>
+
+ <h2>Bonus: Proteuse </h2>
+ <a href="Proteuse_esp8266.zip" download>📦 Download Proteuse </a>
+ <h2>Bonus: Sample soifgo </h2>
+ <a href="soifgo_design_esp8266.zip" download>📦 Download soifgo file </a>
+
+    <hr>
+<p style="text-align:center;">
+  <a href="https://soifgo.github.io/soifgo/tutorials/list.html" 
+     style="display:inline-block; padding:10px 20px; background:#0066cc; color:#fff; text-decoration:none; border-radius:5px;">
+    ⬅ Back to Tutorial
+  </a>
+</p>
+
+
+
+<hr>
+<p style="text-align:center;">
+  <a href="https://soifgo.github.io/soifgo/index.html" 
+     style="display:inline-block; padding:10px 20px; background:#8B4513; color:#fff; text-decoration:none; border-radius:5px;">
+    ⬅ Back to Home
+  </a>
+</p>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

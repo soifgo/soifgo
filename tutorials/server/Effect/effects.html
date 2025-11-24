@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SoifGo Effects Tutorial</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #1f2937;
+      --accent: #0b7bbf;
+      --card-bg: #f5f7fb;
+      --border: #d7dce4;
+      --muted: #6b7280;
+      --code-bg: #eef2f7;
+      --link: #0a84ff;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0b0e12;
+        --fg: #e5e7eb;
+        --accent: #4dabf7;
+        --card-bg: #12161d;
+        --border: #243041;
+        --muted: #9aa3af;
+        --code-bg: #1b2230;
+        --link: #58a6ff;
+      }
+    }
+
+    html, body {
+      background: var(--bg);
+      color: var(--fg);
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      -webkit-text-size-adjust: 100%;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    h1 { font-size: 1.6rem; margin: 0.75rem 0 0.5rem; color: var(--accent); }
+    h2 { font-size: 1.25rem; margin: 1.25rem 0 0.5rem; color: var(--accent); }
+    h3 { font-size: 1.1rem; margin: 1rem 0 0.5rem; color: var(--accent); }
+    p, li { font-size: 1rem; }
+    small { color: var(--muted); }
+
+.card {
+  max-width: 100%;
+  overflow-x: auto;  
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.card table {
+  width: 100%;      
+  border-collapse: collapse;
+}
+
+.card th, .card td {
+  padding: 8px;
+  text-align: left;
+  word-break: break-word;  
+}
+
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: saturate(180%) blur(8px);
+      background: color-mix(in oklab, var(--bg) 92%, transparent);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      padding: 10px 16px;
+    }
+    .nav a {
+      flex: 1 1 auto;
+      text-align: center;
+      font-size: clamp(0.8rem, 2.5vw, 1rem);
+      padding: 8px 10px;
+      text-decoration: none;
+      color: var(--link);
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+
+    .table-wrapper {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 600px;
+    }
+    table th, table td {
+      padding: 6px 8px;
+      text-align: left;
+      word-break: break-word;
+    }
+
+    .muted { color: var(--muted); }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <nav class="nav-inner" aria-label="Inline navigation">
+      <a href="#overview">Overview</a>
+      <a href="#setup">Setup</a>
+      <a href="#size">Size</a>
+      <a href="#circle">Circle</a>
+      <a href="#move">Move</a>
+      <a href="#rotate">Rotate</a>
+      <a href="#color">Color</a>
+      <a href="#graph">Graph</a>
+      <a href="#formula">Formula</a>
+      <a href="#ALARM">ALARM</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1 id="overview">SoifGo Tutorial: How effects work</h1>
+
+
+    <div class="card">
+<section>
+  <h2>Simulation Setup</h2>
+  <p>
+    If the required hardware for applying values by address to test button actions is unavailable,
+    you can enable the simulator. It provides an internal counter ranging from <code>1</code> to
+    <code>1024</code> at address <code>123</code>, allowing you to prototype and test your button behavior.
+  </p>
+
+  <h3>How to Use</h3>
+  <ul>
+    <li>Set the button behavior to <strong>numeric input</strong> (Bluetooth or API).</li>
+    <li>Assign address <code>123</code> and maximum input value <code>1024</code>.</li>
+    <li>Enable <strong>Simulation Input Value</strong> from the <em>Play</em> menu.</li>
+    <li>The simulator will apply values from <code>1</code> to <code>1024</code> automatically.</li>
+    <li>Once testing is complete, configure the external hardware address as needed.</li>
+  </ul>
+</section>
+
+    </div>
+
+<img src="effect01.png" alt="Recommended Converter">
+
+    <h2 id="setup">Setup</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Create the button:</strong> Set behavior to numeric input (Bluetooth or API).</li>
+        <li><strong>Address:</strong> <code>123</code>. <strong>Maximum:</strong> <code>1024</code>.</li>
+        <li><strong>Enable simulator:</strong> Use <em>simulation input value</em> in Play to generate values <code>1 → 1024</code>.</li>
+        <li><strong>Edit mode:</strong> Click the button and open <em>Effects</em>. Options include Size, Circle, Move, Rotate, Color, Graph, Formula.</li>
+      </ul>
+    </div>
+<img src="effect02.png" alt="Recommended Converter">
+<img src="effect03.png" alt="Recommended Converter">
+
+    <h2 id="size">Size</h2>
+    <div class="card">
+      <p>
+        Two sliders appear: the upper slider sets width to the far right; the next slider sets height to the top. For maximum variation,
+        place the button at the leftmost and lowest position. With numeric input in Play, the button scales from its initial size to the
+        configured maximum in proportion to the input (up to <code>1024</code>).
+      </p>
+      <p>Suitable for balancing visuals like rising water or fuel level, or any growing variable.</p>
+    </div>
+
+    <h2 id="circle">Circle</h2>
+    <div class="card">
+      <p>
+        Renders a circular chart (full or partial) behind the button. Set start and end degrees for the minimum and maximum input.
+        Adjust the button’s background for visibility. Ideal for showing input power, throttle, and similar gauges.
+      </p>
+    </div>
+
+    <h2 id="move">Move</h2>
+    <div class="card">
+      <p>
+        Moves the button to the far right and to the top based on input. Two sliders control motion: the first for horizontal (right),
+        the second for vertical (up). Useful for building thermometers, balancers, scales, tank level, and similar indicators.
+      </p>
+    </div>
+
+    <h2 id="rotate">Rotate</h2>
+    <div class="card">
+      <p>
+        Rotates the button up to <code>360°</code> for maximum input. The first slider sets the start position for input <code>0</code>;
+        the second sets the end rotation at maximum input. If you are using a needle in the button background and cannot reach a specific
+        position, adjust the initial needle/background rotation after setting the background to achieve the target angle.
+      </p>
+      <p>Suitable for clocks, pressure/temperature/current/voltage gauges, speedometers, and more.</p>
+    </div>
+
+    <h2 id="color">Color</h2>
+    <div class="card">
+      <p>
+        Predefined options include battery, cooling, brightness, red, green, blue, and yellow. Each has specific use cases—for example,
+        battery visualizes depletion, and red increases in intensity from minimum to maximum input.
+      </p>
+    </div>
+
+
+        <h2>Size Circular Move Rotation Color    Math Furmula </h2>
+<video controls width="50%">
+  <source src="https://raw.githubusercontent.com/soifgo/soifgo/main/tutorials/server/Effect/effect1.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+<h2 id="graph">Graph</h2>
+<div class="card">
+  <p>
+    Draws a line graph for the input on the button. In settings, select graph line color and thickness. In the trigger section you have
+    four options:
+  </p>
+  <ul>
+    <li><strong>Phone/internal timing with saving</strong></li>
+    <li><strong>Internal timing without saving</strong></li>
+    <li><strong>External trigger with saving</strong></li>
+    <li><strong>External trigger without saving</strong></li>
+  </ul>
+  <p>
+    For external triggers, each input stores both the value and time—ensure your sending cadence is correct (e.g., per second or hourly),
+    since transmission errors affect recorded time. At the bottom, two sliders are available: the first sets internal timing from
+    <code>100 ms</code> to <code>48 s</code>; the second controls graph line thickness. Graphs are saved in the SoifGo folder and can
+    be shared or transferred. In Play, you can zoom and navigate history pages.
+  </p>
+  <p>
+    If you want to create another graph or a new group using the same button, simply change the button name in the <em>Edit</em> section.
+    With the new name, fresh graphs will be recorded. To revisit a previous graph, rename the button back to its former name.  
+    Don’t worry if you forget—graphs are stored under their names in the <strong>SoifGo/graph</strong> folder. Use your file manager to
+    browse and access them anytime.
+  </p>
+</div>
+
+    <h2>Graph </h2>
+<video controls width="50%">
+  <source src="https://raw.githubusercontent.com/soifgo/soifgo/main/tutorials/server/Effect/graph1.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+
+    <h2 id="formula">Formula</h2>
+
+
+<div class="card">
+  <p>
+    This feature displays a custom value derived from the input. For example, if input range is <code>0–1024</code> but you want
+    <code>0–512</code>, write <code>val/2</code>. The input variable name is <code>val</code>. Formula authoring uses HTML-like
+    functions.
+  </p>
+
+  <h3>Available Math Functions with Examples</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Function</th>
+        <th>Description</th>
+        <th>Example</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><code>+</code></td><td>Adds two numbers</td><td><code>val+10</code> → if val=5 → 15</td></tr>
+      <tr><td><code>-</code></td><td>Subtracts second number from first</td><td><code>val-2</code> → if val=7 → 5</td></tr>
+      <tr><td><code>*</code></td><td>Multiplies two numbers</td><td><code>val*3</code> → if val=4 → 12</td></tr>
+      <tr><td><code>/</code></td><td>Divides first number by second</td><td><code>val/2</code> → if val=10 → 5</td></tr>
+      <tr><td><code>%</code></td><td>Remainder of division</td><td><code>val%3</code> → if val=10 → 1</td></tr>
+      <tr><td><code>Math.pow</code></td><td>Exponentiation</td><td><code>Math.pow(val,2)</code> → if val=4 → 16</td></tr>
+      <tr><td><code>Math.sqrt</code></td><td>Square root</td><td><code>Math.sqrt(val)</code> → if val=9 → 3</td></tr>
+      <tr><td><code>Math.cbrt</code></td><td>Cube root</td><td><code>Math.cbrt(val)</code> → if val=8 → 2</td></tr>
+      <tr><td><code>Math.round</code></td><td>Rounds to nearest integer</td><td><code>Math.round(3.6)</code> → 4</td></tr>
+      <tr><td><code>Math.floor</code></td><td>Rounds down</td><td><code>Math.floor(3.9)</code> → 3</td></tr>
+      <tr><td><code>Math.ceil</code></td><td>Rounds up</td><td><code>Math.ceil(3.1)</code> → 4</td></tr>
+      <tr><td><code>Math.trunc</code></td><td>Removes decimal part</td><td><code>Math.trunc(5.7)</code> → 5</td></tr>
+      <tr><td><code>Math.fround</code></td><td>Rounds to 32-bit float</td><td><code>Math.fround(1.337)</code> → 1.337000012</td></tr>
+      <tr><td><code>Math.abs</code></td><td>Absolute value</td><td><code>Math.abs(-7)</code> → 7</td></tr>
+      <tr><td><code>Math.sign</code></td><td>Sign of number</td><td><code>Math.sign(-5)</code> → -1</td></tr>
+      <tr><td><code>Math.random</code></td><td>Random number 0–1</td><td><code>Math.random()</code> → e.g. 0.42</td></tr>
+      <tr><td><code>Math.PI</code></td><td>Pi constant</td><td><code>Math.PI</code> → 3.14159…</td></tr>
+      <tr><td><code>Math.E</code></td><td>Euler's number</td><td><code>Math.E</code> → 2.718…</td></tr>
+      <tr><td><code>Math.sin</code></td><td>Sine of angle</td><td><code>Math.sin(Math.PI/2)</code> → 1</td></tr>
+      <tr><td><code>Math.cos</code></td><td>Cosine of angle</td><td><code>Math.cos(0)</code> → 1</td></tr>
+      <tr><td><code>Math.tan</code></td><td>Tangent of angle</td><td><code>Math.tan(Math.PI/4)</code> → 1</td></tr>
+      <tr><td><code>Math.log</code></td><td>Natural log</td><td><code>Math.log(Math.E)</code> → 1</td></tr>
+      <tr><td><code>Math.exp</code></td><td>e^x</td><td><code>Math.exp(1)</code> → 2.718…</td></tr>
+      <tr><td><code>Math.hypot</code></td><td>Hypotenuse length</td><td><code>Math.hypot(3,4)</code> → 5</td></tr>
+      <tr><td><code>Math.max</code></td><td>Maximum</td><td><code>Math.max(1,9,3)</code> → 9</td></tr>
+      <tr><td><code>Math.min</code></td><td>Minimum</td><td><code>Math.min(1,9,3)</code> → 1</td></tr>
+      <tr><td><code>Math.clz32</code></td><td>Leading zeros in 32-bit</td><td><code>Math.clz32(1)</code> → 31</td></tr>
+      <tr><td><code>toRadians</code></td><td>Degrees → radians</td><td><code>toRadians(180)</code> → 3.14159…</td></tr>
+      <tr><td><code>toDegrees</code></td><td>Radians → degrees</td><td><code>toDegrees(Math.PI)</code> → 180</td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+        <h2 id="ALARM">ALARM</h2>
+    <div class="card">
+      <p>
+The alarm provides both text and sound notifications. It is triggered when the measured value becomes greater or less than the configured threshold.
+
+Alarm Value: The numeric threshold that activates the alarm.
+
+Alarm Message: The text notification displayed when the alarm is triggered.
+
+Alarm Option: Can be enabled for either "greater than" or "less than" conditions.
+
+Delay Setting: A configurable delay bar is available at the bottom to manage consecutive alarms.
+
+Sound Notification: The alarm sound uses the same configuration as the button sound setting.
+      </p>
+    </div>
+
+    <video controls width="50%">
+  <source src="https://raw.githubusercontent.com/soifgo/soifgo/main/tutorials/server/Effect/Alarm1.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+
+
+    <hr>
+<p style="text-align:center;">
+  <a href="https://soifgo.github.io/soifgo/tutorials/list.html" 
+     style="display:inline-block; padding:10px 20px; background:#0066cc; color:#fff; text-decoration:none; border-radius:5px;">
+    ⬅ Back to Tutorial
+  </a>
+</p>
+
+
+
+<hr>
+<p style="text-align:center;">
+  <a href="https://soifgo.github.io/soifgo/index.html" 
+     style="display:inline-block; padding:10px 20px; background:#8B4513; color:#fff; text-decoration:none; border-radius:5px;">
+    ⬅ Back to Home
+  </a>
+</p>
+
+  </main>
+</body>
+</html>
+
+
+
+
+
+

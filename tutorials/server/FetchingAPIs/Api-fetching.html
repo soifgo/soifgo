@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Online API Extraction – SoifGo</title>
+ 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f9f9f9;
+      padding: 1em;
+      margin: auto;
+      max-width: 100%;
+      line-height: 1.6;
+    }
+    h1 {
+      color: #0055aa;
+      text-align: center;
+      font-size: 2em;
+    }
+    h2 {
+      color: #333;
+      margin-top: 2em;
+      font-size: 1.5em;
+    }
+    p {
+      margin-bottom: 1em;
+    }
+    code {
+      background-color: #eee;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    pre {
+      background-color: #eee;
+      padding: 1em;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 1em;
+      font-family: Consolas, monospace;
+      line-height: 1.6;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      margin: 1em 0;
+      border-radius: 6px;
+    }
+    a {
+      color: #0055aa;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+     
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 5px;
+      color: #fff;
+      text-decoration: none;
+      margin: 5px;
+    }
+    .btn-blue { background: #0066cc; }
+    .btn-brown { background: #8B4513; }
+
+ 
+    @media (max-width: 600px) {
+      body { font-size: 18px; line-height: 1.8; }
+      h1 { font-size: 24px; }
+      h2 { font-size: 20px; }
+      pre { font-size: 18px; line-height: 1.8; white-space: pre-wrap; word-wrap: break-word; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🌐 Online API Extraction in SoifGo</h1>
+
+  <h2>Step 1: Choose a Free API</h2>
+  <p>Visit the following site that offers free crypto data:</p>
+  <p><a href="https://www.diadata.org/free-crypto-api/" target="_blank">🔗 DIA Free Crypto API</a></p>
+  <p>Select your desired coin (e.g., <code>BTC</code>) and click <strong>RUN FEED</strong>.</p>
+  <p>The API endpoint and keys like <code>Price</code> will be shown on the right.</p>
+
+  <img src="Api-fetching1.png" alt="DIA API Selection Screenshot">
+
+  <h2>Step 2: Create a Button in SoifGo</h2>
+  <p>In SoifGo, create a button and set its behavior to <strong>Receive Server Text</strong>.</p>
+  <p>Paste the API address into the <code>Server Address</code> field:</p>
+  <pre><code>https://api.diadata.org/v1/assetQuotation/Bitcoin/0x0000000000000000000000000000000000000000</code></pre>
+  <p>Set the <code>Server Key</code> to <code>Price</code> or any other key you want to extract.</p>
+
+  <img src="Api-fetching2.png" alt="SoifGo Server Setup Screenshot">
+
+  <h2>Step 3: Filter Complex Keys (Optional)</h2>
+  <p>If the value is embedded in a long string like <code>temp12_Abc</code>, use filters:</p>
+  <ul>
+    <li><strong>Start Filter:</strong> <code>temp</code></li>
+    <li><strong>End Filter:</strong> <code>_Abc</code></li>
+  </ul>
+  <p>This will extract only <code>12</code> and hide the rest.</p>
+
+  <img src="Api-fetching3.png" alt="Filter Setup Screenshot">
+
+  <h2>Step 4: Apply Effects Based on API Value</h2>
+  <p>To trigger visual effects, set button behavior to <strong>Receive Server Value</strong>.</p>
+  <p>Define a <strong>Maximum Value</strong> and configure effects in the menu.</p>
+  <p>For more on effects, visit:</p>
+  <p><a href="https://soifgo.github.io/soifgo/tutorials/server/Effect/effects.html">🎨 Button Effects Tutorial</a></p>
+
+  <hr>
+  <p style="text-align:center;">
+    <a href="https://soifgo.github.io/soifgo/tutorials/list.html" class="btn btn-blue">⬅ Back to Tutorial</a>
+    <a href="https://soifgo.github.io/soifgo/index.html" class="btn btn-brown">⬅ Back to Home</a>
+  </p>
+
+</body>
+</html>
