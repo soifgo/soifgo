@@ -96,7 +96,11 @@
   <img src="Api-fetching2.png" alt="SoifGo Server Setup Screenshot">
 
   <h2>Step 3: Filter Complex Keys (Optional)</h2>
-  <p>If the value is embedded in a long string like <code>temp12_Abc</code>, use filters:</p>
+  <p>If the value is embedded in a long string like 
+    If extracting an API key does not work due to malformed data, simply leave the key field empty to receive the entire dataset. 
+    Then, specify the word or phrase that comes before and after the desired value.
+    The system will filter the data between those markers and display the extracted result
+    <code>temp12_Abc</code>, use filters:</p>
   <ul>
     <li><strong>Start Filter:</strong> <code>temp</code></li>
     <li><strong>End Filter:</strong> <code>_Abc</code></li>
