@@ -72,9 +72,37 @@
 
   <h1>🖥️ Local Server Setup for SoifGo</h1>
   <h2>Step 1: Download and Start the Server</h2>
+
+
+<h2>Prerequisite: Install Node.js</h2>
+<p>⚠️ Before starting, make sure Node.js is installed. Without Node.js the server cannot run.</p>
+<p>You can install it using the file provided in your folder:</p>
+<p><a href="node-v22.17.1-x64.zip" download>📦 Download node-v22.17.1-x64</a></p>
+<p>Or download the latest version from the official website:</p>
+<p><a href="https://nodejs.org/en/download">🌐 Node.js Official Download</a></p>
+
+<p>
+## Important Note
+
+✅ All required npm packages have already been installed.  
+This means you do **not** need to run `npm install` again.  
+
+Everything needed to run the server is already included inside the folder:
+- `server.js`
+- `node_modules/` (all dependencies)
+- `Start server.bat` (for easy launch)
+
+Simply extract the ZIP file and double‑click on **Start server.bat**.  
+The server will start immediately without any extra setup.</p>
+
   <p>Download the following ZIP file and extract it:</p>
-  <p><a href="Local-server.zip" download>📦 Download Local-server.zip</a></p>
+  <p><a href="Local_Server.zip" download>📦 Download Local_Server</a></p>
+
   <p>After extraction, click on <code>Start server.bat</code> to launch the Local server on your computer.</p>
+
+
+
+
   <p>If successful, you will see a message like this:</p>
   <pre><code>{"level":30,"time":1761753122527,"pid":9856,"hostname":"ssm","msg":"Server listening at http://192.168.224.1:3000"}</code></pre>
 
@@ -102,6 +130,19 @@
   <p>Once configured, effects will appear in the menu.</p>
   <p>To learn more about applying effects to buttons, visit the following link:</p>
   <p><a href="https://soifgo.github.io/soifgo/tutorials/server/Effect/effects.html">🎨 Effects Tutorial</a></p>
+
+
+    <p>
+    If extracting an API key does not work due to malformed data, simply leave the key field empty to receive the entire dataset. 
+    Then, specify the word or phrase that comes before and after the desired value.
+    The system will filter the data between those markers and display the extracted result
+      </p>
+
+
+   <img src="Api-fetching4.png" alt="Filter Setup Screenshot4">
+   <img src="Api-fetching5.png" alt="Filter Setup Screenshot5">
+
+
 
   <hr>
   <p style="text-align:center;">
