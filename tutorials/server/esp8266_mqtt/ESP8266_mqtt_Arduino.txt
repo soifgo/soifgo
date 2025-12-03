@@ -2,30 +2,30 @@
 #include <PubSubClient.h>
 
 // Wi-Fi settings
-const char* ssid = "TPLINK";        // Wi-Fi SSID
-const char* password = "abcd1234";  // Wi-Fi password
+const char* ssid = "TPLINK";
+const char* password = "abcd1234";
 
 // MQTT settings
-const char* mqtt_server = "test.mosquitto.org"; // Broker address (or direct IP: "85.119.83.194")
-const int   mqtt_port   = 1883;                 // MQTT port
-const char* mqtt_recv_topic = "soifgo_send";    // Fixed topic for receiving
+const char* mqtt_server = "test.mosquitto.org";
+const int   mqtt_port   = 1883;
+const char* mqtt_recv_topic = "soifgo_send";
 
 WiFiClient espClient;
 PubSubClient client(espClient);
 
+ 
+unsigned long lastCheck = 0;
+const unsigned long checkInterval = 15000;  
+int reconnectAttempts = 0;
+const int maxReconnectAttempts = 4;     
+
 void setup_wifi() {
-  delay(10);
-  Serial.println();
-  Serial.print("Connecting to ");
-  Serial.println(ssid);
-
   WiFi.begin(ssid, password);
-
+  Serial.print("Connecting to WiFi");
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
   }
-
   Serial.println("");
   Serial.println("WiFi connected");
   Serial.print("IP address: ");
@@ -34,30 +34,31 @@ void setup_wifi() {
   Serial.println(WiFi.macAddress());
 }
 
-// Callback when a new MQTT message is received
 void mqttCallback(char* topic, byte* payload, unsigned int length) {
   String message;
   for (unsigned int i = 0; i < length; i++) {
     message += (char)payload[i];
   }
-  if (message.length() > 0) {
-    // Only print messages from the fixed receive topic
-    if (String(topic) == mqtt_recv_topic) {
-      Serial.println(message);
-    }
+  if (String(topic) == mqtt_recv_topic) {
+    Serial.println( message);
   }
 }
 
-void reconnect() {
-  while (!client.connected()) {
+bool reconnect() {
+  if (!client.connected()) {
     String clientId = "ESP8266Client-" + String(ESP.getChipId());
     if (client.connect(clientId.c_str())) {
-      // Subscribe only to the fixed receive topic
       client.subscribe(mqtt_recv_topic);
+      Serial.println("MQTT connected");
+      reconnectAttempts = 0;   
+      return true;
     } else {
-      delay(2000);
+      reconnectAttempts++;
+      Serial.println("MQTT reconnect failed");
+      return false;
     }
   }
+  return true;
 }
 
 void setup() {
@@ -73,7 +74,25 @@ void loop() {
   }
   client.loop();
 
-  // If data comes from Serial → split into topic and payload
+ 
+  if (millis() - lastCheck > checkInterval) {
+    lastCheck = millis();
+
+    if (WiFi.status() != WL_CONNECTED) {
+      Serial.println("WiFi lost → reconnecting...");
+      WiFi.disconnect();
+      WiFi.begin(ssid, password);
+    }
+
+    if (!client.connected()) {
+      if (!reconnect() && reconnectAttempts >= maxReconnectAttempts) {
+        Serial.println("Too many fails → Restarting...");
+        ESP.restart();
+      }
+    }
+  }
+
+ 
   static String serialBuffer = "";
   while (Serial.available()) {
     char c = Serial.read();
@@ -82,13 +101,13 @@ void loop() {
       if (serialBuffer.length() > 0) {
         int sepIndex = serialBuffer.indexOf(':');
         if (sepIndex > 0) {
-          String topicPart   = serialBuffer.substring(0, sepIndex);   // e.g. temp1
-          String payloadPart = serialBuffer.substring(sepIndex + 1); // e.g. 123
-          String fullTopic   = "soifgo_" + topicPart;                // e.g. soifgo_temp1
+          String topicPart   = serialBuffer.substring(0, sepIndex);
+          String payloadPart = serialBuffer.substring(sepIndex + 1);
+          String fullTopic   = "soifgo_" + topicPart;
           client.publish(fullTopic.c_str(), payloadPart.c_str());
         }
       }
-      serialBuffer = ""; // Clear buffer after sending
+      serialBuffer = "";
     } else {
       serialBuffer += c;
     }

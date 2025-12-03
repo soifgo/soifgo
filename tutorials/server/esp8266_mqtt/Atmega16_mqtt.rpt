@@ -1,6 +1,6 @@
 Report       : Atmega16_mqtt
 Date         : 12-03-2025
-Time         : 03:10:03
+Time         : 16:16:00
 
 Compiler     : BASCOM-AVR LIBRARY V 2.0.8.5
 Processor    : M16
@@ -8,8 +8,8 @@ SRAM         : 400 hex
 EEPROM       : 200 hex
 ROMSIZE      : 4000 hex
 
-ROMIMAGE     : F06 hex  -> Will fit into ROM
-ROMIMAGE     :  3846 dec
+ROMIMAGE     : EBA hex  -> Will fit into ROM
+ROMIMAGE     :  3770 dec
 FLASH USED   :  23  %
 BAUD         : 115200 Baud
 XTAL         : 11059200 Hz
@@ -21,7 +21,7 @@ S-Stacksize  : 10 hex
 S-Stackstart : 438 hex
 Framesize    : 20 hex
 Framestart   : 408 hex
-Space left   :  810  dec
+Space left   :  726  dec
 
 LCD DB7      : PORTB.7
 LCD DB6      : PORTB.6
@@ -93,26 +93,30 @@ PWM1B                            Word              0048          72
 COMPARE1B                        Word              0048          72 
 PWM0                             Byte              005C          92 
 ERR                              Bit [2]           0006          6 
-TEXT                             String * 40       008C          140 
-TEXT2                            String * 4        00B5          181 
-TEXT3                            String * 5        00BA          186 
-LASTTEMP1                        Word              00C0          192 
-TEMP1                            Word              00C2          194 
-LASTTEMP2                        Word              00C4          196 
-TEMP2                            Word              00C6          198 
-PWM1AA                           Word              00C8          200 
-VOLT                             Word              00CA          202 
-LASTVOLT2                        Single            00CC          204 
-VOLT2                            Single            00D0          208 
-STEP1                            Byte              00D4          212 
-I                                Byte              00D5          213 
-T1                               Byte              00D6          214 
-P                                Byte              00D7          215 
-T2                               Bit [7]           00D8          216 
-LASTPB                           Byte              00D9          217 
-PB                               Byte              00DA          218 
-LASTPC                           Byte              00DB          219 
-PC                               Byte              00DC          220 
+LASTFEEDBACK                     String * 40       008C          140 
+FEEDBACK                         String * 40       00B5          181 
+TEXT                             String * 40       00DE          222 
+TEXT2                            String * 4        0107          263 
+TEXT3                            String * 5        010C          268 
+LASTTEMP1                        Word              0112          274 
+TEMP1                            Word              0114          276 
+LASTTEMP2                        Word              0116          278 
+TEMP2                            Word              0118          280 
+PWM1AA                           Word              011A          282 
+VOLT                             Word              011C          284 
+LASTVOLT2                        Single            011E          286 
+VOLT2                            Single            0122          290 
+REFRESH                          Byte              0126          294 
+STEP1                            Byte              0127          295 
+I                                Byte              0128          296 
+T1                               Byte              0129          297 
+P                                Byte              012A          298 
+T2                               Bit [7]           012B          299 
+LASTPB                           Byte              012C          300 
+PB                               Byte              012D          301 
+LASTPC                           Byte              012E          302 
+PC                               Byte              012F          303 
+Z                                Byte              0130          304 
 
 --------------------------------------------------------------------------------
 Constant                         Value
@@ -545,7 +549,14 @@ Warnings:
 --------------------------------------------------------------------------------
 ADCD                             not used
 COMPARE1                         not used
+LASTFEEDBACK                     not used
+LASTTEMP1                        not used
+LASTTEMP2                        not used
+LASTVOLT2                        not used
+REFRESH                          not used
+I                                not used
 P                                not used
+LASTPB                           not used
+LASTPC                           not used
+PC                               not used
 
-When reading the PIN, PINx should be used?  in line  74 
-When reading the PIN, PINx should be used?  in line  80 

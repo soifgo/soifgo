@@ -19,17 +19,17 @@ Enable Interrupts
 
  Config Serialin = Buffered , Size = 41 , Bytematch = 13
 
-Dim Text As String * 40
+Dim Text , Feedback , Lastfeedback As String * 40
 Dim Text2 As String * 4
 Dim Text3 As String * 5
 DIM TEMP1,LastTemp1 AS WORD
 Dim Temp2,LastTemp2 As Word
 Dim Volt,pwm1aa As Word
 Dim Volt2,LastVolt2 As Single
-Dim Step1 As Byte
+Dim Step1 , Refresh As Byte
 dim p,t1,i as byte
 dim t2 as bit
-dim pc,lastpc,pb,lastpb as byte
+Dim Pc , Lastpc , Pb , Lastpb As Byte
 config watchdog=2048
 start watchdog
  Readeeprom portb , 1
@@ -41,12 +41,12 @@ start watchdog
   Print #1 , "soifgo"
 pwm1a=pwm1aa
 Main:
-Waitms 100
+Waitms 400
   Incr Step1
 
 reset watchdog
 
-    If Step1 >6 Then Step1 = 1
+    If Step1 > 7 Then Step1 = 1
 
 
     Select Case Step1
@@ -55,34 +55,36 @@ reset watchdog
 
             Volt = Getadc(0)
             Volt2 = Volt / 204.8
-               If Volt2 <> Lastvolt2 Then
+
                    Print "volt:" ; Fusing(volt2 , "#.##")
-                   Lastvolt2 = Volt2
-               End If
+
         Case 2
               Temp1 = Getadc(1)
-               If Temp1 <> Lasttemp1 Then
-                   Print "temp1" ; ":" ; Temp1
-                   Lasttemp1 = Temp1
-               End If
+
+                   Print "temp1:" ; Temp1
+
         Case 3
             Temp2 = Getadc(2)
-               If Temp2 <> Lasttemp2 Then
-                   Print "temp2" ; ":" ; Temp2
-                   Lasttemp2 = Temp2
-               End If
+
+                   Print "temp2:" ; Temp2
+
         Case 4
-           Pb = Portb
-               If Pb <> Lastpb Then
-                  Print "portb" ; ":" ; Bin(portb)
-                  Lastpb = Pb
-               End If
+              Pb.0 = Portb.7
+              Pb.1 = Portb.6
+              Pb.2 = Portb.5
+              Pb.3 = Portb.4
+              Pb.4 = Portb.3
+              Pb.5 = Portb.2
+              Pb.6 = Portb.1
+              Pb.7 = Portb.0
+                  Print "portb:" ; Bin(pb)
+
         Case 5
-                 Pc = Portc
-               If Pc <> Lastpc Then
-                  Print "pinc" ; ":" ; Pinc.0 ; Pinc.1
-                  Lastpc = Pc
-               End If
+                  Print "pinc:" ; Pinc.0 ; Pinc.1
+        Case 6
+                 Print "feedback:" ; Feedback
+
+
 
     End Select
 
@@ -105,9 +107,25 @@ Sub Red
   Text = Trim(text)
   Text = Ltrim(text)
 
-  'Print #1 , ">";Text;"<"
+
+         Dim Z As Byte
+
+
+
+     For Z = 1 To Len(text)
+        If Mid(text , Z , 1) = ":" Then
+           Mid(text , Z , 1) = "="
+        End If
+     Next
+
+      Feedback = Text
+
+
+
+
+
       If Instr(text , "rang") > 0 Then
-      Disable Interrupts
+        Disable Interrupts
        Print #1 , Mid(text , 6 , 36)
         Enable Interrupts
        End If
@@ -134,18 +152,10 @@ Sub Red
 
           if t2=1 then
             Portb = 255
-             For I = 0 To 7
-              Print "#port" ; I ; ":1*"
-              Waitms 50
-             Next
           End If
 
         if t2=0 then
-          portb=0
-          for i=0 to 7
-           Print  "#port";i ; ":0*"
-           waitms 50
-          next
+          Portb = 0
         end if
 
 
