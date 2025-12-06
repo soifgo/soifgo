@@ -94,11 +94,16 @@
 </head>
 <body>
 
-  <h1>🚀 ESP8266 mqtt Setup with SoifGo</h1>
+<h1>🚀 ESP8266 MQTT Setup with SoifGo</h1>
 
+<h2>Step 1: Introduction</h2>
+<p>
+In this tutorial, you will learn how to configure the ESP8266 Wi-Fi module 
+and establish a reliable connection with the SoifGo MQTT broker. 
+We’ll cover the basics of MQTT, explain how publish/subscribe works, 
+and guide you step by step to get your device online.
+</p>
 
-  <h2>Step 1: Introduction</h2>
-  <p>This tutorial helps you set up the ESP8266 Wi-Fi module and connect it to SoifGo.</p>
 
   <h2>Step 2: Preparing the Module</h2>
   <p>Use a USB to TTL converter. It can be a single USB-to-TTL board or a combination of USB-to-UART and UART-to-TTL.</p>
@@ -262,6 +267,25 @@ wifiPass = "abcd1234";
   <img src="output1.png" alt="Serial Output">
 
   <h2>Step 7: Microcontroller Connection</h2>
+<p>
+In this step, you need to program your microcontroller.  
+You have several options:
+</p>
+<ul>
+  <li>Use the <strong>Bascom software</strong> to upload the program directly.</li>
+  <li>Apply your own <strong>custom edits</strong> before programming.</li>
+  <li>Download the provided <strong>HEX or binary file</strong> and flash it using any compatible programmer.</li>
+</ul>
+<p>
+If you are not familiar with the Bascom language, don’t worry.  
+Simply copy the provided Bascom Basic code and use an AI assistant to translate it into Arduino C++ or any other programming language you are comfortable with.  
+This way, you can adapt the project to your preferred development environment.
+</p>
+<p>
+⚠️ <strong>Important:</strong> Don’t forget to configure the <em>oscillator fuse bits</em> to use an external crystal.  
+Without this setting, the microcontroller will not operate correctly.
+</p>
+
   <img src="micro1.png" alt="Microcontroller Wiring">
   <p>Program your ATmega16 using a compatible programmer:</p>
 
@@ -453,11 +477,36 @@ End Sub
 
 
 
-  <h2>Step 8: SoifGo Integration</h2>
+ <h2>Step 8: SoifGo Integration</h2>
+<p>
+If you need advanced configuration, don’t worry.  
+Simply click on the <strong>Topic Options</strong> label to access additional settings.  
+Here you can adjust your <em>username</em>, <em>password</em>, <em>client ID</em>, and the <em>connection quality (QoS)</em>.  
+This ensures that your ESP8266 communicates reliably with the SoifGo MQTT broker.
+</p>
+
+<h3>Understanding QoS Levels</h3>
+<ul>
+  <li><strong>QoS 0 – At most once:</strong> Fastest, but no delivery guarantee. Suitable for non-critical sensor data.</li>
+  <li><strong>QoS 1 – At least once:</strong> Guaranteed delivery, but messages may be duplicated. Good for control commands.</li>
+  <li><strong>QoS 2 – Exactly once:</strong> Highest reliability, ensures no loss or duplication. Best for critical operations.</li>
+</ul>
+<p>
+Choose the QoS level based on how important message delivery is for your project.  
+Higher QoS means more reliability, but also more overhead and slower performance.
+</p>
+
   <img src="soifgo-receive.png" alt="Receive Setup">
   <img src="soifgo-send.png" alt="Send Setup">
 
 <h2>Step 9: ESP8266 Setup Video</h2>
+<p>
+This video demonstrates how to install and set up the ESP8266 Wi-Fi module.  
+The process is the same across different setups, but make sure to use the provided MQTT Arduino sketch file.  
+Click the link below to download the sample project:
+</p>
+<a href="ESP8266_mqtt_Arduino.zip" download>📦 Download ESP8266_mqtt_Arduino.zip</a>
+
 <video controls width="100%">
   <source src="https://raw.githubusercontent.com/soifgo/soifgo/refs/heads/soifgo/tutorials/server/ESP32Server/Esp8266%20Setup.mp4" type="video/mp4">
   Your browser does not support the video tag.
@@ -473,7 +522,25 @@ End Sub
 
  <h2>Bonus: Proteuse </h2>
  <a href="Proteuse_esp8266.zip" download>📦 Download Proteuse </a>
- <h2>Bonus: Sample soifgo </h2>
+<h2>Bonus: Sample SoifGo File</h2>
+<p>
+If you don’t already have your own project, you can start with the prepared SoifGo sample file.  
+</p>
+<p>
+1. Extract the file and copy it into the device memory.  
+</p>
+<p>
+2. (Optional) Rename the <code>p1</code> folder before placing it inside the SoifGo directory. 
+</p>
+<p> 
+3. You can also move the file directly into the desired page folder within the SoifGo memory. 
+</p>
+<p> 
+This way, you’ll have a ready-to-use setup without needing to create a project from scratch.
+
+</p>
+
+
  <a href="soifgo_design_esp8266_mqtt.zip" download>📦 Download soifgo file </a>
 
     <hr>
