@@ -50,7 +50,7 @@ SoifGo is an Android application that provides users with advanced capabilities 
 
 ### 🔧 Features
 - 📡 **Bluetooth communication:** Sending and receiving serial Bluetooth data  
-- 🌐 **API server interaction & web browsing**  
+- 🌐 **API and MQTT server interaction & web browsing**
 - 📝 **Managing HTML files & notes**  
 - 📂 **Shortcut & library management for PDFs and images**  
 - 🎛️ **Seek bar control with serial Bluetooth transmission**  
