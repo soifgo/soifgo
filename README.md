@@ -78,9 +78,12 @@ SoifGo is an Android application that provides users with advanced capabilities 
 
 ### Servers and APIs
 - [Local Server Setup (Fastify on PC)](https://soifgo.github.io/soifgo/tutorials/server/LocalServerSetup/Local-server.html)
-- [ESP32 Server (WiFiServer/WebServer)](https://soifgo.github.io/soifgo/tutorials/server/ESP32Server/ESP8266_wifi.html)
+- [ESP8266 Server (WiFiServer/WebServer)](https://soifgo.github.io/soifgo/tutorials/server/ESP32Server/ESP8266_wifi.html)
 - [Fetching APIs (External Servers)](https://soifgo.github.io/soifgo/tutorials/server/FetchingAPIs/Api-fetching.html)
 
+### MQTT
+- [ESP8266 ](https://soifgo.github.io/soifgo/tutorials/server/Esp8266_wifi_mqtt/esp8266_mqtt.html)
+- 
 ---
 
 ## 🚀 Installation
