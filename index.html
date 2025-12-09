@@ -3,10 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-  <script data-goatcounter="https://soifgo.goatcounter.com/count" 
-        async src="//gc.zgo.at/count.js"></script>
-
+  <script data-goatcounter="https://soifgo.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
   <title>SoifGo – Simple Page</title>
   <style>
     body {
@@ -16,14 +13,13 @@
       font-size: 17px;
       line-height: 1.6;
     }
-
     header {
       background: #8B4513;
       color: white;
       padding: 1.2em;
       text-align: center;
+      position: relative;
     }
-
     header h1 {
       display: flex;
       align-items: center;
@@ -33,12 +29,17 @@
       flex-wrap: wrap;
       margin: 0;
     }
-
     header h1 img {
       height: 36px;
       max-width: 100%;
     }
-
+    #dateBox {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      color: white;
+      font-size: 0.95em;
+    }
     nav {
       display: flex;
       justify-content: center;
@@ -48,7 +49,6 @@
       top: 0;
       z-index: 1000;
     }
-
     nav button {
       margin: 0.6em;
       padding: 0.7em 1.4em;
@@ -60,17 +60,14 @@
       color: black;
       transition: transform 0.1s ease, background 0.2s ease;
     }
-
     nav button:hover {
       background: #ccc;
     }
-
     nav button:active,
     nav button.clicked {
       transform: translateY(3px);
       background: #bbb;
     }
-
     section {
       display: none;
       padding: 1.8em;
@@ -78,40 +75,33 @@
       margin: auto;
       font-size: 1.05em;
     }
-
     section.active {
       display: block;
     }
-
     h2 {
       font-size: 1.4em;
       margin-bottom: 0.8em;
     }
-
     img {
       max-width: 100%;
       height: auto;
       display: block;
       margin: 1.2em auto;
     }
-
     @media (max-width: 600px) {
       header h1 {
         font-size: 1.6em;
         flex-direction: column;
       }
-
       nav {
         flex-direction: column;
         align-items: center;
       }
-
       nav button {
         width: 95%;
         font-size: 1.2em;
         margin: 0.4em 0;
       }
-
       section {
         padding: 1em;
         margin: 0 12px;
@@ -126,24 +116,21 @@
       <img src="soifgo-logo.png" alt="SoifGo Logo">
     </h1>
     <p>SoifGo is an Android application that provides users with advanced capabilities using buttons and seek bars.</p>
+    <div id="dateBox"></div>
   </header>
-
   <nav>
     <button id="downloadBtn" onclick="showDownload()">Download</button>
     <button onclick="showSection('readme')">README</button>
     <button onclick="showSection('about')">About</button>
     <button onclick="openTutorial()">SoifGo Tutorial</button>
   </nav>
-
   <section id="download">
     <h2>Download SoifGo</h2>
     <ul>
-      
       <li><a href="https://github.com/soifgo/soifgo/releases/download/1.27/soifgo.apk">soifgo.apk</a></li>
       <li><a href="https://apkpure.com/soifgo/soifgo.saeidmoghadam">Apkpure</a></li>
     </ul>
   </section>
-
   <section id="readme">
     <h2>README</h2>
     <h3>The developer: Saeid Moghadam</h3>
@@ -175,13 +162,11 @@
     <h3>About SoifGo</h3>
     <p><strong>SoifGo</strong> is an Android application that provides users with advanced capabilities using <strong>buttons and seek bars</strong>.</p>
   </section>
-
   <section id="about">
     <h2>About the Developer</h2>
     <p><strong>Saeid Moghadam</strong> is a documentation perfectionist and user-focused developer.</p>
     <p>Email: <a href="mailto:SSMQQMSS@gmail.com">SSMQQMSS@gmail.com</a></p>
   </section>
-
   <script>
     document.querySelectorAll('nav button').forEach(btn => {
       btn.addEventListener('click', function() {
@@ -189,28 +174,29 @@
         this.classList.add('clicked');
       });
     });
-
     function showSection(id) {
       document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
     }
-
     function showDownload() {
       document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
       document.getElementById('download').classList.add('active');
       document.querySelectorAll('nav button').forEach(b => b.classList.remove('clicked'));
       document.getElementById('downloadBtn').classList.add('clicked');
     }
-
     function openTutorial() {
       window.location.href = "tutorials/list.html";
     }
-
+    function showDate() {
+      const now = new Date();
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      document.getElementById('dateBox').textContent = now.toLocaleDateString('fa-IR', options);
+    }
     window.onload = function() {
       document.getElementById('downloadBtn').click();
+      showDate();
     };
   </script>
-
   <img src="soifgo_pic01.png" alt="Recommended Converter">
 </body>
 </html>
