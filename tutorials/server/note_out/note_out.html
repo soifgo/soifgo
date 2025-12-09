@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>How to Work with Note Out in Soifgo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 15px;
+      line-height: 1.6;
+      font-size: 16px;
+    }
+    h1 {
+      font-size: 1.8em;
+      text-align: center;
+      color: #2c3e50;
+    }
+    h2 {
+      color: #34495e;
+      margin-top: 20px;
+    }
+    code {
+      background-color: #f4f4f4;
+      padding: 3px 6px;
+      border-radius: 4px;
+      display: block;
+      margin: 5px 0;
+    }
+    ul {
+      padding-left: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>How to Work with Note Out in Soifgo</h1>
+
+  <h2>Step 1: Create a Note</h2>
+  <p>
+    First, create a button and set its behavior to <strong>Note</strong>.  
+    Choose <em>Create</em> to generate a blank note.  
+    Then go to the <strong>Play</strong> page, click the button to open the note,  
+    and from the menu or play icon select <strong>Note Out</strong> to see the list of communication methods.  
+    For example, choose <strong>Bluetooth</strong> and return to the note.  
+    Now you can start writing the required commands line by line.
+  </p>
+
+  <h2>Step 2: Sending Options</h2>
+  <p>
+    At the top of the page, you will see the <strong>Send</strong> icon.  
+    By long-clicking on this icon, a list of settings will appear:
+  </p>
+  <ul>
+    <li><strong>Manual Sending:</strong> No delay is applied.  
+      After clicking the send icon, another icon appears on the screen.  
+      Each time you click it, one line is sent. The next click sends the next line, and so on.</li>
+    <li><strong>Automatic Sending:</strong> Delay settings are applied.  
+      <ul>
+        <li><em>Custom Wait Off:</em> A single delay time (e.g., 2 seconds) is set at the bottom of the page and applied to all lines equally.</li>
+        <li><em>Custom Wait On:</em> Different delays can be defined for each line, as explained below.</li>
+      </ul>
+    </li>
+  </ul>
+
+  <h2>Method 1: Fixed Delay for All Lines (Custom Wait Off)</h2>
+  <p>
+    In this method, every line is sent with the same delay.  
+    You simply write the commands normally, and the system applies a uniform delay between each line.
+  </p>
+  <p><strong>Example:</strong></p>
+  <code>START_MACHINE</code>
+  <code>SET_SPEED 1200</code>
+  <code>MOVE_X 50</code>
+  <code>MOVE_Y 30</code>
+  <code>STOP_MACHINE</code>
+  <p>
+    Here, each command line will be sent one after another with the same delay (e.g., 2 seconds).
+  </p>
+
+  <h2>Method 2: Custom Delay Between Lines (Custom Wait On)</h2>
+  <p>
+    In this method, you can define different delays for each command.  
+    The first line is the command, and the next line is only the delay time in seconds.
+  </p>
+  <p><strong>Example:</strong></p>
+  <code>START_MACHINE</code>
+  <code>3</code>
+  <code>SET_SPEED 1200</code>
+  <code>5</code>
+  <code>MOVE_X 50</code>
+  <code>2</code>
+  <code>MOVE_Y 30</code>
+  <code>4</code>
+  <code>STOP_MACHINE</code>
+  <p>
+    In this example:
+    <ul>
+      <li><code>START_MACHINE</code> is sent, then waits 3 seconds.</li>
+      <li><code>SET_SPEED 1200</code> is sent, then waits 5 seconds.</li>
+      <li><code>MOVE_X 50</code> is sent, then waits 2 seconds.</li>
+      <li><code>MOVE_Y 30</code> is sent, then waits 4 seconds.</li>
+      <li><code>STOP_MACHINE</code> is sent at the end.</li>
+    </ul>
+  </p>
+
+  <h2>Step 3: Communication Settings</h2>
+  <p>
+    Each communication method (Bluetooth, API, MQTT) has its own specific settings.  
+    Below are the main options for <strong>Bluetooth</strong> (similar concepts apply to API and MQTT):
+  </p>
+
+  <ul>
+    <li><strong>Send Format:</strong> Choose how each line ends, e.g. <code>CR+LF</code>, <code>CR</code>, <code>NULL</code>, etc.</li>
+    <li><strong>Echo:</strong> After sending, the same data must be echoed back to Soifgo.  
+      If no echo is received, Soifgo retries the send up to 3 times.  
+      If still no response, an error is triggered.  
+      This ensures reliable delivery of each packet.</li>
+    <li><strong>Wait for NEXT:</strong> With this option enabled, Soifgo waits for the word <code>next</code> or <code>NEXT</code> after each command.  
+      This is useful for tasks with uncertain completion times.  
+      <em>Example:</em> A conveyor or crane may take 2–30 seconds to finish moving a heavy load.  
+      Once the task is complete, the destination sends <code>NEXT</code> back, signaling Soifgo to continue with the next line.</li>
+    <li><strong>Loop On/Off:</strong> In automatic sending mode, enabling <em>Loop On</em> makes the note repeat after finishing all lines.  
+      With <em>Loop Off</em>, the note stops after one full cycle.</li>
+  </ul>
+
+  <p>
+    These settings allow you to adapt Note Out for different devices and scenarios, ensuring both reliability and flexibility in communication.
+  </p>
+
+
+<img src="note01.png" alt=" ">
+
+<img src="note02.png" alt=" ">
+
+<img src="note03.png" alt=" ">
+
+
+
+    <hr>
+<p style="text-align:center;">
+  <a href="https://soifgo.github.io/soifgo/tutorials/list.html" 
+     style="display:inline-block; padding:10px 20px; background:#0066cc; color:#fff; text-decoration:none; border-radius:5px;">
+    ⬅ Back to Tutorial
+  </a>
+</p>
+
+
+
+<hr>
+<p style="text-align:center;">
+  <a href="https://soifgo.github.io/soifgo/index.html" 
+     style="display:inline-block; padding:10px 20px; background:#8B4513; color:#fff; text-decoration:none; border-radius:5px;">
+    ⬅ Back to Home
+  </a>
+</p>
+
+
+</body>
+</html>
