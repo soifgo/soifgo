@@ -187,11 +187,12 @@
     function openTutorial() {
       window.location.href = "tutorials/list.html";
     }
-    function showDate() {
-      const now = new Date();
-      const options = { year: 'numeric', month: 'long', day: 'numeric' };
-      document.getElementById('dateBox').textContent = now.toLocaleDateString('fa-IR', options);
-    }
+function showDate() {
+  const now = new Date();
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  document.getElementById('dateBox').textContent = now.toLocaleDateString('en-US', options);
+}
+
     window.onload = function() {
       document.getElementById('downloadBtn').click();
       showDate();
