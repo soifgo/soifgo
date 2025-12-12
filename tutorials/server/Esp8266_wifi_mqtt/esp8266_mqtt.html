@@ -329,6 +329,8 @@ void loop() {
     }
   }
 
+
+
   static String serialBuffer = "";
   while (Serial.available()) {
     char c = Serial.read();
@@ -341,7 +343,6 @@ void loop() {
           String payloadPart = serialBuffer.substring(sepIndex + 1);
           String fullTopic   = "soifgo_" + topicPart;
           client.publish(fullTopic.c_str(), payloadPart.c_str());
-          Serial.println("Published → " + fullTopic + " : " + payloadPart);
         }
       }
       serialBuffer = "";
@@ -350,6 +351,7 @@ void loop() {
     }
   }
 }
+
 
 
 </code></pre>
