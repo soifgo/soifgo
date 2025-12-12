@@ -129,54 +129,90 @@ ESP8266WebServer server(80);
 WiFiClient espClient;
 PubSubClient client(espClient);
 
-
 const char* mqtt_server = "test.mosquitto.org";
 const int mqtt_port = 1883;
 const char* mqtt_recv_topic = "soifgo_send";
 
-
 String ssid = "";
 String password = "";
+String ap_pass = "";
 
 unsigned long lastCheck = 0;
 const unsigned long checkInterval = 15000;
 int reconnectAttempts = 0;
 const int maxReconnectAttempts = 4;
 
-
 void handleRoot() {
   String mac = WiFi.macAddress();
   String html = "<h1>WiFi Setup</h1>"
                 "<p><b>MAC Address:</b> " + mac + "</p>"
-                "<form action='/save' method='POST'>"
-                "SSID: <input type='text' name='ssid'><br>"
-                "Password: <input type='text' name='pass'><br>"
-                "<input type='submit' value='Save'>"
+                "<form action='/savewifi' method='POST'>"
+                "WiFi SSID: <input type='text' name='ssid'><br>"
+                "WiFi Password: <input type='text' name='pass'><br>"
+                "<input type='submit' value='Save WiFi'>"
+                "</form><hr>"
+                "<form action='/saveap' method='POST'>"
+                "AP SSID: <b>ESP_Config</b><br>"
+                "AP Password: <input type='text' name='ap_pass' placeholder='min 8 chars'><br>"
+                "<input type='submit' value='Save AP'>"
+                "</form><hr>"
+                "<form action='/reset' method='POST'>"
+                "<input type='submit' value='Reset EEPROM & Restart'>"
                 "</form>";
   server.send(200, "text/html", html);
 }
 
-
-void handleSave() {
+void handleSaveWiFi() {
   ssid = server.arg("ssid");
   password = server.arg("pass");
 
-  EEPROM.begin(512);
-  for (int i = 0; i < 512; i++) EEPROM.write(i, 0);      
+  for (int i = 0; i < 200; i++) EEPROM.write(i, 0);
+
   EEPROM.write(0, ssid.length());
   for (int i = 0; i < ssid.length(); i++) EEPROM.write(i+1, ssid[i]);
+
   EEPROM.write(100, password.length());
   for (int i = 0; i < password.length(); i++) EEPROM.write(i+101, password[i]);
+
   EEPROM.commit();
 
-  server.send(200, "text/html", "Saved! Restarting...");
+  server.send(200, "text/html", "WiFi Saved! Restarting...");
+  delay(1500);
+  ESP.restart();
+}
+
+void handleSaveAP() {
+  ap_pass = server.arg("ap_pass");
+
+  if (ap_pass.length() < 8) {
+    server.send(200, "text/html", "Error: Password must be at least 8 characters!");
+    return;
+  }
+
+  for (int i = 200; i < 400; i++) EEPROM.write(i, 0);
+
+  EEPROM.write(300, ap_pass.length());
+  for (int i = 0; i < ap_pass.length(); i++) EEPROM.write(i+301, ap_pass[i]);
+
+  EEPROM.commit();
+
+  server.send(200, "text/html", "AP Password Saved! Restarting...");
   delay(2000);
   ESP.restart();
 }
 
+void handleReset() {
+  for (int i = 0; i < 512; i++) {
+    EEPROM.write(i, 0);
+  }
+  EEPROM.commit();
 
-void connectWiFi() {
-  EEPROM.begin(512);
+  server.send(200, "text/html", "EEPROM cleared! Restarting...");
+  delay(2000);
+  ESP.restart();
+}
+
+void loadCredentials() {
   int ssidLen = EEPROM.read(0);
   ssid = "";
   for (int i = 0; i < ssidLen; i++) ssid += char(EEPROM.read(i+1));
@@ -185,6 +221,14 @@ void connectWiFi() {
   password = "";
   for (int i = 0; i < passLen; i++) password += char(EEPROM.read(i+101));
 
+  int apPassLen = EEPROM.read(300);
+  ap_pass = "";
+  for (int i = 0; i < apPassLen; i++) ap_pass += char(EEPROM.read(i+301));
+}
+
+void connectWiFi() {
+  loadCredentials();
+
   bool connected = false;
 
   if (ssid.length() > 0) {
@@ -192,7 +236,7 @@ void connectWiFi() {
     Serial.print("Connecting to saved WiFi: ");
     Serial.println(ssid);
     int retries = 0;
-    while (WiFi.status() != WL_CONNECTED && retries < 10) {
+    while (WiFi.status() != WL_CONNECTED && retries < 5) {
       delay(500);
       Serial.print(".");
       retries++;
@@ -202,17 +246,19 @@ void connectWiFi() {
       Serial.print("IP: ");
       Serial.println(WiFi.localIP());
       connected = true;
+    } else {
+      Serial.println("\nWiFi connect failed.");
     }
   }
 
   if (!connected) {
-    WiFi.softAP("ESP_Config", "12345678");
-    Serial.println("Started AP: ESP_Config, password: 12345678");
+    if (ap_pass.length() < 8) ap_pass = "12345678";
+    WiFi.softAP("ESP_Config", ap_pass.c_str());
+    Serial.println("Started AP: ESP_Config, password: " + ap_pass);
     Serial.print("AP IP: ");
     Serial.println(WiFi.softAPIP());
   }
 }
-
 
 void mqttCallback(char* topic, byte* payload, unsigned int length) {
   String message;
@@ -224,7 +270,6 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
   }
 }
 
- 
 bool reconnectMQTT() {
   if (!client.connected()) {
     String clientId = "ESP8266Client-" + String(ESP.getChipId());
@@ -244,9 +289,14 @@ bool reconnectMQTT() {
 
 void setup() {
   Serial.begin(115200);
+  EEPROM.begin(512);    
+
   connectWiFi();
+
   server.on("/", handleRoot);
-  server.on("/save", handleSave);
+  server.on("/savewifi", handleSaveWiFi);
+  server.on("/saveap", handleSaveAP);
+  server.on("/reset", handleReset);
   server.begin();
 
   client.setServer(mqtt_server, mqtt_port);
@@ -279,7 +329,6 @@ void loop() {
     }
   }
 
-
   static String serialBuffer = "";
   while (Serial.available()) {
     char c = Serial.read();
@@ -292,6 +341,7 @@ void loop() {
           String payloadPart = serialBuffer.substring(sepIndex + 1);
           String fullTopic   = "soifgo_" + topicPart;
           client.publish(fullTopic.c_str(), payloadPart.c_str());
+          Serial.println("Published → " + fullTopic + " : " + payloadPart);
         }
       }
       serialBuffer = "";
@@ -300,6 +350,7 @@ void loop() {
     }
   }
 }
+
 
 </code></pre>
 
@@ -610,46 +661,72 @@ This way, you’ll have a ready-to-use setup without needing to create a project
 
 
 
-<h1>Wi-Fi Connection Instructions</h1>
+<h1>Wi‑Fi Connection Instructions</h1>
 
-<h2>Normal Mode</h2>
+<h2>Normal mode</h2>
 <p>
-The module will attempt to connect to your router using the SSID and password you have provided. 
+The module will attempt to connect to your router using the SSID and password you have provided.
 If the connection is successful, the device will remain stable and ready to use.
 </p>
 
-<h2>Access Point (AP) Mode</h2>
+<h2>Access point (AP) mode</h2>
 <p>
-If the connection to the router fails (for example, due to an incorrect SSID or password), 
-the module will automatically switch to <strong>Access Point mode</strong>. 
+If the connection to the router fails (for example, due to an incorrect SSID or password),
+the module will automatically switch to <strong>Access Point mode</strong>.
 In this mode, a network named <code>ESP_Config</code> will be created.
 </p>
 <ul>
-  <li>Connect to this network.</li>
-  <li>Open your browser and enter the following address:</li>
+  <li><strong>Connect</strong> to this network.</li>
+  <li><strong>Open</strong> your browser and enter the following address:</li>
 </ul>
 
 <pre><code class="language-none">192.168.4.1</code></pre>
 
 <p>
-On this page, you can enter a new SSID and password, and also view the 
-<strong>MAC Address</strong> of the module. After saving the information, 
-the module will attempt to reconnect to your router.
+On this page, you can enter a new SSID and password, and also view the
+<strong>MAC Address</strong> of the module. After saving the information,
+the module will attempt to reconnect to your router and <strong>restart automatically</strong>.
 </p>
 
-<h2>⚠️ Security Note</h2>
+<h2>Reset EEPROM and restart</h2>
+<p>
+If you need to clear all saved settings (SSID, password, AP password), use the
+<strong>Reset EEPROM & Restart</strong> button on the same page. This will:
+</p>
+<ul>
+  <li><strong>Erase</strong> all stored credentials from EEPROM.</li>
+  <li><strong>Restart</strong> the module automatically.</li>
+  <li>After restart, the device will enter <strong>AP mode</strong> again if no valid Wi‑Fi is configured.</li>
+</ul>
+
+  <img src="option01.png" alt="option">
+
+<h2>Input requirements</h2>
+<ul>
+  <li><strong>Wi‑Fi SSID</strong>: Plain text, avoid leading/trailing spaces.</li>
+  <li><strong>Wi‑Fi password</strong>: If your router uses a password, enter it exactly (case‑sensitive).</li>
+  <li><strong>AP password</strong>: Must be <strong>at least 8 characters</strong>. Shorter values will be rejected.</li>
+</ul>
+<p>
+If the AP password is not set or is shorter than 8 characters, a fallback password
+may be used to allow access, but it is <strong>not recommended</strong> for production.
+</p>
+
+<h2>⚠️ Security note</h2>
 <p>
 If you plan to commercialize or sell this module:
 </p>
 <ul>
-  <li>Always set a custom password for the AP mode.</li>
-  <li>Print or include this password on the product packaging.</li>
-  <li>Inform customers that the AP password is unique to their device and not a public default.</li>
+  <li>Always set a <strong>custom</strong> password for AP mode (minimum 8 characters).</li>
+  <li>Include this password on the product packaging or a setup card.</li>
+  <li>Inform customers that the AP password is unique to their device and <strong>not</strong> a public default.</li>
 </ul>
-
 <p>
-This prevents unauthorized access and ensures the security of your users.
+This prevents unauthorized access and protects your users.
 </p>
+
+<hr>
+
 
 
 
