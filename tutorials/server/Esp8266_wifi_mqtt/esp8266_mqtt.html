@@ -120,41 +120,99 @@ and guide you step by step to get your device online.
   <h2>Step 4: Uploading the Program</h2>
 
 <pre class="line-numbers"><code class="language-cpp">
-#include <ESP8266WiFi.h>
-#include <PubSubClient.h>
+#include &lt;ESP8266WiFi.h&gt;
+#include &lt;ESP8266WebServer.h&gt;
+#include &lt;EEPROM.h&gt;
+#include &lt;PubSubClient.h&gt;
 
-// Wi-Fi settings
-const char* ssid = "TPLINK";
-const char* password = "abcd1234";
-
-// MQTT settings
-const char* mqtt_server = "test.mosquitto.org";
-const int   mqtt_port   = 1883;
-const char* mqtt_recv_topic = "soifgo_send";
-
+ESP8266WebServer server(80);
 WiFiClient espClient;
 PubSubClient client(espClient);
 
- 
-unsigned long lastCheck = 0;
-const unsigned long checkInterval = 15000;  
-int reconnectAttempts = 0;
-const int maxReconnectAttempts = 4;     
 
-void setup_wifi() {
-  WiFi.begin(ssid, password);
-  Serial.print("Connecting to WiFi");
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println("");
-  Serial.println("WiFi connected");
-  Serial.print("IP address: ");
-  Serial.println(WiFi.localIP());
-  Serial.print("MAC address: ");
-  Serial.println(WiFi.macAddress());
+const char* mqtt_server = "test.mosquitto.org";
+const int mqtt_port = 1883;
+const char* mqtt_recv_topic = "soifgo_send";
+
+
+String ssid = "";
+String password = "";
+
+unsigned long lastCheck = 0;
+const unsigned long checkInterval = 15000;
+int reconnectAttempts = 0;
+const int maxReconnectAttempts = 4;
+
+
+void handleRoot() {
+  String mac = WiFi.macAddress();
+  String html = "<h1>WiFi Setup</h1>"
+                "<p><b>MAC Address:</b> " + mac + "</p>"
+                "<form action='/save' method='POST'>"
+                "SSID: <input type='text' name='ssid'><br>"
+                "Password: <input type='text' name='pass'><br>"
+                "<input type='submit' value='Save'>"
+                "</form>";
+  server.send(200, "text/html", html);
 }
+
+
+void handleSave() {
+  ssid = server.arg("ssid");
+  password = server.arg("pass");
+
+  EEPROM.begin(512);
+  for (int i = 0; i < 512; i++) EEPROM.write(i, 0);      
+  EEPROM.write(0, ssid.length());
+  for (int i = 0; i < ssid.length(); i++) EEPROM.write(i+1, ssid[i]);
+  EEPROM.write(100, password.length());
+  for (int i = 0; i < password.length(); i++) EEPROM.write(i+101, password[i]);
+  EEPROM.commit();
+
+  server.send(200, "text/html", "Saved! Restarting...");
+  delay(2000);
+  ESP.restart();
+}
+
+
+void connectWiFi() {
+  EEPROM.begin(512);
+  int ssidLen = EEPROM.read(0);
+  ssid = "";
+  for (int i = 0; i < ssidLen; i++) ssid += char(EEPROM.read(i+1));
+
+  int passLen = EEPROM.read(100);
+  password = "";
+  for (int i = 0; i < passLen; i++) password += char(EEPROM.read(i+101));
+
+  bool connected = false;
+
+  if (ssid.length() > 0) {
+    WiFi.begin(ssid.c_str(), password.c_str());
+    Serial.print("Connecting to saved WiFi: ");
+    Serial.println(ssid);
+    int retries = 0;
+    while (WiFi.status() != WL_CONNECTED && retries < 10) {
+      delay(500);
+      Serial.print(".");
+      retries++;
+    }
+    if (WiFi.status() == WL_CONNECTED) {
+      Serial.println("\nConnected!");
+      Serial.print("IP: ");
+      Serial.println(WiFi.localIP());
+      connected = true;
+    }
+  }
+
+  if (!connected) {
+    WiFi.softAP("ESP_Config", "12345678");
+    Serial.println("Started AP: ESP_Config, password: 12345678");
+    Serial.print("AP IP: ");
+    Serial.println(WiFi.softAPIP());
+  }
+}
+
 
 void mqttCallback(char* topic, byte* payload, unsigned int length) {
   String message;
@@ -162,17 +220,18 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
     message += (char)payload[i];
   }
   if (String(topic) == mqtt_recv_topic) {
-    Serial.println( message);
+    Serial.println(message);
   }
 }
 
-bool reconnect() {
+ 
+bool reconnectMQTT() {
   if (!client.connected()) {
     String clientId = "ESP8266Client-" + String(ESP.getChipId());
     if (client.connect(clientId.c_str())) {
       client.subscribe(mqtt_recv_topic);
       Serial.println("MQTT connected");
-      reconnectAttempts = 0;   
+      reconnectAttempts = 0;
       return true;
     } else {
       reconnectAttempts++;
@@ -185,36 +244,42 @@ bool reconnect() {
 
 void setup() {
   Serial.begin(115200);
-  setup_wifi();
+  connectWiFi();
+  server.on("/", handleRoot);
+  server.on("/save", handleSave);
+  server.begin();
+
   client.setServer(mqtt_server, mqtt_port);
   client.setCallback(mqttCallback);
 }
 
 void loop() {
-  if (!client.connected()) {
-    reconnect();
-  }
-  client.loop();
+  server.handleClient();
 
- 
+  if (WiFi.status() == WL_CONNECTED) {
+    if (!client.connected()) {
+      reconnectMQTT();
+    }
+    client.loop();
+  }
+
   if (millis() - lastCheck > checkInterval) {
     lastCheck = millis();
 
     if (WiFi.status() != WL_CONNECTED) {
       Serial.println("WiFi lost → reconnecting...");
-      WiFi.disconnect();
-      WiFi.begin(ssid, password);
+      connectWiFi();
     }
 
     if (!client.connected()) {
-      if (!reconnect() && reconnectAttempts >= maxReconnectAttempts) {
+      if (!reconnectMQTT() && reconnectAttempts >= maxReconnectAttempts) {
         Serial.println("Too many fails → Restarting...");
         ESP.restart();
       }
     }
   }
 
- 
+
   static String serialBuffer = "";
   while (Serial.available()) {
     char c = Serial.read();
@@ -542,6 +607,52 @@ This way, you’ll have a ready-to-use setup without needing to create a project
 
 
  <a href="soifgo_design_esp8266_mqtt.zip" download>📦 Download soifgo file </a>
+
+
+
+<h1>Wi-Fi Connection Instructions</h1>
+
+<h2>Normal Mode</h2>
+<p>
+The module will attempt to connect to your router using the SSID and password you have provided. 
+If the connection is successful, the device will remain stable and ready to use.
+</p>
+
+<h2>Access Point (AP) Mode</h2>
+<p>
+If the connection to the router fails (for example, due to an incorrect SSID or password), 
+the module will automatically switch to <strong>Access Point mode</strong>. 
+In this mode, a network named <code>ESP_Config</code> will be created.
+</p>
+<ul>
+  <li>Connect to this network.</li>
+  <li>Open your browser and enter the following address:</li>
+</ul>
+
+<pre><code class="language-none">192.168.4.1</code></pre>
+
+<p>
+On this page, you can enter a new SSID and password, and also view the 
+<strong>MAC Address</strong> of the module. After saving the information, 
+the module will attempt to reconnect to your router.
+</p>
+
+<h2>⚠️ Security Note</h2>
+<p>
+If you plan to commercialize or sell this module:
+</p>
+<ul>
+  <li>Always set a custom password for the AP mode.</li>
+  <li>Print or include this password on the product packaging.</li>
+  <li>Inform customers that the AP password is unique to their device and not a public default.</li>
+</ul>
+
+<p>
+This prevents unauthorized access and ensures the security of your users.
+</p>
+
+
+
 
     <hr>
 <p style="text-align:center;">
