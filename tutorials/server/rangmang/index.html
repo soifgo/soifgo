@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="fa">
+<head>
+<meta charset="utf-8">
+<title>Rangmang Simulator</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>Rangmang Web Simulator</h2>
+
+<div class="row">
+  <span class="label">Command:</span>
+  <input id="cmd" size="50" value="A01D01R255G050B050S020E020M040">
+  <button id="run">Run</button>
+  <button id="clear">Clear</button>
+</div>
+
+<div class="row">
+  <span class="label">Quick mode (D):</span>
+  <select id="mode">
+    <option value="00">D00 Solid</option>
+    <option value="01">D01 Snake run slow</option>
+    <option value="02">D02 Snake return slow</option>
+    <option value="03">D03 Snake run fast</option>
+    <option value="21">D21 Star run fast</option>
+    <option value="33">D33 Disco</option>
+    <option value="39">D39 Random D01–D38</option>
+  </select>
+  <button id="play">Play mode</button>
+</div>
+
+<div class="strip" id="strip"></div>
+
+<script src="script.js"></script>
+</body>
+</html>

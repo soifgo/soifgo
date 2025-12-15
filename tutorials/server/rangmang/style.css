@@ -1,0 +1,6 @@
+body { font-family: sans-serif; background:#111; color:#eee; padding:20px; }
+.strip { display:flex; gap:4px; flex-wrap:wrap; width: 900px; }
+.px { width: 14px; height: 14px; background:#222; border-radius:2px; box-shadow:0 0 6px #000; }
+.row { margin-bottom:12px; }
+input, button, select { padding:8px; margin-right:8px; }
+.label { font-weight:bold; margin-right:8px; }
