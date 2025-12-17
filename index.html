@@ -221,23 +221,26 @@
 
 
 
+ <h3>   </h3>
+
 <div id="visitorCounter" style="text-align:center; margin:40px 0; font-size:20px;"></div>
 
 <script>
-var t = setInterval(function() {
-    if (window.goatcounter && window.goatcounter.get_data) {
-        clearInterval(t);
+window.addEventListener("load", function () {
 
-        let path = window.goatcounter.get_data()['p'];
+  
+    let path = location.pathname;
 
-        fetch('https://soifgo.goatcounter.com/counter/' + encodeURIComponent(path) + '.json')
-            .then(r => r.json())
-            .then(j => {
-                document.getElementById('visitorCounter').textContent = j.count;
-            });
-    }
-}, 10000);
+    fetch('https://soifgo.goatcounter.com/counter/' + encodeURIComponent(path) + '.json')
+        .then(r => r.json())
+        .then(j => {
+            document.getElementById('visitorCounter').textContent = j.count;
+        });
+
+});
 </script>
+
+
 
 
   
