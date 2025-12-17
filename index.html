@@ -201,15 +201,31 @@ function showDate() {
   </script>
   <img src="soifgo_pic01.png" alt="Recommended Converter">
 
-<div id="visitorCounter" style="text-align:center; margin:40px 0; font-size:20px;"></div>
+<div id="totalVisits" style="text-align:center; margin:40px 0; font-size:22px; font-weight:bold;">
+  Loading...
+</div>
 
 <script>
-fetch("https://soifgo.goatcounter.com/counter//soifgo/index.html.json")
-  .then(r => r.json())
-  .then(j => {
-    document.getElementById("visitorCounter").textContent = j.count;
-  });
+async function getCount(path) {
+  const url = `https://soifgo.goatcounter.com/counter/${path}.json`;
+  const res = await fetch(url);
+  const data = await res.json();
+  return data.count || 0;
+}
+
+async function loadTotal() {
+  const count1 = await getCount("soifgo");
+  const count2 = await getCount("soifgo/index.html");
+
+  const total = count1 + count2;
+
+  document.getElementById("totalVisits").textContent =
+    "Total Visits: " + total;
+}
+
+loadTotal();
 </script>
+
 
   
 </body>
