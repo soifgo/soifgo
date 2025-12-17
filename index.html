@@ -201,7 +201,8 @@ function showDate() {
   </script>
   <img src="soifgo_pic01.png" alt="Recommended Converter">
 
-<div id="totalVisits" style="text-align:center; margin:40px 0; font-size:22px; font-weight:bold;">
+
+  <div id="totalVisits" style="text-align:center; margin:40px 0; font-size:22px; font-weight:bold;">
   Loading...
 </div>
 
@@ -214,10 +215,11 @@ async function getCount(path) {
 }
 
 async function loadTotal() {
-  const count1 = await getCount("soifgo");
-  const count2 = await getCount("soifgo/index.html");
+  const a = await getCount("soifgo");
+  const b = await getCount("soifgo/");
+  const c = await getCount("soifgo/index.html");
 
-  const total = count1 + count2;
+  const total = a + b + c;
 
   document.getElementById("totalVisits").textContent =
     "Total Visits: " + total;
@@ -225,7 +227,6 @@ async function loadTotal() {
 
 loadTotal();
 </script>
-
 
 
   
