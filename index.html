@@ -209,16 +209,7 @@
       document.getElementById('dateBox').textContent = now.toLocaleDateString('en-US', options);
     }
 
-    // Load visitor counter AFTER goatcounter script is ready
-    var t = setInterval(function() {
-      if (window.goatcounter && window.goatcounter.visit_count) {
-        clearInterval(t);
-        window.goatcounter.visit_count({
-          append: '#visitorCounter',
-          no_branding: true
-        });
-      }
-    }, 100);
+
 
     window.onload = function() {
       document.getElementById('downloadBtn').click();
@@ -227,5 +218,28 @@
   </script>
 
   <img src="soifgo_pic01.png" alt="Recommended Converter">
+
+
+
+<div id="visitorCounter" style="text-align:center; margin:40px 0; font-size:20px;"></div>
+
+<script>
+var t = setInterval(function() {
+    if (window.goatcounter && window.goatcounter.get_data) {
+        clearInterval(t);
+
+        let path = window.goatcounter.get_data()['p'];
+
+        fetch('https://soifgo.goatcounter.com/counter/' + encodeURIComponent(path) + '.json')
+            .then(r => r.json())
+            .then(j => {
+                document.getElementById('visitorCounter').textContent = j.count;
+            });
+    }
+}, 10000);
+</script>
+
+
+  
 </body>
 </html>
