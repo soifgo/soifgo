@@ -3,11 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-  <!-- GoatCounter main script -->
-  <script data-goatcounter="https://soifgo.goatcounter.com/count"
-          src="//gc.zgo.at/count.js" async></script>
-
+  <script data-goatcounter="https://soifgo.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+  
   <title>SoifGo – Simple Page</title>
   <style>
     body {
@@ -122,14 +119,12 @@
     <p>SoifGo is an Android application that provides users with advanced capabilities using buttons and seek bars.</p>
     <div id="dateBox"></div>
   </header>
-
   <nav>
     <button id="downloadBtn" onclick="showDownload()">Download</button>
     <button onclick="showSection('readme')">README</button>
     <button onclick="showSection('about')">About</button>
     <button onclick="openTutorial()">SoifGo Tutorial</button>
   </nav>
-
   <section id="download">
     <h2>Download SoifGo</h2>
     <ul>
@@ -137,7 +132,6 @@
       <li><a href="https://apkpure.com/soifgo/soifgo.saeidmoghadam">Apkpure</a></li>
     </ul>
   </section>
-
   <section id="readme">
     <h2>README</h2>
     <h3>The developer: Saeid Moghadam</h3>
@@ -169,16 +163,11 @@
     <h3>About SoifGo</h3>
     <p><strong>SoifGo</strong> is an Android application that provides users with advanced capabilities using <strong>buttons and seek bars</strong>.</p>
   </section>
-
   <section id="about">
     <h2>About the Developer</h2>
     <p><strong>Saeid Moghadam</strong> is a documentation perfectionist and user-focused developer.</p>
     <p>Email: <a href="mailto:SSMQQMSS@gmail.com">SSMQQMSS@gmail.com</a></p>
   </section>
-
-  <!-- Visitor Counter -->
-  <div id="visitorCounter" style="text-align:center; margin: 40px 0;"></div>
-
   <script>
     document.querySelectorAll('nav button').forEach(btn => {
       btn.addEventListener('click', function() {
@@ -186,62 +175,41 @@
         this.classList.add('clicked');
       });
     });
-
     function showSection(id) {
       document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
     }
-
     function showDownload() {
       document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
       document.getElementById('download').classList.add('active');
       document.querySelectorAll('nav button').forEach(b => b.classList.remove('clicked'));
       document.getElementById('downloadBtn').classList.add('clicked');
     }
-
     function openTutorial() {
       window.location.href = "tutorials/list.html";
     }
-
-    function showDate() {
-      const now = new Date();
-      const options = { year: 'numeric', month: 'long', day: 'numeric' };
-      document.getElementById('dateBox').textContent = now.toLocaleDateString('en-US', options);
-    }
-
-
+function showDate() {
+  const now = new Date();
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  document.getElementById('dateBox').textContent = now.toLocaleDateString('en-US', options);
+}
 
     window.onload = function() {
       document.getElementById('downloadBtn').click();
       showDate();
     };
   </script>
-
   <img src="soifgo_pic01.png" alt="Recommended Converter">
-
-
-
- <h3>   </h3>
 
 <div id="visitorCounter" style="text-align:center; margin:40px 0; font-size:20px;"></div>
 
 <script>
-window.addEventListener("load", function () {
-
-  
-    let path = location.pathname;
-
-    fetch('https://soifgo.goatcounter.com/counter/' + encodeURIComponent(path) + '.json')
-        .then(r => r.json())
-        .then(j => {
-            document.getElementById('visitorCounter').textContent = j.count;
-        });
-
-});
+fetch("https://soifgo.goatcounter.com/counter//soifgo/index.html.json")
+  .then(r => r.json())
+  .then(j => {
+    document.getElementById("visitorCounter").textContent = j.count;
+  });
 </script>
-
-
-
 
   
 </body>
