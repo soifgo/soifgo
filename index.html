@@ -211,19 +211,22 @@ async function getCount(path) {
   const url = `https://soifgo.goatcounter.com/counter/${path}.json`;
   const res = await fetch(url);
   const data = await res.json();
-  return data.count || 0;
+  return Number(data.count) || 0;         
 }
 
 async function loadTotal() {
   const a = await getCount("soifgo/");
   const b = await getCount("soifgo/index.html");
 
-const total = a + b ;
+  const total = a + b;
   document.getElementById("totalVisits").textContent =
     " > : " + total;
 }
 
 loadTotal();
+
+
+  
 </script>
 
 
