@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <script data-goatcounter="https://soifgo.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+  
   <title>SoifGo – Simple Page</title>
   <style>
     body {
@@ -199,5 +200,36 @@ function showDate() {
     };
   </script>
   <img src="soifgo_pic01.png" alt="Recommended Converter">
+
+
+  <div id="totalVisits" style="text-align:center; margin:40px 0; font-size:22px; font-weight:bold;">
+  Loading...
+</div>
+
+<script>
+async function getCount(path) {
+  const url = `https://soifgo.goatcounter.com/counter/${path}.json`;
+  const res = await fetch(url);
+  const data = await res.json();
+  return Number(data.count) || 0;         
+}
+
+async function loadTotal() {
+  const a = await getCount("soifgo/");
+  const b = await getCount("soifgo/index.html");
+
+  const total = a + b;
+  document.getElementById("totalVisits").textContent =
+    " > : " + total;
+}
+
+loadTotal();
+
+
+  
+</script>
+
+
+  
 </body>
 </html>
