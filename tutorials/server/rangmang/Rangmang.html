@@ -255,22 +255,32 @@ Each row encodes the following parameters (ADRGBSEM format):
 ' E000 TO E999   RGB STRIP SECOND DELAY EFFECT (ms)
 ' M001 TO M999   SET HOW MANY PIXELS DANCING
 
-</pre>
-
-
 <h2>✅ Module Addressing Instructions</h2>
 
 <pre>
 
-
 To address a module, simply follow the method below.
+
 For example:
 
-Address 2 → CH=02
+Old address 1   New Address 2  →  CH01=02
+Old address 23  New Address 47 →  CH23=47
 
-Address 34 → CH=34
+Important:
+After programming, all modules have an initial default address of 01.
+Therefore, during the first addressing, the old (current) address is always 01.
 
-After sending the command, the module will respond and operate according to the specified address.
+Addressing format:
+
+
+CH  old address  =  new address
+
+For example:
+CH01=03
+
+After changing the address, the module will respond using its new address.
+For example, if the new address is 03, the module will reply to:
+New Address=03
 
 Please note:
 
@@ -278,7 +288,7 @@ Valid addresses range from 01 to 98.
 
 Address 99 is a shared address that applies to all modules.
 
-Therefore, each module will respond and act to its assigned address (between 01 and 98) as well as to the shared address 99
+Therefore, each module will respond and act to its assigned address (between 01 and 98) as well as to the shared address 99.
 
 </pre>
 
