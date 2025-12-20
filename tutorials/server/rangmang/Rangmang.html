@@ -80,25 +80,18 @@
       </tbody>
     </table>
   </div>
-  <h2>Atmega 128   support for 999 pixels </h2>
-  <h2>Source Code</h2>
-  <p><a href="Bascom_Rangmang.zip">Download BASCOM Source ZIP</a></p>
-
-  <h2>Programming the Microcontroller</h2>
-  <p><a href="dude 6.4_mega128_999 pixel.zip">Download Programmer ZIP</a></p>
-
-
 
    <p>
 Official download link for USBasp Programmer: You can find complete files and information about the USBasp programmer on the developer's official website: 
 <a href="https://www.fischl.de/usbasp" target="_blank">fischl.de/usbasp</a>.
 </p>
-  <h2>PCB and Schematic Files</h2>
+  <h2>PCB and Schematic Files Atmega 128A </h2>
 
-  <img src="rangmang_schematics.png" alt="Recommended Converter">
-  <ul>
-    <li><a href="RANGMANG Proteus(Atmega128A).zip">Download Proteus File</a></li>
-  </ul>
+  <img src="rangmang_schematics_128a.png" alt="Recommended Converter">
+
+  <h2>PCB and Schematic Files Atmega 328P </h2>
+
+  <img src="rangmang_schematics_328p.png" alt="Recommended Converter">
 
 
 
@@ -158,7 +151,7 @@ Each row encodes the following parameters (ADRGBSEM format):
 </table>
 
 
-<p><a href="soifgo_rangmang_design.zip"> 📦 Download soifgo_rangmang_design</a></p>
+
 
   
 <h2>RANGMANG Fixed Color Mode Configuration (ATmega128 – 999 Pixels)</h2>
@@ -198,15 +191,44 @@ Each row encodes the following parameters (ADRGBSEM format):
 
   <h2>Power Regulation Notes</h2>
   <ul>
+<pre>
+If the module is used individually, connect the Bluetooth power jumper.
+
+If the modules are used in parallel, only connect the jumper for the module linked to Bluetooth and disconnect the rest.
+
+Install a 5V regulator for 12V LED strips; for 5V LED strips, no regulator is needed.
+
+Use a single wire to solder and connect the input and output pins of the regulator directly on the board.
+</pre>
     <li>For 5V LED strips: You can remove the regulator and directly power the microcontroller from the strip's 5V socket.</li>
     <li>For 12V LED strips: You must use a 12V-to-5V regulator to power the microcontroller safely.</li>
     <li>Note: To prevent reverse connection of the LED strip to the module, use a properly keyed connector. If necessary, add a diode in series with the microcontroller's power input to protect against polarity reversal.</li>
   </ul>
 
-   <img src="rangmang_pic_328p.png" alt="Wiring 1">
-    <h2>In this version, the microcontroller is ATmega328P with the same specifications, but with support for 480 pixels</h2>
-  <p><a href="Atmega_328_480 pixel.zip"> 📦 Download Atmega 329P ZIP</a></p>
 
+<h2>RANGMANG ATmega128 – 999 Pixels</h2>
+<pre>
+' 30 inputs
+' ADRGBSEM
+' A00D00R000G000B000S000E000M000
+' A01 TO A98   FOR ADDRESS MODULE   A99 FOR ALL
+' IF D00 THEN SOLID COLOR
+' R000 TO R255   RED COLOR
+' G000 TO G255   GREEN COLOR
+' B000 TO B255   BLUE COLOR
+' S000 TO S480   RGB STRIP START POSITION FOR COLORED PIXEL
+' E000 TO E480   RGB STRIP END POSITION FOR COLORED PIXEL
+' M000 TO M098   M000 WITHOUT MEMORY SAVE   M001 SAVE SLOT 1 MEMORY
+
+' IF D01 TO D38   DANCE
+' D99   FOR RANDOM SELECT D01 TO D38 DANCE
+' R000 TO R250   RED COLOR   R251 TO R255 FOR RANDOM RED COLOR
+' G000 TO G250   GREEN COLOR   G251 TO G255 FOR RANDOM GREEN COLOR
+' B000 TO B250   BLUE COLOR   B251 TO B255 FOR RANDOM BLUE COLOR
+' S000 TO S999   RGB STRIP FIRST DELAY EFFECT (ms)
+' E000 TO E999   RGB STRIP SECOND DELAY EFFECT (ms)
+' M001 TO M999   SET HOW MANY PIXELS DANCING
+</pre>
 
 <h2>RANGMANG ATmega328 – 480 Pixels</h2>
 <pre>
@@ -232,28 +254,7 @@ Each row encodes the following parameters (ADRGBSEM format):
 ' M001 TO M480   SET HOW MANY PIXELS DANCING
 </pre>
 
-<h2>RANGMANG ATmega128 – 999 Pixels</h2>
-<pre>
-' 30 inputs
-' ADRGBSEM
-' A00D00R000G000B000S000E000M000
-' A01 TO A98   FOR ADDRESS MODULE   A99 FOR ALL
-' IF D00 THEN SOLID COLOR
-' R000 TO R255   RED COLOR
-' G000 TO G255   GREEN COLOR
-' B000 TO B255   BLUE COLOR
-' S000 TO S480   RGB STRIP START POSITION FOR COLORED PIXEL
-' E000 TO E480   RGB STRIP END POSITION FOR COLORED PIXEL
-' M000 TO M098   M000 WITHOUT MEMORY SAVE   M001 SAVE SLOT 1 MEMORY
 
-' IF D01 TO D38   DANCE
-' D99   FOR RANDOM SELECT D01 TO D38 DANCE
-' R000 TO R250   RED COLOR   R251 TO R255 FOR RANDOM RED COLOR
-' G000 TO G250   GREEN COLOR   G251 TO G255 FOR RANDOM GREEN COLOR
-' B000 TO B250   BLUE COLOR   B251 TO B255 FOR RANDOM BLUE COLOR
-' S000 TO S999   RGB STRIP FIRST DELAY EFFECT (ms)
-' E000 TO E999   RGB STRIP SECOND DELAY EFFECT (ms)
-' M001 TO M999   SET HOW MANY PIXELS DANCING
 
 <h2>✅ Module Addressing Instructions</h2>
 
@@ -294,6 +295,11 @@ Therefore, each module will respond and act to its assigned address (between 01 
 
 
 
+<h2><a href="soifgo_rangmang_design.zip"> 📦 Download soifgo_rangmang_design</a></h2>
+
+<h2><a href="Atmega128.zip">Download Atmega128 File</a></h2>
+
+<h2><a href="Atmega328P.zip">Download Atmega328P File</a></h2>
 
 <hr>
 <p style="text-align:center;">
