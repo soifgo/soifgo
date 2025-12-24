@@ -181,6 +181,152 @@ A long press on this icon opens the settings for API and MQTT.
 </p>
 
 
+
+<hr>
+
+<h1>Practice Example: Using SoifGo with the PC Robot Simulator</h1>
+
+<p>
+This example shows you how to practice <strong>Note SEND</strong> and <strong>Note RECEIVE</strong> in SoifGo without needing any hardware.
+All you need is:
+</p>
+
+<ul>
+  <li><strong>SoifGo</strong> on your phone</li>
+  <li><strong>A PC or laptop</strong></li>
+  <li>The provided <strong>HTML simulator file</strong>, which runs directly in a desktop browser (Chrome, Edge, etc.)</li>
+</ul>
+
+<p>
+The simulator creates a virtual robot point inside a box. You can move the point with your mouse (SEND mode), or let SoifGo move it by sending X/Y coordinates (RECEIVE mode).
+</p>
+
+
+
+
+
+<h2>1. Open the simulator on your PC</h2>
+
+
+<hr>
+
+<h2>Download and Open the Simulator</h2>
+
+<p>Download the simulator file:</p>
+<a href="soifgo_note_send_receive_simulator.zip" download>📦 Download soifgo_note_send_receive_simulator.zip</a>
+
+<p>You can also open the simulator directly in your browser (PC only):</p>
+<a href="soifgo_note_send_receive_simulator.html" target="_blank">🖥️ Open soifgo_note_send_receive_simulator.html</a>
+
+<p>Use this simulator to practice Note SEND and Note RECEIVE with SoifGo over Bluetooth.</p>
+
+<p>Paste the Arduino code into Arduino IDE if you are using the ESP8266 example.  
+You can configure Wi-Fi settings before uploading:</p>
+
+<pre><code>
+// Your Arduino code goes here...
+</code></pre>
+
+
+
+<p>
+Open the HTML file on your computer. You will see two sections:
+</p>
+<ul>
+  <li><strong>Serial Port Manager</strong> (connect, send, receive)</li>
+  <li><strong>Robot Simulator</strong> (a point inside a box)</li>
+</ul>
+<p>
+The simulator uses the Web Serial API, so it works only on desktop browsers.
+</p>
+
+<h2>2. Connect SoifGo to the simulator</h2>
+<p>
+On your PC:
+</p>
+<ol>
+  <li><strong>Click &quot;Connect&quot;</strong> in the Serial Port Manager.</li>
+  <li>Select your <strong>Bluetooth serial device</strong> (for example HC-05, ESP32, etc.).</li>
+  <li>When connected, the button text changes to <strong>&quot;Connected&quot;</strong> and turns green.</li>
+</ol>
+
+<h2>3. Configure SoifGo</h2>
+<p>
+Inside SoifGo:
+</p>
+<ol>
+  <li>Open your <strong>Note</strong>.</li>
+  <li>From the menu, choose <strong>Note SEND</strong> or <strong>Note RECEIVE</strong>.</li>
+  <li>Select <strong>Bluetooth</strong> as the communication method.</li>
+  <li>Make sure your phone is paired with the PC over Bluetooth.</li>
+</ol>
+<p>
+After receiving and sending in SoifGo, select <strong>Bluetooth</strong> as the Note send/receive method.
+</p>
+
+<h2>4. Practice Note SEND (move the point from SoifGo)</h2>
+<p>
+In SoifGo, set the Note to <strong>Note SEND</strong> with <strong>Bluetooth</strong>, then write lines like:
+</p>
+<code>X:150,Y:120</code><br>
+<code>X:200,Y:80</code><br>
+<code>X:50,Y:200</code>
+<p>
+Then press the <strong>Send</strong> icon in SoifGo.
+</p>
+<p>
+In the simulator on the PC:
+</p>
+<ul>
+  <li>Set the mode button to <strong>Mode: RECEIVE</strong>.</li>
+  <li>The red point inside the box will move to each X/Y position sent from SoifGo.</li>
+</ul>
+<p>
+This simulates controlling a robot arm, CNC head, or any XY device.
+</p>
+
+<h2>5. Practice Note RECEIVE (record the motion path in SoifGo)</h2>
+<p>
+In the simulator on the PC:
+</p>
+<ul>
+  <li>Set the mode button to <strong>Mode: SEND</strong>.</li>
+  <li>Drag the red point with your mouse inside the box.</li>
+</ul>
+<p>
+The simulator sends coordinates like:
+</p>
+<code>X:197.66,Y:151.47</code><br>
+<code>X:191.66,Y:140.47</code><br>
+<code>X:185.66,Y:136.47</code>
+<p>
+In SoifGo:
+</p>
+<ol>
+  <li>Set the Note to <strong>Note RECEIVE</strong>.</li>
+  <li>Select <strong>Bluetooth</strong> as the receiving method.</li>
+  <li>Each movement of the point will appear as a new line in the Note.</li>
+</ol>
+<p>
+This simulates recording a robot’s motion path with SoifGo.
+</p>
+
+<h2>6. What this exercise teaches you</h2>
+<p>
+With this simple setup, you can practice:
+</p>
+<ul>
+  <li><strong>Sending</strong> commands from SoifGo to an external device (the PC simulator)</li>
+  <li><strong>Receiving</strong> live data into a Note in SoifGo</li>
+  <li>Building motion sequences using X/Y coordinates</li>
+  <li>Testing automation logic without any physical hardware</li>
+</ul>
+<p>
+The HTML simulator file can be executed on a PC and used as a training tool together with SoifGo.
+</p>
+
+
+
     <hr>
 <p style="text-align:center;">
   <a href="https://soifgo.github.io/soifgo/tutorials/list.html" 
