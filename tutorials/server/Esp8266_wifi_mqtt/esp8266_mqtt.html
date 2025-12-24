@@ -730,6 +730,20 @@ This prevents unauthorized access and protects your users.
 <hr>
 
 
+<div class="mqtt-note">
+  <h3>Important Note</h3>
+  <p>
+    This example is configured using Mosquitto MQTT in public and free mode.
+    For better security, it is recommended that you create your own private path
+    with a username and password in Mosquitto, and then apply those credentials
+    in <strong>Soifgo</strong> as well.
+  </p>
+  <ul>
+    <li>If two or more phones are supposed to control the same device, each must have a unique ID. Otherwise, you will encounter problems.</li>
+    <li>If you still insist on using this free/public method, you must change the topic names.</li>
+    <li>Don’t forget that the topic names on the microcontroller must also be updated and kept in sync.</li>
+  </ul>
+</div>
 
 
 
