@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>How to Work with Note Out in Soifgo</title>
+  <title>How to Use Note SEND and RECEIVE in SoifGo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
@@ -40,14 +40,24 @@ img {
   </style>
 </head>
 <body>
-  <h1>How to Work with Note Out in Soifgo</h1>
+  <h1>How to Use Note SEND and RECEIVE in SoifGo</h1>
+   
+ 
+  <p>
+The Note feature in SoifGo, with both send and receive functionality, is designed to help you build automation processes using Bluetooth Serial, API, and MQTT communication modes. For example, if you send the joint angles of a three‑axis robotic arm (with encoders) over Bluetooth Serial and store them in a Note, you can later send the same recorded joint values back, and the robot will repeat the exact previous motion.
 
+In another example, if the receiver is a CNC machine and you load CNC codes into a Note, sending that Note will cause the CNC to start executing the commands.
+
+A wide range of creative workflows can be built this way—limited only by the user’s imagination .</p>
+ 
+
+<h1>How to Work with Note SEND : </h1>
   <h2>Step 1: Create a Note</h2>
   <p>
     First, create a button and set its behavior to <strong>Note</strong>.  
     Choose <em>Create</em> to generate a blank note.  
     Then go to the <strong>Play</strong> page, click the button to open the note,  
-    and from the menu or play icon select <strong>Note Out</strong> to see the list of communication methods.  
+    and from the menu or play icon select <strong>Note send</strong> to see the list of communication methods.  
     For example, choose <strong>Bluetooth</strong> and return to the note.  
     Now you can start writing the required commands line by line.
   </p>
@@ -131,7 +141,7 @@ img {
   </ul>
 
   <p>
-    These settings allow you to adapt Note Out for different devices and scenarios, ensuring both reliability and flexibility in communication.
+    These settings allow you to adapt Note SEND for different devices and scenarios, ensuring both reliability and flexibility in communication.
   </p>
 
 
@@ -141,6 +151,34 @@ img {
 
 <img src="note03.png" alt=" ">
 
+
+<h1> How to Work with Note RECEIVE</h1>
+
+<h2>Receiving via Bluetooth</h2>
+<p>
+For Bluetooth receiving, you must tap the Bluetooth icon to establish the connection.  
+Each time a text message is sent, it is immediately received and added as a new line in the note.
+</p>
+
+<h2>Receiving via API</h2>
+<p>
+In API receiving mode, any incoming value or size change is automatically added as a new line in the note.
+</p>
+
+<h2>Receiving via MQTT</h2>
+<p>
+In MQTT receiving mode, every published value or payload change is captured and appended to the note in real time.
+</p>
+
+<h2>Real‑Time Logging</h2>
+<p>
+Note RECEIVE can also be used as a real‑time logger for monitoring incoming data from devices.
+</p>
+
+<p>
+Additionally, at the top-right of the screen, the Play/Pause icon allows you to pause or resume receiving with a single tap.  
+A long press on this icon opens the settings for API and MQTT.
+</p>
 
 
     <hr>
