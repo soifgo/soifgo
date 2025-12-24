@@ -746,6 +746,43 @@ This prevents unauthorized access and protects your users.
 </div>
 
 
+<h3>🔄 Changing Topics & Syncing Microcontroller</h3>
+
+<!-- Microcontroller Parsing Examples -->
+<div style="font-family: monospace; background:#f4f4f4; padding:15px; border:1px solid #ccc; margin-top:20px;">
+  <h3>Microcontroller String Parsing Examples</h3>
+  
+  <h4>Example 1: Receiving <code>port3:1</code></h4>
+  <pre>
+If Instr(text , "port") > 0 Then
+    Text2 = Mid(text , 7 , 1)   ' Operand: ON=1, OFF=0
+    Text  = Mid(text , 5 , 1)   ' Port number → "3"
+End If
+  </pre>
+  <p><strong>Result:</strong> Port 3 ON</p>
+
+  <h4>Example 2: Sending <code>outmotor3:1</code></h4>
+  <pre>
+If Instr(text , "outmotor") > 0 Then
+    Text2 = Mid(text , 11 , 1)  ' Operand: ON=1, OFF=0
+    Text  = Mid(text , 9 , 1)   ' Port number → "3"
+End If
+  </pre>
+  <p><strong>Result:</strong> Motor output 3 ON</p>
+
+  <h4>Example 3: Feedback Topic</h4>
+  <pre>
+' Original:
+Print "feedback:" ; Feedback
+' → Topic in Soifgo: soifgo_feedback
+
+' Changed:
+Print "myfeedback123:" ; Feedback
+' → Topic in Soifgo: soifgo_myfeedback123
+  </pre>
+</div>
+
+
 
     <hr>
 <p style="text-align:center;">
