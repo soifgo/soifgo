@@ -424,9 +424,9 @@ $crystal = 11059200
 
 Config Adc = Single , Prescaler = Auto , Reference = Avcc
 Config Timer1 = Pwm , Pwm = 10 , Compare_a_pwm = Clear_up , Compare_b_pwm = Clear_up , Prescale = 1
-Declare Sub Red
 
-CONFIG PORTB=OUTPUT
+
+Config Portb = Output
    Portb = 0
 Config Portc.0 = Input                                      'in key 1
 Ddrc.0 = 0 : Portc.0 = 1
@@ -438,9 +438,9 @@ $baud = 115200
 
 Enable Interrupts
 
- Config Serialin = Buffered , Size = 41 , Bytematch = 13
+ Config Serialin = Buffered , Size = 52 , Bytematch = 13
 
-Dim Text , Feedback As String * 40
+Dim Text , Feedback As String * 51
 Dim Text2 As String * 4
 Dim Text3 As String * 5
 Dim Temp1 As Word
@@ -450,6 +450,7 @@ Dim Volt2 As Single
 Dim Step1 As Byte
 Dim T1 As Byte
 dim t2 as bit
+Dim Ina As Bit
 Dim Pb As Byte
 config watchdog=2048
 start watchdog
@@ -462,12 +463,14 @@ start watchdog
   Print #1 , "soifgo"
 pwm1a=pwm1aa
 Main:
-Waitms 400
+If Ina = 1 Then Goto Red
+Waitms 100
+If Ina = 1 Then Goto Red
   Incr Step1
 
-reset watchdog
+Reset Watchdog
 
-    If Step1 > 7 Then Step1 = 1
+    If Step1 > 6 Then Step1 = 1
 
 
     Select Case Step1
@@ -515,14 +518,13 @@ reset watchdog
 Goto Main
 
 Serial0charmatch:
- waitms 20
 Input Text
-
-if text <> "" then call Red
+Clear Serialin
+ Ina = 1
 Return
 
 
-Sub Red
+Red:
   Reset Watchdog
 
   Text = Trim(text)
@@ -590,10 +592,10 @@ Sub Red
    Text3 = ""
    T1 = 222
    T2 = 0
-   Clear Serialin
+Ina = 0
 
 
-End Sub
+Goto Main
 </code></pre>
 
 
