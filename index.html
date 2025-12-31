@@ -45,6 +45,16 @@
       display: flex;
       align-items: center;
     }
+/* ★★★ ADDED: Christmas icon blink animation ★★★ */
+@keyframes xmasBlink {
+  0%   { opacity: 1; transform: scale(1); }
+  50%  { opacity: 0.4; transform: scale(1.12); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+#newYearBadge {
+  animation: xmasBlink 2.2s ease-in-out infinite;
+}
 
     /* ★★★ ADDED: Christmas icon styling ★★★ */
     #newYearBadge {
