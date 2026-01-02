@@ -34,13 +34,43 @@
       height: 36px;
       max-width: 100%;
     }
+
+    /* ★★★ ADDED: Christmas badge + date container styling ★★★ */
     #dateBox {
       position: absolute;
       top: 10px;
       right: 15px;
       color: white;
       font-size: 0.95em;
+      display: flex;
+      align-items: center;
     }
+/* ★★★ ADDED: Christmas icon blink animation ★★★ */
+@keyframes xmasBlink {
+  0%   { opacity: 1; transform: scale(1); }
+  50%  { opacity: 0.4; transform: scale(1.12); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+#newYearBadge {
+  animation: xmasBlink 2.2s ease-in-out infinite;
+}
+
+    /* ★★★ ADDED: Christmas icon styling ★★★ */
+    #newYearBadge {
+      display: inline-block;
+      background: #fff;
+      padding: 3px 10px;
+      border-radius: 14px;
+      font-size: 1.7em; /* bigger icon */
+      margin-right: 6px;
+    }
+
+    #dateText {
+      font-size: 0.95em;
+    }
+    /* ★★★ END OF ADDED STYLES ★★★ */
+
     nav {
       display: flex;
       justify-content: center;
@@ -116,23 +146,32 @@
       SoifGo
       <img src="soifgo-logo.png" alt="SoifGo Logo">
     </h1>
-    <p>SoifGo is an Android application that provides users with advanced capabilities using buttons and seek bars
-</p>
-    <div id="dateBox"></div>
+
+    <!-- ★★★ CHANGED: Added Christmas icon + date text ★★★ -->
+    <div id="dateBox">
+      <span id="newYearBadge">🎄</span>
+      <span id="dateText"></span>
+    </div>
+    <!-- ★★★ END OF CHANGE ★★★ -->
+
+    <p>SoifGo is an Android application that provides users with advanced capabilities using buttons and seek bars</p>
   </header>
+
   <nav>
     <button id="downloadBtn" onclick="showDownload()">Download</button>
     <button onclick="showSection('readme')">README</button>
     <button onclick="showSection('about')">About</button>
     <button onclick="openTutorial()">SoifGo Tutorial</button>
   </nav>
+
   <section id="download">
     <h2>Download SoifGo</h2>
     <ul>
-      <li><a href="https://github.com/soifgo/soifgo/releases/download/1.29/soifgo.apk">soifgo.apk  V 1.29</a></li>
+      <li><a href="https://github.com/soifgo/soifgo/releases/download/1.32/soifgo.apk">soifgo.apk  V 1.32</a></li>
       <li><a href="https://apkpure.com/soifgo/soifgo.saeidmoghadam">Apkpure</a></li>
     </ul>
   </section>
+
   <section id="readme">
     <h2>README</h2>
     <h3>The developer: Saeid Moghadam</h3>
@@ -161,33 +200,17 @@
       <li>Thai (ไทย)</li>
       <li>Swahili (Kiswahili)</li>
     </ul>
+
     <h3>About SoifGo</h3>
-    <p><strong>SoifGo</strong> is an Android application that provides users with advanced capabilities using <strong>buttons and seek bars
-
-The core structure of SoifGo is based on two main pages: Play and Edit.
-To start designing, go to the Edit page and use the Select Design option.
-
-First, create a folder using the Select Design menu.
-
-Then, again through Select Design, create a new page inside that folder.
-
-Finally, once more open Select Design and add a button to the page.
-
-To modify anything on the Edit page, always click on the button first, then open the Edit menu so the button’s options appear.
-
-Whenever you want to add another button, edit folders or pages, or change the main theme, you must use the Select Design option.
-
-</strong>.</p>
-
-
-
-
+    <p><strong>SoifGo</strong> is an Android application that provides users with advanced capabilities using <strong>buttons and seek bars...</strong></p>
   </section>
+
   <section id="about">
     <h2>About the Developer</h2>
     <p><strong>Saeid Moghadam</strong> is a documentation perfectionist and user-focused developer.</p>
     <p>Email: <a href="mailto:SSMQQMSS@gmail.com">SSMQQMSS@gmail.com</a></p>
   </section>
+
   <script>
     document.querySelectorAll('nav button').forEach(btn => {
       btn.addEventListener('click', function() {
@@ -195,61 +218,63 @@ Whenever you want to add another button, edit folders or pages, or change the ma
         this.classList.add('clicked');
       });
     });
+
     function showSection(id) {
       document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
     }
+
     function showDownload() {
       document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
       document.getElementById('download').classList.add('active');
       document.querySelectorAll('nav button').forEach(b => b.classList.remove('clicked'));
       document.getElementById('downloadBtn').classList.add('clicked');
     }
+
     function openTutorial() {
       window.location.href = "tutorials/list.html";
     }
-function showDate() {
-  const now = new Date();
-  const options = { year: 'numeric', month: 'long', day: 'numeric' };
-  document.getElementById('dateBox').textContent = now.toLocaleDateString('en-US', options);
-}
+
+    /* ★★★ CHANGED: Updated date function to fill #dateText instead of replacing whole box ★★★ */
+    function showDate() {
+      const now = new Date();
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      document.getElementById('dateText').textContent =
+        now.toLocaleDateString('en-US', options);
+    }
+    /* ★★★ END OF CHANGE ★★★ */
 
     window.onload = function() {
       document.getElementById('downloadBtn').click();
       showDate();
     };
   </script>
+
   <img src="soifgo_pic01.png" alt="Recommended Converter">
 
-
   <div id="totalVisits" style="text-align:center; margin:40px 0; font-size:22px; font-weight:bold;">
-  Loading...
-</div>
+    Loading...
+  </div>
 
-<script>
-async function getCount(path) {
-  const url = `https://soifgo.goatcounter.com/counter/${path}.json`;
-  const res = await fetch(url);
-  const data = await res.json();
-  return Number(data.count) || 0;         
-}
+  <script>
+    async function getCount(path) {
+      const url = `https://soifgo.goatcounter.com/counter/${path}.json`;
+      const res = await fetch(url);
+      const data = await res.json();
+      return Number(data.count) || 0;
+    }
 
-async function loadTotal() {
-  const a = await getCount("soifgo/");
-  const b = await getCount("soifgo/index.html");
+    async function loadTotal() {
+      const a = await getCount("soifgo/");
+      const b = await getCount("soifgo/index.html");
 
-  const total = a + b;
-  document.getElementById("totalVisits").textContent =
-    " > : " + total;
-}
+      const total = a + b;
+      document.getElementById("totalVisits").textContent =
+        " > : " + total;
+    }
 
-loadTotal();
+    loadTotal();
+  </script>
 
-
-  
-</script>
-
-
-  
 </body>
 </html>
