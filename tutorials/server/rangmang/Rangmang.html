@@ -243,6 +243,14 @@ Use a single wire to solder and connect the input and output pins of the regulat
 ' S000 TO S480   RGB STRIP START POSITION FOR COLORED PIXEL
 ' E000 TO E480   RGB STRIP END POSITION FOR COLORED PIXEL
 ' M000 TO M098   M000 WITHOUT MEMORY SAVE   M001 SAVE SLOT 1 MEMORY
+'!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+'M996 performs a full pixel wipe on the LED strip and erases all stored memory.
+'M997 clears all pixels on the LED strip without affecting any memory
+'M998 quickly fills all pixels on the LED strip without using or modifying memory
+'M999 colors all pixels on the LED strip and saves it as memory slot 001
+  
+
+
 
 ' IF D01 TO D38   DANCE
 ' D99   FOR RANDOM SELECT D01 TO D38 DANCE
