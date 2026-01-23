@@ -110,7 +110,7 @@ Each row encodes the following parameters (ADRGBSEM format):
 
 <ul>
   <li><strong>A (Address)</strong> – 2 digits (A01–A98 for module, A99 for all).</li>
-  <li><strong>D (Mode)</strong> – D01–D38 for dance styles, D99 for random dance selection.</li>
+  <li><strong>D (Mode)</strong> – D01–D55 for dance styles, D99 for random dance selection.</li>
   <li><strong>R / G / B</strong> – 3 digits each. Normal range R000–R250, G000–G250, B000–B250.  
     Special values:  
     <ul>
@@ -220,8 +220,8 @@ Use a single wire to solder and connect the input and output pins of the regulat
 ' E000 TO E480   RGB STRIP END POSITION FOR COLORED PIXEL
 ' M000 TO M098   M000 WITHOUT MEMORY SAVE   M001 SAVE SLOT 1 MEMORY
 
-' IF D01 TO D38   DANCE
-' D99   FOR RANDOM SELECT D01 TO D38 DANCE
+' IF D01 TO D55   DANCE
+' D99   FOR RANDOM SELECT D01 TO D55 DANCE
 ' R000 TO R250   RED COLOR   R251 TO R255 FOR RANDOM RED COLOR
 ' G000 TO G250   GREEN COLOR   G251 TO G255 FOR RANDOM GREEN COLOR
 ' B000 TO B250   BLUE COLOR   B251 TO B255 FOR RANDOM BLUE COLOR
@@ -252,8 +252,8 @@ Use a single wire to solder and connect the input and output pins of the regulat
 
 
 
-' IF D01 TO D38   DANCE
-' D99   FOR RANDOM SELECT D01 TO D38 DANCE
+' IF D01 TO D55   DANCE
+' D99   FOR RANDOM SELECT D01 TO D55 DANCE
 ' R000 TO R250   RED COLOR   R251 TO R255 FOR RANDOM RED COLOR
 ' G000 TO G250   GREEN COLOR   G251 TO G255 FOR RANDOM GREEN COLOR
 ' B000 TO B250   BLUE COLOR   B251 TO B255 FOR RANDOM BLUE COLOR
