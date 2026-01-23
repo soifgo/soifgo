@@ -35,41 +35,7 @@
       max-width: 100%;
     }
 
-    /* ★★★ ADDED: Christmas badge + date container styling ★★★ */
-    #dateBox {
-      position: absolute;
-      top: 10px;
-      right: 15px;
-      color: white;
-      font-size: 0.95em;
-      display: flex;
-      align-items: center;
-    }
-/* ★★★ ADDED: Christmas icon blink animation ★★★ */
-@keyframes xmasBlink {
-  0%   { opacity: 1; transform: scale(1); }
-  50%  { opacity: 0.4; transform: scale(1.12); }
-  100% { opacity: 1; transform: scale(1); }
-}
 
-#newYearBadge {
-  animation: xmasBlink 2.2s ease-in-out infinite;
-}
-
-    /* ★★★ ADDED: Christmas icon styling ★★★ */
-    #newYearBadge {
-      display: inline-block;
-      background: #fff;
-      padding: 3px 10px;
-      border-radius: 14px;
-      font-size: 1.7em; /* bigger icon */
-      margin-right: 6px;
-    }
-
-    #dateText {
-      font-size: 0.95em;
-    }
-    /* ★★★ END OF ADDED STYLES ★★★ */
 
     nav {
       display: flex;
@@ -147,12 +113,6 @@
       <img src="soifgo-logo.png" alt="SoifGo Logo">
     </h1>
 
-    <!-- ★★★ CHANGED: Added Christmas icon + date text ★★★ -->
-    <div id="dateBox">
-      <span id="newYearBadge">🎄</span>
-      <span id="dateText"></span>
-    </div>
-    <!-- ★★★ END OF CHANGE ★★★ -->
 
     <p>SoifGo is an Android application that provides users with advanced capabilities using buttons and seek bars</p>
   </header>
@@ -235,14 +195,6 @@
       window.location.href = "tutorials/list.html";
     }
 
-    /* ★★★ CHANGED: Updated date function to fill #dateText instead of replacing whole box ★★★ */
-    function showDate() {
-      const now = new Date();
-      const options = { year: 'numeric', month: 'long', day: 'numeric' };
-      document.getElementById('dateText').textContent =
-        now.toLocaleDateString('en-US', options);
-    }
-    /* ★★★ END OF CHANGE ★★★ */
 
     window.onload = function() {
       document.getElementById('downloadBtn').click();
