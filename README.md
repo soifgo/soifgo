@@ -85,7 +85,6 @@ SoifGo is an Android application that provides users with advanced capabilities 
 - [ESP8266 ](https://soifgo.github.io/soifgo/tutorials/server/Esp8266_wifi_mqtt/esp8266_mqtt.html)
 - 
 ---
----
 
 ## 🚀 Installation
 - Download the latest APK from [Releases](https://github.com/soifgo/soifgo/releases).
