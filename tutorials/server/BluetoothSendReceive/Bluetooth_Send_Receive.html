@@ -127,6 +127,110 @@
   <pre><code>temp1:128</code></pre>
   <p>SoiftGo interprets <code>temp1:</code> as the <strong>address</strong> of the configured button, and <code>128</code> as the <strong>value</strong> to be displayed.</p>
 
+
+<h1>Bluetooth Serial Data Format for SoiftGo</h1>
+
+<p>The data format expected by SoiftGo:</p>
+
+<pre>temp1:128</pre>
+
+<p>
+<strong>temp1:</strong> widget address  
+<br>
+<strong>128</strong> value to display
+</p>
+
+<hr>
+
+<h2>1. BASIC</h2>
+<pre>
+value = 128
+PRINT "temp1:"; value
+</pre>
+
+<pre>
+value = 128
+PRINT "temp1:" + STR$(value)
+</pre>
+
+<hr>
+
+<h2>2. C</h2>
+<pre>
+int value = 128;
+printf("temp1:%d", value);
+</pre>
+
+<pre>
+int value = 128;
+char buffer[20];
+sprintf(buffer, "temp1:%d", value);
+UART_SendString(buffer);
+</pre>
+
+<hr>
+
+<h2>3. C++</h2>
+<pre>
+int value = 128;
+std::cout << "temp1:" << value;
+</pre>
+
+<pre>
+int value = 128;
+std::string msg = "temp1:" + std::to_string(value);
+Serial.write(msg.c_str());
+</pre>
+
+<hr>
+
+<h2>4. Arduino</h2>
+<pre>
+int value = 128;
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  Serial.print("temp1:");
+  Serial.println(value);
+  delay(1000);
+}
+</pre>
+
+<hr>
+
+<h2>5. MicroPython</h2>
+<pre>
+value = 128
+uart.write("temp1:" + str(value))
+</pre>
+
+<hr>
+
+<h2>6. Python</h2>
+<pre>
+import serial
+
+ser = serial.Serial("COM5", 9600)
+value = 128
+ser.write(f"temp1:{value}".encode())
+</pre>
+
+<hr>
+
+<h2>7. JavaScript (Node.js)</h2>
+<pre>
+const { SerialPort } = require("serialport");
+
+const port = new SerialPort({ path: "COM5", baudRate: 9600 });
+
+let value = 128;
+port.write("temp1:" + value);
+</pre>
+
+
   <h3>Display Behavior</h3>
   <ul>
     <li>The value is shown <strong>attached to the button name</strong>.</li>
