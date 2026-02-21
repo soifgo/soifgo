@@ -4,116 +4,172 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <script data-goatcounter="https://soifgo.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-  
+
   <title>SoifGo – Simple Page</title>
+
   <style>
     body {
-      font-family: sans-serif;
-      background: #f4f4f4;
+      font-family: "Segoe UI", sans-serif;
+      background: #f7f5f2;
       margin: 0;
       font-size: 17px;
-      line-height: 1.6;
+      line-height: 1.7;
+      color: #333;
     }
+
+    /* HEADER */
     header {
-      background: #8B4513;
+      background: linear-gradient(135deg, #8B4513, #A0522D);
       color: white;
-      padding: 1.2em;
+      padding: 2em 1em;
       text-align: center;
-      position: relative;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
     header h1 {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 12px;
-      font-size: 2em;
-      flex-wrap: wrap;
+      font-size: 2.2em;
       margin: 0;
     }
     header h1 img {
-      height: 36px;
-      max-width: 100%;
+      height: 40px;
+    }
+    header p {
+      margin-top: 10px;
+      opacity: 0.9;
+      font-size: 1.1em;
     }
 
-
-
+    /* NAVIGATION */
     nav {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      background: #eee;
+      background: #ffffff;
+      padding: 0.6em;
       position: sticky;
       top: 0;
       z-index: 1000;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
     nav button {
-      margin: 0.6em;
-      padding: 0.7em 1.4em;
+      margin: 0.5em;
+      padding: 0.7em 1.5em;
       border: none;
-      background: #ddd;
+      background: #e8e5e1;
       cursor: pointer;
-      font-size: 1.1em;
-      border-radius: 5px;
-      color: black;
-      transition: transform 0.1s ease, background 0.2s ease;
+      font-size: 1.05em;
+      border-radius: 8px;
+      color: #333;
+      transition: 0.2s ease;
     }
     nav button:hover {
-      background: #ccc;
+      background: #dcd8d3;
+      transform: translateY(-2px);
     }
-    nav button:active,
     nav button.clicked {
-      transform: translateY(3px);
-      background: #bbb;
+      background: #c7b9a8;
+      color: white;
+      transform: translateY(2px);
     }
+
+    /* SECTIONS */
     section {
       display: none;
-      padding: 1.8em;
-      max-width: 800px;
+      padding: 2em;
+      max-width: 850px;
       margin: auto;
-      font-size: 1.05em;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      margin-top: 25px;
     }
     section.active {
       display: block;
     }
+
     h2 {
-      font-size: 1.4em;
+      font-size: 1.6em;
       margin-bottom: 0.8em;
+      color: #8B4513;
     }
+
+    /* DOWNLOAD LINKS */
+    #download ul {
+      list-style: none;
+      padding: 0;
+    }
+    #download ul li {
+      margin: 12px 0;
+    }
+    #download a {
+      color: #8B4513;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 1.1em;
+    }
+    #download a:hover {
+      text-decoration: underline;
+    }
+
+    /* SECURITY BOX */
+    .security-box {
+      margin-top: 25px;
+      padding: 15px;
+      background: #f0ebe6;
+      border-left: 5px solid #8B4513;
+      border-radius: 8px;
+      font-size: 0.95em;
+      line-height: 1.6;
+    }
+    .security-box a {
+      color: #8B4513;
+      font-weight: bold;
+    }
+
+    /* IMAGE */
     img {
       max-width: 100%;
-      height: auto;
+      border-radius: 10px;
+      margin: 1.5em auto;
       display: block;
-      margin: 1.2em auto;
     }
+
+    /* VISIT COUNTER */
+    #totalVisits {
+      text-align: center;
+      margin: 40px 0;
+      font-size: 22px;
+      font-weight: bold;
+      color: #8B4513;
+    }
+
+    /* MOBILE */
     @media (max-width: 600px) {
       header h1 {
-        font-size: 1.6em;
+        font-size: 1.7em;
         flex-direction: column;
-      }
-      nav {
-        flex-direction: column;
-        align-items: center;
       }
       nav button {
         width: 95%;
         font-size: 1.2em;
-        margin: 0.4em 0;
       }
       section {
-        padding: 1em;
-        margin: 0 12px;
+        padding: 1.2em;
       }
     }
   </style>
 </head>
+
 <body>
+
   <header>
     <h1>
       SoifGo
       <img src="soifgo-logo.png" alt="SoifGo Logo">
     </h1>
-
-
     <p>SoifGo is an Android application that provides users with advanced capabilities using buttons and seek bars</p>
   </header>
 
@@ -124,19 +180,31 @@
     <button onclick="openTutorial()">SoifGo Tutorial</button>
   </nav>
 
+  <!-- DOWNLOAD SECTION -->
   <section id="download">
     <h2>Download SoifGo</h2>
+
     <ul>
-      <li><a href="https://github.com/soifgo/soifgo/releases/download/1.35/soifgo.apk">soifgo.apk  V 1.35</a></li>
-      <li><a href="https://apkpure.com/soifgo/soifgo.saeidmoghadam">Apkpure</a></li>
+      <li><a href="https://github.com/soifgo/soifgo/releases/download/1.35/soifgo.apk">📥 Download soifgo.apk (v1.35)</a></li>
+      <li><a href="https://apkpure.com/soifgo/soifgo.saeidmoghadam">📦 Download from APKPure</a></li>
     </ul>
 
-<div class="security-box"> 🔒 <strong>Security Verified</strong><br> This APK has been scanned by 65+ global security vendors on VirusTotal.<br> ✔️ No threats detected.<br> <a href="https://www.virustotal.com/gui/file/5a28ee2acf881b4a300cc482e5691ee8313f1ca6fde0457e07e942e416d51d81" target="_blank"> View Full VirusTotal Report </a> </div>
+    <div class="security-box">
+      🔒 <strong>Security Verified</strong><br>
+      This APK has been scanned by 65+ global security vendors on VirusTotal.<br>
+      ✔️ No threats detected.<br>
+      <a href="https://www.virustotal.com/gui/file/5a28ee2acf881b4a300cc482e5691ee8313f1ca6fde0457e07e942e416d51d81" target="_blank">
+        View Full VirusTotal Report
+      </a>
+    </div>
   </section>
 
+  <!-- README SECTION -->
   <section id="readme">
     <h2>README</h2>
+
     <h3>The developer: Saeid Moghadam</h3>
+
     <h3>Supported Languages in SoifGo</h3>
     <ul>
       <li>English (EN)</li>
@@ -167,11 +235,16 @@
     <p><strong>SoifGo</strong> is an Android application that provides users with advanced capabilities using <strong>buttons and seek bars...</strong></p>
   </section>
 
+  <!-- ABOUT SECTION -->
   <section id="about">
     <h2>About the Developer</h2>
     <p><strong>Saeid Moghadam</strong> is a documentation perfectionist and user-focused developer.</p>
     <p>Email: <a href="mailto:SSMQQMSS@gmail.com">SSMQQMSS@gmail.com</a></p>
   </section>
+
+  <img src="soifgo_pic01.png" alt="Recommended Converter">
+
+  <div id="totalVisits">Loading...</div>
 
   <script>
     document.querySelectorAll('nav button').forEach(btn => {
@@ -197,20 +270,6 @@
       window.location.href = "tutorials/list.html";
     }
 
-
-    window.onload = function() {
-      document.getElementById('downloadBtn').click();
-      showDate();
-    };
-  </script>
-
-  <img src="soifgo_pic01.png" alt="Recommended Converter">
-
-  <div id="totalVisits" style="text-align:center; margin:40px 0; font-size:22px; font-weight:bold;">
-    Loading...
-  </div>
-
-  <script>
     async function getCount(path) {
       const url = `https://soifgo.goatcounter.com/counter/${path}.json`;
       const res = await fetch(url);
@@ -227,7 +286,10 @@
         " Visits : " + total;
     }
 
-    loadTotal();
+    window.onload = function() {
+      document.getElementById('downloadBtn').click();
+      loadTotal();
+    };
   </script>
 
 </body>
