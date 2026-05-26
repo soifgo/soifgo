@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CMI209 Module </title>
+  <style>
+    :root{
+      --bg:#f7f9fc;
+      --card:#ffffff;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --accent:#2563eb;
+      --border:#dbe3ef;
+      --code-bg:#0f172a;
+      --code-text:#e2e8f0;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.6;
+      -webkit-text-size-adjust:100%;
+    }
+    .container{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+    .header{
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color:#fff;
+      padding: 24px 18px;
+      border-radius: 18px;
+      box-shadow: 0 10px 25px rgba(37,99,235,.18);
+      margin-bottom: 16px;
+    }
+    .header h1{
+      margin:0 0 8px;
+      font-size: 1.55rem;
+      line-height:1.25;
+    }
+    .header p{
+      margin:0;
+      opacity:.92;
+      font-size:.98rem;
+    }
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:16px;
+      margin-bottom:14px;
+      box-shadow: 0 4px 14px rgba(15,23,42,.04);
+    }
+    h2{
+      font-size:2.2rem;
+      margin:0 0 10px;
+      color:#0f172a;
+      border-bottom:1px solid var(--border);
+      padding-bottom:8px;
+    }
+    h3{
+      font-size:2.02rem;
+      margin:14px 0 8px;
+      color:#111827;
+    }
+img {
+    width: 100% !important;
+}
+
+    p{margin:8px 0}
+    ul{margin:8px 0 8px 20px}
+    li{margin:4px 0}
+    code, pre{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    }
+    .cmd{
+      background:#eef2ff;
+      color:#1e3a8a;
+      padding:2px 8px;
+      border-radius:8px;
+      font-weight:600;
+      display:inline-block;
+      margin:2px 0;
+    }
+    pre{
+      background:var(--code-bg);
+      color:var(--code-text);
+      padding:12px 14px;
+      border-radius:12px;
+      overflow-x:auto;
+      margin:10px 0;
+      font-size:.95rem;
+      white-space:pre-wrap;
+      word-break:break-word;
+    }
+    .note{
+      background:#fff7ed;
+      border:1px solid #fed7aa;
+      color:#9a3412;
+      padding:12px 14px;
+      border-radius:12px;
+      margin:10px 0;
+    }
+    .small{
+      color:var(--muted);
+      font-size:.92rem;
+    }
+    .section-title{
+      margin-top:0;
+    }
+    .divider{
+      height:1px;
+      background:var(--border);
+      margin:14px 0;
+    }
+    .footer{
+      text-align:center;
+      color:var(--muted);
+      font-size:.9rem;
+      padding:10px 0 20px;
+    }
+    @media (max-width: 600px){
+      .container{padding:10px}
+      .card{padding:14px}
+      .header{padding:18px 14px; border-radius:14px}
+      .header h1{font-size:1.28rem}
+      h2{font-size:1.08rem}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>CMi209    </h1>
+   <img src="cmi209_01.jpg" alt="Wiring 1" >
+    </div>
+
+    <div class="card">
+      <h2 class="section-title">Overview</h2>
+      <p>
+        <strong>CMI209</strong> is a CNC-like module based on the <strong>ATmega328P</strong> microcontroller.
+        It is controlled by the <strong>Soifgo Android app</strong> through the <strong>CMI (CNC Mobile Interface)</strong>.
+        Communication is done via a <strong>Bluetooth module</strong> at a baud rate of <strong>115200</strong>.
+      </p>
+      <div class="note">
+        <strong>Note:</strong> Before using the Bluetooth module, it must be set to <strong>115200 baud</strong>.
+<img src="cmi209_02.png" alt="Wiring 1">
+      </div>
+      <p>
+The following files are included in the project: PCB file, programmer file, BASCOM file, Proteus file, and reference images. All of these files are available for download at the end of the page.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>Saved Settings</h2>
+      <p>The following settings are stored in memory:</p>
+      <pre>pulse=100</pre>
+      <p>
+        This means that <strong>100 pulses</strong> move the stepper motor by <strong>1 mm</strong> in this project.
+        If you use a different device, adjust the <strong>pulses per millimeter</strong> value in Soifgo.
+      </p>
+
+      <pre>Max_x=40
+Max_y=40
+Max_z=40</pre>
+      <p>
+        The maximum travel range for the X, Y, and Z axes is <strong>40 mm</strong> for this setup.
+      </p>
+
+      <pre>feedm=1200</pre>
+      <p>
+        Default movement speed is set to <strong>1400 mm/min</strong>. If no speed is received, the module uses the stored/default speed value.
+      </p>
+
+      <pre>feeds=5.7</pre>
+      <p>
+        This is the speed correction coefficient used to match the machine behavior. In this device, the measured value is <strong>5.7</strong>.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>Position Setting Commands</h2>
+      <p>
+        These commands can be received either from <strong>G-code</strong> or entered manually.
+        Values are in <strong>millimeters</strong>, and <strong>uppercase letters</strong> must be used.
+      </p>
+      <p>Examples:</p>
+      <pre>X12
+Y2
+Z-3</pre>
+      <p>
+        For <strong>X</strong> and <strong>Y</strong>, decimal values, zero, and positive values are allowed.
+        For <strong>Z</strong>, negative values are also allowed.
+      </p>
+      <p>
+        Length and width are defined from <strong>0</strong> to their maximum limits.
+        Height has a special meaning because it depends on identifying the work surface.
+        After setting the work surface, the Z axis must be zeroed using:
+      </p>
+      <pre>resetz</pre>
+      <p>
+        Then, to move the tool to a safe height, for example <strong>5 mm</strong> above the surface:
+      </p>
+      <pre>Z5</pre>
+      <p>To move downward by <strong>1 mm</strong>:</p>
+      <pre>Z-1</pre>
+      <p>To zero the X and Y axes:</p>
+      <pre>resetx
+resety</pre>
+    </div>
+
+    <div class="card">
+      <h2>Spindle Speed Control</h2>
+      <p>
+        An initial spindle control circuit is included on the board.
+        If you control the module using <strong>PWM</strong>, do not install the MOSFET input; instead, use the PWM input.
+      </p>
+      <p>
+        Spindle speed can be set up to <strong>20,000 RPM</strong>.
+        The corresponding PWM output range is <strong>0 to 1024</strong> (<strong>10-bit</strong>).
+        This command can be used in both G-code and manual mode, using uppercase letters.
+      </p>
+      <pre>S0</pre>
+      <p>Spindle off</p>
+      <pre>S12000</pre>
+      <p>Spindle speed set to <strong>12,000 RPM</strong></p>
+    </div>
+
+    <div class="card">
+      <h2>Axis Feed Speed</h2>
+      <p>
+        If no initial speed is received, the default speed described above is applied.
+        In both G-code and manual mode, you can send values between <strong>1 and 4800</strong>.
+      </p>
+      <pre>F600</pre>
+      <p>Feed speed: <strong>600 mm/min</strong> (uppercase letters)</p>
+    </div>
+
+    <div class="card">
+      <h2>Reserved PWM Output</h2>
+      <p>
+        Another reserved PWM output is available on the board, near the limit switch pins.
+        It is intended for manual control tasks and can be used for:
+      </p>
+      <ul>
+        <li>Laser power control</li>
+        <li>Plasma cutter on/off control</li>
+        <li>Servo motor rotation</li>
+      </ul>
+      <p>The output range is <strong>0 to 1024</strong> (<strong>10-bit</strong>):</p>
+      <pre>W510</pre>
+    </div>
+
+    <div class="card">
+      <h2>Manual Arc and Circle Drawing</h2>
+      <p>
+        The module supports linear G-code and arc G-code.
+        It also supports a manual method for drawing arcs or circles.
+      </p>
+
+      <h3>Command Parameters</h3>
+      <ul>
+        <li><strong>A</strong>: Starting angle, from 0 to 360. It must always be the first part of the command.</li>
+        <li><strong>B</strong>: Ending angle, from 0 to 360.</li>
+        <li><strong>R</strong>: Radius of the circle.</li>
+        <li><strong>X</strong>, <strong>Y</strong>: X and Y coordinates of the circle or arc center. These must be written after the angles.</li>
+        <li><strong>Z</strong>: Height/depth of the circle or arc. This must also come after the angles.</li>
+      </ul>
+
+      <h3>Example</h3>
+      <p>A full circle with a <strong>10 mm radius</strong> at <strong>X=20</strong>, <strong>Y=20</strong>, and a depth of <strong>1 mm</strong>:</p>
+      <p>Before this command, raise the tool:</p>
+      <pre>Z5
+A0B360X20Y20Z-1</pre>
+
+      <p>
+        In arc drawing and arc G-code, the number of points used to generate the circle is initially set to <strong>50</strong>.
+        If needed, you can reduce it for a polygon-like shape, such as a hexagon, or increase it up to a maximum of <strong>99</strong> for higher precision.
+      </p>
+      <pre>res23</pre>
+      <p>
+        Sometimes it is necessary to wait before starting an action, for example in plasma cutting where a few seconds of delay may be needed before piercing.
+        The following command creates a delay in seconds, from <strong>1 to 300</strong> seconds:
+      </p>
+      <pre>sec2</pre>
+    </div>
+
+    <div class="card">
+      <h2>Precise Movement Commands</h2>
+      <p>
+        Sometimes the axes need to move manually in small or large increments.
+        For example, movement in <strong>0.5 mm</strong> steps for X, Y, and Z
+        (<strong>0.001 to 999</strong>) using signed lowercase commands:
+      </p>
+      <pre>+x0.5
+-x0.5
++y0.5
+-y0.5
++z0.5
+-z0.5</pre>
+    </div>
+
+    <div class="card">
+      <h2>Homing</h2>
+      <p>
+        The home or initial position of the machine is available through:
+      </p>
+      <pre>G28</pre>
+      <p>and in the module:</p>
+      <pre>home</pre>
+      <p>
+        Both commands move the axes to the home position.
+      </p>
+      <div class="note">
+        Three normally-open switches should be installed for X home, Y home, and Z home.
+        The Z home switch should allow some extra travel, at least <strong>6 mm to 10 mm</strong>, because homing includes position zero and the safe tool height is about <strong>6 mm</strong>.
+<img src="limit_switch.png" alt="Wiring 1">
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Limit Switches and Emergency Stop Error Input</h2>
+      <p>
+        A dedicated input is provided in the module so that when it is pulled low, the axes, spindle, and the entire machine stop.
+      </p>
+      <p>
+        In most machines, limit switches are installed at the end of each axis travel so that the machine is not damaged if it moves beyond its allowed range.
+        All switches are wired in parallel, including the emergency stop push button.
+        The circuit and wiring should be done according to the schematic.
+      </p>
+      <p>
+        When this fault occurs, the module will no longer accept movement commands unless the error is cleared, the machine is power-cycled, or the following command is sent through Soifgo:
+      </p>
+      <pre>resetall</pre>
+      <p>
+        If the axis remains stuck on the protective limit switch and the fault is not cleared, the module will return to the stop state again.
+      </p>
+      <p>A dedicated stop command is also available through Soifgo:</p>
+      <pre>stop</pre>
+      <p>
+        When this command is sent, the machine stops and requires:
+      </p>
+      <pre>resetall</pre>
+      <p>to resume operation.</p>
+    </div>
+
+    <div class="card">
+      <h2>Stepper Driver Connections</h2>
+      <p>
+        This module uses <strong>three stepper motor driver modules</strong>.
+        If you want to use another driver, do not install the onboard modules.
+        Instead, use the <strong>four pins</strong> provided for each axis to connect an external driver:
+      </p>
+      <pre>GND
+ENABLE
+STEP
+DIR</pre>
+    </div>
+
+    <div class="card">
+      <h2>Video and Usage Sections</h2>
+      <ul>
+        <li>How to program the module(USBASP)</li>
+         <img src="programmer.jpg" alt="Wiring 1">
+
+        <video controls width="80%" height="500">
+        <source src="Avrdude_Programing.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+
+        <li>How to design sample pages in Soifgo</li>
+
+        <video controls width="80%" height="500">
+        <source src="design01.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+
+        <video controls width="80%" height="500">
+        <source src="design02.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+
+        <li>Sample design using Spire software and export file creation</li>
+
+        <video controls width="80%" height="500">
+        <source src="design03.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+
+        <li>How to transfer the Spire export file to the phone</li>
+
+        <video controls width="80%" height="500">
+        <source src="design04.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+
+        <li>How to load the file with Soifgo and operate CMI209</li>
+
+        <video controls width="80%" height="500">
+        <source src="design05.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+
+        <li>Manual direct input example in Soifgo</li>
+
+        <video controls width="80%" height="500">
+        <source src="design06.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+
+        <li>Understanding arc resolution settings</li>
+
+        <video controls width="80%" height="500">
+        <source src="design07.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+
+        <li>Designing reset-all and stop functions in Soifgo</li>
+
+        <video controls width="80%" height="500">
+        <source src="design08.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+
+        <li>Sample operation of CMI209</li>
+
+        <video controls width="80%" height="500">
+        <source src="design09.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+
+        <h2>PCB and Schematic Files Atmega 328P </h2>
+       <h2><a href="cmi209_File.zip"> 📦 Download All File</a>
+      </ul>
+    </div>
+
+    <div class="footer">
+      Saeid Moghadam
+    </div>
+  </div>
+
+    <hr>
+<p style="text-align:center;">
+  <a href="https://soifgo.github.io/soifgo/tutorials/list.html" 
+     style="display:inline-block; padding:10px 20px; background:#0066cc; color:#fff; text-decoration:none; border-radius:5px;">
+    ⬅ Back to Tutorial
+  </a>
+</p>
+
+
+
+<hr>
+<p style="text-align:center;">
+  <a href="https://soifgo.github.io/soifgo/index.html" 
+     style="display:inline-block; padding:10px 20px; background:#8B4513; color:#fff; text-decoration:none; border-radius:5px;">
+    ⬅ Back to Home
+  </a>
+</p>
+
+
+</body>
+</html>
