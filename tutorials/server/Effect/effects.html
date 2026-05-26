@@ -148,16 +148,19 @@
   <p>
     If the required hardware for applying values by address to test button actions is unavailable,
     you can enable the simulator. It provides an internal counter ranging from <code>1</code> to
-    <code>1024</code> at address <code>123</code>, allowing you to prototype and test your button behavior.
+    <code>1024</code>  <code> </code>, allowing you to prototype and test your button behavior.
+The input can also have negative values, so when setting the maximum input value, click on the label and also enter the negative input value. For example, if our input is between -20 and 100, we set the maximum positive input value to 100 and by clicking on the label and changing its name to ‘maximum negative input value’, we set the maximum negative input value to 20
   </p>
 
   <h3>How to Use</h3>
   <ul>
     <li>Set the button behavior to <strong>numeric input</strong> (Bluetooth or API or MQTT ).</li>
-    <li>Assign address <code>123</code> and maximum input value <code>1024</code>.</li>
+    <li> <code></code>   maximum input value <code>1024</code>.</li>
     <li>Enable <strong>Simulation Input Value</strong> from the <em>Play</em> menu.</li>
     <li>The simulator will apply values from <code>1</code> to <code>1024</code> automatically.</li>
     <li>Once testing is complete, configure the external hardware address as needed.</li>
+
+
   </ul>
 </section>
 
@@ -169,7 +172,7 @@
     <div class="card">
       <ul>
         <li><strong>Create the button:</strong> Set behavior to numeric input (Bluetooth or API or MQTT).</li>
-        <li><strong>Address:</strong> <code>123</code>. <strong>Maximum:</strong> <code>1024</code>.</li>
+        <li><strong></strong> <code></code>. <strong>Maximum:</strong> <code>1024</code>.</li>
         <li><strong>Enable simulator:</strong> Use <em>simulation input value</em> in Play to generate values <code>1 → 1024</code>.</li>
         <li><strong>Edit mode:</strong> Click the button and open <em>Effects</em>. Options include Size, Circle, Move, Rotate, Color, Graph, Formula.</li>
       </ul>
@@ -181,8 +184,9 @@
     <div class="card">
       <p>
         Two sliders appear: the upper slider sets width to the far right; the next slider sets height to the top. For maximum variation,
-        place the button at the leftmost and lowest position. With numeric input in Play, the button scales from its initial size to the
-        configured maximum in proportion to the input (up to <code>1024</code>).
+        place the button at the leftmost and lowest position. In the Play screen, when a numeric value is received — whether via Bluetooth,            simulator, API, MQTT, or internal sensors — the button’s size begins to change from its initial state toward the configured maximum, in    proportion to that value (up to 1024).
+
+This effect can be used in applications such as vertical or horizontal balancers, temperature indicators, tank fill-level displays, and similar cases.
       </p>
       <p>Suitable for balancing visuals like rising water or fuel level, or any growing variable.</p>
     </div>
