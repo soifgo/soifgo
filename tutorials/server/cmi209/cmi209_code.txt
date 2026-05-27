@@ -1,0 +1,1294 @@
+'Cmi209
+'SAEID MOGHADAM
+'CNC Mobile Interface (CMI)
+' mm/minute           mm/second
+'feed 60  mm/minute   = 1 s >   1 mm MOVE
+'feed 600 mm/minute   = 1 s >  10 mm MOVE
+'pulse for PS2 drive: 100 pulses for 1 mm move
+'PS2 length = 40 mm  -> 40 * pulse = 4000 pulses
+'PS2 CALCULATION:
+'pulse = 100
+'max_x = 40 mm  (4 cm)
+'max_y = 40 mm  (4 cm)
+'max_z = 30 mm  (3 cm)
+'Example:
+'stepper motor needs 40 pulses for 1 mm move
+'max travel for X = 40 cm
+'max travel for Y = 40 cm
+'max travel for Z = 30 cm
+'new CNC CALCULATION:
+'pulse = 40
+'max_x = 40 cm
+'max_y = 40 cm
+'max_z = 30 cm
+
+Start0:
+$regfile = "m328pdef.dat"
+$crystal = 2000000
+
+$prog &HFF , &HFF , &HDF , &HFE       ' generated. Take care that the chip supports all fuse bytes.
+Dim Reset_all As Bit
+
+Reset_all = 0
+Start1:
+
+Config Timer1 = Pwm , Pwm = 10 , Compare_a_pwm = Clear_up , Compare_b_pwm = Clear_up , Prescale = 8
+Pwm1a = 0
+Pwm1b = 0           'spindle speed
+
+Config Portb.0 = Input       'xyz limit
+Ddrb.0 = 0 : Portb.0 = 1
+Limit Alias Pinb.0
+
+Config Portc.0 = Input       'home x
+Ddrc.0 = 0 : Portc.0 = 1
+Xz Alias Pinc.0
+
+Config Portc.1 = Input       'home y
+Ddrc.1 = 0 : Portc.1 = 1
+Yz Alias Pinc.1
+
+Config Portc.2 = Input       'home z
+Ddrc.2 = 0 : Portc.2 = 1
+Zz Alias Pinc.2
+
+
+
+ Config Portd.5 = Output       'X enable
+ Xen Alias Portd.5
+  Config Portd.6 = Output
+Xstep Alias Portd.6
+  Config Portd.7 = Output
+Xdir Alias Portd.7
+
+ Config Portd.2 = Output       'Y enable
+Yen Alias Portd.2
+  Config Portd.3 = Output
+Ystep Alias Portd.3
+  Config Portd.4 = Output
+Ydir Alias Portd.4
+
+
+ Config Portc.3 = Output       'Z enable
+ Zen Alias Portc.3
+  Config Portc.4 = Output
+Zstep Alias Portc.4
+  Config Portc.5 = Output
+Zdir Alias Portc.5
+
+Dim Ii As Word
+Xen = 1
+Yen = 1
+Zen = 1
+'''''''''''''''''''''''''''''
+Dim Max_x , Max_y , Max_z , Feedm , Pulse As Word
+ Dim Max_xx , Max_yy , Max_zz As Single
+Dim Feeds As Single
+Dim Send_xyz As Byte
+   Readeeprom Max_x , 1
+   Readeeprom Max_y , 3
+   Readeeprom Max_z , 5
+   Readeeprom Feedm , 7
+   Readeeprom Feeds , 9
+   Readeeprom Pulse , 14
+   Readeeprom Send_xyz , 16
+If Max_x < 1 Or Max_x > 65000 Then Max_x = 40
+Max_xx = Max_x
+If Max_y < 1 Or Max_y > 65000 Then Max_y = 40
+Max_yy = Max_y
+If Max_z < 1 Or Max_z > 65000 Then Max_z = 30
+Max_zz = -max_z
+If Feedm < 10 Or Feedm > 4800 Then Feedm = 1400
+If Feeds < 1 Or Feeds > 100 Then Feeds = 5.7
+If Pulse < 1 Or Pulse > 20000 Then Pulse = 100
+''''''''''''''''''''''''''''''
+ Dim X1 , X2 As Single
+ Dim Y1 , Y2 As Single
+ Dim Z1 , Z2 As Single
+ Dim Xs , Ys , Zs As Word
+ Dim Feed , Spindle , Resolation , Seco As Word
+ ''''''''''''''''''''''''''''''''''
+ Dim Scal1 , Scal2 , Feedi As Single
+ Dim Scal As Dword , Sr As Dword
+ Dim Scalx , Scaly , Scalz As Dword
+
+  Dim Addx , Addy , Addz As Dword
+ ''''''''''''''''''''''''''''''''
+  Dim N As Byte , S As Byte
+  Dim Trig , Trigf , Trigc As String * 10
+  Dim Vx , Vy , Vz , Vi , Vj , Xold , Cxc , Cyc , X0 , Y0 , Z0 , Move As Single
+  Dim Yold , Xnew , Ynew , Ds , De , R , X22 , Y22 As Single
+  Dim Vxb , Vyb , Vzb , Arc , Ccw , Arc_man As Bit
+  Dim Vxbc As Bit , Vybc As Bit , Vzbc As Bit , Nex As Bit
+  Dim Rr1 , Rr2 As Single
+
+ '''''''''''''''''''''''''''''
+
+ Const Nexte = "next"
+ Dim Dd As Dword
+ Dim Del As Word
+ Declare Sub Homee
+ Declare Sub Xyz
+  Declare Sub Xy
+ Declare Sub Xyzij
+  Declare Sub Arc_manual
+ Declare Sub Configs
+ Declare Sub Mainfeed
+ Declare Sub Memxy
+  Declare Sub Memz
+ Declare Sub Arcz
+
+ Call Mainfeed
+
+  $baud = 11520
+  '''''''''''''''''''serial
+  Dim Ina As Bit
+   Dim Text As String * 81
+    Enable Interrupts
+
+ Config Serialin = Buffered , Size = 80 , Bytematch = 13
+  Echo Off
+ Print "Cmi209"
+Main:
+If Ina = 1 And Limit = 1 Then Goto Red1
+ If Limit = 0 Then
+  Xen = 1
+  Yen = 1
+  Zen = 1
+  Pwm1a = 0
+  Pwm1b = 0
+  Reset_all = 1
+ End If
+Goto Main
+ Sub Xyz
+
+   Scalx = 0 : Scaly = 0 : Scalz = 0
+   Scal1 = 0 : Scal2 = 0 : Scal = 0 : Sr = 0
+ '''''''''''''''''''''''max scal
+  ''  pulse for ps2=1  4000 puls= 4cm move  >>> 100 pulse for 1 mm
+
+ If Xs > Sr Then Sr = Xs
+ If Ys > Sr Then Sr = Ys
+ If Zs > Sr Then Sr = Zs
+  If Xs = Sr Then
+   Scalx = 10
+   Scal1 = Sr / Ys
+   Scaly = Scal1 * 10
+   Scal2 = Sr / Zs
+   Scalz = Scal2 * 10
+  End If
+  If Ys = Sr Then
+   Scaly = 10
+   Scal1 = Sr / Xs
+   Scalx = Scal1 * 10
+   Scal2 = Sr / Zs
+   Scalz = Scal2 * 10
+  End If
+  If Zs = Sr Then
+   Scalz = 10
+   Scal1 = Sr / Xs
+   Scalx = Scal1 * 10
+   Scal2 = Sr / Ys
+   Scaly = Scal2 * 10
+  End If
+ ''''''''''''''''''''''''''''''''''''
+
+ Addx = 0 : Addy = 0 : Addz = 0
+      Sr = Sr * 10
+
+ For Dd = 1 To Sr
+
+     'Decr Sr
+    If Xs > 0 Then
+     Incr Addx
+     If Scalx = Addx Then
+      Xstep = 1
+      Xen = 0
+      Addx = 0
+      End If
+    End If
+
+    If Ys > 0 Then
+     Incr Addy
+     If Scaly = Addy Then
+      Ystep = 1
+      Yen = 0
+      Addy = 0
+      End If
+    End If
+
+    If Zs > 0 Then
+     Incr Addz
+     If Scalz = Addz Then
+      Zstep = 1
+      Zen = 0
+      Addz = 0
+      End If
+    End If
+
+              Xstep = 0
+              Ystep = 0
+              Zstep = 0
+            For Del = 1 To Feed
+            Next
+    If Limit = 0 Or Ina = 1 Then Exit For
+ Next
+
+  ''''''''''''''''''''
+      Xen = 1 : Yen = 1 : Zen = 1
+      Xs = 0 : Ys = 0 : Sr = 0 : Zs = 0
+      If Arc = 0 And Arc_man = 0 Then
+       Print Nexte
+       Nex = 1
+      End If
+End Sub
+
+Sub Homee
+
+    Pwm1a = 0
+    Pwm1b = 0
+   Dim Homewait , Maxhx , Maxhy , Maxhz As Word
+   Maxhx = Max_x * Pulse
+   Maxhy = Max_y * Pulse
+   Maxhz = Max_z * Pulse
+      '''''''''''''''''''''''''''max_f to feed
+       Homewait = Feedm
+       If Homewait > 4800 Then Homewait = 4800
+       If Homewait < 10 Then Homewait = 10
+       Feedi = Homewait / 4800
+       Feedi = 1 / Feedi
+       Feedi = Feedi * Feeds
+       Homewait = Feedi * 100
+  ''''''''''''''''''''''''''''''''''''''''''''''
+
+  Xen = 1
+  Yen = 1
+  Zen = 1
+  Pwm1a = 0
+  Pwm1b = 0
+
+  If Zz = 1 And Limit = 1 Then
+     For Ii = Maxhz To 0 Step -1
+         Zdir = 0
+         Zen = 0
+         Zstep = 1
+          Waitus Homewait
+         Zstep = 0
+         Waitus Homewait
+         If Zz = 0 Or Limit = 0 Or Ina = 1 Then Exit For
+     Next
+  End If
+  Zen = 1
+
+  If Xz = 1 And Limit = 1 Then
+     For Ii = Maxhx To 0 Step -1
+         Xdir = 0
+         Xen = 0
+         Xstep = 1
+          Waitus Homewait
+         Xstep = 0
+         Waitus Homewait
+         If Xz = 0 Or Limit = 0 Or Ina = 1 Then Exit For
+     Next
+  End If
+  Xen = 1
+
+  If Yz = 1 And Limit = 1 Then
+     For Ii = Maxhy To 0 Step -1
+         Ydir = 0
+         Yen = 0
+         Ystep = 1
+          Waitus Homewait
+         Ystep = 0
+         Waitus Homewait
+         If Yz = 0 Or Limit = 0 Or Ina = 1 Then Exit For
+     Next
+  End If
+  Xen = 1
+  Yen = 1
+  Zen = 1
+  Pwm1a = 0
+  Pwm1b = 0
+  X1 = 0
+  Y1 = 0
+  Z1 = 0
+  X2 = 0
+  Y2 = 0
+  Z2 = 0
+  Vx = 0
+  Vy = 0
+  Xs = 0
+  Ys = 0
+  Zs = 0
+  Xold = 0
+  Yold = 0
+  Xnew = 0
+  Ynew = 0
+  Print Nexte
+  Nex = 1
+  Call Mainfeed
+End Sub
+
+
+
+
+
+
+  Red1:
+
+  Ina = 0
+  N = 0 : S = 0 : Trig = "" : Vx = 0 : Vy = 0 : Vz = 0 : Arc_man = 0
+  Vxb = 0 : Vyb = 0 : Vzb = 0 : Vxbc = 0 : Vybc = 0 : Vzbc = 0 : Arc = 0
+  Ccw = 0 : R = 0 : Spindle = 0
+
+           Text = Trim(text)
+           Text = Ltrim(text)
+           Trig = Mid(text , 1 , 2)
+If Reset_all = 0 Then
+          'linear
+      If Instr(trig , "G2") > 0 Then
+        Arc = 1     'arc xyzij
+        Ccw = 0     'cw
+         Arc_man = 0
+      End If
+
+
+      If Instr(trig , "G3") > 0 Then
+        Arc = 1     'arc xyzij
+        Ccw = 1     'ccw
+         Arc_man = 0
+      End If
+
+
+       Trig = "" : Trigf = ""
+       N = 0 : S = 0
+    For N = 1 To 40 'find xyzijfw
+         S = N + 1
+       Trig = Mid(text , N , 1 )
+
+       ''''''''''''''''''''''''''''''''''''''''''''X
+       Dim Xvis , Yvis As Bit
+       Xvis = 0
+       Yvis = 0
+     If Instr(trig , "X") > 0 Then
+         Trigf = Mid(text , S , 10)
+       If Trigf <> "" Then
+          Vx = Val(trigf)
+         If Vx <= Max_xx Then       'x limit 0 to 40 mm= 0 to 4 cm
+            Vxb = 1
+         Else
+            Vx = 0
+            Vxb = 1
+         End If
+       End If
+     End If
+     '''''''''''''''''''''''''''''''''''''''''''''''''''''''x
+     '''''''''''''''''''''''''''''''''''''Y
+     If Instr(trig , "Y") > 0 Then
+        Trigf = Mid(text , S , 10)
+       If Trigf <> "" Then
+          Vy = Val(trigf)
+         If Vy <= Max_yy Then       'Y limit 0 to 40 mm= 0 to 4 cm
+            Vyb = 1
+         Else
+            Vy = 0
+            Vyb = 1
+         End If
+       End If
+     End If
+     ''''''''''''''''''''''''''''''''''''''''''''''''y
+
+     '''''''''''''''''''''''''''''''''''Z
+     If Instr(trig , "Z") > 0 Then
+        Trigf = Mid(text , S , 10)
+       If Trigf <> "" Then
+
+        Vz = Val(trigf)
+        Z0 = Vz
+         If Vz > Max_zz Then       'z limit 0 to 40 mm= 0 to 4 cm
+                    ' 0 home  -40 mm  max deep
+            Vz = -vz
+            Vzb = 1
+         Else
+            Vz = 0
+            Vzb = 1
+         End If
+       End If
+     End If
+    ''''''''''''''''''''''''''''''''''''''''''''''''''z
+
+           ''''''''''''''''''''''''''''''''''''''''''''i
+     If Instr(trig , "I") > 0 Then
+        Trigf = Mid(text , S , 10)
+       If Trigf <> "" Then Vi = Val(trigf)
+     End If
+     '''''''''''''''''''''''''''''''''''''''''''''''''''''''i
+
+      ''''''''''''''''''''''''''''''''''''''''''''j
+     If Instr(trig , "J") > 0 Then
+        Trigf = Mid(text , S , 10)
+       If Trigf <> "" Then Vj = Val(trigf)
+     End If
+     '''''''''''''''''''''''''''''''''''''''''''''''''''''''j
+      ''''''''''''''''''''''''''''''''''''''''''''Q  DS
+      If Instr(trig , "A") > 0 Then
+         Trigf = Mid(text , S , 10)
+        If Trigf <> "" Then
+         Ds = Val(trigf)
+         Arc = 0    'arc xyzij
+         Arc_man = 1
+        End If
+     End If
+     '''''''''''''''''''''''''''''''''''''''''''''''''''''''DS
+     ''''''''''''''''''''''''''''''''''''''''''''E DE
+     If Instr(trig , "B") > 0 Then
+      Trigf = Mid(text , S , 10)
+       If Trigf <> "" Then
+        De = Val(trigf)
+        Arc = 0     'arc xyzij
+        Arc_man = 1
+        End If
+
+     End If
+     '''''''''''''''''''''''''''''''''''''''''''''''''''''''DE
+     ''''''''''''''''''''''''''''''''''''''''''''R
+     If Instr(trig , "R") > 0 Then
+      Trigf = Mid(text , S , 10)
+       If Trigf <> "" Then R = Val(trigf)
+     End If
+     '''''''''''''''''''''''''''''''''''''''''''''''''''''''R
+
+    ''''''''''''''''''''''''''''''''''''F   feed
+     If Instr(trig , "F") > 0 Then
+        Trigf = Mid(text , S , 10)
+       If Trigf <> "" Then
+        Feed = Val(trigf)
+        If Feed > 4800 Then Feed = Feedm
+        If Feed < 10 Then Feed = Feedm
+        Feedi = Feed / 4800
+        Feedi = 1 / Feedi
+        Feedi = Feedi * Feeds
+        Feed = Feedi
+       End If
+     End If
+    ''''''''''''''''''''''''''''''''''''''''f
+    ''''''''''''''''''''''''''''''''''''S   spindle
+     If Instr(trig , "S") > 0 Then
+        Trigf = Mid(text , S , 10)
+      If Trigf <> "" Then
+        Spindle = Val(trigf)
+        If Spindle > 20000 Then Spindle = 20000
+        Spindle = Spindle / 19.55       'pwm1B 0 to 1024  10 bit  20000 = 1023
+        Pwm1b = Spindle
+      End If
+     End If
+    ''''''''''''''''''''''''''''''''''''''''''''s
+     ''''''''''''''''''''''''''''''''''''W   pwm1a
+     If Instr(trig , "W") > 0 Then
+        Trigf = Mid(text , S , 10)
+
+       If Trigf <> "" Then
+        Dim Pw As Word
+        Pw = Val(trigf)
+        If Pw > 1023 Then Pw = 1023       'pwm1A 0 to 1023
+
+        Pwm1a = Pw
+       End If
+     End If
+     '''''''''''''''''''''''''''''''''''''''''''''''w
+    Next
+
+
+  If Vxb = 1 Or Vyb = 1 Or Vzb = 1 Then       'x or y or z input
+    If Vxb = 1 Then
+          X0 = Xold
+          Xold = Xnew
+          Xnew = Vx
+          Xvis = 1
+       X1 = Vx * Pulse       '40 mm >>  40*100=4000 pulse for 4 cm move
+
+           If X1 >= X2 Then
+            Xdir = 1
+            Xs = X1 - X2
+            X2 = X1
+            Vxbc = 1
+           Else
+            If X1 < X2 Then
+              Xdir = 0
+              Xs = X2 - X1
+              X2 = X1
+              Vxbc = 1
+            End If
+           End If
+           If X1 = 0 Then X2 = 0
+    Else
+     Xs = 0
+    End If
+
+
+    If Vyb = 1 Then
+          Y0 = Yold
+          Yold = Ynew
+          Ynew = Vy
+          Yvis = 1
+
+       Y1 = Vy * Pulse       '40 mm >>  40*100=4000 pulse for 4 cm move Y
+
+           If Y1 >= Y2 Then
+            Ydir = 1
+            Ys = Y1 - Y2
+            Y2 = Y1
+            Vybc = 1
+           Else
+            If Y1 < Y2 Then
+             Ydir = 0
+             Ys = Y2 - Y1
+             Y2 = Y1
+             Vybc = 1
+            End If
+           End If
+           If Y1 = 0 Then Y2 = 0
+    Else
+     Ys = 0
+    End If
+
+    If Vzb = 1 Then
+       Z1 = Vz * Pulse       '40 mm >>  40*100=4000 pulse for 4 cm move Z
+             '
+           If Z1 >= Z2 Then
+            Zdir = 1
+            Zs = Z1 - Z2
+            Z2 = Z1
+            Vzbc = 1
+           Else
+            If Z1 < Z2 Then
+             Zdir = 0
+             Zs = Z2 - Z1
+             Z2 = Z1
+             Vzbc = 1
+            End If
+           End If
+           If Z1 = 0 Then Z2 = 0
+    Else
+     Zs = 0
+    End If
+
+
+     If Xvis = 1 And Yvis = 1 Then
+     Else
+       If Xvis = 1 And Yvis = 0 Then Yold = Ynew
+       If Xvis = 0 And Yvis = 1 Then Xold = Xnew
+     End If
+       Xvis = 0
+       Yvis = 0
+
+    If Seco > 0 Then
+    Dim Jj As Word
+    For Jj = 1 To Seco
+     Wait 10
+     If Limit = 0 Or Ina = 1 Then Exit For
+    Next
+     Seco = 0
+    End If
+
+    If Vxbc = 1 Or Vybc = 1 Or Vzbc = 1 Then
+     If Arc_man = 0 Then
+        If Arc = 0 Then
+           X22 = X2
+           Y22 = Y2
+         Call Xyz
+
+        Else
+
+         Call Xyzij
+
+        End If
+     Else
+
+          Cxc = Vx
+          Cyc = Vy
+           Call Arc_manual
+            X2 = X22
+            Y2 = Y22
+             Vx = Xold
+             Vy = Yold
+           Call Memxy
+           Call Xy
+           Vz = Z0
+
+           Call Arcz
+
+        Call Xyzij
+
+     End If
+
+    End If
+
+  End If
+
+
+    '   ''''''''''''''''''''''''''''''''''''''''''''''''''''
+     If Send_xyz = 1 Then Print "x" ; Vx ; "y" ; Vy ; "z" ; Vz
+End If
+  If Nex = 0 Then Call Configs
+   Nex = 0
+  Text = ""
+  Clear Serialin
+  Arc = 0
+  Goto Main
+
+   Sub Configs
+
+    '''''''''''''''''''''reset_all
+       If Instr(text , "RESETALL") > 0 Or Instr(text , "Resetall") > 0 Or _
+       Instr(text , "resetall") > 0 Then Goto Start0
+
+       If Instr(text , "STOP") > 0 Or Instr(text , "Stop") > 0 Or _
+        Instr(text , "stop") > 0 Then
+        Xen = 1
+        Yen = 1
+        Zen = 1
+        Pwm1a = 0
+        Pwm1b = 0
+        Reset_all = 1
+       End If
+
+      If Reset_all = 1 Then
+       Print "STOP ! Please Check ?"
+       Wait 10
+      End If
+    ''''''''''''''''''''''''''''''''''''''''''''''''''
+
+    If Reset_all = 0 Then
+
+       If Instr(text , "M30") > 0 Then
+            Xen = 1
+            Yen = 1
+            Zen = 1
+            Pwm1a = 0
+            Pwm1b = 0
+       End If
+       If Instr(text , "HOME") > 0 Or Instr(text , "G28") > 0 Or _
+       Instr(text , "home") > 0 Or _
+       Instr(text , "Home") > 0 Then Call Homee
+
+
+
+       If Instr(text , "RESETZ") > 0 Or Instr(text , "Resetz") > 0 Or _
+        Instr(text , "resetz") > 0 Then
+        Z1 = 0
+        Z2 = 0
+        Zs = 0
+        Text = ""
+       End If
+
+       If Instr(text , "RESETX") > 0 Or Instr(text , "Resetx") > 0 Or _
+        Instr(text , "resetx") > 0 Then
+        X1 = 0
+        X2 = 0
+        Xs = 0
+        Xold = 0
+        Xnew = 0
+        Text = ""
+       End If
+
+       If Instr(text , "RESETY") > 0 Or Instr(text , "Resety") > 0 Or _
+        Instr(text , "resety") > 0 Then
+        Y1 = 0
+        Y2 = 0
+        Ys = 0
+        Yold = 0
+        Ynew = 0
+        Text = ""
+       End If
+
+        If Instr(text , "SENDON ") > 0 Or Instr(text , "Sendon") > 0 Or _
+        Instr(text , "sendon") > 0 Then
+         Send_xyz = 1
+           Writeeeprom Send_xyz , 16
+          Print "Ok sendon"
+          Text = ""
+          Wait 5
+        End If
+        If Instr(text , "SENDOFF ") > 0 Or Instr(text , "Sendoff") > 0 Or _
+        Instr(text , "sendoff") > 0 Then
+         Send_xyz = 0
+         Writeeeprom Send_xyz , 16
+         Text = ""
+         Print "Ok sendoff"
+         Wait 5
+        End If
+       'G00  Move at max speed
+       'G01  Linear interpolation
+       'G02  Circular interpolation CW
+       'G03  Circular interpolation CCW
+       'G17  Select XY plane
+       'G28  ALL XYZ=0  home
+       'M00  Program stop
+       'M03  Spindle rotation CW
+       'M04  Spindle rotation CCW
+       'M05  Stop spindle
+       'M08  Coolant ON
+       'M09  Coolant OFF
+       'M30  End program and rewind And RESET
+       'S    SPINLE SPEED R.P.M
+       'F    FEED RATE  mm/minute
+
+       Print Nexte
+       Nex = 0
+
+      ''''''''''''''''''''''''''''''''''''''''''''''config
+
+         Trig = Mid(text , 1 , 6)
+      ''''''''''''''''''''''''''''''''''''max_x
+     If Instr(trig , "max_x=") > 0 Or Instr(trig , "Max_x=") > 0 Or _
+      Instr(trig , "MAX_X=") > 0 Then
+       Trigc = Mid(text , 7 , 10)
+       Max_x = Val(trigc)
+         If Max_x < 1 Or Max_x > 6500 Then
+          Max_x = 40
+          Print "ERR max_x  1  to  65000"
+         Else
+          Writeeeprom Max_x , 1
+          Print "OK " ; Text
+         End If
+         Trig = ""
+     End If
+    ''''''''''''''''''''''''''''''''''''''''
+
+          ''''''''''''''''''''''''''''''''''''max_y
+     If Instr(trig , "max_y=") > 0 Or Instr(trig , "Max_y=") > 0 Or _
+      Instr(trig , "MAX_F=") > 0 Then
+        Trigc = Mid(text , 7 , 10)
+        Max_y = Val(trigc)
+         If Max_y < 1 Or Max_y > 65000 Then
+          Max_y = 40
+          Print "ERR max_y  1  to  65000"
+         Else
+          Writeeeprom Max_y , 3
+          Print "OK " ; Text
+         End If
+         Trig = ""
+     End If
+     ''''''''''''''''''''''''''''''''''''''''
+
+          ''''''''''''''''''''''''''''''''''''max_z
+     If Instr(trig , "max_z=") > 0 Or Instr(trig , "Max_z=") > 0 Or _
+      Instr(trig , "MAX_Z=") > 0 Then
+        Trigc = Mid(text , 7 , 10)
+        Max_z = Val(trigc)
+         If Max_z < 1 Or Max_z > 6500 Then
+          Max_z = 40
+          Print "ERR max_z  1  to  65000"
+         Else
+          Writeeeprom Max_z , 5
+          Print "OK " ; Text
+         End If
+         Trig = ""
+     End If
+     ''''''''''''''''''''''''''''''''''''''''
+
+          ''''''''''''''''''''''''''''''''''''max_f
+     If Instr(trig , "Feedm=") > 0 Or Instr(trig , "feedm=") > 0 Or _
+      Instr(trig , "FEEDM=") > 0 Then
+        Trigc = Mid(text , 7 , 10)
+        Feedm = Val(trigc)
+         If Feedm < 1 Or Feedm > 4800 Then
+          Feedm = 1400
+          Print "ERR feedm  1  to  4800"
+         Else
+          Writeeeprom Feedm , 7
+          Print "OK " ; Text
+         End If
+         Trig = ""
+     End If
+     ''''''''''''''''''''''''''''''''''''''''
+
+
+
+          ''''''''''''''''''''''''''''''''''''feeds
+     If Instr(trig , "feeds=") > 0 Or Instr(trig , "Feeds=") > 0 Or _
+      Instr(trig , "FEEDS=") > 0 Then
+        Trigc = Mid(text , 7 , 10)
+        Feeds = Val(trigc)
+         If Feeds < 1 Or Feeds > 100 Then
+          Feeds = 5.7
+          Print "ERR feeds  1  to  100"
+         Else
+          Writeeeprom Feeds , 9
+          Print "OK " ; Feeds
+         End If
+         Trig = ""
+     End If
+     ''''''''''''''''''''''''''''''''''''''''
+
+          ''''''''''''''''''''''''''''''''''''pulse
+     If Instr(trig , "pulse=") > 0 Or Instr(trig , "Pulse=") > 0 Or _
+      Instr(trig , "PULSE=") > 0 Then
+        Trigc = Mid(text , 7 , 10)
+        Pulse = Val(trigc)
+         If Pulse < 1 Or Pulse > 20000 Then
+          Pulse = 100
+          Print "ERR pulse  1  to  20000"
+         Else
+          Writeeeprom Pulse , 14
+          Print "OK " ; Pulse
+         End If
+         Trig = ""
+     End If
+     ''''''''''''''''''''''''''''''''''''''''
+               ''''''''''''''''''''''''''''''''''''pulse
+     If Instr(trig , "RES") > 0 Or Instr(trig , "Res") > 0 Or _
+      Instr(trig , "res") > 0 Then
+        Trigc = Mid(text , 4 , 4)
+        Resolation = Val(trigc)
+         If Resolation < 4 Or Resolation > 100 Then
+          Resolation = 50
+          Print "ERR Res  4  to  100"
+         Else
+           Print "OK " ; Resolation
+         End If
+         Trig = ""
+     End If
+     ''''''''''''''''''''''''''''''''''''''''
+      ''''''''''''''''''''''''''''''''''''sec
+     If Instr(trig , "SEC") > 0 Or Instr(trig , "Sec") > 0 Or _
+      Instr(trig , "sec") > 0 Then
+        Trigc = Mid(text , 4 , 4)
+        Seco = Val(trigc)
+         If Seco < 1 Or Seco > 300 Then
+          Seco = 0
+          Print "ERR sec  1  to  300"
+         Else
+           Print "OK " ; Seco
+         End If
+         Trig = ""
+     End If
+     ''''''''''''''''''''''''''''''''''''''''
+          Trig = Mid(text , 1 , 2)
+           ''''''''''''''''''''''''''''''''''''+x
+     If Instr(trig , "+x") > 0 Then
+        Trigc = Mid(text , 3 , 4)
+        Move = Val(trigc)
+         If Move < 0.001 Or Move > 9999 Then
+
+          Print "ERR Move  0.001  to  9999"
+         Else
+
+          Vx = X2 / Pulse
+          Vx = Vx + Move
+          Print "OK " ; Move
+            If Vx < Max_xx Then
+              Call Memxy
+              Call Xyz
+             Else
+              Print "MAX OF X !"
+             End If
+
+         End If
+         Trig = ""
+     End If
+     ''''''''''''''''''''''''''''''''''''''''
+           ''''''''''''''''''''''''''''''''''''-x
+     If Instr(trig , "-x") > 0 Then
+        Trigc = Mid(text , 3 , 4)
+        Move = Val(trigc)
+         If Move < 0.001 Or Move > 9999 Then
+
+          Print "ERR Move  0.001  to  9999"
+         Else
+          Vx = X2 / Pulse
+          Vx = Vx - Move
+          Print "OK " ; Move
+            If Vx > 0 Then
+              Call Memxy
+              Call Xyz
+             Else
+              Print "Zero OF X !"
+             End If
+
+         End If
+         Trig = ""
+     End If
+     ''''''''''''''''''''''''''''''''''''''''
+           ''''''''''''''''''''''''''''''''''''+y
+     If Instr(trig , "+y") > 0 Then
+        Trigc = Mid(text , 3 , 4)
+
+        Move = Val(trigc)
+         If Move < 0.001 Or Move > 9999 Then
+
+          Print "ERR Move  0.001  to  9999"
+         Else
+          Vy = Y2 / Pulse
+          Vy = Vy + Move
+          Print "OK " ; Move
+            If Vy < Max_yy Then
+              Call Memxy
+              Call Xyz
+             Else
+              Print "MAX OF Y !"
+             End If
+
+         End If
+         Trig = ""
+     End If
+     ''''''''''''''''''''''''''''''''''''''''
+           ''''''''''''''''''''''''''''''''''''-y
+     If Instr(trig , "-y") > 0 Then
+        Trigc = Mid(text , 3 , 4)
+
+        Move = Val(trigc)
+         If Move < 0.001 Or Move > 9999 Then
+
+          Print "ERR Move  0.001  to  9999"
+         Else
+          Vy = Y2 / Pulse
+          Vy = Vy - Move
+          Print "OK " ; Move
+            If Vy > 0 Then
+              Call Memxy
+              Call Xyz
+             Else
+              Print "Zero OF Y !"
+             End If
+
+         End If
+         Trig = ""
+     End If
+     ''''''''''''''''''''''''''''''''''''''''
+           ''''''''''''''''''''''''''''''''''''+z
+
+     If Instr(trig , "+z") > 0 Then
+        Trigc = Mid(text , 3 , 6)
+        Move = Val(trigc)
+          Vz = Z0
+          Vz = Vz + Move
+          'Vz = -vz
+          Print "OK " ; Move
+              Call Memz
+              Call Xyz
+     End If
+     ''''''''''''''''''''''''''''''''''''''''
+           ''''''''''''''''''''''''''''''''''''-z
+     If Instr(trig , "-z") > 0 Then
+        Trigc = Mid(text , 3 , 6)
+        Move = Val(trigc)
+        Vz = Z0
+          Vz = Vz - Move
+          'Vz = -vz
+          Print "OK " ; Move
+              Call Memz
+              Call Xyz
+     End If
+     ''''''''''''''''''''''''''''''''''''''''
+    End If
+   End Sub
+ Sub Mainfeed
+
+   '''''''''''''''''''''''''''max_f to feed
+       Feed = Feedm
+       If Feed > 4800 Then Feed = 4800
+       If Feed < 10 Then Feed = 10
+       Feedi = Feed / 4800
+       Feedi = 1 / Feedi
+       Feedi = Feedi * Feeds
+       Feed = Feedi
+  ''''''''''''''''''''''''''''''''''''''''''''''
+End Sub
+  Serial0charmatch:
+  Input Text
+  Ina = 1
+Return
+
+
+Sub Xyzij
+'          Print " xold " ; Xold ; "  yold " ; Yold ; " xnew " ; Xnew ; "  ynew " ; Ynew
+'          Wait 80
+
+ Dim Cx , Cy , Anglestart , Angleend , Stepangle , Anglediff As Single
+ Dim K As Word
+   If Resolation < 4 Or Resolation > 100 Then
+      Resolation = 50
+   End If
+
+  If Arc_man = 0 Then
+   Cx = Xold + Vi
+   Cy = Yold + Vj
+   Rr1 = Vi * Vi
+   Rr2 = Vj * Vj
+   R = Rr1 + Rr2
+   R = Sqr(r)
+   Rr1 = Yold - Cy
+   Rr2 = Xold - Cx
+   Anglestart = Atn2(rr1 , Rr2)
+   Rr1 = Ynew - Cy
+   Rr2 = Xnew - Cx
+   Angleend = Atn2(rr1 , Rr2)
+  Else
+    Cx = Cxc
+    Cy = Cyc
+    Rr1 = 0.0174532925 * Ds
+    Anglestart = Rr1
+    Rr1 = 0.0174532925 * De
+    Angleend = Rr1
+    Vx = Xnew
+    Vy = Ynew
+    X1 = Xnew
+    Y1 = Ynew
+
+  End If
+
+
+
+ Anglediff = Angleend - Anglestart
+ If Ccw = 0 Then
+    If Anglediff > 0 Then
+        Angleend = Angleend - 6.283185
+    End If
+Else
+    If Anglediff < 0 Then
+        Angleend = Angleend + 6.283185
+    End If
+End If
+
+
+  If Arc_man = 1 Then
+    If Anglediff < 0.000001 And Anglediff > -0.000001 Then
+
+      Anglediff = 6.283185
+
+    End If
+
+  Else
+    Anglediff = Angleend - Anglestart
+  End If
+
+   Stepangle = Anglediff / Resolation
+
+    Dim Angle As Single
+
+  For K = 0 To Resolation
+
+   Rr1 = Stepangle * K
+   Angle = Anglestart + Rr1
+
+   Vx = R * Cos(angle)
+   Vx = Vx + Cx
+
+   Vy = R * Sin(angle)
+   Vy = Vy + Cy
+
+
+
+     'print " vx " ; Vx ; " vy " ; Vy ; "  " ; X2 ; "  " ; Y2 ; "  " ; Rr1 ; "  " ; Angle
+'       Print K ; "  vx " ; Vx ; " vy " ; Vy ; "    " ; Angle
+'       Wait 40
+
+        If K > 0 Then
+
+          Call Memxy
+          X22 = X2
+          Y22 = Y2
+          Call Xyz
+
+        Else
+          X2 = Xold
+          Y2 = Yold
+          Call Memxy
+        End If
+
+
+
+
+     Next
+
+
+
+End Sub
+
+Sub Memxy
+         X1 = Vx * Pulse       '40 mm >>  40*100=4000 pulse for 4 cm move x
+           If X1 >= X2 Then
+            Xdir = 1
+            Xs = X1 - X2
+            X2 = X1
+            Vxbc = 1
+           Else
+            If X1 < X2 Then
+              Xdir = 0
+              Xs = X2 - X1
+              X2 = X1
+              Vxbc = 1
+            End If
+           End If
+           If X1 = 0 Then X2 = 0
+
+       Y1 = Vy * Pulse       '40 mm >>  40*100=4000 pulse for 4 cm move Y
+           If Y1 >= Y2 Then
+            Ydir = 1
+            Ys = Y1 - Y2
+            Y2 = Y1
+            Vybc = 1
+           Else
+            If Y1 < Y2 Then
+             Ydir = 0
+             Ys = Y2 - Y1
+             Y2 = Y1
+             Vybc = 1
+            End If
+           End If
+           If Y1 = 0 Then Y2 = 0
+
+End Sub
+
+Sub Memz
+            Z1 = Vz * Pulse       '40 mm >>  40*100=4000 pulse for 4 cm move Z
+            Z1 = -z1
+           If Z1 >= Z2 Then
+            Zdir = 1
+            Zs = Z1 - Z2
+            Z2 = Z1
+            Vzbc = 1
+           Else
+            If Z1 < Z2 Then
+             Zdir = 0
+             Zs = Z2 - Z1
+             Z2 = Z1
+             Vzbc = 1
+            End If
+           End If
+           If Z1 = 0 Then Z2 = 0
+           Z0 = Vz
+End Sub
+Sub Arc_manual
+'If Ds = 0 Then Ds = 0.1
+       'Ccw = 0
+  'Xold = Cx + R * Cos(anglestart)
+ Ds = Abs(ds)
+ De = Abs(de)
+ Rr1 = 0.0174532925 * Ds
+ Rr1 = Cos(rr1)
+ Rr1 = R * Rr1
+ Xold = Cxc + Rr1
+
+ 'Yold = Cy + R * sin(AngleStart)
+
+ Rr1 = 0.0174532925 * Ds
+ Rr1 = Sin(rr1)
+ Rr1 = R * Rr1
+ Yold = Cyc + Rr1
+
+  'xnew = Cy + R * cos(AngleEnd)
+
+ Rr1 = 0.0174532925 * De
+ Rr1 = Cos(rr1)
+ Rr1 = R * Rr1
+ Xnew = Cxc + Rr1
+
+  'ynew = Cy + R * sin(AngleEnd)
+
+ Rr1 = 0.0174532925 * De
+ Rr1 = Sin(rr1)
+ Rr1 = R * Rr1
+ Ynew = Cyc + Rr1
+
+End Sub
+
+Sub Arcz
+
+   Scal1 = 0 : Scal2 = 0 : Scal = 0 : Sr = 0
+ '''''''''''''''''''''''max scal
+  ''  pulse for ps2=1  4000 puls= 4cm move  >>> 100 pulse for 1 mm
+   Scalz = 10
+ ''''''''''''''''''''''''''''''''''''
+ Sr = Zs
+  Addz = 0
+      Sr = Sr * 10
+ For Dd = 1 To Sr
+     'Decr Sr
+
+    If Zs > 0 Then
+     Incr Addz
+     If Scalz = Addz Then
+      Zstep = 1
+      Zen = 0
+      Addz = 0
+      End If
+    End If
+
+              Zstep = 0
+            For Del = 1 To Feed
+            Next
+    If Limit = 0 Or Ina = 1 Then Exit For
+ Next
+  ''''''''''''''''''''
+  Zen = 1
+  Sr = 0 : Zs = 0
+      If Arc = 0 And Arc_man = 0 Then
+       Print Nexte
+       Nex = 1
+      End If
+
+
+End Sub
+
+ Sub Xy
+   Scalx = 0 : Scaly = 0
+   Scal1 = 0 : Scal2 = 0 : Scal = 0 : Sr = 0
+ '''''''''''''''''''''''max scal
+  ''  pulse for ps2=1  4000 puls= 4cm move  >>> 100 pulse for 1 mm
+ If Xs > Sr Then Sr = Xs
+ If Ys > Sr Then Sr = Ys
+
+  If Xs = Sr Then
+   Scalx = 10
+   Scal1 = Sr / Ys
+   Scaly = Scal1 * 10
+
+  End If
+  If Ys = Sr Then
+   Scaly = 10
+   Scal1 = Sr / Xs
+   Scalx = Scal1 * 10
+
+  End If
+
+ ''''''''''''''''''''''''''''''''''''
+ Addx = 0 : Addy = 0 : Addz = 0
+      Sr = Sr * 10
+ For Dd = 1 To Sr
+     'Decr Sr
+    If Xs > 0 Then
+     Incr Addx
+     If Scalx = Addx Then
+      Xstep = 1
+      Xen = 0
+      Addx = 0
+      End If
+    End If
+    If Ys > 0 Then
+     Incr Addy
+     If Scaly = Addy Then
+      Ystep = 1
+      Yen = 0
+      Addy = 0
+      End If
+    End If
+
+
+              Xstep = 0
+              Ystep = 0
+
+            For Del = 1 To Feed
+            Next
+    If Limit = 0 Or Ina = 1 Then Exit For
+ Next
+  ''''''''''''''''''''
+      Xen = 1 : Yen = 1
+      Xs = 0 : Ys = 0 : Sr = 0
+      If Arc = 0 And Arc_man = 0 Then
+       Print Nexte
+       Nex = 1
+      End If
+End Sub
