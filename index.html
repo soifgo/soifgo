@@ -178,6 +178,7 @@
     <button onclick="showSection('readme')">README</button>
     <button onclick="showSection('about')">About</button>
     <button onclick="openTutorial()">SoifGo Tutorial</button>
+    <button onclick="openForum()">Forum</button>
   </nav>
 
   <!-- DOWNLOAD SECTION -->
@@ -268,6 +269,10 @@
 
     function openTutorial() {
       window.location.href = "tutorials/list.html";
+    }
+
+    function openForum() {
+      window.location.href = "https://github.com/soifgo/soifgo/discussions/3";
     }
 
     async function getCount(path) {
