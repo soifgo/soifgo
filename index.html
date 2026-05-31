@@ -175,9 +175,9 @@
 
   <nav>
     <button id="downloadBtn" onclick="showDownload()">Download</button>
-    <button onclick="showSection('readme')">README</button>
     <button onclick="showSection('about')">About</button>
     <button onclick="openTutorial()">SoifGo Tutorial</button>
+    <button onclick="openForum()">Forum</button>
   </nav>
 
   <!-- DOWNLOAD SECTION -->
@@ -185,7 +185,7 @@
     <h2>Download SoifGo</h2>
 
     <ul>
-      <li><a href="https://github.com/soifgo/soifgo/releases/download/1.38/soifgo.apk">📥 Download soifgo.apk (v1.38)</a></li>
+      <li><a href="https://github.com/soifgo/soifgo/releases/download/1.39/soifgo.apk">📥 Download soifgo.apk (v1.39)</a></li>
       <li><a href="https://apkpure.com/soifgo/soifgo.saeidmoghadam">📦 Download from APKPure</a></li>
     </ul>
 
@@ -199,9 +199,9 @@
     </div>
   </section>
 
-  <!-- README SECTION -->
-  <section id="readme">
-    <h2>README</h2>
+  <!-- ABOUT SECTION (README MERGED HERE) -->
+  <section id="about">
+    <h2>About SoifGo & Developer</h2>
 
     <h3>The developer: Saeid Moghadam</h3>
 
@@ -233,12 +233,8 @@
 
     <h3>About SoifGo</h3>
     <p><strong>SoifGo</strong> is an Android application that provides users with advanced capabilities using <strong>buttons and seek bars...</strong></p>
-  </section>
 
-  <!-- ABOUT SECTION -->
-  <section id="about">
-    <h2>About the Developer</h2>
-    <p><strong>Saeid Moghadam</strong> is a documentation perfectionist and user-focused developer.</p>
+    <h3>Contact</h3>
     <p>Email: <a href="mailto:SSMQQMSS@gmail.com">SSMQQMSS@gmail.com</a></p>
   </section>
 
@@ -268,6 +264,10 @@
 
     function openTutorial() {
       window.location.href = "tutorials/list.html";
+    }
+
+    function openForum() {
+      window.location.href = "https://github.com/soifgo/soifgo/discussions/3";
     }
 
     async function getCount(path) {
