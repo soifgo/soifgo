@@ -5,46 +5,120 @@
   <title>RANGMANG RGB Controller</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    /* Modern Dark Theme for Electronics/RGB Projects */
     body {
-      font-family: Arial, sans-serif;
-      margin: 10px;
-      line-height: 1.6;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      line-height: 1.7;
+      background-color: #1e1e24;
+      color: #e0e0e0;
     }
-    img {
+    
+    /* Center and constrain content width for better readability */
+    body > * {
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Cyan/Neon heading styles matching RGB themes */
+    h1 {
+      font-size: 2.5rem;
+      color: #00ffcc;
+      text-transform: uppercase;
+      border-bottom: 2px solid #3a3a47;
+      padding-bottom: 10px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #ff007f; 
+      margin-top: 40px;
+      border-left: 4px solid #ff007f;
+      padding-left: 10px;
+    }
+
+    p, li {
+      color: #b8b8c4;
+    }
+
+    strong {
+      color: #ffffff;
+    }
+
+    /* Responsive Images & Videos with soft shadows */
+    img, video {
       max-width: 100%;
       height: auto;
       display: block;
-      margin: 10px 0;
+      margin: 25px auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
     }
+
+    /* Modern Table UI */
     table {
       width: 100%;
       border-collapse: collapse;
-      margin: 10px 0;
+      margin: 20px 0;
+      background-color: #2a2a35;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     }
+
     th, td {
-      border: 1px solid #333;
-      padding: 8px;
+      padding: 12px 15px;
       text-align: center;
+      border: 1px solid #3a3a47;
     }
+
     th {
-      background-color: #f2f2f2;
+      background-color: #333344;
+      color: #00ffcc;
+      font-weight: 600;
     }
+
+    tr:nth-child(even) {
+      background-color: #24242d;
+    }
+
+    /* Compiler/IDE style for code blocks */
+    pre {
+      background-color: #111116;
+      color: #a9ffb4; 
+      padding: 15px;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-family: "Consolas", "Courier New", Courier, monospace;
+      border-left: 3px solid #00ffcc;
+      font-size: 0.9rem;
+    }
+
     ul {
-      list-style-type: none;
-      padding: 0;
+      padding-left: 20px;
+      list-style-type: square;
     }
+    
     ul li {
-      margin: 5px 0;
+      margin: 8px 0;
     }
+
+    /* Interactive UI Links */
     a {
-      color: #0066cc;
+      color: #00ffff;
       text-decoration: none;
+      transition: color 0.2s;
     }
     a:hover {
+      color: #ff007f;
       text-decoration: underline;
     }
+
     .table-container {
       overflow-x: auto;
+      border-radius: 8px;
     }
   </style>
 </head>
@@ -81,117 +155,105 @@
     </table>
   </div>
 
-   <p>
-Official download link for USBasp Programmer: You can find complete files and information about the USBasp programmer on the developer's official website: 
-<a href="https://www.fischl.de/usbasp" target="_blank">fischl.de/usbasp</a>.
-</p>
+  <p>
+    Official download link for USBasp Programmer: You can find complete files and information about the USBasp programmer on the developer's official website: 
+    <a href="https://www.fischl.de/usbasp" target="_blank">fischl.de/usbasp</a>.
+  </p>
+  
   <h2>PCB and Schematic Files Atmega 128A </h2>
-
   <img src="rangmang_schematics_128a.png" alt="Recommended Converter">
 
   <h2>PCB and Schematic Files Atmega 328P </h2>
-
   <img src="rangmang_schematics_328p.png" alt="Recommended Converter">
 
+  <video controls width="80%" height="500">
+    <source src="rangmang_dance.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
 
+  <h2>RANGMANG Dance Mode Configuration</h2>
+  <p>
+    This configuration defines how the RANGMANG module controls LED dance modes.  
+    Each row encodes the following parameters (ADRGBSEM format). <strong>Note: Leading zeros are optional and no longer strictly required for numerical values.</strong>
+  </p>
 
-<video controls width="80%" height="500">
-  <source src="rangmang_dance.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+  <ul>
+    <li><strong>A (Address)</strong> – Module address (1–98 for specific module, 99 for all).</li>
+    <li><strong>D (Mode)</strong> – Dance styles (1–55), or 99 for random dance selection.</li>
+    <li><strong>R / G / B</strong> – Color intensity values. Normal range: 0–250.  
+      Special values:  
+      <ul>
+        <li>251–255 → Random Red / Green / Blue</li>
+      </ul>
+    </li>
+    <li><strong>S (Dance Time 1)</strong> – Milliseconds per pixel move (first timing), range: 0–999.</li>
+    <li><strong>E (Dance Time 2)</strong> – Milliseconds per pixel move (second timing), range: 0–999.</li>
+    <li><strong>M (Pixel Count)</strong> – Number of dancing pixels.  
+      - ATmega328: range 1–450  
+      - ATmega128: range 1–999  
+    </li>
+  </ul>
 
+  <table border="1" cellpadding="6">
+    <tr>
+      <th>A (Channel)</th>
+      <th>D (Mode)</th>
+      <th>R (Red)</th>
+      <th>G (Green)</th>
+      <th>B (Blue)</th>
+      <th>S (Dance Time 1)</th>
+      <th>E (Dance Time 2)</th>
+      <th>M (Pixel Count)</th>
+    </tr>
+    <tr>
+      <td>A1</td>
+      <td>D12</td>
+      <td>R251</td>
+      <td>G251</td>
+      <td>B251</td>
+      <td>S1</td>
+      <td>E1</td>
+      <td>M128</td>
+    </tr>
+  </table>
 
-<h2>RANGMANG Dance Mode Configuration</h2>
+  <h2>RANGMANG Fixed Color Mode Configuration (ATmega128 – 999 Pixels)</h2>
+  <p><strong>Note: Values can be entered directly without leading zeros (e.g., R50 instead of R050).</strong></p>
 
-<p>
-This configuration defines how the RANGMANG module controls LED dance modes.  
-Each row encodes the following parameters (ADRGBSEM format):
-</p>
+  <ul>
+    <li><strong>A (Address)</strong> – Module address (1–98 for specific module, 99 for all).</li>
+    <li><strong>D (Mode)</strong> – Must always be 0 (D0) for solid color.</li>
+    <li><strong>R / G / B</strong> – Color intensity values, range: 0–255.</li>
+    <li><strong>S (Start Pixel)</strong> – Start position for colored pixels, range: 0–999.</li>
+    <li><strong>E (End Pixel)</strong> – End position for colored pixels, range: 0–999.</li>
+    <li><strong>M (Memory Slot)</strong> – Memory control: 0 (M0) without save, 1–99 for saving to slots.</li>
+  </ul>
 
-<ul>
-  <li><strong>A (Address)</strong> – 2 digits (A01–A98 for module, A99 for all).</li>
-  <li><strong>D (Mode)</strong> – D01–D55 for dance styles, D99 for random dance selection.</li>
-  <li><strong>R / G / B</strong> – 3 digits each. Normal range R000–R250, G000–G250, B000–B250.  
-    Special values:  
-    <ul>
-      <li>R251–R255 → Random Red</li>
-      <li>G251–G255 → Random Green</li>
-      <li>B251–B255 → Random Blue</li>
-    </ul>
-  </li>
-  <li><strong>S (Dance Time 1)</strong> – 3 digits, milliseconds per pixel move (first timing), range S000–S999.</li>
-  <li><strong>E (Dance Time 2)</strong> – 3 digits, milliseconds per pixel move (second timing), range E000–E999.</li>
-  <li><strong>M (Pixel Count)</strong> – 3 digits, number of dancing pixels.  
-    - ATmega328: M001–M480  
-    - ATmega128: M001–M999  
-  </li>
-</ul>
-
-<table border="1" cellpadding="6">
-  <tr>
-    <th>A (Channel)</th>
-    <th>D (Mode)</th>
-    <th>R (Red)</th>
-    <th>G (Green)</th>
-    <th>B (Blue)</th>
-    <th>S (Dance Time 1)</th>
-    <th>E (Dance Time 2)</th>
-    <th>M (Pixel Count)</th>
-  </tr>
-  <tr>
-    <td>A01</td>
-    <td>D12</td>
-    <td>R251</td>
-    <td>G251</td>
-    <td>B251</td>
-    <td>S001</td>
-    <td>E001</td>
-    <td>M128</td>
-  </tr>
-</table>
-
-
-
-
-  
-<h2>RANGMANG Fixed Color Mode Configuration (ATmega128 – 999 Pixels)</h2>
-
-<ul>
-  <li><strong>A (Address)</strong> – 2 digits (A01–A98 for module, A99 for all).</li>
-  <li><strong>D (Mode)</strong> – must always be D00 for solid color.</li>
-  <li><strong>R / G / B</strong> – 3 digits each, range R000–R255, G000–G255, B000–B255.</li>
-  <li><strong>S (Start Pixel)</strong> – 3 digits, range S000–S999.</li>
-  <li><strong>E (End Pixel)</strong> – 3 digits, range E000–E999.</li>
-  <li><strong>M (Memory Slot)</strong> – 3 digits, M000 without save, M001–M099 for slots.</li>
-</ul>
-
-<table border="1" cellpadding="6">
-  <tr>
-    <th>A (Channel)</th>
-    <th>D (Mode)</th>
-    <th>R (Red)</th>
-    <th>G (Green)</th>
-    <th>B (Blue)</th>
-    <th>S (Start Pixel)</th>
-    <th>E (End Pixel)</th>
-    <th>M (Memory Slot)</th>
-  </tr>
-  <tr>
-    <td>A01</td>
-    <td>D00</td>
-    <td>R200</td>
-    <td>G050</td>
-    <td>B100</td>
-    <td>S001</td>
-    <td>E120</td>
-    <td>M010</td>
-  </tr>
-</table>
-
+  <table border="1" cellpadding="6">
+    <tr>
+      <th>A (Channel)</th>
+      <th>D (Mode)</th>
+      <th>R (Red)</th>
+      <th>G (Green)</th>
+      <th>B (Blue)</th>
+      <th>S (Start Pixel)</th>
+      <th>E (End Pixel)</th>
+      <th>M (Memory Slot)</th>
+    </tr>
+    <tr>
+      <td>A1</td>
+      <td>D0</td>
+      <td>R200</td>
+      <td>G50</td>
+      <td>B100</td>
+      <td>S1</td>
+      <td>E120</td>
+      <td>M10</td>
+    </tr>
+  </table>
 
   <h2>Power Regulation Notes</h2>
-  <ul>
-<pre>
+  <pre>
 If the module is used individually, connect the Bluetooth power jumper.
 
 If the modules are used in parallel, only connect the jumper for the module linked to Bluetooth and disconnect the rest.
@@ -199,170 +261,139 @@ If the modules are used in parallel, only connect the jumper for the module link
 Install a 5V regulator for 12V LED strips; for 5V LED strips, no regulator is needed.
 
 Use a single wire to solder and connect the input and output pins of the regulator directly on the board.
-</pre>
+  </pre>
+  
+  <ul>
     <li>For 5V LED strips: You can remove the regulator and directly power the microcontroller from the strip's 5V socket.</li>
     <li>For 12V LED strips: You must use a 12V-to-5V regulator to power the microcontroller safely.</li>
     <li>Note: To prevent reverse connection of the LED strip to the module, use a properly keyed connector. If necessary, add a diode in series with the microcontroller's power input to protect against polarity reversal.</li>
   </ul>
 
+  <h2>RANGMANG ATmega128 – 999 Pixels</h2>
+  <pre>
+' Inputs format: ADRGBSEM (Leading zeros are optional)
+' Example: A1D0R0G0B0S0E0M0
+' A1 TO A98    FOR ADDRESS MODULE   A99 FOR ALL
+' IF D0 THEN SOLID COLOR
+' R: 0 TO 255   RED COLOR
+' G: 0 TO 255   GREEN COLOR
+' B: 0 TO 255   BLUE COLOR
+' S: 0 TO 999   RGB STRIP START POSITION FOR COLORED PIXEL
+' E: 0 TO 999   RGB STRIP END POSITION FOR COLORED PIXEL
+' M: 0 TO 98    M0 WITHOUT MEMORY SAVE   M1 TO M98 SAVE SLOT MEMORY
 
-<h2>RANGMANG ATmega128 – 999 Pixels</h2>
-<pre>
-' 30 inputs
-' ADRGBSEM
-' A00D00R000G000B000S000E000M000
-' A01 TO A98   FOR ADDRESS MODULE   A99 FOR ALL
-' IF D00 THEN SOLID COLOR
-' R000 TO R255   RED COLOR
-' G000 TO G255   GREEN COLOR
-' B000 TO B255   BLUE COLOR
-' S000 TO S480   RGB STRIP START POSITION FOR COLORED PIXEL
-' E000 TO E480   RGB STRIP END POSITION FOR COLORED PIXEL
-' M000 TO M098   M000 WITHOUT MEMORY SAVE   M001 SAVE SLOT 1 MEMORY
+' IF D1 TO D55   DANCE
+' D99   FOR RANDOM SELECT D1 TO D55 DANCE
+' R: 0 TO 250   RED COLOR   251 TO 255 FOR RANDOM RED COLOR
+' G: 0 TO 250   GREEN COLOR   251 TO 255 FOR RANDOM GREEN COLOR
+' B: 0 TO 250   BLUE COLOR   251 TO 255 FOR RANDOM BLUE COLOR
+' S: 0 TO 999   RGB STRIP FIRST DELAY EFFECT (ms)
+' E: 0 TO 999   RGB STRIP SECOND DELAY EFFECT (ms)
+' M: 1 TO 999   SET HOW MANY PIXELS DANCING
+  </pre>
 
-' IF D01 TO D55   DANCE
-' D99   FOR RANDOM SELECT D01 TO D55 DANCE
-' R000 TO R250   RED COLOR   R251 TO R255 FOR RANDOM RED COLOR
-' G000 TO G250   GREEN COLOR   G251 TO G255 FOR RANDOM GREEN COLOR
-' B000 TO B250   BLUE COLOR   B251 TO B255 FOR RANDOM BLUE COLOR
-' S000 TO S999   RGB STRIP FIRST DELAY EFFECT (ms)
-' E000 TO E999   RGB STRIP SECOND DELAY EFFECT (ms)
-' M001 TO M999   SET HOW MANY PIXELS DANCING
-</pre>
-
-<h2>RANGMANG ATmega328 – 480 Pixels</h2>
-<pre>
-' 30 inputs
-' ADRGBSEM
-' A00D00R000G000B000S000E000M000
-' A01 TO A98   FOR ADDRESS MODULE   A99 FOR ALL
-' IF D00 THEN SOLID COLOR
-' R000 TO R255   RED COLOR
-' G000 TO G255   GREEN COLOR
-' B000 TO B255   BLUE COLOR
-' S000 TO S480   RGB STRIP START POSITION FOR COLORED PIXEL
-' E000 TO E480   RGB STRIP END POSITION FOR COLORED PIXEL
-' M000 TO M098   M000 WITHOUT MEMORY SAVE   M001 SAVE SLOT 1 MEMORY
+  <h2>RANGMANG ATmega328 – 450 Pixels</h2>
+  <pre>
+' Inputs format: ADRGBSEM (Leading zeros are optional)
+' Example: A1D0R0G0B0S0E0M0
+' A1 TO A98    FOR ADDRESS MODULE   A99 FOR ALL
+' IF D0 THEN SOLID COLOR
+' R: 0 TO 255   RED COLOR
+' G: 0 TO 255   GREEN COLOR
+' B: 0 TO 255   BLUE COLOR
+' S: 0 TO 450   RGB STRIP START POSITION FOR COLORED PIXEL
+' E: 0 TO 450   RGB STRIP END POSITION FOR COLORED PIXEL
+' M: 0 TO 98    M0 WITHOUT MEMORY SAVE   M1 TO M98 SAVE SLOT MEMORY
 '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 'M996 performs a full pixel wipe on the LED strip and erases all stored memory.
 'M997 clears all pixels on the LED strip without affecting any memory
 'M998 quickly fills all pixels on the LED strip without using or modifying memory
-'M999 colors all pixels on the LED strip and saves it as memory slot 001
+'M999 colors all pixels on the LED strip and saves it as memory slot 1
   
+' IF D1 TO D55   DANCE
+' D99   FOR RANDOM SELECT D1 TO D55 DANCE
+' R: 0 TO 250   RED COLOR   251 TO 255 FOR RANDOM RED COLOR
+' G: 0 TO 250   GREEN COLOR   251 TO 255 FOR RANDOM GREEN COLOR
+' B: 0 TO 250   BLUE COLOR   251 TO 255 FOR RANDOM BLUE COLOR
+' S: 0 TO 999   RGB STRIP FIRST DELAY EFFECT (ms)
+' E: 0 TO 999   RGB STRIP SECOND DELAY EFFECT (ms)
+' M: 1 TO 450   SET HOW MANY PIXELS DANCING
+  </pre>
 
-
-
-' IF D01 TO D55   DANCE
-' D99   FOR RANDOM SELECT D01 TO D55 DANCE
-' R000 TO R250   RED COLOR   R251 TO R255 FOR RANDOM RED COLOR
-' G000 TO G250   GREEN COLOR   G251 TO G255 FOR RANDOM GREEN COLOR
-' B000 TO B250   BLUE COLOR   B251 TO B255 FOR RANDOM BLUE COLOR
-' S000 TO S999   RGB STRIP FIRST DELAY EFFECT (ms)
-' E000 TO E999   RGB STRIP SECOND DELAY EFFECT (ms)
-' M001 TO M480   SET HOW MANY PIXELS DANCING
-</pre>
-
-
-
-<h2>✅ Module Addressing Instructions</h2>
-
-<pre>
-
+  <h2>✅ Module Addressing Instructions</h2>
+  <pre>
 To address a module, simply follow the method below.
 
 For example:
-
-Old address 1   New Address 2  →  CH01=02
+Old address 1   New Address 2  →  CH1=2
 Old address 23  New Address 47 →  CH23=47
 
 Important:
-After programming, all modules have an initial default address of 01.
-Therefore, during the first addressing, the old (current) address is always 01.
+After programming, all modules have an initial default address of 1.
+Therefore, during the first addressing, the old (current) address is always 1.
 
 Addressing format:
-
-
-CH  old address  =  new address
+CH old_address = new_address
 
 For example:
-CH01=03
+CH1=3
 
 After changing the address, the module will respond using its new address.
-For example, if the new address is 03, the module will reply to:
-New Address=03
+For example, if the new address is 3, the module will reply to:
+New Address=3
 
 Please note:
-
-Valid addresses range from 01 to 98.
-
+Valid addresses range from 1 to 98.
 Address 99 is a shared address that applies to all modules.
 
-Therefore, each module will respond and act to its assigned address (between 01 and 98) as well as to the shared address 99.
+Therefore, each module will respond and act to its assigned address (between 1 and 98) as well as to the shared address 99.
+  </pre>
 
-</pre>
+  <p>
+    In each microcontroller’s folder, the software directory “dude 6.4” is available. Using the file “Program Chip.bat,” you simply need to connect the USBasp to the microcontroller and then click on “Program Chip.bat” to program the microcontroller.
+  </p>
+  
+  <img src="rangmang_design_soifgo.png" alt="Recommended Converter">
+  
+  <h2><a href="soifgo_rangmang_design.zip"> 📦 Download soifgo_rangmang_design</a></h2>
+  <h2><a href="Atmega128.zip">Download Atmega128 File</a></h2>
+  <h2><a href="Atmega328P.zip">Download Atmega328P File</a></h2>
 
-<p>
-In each microcontroller’s folder, the software directory “dude 6.4” is available. Using the file “Program Chip.bat,” you simply need to connect the USBasp to the microcontroller and then click on “Program Chip.bat” to program the microcontroller.
-</p>
- <img src="rangmang_design_soifgo.png" alt="Recommended Converter">
-<h2><a href="soifgo_rangmang_design.zip"> 📦 Download soifgo_rangmang_design</a></h2>
+  <p>
+    If you need the module as a single unit, you can use regular sockets. However, when using multiple modules in parallel, only the Bluetooth socket should be connected through long-pin headers so that the remaining modules can receive Bluetooth serial data.
 
-<h2><a href="Atmega128.zip">Download Atmega128 File</a></h2>
-
-<h2><a href="Atmega328P.zip">Download Atmega328P File</a></h2>
-
-<p>
-
-
-If you need the module as a single unit, you can use regular sockets. However, when using multiple modules in parallel, only the Bluetooth socket should be connected through long-pin headers so that the remaining modules can receive Bluetooth serial data.
-
-Next, it is better to mechanically connect the modules together using spacer screws. For the final module, you can insulate the pins or use a suitable cover. Alternatively, if you are certain that you will not expand the number of modules in the future, you may use short-pin headers instead.
-</p>
+    Next, it is better to mechanically connect the modules together using spacer screws. For the final module, you can insulate the pins or use a suitable cover. Alternatively, if you are certain that you will not expand the number of modules in the future, you may use short-pin headers instead.
+  </p>
+  
   <img src="board01.png" alt="Recommended Converter">
 
-<h2>
+  <h2>
+    When using long RGB strips, make sure to pay attention to the voltage of the microcontroller and Bluetooth. Using an unsuitable regulator or a power supply with insufficient current capacity can cause severe voltage drops, which may lead to the Bluetooth and microcontroller shutting down.
+  </h2>
 
-When using long RGB  strips, make sure to pay attention to the voltage of the microcontroller and Bluetooth. Using an unsuitable regulator or a power supply with insufficient current capacity can cause severe voltage drops, which may lead to the Bluetooth and microcontroller shutting down
-</h2>
+  <hr>
+  <p style="text-align:center;">
+    <a href="index.html" 
+       style="display:inline-block; padding:10px 20px; background:gray; color:yellow; text-decoration:none; border-radius:5px;">
+      Rangmang Web Simulator
+    </a>
+  </p>
 
-<hr>
-<p style="text-align:center;">
-  <a href="index.html" 
-     style="display:inline-block; padding:10px 20px; background:gray; color:yellow; text-decoration:none; border-radius:5px;">
-    Rangmang Web Simulator
-  </a>
-</p>
+  <hr>
+  <p style="text-align:center;">
+    <a href="https://soifgo.github.io/soifgo/tutorials/list.html" 
+       style="display:inline-block; padding:10px 20px; background:#0066cc; color:#fff; text-decoration:none; border-radius:5px;">
+      ⬅ Back to Tutorial
+    </a>
+  </p>
 
-
-
-
-    <hr>
-<p style="text-align:center;">
-  <a href="https://soifgo.github.io/soifgo/tutorials/list.html" 
-     style="display:inline-block; padding:10px 20px; background:#0066cc; color:#fff; text-decoration:none; border-radius:5px;">
-    ⬅ Back to Tutorial
-  </a>
-</p>
-
-
-
-<hr>
-<p style="text-align:center;">
-  <a href="https://soifgo.github.io/soifgo/index.html" 
-     style="display:inline-block; padding:10px 20px; background:#8B4513; color:#fff; text-decoration:none; border-radius:5px;">
-    ⬅ Back to Home
-  </a>
-</p>
+  <hr>
+  <p style="text-align:center;">
+    <a href="https://soifgo.github.io/soifgo/index.html" 
+       style="display:inline-block; padding:10px 20px; background:#8B4513; color:#fff; text-decoration:none; border-radius:5px;">
+      ⬅ Back to Home
+    </a>
+  </p>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
