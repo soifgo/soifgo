@@ -171,6 +171,9 @@
     Your browser does not support the video tag.
   </video>
 
+
+
+
   <h2>RANGMANG Dance Mode Configuration</h2>
   <p>
     This configuration defines how the RANGMANG module controls LED dance modes.  
@@ -354,6 +357,44 @@ Therefore, each module will respond and act to its assigned address (between 1 a
   </p>
   
   <img src="rangmang_design_soifgo.png" alt="Recommended Converter">
+  <img src="rangmang_design_soifgo.png" alt="Recommended Converter">
+
+  <p>
+Color Swap Issue between WS2811 and WS2812: Why Green and Blue are Reversed
+When working with addressable LED strips like the WS2811 and WS2812, you might notice a classic issue: when you test your LEDs, the Red color displays perfectly, but Green and Blue are completely swapped.
+
+Why does this happen?
+While the Red channel remains in its correct first position, the order of the Green and Blue channels varies due to hardware layout designs:
+
+WS2812 LEDs typically use the internal GRB or standard RGB color ordering profile.
+
+WS2811 ICs are external controllers often used in 12V strips or pixel strings. To simplify PCB routing and prevent copper traces from crossing over each other, manufacturers frequently cross-wire the Green and Blue output pins to the LED.
+
+As a result, from a programmer's and user's perspective, the strip ends up behaving as an RBG (Red, Blue, Green) device instead of a standard RGB device.
+
+Why We Inverted the Logic in the Code (Under the Hood)
+To prevent any confusion or "color dizziness" while designing your light patterns, Soifgo handles all the heavy lifting behind the scenes.
+
+Most modern WS2811 strips available on the market today use an internal RBG chip methodology. However, to keep things intuitive for you, the app lets you think and work in the universal RGB standard.
+
+When you pick a color in the app—for example, setting R=123, G=22, B=12—you don't have to worry about the strip's internal layout. When the RBG mode is active:
+
+You interact with the familiar RGB values naturally.
+
+The microcontroller intentionally and automatically swaps the Green and Blue bytes right before transmitting them over the wire.
+
+The flipped data matches the physical cross-wiring of the WS2811 chip perfectly.
+
+In short, we deliberately inverted the software logic for the WS2811 setting so that your workflow remains simple, consistent, and strictly RGB on the screen, while the hardware gets exactly what it needs!
+
+Solution in Soifgo Settings
+If you are experiencing this color mismatch, there is no need to change your hardware wiring. You can fix this instantly via software inside the app:
+
+Important Note for Soifgo Users:
+When using certain WS2811 LED strips where the Green and Blue colors are reversed, simply go to the application settings and tap on the RGB label to switch it to RBG.
+
+By changing this setting to RBG, Soifgo will automatically swap the Green and Blue bytes during data transmission, ensuring that your color palette and light animations are applied accurately to your strip!
+  </p>
   
   <h2><a href="soifgo_rangmang_design.zip"> 📦 Download soifgo_rangmang_design</a></h2>
   <h2><a href="Atmega128.zip">Download Atmega128 File</a></h2>
