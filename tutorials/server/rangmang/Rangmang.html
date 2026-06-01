@@ -177,7 +177,7 @@
   <h2>RANGMANG Dance Mode Configuration</h2>
   <p>
     This configuration defines how the RANGMANG module controls LED dance modes.  
-    Each row encodes the following parameters (ADRGBSEM format). <strong>Note: Leading zeros are optional and no longer strictly required for numerical values.</strong>
+    Each row encodes the following parameters (ADRGBSEM format)
   </p>
 
   <ul>
@@ -221,7 +221,7 @@
   </table>
 
   <h2>RANGMANG Fixed Color Mode Configuration (ATmega128 – 999 Pixels)</h2>
-  <p><strong>Note: Values can be entered directly without leading zeros (e.g., R50 instead of R050).</strong></p>
+ 
 
   <ul>
     <li><strong>A (Address)</strong> – Module address (1–98 for specific module, 99 for all).</li>
@@ -395,6 +395,27 @@ When using certain WS2811 LED strips where the Green and Blue colors are reverse
 
 By changing this setting to RBG, Soifgo will automatically swap the Green and Blue bytes during data transmission, ensuring that your color palette and light animations are applied accurately to your strip!
   </p>
+
+
+  <strong>
+💻 Developer Note: Coding Static Colors for WS2811
+If you are writing your own custom firmware or setting up static colors directly in your micro-controller code for a WS2811 strip, you must manually swap the Green and Blue values to achieve the correct output.
+
+Since the physical hardware layout of these strips interprets data differently than our standard mental model, you need to trick the strip by reversing the variables.
+
+For Example:
+If your desired color is Red: 10, Green: 123, Blue: 44, writing it in the standard order will result in swapped colors on the strip.
+
+To fix this in your code, you must pass the values like this:
+
+Standard RGB Intended Color: R: 10, G: 123, B: 44
+
+Actual Code to Write for WS2811: R: 10, G: 44, B: 123
+
+By intentionally swapping the Green (123) and Blue (44) values inside your code, the WS2811 strip will display the exact shade you originally intended!
+  </h2>
+
+
   
   <h2><a href="soifgo_rangmang_design.zip"> 📦 Download soifgo_rangmang_design</a></h2>
   <h2><a href="Atmega128.zip">Download Atmega128 File</a></h2>
