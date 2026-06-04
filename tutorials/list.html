@@ -3,52 +3,118 @@
 <head>
   <meta charset="UTF-8">
   <title>SoifGo – Tutorial List</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Mobile scaling -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    :root {
+      --bg-color: #0f172a;        /* Deep sleek dark background */
+      --card-bg: #1e293b;         /* Slightly lighter slate for cards */
+      --text-color: #f1f5f9;      /* Crisp off-white text */
+      --text-muted: #94a3b8;     /* Muted gray for small details */
+      --accent-color: #38bdf8;    /* Vibrant neon blue for buttons/highlights */
+    }
+
     body {
-      font-family: sans-serif;
-      background-color: #0066cc;
-      padding: 1em;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      padding: 2rem 1rem;
       margin: 0;
     }
+
     h1 {
-      color: #000000;
+      color: #fff;
       text-align: center;
-      font-size: 1.6em;
-      margin: 1em 0;
+      font-size: 1.8em;
+      margin-bottom: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
     }
+
     ul {
       list-style-type: none;
       padding: 0;
       margin: 0 auto;
-      max-width: 600px;
-    }
-    li {
-      background-color: #eee;
-      margin: 0.7em 0;
-      padding: 1.2em;
-      border-radius: 8px;
-      font-size: 1.1em;
-    }
-    a {
-      color: #000000;
-      text-decoration: none;
-      font-weight: bold;
-      display: block; /* makes the whole box clickable */
-    }
-    a:hover {
-      text-decoration: underline;
+      max-width: 650px;
     }
 
-    /* Mobile adjustments */
+    li {
+      background-color: var(--card-bg);
+      margin-bottom: 1rem;
+      border-radius: 12px;
+      border: 1px solid #334155; /* Subtle border for definition */
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    }
+
+    li:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent-color);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    a {
+      color: var(--text-color);
+      text-decoration: none;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      padding: 1rem 1.2rem;
+      font-size: 1.05rem;
+    }
+
+    /* Unified icon sizing */
+    .icon {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+      margin-right: 15px;
+      border-radius: 8px;
+      background: #0f172a; /* Blends with the root background */
+      padding: 4px;
+    }
+
+    /* Dark mode placeholder for missing icons */
+    .no-icon-spacer {
+      width: 50px;
+      height: 50px;
+      margin-right: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      font-size: 1.2rem;
+    }
+
+    hr {
+      border: 0;
+      height: 1px;
+      background: #334155;
+      margin: 2.5rem 0 1.5rem 0;
+    }
+
+    .btn-back {
+      display: inline-block;
+      padding: 12px 28px;
+      background: var(--accent-color);
+      color: #0f172a; /* Dark text inside the bright button for high contrast */
+      text-decoration: none;
+      border-radius: 30px;
+      font-weight: bold;
+      transition: background 0.2s, transform 0.2s;
+      box-shadow: 0 4px 14px rgba(56, 189, 248, 0.3);
+    }
+
+    .btn-back:hover {
+      background: #7dd3fc;
+      transform: scale(1.03);
+    }
+
+    /* Mobile view tweaks */
     @media (max-width: 600px) {
-      h1 {
-        font-size: 1.3em;
-      }
-      li {
-        font-size: 1em;
-        padding: 1em;
-      }
+      h1 { font-size: 1.5em; }
+      a { padding: 0.9rem 1rem; font-size: 1rem; }
+      .icon, .no-icon-spacer { width: 40px; height: 40px; }
     }
   </style>
 </head>
@@ -57,61 +123,82 @@
   <h1>📚 SoifGo Tutorial List</h1>
 
   <ul>
+    <li>
+      <a href="server/page/Create_Page.html">
+        <img src="server/icon/new.png" alt="Page Icon" class="icon"> Create Page
+      </a>
+    </li>
+    <li>
+      <a href="server/pagefolder/page_folder.html">
+        <img src="server/icon/folder.png" alt="Page Icon" class="icon"> Page & Folder Navigation
+      </a>
+    </li>
+    <li>
+      <a href="server/BluetoothExample1/bluetooth_sample1.html">
+        <img src="server/icon/blue.png" alt="Page Icon" class="icon"> Bluetooth Example 1
+      </a>
+    </li>
+    <li>
+      <a href="server/WorkingwithHTMLFiles/html01.html">
+        <img src="server/icon/html.png" alt="Page Icon" class="icon"> Working with HTML Files
+      </a>
+    </li>
+    <li>
+      <a href="server/Effect/effects.html">
+        <img src="server/icon/effect.png" alt="Page Icon" class="icon"> Effect
+      </a>
+    </li>
+    
+    <li>
+      <a href="server/LocalServerSetup/Local-server_api.html">
+        <div class="no-icon-spacer">💻</div> Local Server Setup (Fastify on PC_API JSON)
+      </a>
+    </li>
+    <li>
+      <a href="server/ESP32Server/ESP8266_wifi_api.html">
+        <div class="no-icon-spacer">🌐</div> ESP32 Server (Using WiFiServer or WebServer_api)
+      </a>
+    </li>
+    <li>
+      <a href="server/FetchingAPIs/Api-fetching_api.html">
+        <div class="no-icon-spacer">🔄</div> Fetching APIs (From External Servers_api)
+      </a>
+    </li>
 
-<li> <a href="server/page/Create_Page.html"> <img src="server/icon/new.png" alt="Page Icon" style="width:100px; height:100px; vertical-align:middle; margin-right:22px;"> Create Page </a> </li>
- 
-<li> <a href="server/pagefolder/page_folder.html"> <img src="server/icon/folder.png" alt="Page Icon" style="width:200px; height:100px; vertical-align:middle; margin-right:22px;"> Page & Folder Navigation</a> </li>
-   
- 
-<li> <a href="server/BluetoothExample1/bluetooth_sample1.html"> <img src="server/icon/blue.png" alt="Page Icon" style="width:100px; height:100px; vertical-align:middle; margin-right:22px;"> Bluetooth Example 1</a> </li>
-
-<li> <a href="server/WorkingwithHTMLFiles/html01.html"> <img src="server/icon/html.png" alt="Page Icon" style="width:100px; height:100px; vertical-align:middle; margin-right:22px;">Working with HTML Files</a> </li>
-
-<li> <a href="server/Effect/effects.html"> <img src="server/icon/effect.png" alt="Page Icon" style="width:300px; height:100px; vertical-align:middle; margin-right:22px;">Effect</a> </li>
-
-   
-    <li><a href="server/LocalServerSetup/Local-server_api.html">Local Server Setup (Fastify on PC_API JSON)</a></li>
-    <li><a href="server/ESP32Server/ESP8266_wifi_api.html">ESP32 Server (Using WiFiServer or WebServer_api)</a></li>
-    <li><a href="server/FetchingAPIs/Api-fetching_api.html">Fetching APIs (From External Servers_api)</a></li>
-
-<li> <a href="server/Esp8266_wifi_mqtt/esp8266_mqtt.html"> <img src="server/icon/mqtt.png" alt="Page Icon" style="width:200px; height:100px; vertical-align:middle; margin-right:22px;">ESP8266 mqtt (Online MQTT_iot)</a> </li>
-
-<li> <a href="server/BluetoothSendReceive/Bluetooth_Send_Receive.html"> <img src="server/icon/bluesend.png" alt="Page Icon" style="width:200px; height:100px; vertical-align:middle; margin-right:22px;">Bluetooth Send Receive</a> </li>
-
-
-<li> <a href="server/note_out/note_out.html"> <img src="server/icon/val.png" alt="Page Icon" style="width:300px; height:100px; vertical-align:middle; margin-right:22px;"> Note SEND AND RECEIVE</a> </li>
-
-<li> <a href="server/rangmang/Rangmang.html"> <img src="server/rangmang/rangmang_pic.png" alt="Page Icon" style="width:100px; height:100px; vertical-align:middle; margin-right:22px;"> RANGMANG </a> </li>
-
-<li> <a href="server/cmi209/cmi209.html"> <img src="server/cmi209/cmi209_01.jpg" alt="Page Icon" style="width:100px; height:100px; vertical-align:middle; margin-right:22px;"> cmi209 </a> </li>
-
-
-
+    <li>
+      <a href="server/Esp8266_wifi_mqtt/esp8266_mqtt.html">
+        <img src="server/icon/mqtt.png" alt="Page Icon" class="icon"> ESP8266 mqtt (Online MQTT_iot)
+      </a>
+    </li>
+    <li>
+      <a href="server/BluetoothSendReceive/Bluetooth_Send_Receive.html">
+        <img src="server/icon/bluesend.png" alt="Page Icon" class="icon"> Bluetooth Send Receive
+      </a>
+    </li>
+    <li>
+      <a href="server/note_out/note_out.html">
+        <img src="server/icon/val.png" alt="Page Icon" class="icon"> Note SEND AND RECEIVE
+      </a>
+    </li>
+    <li>
+      <a href="server/rangmang/Rangmang.html">
+        <img src="server/rangmang/rangmang_pic.png" alt="Page Icon" class="icon"> RANGMANG
+      </a>
+    </li>
+    <li>
+      <a href="server/cmi209/cmi209.html">
+        <img src="server/cmi209/cmi209_01.jpg" alt="Page Icon" class="icon"> cmi209
+      </a>
+    </li>
   </ul>
 
-
-
   <hr>
-<p style="text-align:center;">
-  <a href="https://soifgo.github.io/soifgo/index.html" 
-     style="display:inline-block; padding:10px 20px; background:#8B4513; color:#fff; text-decoration:none; border-radius:5px;">
-    ⬅ Back to Home
-  </a>
-</p>
 
-  
+  <p style="text-align:center;">
+    <a href="https://soifgo.github.io/soifgo/index.html" class="btn-back">
+      ⬅ Back to Home
+    </a>
+  </p>
+
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
