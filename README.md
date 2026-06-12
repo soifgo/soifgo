@@ -72,7 +72,8 @@ SoifGo is an Android application that provides users with advanced capabilities 
 - [Working with HTML Files](https://soifgo.github.io/soifgo/tutorials/server/WorkingwithHTMLFiles/html01.html)
 - [Effects](https://soifgo.github.io/soifgo/tutorials/server/Effect/effects.html)
 - [RANGMANG](https://soifgo.github.io/soifgo/tutorials/server/rangmang/Rangmang.html)
-
+- [CMi209](https://soifgo.github.io/soifgo/tutorials/server/cmi209/cmi209.html)
+ 
 ### Bluetooth and Device Interaction
 - [Bluetooth Example 1](https://soifgo.github.io/soifgo/tutorials/server/BlutoothExample1/blutooth_sample1.html)
 - [Bluetooth Send/Receive](https://soifgo.github.io/soifgo/tutorials/server/BluetoothSendReceive/Bluetooth_Send_Receive.html)
