@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CMI209 Module </title>
+  <title>CMI209 Module</title>
   <style>
     :root{
       --bg:#f7f9fc;
@@ -56,21 +56,22 @@
       box-shadow: 0 4px 14px rgba(15,23,42,.04);
     }
     h2{
-      font-size:2.2rem;
+      font-size:1.3rem;
       margin:0 0 10px;
       color:#0f172a;
       border-bottom:1px solid var(--border);
       padding-bottom:8px;
     }
     h3{
-      font-size:2.02rem;
+      font-size:1.05rem;
       margin:14px 0 8px;
       color:#111827;
     }
-img {
-    width: 100% !important;
-}
-
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
     p{margin:8px 0}
     ul{margin:8px 0 8px 20px}
     li{margin:4px 0}
@@ -123,22 +124,70 @@ img {
       font-size:.9rem;
       padding:10px 0 20px;
     }
+
+    /* ===== CAD-CAM Guide Styles ===== */
+    .guide-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 10px 0;
+    }
+    .guide-grid .item {
+      background: #f1f5f9;
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+    .guide-grid .item strong {
+      display: block;
+      color: #0f172a;
+      margin-bottom: 4px;
+    }
+    .guide-grid .item span {
+      color: #475569;
+      font-size: 0.92rem;
+    }
+    .shortcut-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      margin: 10px 0;
+    }
+    .shortcut-grid .key {
+      background: #e2e8f0;
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-family: monospace;
+      font-weight: 600;
+      color: #0f172a;
+      text-align: center;
+      font-size: 0.85rem;
+    }
+    .shortcut-grid .action {
+      color: #475569;
+      font-size: 0.85rem;
+      padding: 4px 0;
+    }
     @media (max-width: 600px){
       .container{padding:10px}
       .card{padding:14px}
       .header{padding:18px 14px; border-radius:14px}
       .header h1{font-size:1.28rem}
       h2{font-size:1.08rem}
+      .guide-grid{grid-template-columns:1fr}
+      .shortcut-grid{grid-template-columns:1fr 1fr}
     }
   </style>
 </head>
 <body>
   <div class="container">
+
+    <!-- ===== HEADER ===== -->
     <div class="header">
-      <h1>CMi209    </h1>
-   <img src="cmi209_01.jpg" alt="Wiring 1" >
+      <h1>CMi209</h1>
+      <img src="cmi209_01.jpg" alt="Wiring 1">
     </div>
 
+    <!-- ===== OVERVIEW ===== -->
     <div class="card">
       <h2 class="section-title">Overview</h2>
       <p>
@@ -148,13 +197,14 @@ img {
       </p>
       <div class="note">
         <strong>Note:</strong> Before using the Bluetooth module, it must be set to <strong>115200 baud</strong>.
-<img src="cmi209_02.png" alt="Wiring 1">
+        <img src="cmi209_02.png" alt="Wiring 1">
       </div>
       <p>
-The following files are included in the project: PCB file, programmer file, BASCOM file, Proteus file, and reference images. All of these files are available for download at the end of the page.
+        The following files are included in the project: PCB file, programmer file, BASCOM file, Proteus file, and reference images. All of these files are available for download at the end of the page.
       </p>
     </div>
 
+    <!-- ===== SAVED SETTINGS ===== -->
     <div class="card">
       <h2>Saved Settings</h2>
       <p>The following settings are stored in memory:</p>
@@ -163,25 +213,23 @@ The following files are included in the project: PCB file, programmer file, BASC
         This means that <strong>100 pulses</strong> move the stepper motor by <strong>1 mm</strong> in this project.
         If you use a different device, adjust the <strong>pulses per millimeter</strong> value in Soifgo.
       </p>
-
       <pre>Max_x=40
 Max_y=40
 Max_z=40</pre>
       <p>
         The maximum travel range for the X, Y, and Z axes is <strong>40 mm</strong> for this setup.
       </p>
-
       <pre>feedm=1200</pre>
       <p>
         Default movement speed is set to <strong>1400 mm/min</strong>. If no speed is received, the module uses the stored/default speed value.
       </p>
-
       <pre>feeds=5.7</pre>
       <p>
         This is the speed correction coefficient used to match the machine behavior. In this device, the measured value is <strong>5.7</strong>.
       </p>
     </div>
 
+    <!-- ===== POSITION COMMANDS ===== -->
     <div class="card">
       <h2>Position Setting Commands</h2>
       <p>
@@ -213,6 +261,7 @@ Z-3</pre>
 resety</pre>
     </div>
 
+    <!-- ===== SPINDLE ===== -->
     <div class="card">
       <h2>Spindle Speed Control</h2>
       <p>
@@ -230,6 +279,7 @@ resety</pre>
       <p>Spindle speed set to <strong>12,000 RPM</strong></p>
     </div>
 
+    <!-- ===== FEED SPEED ===== -->
     <div class="card">
       <h2>Axis Feed Speed</h2>
       <p>
@@ -240,6 +290,7 @@ resety</pre>
       <p>Feed speed: <strong>600 mm/min</strong> (uppercase letters)</p>
     </div>
 
+    <!-- ===== PWM OUTPUT ===== -->
     <div class="card">
       <h2>Reserved PWM Output</h2>
       <p>
@@ -255,13 +306,13 @@ resety</pre>
       <pre>W510</pre>
     </div>
 
+    <!-- ===== ARC / CIRCLE ===== -->
     <div class="card">
       <h2>Manual Arc and Circle Drawing</h2>
       <p>
         The module supports linear G-code and arc G-code.
         It also supports a manual method for drawing arcs or circles.
       </p>
-
       <h3>Command Parameters</h3>
       <ul>
         <li><strong>A</strong>: Starting angle, from 0 to 360. It must always be the first part of the command.</li>
@@ -270,13 +321,11 @@ resety</pre>
         <li><strong>X</strong>, <strong>Y</strong>: X and Y coordinates of the circle or arc center. These must be written after the angles.</li>
         <li><strong>Z</strong>: Height/depth of the circle or arc. This must also come after the angles.</li>
       </ul>
-
       <h3>Example</h3>
       <p>A full circle with a <strong>10 mm radius</strong> at <strong>X=20</strong>, <strong>Y=20</strong>, and a depth of <strong>1 mm</strong>:</p>
       <p>Before this command, raise the tool:</p>
       <pre>Z5
 A0B360X20Y20Z-1</pre>
-
       <p>
         In arc drawing and arc G-code, the number of points used to generate the circle is initially set to <strong>50</strong>.
         If needed, you can reduce it for a polygon-like shape, such as a hexagon, or increase it up to a maximum of <strong>99</strong> for higher precision.
@@ -289,6 +338,7 @@ A0B360X20Y20Z-1</pre>
       <pre>sec2</pre>
     </div>
 
+    <!-- ===== PRECISE MOVEMENT ===== -->
     <div class="card">
       <h2>Precise Movement Commands</h2>
       <p>
@@ -304,6 +354,7 @@ A0B360X20Y20Z-1</pre>
 -z0.5</pre>
     </div>
 
+    <!-- ===== HOMING ===== -->
     <div class="card">
       <h2>Homing</h2>
       <p>
@@ -318,10 +369,11 @@ A0B360X20Y20Z-1</pre>
       <div class="note">
         Three normally-open switches should be installed for X home, Y home, and Z home.
         The Z home switch should allow some extra travel, at least <strong>6 mm to 10 mm</strong>, because homing includes position zero and the safe tool height is about <strong>6 mm</strong>.
-<img src="limit_switch.png" alt="Wiring 1">
+        <img src="limit_switch.png" alt="Wiring 1">
       </div>
     </div>
 
+    <!-- ===== LIMIT SWITCHES ===== -->
     <div class="card">
       <h2>Limit Switches and Emergency Stop Error Input</h2>
       <p>
@@ -348,6 +400,7 @@ A0B360X20Y20Z-1</pre>
       <p>to resume operation.</p>
     </div>
 
+    <!-- ===== STEPPER DRIVERS ===== -->
     <div class="card">
       <h2>Stepper Driver Connections</h2>
       <p>
@@ -361,112 +414,250 @@ STEP
 DIR</pre>
     </div>
 
+    <!-- ===== VIDEOS ===== -->
     <div class="card">
       <h2>Video and Usage Sections</h2>
       <ul>
         <li>How to program the module(USBASP)</li>
-         <img src="programmer.jpg" alt="Wiring 1">
-
+        <img src="programmer.jpg" alt="Wiring 1">
         <video controls width="80%" height="500">
-        <source src="Avrdude_Programing.mp4" type="video/mp4">
+          <source src="Avrdude_Programing.mp4" type="video/mp4">
           Your browser does not support the video tag.
         </video>
 
         <li>How to design sample pages in Soifgo</li>
-
         <video controls width="80%" height="500">
-        <source src="design01.mp4" type="video/mp4">
+          <source src="design01.mp4" type="video/mp4">
           Your browser does not support the video tag.
         </video>
-
         <video controls width="80%" height="500">
-        <source src="design02.mp4" type="video/mp4">
+          <source src="design02.mp4" type="video/mp4">
           Your browser does not support the video tag.
         </video>
 
         <li>Sample design using Aspire software and export file creation</li>
-
         <video controls width="80%" height="500">
-        <source src="design03.mp4" type="video/mp4">
+          <source src="design03.mp4" type="video/mp4">
           Your browser does not support the video tag.
         </video>
 
         <li>How to transfer the Aspire export file to the phone</li>
-
         <video controls width="80%" height="500">
-        <source src="design04.mp4" type="video/mp4">
+          <source src="design04.mp4" type="video/mp4">
           Your browser does not support the video tag.
         </video>
 
         <li>How to load the file with Soifgo and operate CMI209</li>
-
         <video controls width="80%" height="500">
-        <source src="design05.mp4" type="video/mp4">
+          <source src="design05.mp4" type="video/mp4">
           Your browser does not support the video tag.
         </video>
 
         <li>Manual direct input example in Soifgo</li>
-
         <video controls width="80%" height="500">
-        <source src="design06.mp4" type="video/mp4">
+          <source src="design06.mp4" type="video/mp4">
           Your browser does not support the video tag.
         </video>
 
         <li>Understanding arc resolution settings</li>
-
         <video controls width="80%" height="500">
-        <source src="design07.mp4" type="video/mp4">
+          <source src="design07.mp4" type="video/mp4">
           Your browser does not support the video tag.
         </video>
 
         <li>Designing reset-all and stop functions in Soifgo</li>
-
         <video controls width="80%" height="500">
-        <source src="design08.mp4" type="video/mp4">
+          <source src="design08.mp4" type="video/mp4">
           Your browser does not support the video tag.
         </video>
 
         <li>Sample operation of CMI209</li>
-
         <video controls width="80%" height="500">
-        <source src="design09.mp4" type="video/mp4">
+          <source src="design09.mp4" type="video/mp4">
           Your browser does not support the video tag.
         </video>
 
-        <h2>PCB and Schematic Files Atmega 328P </h2>
-       <h2><a href="cmi209_File.zip"> 📦 Download All File</a>
+        <h2>PCB and Schematic Files Atmega 328P</h2>
+        <h2><a href="cmi209_File.zip">📦 Download All File</a></h2>
       </ul>
     </div>
 
-<iframe src="cmi209_code.txt" 
-        width="100%" 
-        height="300px" 
-        style="border: none; border-radius: 8px; background: #2d2d2d; font-family: monospace;">
-</iframe>
+    <!-- ===== CODE ===== -->
+    <iframe src="cmi209_code.txt"
+            width="100%"
+            height="300px"
+            style="border: none; border-radius: 8px; background: #2d2d2d; font-family: monospace;">
+    </iframe>
+        <h3>________________________________</h3>
+        <h3>Sample operation of MINI CAD-CAM</h3>
+		<h3>________________________________</h3>
+        <video controls width="80%" height="500">
+          <source src="design10.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
 
+    <!-- ============================================================== -->
+    <!-- =====  UPDATED: MINI CAD-CAM USER GUIDE (ENGLISH)  ===== -->
+    <!-- ============================================================== -->
+    <div class="card" style="border:2px solid #2563eb;">
+      <h2 style="color:#2563eb;">📐 Mini CAD-CAM V2.9.8 – Complete User Guide</h2>
+      <p style="color:#475569;">
+        This is a <strong>lightweight CAD-CAM tool</strong> for creating 2D vector shapes, editing them, and generating
+        <strong>G‑Code</strong> for CNC machines. All coordinates are in <strong>millimeters (mm)</strong>
+        within a user‑defined work area. The app is fully touch‑compatible and saves your work automatically in your browser.
+      </p>
+
+      <h3>🖱️ Interface Overview</h3>
+      <div class="guide-grid">
+        <div class="item"><strong>Toolbar</strong><span>All drawing, editing, and export tools</span></div>
+        <div class="item"><strong>Canvas</strong><span>Interactive drawing area (scroll to zoom, right-drag or two-finger drag to pan)</span></div>
+        <div class="item"><strong>Info Bar</strong><span>Shows current mode, shape count, selected object, zoom level, pan offset, helper status, undo stack, work area size</span></div>
+        <div class="item"><strong>G‑Code Output</strong><span>Displays generated G‑Code (ready to copy or send to the machine)</span></div>
+      </div>
+
+      <h3>🎨 Drawing Shapes</h3>
+      <p>Click the <strong>Shapes ▾</strong> dropdown and choose:</p>
+      <div class="guide-grid">
+        <div class="item"><strong>Rect</strong><span>Adds a centered rectangle</span></div>
+        <div class="item"><strong>Circle</strong><span>Adds a centered circle</span></div>
+        <div class="item"><strong>Ellipse</strong><span>Adds a centered ellipse</span></div>
+        <div class="item"><strong>Triangle</strong><span>Adds an equilateral triangle</span></div>
+        <div class="item"><strong>Line</strong><span>Click once for start point, move mouse, click again to place the end point (supports Ortho mode)</span></div>
+        <div class="item"><strong>Arc</strong><span>Click 3 points: <strong>start → middle → end</strong> to define the arc path</span></div>
+        <div class="item"><strong>Text</strong><span>Opens a modal to enter any text, adjust size, scale, character spacing, and smoothness quality</span></div>
+        <div class="item"><strong>Freehand</strong><span>Click and drag to draw a freeform polygon (release to finalize)</span></div>
+        <div class="item"><strong>Import Image</strong><span>Load an image, adjust edge detection threshold, and convert it to vector lines</span></div>
+      </div>
+      <p class="small">💡 <em>Text and imported images are converted into <strong>polygon groups</strong> (editable as a single group).</em></p>
+
+      <h3>✏️ Editing Shapes</h3>
+      <p>Click the <strong>Edit ▾</strong> dropdown or use direct manipulation:</p>
+      <div class="guide-grid">
+        <div class="item"><strong>Select</strong><span>Click any shape to select it (green outline appears). If multiple overlap, click again to cycle through them.</span></div>
+        <div class="item"><strong>Resize</strong><span>Drag corner handles to scale the shape (or resize a whole group).</span></div>
+        <div class="item"><strong>Rotate</strong><span>Click the orange rotation handle (circle) and drag to rotate the selected object.</span></div>
+        <div class="item"><strong>Delete</strong><span>Removes the selected shape(s) – also works with <kbd>Delete</kbd> or <kbd>Backspace</kbd>.</span></div>
+        <div class="item"><strong>Copy</strong><span>Copies selected shape (or group) to the clipboard.</span></div>
+        <div class="item"><strong>Paste</strong><span>Pastes the copied object (slightly offset) – also works with <kbd>Ctrl+V</kbd>.</span></div>
+      </div>
+      <ul>
+        <li><strong>Move</strong>: Select then drag the shape (or group).</li>
+        <li><strong>Resize (single shape)</strong>: Select then drag any green handle.</li>
+        <li><strong>Resize (group)</strong>: Select a group, drag the green corner handles (scales all children proportionally).</li>
+        <li><strong>Rotate (group)</strong>: Select the group, then drag its orange rotation handle.</li>
+      </ul>
+
+      <h3>🧰 Tools (Tools ▾)</h3>
+      <div class="guide-grid">
+        <div class="item"><strong>Snap</strong><span>Toggles snap-to‑center points of all shapes (shows a crosshair at shape centers). Helps with precise alignment.</span></div>
+        <div class="item"><strong>Ortho</strong><span>Restricts movement/line drawing to <strong>0°, 45°, 90°, 135°</strong> (increments of 45°).</span></div>
+        <div class="item"><strong>Center</strong><span>Shows a small orange dot at the center of every shape (useful for visual reference).</span></div>
+        <div class="item"><strong>Clear All</strong><span>Deletes all shapes (confirmation required).</span></div>
+      </div>
+
+      <h3>🔄 Undo / Redo</h3>
+      <ul>
+        <li><strong>Undo</strong>: <kbd>Ctrl+Z</kbd> (or click the Undo button)</li>
+        <li><strong>Redo</strong>: <kbd>Ctrl+Y</kbd> (or click the Redo button)</li>
+      </ul>
+      <p class="small">📌 <em>History limited to 50 steps. Auto‑saved to LocalStorage after each action.</em></p>
+
+      <h3>📐 Work Area &amp; G‑Code Settings</h3>
+      <p>Located inside the <strong>G‑Code ▾</strong> dropdown:</p>
+      <ul>
+        <li><strong>Work Area (mm)</strong>: Define your CNC bed size (default 40×40 mm). Click <strong>Apply</strong> to update.</li>
+        <li><strong>Z Depth (mm)</strong>: Cutting depth (negative values = down into material, range 0 to –1000).</li>
+        <li><strong>Feed Rate (mm/min)</strong>: Speed of movement (range 10–4800).</li>
+      </ul>
+      <p>After setting these, click <strong>Generate G‑Code</strong> to create the output.</p>
+
+      <h3>📤 Generating &amp; Exporting G‑Code</h3>
+      <ol>
+        <li>Make sure you have at least one shape on the canvas.</li>
+        <li>Adjust work area, Z depth, and feed rate if needed.</li>
+        <li>Click <strong>Generate G‑Code</strong> – the output appears in the text area below.</li>
+        <li>Click <strong>💾 Send to Notes</strong> to copy the G‑Code to your device’s note system (via the Soifgo bridge if available).</li>
+        <li>You can also manually select and copy the G‑Code text from the output field.</li>
+      </ol>
+      <div class="note">
+        <strong>Note:</strong> The generated G‑Code uses <strong>absolute positioning (G90)</strong> and <strong>metric units (G21)</strong>.
+        Safe Z retracts (Z5) are included between operations. All coordinates are clamped to the work area.
+      </div>
+
+      <h3>👆 Touch Helper</h3>
+      <ul>
+        <li>Toggle <strong>Touch Helper</strong> (button in the toolbar) to increase handle size and hit detection radius – ideal for tablets and touchscreens.</li>
+        <li>Status shows <strong>ON</strong> or <strong>OFF</strong> in the info bar.</li>
+      </ul>
+
+      <h3>📐 Properties Modal</h3>
+      <p>Click the <strong>Properties</strong> button to edit the selected object's <strong>absolute coordinates</strong> (relative to the work area):</p>
+      <ul>
+        <li><strong>Rect</strong>: X, Y (bottom‑left corner), Width, Height, Rotation (°)</li>
+        <li><strong>Circle</strong>: Center X, Y, Radius</li>
+        <li><strong>Ellipse</strong>: Center X, Y, Radius X, Radius Y, Rotation (°)</li>
+        <li><strong>Triangle</strong>: Center X, Y, Circumradius, Rotation (°)</li>
+        <li><strong>Line</strong>: Start &amp; End points (X1,Y1, X2,Y2)</li>
+        <li><strong>Arc</strong>: All 3 control points (P1, P2, P3)</li>
+        <li><strong>Polygon</strong>: Edit point list as <code>x1,y1; x2,y2; ...</code> (absolute coordinates)</li>
+        <li><strong>Group</strong>: Center X, Y, Width, Height, Rotation (°) – adjusts all children as a unit.</li>
+      </ul>
+      <p class="small">📌 <em>Values are in <strong>absolute coordinates</strong> (0 to work area size).</em></p>
+
+      <h3>⌨️ Keyboard Shortcuts (Real)</h3>
+      <div class="shortcut-grid">
+        <span class="key">Ctrl+Z</span><span class="action">Undo</span>
+        <span class="key">Ctrl+Y</span><span class="action">Redo</span>
+        <span class="key">Delete / Backspace</span><span class="action">Delete selected</span>
+        <span class="key">Ctrl+C</span><span class="action">Copy selected</span>
+        <span class="key">Ctrl+V</span><span class="action">Paste</span>
+        <span class="key">Esc</span><span class="action">Deselect all</span>
+      </div>
+      <p class="small">💡 <em>Additional shortcuts (like R for Reset View, H for Helper) are not implemented in the current version but can be added by editing the source.</em></p>
+
+      <h3>🧭 Canvas Navigation</h3>
+      <ul>
+        <li><strong>Zoom</strong>: Mouse wheel or pinch‑to‑zoom on touch.</li>
+        <li><strong>Pan</strong>: Right‑click + drag (mouse) or two‑finger drag (touch).</li>
+        <li><strong>Reset View</strong>: Click the <strong>🏠 Reset</strong> button to restore default zoom and pan.</li>
+      </ul>
+
+      <h3>🛠️ Additional Tips</h3>
+      <ul>
+        <li><strong>Groups</strong> are created automatically when you add <strong>Text</strong> or import an image. You can also group objects by selecting them and using <strong>Group</strong> (not yet available as a button – but you can use the Properties modal to adjust the group).</li>
+        <li>To edit individual shapes inside a group, use the <strong>Properties</strong> modal on the whole group to scale, rotate, or reposition it.</li>
+        <li>Always verify your <strong>Work Area</strong> before generating G‑Code to avoid out‑of‑bounds errors.</li>
+        <li>The <strong>Snap</strong> feature is independent of the grid – it snaps to shape centers only, not to a grid.</li>
+        <li>You can use the <strong>Ortho</strong> mode while drawing lines or moving shapes to constrain movement to 45° increments.</li>
+      </ul>
+
+      <p style="text-align:right; color:#6b7280; font-size:0.9rem; margin-top:12px;">
+        <strong>Mini CAD-CAM V2.9.8</strong> &mdash; Full Feature Set &bull; LocalStorage Auto‑Save
+      </p>
+    </div>
+    <!-- ===== END OF UPDATED CAD-CAM GUIDE ===== -->
+
+    <!-- ===== FOOTER ===== -->
     <div class="footer">
       Saeid Moghadam
     </div>
   </div>
 
-    <hr>
-<p style="text-align:center;">
-  <a href="https://soifgo.github.io/soifgo/tutorials/list.html" 
-     style="display:inline-block; padding:10px 20px; background:#0066cc; color:#fff; text-decoration:none; border-radius:5px;">
-    ⬅ Back to Tutorial
-  </a>
-</p>
+  <hr>
+  <p style="text-align:center;">
+    <a href="https://soifgo.github.io/soifgo/tutorials/list.html"
+       style="display:inline-block; padding:10px 20px; background:#0066cc; color:#fff; text-decoration:none; border-radius:5px;">
+      ⬅ Back to Tutorial
+    </a>
+  </p>
 
-
-
-<hr>
-<p style="text-align:center;">
-  <a href="https://soifgo.github.io/soifgo/index.html" 
-     style="display:inline-block; padding:10px 20px; background:#8B4513; color:#fff; text-decoration:none; border-radius:5px;">
-    ⬅ Back to Home
-  </a>
-</p>
-
+  <hr>
+  <p style="text-align:center;">
+    <a href="https://soifgo.github.io/soifgo/index.html"
+       style="display:inline-block; padding:10px 20px; background:#8B4513; color:#fff; text-decoration:none; border-radius:5px;">
+      ⬅ Back to Home
+    </a>
+  </p>
 
 </body>
 </html>
