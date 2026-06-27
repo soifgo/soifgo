@@ -238,8 +238,8 @@
       <p><strong>SoifGo</strong> is an Android application that provides users with advanced capabilities using <strong>buttons and seek bars...</strong></p>
 
       <h3>Contact</h3>
-      <p>Email: <a href="mailto:SSM20985@gmail.com">SSM20985@gmail.com</a></p>
-      <p>Email: <a href="mailto:SSMQQMSS@gmail.com">SSMQQMSS@gmail.com</a></p>
+	   <p>Email: <a href="mailto:SSM20985@gmail.com">SSM20985@gmail.com</a></p>
+       <p>Email: <a href="mailto:SSMQQMSS@gmail.com">SSMQQMSS@gmail.com</a></p>
     </section>
 
     <img src="soifgo_pic01.png" alt="Recommended Converter" class="preview-img" loading="lazy">
@@ -247,23 +247,14 @@
     <div id="totalVisits">Loading...</div>
   </main>
 
-  <footer style="margin-top: 50px; text-align: center; color: #8b949e; border-top: 1px solid #ddd6ce; padding-top: 20px;">
-    <p>
-      Support: <a href="mailto:ssmqqmss@gmail.com" style="color: #8B4513;">ssmqqmss@gmail.com</a>
-      &nbsp;|&nbsp;
-      <a href="policy_soifgo.html" style="color: #8B4513;">Privacy Policy</a>
-    </p>
-  </footer>
-
   <script>
-    // ============================================================
-    //  Tab switching (unchanged)
-    // ============================================================
-
+ 
     function switchTab(sectionId, buttonElement) {
+ 
       document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
       document.querySelectorAll('nav button').forEach(b => b.classList.remove('clicked'));
-
+      
+ 
       document.getElementById(sectionId).classList.add('active');
       buttonElement.classList.add('clicked');
     }
@@ -276,34 +267,40 @@
       window.location.href = "https://github.com/soifgo/soifgo/discussions/3";
     }
 
-    // ============================================================
-    //  FIXED VISIT COUNTER – using countapi.xyz
-    // ============================================================
-
-    async function loadTotal() {
-      const el = document.getElementById("totalVisits");
-      // Show cached value immediately if available
-      const cached = localStorage.getItem('soifgo_visits');
-      if (cached) el.textContent = " Visits : " + cached;
-
+    async function getCount(path) {
       try {
-        const res = await fetch('https://api.countapi.xyz/hit/soifgo/visits');
-        if (!res.ok) throw new Error('Network error');
+        const url = `https://soifgo.goatcounter.com/counter/${path}.json`;
+        const res = await fetch(url);
+        if (!res.ok) return 0;
         const data = await res.json();
-        const count = data.value;
-        el.textContent = " Visits : " + count;
-        localStorage.setItem('soifgo_visits', count);
+        return Number(data.count) || 0;
       } catch (e) {
-        // If fetch fails and no cache, show a fallback
-        if (!cached) el.textContent = " Visits : ?";
+ 
       }
     }
 
+    async function loadTotal() {
+      const a = await getCount("soifgo/");
+      const b = await getCount("soifgo/index.html");
+      const total = a + b;
+      document.getElementById("totalVisits").textContent = " Visits : " + total;
+    }
+
     window.onload = function() {
+     
       switchTab('download', document.getElementById('downloadBtn'));
       loadTotal();
     };
   </script>
+         </div>
 
+    <footer style="margin-top: 50px; text-align: center; color: #8b949e;">
+        <p>
+            Support: <a href="mailto:ssmqqmss@gmail.com" style="color: var(--accent-color);">ssmqqmss@gmail.com</a>
+            &nbsp;|&nbsp;
+            <a href="policy_soifgo.html" style="color: var(--accent-color);">Privacy Policy</a>
+        </p>
+    </footer>
+</div>
 </body>
 </html>
