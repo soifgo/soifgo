@@ -240,16 +240,16 @@
       window.location.href = "https://github.com/soifgo/soifgo/discussions/3";
     }
 
-    async function loadTotal() {
-      try {
-        const res = await fetch("https://soifgo-counter.saeid.workers.dev
-");
-        const data = await res.json();
-        document.getElementById("totalVisits").textContent = "Visits : " + data.visits;
-      } catch (e) {
-        document.getElementById("totalVisits").textContent = "Visits : Error";
-      }
-    }
+async function loadTotal() {
+  try {
+    const res = await fetch("https://soifgo-counter.soifgo.workers.dev");
+    const data = await res.json();
+    document.getElementById("totalVisits").textContent = "Visits : " + data.visits;
+  } catch (e) {
+    document.getElementById("totalVisits").textContent = "Visits : Error";
+  }
+}
+
 
     window.onload = function() {
       switchTab('download', document.getElementById('downloadBtn'));
