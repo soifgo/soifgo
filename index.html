@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <script data-goatcounter="https://soifgo.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 
   <title>SoifGo – Simple Page</title>
 
@@ -16,6 +17,7 @@
       color: #333;
     }
 
+    /* HEADER */
     header {
       background: linear-gradient(135deg, #8B4513, #A0522D);
       color: white;
@@ -40,6 +42,7 @@
       font-size: 1.1em;
     }
 
+    /* NAVIGATION */
     nav {
       display: flex;
       justify-content: center;
@@ -72,6 +75,7 @@
       transform: translateY(2px);
     }
 
+    /* SECTIONS */
     main {
       max-width: 850px;
       margin: auto;
@@ -95,6 +99,7 @@
       color: #8B4513;
     }
 
+    /* DOWNLOAD LINKS */
     #download ul {
       list-style: none;
       padding: 0;
@@ -112,6 +117,7 @@
       text-decoration: underline;
     }
 
+    /* SECURITY BOX */
     .security-box {
       margin-top: 25px;
       padding: 15px;
@@ -126,6 +132,7 @@
       font-weight: bold;
     }
 
+    /* IMAGE */
     img.preview-img {
       max-width: 100%;
       height: auto;
@@ -134,12 +141,28 @@
       display: block;
     }
 
+    /* VISIT COUNTER */
     #totalVisits {
       text-align: center;
       margin: 40px 0;
       font-size: 22px;
       font-weight: bold;
       color: #8B4513;
+    }
+
+    /* MOBILE */
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.7em;
+        flex-direction: column;
+      }
+      nav button {
+        width: 95%;
+        font-size: 1.2em;
+      }
+      section {
+        padding: 1.2em;
+      }
     }
   </style>
 </head>
@@ -166,7 +189,7 @@
       <h2>Download SoifGo</h2>
 
       <ul>
-        <li><a href="https://github.com/soifgo/soifgo/releases/download/1.41/soifgo.apk">📥 Download soifgo.apk (v1.41)</a></li>
+        <li><a href="https://github.com/soifgo/soifgo/releases/download/1.40/soifgo.apk">📥 Download soifgo.apk (v1.40)</a></li>
         <li><a href="https://apkpure.com/soifgo/soifgo.saeidmoghadam">📦 Download from APKPure</a></li>
       </ul>
 
@@ -215,8 +238,8 @@
       <p><strong>SoifGo</strong> is an Android application that provides users with advanced capabilities using <strong>buttons and seek bars...</strong></p>
 
       <h3>Contact</h3>
-      <p>Email: <a href="mailto:SSM20985@gmail.com">SSM20985@gmail.com</a></p>
-      <p>Email: <a href="mailto:SSMQQMSS@gmail.com">SSMQQMSS@gmail.com</a></p>
+	   <p>Email: <a href="mailto:SSM20985@gmail.com">SSM20985@gmail.com</a></p>
+       <p>Email: <a href="mailto:SSMQQMSS@gmail.com">SSMQQMSS@gmail.com</a></p>
     </section>
 
     <img src="soifgo_pic01.png" alt="Recommended Converter" class="preview-img" loading="lazy">
@@ -225,9 +248,13 @@
   </main>
 
   <script>
+ 
     function switchTab(sectionId, buttonElement) {
+ 
       document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
       document.querySelectorAll('nav button').forEach(b => b.classList.remove('clicked'));
+      
+ 
       document.getElementById(sectionId).classList.add('active');
       buttonElement.classList.add('clicked');
     }
@@ -240,30 +267,40 @@
       window.location.href = "https://github.com/soifgo/soifgo/discussions/3";
     }
 
-async function loadTotal() {
-  try {
-    const res = await fetch("https://soifgo-counter.soifgo.workers.dev");
-    const data = await res.json();
-    document.getElementById("totalVisits").textContent = "Visits : " + data.visits;
-  } catch (e) {
-    document.getElementById("totalVisits").textContent = "Visits : Error";
-  }
-}
+    async function getCount(path) {
+      try {
+        const url = `https://soifgo.goatcounter.com/counter/${path}.json`;
+        const res = await fetch(url);
+        if (!res.ok) return 0;
+        const data = await res.json();
+        return Number(data.count) || 0;
+      } catch (e) {
+ 
+      }
+    }
 
+    async function loadTotal() {
+      const a = await getCount("soifgo/");
+      const b = await getCount("soifgo/index.html");
+      const total = a + b;
+      document.getElementById("totalVisits").textContent = " Visits : " + total;
+    }
 
     window.onload = function() {
+     
       switchTab('download', document.getElementById('downloadBtn'));
       loadTotal();
     };
   </script>
+         </div>
 
-  <footer style="margin-top: 50px; text-align: center; color: #8b949e;">
-    <p>
-      Support: <a href="mailto:ssmqqmss@gmail.com" style="color: var(--accent-color);">ssmqqmss@gmail.com</a>
-      &nbsp;|&nbsp;
-      <a href="policy_soifgo.html" style="color: var(--accent-color);">Privacy Policy</a>
-    </p>
-  </footer>
-
+    <footer style="margin-top: 50px; text-align: center; color: #8b949e;">
+        <p>
+            Support: <a href="mailto:ssmqqmss@gmail.com" style="color: var(--accent-color);">ssmqqmss@gmail.com</a>
+            &nbsp;|&nbsp;
+            <a href="policy_soifgo.html" style="color: var(--accent-color);">Privacy Policy</a>
+        </p>
+    </footer>
+</div>
 </body>
 </html>
