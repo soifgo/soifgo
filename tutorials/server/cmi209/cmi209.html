@@ -497,48 +497,57 @@ DIR</pre>
         </video>
 
     <!-- ============================================================== -->
-    <!-- =====  UPDATED: MINI CAD-CAM USER GUIDE (ENGLISH)  ===== -->
+    <!-- =====  UPDATED: MINI CAD-CAM USER GUIDE (ENGLISH) v3.0.0  ===== -->
     <!-- ============================================================== -->
     <div class="card" style="border:2px solid #2563eb;">
-      <h2 style="color:#2563eb;">📐 Mini CAD-CAM V2.9.8 – Complete User Guide</h2>
+      <h2 style="color:#2563eb;">?? Mini CAD-CAM V3.0.0 � Complete User Guide</h2>
       <p style="color:#475569;">
         This is a <strong>lightweight CAD-CAM tool</strong> for creating 2D vector shapes, editing them, and generating
-        <strong>G‑Code</strong> for CNC machines. All coordinates are in <strong>millimeters (mm)</strong>
-        within a user‑defined work area. The app is fully touch‑compatible and saves your work automatically in your browser.
+        <strong>G-Code</strong> for CNC machines. All coordinates are in <strong>millimeters (mm)</strong>
+        within a user-defined work area. The app is fully touch-compatible and saves your work automatically in your browser.
       </p>
 
-      <h3>🖱️ Interface Overview</h3>
+      <h3>? What's New in V3.0.0</h3>
+      <ul>
+        <li><strong>?? Magnifier</strong>: Tap &amp; hold (or hover) on the canvas to see a zoomed-in view of the precise area � ideal for fine adjustments.</li>
+        <li><strong>??? Canny Edge Detection</strong>: Import images with <strong>advanced edge detection</strong> � adjust <em>Threshold</em> and <em>Connection Distance</em> for clean, accurate vector lines.</li>
+        <li><strong>?? Shortcut P</strong>: Quick toggle for Pan mode (no need to reach for the button).</li>
+        <li><strong>?? Simple vs Canny</strong>: Choose between the fast classic method or the high-quality Canny algorithm when converting images.</li>
+        <li><strong>?? Improved Arc Resolution</strong>: Better interpolation for smoother arcs and circles.</li>
+      </ul>
+
+      <h3>??? Interface Overview</h3>
       <div class="guide-grid">
         <div class="item"><strong>Toolbar</strong><span>All drawing, editing, and export tools</span></div>
         <div class="item"><strong>Canvas</strong><span>Interactive drawing area (scroll to zoom, right-drag or two-finger drag to pan)</span></div>
         <div class="item"><strong>Info Bar</strong><span>Shows current mode, shape count, selected object, zoom level, pan offset, helper status, undo stack, work area size</span></div>
-        <div class="item"><strong>G‑Code Output</strong><span>Displays generated G‑Code (ready to copy or send to the machine)</span></div>
+        <div class="item"><strong>G-Code Output</strong><span>Displays generated G-Code (ready to copy or send to the machine)</span></div>
       </div>
 
-      <h3>🎨 Drawing Shapes</h3>
-      <p>Click the <strong>Shapes ▾</strong> dropdown and choose:</p>
+      <h3>?? Drawing Shapes</h3>
+      <p>Click the <strong>Shapes ?</strong> dropdown and choose:</p>
       <div class="guide-grid">
         <div class="item"><strong>Rect</strong><span>Adds a centered rectangle</span></div>
         <div class="item"><strong>Circle</strong><span>Adds a centered circle</span></div>
         <div class="item"><strong>Ellipse</strong><span>Adds a centered ellipse</span></div>
         <div class="item"><strong>Triangle</strong><span>Adds an equilateral triangle</span></div>
         <div class="item"><strong>Line</strong><span>Click once for start point, move mouse, click again to place the end point (supports Ortho mode)</span></div>
-        <div class="item"><strong>Arc</strong><span>Click 3 points: <strong>start → middle → end</strong> to define the arc path</span></div>
+        <div class="item"><strong>Arc</strong><span>Click 3 points: <strong>start ? middle ? end</strong> to define the arc path</span></div>
         <div class="item"><strong>Text</strong><span>Opens a modal to enter any text, adjust size, scale, character spacing, and smoothness quality</span></div>
         <div class="item"><strong>Freehand</strong><span>Click and drag to draw a freeform polygon (release to finalize)</span></div>
-        <div class="item"><strong>Import Image</strong><span>Load an image, adjust edge detection threshold, and convert it to vector lines</span></div>
+        <div class="item"><strong>Import Image</strong><span>Load an image, adjust edge detection threshold, and convert it to vector lines (supports Canny or simple method)</span></div>
       </div>
-      <p class="small">💡 <em>Text and imported images are converted into <strong>polygon groups</strong> (editable as a single group).</em></p>
+      <p class="small">?? <em>Text and imported images are converted into <strong>polygon groups</strong> (editable as a single group).</em></p>
 
-      <h3>✏️ Editing Shapes</h3>
-      <p>Click the <strong>Edit ▾</strong> dropdown or use direct manipulation:</p>
+      <h3>?? Editing Shapes</h3>
+      <p>Click the <strong>Edit ?</strong> dropdown or use direct manipulation:</p>
       <div class="guide-grid">
         <div class="item"><strong>Select</strong><span>Click any shape to select it (green outline appears). If multiple overlap, click again to cycle through them.</span></div>
         <div class="item"><strong>Resize</strong><span>Drag corner handles to scale the shape (or resize a whole group).</span></div>
         <div class="item"><strong>Rotate</strong><span>Click the orange rotation handle (circle) and drag to rotate the selected object.</span></div>
-        <div class="item"><strong>Delete</strong><span>Removes the selected shape(s) – also works with <kbd>Delete</kbd> or <kbd>Backspace</kbd>.</span></div>
+        <div class="item"><strong>Delete</strong><span>Removes the selected shape(s) � also works with <kbd>Delete</kbd> or <kbd>Backspace</kbd>.</span></div>
         <div class="item"><strong>Copy</strong><span>Copies selected shape (or group) to the clipboard.</span></div>
-        <div class="item"><strong>Paste</strong><span>Pastes the copied object (slightly offset) – also works with <kbd>Ctrl+V</kbd>.</span></div>
+        <div class="item"><strong>Paste</strong><span>Pastes the copied object (slightly offset) � also works with <kbd>Ctrl+V</kbd>.</span></div>
       </div>
       <ul>
         <li><strong>Move</strong>: Select then drag the shape (or group).</li>
@@ -547,64 +556,83 @@ DIR</pre>
         <li><strong>Rotate (group)</strong>: Select the group, then drag its orange rotation handle.</li>
       </ul>
 
-      <h3>🧰 Tools (Tools ▾)</h3>
+      <h3>?? Tools (Tools ?)</h3>
       <div class="guide-grid">
-        <div class="item"><strong>Snap</strong><span>Toggles snap-to‑center points of all shapes (shows a crosshair at shape centers). Helps with precise alignment.</span></div>
-        <div class="item"><strong>Ortho</strong><span>Restricts movement/line drawing to <strong>0°, 45°, 90°, 135°</strong> (increments of 45°).</span></div>
+        <div class="item"><strong>Snap</strong><span>Toggles snap-to-center points of all shapes (shows a crosshair at shape centers). Helps with precise alignment.</span></div>
+        <div class="item"><strong>Ortho</strong><span>Restricts movement/line drawing to <strong>0�, 45�, 90�, 135�</strong> (increments of 45�).</span></div>
         <div class="item"><strong>Center</strong><span>Shows a small orange dot at the center of every shape (useful for visual reference).</span></div>
         <div class="item"><strong>Clear All</strong><span>Deletes all shapes (confirmation required).</span></div>
       </div>
 
-      <h3>🔄 Undo / Redo</h3>
+      <h3>?? Undo / Redo</h3>
       <ul>
         <li><strong>Undo</strong>: <kbd>Ctrl+Z</kbd> (or click the Undo button)</li>
         <li><strong>Redo</strong>: <kbd>Ctrl+Y</kbd> (or click the Redo button)</li>
       </ul>
-      <p class="small">📌 <em>History limited to 50 steps. Auto‑saved to LocalStorage after each action.</em></p>
+      <p class="small">?? <em>History limited to 50 steps. Auto-saved to LocalStorage after each action.</em></p>
 
-      <h3>📐 Work Area &amp; G‑Code Settings</h3>
-      <p>Located inside the <strong>G‑Code ▾</strong> dropdown:</p>
+      <h3>?? Work Area &amp; G-Code Settings</h3>
+      <p>Located inside the <strong>G-Code ?</strong> dropdown:</p>
       <ul>
-        <li><strong>Work Area (mm)</strong>: Define your CNC bed size (default 40×40 mm). Click <strong>Apply</strong> to update.</li>
-        <li><strong>Z Depth (mm)</strong>: Cutting depth (negative values = down into material, range 0 to –1000).</li>
-        <li><strong>Feed Rate (mm/min)</strong>: Speed of movement (range 10–4800).</li>
+        <li><strong>Work Area (mm)</strong>: Define your CNC bed size (default 40�40 mm). Click <strong>Apply</strong> to update.</li>
+        <li><strong>Z Depth (mm)</strong>: Cutting depth (negative values = down into material, range 0 to �1000).</li>
+        <li><strong>Feed Rate (mm/min)</strong>: Speed of movement (range 10�4800).</li>
       </ul>
-      <p>After setting these, click <strong>Generate G‑Code</strong> to create the output.</p>
+      <p>After setting these, click <strong>Generate G-Code</strong> to create the output.</p>
 
-      <h3>📤 Generating &amp; Exporting G‑Code</h3>
+      <h3>?? Generating &amp; Exporting G-Code</h3>
       <ol>
         <li>Make sure you have at least one shape on the canvas.</li>
         <li>Adjust work area, Z depth, and feed rate if needed.</li>
-        <li>Click <strong>Generate G‑Code</strong> – the output appears in the text area below.</li>
-        <li>Click <strong>💾 Send to Notes</strong> to copy the G‑Code to your device’s note system (via the Soifgo bridge if available).</li>
-        <li>You can also manually select and copy the G‑Code text from the output field.</li>
+        <li>Click <strong>Generate G-Code</strong> � the output appears in the text area below.</li>
+        <li>Click <strong>?? Send to Notes</strong> to copy the G-Code to your device�s note system (via the Soifgo bridge if available).</li>
+        <li>You can also manually select and copy the G-Code text from the output field.</li>
       </ol>
       <div class="note">
-        <strong>Note:</strong> The generated G‑Code uses <strong>absolute positioning (G90)</strong> and <strong>metric units (G21)</strong>.
+        <strong>Note:</strong> The generated G-Code uses <strong>absolute positioning (G90)</strong> and <strong>metric units (G21)</strong>.
         Safe Z retracts (Z5) are included between operations. All coordinates are clamped to the work area.
       </div>
 
-      <h3>👆 Touch Helper</h3>
+      <h3>?? Touch Helper &amp; Pan Mode</h3>
       <ul>
-        <li>Toggle <strong>Touch Helper</strong> (button in the toolbar) to increase handle size and hit detection radius – ideal for tablets and touchscreens.</li>
+        <li><strong>Touch Helper</strong> (button in toolbar): increases handle size and hit detection radius � ideal for tablets and touchscreens.</li>
+        <li><strong>Pan Mode</strong>: Click the <strong>? Pan</strong> button (or press <kbd>P</kbd>) to temporarily disable shape selection and move the view freely. Drag with mouse/touch to pan.</li>
         <li>Status shows <strong>ON</strong> or <strong>OFF</strong> in the info bar.</li>
       </ul>
 
-      <h3>📐 Properties Modal</h3>
+      <h3>?? Magnifier (New)</h3>
+      <p>
+        On the canvas, <strong>tap &amp; hold</strong> (touch) or <strong>hover</strong> (mouse) to activate a floating magnifier.
+        It shows a 4� zoomed view of the area around your finger/cursor, with a crosshair, making it easy to position elements with sub-pixel accuracy.
+      </p>
+
+      <h3>??? Import Image � Canny Edge Detection (New)</h3>
+      <p>
+        In the <strong>Import Image</strong> modal, after loading an image, you get <strong>live preview</strong> of the extracted lines.
+        Adjust:
+      </p>
+      <ul>
+        <li><strong>Threshold</strong> (0�255): Controls edge sensitivity � lower values detect more edges, higher values only strong edges.</li>
+        <li><strong>Connection Distance</strong> (0.01�2.0): Maximum gap between edge points to be connected into a continuous line.</li>
+        <li><strong>? Use Canny</strong> checkbox: Toggle between the fast <em>simple</em> method and the high-quality <em>Canny</em> algorithm (slower but much cleaner).</li>
+      </ul>
+      <p class="small">?? <em>Canny uses bilinear interpolation and hysteresis for sub-pixel edge tracing � perfect for converting photos and sketches into CNC-ready vectors.</em></p>
+
+      <h3>?? Properties Modal</h3>
       <p>Click the <strong>Properties</strong> button to edit the selected object's <strong>absolute coordinates</strong> (relative to the work area):</p>
       <ul>
-        <li><strong>Rect</strong>: X, Y (bottom‑left corner), Width, Height, Rotation (°)</li>
+        <li><strong>Rect</strong>: X, Y (bottom-left corner), Width, Height, Rotation (�)</li>
         <li><strong>Circle</strong>: Center X, Y, Radius</li>
-        <li><strong>Ellipse</strong>: Center X, Y, Radius X, Radius Y, Rotation (°)</li>
-        <li><strong>Triangle</strong>: Center X, Y, Circumradius, Rotation (°)</li>
+        <li><strong>Ellipse</strong>: Center X, Y, Radius X, Radius Y, Rotation (�)</li>
+        <li><strong>Triangle</strong>: Center X, Y, Circumradius, Rotation (�)</li>
         <li><strong>Line</strong>: Start &amp; End points (X1,Y1, X2,Y2)</li>
         <li><strong>Arc</strong>: All 3 control points (P1, P2, P3)</li>
         <li><strong>Polygon</strong>: Edit point list as <code>x1,y1; x2,y2; ...</code> (absolute coordinates)</li>
-        <li><strong>Group</strong>: Center X, Y, Width, Height, Rotation (°) – adjusts all children as a unit.</li>
+        <li><strong>Group</strong>: Center X, Y, Width, Height, Rotation (�) � adjusts all children as a unit.</li>
       </ul>
-      <p class="small">📌 <em>Values are in <strong>absolute coordinates</strong> (0 to work area size).</em></p>
+      <p class="small">?? <em>Values are in <strong>absolute coordinates</strong> (0 to work area size).</em></p>
 
-      <h3>⌨️ Keyboard Shortcuts (Real)</h3>
+      <h3>?? Keyboard Shortcuts (Real)</h3>
       <div class="shortcut-grid">
         <span class="key">Ctrl+Z</span><span class="action">Undo</span>
         <span class="key">Ctrl+Y</span><span class="action">Redo</span>
@@ -612,27 +640,29 @@ DIR</pre>
         <span class="key">Ctrl+C</span><span class="action">Copy selected</span>
         <span class="key">Ctrl+V</span><span class="action">Paste</span>
         <span class="key">Esc</span><span class="action">Deselect all</span>
+        <span class="key">P</span><span class="action">Toggle Pan mode</span>
       </div>
-      <p class="small">💡 <em>Additional shortcuts (like R for Reset View, H for Helper) are not implemented in the current version but can be added by editing the source.</em></p>
 
-      <h3>🧭 Canvas Navigation</h3>
+      <h3>?? Canvas Navigation</h3>
       <ul>
-        <li><strong>Zoom</strong>: Mouse wheel or pinch‑to‑zoom on touch.</li>
-        <li><strong>Pan</strong>: Right‑click + drag (mouse) or two‑finger drag (touch).</li>
-        <li><strong>Reset View</strong>: Click the <strong>🏠 Reset</strong> button to restore default zoom and pan.</li>
+        <li><strong>Zoom</strong>: Mouse wheel or pinch-to-zoom on touch.</li>
+        <li><strong>Pan</strong>: Right-click + drag (mouse) or two-finger drag (touch). Also use <strong>Pan mode</strong> (button or <kbd>P</kbd>) for one-finger dragging.</li>
+        <li><strong>Magnifier</strong>: Tap &amp; hold (touch) or hover (mouse) to see a detailed zoomed view.</li>
+        <li><strong>Reset View</strong>: Click the <strong>?? Reset</strong> button to restore default zoom and pan.</li>
       </ul>
 
-      <h3>🛠️ Additional Tips</h3>
+      <h3>??? Additional Tips</h3>
       <ul>
-        <li><strong>Groups</strong> are created automatically when you add <strong>Text</strong> or import an image. You can also group objects by selecting them and using <strong>Group</strong> (not yet available as a button – but you can use the Properties modal to adjust the group).</li>
+        <li><strong>Groups</strong> are created automatically when you add <strong>Text</strong> or import an image. You can also group objects by selecting them and using <strong>Group</strong> (not yet available as a button � but you can use the Properties modal to adjust the group).</li>
         <li>To edit individual shapes inside a group, use the <strong>Properties</strong> modal on the whole group to scale, rotate, or reposition it.</li>
-        <li>Always verify your <strong>Work Area</strong> before generating G‑Code to avoid out‑of‑bounds errors.</li>
-        <li>The <strong>Snap</strong> feature is independent of the grid – it snaps to shape centers only, not to a grid.</li>
-        <li>You can use the <strong>Ortho</strong> mode while drawing lines or moving shapes to constrain movement to 45° increments.</li>
+        <li>Always verify your <strong>Work Area</strong> before generating G-Code to avoid out-of-bounds errors.</li>
+        <li>The <strong>Snap</strong> feature is independent of the grid � it snaps to shape centers only, not to a grid.</li>
+        <li>You can use the <strong>Ortho</strong> mode while drawing lines or moving shapes to constrain movement to 45� increments.</li>
+        <li>When importing images, experiment with <strong>Threshold</strong> and <strong>Connection Distance</strong> to get the best vectorization for your specific image.</li>
       </ul>
 
       <p style="text-align:right; color:#6b7280; font-size:0.9rem; margin-top:12px;">
-        <strong>Mini CAD-CAM V2.9.8</strong> &mdash; Full Feature Set &bull; LocalStorage Auto‑Save
+        <strong>Mini CAD-CAM V3.0.0</strong> &mdash; Full Feature Set &bull; LocalStorage Auto-Save &bull; Canny Edge &bull; Magnifier
       </p>
     </div>
     <!-- ===== END OF UPDATED CAD-CAM GUIDE ===== -->
