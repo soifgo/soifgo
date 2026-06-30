@@ -1,18 +1,16 @@
-```yaml
 name: Sync GitHub to SourceForge
 
 on:
   push:
     branches:
-      - main
+      - soifgo
 
 jobs:
   sync:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -27,17 +25,12 @@ jobs:
         run: |
           ssh -T -i ~/.ssh/id_ed25519 anyscan209@git.code.sf.net || true
 
-      - name: Configure Git
-        run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
-
       - name: Add SourceForge Remote
         run: |
           git remote remove sourceforge || true
-          git remote add sourceforge ssh://anyscan209@git.code.sf.net/p/soifgo/code
+          git remote add sourceforge \
+            ssh://anyscan209@git.code.sf.net/p/soifgo/code
 
       - name: Push to SourceForge
         run: |
-          git push sourceforge HEAD:main --force
-```
+          git push sourceforge HEAD:soifgo --force
