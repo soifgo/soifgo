@@ -24,4 +24,4 @@ jobs:
       - name: Push to SourceForge
         run: |
           git remote add sourceforge ssh://anyscan209@git.code.sf.net/p/soifgo/code
-          git push sourceforge HEAD:main --force
+          git push sourceforge HEAD:soifgo --force
