@@ -3,9 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <script data-goatcounter="https://soifgo.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 
-  <title>SoifGo – Simple Page</title>
+  <title>SoifGo — Android Bluetooth & MQTT IoT Controller</title>
+
+  <!-- SEO: Description -->
+  <meta name="description" content="SoifGo یک اپلیکیشن اندروید برای کنترل دستگاه‌ها، سنسورها و پروژه‌های IoT با استفاده از Bluetooth، MQTT، دکمه‌ها و SeekBarها است. این ابزار سبک، سریع و چندزبانه برای کنترل ESP32، Arduino، HC-05، ESP8266 و پروژه‌های هوشمند طراحی شده است.">
+
+  <!-- SEO: Keywords -->
+  <meta name="keywords" content="
+SoifGo, Android IoT Controller, Bluetooth Controller, MQTT Controller, UI Controller,
+SeekBar Controller, Button Controller, Android Remote Control, IoT mobile controller,
+Bluetooth HC-05 control, ESP32 controller app, ESP8266 MQTT control, Arduino Bluetooth control,
+IoT dashboard, Android slider control, Android button control, MQTT mobile app,
+Bluetooth remote app, IoT automation app, Android automation tools,
+کنترل بلوتوث اندروید, کنترل MQTT اندروید, کنترل ESP32, کنترل Arduino,
+اپ کنترل IoT, اپ کنترل دستگاه, اپ کنترل از راه دور, اپ کنترل سنسور">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="SoifGo — Android Bluetooth & MQTT IoT Controller">
+  <meta property="og:description" content="Control ESP32, Arduino, HC-05, ESP8266 and IoT devices using Bluetooth, MQTT, buttons and seek bars. Lightweight, fast, multilingual.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://soifgo.github.io">
+  <meta property="og:image" content="https://soifgo.github.io/soifgo-logo.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SoifGo — IoT Controller for Android">
+  <meta name="twitter:description" content="Android app for controlling IoT devices using Bluetooth, MQTT, buttons and seek bars. Supports ESP32, Arduino, HC-05, ESP8266.">
+  <meta name="twitter:image" content="https://soifgo.github.io/soifgo-logo.png">
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "SoifGo",
+    "operatingSystem": "Android",
+    "applicationCategory": "Utility, IoT Controller, Bluetooth Tool",
+    "description": "SoifGo is an Android application for controlling IoT devices using Bluetooth, MQTT, buttons and seek bars. Supports ESP32, Arduino, HC-05, ESP8266.",
+    "url": "https://soifgo.github.io",
+    "creator": {
+      "@type": "Person",
+      "name": "Saeid Moghadam"
+    }
+  }
+  </script>
+
+  <!-- GoatCounter Analytics -->
+  <script data-goatcounter="https://soifgo.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 
   <style>
     body {
@@ -17,7 +62,6 @@
       color: #333;
     }
 
-    /* HEADER */
     header {
       background: linear-gradient(135deg, #8B4513, #A0522D);
       color: white;
@@ -42,7 +86,6 @@
       font-size: 1.1em;
     }
 
-    /* NAVIGATION */
     nav {
       display: flex;
       justify-content: center;
@@ -75,7 +118,6 @@
       transform: translateY(2px);
     }
 
-    /* SECTIONS */
     main {
       max-width: 850px;
       margin: auto;
@@ -99,7 +141,6 @@
       color: #8B4513;
     }
 
-    /* DOWNLOAD LINKS */
     #download ul {
       list-style: none;
       padding: 0;
@@ -117,7 +158,6 @@
       text-decoration: underline;
     }
 
-    /* SECURITY BOX */
     .security-box {
       margin-top: 25px;
       padding: 15px;
@@ -132,7 +172,6 @@
       font-weight: bold;
     }
 
-    /* IMAGE */
     img.preview-img {
       max-width: 100%;
       height: auto;
@@ -141,7 +180,6 @@
       display: block;
     }
 
-    /* VISIT COUNTER */
     #totalVisits {
       text-align: center;
       margin: 40px 0;
@@ -150,7 +188,6 @@
       color: #8B4513;
     }
 
-    /* MOBILE */
     @media (max-width: 600px) {
       header h1 {
         font-size: 1.7em;
@@ -189,7 +226,7 @@
       <h2>Download SoifGo</h2>
 
       <ul>
-	    <li><a href="soifgo.zip">📦 Download soifgo (v1.41) - ZIP Package</a></li>
+        <li><a href="soifgo.zip">📦 Download soifgo (v1.41) - ZIP Package</a></li>
         <li><a href="https://apkpure.com/soifgo/soifgo.saeidmoghadam">📦 Download from APKPure</a></li>
       </ul>
 
@@ -238,8 +275,8 @@
       <p><strong>SoifGo</strong> is an Android application that provides users with advanced capabilities using <strong>buttons and seek bars...</strong></p>
 
       <h3>Contact</h3>
-	   <p>Email: <a href="mailto:SSM20985@gmail.com">SSM20985@gmail.com</a></p>
-       <p>Email: <a href="mailto:SSMQQMSS@gmail.com">SSMQQMSS@gmail.com</a></p>
+      <p>Email: <a href="mailto:SSM20985@gmail.com">SSM20985@gmail.com</a></p>
+      <p>Email: <a href="mailto:SSMQQMSS@gmail.com">SSMQQMSS@gmail.com</a></p>
     </section>
 
     <img src="soifgo_pic01.png" alt="Recommended Converter" class="preview-img" loading="lazy">
@@ -248,13 +285,9 @@
   </main>
 
   <script>
- 
     function switchTab(sectionId, buttonElement) {
- 
       document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
       document.querySelectorAll('nav button').forEach(b => b.classList.remove('clicked'));
-      
- 
       document.getElementById(sectionId).classList.add('active');
       buttonElement.classList.add('clicked');
     }
@@ -274,9 +307,7 @@
         if (!res.ok) return 0;
         const data = await res.json();
         return Number(data.count) || 0;
-      } catch (e) {
- 
-      }
+      } catch (e) {}
     }
 
     async function loadTotal() {
@@ -287,20 +318,18 @@
     }
 
     window.onload = function() {
-     
       switchTab('download', document.getElementById('downloadBtn'));
       loadTotal();
     };
   </script>
-         </div>
 
-    <footer style="margin-top: 50px; text-align: center; color: #8b949e;">
-        <p>
-            Support: <a href="mailto:ssmqqmss@gmail.com" style="color: var(--accent-color);">ssmqqmss@gmail.com</a>
-            &nbsp;|&nbsp;
-            <a href="policy_soifgo.html" style="color: var(--accent-color);">Privacy Policy</a>
-        </p>
-    </footer>
-</div>
+  <footer style="margin-top: 50px; text-align: center; color: #8b949e;">
+    <p>
+      Support: <a href="mailto:ssmqqmss@gmail.com" style="color: var(--accent-color);">ssmqqmss@gmail.com</a>
+      &nbsp;|&nbsp;
+      <a href="policy_soifgo.html" style="color: var(--accent-color);">Privacy Policy</a>
+    </p>
+  </footer>
+
 </body>
 </html>
