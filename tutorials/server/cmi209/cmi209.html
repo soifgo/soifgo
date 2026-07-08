@@ -3,7 +3,55 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CMI209 Module</title>
+
+  <!-- ===== PRIMARY SEO ===== -->
+  <title>CMI209 CNC Module — ATmega328P, Soifgo Bluetooth & G-Code Controller</title>
+  <meta name="description" content="CMI209 is a CNC-like module based on ATmega328P, controlled via Soifgo Android app over Bluetooth (115200 baud). Supports G-code, manual arcs, homing, limit switches, PWM spindle, and Mini CAD-CAM v3.0.0 with Canny edge detection." />
+  <meta name="keywords" content="CMI209, ATmega328P CNC, Soifgo controller, Bluetooth CNC, G-code interpreter, Mini CAD-CAM, Canny edge detection, Arduino CNC, stepper driver, PWM spindle, homing, limit switch, emergency stop, CNC mobile interface, Saeid Moghadam" />
+  <link rel="canonical" href="https://soifgo.github.io/soifgo/tutorials/server/cmi209/cmi209.html" />
+
+  <!-- ===== OPEN GRAPH (SOCIAL) ===== -->
+  <meta property="og:title" content="CMI209 — ATmega328P CNC Module with Bluetooth & Soifgo" />
+  <meta property="og:description" content="Complete CNC module: G-code, arc drawing, homing, spindle PWM, limit switches, and Mini CAD-CAM V3.0 with Canny edge detection. Controlled via Soifgo Android app." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://soifgo.github.io/soifgo/tutorials/server/cmi209/cmi209.html" />
+  <meta property="og:image" content="https://soifgo.github.io/soifgo/tutorials/server/cmi209/cmi209_01.jpg" />
+  <meta property="og:image:width" content="800" />
+  <meta property="og:image:height" content="600" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- ===== TWITTER CARD ===== -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="CMI209 CNC Module — ATmega328P, Bluetooth, G-Code & Mini CAD-CAM" />
+  <meta name="twitter:description" content="CNC controller module with Soifgo app, G-code interpreter, homing, limit switches, spindle PWM, and integrated Mini CAD-CAM V3 with Canny edge detection." />
+  <meta name="twitter:image" content="https://soifgo.github.io/soifgo/tutorials/server/cmi209/cmi209_01.jpg" />
+
+  <!-- ===== STRUCTURED DATA (JSON-LD) ===== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "CMI209 CNC Module",
+    "description": "ATmega328P based CNC-like module with Bluetooth interface (115200 baud). Supports G-code, arcs, homing, limit switches, PWM spindle, and Mini CAD-CAM V3.0.0 with Canny edge detection.",
+    "brand": {
+      "@type": "Brand",
+      "name": "Soifgo"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock"
+    },
+    "image": "https://soifgo.github.io/soifgo/tutorials/server/cmi209/cmi209_01.jpg",
+    "creator": {
+      "@type": "Person",
+      "name": "Saeid Moghadam"
+    }
+  }
+  </script>
+
+  <!-- ===== STYLES (same as original, fully preserved) ===== -->
   <style>
     :root{
       --bg:#f7f9fc;
@@ -184,7 +232,7 @@
     <!-- ===== HEADER ===== -->
     <div class="header">
       <h1>CMi209</h1>
-      <img src="cmi209_01.jpg" alt="Wiring 1">
+      <img src="cmi209_01.jpg" alt="CMI209 CNC Module main board" style="border-radius: 12px; margin-top: 8px;">
     </div>
 
     <!-- ===== OVERVIEW ===== -->
@@ -197,7 +245,7 @@
       </p>
       <div class="note">
         <strong>Note:</strong> Before using the Bluetooth module, it must be set to <strong>115200 baud</strong>.
-        <img src="cmi209_02.png" alt="Wiring 1">
+        <img src="cmi209_02.png" alt="Bluetooth wiring diagram" style="margin-top: 8px;">
       </div>
       <p>
         The following files are included in the project: PCB file, programmer file, BASCOM file, Proteus file, and reference images. All of these files are available for download at the end of the page.
@@ -369,7 +417,7 @@ A0B360X20Y20Z-1</pre>
       <div class="note">
         Three normally-open switches should be installed for X home, Y home, and Z home.
         The Z home switch should allow some extra travel, at least <strong>6 mm to 10 mm</strong>, because homing includes position zero and the safe tool height is about <strong>6 mm</strong>.
-        <img src="limit_switch.png" alt="Wiring 1">
+        <img src="limit_switch.png" alt="Limit switch wiring" style="margin-top: 8px;">
       </div>
     </div>
 
@@ -414,218 +462,208 @@ STEP
 DIR</pre>
     </div>
 
-    <!-- ===== VIDEOS ===== -->
+    <!-- ===== VIDEOS & FILES ===== -->
     <div class="card">
       <h2>Video and Usage Sections</h2>
       <ul>
-        <li>How to program the module(USBASP)</li>
-        <img src="programmer.jpg" alt="Wiring 1">
-        <video controls width="80%" height="500">
+        <li>How to program the module (USBASP)</li>
+        <img src="programmer.jpg" alt="USBASP programmer" style="margin: 8px 0;">
+        <video controls width="100%" style="max-height:400px; border-radius:12px; margin:8px 0;">
           <source src="Avrdude_Programing.mp4" type="video/mp4">
           Your browser does not support the video tag.
         </video>
 
         <li>How to design sample pages in Soifgo</li>
-        <video controls width="80%" height="500">
+        <video controls width="100%" style="max-height:400px; border-radius:12px; margin:8px 0;">
           <source src="design01.mp4" type="video/mp4">
-          Your browser does not support the video tag.
         </video>
-        <video controls width="80%" height="500">
+        <video controls width="100%" style="max-height:400px; border-radius:12px; margin:8px 0;">
           <source src="design02.mp4" type="video/mp4">
-          Your browser does not support the video tag.
         </video>
 
         <li>Sample design using Aspire software and export file creation</li>
-        <video controls width="80%" height="500">
+        <video controls width="100%" style="max-height:400px; border-radius:12px; margin:8px 0;">
           <source src="design03.mp4" type="video/mp4">
-          Your browser does not support the video tag.
         </video>
 
         <li>How to transfer the Aspire export file to the phone</li>
-        <video controls width="80%" height="500">
+        <video controls width="100%" style="max-height:400px; border-radius:12px; margin:8px 0;">
           <source src="design04.mp4" type="video/mp4">
-          Your browser does not support the video tag.
         </video>
 
         <li>How to load the file with Soifgo and operate CMI209</li>
-        <video controls width="80%" height="500">
+        <video controls width="100%" style="max-height:400px; border-radius:12px; margin:8px 0;">
           <source src="design05.mp4" type="video/mp4">
-          Your browser does not support the video tag.
         </video>
 
         <li>Manual direct input example in Soifgo</li>
-        <video controls width="80%" height="500">
+        <video controls width="100%" style="max-height:400px; border-radius:12px; margin:8px 0;">
           <source src="design06.mp4" type="video/mp4">
-          Your browser does not support the video tag.
         </video>
 
         <li>Understanding arc resolution settings</li>
-        <video controls width="80%" height="500">
+        <video controls width="100%" style="max-height:400px; border-radius:12px; margin:8px 0;">
           <source src="design07.mp4" type="video/mp4">
-          Your browser does not support the video tag.
         </video>
 
         <li>Designing reset-all and stop functions in Soifgo</li>
-        <video controls width="80%" height="500">
+        <video controls width="100%" style="max-height:400px; border-radius:12px; margin:8px 0;">
           <source src="design08.mp4" type="video/mp4">
-          Your browser does not support the video tag.
         </video>
 
         <li>Sample operation of CMI209</li>
-        <video controls width="80%" height="500">
+        <video controls width="100%" style="max-height:400px; border-radius:12px; margin:8px 0;">
           <source src="design09.mp4" type="video/mp4">
-          Your browser does not support the video tag.
         </video>
 
-        <h2>PCB and Schematic Files Atmega 328P</h2>
-        <h2><a href="cmi209_File.zip">📦 Download All File</a></h2>
+        <li>Sample operation of MINI CAD-CAM</li>
+        <video controls width="100%" style="max-height:400px; border-radius:12px; margin:8px 0;">
+          <source src="design10.mp4" type="video/mp4">
+        </video>
+
+        <h2 style="margin-top: 20px;">PCB and Schematic Files Atmega 328P</h2>
+        <h2><a href="cmi209_File.zip" style="color:#2563eb;">📦 Download All File</a></h2>
       </ul>
     </div>
 
-    <!-- ===== CODE ===== -->
-    <iframe src="cmi209_code.txt"
-            width="100%"
-            height="300px"
-            style="border: none; border-radius: 8px; background: #2d2d2d; font-family: monospace;">
-    </iframe>
-        <h3>________________________________</h3>
-        <h3>Sample operation of MINI CAD-CAM</h3>
-		<h3>________________________________</h3>
-        <video controls width="80%" height="500">
-          <source src="design10.mp4" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
+    <!-- ===== CODE IFRAME ===== -->
+    <div class="card">
+      <h2>Firmware (ATmega328P)</h2>
+      <iframe src="cmi209_code.txt"
+              width="100%"
+              height="300px"
+              style="border: none; border-radius: 8px; background: #0f172a; font-family: monospace; color:#e2e8f0;">
+      </iframe>
+    </div>
 
-<!-- ============================================================== -->
-<!-- =====  UPDATED: MINI CAD-CAM USER GUIDE (ENGLISH) v3.0.0  ===== -->
-<!-- ============================================================== -->
-<div class="card" style="border:2px solid #2563eb;">
-  <h2 style="color:#2563eb;">✨ Mini CAD-CAM V3.0.0 – Complete User Guide</h2>
-  <p style="color:#475569;">
-    This is a <strong>lightweight CAD-CAM tool</strong> for creating 2D vector shapes, editing them, and generating
-    <strong>G-Code</strong> for CNC machines. All coordinates are in <strong>millimeters (mm)</strong>
-    within a user-defined work area. The app is fully touch-compatible and saves your work automatically in your browser.
-  </p>
+    <!-- ============================================================== -->
+    <!-- =====  UPDATED: MINI CAD-CAM USER GUIDE (ENGLISH) v3.0.0  ===== -->
+    <!-- ============================================================== -->
+    <div class="card" style="border:2px solid #2563eb;">
+      <h2 style="color:#2563eb;">✨ Mini CAD-CAM V3.0.0 – Complete User Guide</h2>
+      <p style="color:#475569;">
+        This is a <strong>lightweight CAD-CAM tool</strong> for creating 2D vector shapes, editing them, and generating
+        <strong>G-Code</strong> for CNC machines. All coordinates are in <strong>millimeters (mm)</strong>
+        within a user-defined work area. The app is fully touch-compatible and saves your work automatically in your browser.
+      </p>
 
-  <h3>🆕 What's New in V3.0.0</h3>
-  <ul>
-    <li><strong>🔍 Magnifier</strong>: Tap &amp; hold (or hover) to see a zoomed-in view for fine adjustments.</li>
-    <li><strong>🖼 Canny Edge Detection</strong>: Import images with advanced edge detection.</li>
-    <li><strong>⌨️ Shortcut P</strong>: Quick toggle for Pan mode.</li>
-    <li><strong>⚙️ Simple vs Canny</strong>: Choose between classic or Canny algorithm.</li>
-    <li><strong>🎯 Improved Arc Resolution</strong>: Smoother arcs and circles.</li>
-  </ul>
+      <h3>🆕 What's New in V3.0.0</h3>
+      <ul>
+        <li><strong>🔍 Magnifier</strong>: Tap &amp; hold (or hover) to see a zoomed-in view for fine adjustments.</li>
+        <li><strong>🖼 Canny Edge Detection</strong>: Import images with advanced edge detection.</li>
+        <li><strong>⌨️ Shortcut P</strong>: Quick toggle for Pan mode.</li>
+        <li><strong>⚙️ Simple vs Canny</strong>: Choose between classic or Canny algorithm.</li>
+        <li><strong>🎯 Improved Arc Resolution</strong>: Smoother arcs and circles.</li>
+      </ul>
 
-  <h3>📐 Interface Overview</h3>
-  <div class="guide-grid">
-    <div class="item"><strong>Toolbar</strong><span>All drawing, editing, and export tools</span></div>
-    <div class="item"><strong>Canvas</strong><span>Interactive drawing area</span></div>
-    <div class="item"><strong>Info Bar</strong><span>Shows mode, zoom, selection, etc.</span></div>
-    <div class="item"><strong>G-Code Output</strong><span>Displays generated G-Code</span></div>
-  </div>
+      <h3>📐 Interface Overview</h3>
+      <div class="guide-grid">
+        <div class="item"><strong>Toolbar</strong><span>All drawing, editing, and export tools</span></div>
+        <div class="item"><strong>Canvas</strong><span>Interactive drawing area</span></div>
+        <div class="item"><strong>Info Bar</strong><span>Shows mode, zoom, selection, etc.</span></div>
+        <div class="item"><strong>G-Code Output</strong><span>Displays generated G-Code</span></div>
+      </div>
 
-  <h3>✏️ Drawing Shapes</h3>
-  <p>Click the <strong>Shapes</strong> dropdown and choose:</p>
-  <div class="guide-grid">
-    <div class="item"><strong>Rect ▭</strong><span>Adds a centered rectangle</span></div>
-    <div class="item"><strong>Circle ○</strong><span>Adds a centered circle</span></div>
-    <div class="item"><strong>Ellipse ◯</strong><span>Adds a centered ellipse</span></div>
-    <div class="item"><strong>Triangle ▲</strong><span>Adds an equilateral triangle</span></div>
-    <div class="item"><strong>Line ➖</strong><span>Click start → end</span></div>
-    <div class="item"><strong>Arc ⟳</strong><span>Click 3 points</span></div>
-    <div class="item"><strong>Text ✎</strong><span>Enter text and adjust size</span></div>
-    <div class="item"><strong>Freehand ✏</strong><span>Draw freeform polygon</span></div>
-    <div class="item"><strong>Import Image 🖼</strong><span>Convert image to vector</span></div>
-  </div>
+      <h3>✏️ Drawing Shapes</h3>
+      <p>Click the <strong>Shapes</strong> dropdown and choose:</p>
+      <div class="guide-grid">
+        <div class="item"><strong>Rect ▭</strong><span>Adds a centered rectangle</span></div>
+        <div class="item"><strong>Circle ○</strong><span>Adds a centered circle</span></div>
+        <div class="item"><strong>Ellipse ◯</strong><span>Adds a centered ellipse</span></div>
+        <div class="item"><strong>Triangle ▲</strong><span>Adds an equilateral triangle</span></div>
+        <div class="item"><strong>Line ➖</strong><span>Click start → end</span></div>
+        <div class="item"><strong>Arc ⟳</strong><span>Click 3 points</span></div>
+        <div class="item"><strong>Text ✎</strong><span>Enter text and adjust size</span></div>
+        <div class="item"><strong>Freehand ✏</strong><span>Draw freeform polygon</span></div>
+        <div class="item"><strong>Import Image 🖼</strong><span>Convert image to vector</span></div>
+      </div>
 
-  <h3>🛠️ Editing Shapes</h3>
-  <div class="guide-grid">
-    <div class="item"><strong>Move ✋</strong><span>Select and drag</span></div>
-    <div class="item"><strong>Resize 📐</strong><span>Drag corner handles</span></div>
-    <div class="item"><strong>Rotate 🔄</strong><span>Drag rotation handle</span></div>
-    <div class="item"><strong>Delete 🗑</strong><span>Remove selected shape</span></div>
-    <div class="item"><strong>Copy 📄</strong><span>Copy selected</span></div>
-    <div class="item"><strong>Paste 📋</strong><span>Paste copied object</span></div>
-  </div>
+      <h3>🛠️ Editing Shapes</h3>
+      <div class="guide-grid">
+        <div class="item"><strong>Move ✋</strong><span>Select and drag</span></div>
+        <div class="item"><strong>Resize 📐</strong><span>Drag corner handles</span></div>
+        <div class="item"><strong>Rotate 🔄</strong><span>Drag rotation handle</span></div>
+        <div class="item"><strong>Delete 🗑</strong><span>Remove selected shape</span></div>
+        <div class="item"><strong>Copy 📄</strong><span>Copy selected</span></div>
+        <div class="item"><strong>Paste 📋</strong><span>Paste copied object</span></div>
+      </div>
 
-  <h3>⚙️ Tools</h3>
-  <div class="guide-grid">
-    <div class="item"><strong>Snap 🎯</strong><span>Snap to shape centers</span></div>
-    <div class="item"><strong>Ortho ⊾</strong><span>Restrict movement to 45° increments</span></div>
-    <div class="item"><strong>Center ⊙</strong><span>Show center points</span></div>
-    <div class="item"><strong>Clear All 🧹</strong><span>Delete all shapes</span></div>
-  </div>
+      <h3>⚙️ Tools</h3>
+      <div class="guide-grid">
+        <div class="item"><strong>Snap 🎯</strong><span>Snap to shape centers</span></div>
+        <div class="item"><strong>Ortho ⊾</strong><span>Restrict movement to 45° increments</span></div>
+        <div class="item"><strong>Center ⊙</strong><span>Show center points</span></div>
+        <div class="item"><strong>Clear All 🧹</strong><span>Delete all shapes</span></div>
+      </div>
 
-  <h3>↩ Undo / Redo</h3>
-  <ul>
-    <li><strong>Undo</strong>: Ctrl+Z</li>
-    <li><strong>Redo</strong>: Ctrl+Y</li>
-  </ul>
+      <h3>↩ Undo / Redo</h3>
+      <ul>
+        <li><strong>Undo</strong>: Ctrl+Z</li>
+        <li><strong>Redo</strong>: Ctrl+Y</li>
+      </ul>
 
-  <h3>📏 Work Area &amp; G-Code Settings</h3>
-  <ul>
-    <li><strong>Work Area</strong>: Define CNC bed size</li>
-    <li><strong>Z Depth</strong>: Cutting depth</li>
-    <li><strong>Feed Rate</strong>: Movement speed</li>
-  </ul>
+      <h3>📏 Work Area &amp; G-Code Settings</h3>
+      <ul>
+        <li><strong>Work Area</strong>: Define CNC bed size</li>
+        <li><strong>Z Depth</strong>: Cutting depth</li>
+        <li><strong>Feed Rate</strong>: Movement speed</li>
+      </ul>
 
-  <h3>📤 Generating &amp; Exporting G-Code</h3>
-  <ol>
-    <li>Add shapes</li>
-    <li>Adjust settings</li>
-    <li>Click Generate G-Code</li>
-    <li>Copy or send to Notes</li>
-  </ol>
+      <h3>📤 Generating &amp; Exporting G-Code</h3>
+      <ol>
+        <li>Add shapes</li>
+        <li>Adjust settings</li>
+        <li>Click Generate G-Code</li>
+        <li>Copy or send to Notes</li>
+      </ol>
 
-  <h3>🖐 Touch Helper &amp; Pan Mode</h3>
-  <ul>
-    <li><strong>Touch Helper</strong>: Larger handles</li>
-    <li><strong>Pan Mode</strong>: Move view freely</li>
-  </ul>
+      <h3>🖐 Touch Helper &amp; Pan Mode</h3>
+      <ul>
+        <li><strong>Touch Helper</strong>: Larger handles</li>
+        <li><strong>Pan Mode</strong>: Move view freely</li>
+      </ul>
 
-  <h3>🔍 Magnifier</h3>
-  <p>Tap &amp; hold or hover to see zoomed view.</p>
+      <h3>🔍 Magnifier</h3>
+      <p>Tap &amp; hold or hover to see zoomed view.</p>
 
-  <h3>🖼 Import Image – Canny Edge Detection</h3>
-  <ul>
-    <li><strong>Threshold</strong>: Edge sensitivity</li>
-    <li><strong>Connection Distance</strong>: Connect edge points</li>
-    <li><strong>Canny Mode</strong>: High-quality tracing</li>
-  </ul>
+      <h3>🖼 Import Image – Canny Edge Detection</h3>
+      <ul>
+        <li><strong>Threshold</strong>: Edge sensitivity</li>
+        <li><strong>Connection Distance</strong>: Connect edge points</li>
+        <li><strong>Canny Mode</strong>: High-quality tracing</li>
+      </ul>
 
-  <h3>📐 Properties Modal</h3>
-  <p>Edit absolute coordinates of shapes.</p>
+      <h3>📐 Properties Modal</h3>
+      <p>Edit absolute coordinates of shapes.</p>
 
-  <h3>⌨️ Keyboard Shortcuts</h3>
-  <div class="shortcut-grid">
-    <span class="key">Ctrl+Z</span><span class="action">Undo</span>
-    <span class="key">Ctrl+Y</span><span class="action">Redo</span>
-    <span class="key">Delete</span><span class="action">Delete</span>
-    <span class="key">Ctrl+C</span><span class="action">Copy</span>
-    <span class="key">Ctrl+V</span><span class="action">Paste</span>
-    <span class="key">Esc</span><span class="action">Deselect</span>
-    <span class="key">P</span><span class="action">Pan Mode</span>
-  </div>
+      <h3>⌨️ Keyboard Shortcuts</h3>
+      <div class="shortcut-grid">
+        <span class="key">Ctrl+Z</span><span class="action">Undo</span>
+        <span class="key">Ctrl+Y</span><span class="action">Redo</span>
+        <span class="key">Delete</span><span class="action">Delete</span>
+        <span class="key">Ctrl+C</span><span class="action">Copy</span>
+        <span class="key">Ctrl+V</span><span class="action">Paste</span>
+        <span class="key">Esc</span><span class="action">Deselect</span>
+        <span class="key">P</span><span class="action">Pan Mode</span>
+      </div>
 
-  <h3>🗺️ Canvas Navigation</h3>
-  <ul>
-    <li><strong>Zoom</strong>: Mouse wheel or pinch</li>
-    <li><strong>Pan</strong>: Right-drag or two-finger drag</li>
-    <li><strong>Magnifier</strong>: Tap &amp; hold</li>
-    <li><strong>Reset View</strong>: Restore default</li>
-  </ul>
+      <h3>🗺️ Canvas Navigation</h3>
+      <ul>
+        <li><strong>Zoom</strong>: Mouse wheel or pinch</li>
+        <li><strong>Pan</strong>: Right-drag or two-finger drag</li>
+        <li><strong>Magnifier</strong>: Tap &amp; hold</li>
+        <li><strong>Reset View</strong>: Restore default</li>
+      </ul>
 
-  <p style="text-align:right; color:#6b7280; font-size:0.9rem; margin-top:12px;">
-    <strong>Mini CAD-CAM V3.0.0</strong> — Full Feature Set • LocalStorage Auto-Save • Canny Edge • Magnifier
-  </p>
-</div>
-<!-- ===== END OF UPDATED CAD-CAM GUIDE ===== -->
-
-
+      <p style="text-align:right; color:#6b7280; font-size:0.9rem; margin-top:12px;">
+        <strong>Mini CAD-CAM V3.0.0</strong> — Full Feature Set • LocalStorage Auto-Save • Canny Edge • Magnifier
+      </p>
+    </div>
+    <!-- ===== END OF UPDATED CAD-CAM GUIDE ===== -->
 
     <!-- ===== FOOTER ===== -->
     <div class="footer">
-      Saeid Moghadam
+      Saeid Moghadam — CMI209 Module
     </div>
   </div>
 
