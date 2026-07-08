@@ -2,51 +2,48 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1e1e24">
 
-  <!-- SEO: Title -->
+  <!-- ===== PRIMARY SEO ===== -->
   <title>RANGMANG — ATmega128/328 Serial RGB Controller for Addressable LEDs</title>
+  <meta name="description" content="RANGMANG is a professional serial RGB controller based on ATmega128 and ATmega328, supporting addressable LEDs such as WS2811, WS2812B, WS2813, WS2815, SK6812, and TM1814. Features include Dance Mode, Solid Color Mode, Pixel Addressing, and support for up to 999 pixels.">
+  <meta name="keywords" content="RANGMANG, Serial RGB Controller, ATmega128, ATmega328P, WS2812B Controller, Addressable LED, RGB LED Controller, Soifgo">
+  <link rel="canonical" href="https://soifgo.github.io/soifgo/tutorials/server/rangmang/">
 
-  <!-- SEO: Description -->
-  <meta name="description" content="RANGMANG is a professional serial RGB controller based on ATmega128 and ATmega328, supporting addressable LEDs such as WS2811, WS2812B, WS2813, WS2815, SK6812, and TM1814. Features include Dance Mode, Solid Color Mode, Pixel Addressing, RGB/RBG configuration, and support for up to 999 pixels.">
+  <!-- ===== LANGUAGE ALTERNATES ===== -->
+  <link rel="alternate" hreflang="x-default" href="https://soifgo.github.io/soifgo/tutorials/server/rangmang/" />
+  <link rel="alternate" hreflang="en" href="https://soifgo.github.io/soifgo/tutorials/server/rangmang/" />
+ 
 
-  <!-- SEO: Keywords -->
-  <meta name="keywords" content="RANGMANG, Serial RGB Controller, ATmega128, ATmega328P, WS2811 Controller, WS2812B Controller, WS2813, WS2815, SK6812 RGBW, TM1814 RGBW, LED Pixel Controller, Pixel Addressing, RGB Controller Module, Soifgo, LED Dance Mode, Solid Color Mode">
-
-  <!-- Open Graph -->
+  <!-- ===== OPEN GRAPH ===== -->
   <meta property="og:title" content="RANGMANG — Professional Serial RGB Controller for ATmega128/328">
   <meta property="og:description" content="A professional serial RGB controller supporting WS2811, WS2812B, WS2813, WS2815, SK6812, and TM1814 with Dance Mode, Solid Color Mode, and Pixel Addressing.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://soifgo.github.io/soifgo/tutorials/server/rangmang/">
   <meta property="og:image" content="https://soifgo.github.io/soifgo/tutorials/server/rangmang/rangmang_pic.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="en_US">
 
-  <!-- Twitter Card -->
+  <!-- ===== TWITTER CARD ===== -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="RANGMANG — ATmega Serial RGB Controller">
   <meta name="twitter:description" content="Serial RGB controller for addressable LEDs with Dance Mode, Solid Color Mode, and Pixel Addressing.">
   <meta name="twitter:image" content="https://soifgo.github.io/soifgo/tutorials/server/rangmang/rangmang_pic.png">
 
-  <!-- Schema.org: SoftwareApplication -->
+  <!-- ===== SCHEMA.ORG ===== -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "name": "RANGMANG Serial RGB Controller",
     "operatingSystem": "Embedded / Microcontroller",
-    "applicationCategory": "LED Controller, RGB Controller, Electronics Tool",
+    "applicationCategory": "LED Controller, RGB Controller",
     "description": "RANGMANG is a serial RGB controller for ATmega128 and ATmega328 supporting addressable LED strips such as WS2811, WS2812B, WS2813, WS2815, SK6812 and TM1814.",
     "url": "https://soifgo.github.io/soifgo/tutorials/server/rangmang/"
   }
   </script>
-
-  <!-- Language Alternates -->
-  <link rel="alternate" hreflang="x-default" href="https://soifgo.github.io/soifgo/tutorials/server/rangmang/" />
-  <link rel="alternate" hreflang="en" href="https://soifgo.github.io/soifgo/tutorials/server/rangmang/" />
-  <link rel="alternate" hreflang="fa" href="https://soifgo.github.io/soifgo/tutorials/server/rangmang/" />
-  <link rel="alternate" hreflang="de" href="https://soifgo.github.io/soifgo/tutorials/server/rangmang/" />
-  <link rel="alternate" hreflang="es" href="https://soifgo.github.io/soifgo/tutorials/server/rangmang/" />
-  <link rel="alternate" hreflang="fr" href="https://soifgo.github.io/soifgo/tutorials/server/rangmang/" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
     /* Modern Dark Theme for Electronics/RGB Projects */
@@ -80,6 +77,13 @@
       color: #ff007f; 
       margin-top: 40px;
       border-left: 4px solid #ff007f;
+      padding-left: 10px;
+    }
+
+    h3 {
+      color: #00ccff;
+      margin-top: 30px;
+      border-left: 4px solid #00ccff;
       padding-left: 10px;
     }
 
@@ -164,13 +168,55 @@
       overflow-x: auto;
       border-radius: 8px;
     }
+
+    .download-box {
+      background: #2a2a35;
+      border: 1px solid #3a3a47;
+      border-radius: 8px;
+      padding: 15px 20px;
+      margin: 10px 0;
+    }
+    .download-box a {
+      font-size: 1.1rem;
+      display: inline-block;
+      margin: 5px 0;
+    }
+
+    .note-box {
+      background: #1a1a2e;
+      border-left: 4px solid #ff007f;
+      padding: 15px 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+
+    .color-fix-box {
+      background: #1a1a2e;
+      border: 1px solid #00ffcc;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .color-fix-box h3 {
+      color: #00ffcc;
+      border-left-color: #00ffcc;
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 10px; }
+      h1 { font-size: 1.8rem; }
+      h2 { font-size: 1.3rem; }
+      pre { font-size: 0.8rem; padding: 10px; }
+      table { font-size: 0.85rem; }
+      th, td { padding: 8px 10px; }
+    }
   </style>
 </head>
 <body>
   <h1>RANGMANG</h1>
   <p><strong>RANGMANG</strong> is an RGB controller based on the ATmega128 microcontroller, Programmed with serial communication.</p>
 
-  <img src="rangmang_pic.png" alt="Wiring 1">
+  <img src="rangmang_pic.png" alt="RANGMANG RGB Controller Module">
 
   <h2>LED Strip Types and Features</h2>
   <p>The following table introduces various LED strips and their specifications:</p>
@@ -204,19 +250,17 @@
     <a href="https://www.fischl.de/usbasp" target="_blank">fischl.de/usbasp</a>.
   </p>
   
-  <h2>PCB and Schematic Files Atmega 128A </h2>
-  <img src="rangmang_schematics_128a.png" alt="Recommended Converter">
+  <h2>PCB and Schematic Files Atmega 128A</h2>
+  <img src="rangmang_schematics_128a.png" alt="ATmega128A PCB Schematic">
 
-  <h2>PCB and Schematic Files Atmega 328P </h2>
-  <img src="rangmang_schematics_328p.png" alt="Recommended Converter">
+  <h2>PCB and Schematic Files Atmega 328P</h2>
+  <img src="rangmang_schematics_328p.png" alt="ATmega328P PCB Schematic">
 
-  <video controls width="80%" height="500">
+  <h2>RANGMANG Dance Mode Demo</h2>
+  <video controls width="80%" height="500" poster="rangmang_pic.png">
     <source src="rangmang_dance.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
-
-
-
 
   <h2>RANGMANG Dance Mode Configuration</h2>
   <p>
@@ -241,31 +285,36 @@
     </li>
   </ul>
 
-  <table border="1" cellpadding="6">
-    <tr>
-      <th>A (Channel)</th>
-      <th>D (Mode)</th>
-      <th>R (Red)</th>
-      <th>G (Green)</th>
-      <th>B (Blue)</th>
-      <th>S (Dance Time 1)</th>
-      <th>E (Dance Time 2)</th>
-      <th>M (Pixel Count)</th>
-    </tr>
-    <tr>
-      <td>A1</td>
-      <td>D12</td>
-      <td>R251</td>
-      <td>G251</td>
-      <td>B251</td>
-      <td>S1</td>
-      <td>E1</td>
-      <td>M128</td>
-    </tr>
-  </table>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>A (Channel)</th>
+          <th>D (Mode)</th>
+          <th>R (Red)</th>
+          <th>G (Green)</th>
+          <th>B (Blue)</th>
+          <th>S (Dance Time 1)</th>
+          <th>E (Dance Time 2)</th>
+          <th>M (Pixel Count)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>A1</td>
+          <td>D12</td>
+          <td>R251</td>
+          <td>G251</td>
+          <td>B251</td>
+          <td>S1</td>
+          <td>E1</td>
+          <td>M128</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
   <h2>RANGMANG Fixed Color Mode Configuration (ATmega128 – 999 Pixels)</h2>
- 
 
   <ul>
     <li><strong>A (Address)</strong> – Module address (1–98 for specific module, 99 for all).</li>
@@ -276,28 +325,34 @@
     <li><strong>M (Memory Slot)</strong> – Memory control: 0 (M0) without save, 1–99 for saving to slots.</li>
   </ul>
 
-  <table border="1" cellpadding="6">
-    <tr>
-      <th>A (Channel)</th>
-      <th>D (Mode)</th>
-      <th>R (Red)</th>
-      <th>G (Green)</th>
-      <th>B (Blue)</th>
-      <th>S (Start Pixel)</th>
-      <th>E (End Pixel)</th>
-      <th>M (Memory Slot)</th>
-    </tr>
-    <tr>
-      <td>A1</td>
-      <td>D0</td>
-      <td>R200</td>
-      <td>G50</td>
-      <td>B100</td>
-      <td>S1</td>
-      <td>E120</td>
-      <td>M10</td>
-    </tr>
-  </table>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>A (Channel)</th>
+          <th>D (Mode)</th>
+          <th>R (Red)</th>
+          <th>G (Green)</th>
+          <th>B (Blue)</th>
+          <th>S (Start Pixel)</th>
+          <th>E (End Pixel)</th>
+          <th>M (Memory Slot)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>A1</td>
+          <td>D0</td>
+          <td>R200</td>
+          <td>G50</td>
+          <td>B100</td>
+          <td>S1</td>
+          <td>E120</td>
+          <td>M10</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
   <h2>Power Regulation Notes</h2>
   <pre>
@@ -397,89 +452,117 @@ Therefore, each module will respond and act to its assigned address (between 1 a
   </pre>
 
   <p>
-    In each microcontroller’s folder, the software directory “dude 6.4” is available. Using the file “Program Chip.bat,” you simply need to connect the USBasp to the microcontroller and then click on “Program Chip.bat” to program the microcontroller.
+    In each microcontroller's folder, the software directory "dude 6.4" is available. Using the file "Program Chip.bat," you simply need to connect the USBasp to the microcontroller and then click on "Program Chip.bat" to program the microcontroller.
   </p>
   
-  <img src="rangmang_design_soifgo.png" alt="Recommended Converter">
-  <img src="rangmang_design_1.jpg" alt="Recommended Converter">
-  <img src="rangmang_design_2.jpg" alt="Recommended Converter">
+  <img src="rangmang_design_soifgo.png" alt="Soifgo Design for RANGMANG">
+  <img src="rangmang_design_1.jpg" alt="RANGMANG Design 1">
+  <img src="rangmang_design_2.jpg" alt="RANGMANG Design 2">
+
+  <h2>Color Swap Issue: WS2811 vs WS2812</h2>
   <p>
-Color Swap Issue between WS2811 and WS2812: Why Green and Blue are Reversed
-When working with addressable LED strips like the WS2811 and WS2812, you might notice a classic issue: when you test your LEDs, the Red color displays perfectly, but Green and Blue are completely swapped.
-
-Why does this happen?
-While the Red channel remains in its correct first position, the order of the Green and Blue channels varies due to hardware layout designs:
-
-WS2812 LEDs typically use the internal GRB or standard RGB color ordering profile.
-
-WS2811 ICs are external controllers often used in 12V strips or pixel strings. To simplify PCB routing and prevent copper traces from crossing over each other, manufacturers frequently cross-wire the Green and Blue output pins to the LED.
-
-As a result, from a programmer's and user's perspective, the strip ends up behaving as an RBG (Red, Blue, Green) device instead of a standard RGB device.
-
-Why We Inverted the Logic in the Code (Under the Hood)
-To prevent any confusion or "color dizziness" while designing your light patterns, Soifgo handles all the heavy lifting behind the scenes.
-
-Most modern WS2811 strips available on the market today use an internal RBG chip methodology. However, to keep things intuitive for you, the app lets you think and work in the universal RGB standard.
-
-When you pick a color in the app—for example, setting R=123, G=22, B=12—you don't have to worry about the strip's internal layout. When the RBG mode is active:
-
-You interact with the familiar RGB values naturally.
-
-The microcontroller intentionally and automatically swaps the Green and Blue bytes right before transmitting them over the wire.
-
-The flipped data matches the physical cross-wiring of the WS2811 chip perfectly.
-
-In short, we deliberately inverted the software logic for the WS2811 setting so that your workflow remains simple, consistent, and strictly RGB on the screen, while the hardware gets exactly what it needs!
-
-Solution in Soifgo Settings
-If you are experiencing this color mismatch, there is no need to change your hardware wiring. You can fix this instantly via software inside the app:
-
-Important Note for Soifgo Users:
-When using certain WS2811 LED strips where the Green and Blue colors are reversed, simply go to the application settings and tap on the RGB label to switch it to RBG.
-
-By changing this setting to RBG, Soifgo will automatically swap the Green and Blue bytes during data transmission, ensuring that your color palette and light animations are applied accurately to your strip!
+    When working with addressable LED strips like the WS2811 and WS2812, you might notice a classic issue: when you test your LEDs, the Red color displays perfectly, but Green and Blue are completely swapped.
   </p>
 
+  <h3>Why does this happen?</h3>
+  <p>
+    While the Red channel remains in its correct first position, the order of the Green and Blue channels varies due to hardware layout designs:
+  </p>
+  <ul>
+    <li><strong>WS2812</strong> LEDs typically use the internal GRB or standard RGB color ordering profile.</li>
+    <li><strong>WS2811</strong> ICs are external controllers often used in 12V strips or pixel strings. To simplify PCB routing and prevent copper traces from crossing over each other, manufacturers frequently cross-wire the Green and Blue output pins to the LED.</li>
+  </ul>
+  <p>
+    As a result, from a programmer's and user's perspective, the strip ends up behaving as an <strong>RBG (Red, Blue, Green)</strong> device instead of a standard RGB device.
+  </p>
 
-  <strong>
-💻 Developer Note: Coding Static Colors for WS2811
-If you are writing your own custom firmware or setting up static colors directly in your micro-controller code for a WS2811 strip, you must manually swap the Green and Blue values to achieve the correct output.
+  <h3>Why We Inverted the Logic in the Code</h3>
+  <p>
+    To prevent any confusion or "color dizziness" while designing your light patterns, Soifgo handles all the heavy lifting behind the scenes.
+  </p>
+  <p>
+    Most modern WS2811 strips available on the market today use an internal RBG chip methodology. However, to keep things intuitive for you, the app lets you think and work in the universal RGB standard.
+  </p>
+  <p>
+    When you pick a color in the app—for example, setting R=123, G=22, B=12—you don't have to worry about the strip's internal layout. When the RBG mode is active:
+  </p>
+  <ul>
+    <li>You interact with the familiar RGB values naturally.</li>
+    <li>The microcontroller intentionally and automatically swaps the Green and Blue bytes right before transmitting them over the wire.</li>
+    <li>The flipped data matches the physical cross-wiring of the WS2811 chip perfectly.</li>
+  </ul>
+  <p>
+    In short, we deliberately inverted the software logic for the WS2811 setting so that your workflow remains simple, consistent, and strictly RGB on the screen, while the hardware gets exactly what it needs!
+  </p>
 
-Since the physical hardware layout of these strips interprets data differently than our standard mental model, you need to trick the strip by reversing the variables.
+  <div class="color-fix-box">
+    <h3>💡 Solution in Soifgo Settings</h3>
+    <p>
+      If you are experiencing this color mismatch, there is no need to change your hardware wiring. You can fix this instantly via software inside the app:
+    </p>
+    <p>
+      <strong>Important Note for Soifgo Users:</strong>
+      When using certain WS2811 LED strips where the Green and Blue colors are reversed, simply go to the application settings and tap on the <strong>RGB</strong> label to switch it to <strong>RBG</strong>.
+    </p>
+    <p>
+      By changing this setting to RBG, Soifgo will automatically swap the Green and Blue bytes during data transmission, ensuring that your color palette and light animations are applied accurately to your strip!
+    </p>
+  </div>
 
-For Example:
-If your desired color is Red: 10, Green: 123, Blue: 44, writing it in the standard order will result in swapped colors on the strip.
-
-To fix this in your code, you must pass the values like this:
-
+  <div class="note-box">
+    <h3>💻 Developer Note: Coding Static Colors for WS2811</h3>
+    <p>
+      If you are writing your own custom firmware or setting up static colors directly in your microcontroller code for a WS2811 strip, you must manually swap the Green and Blue values to achieve the correct output.
+    </p>
+    <p>
+      Since the physical hardware layout of these strips interprets data differently than our standard mental model, you need to trick the strip by reversing the variables.
+    </p>
+    <p>
+      <strong>For Example:</strong><br>
+      If your desired color is Red: 10, Green: 123, Blue: 44, writing it in the standard order will result in swapped colors on the strip.
+    </p>
+    <p>
+      To fix this in your code, you must pass the values like this:
+    </p>
+    <pre>
 Standard RGB Intended Color: R: 10, G: 123, B: 44
 
 Actual Code to Write for WS2811: R: 10, G: 44, B: 123
+    </pre>
+    <p>
+      By intentionally swapping the Green (123) and Blue (44) values inside your code, the WS2811 strip will display the exact shade you originally intended!
+    </p>
+  </div>
 
-By intentionally swapping the Green (123) and Blue (44) values inside your code, the WS2811 strip will display the exact shade you originally intended!
-  </h2>
+  <h2>The default baud rate of the Bluetooth module is 9600</h2>
 
+  <h2>Downloads</h2>
+  <div class="download-box">
+    <p><a href="soifgo_rangmang_design.zip">📦 Download soifgo_rangmang_design</a></p>
+    <p><a href="Atmega128.zip">📦 Download Atmega128 File</a></p>
+    <p><a href="Atmega328P.zip">📦 Download Atmega328P File</a></p>
+  </div>
 
-  <h2> The default baud rate of the Bluetooth module is 9600</a></h2>
-  <h2><a href="soifgo_rangmang_design.zip"> 📦 Download soifgo_rangmang_design</a></h2>
-  <h2><a href="Atmega128.zip">Download Atmega128 File</a></h2>
-  <h2><a href="Atmega328P.zip">Download Atmega328P File</a></h2>
-
+  <h2>Hardware Assembly Notes</h2>
   <p>
     If you need the module as a single unit, you can use regular sockets. However, when using multiple modules in parallel, only the Bluetooth socket should be connected through long-pin headers so that the remaining modules can receive Bluetooth serial data.
-
+  </p>
+  <p>
     Next, it is better to mechanically connect the modules together using spacer screws. For the final module, you can insulate the pins or use a suitable cover. Alternatively, if you are certain that you will not expand the number of modules in the future, you may use short-pin headers instead.
   </p>
   
-  <img src="board01.png" alt="Recommended Converter">
+  <img src="board01.png" alt="Board Assembly Diagram">
 
-  <h2>
-    When using long RGB strips, make sure to pay attention to the voltage of the microcontroller and Bluetooth. Using an unsuitable regulator or a power supply with insufficient current capacity can cause severe voltage drops, which may lead to the Bluetooth and microcontroller shutting down.
-  </h2>
+  <div class="note-box">
+    <h3>⚠️ Important Power Note</h3>
+    <p>
+      When using long RGB strips, make sure to pay attention to the voltage of the microcontroller and Bluetooth. Using an unsuitable regulator or a power supply with insufficient current capacity can cause severe voltage drops, which may lead to the Bluetooth and microcontroller shutting down.
+    </p>
+  </div>
 
   <hr>
   <p style="text-align:center;">
-    <a href="index.html" 
+    <a href="simulator.html" 
        style="display:inline-block; padding:10px 20px; background:gray; color:yellow; text-decoration:none; border-radius:5px;">
       Rangmang Web Simulator
     </a>

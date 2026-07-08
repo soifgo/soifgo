@@ -9,14 +9,8 @@
   <!-- SEO: Description (highlighting multilingual support) -->
   <meta name="description" content="SoifGo is a powerful Android IoT controller supporting 22 languages including English, Spanish, Chinese, Arabic, Hindi, Russian and more. Control ESP32, Arduino, HC-05, ESP8266 via Bluetooth, MQTT, buttons and seek bars. Built for global makers and developers.">
 
-  <!-- SEO: Keywords (expanded with language and global reach) -->
-  <meta name="keywords" content="
-  SoifGo, Android IoT Controller, Bluetooth Controller, MQTT Controller,
-  Multi-language IoT app, 22 languages IoT, Global IoT controller,
-  ESP32 controller, Arduino Bluetooth, HC-05 control, ESP8266 MQTT,
-  SeekBar controller, Button controller, IoT dashboard, Remote control app,
-  Saeid Moghadam, IoT automation, Bluetooth remote, MQTT mobile app,
-  Android slider control, Smart device controller, Maker tool, IoT developer">
+  <!-- SEO: Keywords (optimized) -->
+  <meta name="keywords" content="SoifGo, Android IoT Controller, Bluetooth MQTT, ESP32 Arduino, Multi-language IoT app, Saeid Moghadam">
 
   <!-- Open Graph -->
   <meta property="og:title" content="SoifGo — 22‑Language IoT Controller for Android (Bluetooth & MQTT)">
@@ -24,6 +18,8 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://soifgo.github.io/soifgo/">
   <meta property="og:image" content="https://soifgo.github.io/soifgo/soifgo-logo.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
   <meta property="og:locale" content="en_US">
   <meta property="og:locale:alternate" content="es_ES">
   <meta property="og:locale:alternate" content="zh_CN">
@@ -59,26 +55,34 @@
     }
   }
   </script>
-</head>
-
-
-
 
   <!-- GoatCounter Analytics -->
   <script data-goatcounter="https://soifgo.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 
   <style>
+    :root {
+      --primary: #8B4513;
+      --primary-dark: #6b3a1f;
+      --primary-light: #A0522D;
+      --bg: #f7f5f2;
+      --card-bg: #ffffff;
+      --text: #333333;
+      --text-muted: #6b7280;
+      --border: #e5e0db;
+      --shadow: rgba(0,0,0,0.08);
+    }
+
     body {
-      font-family: "Segoe UI", sans-serif;
-      background: #f7f5f2;
+      font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
       margin: 0;
       font-size: 17px;
       line-height: 1.7;
-      color: #333;
+      color: var(--text);
     }
 
     header {
-      background: linear-gradient(135deg, #8B4513, #A0522D);
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
       color: white;
       padding: 2em 1em;
       text-align: center;
@@ -99,13 +103,16 @@
       margin-top: 10px;
       opacity: 0.9;
       font-size: 1.1em;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     nav {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      background: #ffffff;
+      background: var(--card-bg);
       padding: 0.6em;
       position: sticky;
       top: 0;
@@ -120,15 +127,16 @@
       cursor: pointer;
       font-size: 1.05em;
       border-radius: 8px;
-      color: #333;
+      color: var(--text);
       transition: 0.2s ease;
+      font-weight: 500;
     }
     nav button:hover {
       background: #dcd8d3;
       transform: translateY(-2px);
     }
     nav button.clicked {
-      background: #c7b9a8;
+      background: var(--primary-dark);
       color: white;
       transform: translateY(2px);
     }
@@ -141,9 +149,9 @@
     section {
       display: none;
       padding: 2em;
-      background: white;
+      background: var(--card-bg);
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      box-shadow: 0 4px 12px var(--shadow);
       margin-top: 25px;
     }
     section.active {
@@ -153,7 +161,14 @@
     h2 {
       font-size: 1.6em;
       margin-bottom: 0.8em;
-      color: #8B4513;
+      color: var(--primary);
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 0.3em;
+    }
+    h3 {
+      font-size: 1.2em;
+      color: var(--primary-dark);
+      margin-top: 1.5em;
     }
 
     #download ul {
@@ -164,7 +179,7 @@
       margin: 12px 0;
     }
     #download a {
-      color: #8B4513;
+      color: var(--primary);
       font-weight: bold;
       text-decoration: none;
       font-size: 1.1em;
@@ -175,15 +190,15 @@
 
     .security-box {
       margin-top: 25px;
-      padding: 15px;
+      padding: 15px 20px;
       background: #f0ebe6;
-      border-left: 5px solid #8B4513;
+      border-left: 5px solid var(--primary);
       border-radius: 8px;
       font-size: 0.95em;
       line-height: 1.6;
     }
     .security-box a {
-      color: #8B4513;
+      color: var(--primary);
       font-weight: bold;
     }
 
@@ -193,6 +208,7 @@
       border-radius: 10px;
       margin: 1.5em auto;
       display: block;
+      box-shadow: 0 4px 12px var(--shadow);
     }
 
     #totalVisits {
@@ -200,7 +216,22 @@
       margin: 40px 0;
       font-size: 22px;
       font-weight: bold;
-      color: #8B4513;
+      color: var(--primary);
+    }
+
+    footer {
+      margin-top: 50px;
+      text-align: center;
+      color: var(--text-muted);
+      padding: 20px;
+      border-top: 1px solid var(--border);
+    }
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
     }
 
     @media (max-width: 600px) {
@@ -210,10 +241,14 @@
       }
       nav button {
         width: 95%;
-        font-size: 1.2em;
+        font-size: 1.1em;
+        padding: 0.6em 1em;
       }
       section {
         padding: 1.2em;
+      }
+      h2 {
+        font-size: 1.3em;
       }
     }
   </style>
@@ -226,7 +261,7 @@
       SoifGo
       <img src="soifgo-logo.png" alt="SoifGo Logo">
     </h1>
-    <p>SoifGo is an Android application that provides users with advanced capabilities using buttons and seek bars</p>
+    <p>SoifGo is an Android application that provides users with advanced capabilities using buttons and seek bars — Control ESP32, Arduino, HC-05, and ESP8266 via Bluetooth and MQTT in 22 languages.</p>
   </header>
 
   <nav>
@@ -258,7 +293,8 @@
     <section id="about">
       <h2>About SoifGo & Developer</h2>
 
-      <h3>The developer: Saeid Moghadam</h3>
+      <h3>The Developer: Saeid Moghadam</h3>
+      <p>Saeid Moghadam is the creator of SoifGo, a powerful and multilingual IoT controller for Android.</p>
 
       <h3>Supported Languages in SoifGo</h3>
       <ul>
@@ -287,17 +323,28 @@
       </ul>
 
       <h3>About SoifGo</h3>
-      <p><strong>SoifGo</strong> is an Android application that provides users with advanced capabilities using <strong>buttons and seek bars...</strong></p>
+      <p><strong>SoifGo</strong> is an Android application that provides users with advanced capabilities using <strong>buttons and seek bars</strong>. It supports Bluetooth and MQTT protocols, making it ideal for controlling ESP32, Arduino, HC-05, and ESP8266 devices.</p>
 
       <h3>Contact</h3>
       <p>Email: <a href="mailto:SSM20985@gmail.com">SSM20985@gmail.com</a></p>
       <p>Email: <a href="mailto:SSMQQMSS@gmail.com">SSMQQMSS@gmail.com</a></p>
     </section>
 
-    <img src="soifgo_pic01.png" alt="Recommended Converter" class="preview-img" loading="lazy">
+    <img src="soifgo_pic01.png" alt="SoifGo App Preview - IoT Controller Interface" class="preview-img" loading="lazy">
 
     <div id="totalVisits">Loading...</div>
   </main>
+
+  <footer>
+    <p>
+      Support: <a href="mailto:ssmqqmss@gmail.com">ssmqqmss@gmail.com</a>
+      &nbsp;|&nbsp;
+      <a href="policy_soifgo.html">Privacy Policy</a>
+    </p>
+    <p style="font-size:0.85rem; margin-top:8px;">
+      &copy; 2026 SoifGo — Built by Saeid Moghadam
+    </p>
+  </footer>
 
   <script>
     function switchTab(sectionId, buttonElement) {
@@ -322,7 +369,9 @@
         if (!res.ok) return 0;
         const data = await res.json();
         return Number(data.count) || 0;
-      } catch (e) {}
+      } catch (e) {
+        return 0;
+      }
     }
 
     async function loadTotal() {
@@ -337,14 +386,6 @@
       loadTotal();
     };
   </script>
-
-  <footer style="margin-top: 50px; text-align: center; color: #8b949e;">
-    <p>
-      Support: <a href="mailto:ssmqqmss@gmail.com" style="color: var(--accent-color);">ssmqqmss@gmail.com</a>
-      &nbsp;|&nbsp;
-      <a href="policy_soifgo.html" style="color: var(--accent-color);">Privacy Policy</a>
-    </p>
-  </footer>
 
 </body>
 </html>

@@ -1,14 +1,20 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#2563eb">
 
   <!-- ===== PRIMARY SEO ===== -->
   <title>CMI209 CNC Module — ATmega328P, Soifgo Bluetooth & G-Code Controller</title>
   <meta name="description" content="CMI209 is a CNC-like module based on ATmega328P, controlled via Soifgo Android app over Bluetooth (115200 baud). Supports G-code, manual arcs, homing, limit switches, PWM spindle, and Mini CAD-CAM v3.0.0 with Canny edge detection." />
-  <meta name="keywords" content="CMI209, ATmega328P CNC, Soifgo controller, Bluetooth CNC, G-code interpreter, Mini CAD-CAM, Canny edge detection, Arduino CNC, stepper driver, PWM spindle, homing, limit switch, emergency stop, CNC mobile interface, Saeid Moghadam" />
+  <meta name="keywords" content="CMI209, ATmega328P CNC, Soifgo controller, Bluetooth CNC, G-code interpreter, Mini CAD-CAM, Canny edge detection, Arduino CNC, stepper driver, PWM spindle, homing, limit switch, emergency stop, CNC mobile interface, Saeid Moghadam, CNC shield, GRBL alternative, wireless CNC" />
   <link rel="canonical" href="https://soifgo.github.io/soifgo/tutorials/server/cmi209/" />
+
+  <!-- ===== LANGUAGE ALTERNATES   ===== -->
+  <link rel="alternate" hreflang="x-default" href="https://soifgo.github.io/soifgo/tutorials/server/cmi209/" />
+  <link rel="alternate" hreflang="en" href="https://soifgo.github.io/soifgo/tutorials/server/cmi209/" />
+ 
 
   <!-- ===== OPEN GRAPH (SOCIAL) ===== -->
   <meta property="og:title" content="CMI209 — ATmega328P CNC Module with Bluetooth & Soifgo" />
@@ -51,17 +57,7 @@
   }
   </script>
 
-  <!-- Language Alternates -->
-  <link rel="alternate" hreflang="x-default" href="https://soifgo.github.io/soifgo/tutorials/server/rangmang/" />
-  <link rel="alternate" hreflang="en" href="https://soifgo.github.io/soifgo/tutorials/server/rangmang/" />
-  <link rel="alternate" hreflang="fa" href="https://soifgo.github.io/soifgo/tutorials/server/rangmang/" />
-  <link rel="alternate" hreflang="de" href="https://soifgo.github.io/soifgo/tutorials/server/rangmang/" />
-  <link rel="alternate" hreflang="es" href="https://soifgo.github.io/soifgo/tutorials/server/rangmang/" />
-  <link rel="alternate" hreflang="fr" href="https://soifgo.github.io/soifgo/tutorials/server/rangmang/" />
-
-
-
-  <!-- ===== STYLES (same as original, fully preserved) ===== -->
+  <!-- ===== STYLES ===== -->
   <style>
     :root{
       --bg:#f7f9fc;
@@ -472,68 +468,77 @@ STEP
 DIR</pre>
     </div>
 
-    <!-- ===== VIDEOS & FILES ===== -->
+    <!-- ===== VIDEOS & FILES (ساختار اصلاح‌شده) ===== -->
     <div class="card">
       <h2>Video and Usage Sections</h2>
-      <ul>
-        <li>How to program the module (USBASP)</li>
-        <img src="programmer.jpg" alt="USBASP programmer" style="margin: 8px 0;">
-        <video controls width="100%" style="max-height:400px; border-radius:12px; margin:8px 0;">
-          <source src="Avrdude_Programing.mp4" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
 
-        <li>How to design sample pages in Soifgo</li>
-        <video controls width="100%" style="max-height:400px; border-radius:12px; margin:8px 0;">
-          <source src="design01.mp4" type="video/mp4">
-        </video>
-        <video controls width="100%" style="max-height:400px; border-radius:12px; margin:8px 0;">
-          <source src="design02.mp4" type="video/mp4">
-        </video>
+      <h3>How to program the module (USBASP)</h3>
+      <img src="programmer.jpg" alt="USBASP programmer" style="margin: 8px 0;">
+      <video controls width="100%" poster="cmi209_01.jpg" style="max-height:400px; border-radius:12px; margin:8px 0;">
+        <source src="Avrdude_Programing.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
 
-        <li>Sample design using Aspire software and export file creation</li>
-        <video controls width="100%" style="max-height:400px; border-radius:12px; margin:8px 0;">
-          <source src="design03.mp4" type="video/mp4">
-        </video>
+      <h3>How to design sample pages in Soifgo</h3>
+      <video controls width="100%" poster="cmi209_01.jpg" style="max-height:400px; border-radius:12px; margin:8px 0;">
+        <source src="design01.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <video controls width="100%" poster="cmi209_01.jpg" style="max-height:400px; border-radius:12px; margin:8px 0;">
+        <source src="design02.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
 
-        <li>How to transfer the Aspire export file to the phone</li>
-        <video controls width="100%" style="max-height:400px; border-radius:12px; margin:8px 0;">
-          <source src="design04.mp4" type="video/mp4">
-        </video>
+      <h3>Sample design using Aspire software and export file creation</h3>
+      <video controls width="100%" poster="cmi209_01.jpg" style="max-height:400px; border-radius:12px; margin:8px 0;">
+        <source src="design03.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
 
-        <li>How to load the file with Soifgo and operate CMI209</li>
-        <video controls width="100%" style="max-height:400px; border-radius:12px; margin:8px 0;">
-          <source src="design05.mp4" type="video/mp4">
-        </video>
+      <h3>How to transfer the Aspire export file to the phone</h3>
+      <video controls width="100%" poster="cmi209_01.jpg" style="max-height:400px; border-radius:12px; margin:8px 0;">
+        <source src="design04.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
 
-        <li>Manual direct input example in Soifgo</li>
-        <video controls width="100%" style="max-height:400px; border-radius:12px; margin:8px 0;">
-          <source src="design06.mp4" type="video/mp4">
-        </video>
+      <h3>How to load the file with Soifgo and operate CMI209</h3>
+      <video controls width="100%" poster="cmi209_01.jpg" style="max-height:400px; border-radius:12px; margin:8px 0;">
+        <source src="design05.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
 
-        <li>Understanding arc resolution settings</li>
-        <video controls width="100%" style="max-height:400px; border-radius:12px; margin:8px 0;">
-          <source src="design07.mp4" type="video/mp4">
-        </video>
+      <h3>Manual direct input example in Soifgo</h3>
+      <video controls width="100%" poster="cmi209_01.jpg" style="max-height:400px; border-radius:12px; margin:8px 0;">
+        <source src="design06.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
 
-        <li>Designing reset-all and stop functions in Soifgo</li>
-        <video controls width="100%" style="max-height:400px; border-radius:12px; margin:8px 0;">
-          <source src="design08.mp4" type="video/mp4">
-        </video>
+      <h3>Understanding arc resolution settings</h3>
+      <video controls width="100%" poster="cmi209_01.jpg" style="max-height:400px; border-radius:12px; margin:8px 0;">
+        <source src="design07.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
 
-        <li>Sample operation of CMI209</li>
-        <video controls width="100%" style="max-height:400px; border-radius:12px; margin:8px 0;">
-          <source src="design09.mp4" type="video/mp4">
-        </video>
+      <h3>Designing reset-all and stop functions in Soifgo</h3>
+      <video controls width="100%" poster="cmi209_01.jpg" style="max-height:400px; border-radius:12px; margin:8px 0;">
+        <source src="design08.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
 
-        <li>Sample operation of MINI CAD-CAM</li>
-        <video controls width="100%" style="max-height:400px; border-radius:12px; margin:8px 0;">
-          <source src="design10.mp4" type="video/mp4">
-        </video>
+      <h3>Sample operation of CMI209</h3>
+      <video controls width="100%" poster="cmi209_01.jpg" style="max-height:400px; border-radius:12px; margin:8px 0;">
+        <source src="design09.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
 
-        <h2 style="margin-top: 20px;">PCB and Schematic Files Atmega 328P</h2>
-        <h2><a href="cmi209_File.zip" style="color:#2563eb;">📦 Download All File</a></h2>
-      </ul>
+      <h3>Sample operation of MINI CAD-CAM</h3>
+      <video controls width="100%" poster="cmi209_01.jpg" style="max-height:400px; border-radius:12px; margin:8px 0;">
+        <source src="design10.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+
+      <h2 style="margin-top: 20px;">PCB and Schematic Files Atmega 328P</h2>
+      <p><a href="cmi209_File.zip" style="color:#2563eb; font-size:1.2rem; font-weight:bold;">📦 Download All File</a></p>
     </div>
 
     <!-- ===== CODE IFRAME ===== -->
@@ -679,7 +684,7 @@ DIR</pre>
 
   <hr>
   <p style="text-align:center;">
-    <a href="https://soifgo.github.io/soifgo/tutorials/list.html"
+    <a href="https://soifgo.github.io/soifgo/tutorials/list.html" 
        style="display:inline-block; padding:10px 20px; background:#0066cc; color:#fff; text-decoration:none; border-radius:5px;">
       ⬅ Back to Tutorial
     </a>
@@ -687,7 +692,7 @@ DIR</pre>
 
   <hr>
   <p style="text-align:center;">
-    <a href="https://soifgo.github.io/soifgo/index.html"
+    <a href="https://soifgo.github.io/soifgo/index.html" 
        style="display:inline-block; padding:10px 20px; background:#8B4513; color:#fff; text-decoration:none; border-radius:5px;">
       ⬅ Back to Home
     </a>
