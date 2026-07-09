@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
  
   <url>
     <loc>https://soifgo.github.io/soifgo/</loc>
     <lastmod>2026-07-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://soifgo.github.io/soifgo/soifgo-logo.png</image:loc>
+      <image:title>SoifGo Logo - Bluetooth &amp; MQTT IoT Controller</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://soifgo.github.io/soifgo/soifgo_pic01.png</image:loc>
+      <image:title>SoifGo App Preview - Bluetooth and MQTT IoT Controller</image:title>
+    </image:image>
   </url>
-  
+
  
   <url>
     <loc>https://soifgo.github.io/soifgo/policy_soifgo.html</loc>
@@ -15,7 +25,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-  
  
   <url>
     <loc>https://soifgo.github.io/soifgo/tutorials/list.html</loc>
@@ -25,92 +34,81 @@
   </url>
 
  
-  
-  <!-- BluetoothExample1 -->
   <url>
     <loc>https://soifgo.github.io/soifgo/tutorials/server/BluetoothExample1/</loc>
     <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
-  
-  <!-- BluetoothSendReceive -->
+
   <url>
     <loc>https://soifgo.github.io/soifgo/tutorials/server/BluetoothSendReceive/</loc>
     <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
-  
-  <!-- cmi209 -->
+
   <url>
     <loc>https://soifgo.github.io/soifgo/tutorials/server/cmi209/</loc>
     <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
-  
-  <!-- Effect -->
+
   <url>
     <loc>https://soifgo.github.io/soifgo/tutorials/server/Effect/</loc>
     <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
-  
-  <!-- ESP32Server -->
+
   <url>
     <loc>https://soifgo.github.io/soifgo/tutorials/server/ESP32Server/</loc>
     <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
-  
-  <!-- Esp8266_wifi_mqtt -->
+
   <url>
     <loc>https://soifgo.github.io/soifgo/tutorials/server/Esp8266_wifi_mqtt/</loc>
     <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
-  
-  <!-- FetchingAPIs -->
+
   <url>
     <loc>https://soifgo.github.io/soifgo/tutorials/server/FetchingAPIs/</loc>
     <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
-  
-  <!-- LocalServerSetup -->
+
   <url>
     <loc>https://soifgo.github.io/soifgo/tutorials/server/LocalServerSetup/</loc>
     <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
-  
-  <!-- note_out -->
+
   <url>
     <loc>https://soifgo.github.io/soifgo/tutorials/server/note_out/</loc>
     <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
-  
-  <!-- rangmang -->
+
   <url>
     <loc>https://soifgo.github.io/soifgo/tutorials/server/rangmang/</loc>
     <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
-  
-  <!-- WorkingwithHTMLFiles -->
+
   <url>
     <loc>https://soifgo.github.io/soifgo/tutorials/server/WorkingwithHTMLFiles/</loc>
     <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
+
 </urlset>
