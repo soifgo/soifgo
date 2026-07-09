@@ -4,45 +4,44 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <title>SoifGo — Multi‑Language Bluetooth & MQTT IoT Controller for Android</title>
+  <title>SoifGo — Bluetooth & MQTT IoT Controller for Android | Control ESP32, Arduino, HC-05</title>
 
-  <!-- SEO: Description (highlighting multilingual support) -->
-  <meta name="description" content="SoifGo is a powerful Android IoT controller supporting 22 languages including English, Spanish, Chinese, Arabic, Hindi, Russian and more. Control ESP32, Arduino, HC-05, ESP8266 via Bluetooth, MQTT, buttons and seek bars. Built for global makers and developers.">
+  <!-- Primary SEO Description -->
+  <meta name="description" content="SoifGo is a powerful Android Bluetooth controller app for ESP32, Arduino, HC-05, and ESP8266. Supports MQTT, buttons, and seek bars. Free and open-source IoT controller.">
 
-  <!-- SEO: Keywords (optimized) -->
-  <meta name="keywords" content="SoifGo, Android IoT Controller, Bluetooth MQTT, ESP32 Arduino, Multi-language IoT app, Saeid Moghadam">
+  <!-- Comprehensive Keywords - All in One -->
+  <meta name="keywords" content="Bluetooth controller app for Android, ESP32 Android app, Arduino Bluetooth control app, MQTT client Android, IoT controller app Android, HC-05 Bluetooth app, ESP8266 Android controller, Android Bluetooth serial app, seek bar controller Android, open source IoT app, SoifGo, Saeid Moghadam, control ESP32 with phone, Arduino Bluetooth app, HC-06 Android app, Bluetooth IoT controller, MQTT Android client, best IoT app for Android, free Bluetooth controller">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="SoifGo — 22‑Language IoT Controller for Android (Bluetooth & MQTT)">
-  <meta property="og:description" content="Control ESP32, Arduino and IoT devices in 22 languages: English, Spanish, Chinese, Arabic, Hindi, Russian, French, German, Japanese, Persian, Turkish, Korean, Portuguese, Hebrew, Kurdish, Urdu, Bengali, Indonesian, Tamil, Thai, Swahili, Italian. Built by Saeid Moghadam.">
+  <meta property="og:title" content="SoifGo — Free Bluetooth & MQTT IoT Controller for Android">
+  <meta property="og:description" content="Control ESP32, Arduino, HC-05, and ESP8266 via Bluetooth and MQTT. Features buttons, seek bars, and 22 languages. Free and open-source.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://soifgo.github.io/soifgo/">
   <meta property="og:image" content="https://soifgo.github.io/soifgo/soifgo-logo.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:locale" content="en_US">
-  <meta property="og:locale:alternate" content="es_ES">
-  <meta property="og:locale:alternate" content="zh_CN">
-  <meta property="og:locale:alternate" content="ar_SA">
-  <meta property="og:locale:alternate" content="hi_IN">
-  <meta property="og:locale:alternate" content="ru_RU">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="SoifGo — 22‑Language Bluetooth & MQTT IoT Controller for Android">
-  <meta name="twitter:description" content="Globally accessible IoT controller supporting 22 languages. Control ESP32, Arduino, HC-05, ESP8266 via Bluetooth, MQTT and UI widgets. Developed by Saeid Moghadam.">
+  <meta name="twitter:title" content="SoifGo — Bluetooth & MQTT IoT Controller for Android">
+  <meta name="twitter:description" content="Free Android app for controlling ESP32, Arduino, HC-05 via Bluetooth and MQTT. Buttons, seek bars, 22 languages.">
   <meta name="twitter:image" content="https://soifgo.github.io/soifgo/soifgo-logo.png">
 
-  <!-- Schema.org (enhanced with language support) -->
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://soifgo.github.io/soifgo/">
+
+  <!-- Schema.org -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "name": "SoifGo",
     "operatingSystem": "Android",
-    "applicationCategory": "Utility, IoT Controller, Bluetooth Tool",
-    "description": "SoifGo is a multilingual Android application for controlling IoT devices using Bluetooth and MQTT. Supports 22 languages including English, Spanish, Chinese, Arabic, Hindi, Russian, French, German, Japanese, Persian, Turkish, Korean, Portuguese, Hebrew, Kurdish, Urdu, Bengali, Indonesian, Tamil, Thai, Swahili and Italian.",
+    "applicationCategory": "Utility",
+    "description": "Bluetooth and MQTT IoT controller app for Android. Supports ESP32, Arduino, HC-05, ESP8266. Features buttons, seek bars, and 22 languages.",
     "url": "https://soifgo.github.io/soifgo/",
+    "keywords": "Bluetooth controller app for Android, ESP32 Android app, Arduino Bluetooth control app, MQTT client Android, IoT controller app Android, HC-05 Bluetooth app, ESP8266 Android controller",
     "inLanguage": ["en", "es", "zh", "fr", "de", "ja", "ru", "ar", "fa", "it", "hi", "tr", "ko", "pt", "he", "ku", "ur", "bn", "id", "ta", "th", "sw"],
     "creator": {
       "@type": "Person",
@@ -70,6 +69,10 @@
       --text-muted: #6b7280;
       --border: #e5e0db;
       --shadow: rgba(0,0,0,0.08);
+    }
+
+    * {
+      box-sizing: border-box;
     }
 
     body {
@@ -202,6 +205,34 @@
       font-weight: bold;
     }
 
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 15px 0;
+      padding: 0;
+    }
+    .feature-grid li {
+      background: #f7f5f2;
+      padding: 10px 15px;
+      border-radius: 8px;
+      list-style: none;
+      border-left: 3px solid var(--primary);
+    }
+
+    .faq-item {
+      background: #f7f5f2;
+      padding: 15px 20px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      border-left: 3px solid var(--primary);
+    }
+    .faq-item strong {
+      color: var(--primary-dark);
+      display: block;
+      margin-bottom: 5px;
+    }
+
     img.preview-img {
       max-width: 100%;
       height: auto;
@@ -250,6 +281,9 @@
       h2 {
         font-size: 1.3em;
       }
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -261,7 +295,7 @@
       SoifGo
       <img src="soifgo-logo.png" alt="SoifGo Logo">
     </h1>
-    <p>SoifGo is an Android application that provides users with advanced capabilities using buttons and seek bars — Control ESP32, Arduino, HC-05, and ESP8266 via Bluetooth and MQTT in 22 languages.</p>
+    <p><strong>Bluetooth & MQTT IoT Controller for Android</strong> — Control ESP32, Arduino, HC-05, and ESP8266 with buttons and seek bars. Supports 22 languages. Free and open-source.</p>
   </header>
 
   <nav>
@@ -272,65 +306,121 @@
   </nav>
 
   <main>
+    <!-- Download Section -->
     <section id="download">
-      <h2>Download SoifGo</h2>
+      <h2>Download SoifGo — Bluetooth Controller App for Android</h2>
 
       <ul>
-        <li><a href="soifgo.zip">📦 Download soifgo (v1.41) - ZIP Package</a></li>
-        <li><a href="https://apkpure.com/soifgo/soifgo.saeidmoghadam">📦 Download from APKPure</a></li>
+        <li><a href="soifgo.zip">Download SoifGo v1.41 (ZIP Package)</a></li>
+        <li><a href="https://apkpure.com/soifgo/soifgo.saeidmoghadam">Download from APKPure</a></li>
       </ul>
 
       <div class="security-box">
-        🔒 <strong>Security Verified</strong><br>
+        <strong>Security Verified</strong><br>
         This APK has been scanned by 65+ global security vendors on VirusTotal.<br>
-        ✔️ No threats detected.<br>
+        No threats detected.<br>
         <a href="https://www.virustotal.com/gui/file/5a28ee2acf881b4a300cc482e5691ee8313f1ca6fde0457e07e942e416d51d81" target="_blank">
           View Full VirusTotal Report
         </a>
       </div>
     </section>
 
+    <!-- About Section -->
     <section id="about">
-      <h2>About SoifGo & Developer</h2>
+      <h2>About SoifGo — IoT Controller App for Android</h2>
 
-      <h3>The Developer: Saeid Moghadam</h3>
+      <h3>Developer: Saeid Moghadam</h3>
       <p>Saeid Moghadam is the creator of SoifGo, a powerful and multilingual IoT controller for Android.</p>
 
-      <h3>Supported Languages in SoifGo</h3>
+      <h3>What is SoifGo?</h3>
+      <p><strong>SoifGo</strong> is an Android application that provides users with advanced capabilities using <strong>buttons and seek bars</strong>. It supports Bluetooth and MQTT protocols, making it ideal for controlling ESP32, Arduino, HC-05, and ESP8266 devices.</p>
+
+      <h3>Key Features</h3>
+      <ul>
+        <li>Control ESP32 via Bluetooth from Android</li>
+        <li>Connect to HC-05 and HC-06 modules</li>
+        <li>MQTT protocol support for internet communication</li>
+        <li>Buttons and seek bars for precise control</li>
+        <li>22 languages supported</li>
+        <li>Perfect for Arduino, ESP8266, and robotics projects</li>
+        <li>Two-way communication with IoT devices</li>
+        <li>Ideal for home automation and industrial projects</li>
+      </ul>
+
+      <h3>Supported Languages</h3>
       <ul>
         <li>English (EN)</li>
-        <li>Spanish (Español)</li>
-        <li>Chinese (简体中文)</li>
-        <li>French (Français)</li>
+        <li>Spanish (Espanol)</li>
+        <li>Chinese (Simplified)</li>
+        <li>French (Francais)</li>
         <li>German (Deutsch)</li>
-        <li>Japanese (日本語)</li>
-        <li>Russian (Русский)</li>
-        <li>Arabic (العربية)</li>
-        <li>Persian (فارسی)</li>
+        <li>Japanese (Nihongo)</li>
+        <li>Russian (Russkiy)</li>
+        <li>Arabic (Al-Arabiya)</li>
+        <li>Persian (Farsi)</li>
         <li>Italian (Italiano)</li>
-        <li>Hindi (हिन्दी)</li>
-        <li>Turkish (Türkçe)</li>
-        <li>Korean (한국어)</li>
-        <li>Portuguese (Português)</li>
-        <li>Hebrew (עברית)</li>
-        <li>Kurdish (کوردی)</li>
-        <li>Urdu (اردو)</li>
-        <li>Bengali (বাংলা)</li>
+        <li>Hindi (Hindi)</li>
+        <li>Turkish (Turkce)</li>
+        <li>Korean (Hanguk)</li>
+        <li>Portuguese (Portugues)</li>
+        <li>Hebrew (Ivrit)</li>
+        <li>Kurdish (Kurdi)</li>
+        <li>Urdu (Urdu)</li>
+        <li>Bengali (Bangla)</li>
         <li>Indonesian (Bahasa Indonesia)</li>
-        <li>Tamil (தமிழ்)</li>
-        <li>Thai (ไทย)</li>
+        <li>Tamil (Tamil)</li>
+        <li>Thai (Thai)</li>
         <li>Swahili (Kiswahili)</li>
       </ul>
 
-      <h3>About SoifGo</h3>
-      <p><strong>SoifGo</strong> is an Android application that provides users with advanced capabilities using <strong>buttons and seek bars</strong>. It supports Bluetooth and MQTT protocols, making it ideal for controlling ESP32, Arduino, HC-05, and ESP8266 devices.</p>
+      <h3>Frequently Asked Questions</h3>
+
+      <div class="faq-item">
+        <strong>How to connect ESP32 to Android via Bluetooth?</strong>
+        <p>SoifGo allows you to easily connect and control ESP32 via Bluetooth. Install the app, pair your device, and start sending commands through buttons and seek bars.</p>
+      </div>
+
+      <div class="faq-item">
+        <strong>What devices does SoifGo support?</strong>
+        <p>SoifGo supports ESP32, Arduino, HC-05, HC-06, ESP8266, and any device that communicates via Bluetooth SPP or MQTT protocol.</p>
+      </div>
+
+      <div class="faq-item">
+        <strong>Is SoifGo free and open-source?</strong>
+        <p>Yes! SoifGo is completely free to download and use. The source code is available for developers who want to contribute or customize it.</p>
+      </div>
+
+      <div class="faq-item">
+        <strong>Can I use SoifGo for robotics projects?</strong>
+        <p>Absolutely! SoifGo is perfect for controlling robots with Bluetooth modules like HC-05 and HC-06. Use buttons for movement and seek bars for speed control.</p>
+      </div>
+
+      <div class="faq-item">
+        <strong>Does SoifGo support MQTT?</strong>
+        <p>Yes, SoifGo includes MQTT support, allowing you to control your IoT devices over the internet in addition to Bluetooth.</p>
+      </div>
+
+      <div class="faq-item">
+        <strong>What languages does SoifGo support?</strong>
+        <p>SoifGo supports 22 languages including English, Spanish, Chinese, Arabic, Hindi, Russian, French, German, Japanese, Persian, and many more.</p>
+      </div>
+
+      <div class="faq-item">
+        <strong>How to control Arduino with Bluetooth from Android?</strong>
+        <p>Install SoifGo, pair with your Arduino's HC-05/06 module, and use the buttons and seek bars to send commands.</p>
+      </div>
+
+      <div class="faq-item">
+        <strong>Is SoifGo available on Google Play?</strong>
+        <p>SoifGo is currently available as a direct download (APK) and on APKPure. Google Play release is coming soon.</p>
+      </div>
 
       <h3>Contact</h3>
       <p>Email: <a href="mailto:SSM20985@gmail.com">SSM20985@gmail.com</a></p>
       <p>Email: <a href="mailto:SSMQQMSS@gmail.com">SSMQQMSS@gmail.com</a></p>
     </section>
 
-    <img src="soifgo_pic01.png" alt="SoifGo App Preview - IoT Controller Interface" class="preview-img" loading="lazy">
+    <img src="soifgo_pic01.png" alt="SoifGo App Preview - Bluetooth and MQTT IoT Controller" class="preview-img" loading="lazy">
 
     <div id="totalVisits">Loading...</div>
   </main>
@@ -348,10 +438,14 @@
 
   <script>
     function switchTab(sectionId, buttonElement) {
-      document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-      document.querySelectorAll('nav button').forEach(b => b.classList.remove('clicked'));
+      document.querySelectorAll('section').forEach(function(s) {
+        s.classList.remove('active');
+      });
+      document.querySelectorAll('nav button').forEach(function(b) {
+        b.classList.remove('clicked');
+      });
       document.getElementById(sectionId).classList.add('active');
-      buttonElement.classList.add('clicked');
+      if (buttonElement) buttonElement.classList.add('clicked');
     }
 
     function openTutorial() {
@@ -364,10 +458,10 @@
 
     async function getCount(path) {
       try {
-        const url = `https://soifgo.goatcounter.com/counter/${path}.json`;
-        const res = await fetch(url);
+        var url = "https://soifgo.goatcounter.com/counter/" + path + ".json";
+        var res = await fetch(url);
         if (!res.ok) return 0;
-        const data = await res.json();
+        var data = await res.json();
         return Number(data.count) || 0;
       } catch (e) {
         return 0;
@@ -375,10 +469,10 @@
     }
 
     async function loadTotal() {
-      const a = await getCount("soifgo/");
-      const b = await getCount("soifgo/index.html");
-      const total = a + b;
-      document.getElementById("totalVisits").textContent = " Visits : " + total;
+      var a = await getCount("soifgo/");
+      var b = await getCount("soifgo/index.html");
+      var total = a + b;
+      document.getElementById("totalVisits").textContent = "Visits: " + total;
     }
 
     window.onload = function() {
