@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>soifgo — Professional Help & User Guide</title>
+    <!-- Font Awesome 6 Free (CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ----- RESET & BASE (Dark Professional Theme) ----- */
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            background: #0d1117;
+            color: #c9d1d9;
+            padding: 20px;
+            line-height: 1.7;
+        }
+        a { color: #58a6ff; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #161b22;
+            border-radius: 28px;
+            padding: 30px 35px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+            border: 1px solid #30363d;
+        }
+
+        /* ----- SEARCH & HEADER ----- */
+        .top-bar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #30363d;
+        }
+        .logo h1 {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #58a6ff, #bc8cff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .logo span { font-size: 14px; color: #8b949e; -webkit-text-fill-color: #8b949e; }
+        .search-box {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 40px;
+            padding: 6px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 220px;
+        }
+        .search-box i { color: #8b949e; }
+        .search-box input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #f0f6fc;
+            padding: 10px 0;
+            width: 200px;
+            font-size: 14px;
+        }
+        .search-box input::placeholder { color: #484f58; }
+
+        /* ----- TOC (Table of Contents) ----- */
+        .toc {
+            background: #0d1117;
+            border-radius: 16px;
+            padding: 18px 24px;
+            margin-bottom: 30px;
+            border: 1px solid #21262d;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 20px;
+        }
+        .toc a {
+            font-size: 14px;
+            color: #8b949e;
+            transition: 0.2s;
+            border-right: 1px solid #30363d;
+            padding-right: 18px;
+        }
+        .toc a:last-child { border-right: none; }
+        .toc a:hover { color: #58a6ff; text-decoration: none; }
+
+        /* ----- SECTIONS (Cards) ----- */
+        .section-card {
+            background: #0d1117;
+            border-radius: 20px;
+            padding: 24px 28px;
+            margin-bottom: 28px;
+            border: 1px solid #21262d;
+            transition: 0.2s;
+        }
+        .section-card:hover { border-color: #30363d; }
+        .section-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #f0f6fc;
+        }
+        .section-title i { color: #58a6ff; width: 32px; font-size: 20px; }
+        .section-sub {
+            color: #8b949e;
+            font-size: 15px;
+            margin-bottom: 16px;
+            border-left: 3px solid #30363d;
+            padding-left: 16px;
+        }
+
+        /* ----- LISTS & STEPS ----- */
+        .step-list {
+            list-style: none;
+            padding: 0;
+        }
+        .step-list li {
+            background: #161b22;
+            border-radius: 12px;
+            padding: 12px 18px;
+            margin-bottom: 10px;
+            border-left: 4px solid #58a6ff;
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            font-size: 15px;
+        }
+        .step-list li i { color: #58a6ff; margin-top: 4px; width: 22px; text-align: center; }
+        .step-list li strong { color: #f0f6fc; }
+
+        /* ----- GRID FOR FEATURES ----- */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin: 10px 0;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin: 10px 0;
+        }
+        .info-box {
+            background: #161b22;
+            border-radius: 16px;
+            padding: 18px 20px;
+            border: 1px solid #21262d;
+        }
+        .info-box h4 { color: #f0f6fc; margin-bottom: 6px; display: flex; gap: 8px; align-items: center; }
+        .info-box h4 i { color: #58a6ff; }
+        .info-box p, .info-box li { color: #b1bac4; font-size: 14px; }
+        .info-box ul { padding-left: 20px; }
+
+        /* ----- CODE BLOCK ----- */
+        .code-block {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 14px 20px;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 13px;
+            color: #e3e9f0;
+            overflow-x: auto;
+            margin: 12px 0;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        .code-block .cmd { color: #f0883e; }
+        .code-block .str { color: #a5d6ff; }
+        .code-block .cmt { color: #8b949e; font-style: italic; }
+
+        /* ----- BUTTONS / DOWNLOAD (Removed) ----- */
+
+        /* ----- HIDE FOR SEARCH (JS) ----- */
+        .hidden-section { display: none !important; }
+
+        /* ----- RESPONSIVE ----- */
+        @media (max-width: 768px) {
+            .container { padding: 16px; }
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+            .top-bar { flex-direction: column; align-items: stretch; }
+            .search-box { width: 100%; }
+            .search-box input { width: 100%; }
+            .toc { flex-direction: column; gap: 6px; }
+            .toc a { border-right: none; padding-right: 0; }
+        }
+        @media print {
+            body { background: white; color: black; }
+            .container { background: white; border: 1px solid #ccc; }
+            .section-card { background: #f9f9f9; border: 1px solid #ddd; }
+            .search-box { display: none; }
+            .toc { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- ==================== HEADER + SEARCH ==================== -->
+    <div class="top-bar">
+        <div class="logo">
+            <h1><i class="fas fa-bolt" style="background: none; -webkit-text-fill-color: #58a6ff;"></i> soifgo</h1>
+            <span>Universal Bluetooth / API / MQTT Controller</span>
+        </div>
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Search guide..." onkeyup="filterSections()">
+        </div>
+    </div>
+
+    <!-- ==================== TABLE OF CONTENTS ==================== -->
+    <div class="toc" id="toc">
+        <a href="#intro"><i class="fas fa-home"></i> Intro</a>
+        <a href="#install"><i class="fas fa-download"></i> Install</a>
+        <a href="#dashboard"><i class="fas fa-th-large"></i> Dashboard</a>
+        <a href="#bluetooth"><i class="fab fa-bluetooth-b"></i> Bluetooth</a>
+        <a href="#server"><i class="fas fa-cloud"></i> API / MQTT</a>
+        <a href="#buttons"><i class="fas fa-square"></i> Buttons</a>
+        <a href="#seekbars"><i class="fas fa-sliders-h"></i> SeekBars</a>
+        <a href="#notes"><i class="fas fa-pen"></i> Notes & HTML</a>
+        <a href="#graphs"><i class="fas fa-chart-line"></i> Graphs</a>
+        <a href="#effects"><i class="fas fa-magic"></i> Effects</a>
+        <a href="#sensors"><i class="fas fa-microchip"></i> Sensors</a>
+        <a href="#simulation"><i class="fas fa-play"></i> Simulation</a>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ==================== SECTION 1: INTRO ======================= -->
+    <!-- ============================================================ -->
+    <div class="section-card" id="intro">
+        <div class="section-title"><i class="fas fa-rocket"></i> 1. Introduction</div>
+        <div class="section-sub">
+            <strong>soifgo</strong> is a professional, open‑source Android application designed for industrial automation, IoT prototyping, and Bluetooth device control. 
+            It transforms your phone into a powerful HMI (Human-Machine Interface) with zero coding required.
+        </div>
+        <div class="grid-2">
+            <div class="info-box">
+                <h4><i class="fas fa-check-circle"></i> Why soifgo?</h4>
+                <ul>
+                    <li><strong>Free & Open Source:</strong> No ads, no tracking. Full transparency.</li>
+                    <li><strong>21 Languages:</strong> Built-in custom translation engine (English, Persian, Arabic, Chinese, Russian, etc.).</li>
+                    <li><strong>Lightweight:</strong> Only 7.5 MB APK. Runs smoothly on older devices (Android 5+).</li>
+                    <li><strong>Offline First:</strong> All projects are saved locally. No internet required for core features.</li>
+                </ul>
+            </div>
+            <div class="info-box">
+                <h4><i class="fas fa-microchip"></i> Who is it for?</h4>
+                <ul>
+                    <li><strong>Engineers:</strong> Test PLCs, VFDs, and serial devices via Bluetooth.</li>
+                    <li><strong>Makers:</strong> Control Arduino / ESP32 / Raspberry Pi projects.</li>
+                    <li><strong>Educators:</strong> Teach IoT, sensor reading, and control logic.</li>
+                    <li><strong>Technicians:</strong> Diagnose equipment with real‑time graphs and logs.</li>
+                </ul>
+            </div>
+        </div>
+        <p style="color:#8b949e; margin-top:10px;"><i class="fas fa-code"></i> Developed with B4A (Basic4Android) · Architecture: B4XPages · Version 1.41</p>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ==================== SECTION 2: INSTALL ===================== -->
+    <!-- ============================================================ -->
+    <div class="section-card" id="install">
+        <div class="section-title"><i class="fas fa-download"></i> 2. Installation & Permissions</div>
+        <div class="section-sub">First-time setup guide for Android 5 to Android 14+.</div>
+        <ul class="step-list">
+            <li><i class="fas fa-file-alt"></i> <div><strong>Download APK</strong> – Get the latest version from <a href="#">GitHub Releases</a> or <a href="#">APKPure</a>.</div></li>
+            <li><i class="fas fa-shield-alt"></i> <div><strong>Enable Unknown Sources</strong> – Allow installation from your file manager or browser (Android 8+ handles this per‑app).</div></li>
+            <li><i class="fas fa-folder-open"></i> <div><strong>Storage Permission (Android 5–10)</strong> – Grant <code>WRITE_EXTERNAL_STORAGE</code> to save projects. On Android 11+, <code>MANAGE_EXTERNAL_STORAGE</code> is required for full file access.</div></li>
+            <li><i class="fas fa-bluetooth-b"></i> <div><strong>Bluetooth & SMS Permissions</strong> – Required for device pairing, sending data, and SMS automation. Denying SMS will disable the SMS button function only.</div></li>
+        </ul>
+        <div class="code-block">
+            <span class="cmt">// App creates this folder structure on first run:</span>
+            /storage/emulated/0/soifgo/&lt;folder&gt;/Page/
+            /storage/emulated/0/soifgo/&lt;folder&gt;/Note/
+            /storage/emulated/0/soifgo/&lt;folder&gt;/HTML/
+            /storage/emulated/0/soifgo/&lt;folder&gt;/Audio/
+            /storage/emulated/0/soifgo/&lt;folder&gt;/Pictures/
+            /storage/emulated/0/soifgo/&lt;folder&gt;/Pdf/
+            /storage/emulated/0/soifgo/&lt;folder&gt;/graph/
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ==================== SECTION 3: DASHBOARD =================== -->
+    <!-- ============================================================ -->
+    <div class="section-card" id="dashboard">
+        <div class="section-title"><i class="fas fa-th-large"></i> 3. Dashboard Overview</div>
+        <div class="section-sub">The main screen consists of a configurable panel (Panel1) where you place Buttons and SeekBars.</div>
+        <div class="grid-2">
+            <div class="info-box">
+                <h4><i class="fas fa-play"></i> Play / Edit Mode</h4>
+                <ul>
+                    <li><strong>Play (▶️):</strong> Active runtime. Buttons send commands, bars update values, graphs plot data.</li>
+                    <li><strong>Pause (⏸️):</strong> Edit mode. Move/resize controls, change behaviours, customize colors.</li>
+                    <li><i class="fas fa-sync-alt"></i> Switching modes reloads the current page with updated properties.</li>
+                </ul>
+            </div>
+            <div class="info-box">
+                <h4><i class="fas fa-sliders-h"></i> Main Controls</h4>
+                <ul>
+                    <li><strong>Top Bar:</strong> Bluetooth connect, Menu (≡), Play/Pause, Page navigation.</li>
+                    <li><strong>Slide Menu (≡):</strong> Access folders, pages, search, undo/redo, simulation, and language selection.</li>
+                    <li><strong>Bottom SeekBars:</strong> Fine‑tune effects, sizes, delays, and graph zoom.</li>
+                </ul>
+            </div>
+        </div>
+        <p style="color:#8b949e; margin-top:6px;"><i class="fas fa-lightbulb"></i> <strong>Tip:</strong> Long‑press on any button or SeekBar to access quick‑edit options (audio, vibra, effects).</p>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ==================== SECTION 4: BLUETOOTH =================== -->
+    <!-- ============================================================ -->
+    <div class="section-card" id="bluetooth">
+        <div class="section-title"><i class="fab fa-bluetooth-b"></i> 4. Bluetooth Serial Communication</div>
+        <div class="section-sub">Connect to any classic Bluetooth (SPP) device like HC‑05, HC‑06, Arduino, or industrial modules.</div>
+        <ul class="step-list">
+            <li><i class="fas fa-search"></i> <div><strong>Pairing:</strong> First, pair your device in Android Settings > Bluetooth. Return to soifgo.</div></li>
+            <li><i class="fas fa-plug"></i> <div><strong>Connect:</strong> Tap the Bluetooth icon (top‑left). Select your paired device from the list. The icon turns blue on success.</div></li>
+            <li><i class="fas fa-exchange-alt"></i> <div><strong>Send / Receive:</strong> Buttons with <code>Send Bluetooth</code> behaviour transmit data. Buttons with <code>Receive Bluetooth Text/Value</code> display incoming data.</div></li>
+            <li><i class="fas fa-font"></i> <div><strong>Format (CR/LF/STX):</strong> Configure per‑button or globally. Options: <code>CR+LF</code>, <code>CR</code>, <code>LF</code>, <code>STX/ETX</code>, <code>NULL</code>, <code>NON</code> (raw).</div></li>
+        </ul>
+        <div class="code-block">
+            <span class="cmt">// Example: Button sends "M3 S1000" with CR+LF</span>
+            <span class="cmd">Behavour:</span> Send Bluetooth
+            <span class="cmd">Sender:</span> M3 S1000
+            <span class="cmd">Format:</span> CR+LF  <span class="cmt">// Appends \r\n</span>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ==================== SECTION 5: API / MQTT ================== -->
+    <!-- ============================================================ -->
+    <div class="section-card" id="server">
+        <div class="section-title"><i class="fas fa-cloud"></i> 5. Server API & MQTT Integration</div>
+        <div class="section-sub">Connect to REST APIs or MQTT brokers for cloud‑based control, data logging, and IIoT applications.</div>
+        <div class="grid-2">
+            <div class="info-box">
+                <h4><i class="fas fa-code"></i> REST API</h4>
+                <ul>
+                    <li><strong>Address:</strong> Full URL (e.g., <code>http://192.168.1.100:3000/data</code>).</li>
+                    <li><strong>Server Key:</strong> JSON key name (e.g., <code>"temperature"</code>).</li>
+                    <li><strong>Sender:</strong> The value to send (static text or sensor variable).</li>
+                    <li><strong>Receive:</strong> Buttons with <code>Receive Server Text/Value</code> parse JSON responses.</li>
+                    <li><strong>Filters:</strong> Use <code>Start Word</code> and <code>End Word</code> to extract substrings from large JSON responses.</li>
+                </ul>
+            </div>
+            <div class="info-box">
+                <h4><i class="fas fa-wifi"></i> MQTT</h4>
+                <ul>
+                    <li><strong>Broker:</strong> Address (e.g., <code>tcp://test.mosquitto.org:1883</code>).</li>
+                    <li><strong>Client ID:</strong> Unique identifier (auto‑generated if left blank).</li>
+                    <li><strong>Topic:</strong> Subscribe/Publish topic (e.g., <code>soifgo/sensor1</code>).</li>
+                    <li><strong>QoS:</strong> 0, 1, or 2. Set in the MQTT options menu.</li>
+                    <li><strong>Auth:</strong> Optional username/password for secure brokers.</li>
+                </ul>
+            </div>
+        </div>
+        <p style="color:#8b949e;"><i class="fas fa-check-circle" style="color:#2ea043;"></i> Both API and MQTT support <strong>Note Jobs</strong> – send entire text files line‑by‑line with delays!</p>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ==================== SECTION 6: BUTTONS ===================== -->
+    <!-- ============================================================ -->
+    <div class="section-card" id="buttons">
+        <div class="section-title"><i class="fas fa-square"></i> 6. Buttons – Full Configuration</div>
+        <div class="section-sub">Each button can be customized with behaviours, effects, and media.</div>
+        <div class="grid-2">
+            <div class="info-box">
+                <h4><i class="fas fa-cog"></i> Behaviour Types</h4>
+                <ul>
+                    <li><strong>Send:</strong> Bluetooth, SMS, API, MQTT.</li>
+                    <li><strong>Receive:</strong> Bluetooth Text/Value, API Text/Value, MQTT Text/Value.</li>
+                    <li><strong>UI:</strong> Note, PDF, Image, Web (HTML), Open Page, Open Folder.</li>
+                    <li><strong>Bar Control:</strong> +Bar, -Bar, Show Bar Value.</li>
+                    <li><strong>Sensor:</strong> Read Phone Sensor (Light, Accel X/Y, Magnetic).</li>
+                </ul>
+            </div>
+            <div class="info-box">
+                <h4><i class="fas fa-paint-brush"></i> Visual Properties</h4>
+                <ul>
+                    <li><strong>Name, Font, Text Size, Color.</strong></li>
+                    <li><strong>Icon:</strong> Load from gallery or choose from built‑in icons (Shadow, Edg, Clock, etc.).</li>
+                    <li><strong>Gradients:</strong> 9 pre‑defined gradient styles (TL_BR, LEFT_RIGHT, etc.).</li>
+                    <li><strong>Corner Radius & Border:</strong> Customize the shape and stroke.</li>
+                    <li><strong>Rotation:</strong> Freely rotate the button (0–359°).</li>
+                </ul>
+            </div>
+        </div>
+        <div class="info-box">
+            <h4><i class="fas fa-music"></i> Audio & Vibra</h4>
+            <ul>
+                <li><strong>Audio:</strong> Assign an MP3/WAV file (from assets or saved folder) to play on click.</li>
+                <li><strong>Beeper:</strong> Use system beeper instead of audio file.</li>
+                <li><strong>Vibration:</strong> Set vibration duration (ms).</li>
+            </ul>
+        </div>
+        <div class="code-block">
+            <span class="cmt">// Copy / Paste entire button properties (great for templates)</span>
+            <span class="cmd">Slide Menu → Copy Properties</span>  →  <span class="cmd">Paste Properties</span>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ==================== SECTION 7: SEEKBARS ==================== -->
+    <!-- ============================================================ -->
+    <div class="section-card" id="seekbars">
+        <div class="section-title"><i class="fas fa-sliders-h"></i> 7. SeekBars – Analog Controls</div>
+        <div class="section-sub">SeekBars provide variable output (0–Max). Perfect for speed control, PWM, or dimming.</div>
+        <ul class="step-list">
+            <li><i class="fas fa-arrows-alt-h"></i> <div><strong>Range:</strong> Set <code>Min=0</code>, <code>Max</code> (default 100). Customisable via properties.</div></li>
+            <li><i class="fas fa-palette"></i> <div><strong>RGB Modes:</strong> <code>White</code> (0–255 grayscale), <code>Color Picker</code> (select any color), <code>Color Picker + Free</code> (click to toggle).</div></li>
+            <li><i class="fas fa-envelope"></i> <div><strong>Send Values:</strong> Configure to send via Bluetooth, API, MQTT, or SMS with custom prefix/suffix.</div></li>
+            <li><i class="fas fa-sync-alt"></i> <div><strong>Check‑in:</strong> Enable to wait for an echo/response before moving to the next value.</div></li>
+        </ul>
+        <div class="code-block">
+            <span class="cmt">// Example: SeekBar sends "R255G200B100" via Bluetooth</span>
+            <span class="cmd">Prefix:</span> R  <span class="cmd">Suffix:</span> G  <span class="cmd">RGB Mode:</span> Color Picker
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ==================== SECTION 8: NOTES & HTML ================ -->
+    <!-- ============================================================ -->
+    <div class="section-card" id="notes">
+        <div class="section-title"><i class="fas fa-pen"></i> 8. Note Editor & HTML Viewer</div>
+        <div class="section-sub">A powerful multi‑purpose editor for text, HTML, G‑Code, and automated data streaming.</div>
+        <div class="grid-2">
+            <div class="info-box">
+                <h4><i class="fas fa-edit"></i> Note Features</h4>
+                <ul>
+                    <li><strong>Line Numbers:</strong> Toggle on/off.</li>
+                    <li><strong>Free / Wrap:</strong> Choose between free‑resizing or word wrap.</li>
+                    <li><strong>Font & Size:</strong> Custom fonts from assets.</li>
+                    <li><strong>Find & Replace:</strong> Search text and replace all or next.</li>
+                    <li><strong>Undo / Redo:</strong> Full history via <code>manager1</code>.</li>
+                </ul>
+            </div>
+            <div class="info-box">
+                <h4><i class="fas fa-code"></i> HTML & G‑Code</h4>
+                <ul>
+                    <li><strong>HTML Mode:</strong> WYSIWYG preview inside the app. Supports <code>&lt;style&gt;</code> and <code>&lt;script&gt;</code>.</li>
+                    <li><strong>Syntax Highlighting:</strong> Auto‑colors HTML tags, CSS properties, and JS keywords.</li>
+                    <li><strong>G‑Code Viewer:</strong> Visualise CNC paths (G0, G1, G2, G3) directly in the app.</li>
+                    <li><strong>Rangmang2:</strong> Built‑in utility for 2D plotting and coordinate transformations.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="info-box">
+            <h4><i class="fas fa-random"></i> Note Jobs (Automation)</h4>
+            <ul>
+                <li><strong>Bluetooth Send / Server Send:</strong> Stream each line of the note to Bluetooth/API/MQTT.</li>
+                <li><strong>Delays:</strong> Set a fixed delay between lines, or use the <code>wait=</code> command inside the text (e.g., <code>wait=5</code>).</li>
+                <li><strong>Loop:</strong> Repeat the entire note endlessly.</li>
+                <li><strong>Check Next:</strong> Wait for a specific response (e.g., "OK") before moving to the next line.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ==================== SECTION 9: GRAPHS ====================== -->
+    <!-- ============================================================ -->
+    <div class="section-card" id="graphs">
+        <div class="section-title"><i class="fas fa-chart-line"></i> 9. Real‑Time Graphs</div>
+        <div class="section-sub">Visualise incoming numeric data (Bluetooth/API/MQTT/Sensors) with live plotting.</div>
+        <ul class="step-list">
+            <li><i class="fas fa-flag-checkered"></i> <div><strong>Activate:</strong> In button effects, enable <code>Graph ON</code>. The button background turns into a graph canvas.</div></li>
+            <li><i class="fas fa-tachometer-alt"></i> <div><strong>Update Rate:</strong> Set <code>Graph Intertime</code> (milliseconds per point).</div></li>
+            <li><i class="fas fa-expand"></i> <div><strong>Zoom & Scroll:</strong> Use the <code>Zoom</code> and <code>View</code> options in the graph menu to inspect historical data.</div></li>
+            <li><i class="fas fa-save"></i> <div><strong>Data Logging:</strong> Enable <code>Graph Time Save</code> to store timestamped values (year, month, day, hour, minute, second, value) into the <code>/graph/</code> folder.</div></li>
+            <li><i class="fas fa-search"></i> <div><strong>Graph Select:</strong> Switch between active graphs without leaving the main view.</div></li>
+        </ul>
+        <div class="code-block">
+            <span class="cmt">// Graph data is saved as .ttx files:</span>
+            /soifgo/&lt;folder&gt;/graph/&lt;page&gt;/&lt;ButtonName&gt;_1.ttx
+            <span class="cmt">// Each file contains: Width, then pairs of (Year, Month, Day, Hour, Minute, Second, Value).</span>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ==================== SECTION 10: EFFECTS ==================== -->
+    <!-- ============================================================ -->
+    <div class="section-card" id="effects">
+        <div class="section-title"><i class="fas fa-magic"></i> 10. Dynamic Effects (Visual Feedback)</div>
+        <div class="section-sub">Buttons can react to incoming values with visual changes, making the dashboard come alive.</div>
+        <div class="grid-3">
+            <div class="info-box">
+                <h4><i class="fas fa-arrows-alt"></i> Max Size</h4>
+                <p>The button grows or shrinks proportionally to the input value within a defined range (<code>WidthMax</code>, <code>HeightMax</code>).</p>
+            </div>
+            <div class="info-box">
+                <h4><i class="fas fa-circle"></i> Circular Gauge</h4>
+                <p>Draws an arc (like a speedometer) around the button. Define <code>Start</code> and <code>End</code> angles (0–359°).</p>
+            </div>
+            <div class="info-box">
+                <h4><i class="fas fa-arrows-alt-v"></i> Max Move</h4>
+                <p>Translate the button position based on the value (<code>MoveX</code>, <code>MoveY</code>). Great for slider‑like indicators.</p>
+            </div>
+            <div class="info-box">
+                <h4><i class="fas fa-sync-alt"></i> Rotation</h4>
+                <p>Rotate the button dynamically between <code>Start</code> and <code>End</code> angles (0–359°).</p>
+            </div>
+            <div class="info-box">
+                <h4><i class="fas fa-palette"></i> Color Effect</h4>
+                <p>7 modes: Battery, Cooling, Light (W/R/G/B/Y). Colors change based on value thresholds.</p>
+            </div>
+            <div class="info-box">
+                <h4><i class="fas fa-chart-simple"></i> Math Formula</h4>
+                <p>Apply custom expressions like <code>val * 2 + 10</code> or <code>Math.sin(val)</code> to the incoming value before display.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ==================== SECTION 11: SENSORS ==================== -->
+    <!-- ============================================================ -->
+    <div class="section-card" id="sensors">
+        <div class="section-title"><i class="fas fa-microchip"></i> 11. Phone Sensors</div>
+        <div class="section-sub">Use your phone’s hardware sensors as input sources.</div>
+        <ul class="step-list">
+            <li><i class="fas fa-sun"></i> <div><strong>Light Sensor:</strong> Measures ambient light (lux). Assign to a button with <code>Receive Sensor</code> behaviour.</div></li>
+            <li><i class="fas fa-arrows-alt"></i> <div><strong>Accelerometer (X/Y):</strong> Measures device tilt and motion. Use <code>MoveX</code> or <code>MoveY</code> as address.</div></li>
+            <li><i class="fas fa-compass"></i> <div><strong>Magnetometer:</strong> Measures magnetic field (µT). Useful for compass or metal detection.</div></li>
+            <li><i class="fas fa-sliders-h"></i> <div><strong>Scaling:</strong> Apply multipliers (<code>MagMulti</code>, <code>AccMulti</code>) and offsets (<code>MagAdd</code>, <code>AccAdd</code>) to raw sensor data.</div></li>
+        </ul>
+        <div class="code-block">
+            <span class="cmt">// Example: Send light value via Bluetooth</span>
+            <span class="cmd">Behaviour:</span> Send Bluetooth  |  <span class="cmd">Sensor:</span> Light  |  <span class="cmd">Divider:</span> 1
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ==================== SECTION 12: SIMULATION ================= -->
+    <!-- ============================================================ -->
+    <div class="section-card" id="simulation">
+        <div class="section-title"><i class="fas fa-play"></i> 12. Simulation Mode</div>
+        <div class="section-sub">Test your dashboard without any hardware connected.</div>
+        <ul class="step-list">
+            <li><i class="fas fa-wave-square"></i> <div><strong>Signal Types:</strong> Ramp (0→1024), Bipolar Ramp (-1024→1024), Sine (0→1024), Bipolar Sine (-1024→1024).</div></li>
+            <li><i class="fas fa-eye"></i> <div><strong>Show/Hide:</strong> Toggle the simulated value display on the main screen.</div></li>
+            <li><i class="fas fa-cogs"></i> <div><strong>Usage:</strong> Activate from the <code>Slide Menu → Simulation</code>. Great for demo and UI testing.</div></li>
+        </ul>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ==================== FOOTER ================================= -->
+    <!-- ============================================================ -->
+    <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #21262d; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; color: #484f58; font-size: 13px;">
+        <div><i class="fas fa-code"></i> soifgo · Built for engineers, makers, and educators</div>
+        <div><i class="fas fa-heart" style="color:#da3633;"></i> Free forever · No ads · No tracking</div>
+    </div>
+
+</div>
+
+<!-- ==================== SEARCH JAVASCRIPT ==================== -->
+<script>
+    function filterSections() {
+        const input = document.getElementById('searchInput');
+        const filter = input.value.toLowerCase().trim();
+        const sections = document.querySelectorAll('.section-card');
+
+        if (filter === '') {
+            sections.forEach(s => s.classList.remove('hidden-section'));
+            return;
+        }
+
+        sections.forEach(section => {
+            const text = section.innerText.toLowerCase();
+            if (text.includes(filter)) {
+                section.classList.remove('hidden-section');
+            } else {
+                section.classList.add('hidden-section');
+            }
+        });
+    }
+
+    // Optional: Clear search on ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            document.getElementById('searchInput').value = '';
+            filterSections();
+        }
+    });
+</script>
+
+
+
+    <!-- ===== FOOTER ===== -->
+    <div class="footer">
+      Saeid Moghadam — SoifGo
+    </div>
+  </div>
+
+  <hr>
+  <p style="text-align:center;">
+    <a href="https://soifgo.github.io/soifgo/tutorials/list.html" 
+       style="display:inline-block; padding:10px 20px; background:#0066cc; color:#fff; text-decoration:none; border-radius:5px;">
+      ⬅ Back to Tutorial
+    </a>
+  </p>
+
+  <hr>
+  <p style="text-align:center;">
+    <a href="https://soifgo.github.io/soifgo/index.html" 
+       style="display:inline-block; padding:10px 20px; background:#8B4513; color:#fff; text-decoration:none; border-radius:5px;">
+      ⬅ Back to Home
+    </a>
+  </p>
+
+</body>
+</html>
