@@ -94,31 +94,20 @@ A wide range of creative workflows can be built this way—limited only by the u
     Here, each command line will be sent one after another with the same delay (e.g., 2 seconds).
   </p>
 
-  <h2>Method 2: Custom Delay Between Lines (Custom Wait On)</h2>
+  <h2>Method 2: Custom Delay   (Custom Wait On)</h2>
   <p>
-    In this method, you can define different delays for each command.  
-    The first line is the command, and the next line is only the delay time in seconds.
+In our method, wherever you need a custom delay before executing a command, simply write the desired delay time in seconds as wait=4. This way, upon seeing your command, the system will start counting down and then proceed to send the remaining lines.
   </p>
   <p><strong>Example:</strong></p>
   <code>START_MACHINE</code>
-  <code>3</code>
+  <code>wait=3</code>
   <code>SET_SPEED 1200</code>
-  <code>5</code>
+  <code>wait=5</code>
   <code>MOVE_X 50</code>
-  <code>2</code>
   <code>MOVE_Y 30</code>
-  <code>4</code>
+  <code>wait=4</code>
   <code>STOP_MACHINE</code>
-  <p>
-    In this example:
-    <ul>
-      <li><code>START_MACHINE</code> is sent, then waits 3 seconds.</li>
-      <li><code>SET_SPEED 1200</code> is sent, then waits 5 seconds.</li>
-      <li><code>MOVE_X 50</code> is sent, then waits 2 seconds.</li>
-      <li><code>MOVE_Y 30</code> is sent, then waits 4 seconds.</li>
-      <li><code>STOP_MACHINE</code> is sent at the end.</li>
-    </ul>
-  </p>
+ 
 
   <h2>Step 3: Communication Settings</h2>
   <p>
