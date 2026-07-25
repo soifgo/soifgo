@@ -6,9 +6,9 @@
   <meta name="theme-color" content="#1e1e24">
 
   <!-- ===== PRIMARY SEO ===== -->
-  <title>RANGMANG 2 — Single‑Module Serial RGB Controller (50 Ch × 255 Px)</title>
-  <meta name="description" content="RANGMANG 2 is a professional serial RGB controller based on ATmega128, supporting 50 channels and 255 pixels per channel — total 12,750 addressable pixels. ARGBSE protocol with single‑module design.">
-  <meta name="keywords" content="RANGMANG 2, Serial RGB Controller, ATmega128, Addressable LED, RGB LED Controller, Soifgo, 50 Channels, 255 Pixels">
+  <title>RANGMANG 2 — WS2812 / WS2811 RGB LED Controller (50 Ch, 255 Px) | ATmega128</title>
+  <meta name="description" content="RANGMANG 2 is a professional serial RGB controller based on ATmega128. Supports 50 channels, 255 pixels per channel — total 12,750 addressable LEDs. Compatible with WS2812, WS2811, WS2813, WS2815. Ideal for cheap LED matrix, free scrolling signs, and digital advertising.">
+  <meta name="keywords" content="RANGMANG 2, WS2812, WS2811, WS2813, WS2815, RGB LED Controller, Addressable LED, ATmega128, LED matrix, scrolling sign, digital advertising, cheap LED display, free signboard, 50 channels, 255 pixels, ARGBSE, Soifgo">
   <link rel="canonical" href="https://soifgo.github.io/soifgo/tutorials/server/rangmang2/">
 
   <!-- ===== LANGUAGE ALTERNATES ===== -->
@@ -16,8 +16,8 @@
   <link rel="alternate" hreflang="en" href="https://soifgo.github.io/soifgo/tutorials/server/rangmang2/" />
 
   <!-- ===== OPEN GRAPH ===== -->
-  <meta property="og:title" content="RANGMANG 2 — Single‑Module RGB Controller (50 Ch × 255 Px)">
-  <meta property="og:description" content="ATmega128 based, 50 channels, 255 pixels per channel — total 12,750 pixels. ARGBSE protocol, ideal for medium‑sized LED displays.">
+  <meta property="og:title" content="RANGMANG 2 — WS2812 / WS2811 RGB Controller (50 Ch × 255 Px)">
+  <meta property="og:description" content="ATmega128 based, 50 channels, 255 pixels per channel — total 12,750 pixels. Supports WS2812, WS2811, WS2813, WS2815. Perfect for low-cost LED signs and free advertising displays.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://soifgo.github.io/soifgo/tutorials/server/rangmang2/">
   <meta property="og:image" content="https://soifgo.github.io/soifgo/tutorials/server/rangmang2/rangmang2_pic.png">
@@ -27,25 +27,33 @@
 
   <!-- ===== TWITTER CARD ===== -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="RANGMANG 2 — Single‑Module RGB Controller">
-  <meta name="twitter:description" content="50 channels, 255 pixels per channel, ATmega128, ARGBSE protocol.">
+  <meta name="twitter:title" content="RANGMANG 2 — WS2812/WS2811 RGB LED Controller">
+  <meta name="twitter:description" content="50 channels, 255 pixels per channel, ATmega128, ARGBSE protocol. Supports WS2812, WS2811, WS2813, WS2815. Ideal for cheap LED signs and free digital signage.">
   <meta name="twitter:image" content="https://soifgo.github.io/soifgo/tutorials/server/rangmang2/rangmang2_pic.png">
 
-  <!-- ===== SCHEMA.ORG ===== -->
+  <!-- ===== SCHEMA.ORG (enhanced with LED/product keywords) ===== -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
+    "@type": "Product",
     "name": "RANGMANG 2 Serial RGB Controller",
-    "operatingSystem": "Embedded / ATmega128",
-    "applicationCategory": "LED Controller, RGB Controller",
-    "description": "RANGMANG 2 is a serial RGB controller based on ATmega128, supporting 50 channels and 255 pixels per channel — total 12,750 addressable pixels.",
-    "url": "https://soifgo.github.io/soifgo/tutorials/server/rangmang2/"
+    "brand": "Soifgo",
+    "model": "RANGMANG 2",
+    "description": "RANGMANG 2 is a serial RGB LED controller based on ATmega128, supporting 50 channels and 255 pixels per channel — total 12,750 addressable LEDs. Compatible with WS2812, WS2811, WS2813, WS2815. Perfect for cheap LED matrix, free scrolling signs, and advertising displays.",
+    "url": "https://soifgo.github.io/soifgo/tutorials/server/rangmang2/",
+    "image": "https://soifgo.github.io/soifgo/tutorials/server/rangmang2/rangmang2_pic.png",
+    "offers": {
+      "@type": "Offer",
+      "price": "0.00",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock",
+      "url": "https://soifgo.github.io/soifgo/tutorials/server/rangmang2/"
+    }
   }
   </script>
 
   <style>
- 
+    /* (styles unchanged – kept as in original) */
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       margin: 0;
@@ -85,38 +93,52 @@
       table { font-size: 0.85rem; }
       th, td { padding: 8px 10px; }
     }
+    .highlight-led { background: #2a2a3a; border-radius: 6px; padding: 4px 10px; display: inline-block; margin: 2px 0; color: #ffcc00; }
+    .feature-grid { display: flex; flex-wrap: wrap; gap: 15px; margin: 15px 0; }
+    .feature-card { background: #252530; padding: 12px 18px; border-radius: 8px; flex: 1 1 160px; border-left: 3px solid #00ffcc; }
+    .feature-card strong { color: #00ffcc; }
   </style>
 </head>
 <body>
   <h1>RANGMANG 2 <span class="badge">v2.0</span></h1>
   <p><strong>RANGMANG 2</strong> is a professional serial RGB controller based on the ATmega128 microcontroller, designed for single‑module operation. It supports <strong>50 channels</strong>, each with <strong>255 pixels</strong> — giving you a total of <strong>12,750 addressable pixels</strong> per module.</p>
 
-  <img src="rangmang2_pic.jpg" alt="RANGMANG 2 RGB Controller Module" style="max-width:700px;">
-    <img src="rangmang2.png" alt="RANGMANG 2 RGB Controller Module" style="max-width:900px;">
+  <!-- ===== LED COMPATIBILITY BANNER ===== -->
+  <div style="background: #0f1a1a; border: 1px solid #00ffcc; border-radius: 12px; padding: 12px 20px; margin: 20px 0; text-align: center;">
+    <span style="font-size: 1.2rem; color: #00ffcc;">🔹 Compatible with </span>
+    <span class="highlight-led">WS2812</span> 
+    <span class="highlight-led">WS2812B</span> 
+    <span class="highlight-led">WS2811</span> 
+    <span class="highlight-led">WS2813</span> 
+    <span class="highlight-led">WS2815</span>
+    <span style="color: #aaa; margin: 0 8px;">|</span>
+    <span style="color: #ffcc00;">✨ Ideal for cheap LED matrix, free scrolling signs, and digital advertising</span>
+  </div>
 
+  <img src="rangmang2_pic.jpg" alt="RANGMANG 2 RGB Controller Module - WS2812 compatible" style="max-width:700px;">
+  <img src="rangmang2.png" alt="RANGMANG 2 PCB and schematic - ATmega128" style="max-width:900px;">
+
+  <!-- ===== KEY FEATURES (with LED focus) ===== -->
   <h2>Key Features</h2>
-  <ul>
-    <li><strong>Microcontroller:</strong> ATmega128 (11.0592 MHz crystal)</li>
-    <li><strong>Channels:</strong> 50 (A1 to A50)</li>
-    <li><strong>Pixels per channel:</strong> 255 (1 to 255)</li>
-    <li><strong>Total pixels:</strong> 12,750 (50 × 255)</li>
-    <li><strong>Protocol:</strong> UART / Bluetooth (HC‑05) – Baud 115200)</li>
-    <li><strong>Command format:</strong> <code>ARGBSE</code> (Address, Red, Green, Blue, Start, End)</li>
- 
-  </ul>
+  <div class="feature-grid">
+    <div class="feature-card"><strong>MCU:</strong> ATmega128 (11.0592 MHz)</div>
+    <div class="feature-card"><strong>Channels:</strong> 50 (A1–A50)</div>
+    <div class="feature-card"><strong>Pixels/Ch:</strong> 255 (1–255)</div>
+    <div class="feature-card"><strong>Total LEDs:</strong> 12,750</div>
+    <div class="feature-card"><strong>Protocol:</strong> UART / BT (HC‑05) 115200</div>
+    <div class="feature-card"><strong>Command:</strong> ARGBSE (hex encoded)</div>
+    <div class="feature-card"><strong>LEDs:</strong> WS2812, WS2811, WS2813, WS2815</div>
+    <div class="feature-card"><strong>Use:</strong> LED matrix, scrolling signs, advertising</div>
+  </div>
 
+  <!-- ===== COMMAND PROTOCOL ===== -->
   <h2>Command Protocol — ARGBSE</h2>
   <p>Every command must end with a newline (<code>\n</code> or <code>\r\n</code>). Only uppercase letters are accepted. No spaces.</p>
 
   <div class="table-container">
     <table>
       <thead>
-        <tr>
-          <th>Letter</th>
-          <th>Meaning</th>
-          <th>Range</th>
-          <th>Description</th>
-        </tr>
+        <tr><th>Letter</th><th>Meaning</th><th>Range</th><th>Description</th></tr>
       </thead>
       <tbody>
         <tr><td><strong>A</strong></td><td>Channel Address</td><td>1 – 50</td><td>Channel number</td></tr>
@@ -134,15 +156,7 @@
 
   <div class="table-container">
     <table>
-      <thead>
-        <tr>
-          <th>Variable</th>
-          <th>Meaning</th>
-          <th>Range</th>
-          <th>Hex Range</th>
-          <th>Chars</th>
-        </tr>
-      </thead>
+      <thead><tr><th>Variable</th><th>Meaning</th><th>Range</th><th>Hex Range</th><th>Chars</th></tr></thead>
       <tbody>
         <tr><td><strong>A</strong></td><td>Channel Address</td><td>1 – 50</td><td>01 – 32</td><td>2</td></tr>
         <tr><td><strong>R</strong></td><td>Red</td><td>0 – 255</td><td>00 – FF</td><td>2</td></tr>
@@ -153,12 +167,11 @@
       </tbody>
     </table>
   </div>
-
   <p><strong>Total per command:</strong> 6 variables × 2 hex chars = <strong>12 characters</strong></p>
 
+  <!-- ===== PACKET STRUCTURE ===== -->
   <h3>Packet Structure — Multi-Command Transmission</h3>
   <p>Commands are transmitted in <strong>packets of up to 20</strong> (updated from 10). Each packet can contain 1 to 20 commands, processed in order.</p>
-
   <div class="color-fix-box">
     <h3>Packet Rules</h3>
     <ul>
@@ -168,24 +181,21 @@
       <li>Commands are processed <strong>in the order received</strong></li>
     </ul>
   </div>
- 
 
   <!-- ============================================================ -->
-  <!-- ===== NEW: RANGMANG 2 WEB TOOL — USER GUIDE ===== -->
+  <!-- ===== WEB TOOL USER GUIDE (with LED and matrix focus) ===== -->
   <!-- ============================================================ -->
-
   <hr style="border-color:#3a3a47; margin:50px 0 30px 0;">
-
   <h2 style="color:#00ffcc;">🧰 RANGMANG 2 Web Tool — User Guide</h2>
-
   <p>
     The <strong>RANGMANG 2 Web Tool</strong> (available via the 
     <a href="simulator2.html">Web Simulator</a>) is a companion application 
     that converts images and pixel designs into <strong>hex‑encoded ARGBSE commands</strong> 
-    for direct transmission to the ATmega128 controller.
+    for direct transmission to the ATmega128 controller. Perfect for creating 
+    <strong>cheap LED matrix displays, free scrolling signs, and digital advertising</strong> 
+    using WS2812 / WS2811 / WS2813 / WS2815 strips.
   </p>
 
-  <!-- ===== 1. HOW TO USE ===== -->
   <h3 style="color:#00ccff;">1. How to Use the Web Tool</h3>
   <ul>
     <li><strong>Upload Images:</strong> Click <em>“Choose Images”</em> or drag &amp; drop one or more images onto the canvas.</li>
@@ -193,12 +203,8 @@
     <li><strong>Copy &amp; Send:</strong> Use <em>“Copy”</em> to copy the hex string to your clipboard, or send it directly via SoifGo.</li>
   </ul>
 
-  <!-- ===== 2. PACKET SIZE ===== -->
   <h3 style="color:#00ccff;">2. Packet Size — 20 Commands per Transmission</h3>
-  <p>
-    Unlike the earlier 10‑command limit, the <strong>Web Tool now groups up to 20 commands</strong> 
-    into a single packet for better efficiency. This means:
-  </p>
+  <p>Unlike the earlier 10‑command limit, the <strong>Web Tool now groups up to 20 commands</strong> into a single packet for better efficiency. This means:</p>
   <ul>
     <li>Each packet contains up to <strong>20 hex commands</strong> (12 chars each = 240 characters).</li>
     <li>If you have fewer than 20, only the available commands are sent.</li>
@@ -206,114 +212,55 @@
     <li>Commands are executed in the <strong>exact order</strong> they appear.</li>
   </ul>
 
-  <!-- ===== 3. REFRESH TOGGLE ===== -->
   <h3 style="color:#00ccff;">3. Refresh Toggle — <code>wait</code> vs <code>WAIT</code></h3>
-  <p>
-    The <strong>“Refresh”</strong> checkbox controls the case of the <code>wait</code> keyword 
-    that is inserted <strong>before each frame</strong> in the output.
-  </p>
+  <p>The <strong>“Refresh”</strong> checkbox controls the case of the <code>wait</code> keyword that is inserted <strong>before each frame</strong> in the output.</p>
   <ul>
-    <li>
-      <strong>Enabled (Refresh ON):</strong> Output uses <code>WAIT=...</code> (uppercase).  
-      <span style="color:#00ffcc;">→ The microcontroller clears the screen before drawing the next frame.</span>
-    </li>
-    <li>
-      <strong>Disabled (Refresh OFF):</strong> Output uses <code>wait=...</code> (lowercase).  
-      <span style="color:#ffcc00;">→ The microcontroller does NOT clear the screen; the next frame overlays on the previous one.</span>
-    </li>
+    <li><strong>Enabled (Refresh ON):</strong> Output uses <code>WAIT=...</code> (uppercase). <span style="color:#00ffcc;">→ The microcontroller clears the screen before drawing the next frame.</span></li>
+    <li><strong>Disabled (Refresh OFF):</strong> Output uses <code>wait=...</code> (lowercase). <span style="color:#ffcc00;">→ The microcontroller does NOT clear the screen; the next frame overlays on the previous one.</span></li>
   </ul>
-  <p>
-    This toggle is <strong>frame‑wise</strong> — changing it updates the entire output immediately.
-  </p>
 
-  <!-- ===== 4. WAIT VALUE ===== -->
   <h3 style="color:#00ccff;">4. Wait Value — Inter‑Frame Delay</h3>
-  <p>
-    Each frame in the Web Tool has a <strong><code>wait</code> value</strong> (in milliseconds) 
-    that defines the delay after that frame is displayed.
-  </p>
+  <p>Each frame in the Web Tool has a <strong><code>wait</code> value</strong> (in milliseconds) that defines the delay after that frame is displayed.</p>
   <ul>
-    <li>
-      <strong>Default:</strong> <code>wait = 0</code> (no delay).
-    </li>
-    <li>
-      <strong>To set:</strong> Use the <em>“Wait (S)”</em> input box and click <em>“Apply”</em> 
-      to assign a delay to the current frame.
-    </li>
-    <li>
-      <strong>If no inter‑frame delay is needed, leave it at <code>0</code></strong> — 
-      the frame will be displayed immediately and the next frame will follow without pause.
-    </li>
+    <li><strong>Default:</strong> <code>wait = 0</code> (no delay).</li>
+    <li><strong>To set:</strong> Use the <em>“Wait (S)”</em> input box and click <em>“Apply”</em> to assign a delay to the current frame.</li>
+    <li><strong>If no inter‑frame delay is needed, leave it at <code>0</code></strong> — the frame will be displayed immediately and the next frame will follow without pause.</li>
   </ul>
 
-  <!-- ===== 5. SoifGo Custom Wait ===== -->
   <h3 style="color:#00ccff;">5. SoifGo Integration — Custom Wait</h3>
-  <p>
-    In the <strong>SoifGo</strong> application (on your smartphone), you have an additional 
-    option to control how <code>wait</code> commands are handled:
-  </p>
+  <p>In the <strong>SoifGo</strong> application (on your smartphone), you have an additional option to control how <code>wait</code> commands are handled:</p>
   <ul>
-    <li>
-      Go to <strong>SoifGo Settings → Note Out</strong>.
-    </li>
-    <li>
-      Find the <strong>Custom Wait</strong> toggle.
-    </li>
-    <li>
-      <strong>Enable</strong> → SoifGo will respect and forward the <code>wait</code> / <code>WAIT</code> 
-      values exactly as generated by the Web Tool.
-    </li>
-    <li>
-      <strong>Disable</strong> → SoifGo will ignore the <code>wait</code> lines and send 
-      only the hex commands (useful if you want to manage timing manually).
-    </li>
+    <li>Go to <strong>SoifGo Settings → Note Out</strong>.</li>
+    <li>Find the <strong>Custom Wait</strong> toggle.</li>
+    <li><strong>Enable</strong> → SoifGo will respect and forward the <code>wait</code> / <code>WAIT</code> values exactly as generated by the Web Tool.</li>
+    <li><strong>Disable</strong> → SoifGo will ignore the <code>wait</code> lines and send only the hex commands (useful if you want to manage timing manually).</li>
   </ul>
 
-  <!-- ===== 6. TROUBLESHOOTING ===== -->
   <h3 style="color:#00ccff;">6. Quick Tips</h3>
   <ul>
-    <li>
-      <strong>Output not updating?</strong> Make sure you have at least one frame (from images 
-      or the Pixel Editor) and click <em>“Process All”</em>.
-    </li>
-    <li>
-      <strong>Microcontroller not responding?</strong> Check baud rate (115200) and ensure 
-      your serial connection is active.
-    </li>
-    <li>
-      <strong>Colors look wrong?</strong> Toggle the <strong>“RBG (WS2811)”</strong> checkbox 
-      to swap Green and Blue channels if you are using WS2811/WS2812 LEDs.
-    </li>
-    <li>
-      <strong>Need to clear everything?</strong> Use the <em>“Clear”</em> button to reset 
-      all frames and images.
-    </li>
+    <li><strong>Output not updating?</strong> Make sure you have at least one frame (from images or the Pixel Editor) and click <em>“Process All”</em>.</li>
+    <li><strong>Microcontroller not responding?</strong> Check baud rate (115200) and ensure your serial connection is active.</li>
+    <li><strong>Colors look wrong?</strong> Toggle the <strong>“RBG (WS2811)”</strong> checkbox to swap Green and Blue channels if you are using WS2811/WS2812 LEDs.</li>
+    <li><strong>Need to clear everything?</strong> Use the <em>“Clear”</em> button to reset all frames and images.</li>
   </ul>
-  
-  
-        <h3>Sample operation of MINI CAD-CAM</h3>
-      <video controls width="80%" poster="ws2812b.jpg" style="max-height:50%; border-radius:12px; margin:8px 0;">
-        <source src="design01.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
 
-      <h2 style="margin-top: 20px;">PCB and Schematic Files Atmega 128A</h2>
-      <p><a href="rangmang2_file.zip" style="color:#2563eb; font-size:1.2rem; font-weight:bold;">📦 Download All File</a></p>
-    </div>
-  
-  
-  
- 
+  <!-- ===== VIDEO & DOWNLOADS ===== -->
+  <h3>Sample operation of MINI CAD-CAM</h3>
+  <video controls width="80%" poster="ws2812b.jpg" style="max-height:50%; border-radius:12px; margin:8px 0;">
+    <source src="design01.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
 
- 
- 
+  <h2 style="margin-top: 20px;">PCB and Schematic Files Atmega 128A</h2>
+  <p><a href="rangmang2_file.zip" style="color:#2563eb; font-size:1.2rem; font-weight:bold;">📦 Download All File</a></p>
+
+  <!-- ===== BACK LINKS ===== -->
   <p style="text-align:center;">
     <a href="https://soifgo.github.io/soifgo/tutorials/list.html" 
        style="display:inline-block; padding:10px 20px; background:#0066cc; color:#fff; text-decoration:none; border-radius:5px;">
       ⬅ Back to Tutorials
     </a>
   </p>
-
   <hr>
   <p style="text-align:center;">
     <a href="https://soifgo.github.io/soifgo/index.html" 
@@ -322,5 +269,9 @@
     </a>
   </p>
 
+  <!-- ===== ADDITIONAL SEO FOOTER ===== -->
+  <div style="margin-top: 40px; font-size: 0.8rem; color: #666; text-align: center; border-top: 1px solid #2a2a35; padding-top: 20px;">
+    <p>RANGMANG 2 — RGB LED Controller for WS2812, WS2811, WS2813, WS2815. Ideal for cheap LED matrix, free scrolling signs, and digital advertising. Built with ATmega128, 50 channels, 255 pixels per channel.</p>
+  </div>
 </body>
 </html>
