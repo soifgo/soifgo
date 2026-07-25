@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1e1e24">
+
+  <!-- ===== PRIMARY SEO ===== -->
+  <title>RANGMANG 2 — Single‑Module Serial RGB Controller (50 Ch × 255 Px)</title>
+  <meta name="description" content="RANGMANG 2 is a professional serial RGB controller based on ATmega128, supporting 50 channels and 255 pixels per channel — total 12,750 addressable pixels. ARGBSE protocol with single‑module design.">
+  <meta name="keywords" content="RANGMANG 2, Serial RGB Controller, ATmega128, Addressable LED, RGB LED Controller, Soifgo, 50 Channels, 255 Pixels">
+  <link rel="canonical" href="https://soifgo.github.io/soifgo/tutorials/server/rangmang2/">
+
+  <!-- ===== LANGUAGE ALTERNATES ===== -->
+  <link rel="alternate" hreflang="x-default" href="https://soifgo.github.io/soifgo/tutorials/server/rangmang2/" />
+  <link rel="alternate" hreflang="en" href="https://soifgo.github.io/soifgo/tutorials/server/rangmang2/" />
+
+  <!-- ===== OPEN GRAPH ===== -->
+  <meta property="og:title" content="RANGMANG 2 — Single‑Module RGB Controller (50 Ch × 255 Px)">
+  <meta property="og:description" content="ATmega128 based, 50 channels, 255 pixels per channel — total 12,750 pixels. ARGBSE protocol, ideal for medium‑sized LED displays.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://soifgo.github.io/soifgo/tutorials/server/rangmang2/">
+  <meta property="og:image" content="https://soifgo.github.io/soifgo/tutorials/server/rangmang2/rangmang2_pic.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="en_US">
+
+  <!-- ===== TWITTER CARD ===== -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="RANGMANG 2 — Single‑Module RGB Controller">
+  <meta name="twitter:description" content="50 channels, 255 pixels per channel, ATmega128, ARGBSE protocol.">
+  <meta name="twitter:image" content="https://soifgo.github.io/soifgo/tutorials/server/rangmang2/rangmang2_pic.png">
+
+  <!-- ===== SCHEMA.ORG ===== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "RANGMANG 2 Serial RGB Controller",
+    "operatingSystem": "Embedded / ATmega128",
+    "applicationCategory": "LED Controller, RGB Controller",
+    "description": "RANGMANG 2 is a serial RGB controller based on ATmega128, supporting 50 channels and 255 pixels per channel — total 12,750 addressable pixels.",
+    "url": "https://soifgo.github.io/soifgo/tutorials/server/rangmang2/"
+  }
+  </script>
+
+  <style>
+ 
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      line-height: 1.7;
+      background-color: #1e1e24;
+      color: #e0e0e0;
+    }
+    body > * { max-width: 1000px; margin-left: auto; margin-right: auto; }
+    h1 { font-size: 2.8rem; color: #00ffcc; text-transform: uppercase; border-bottom: 2px solid #3a3a47; padding-bottom: 10px; text-align: center; letter-spacing: 2px; }
+    h2 { color: #ff007f; margin-top: 40px; border-left: 4px solid #ff007f; padding-left: 10px; }
+    h3 { color: #00ccff; margin-top: 30px; border-left: 4px solid #00ccff; padding-left: 10px; }
+    p, li { color: #b8b8c4; }
+    strong { color: #ffffff; }
+    img, video { max-width: 100%; height: auto; display: block; margin: 25px auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); }
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; background-color: #2a2a35; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+    th, td { padding: 12px 15px; text-align: center; border: 1px solid #3a3a47; }
+    th { background-color: #333344; color: #00ffcc; font-weight: 600; }
+    tr:nth-child(even) { background-color: #24242d; }
+    pre { background-color: #111116; color: #ffffff; padding: 15px; border-radius: 6px; overflow-x: auto; font-family: "Consolas", "Courier New", Courier, monospace; border-left: 3px solid #00ffcc; font-size: 0.9rem; }
+    ul { padding-left: 20px; list-style-type: square; }
+    ul li { margin: 8px 0; }
+    a { color: #00ffff; text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff007f; text-decoration: underline; }
+    .table-container { overflow-x: auto; border-radius: 8px; }
+    .download-box { background: #2a2a35; border: 1px solid #3a3a47; border-radius: 8px; padding: 15px 20px; margin: 10px 0; }
+    .download-box a { font-size: 1.1rem; display: inline-block; margin: 5px 0; }
+    .note-box { background: #1a1a2e; border-left: 4px solid #ff007f; padding: 15px 20px; border-radius: 8px; margin: 20px 0; }
+    .color-fix-box { background: #1a1a2e; border: 1px solid #00ffcc; border-radius: 8px; padding: 20px; margin: 20px 0; }
+    .color-fix-box h3 { color: #00ffcc; border-left-color: #00ffcc; }
+    .badge { display: inline-block; background: #ff007f; color: #fff; padding: 2px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; letter-spacing: 0.5px; margin-left: 10px; }
+    @media (max-width: 600px) {
+      body { padding: 10px; }
+      h1 { font-size: 2rem; }
+      h2 { font-size: 1.3rem; }
+      pre { font-size: 0.8rem; padding: 10px; }
+      table { font-size: 0.85rem; }
+      th, td { padding: 8px 10px; }
+    }
+  </style>
+</head>
+<body>
+  <h1>RANGMANG 2 <span class="badge">v2.0</span></h1>
+  <p><strong>RANGMANG 2</strong> is a professional serial RGB controller based on the ATmega128 microcontroller, designed for single‑module operation. It supports <strong>50 channels</strong>, each with <strong>255 pixels</strong> — giving you a total of <strong>12,750 addressable pixels</strong> per module.</p>
+
+  <img src="rangmang2_pic.jpg" alt="RANGMANG 2 RGB Controller Module" style="max-width:700px;">
+
+  <h2>Key Features</h2>
+  <ul>
+    <li><strong>Microcontroller:</strong> ATmega128 (11.0592 MHz crystal)</li>
+    <li><strong>Channels:</strong> 50 (A1 to A50)</li>
+    <li><strong>Pixels per channel:</strong> 255 (1 to 255)</li>
+    <li><strong>Total pixels:</strong> 12,750 (50 × 255)</li>
+    <li><strong>Protocol:</strong> UART / Bluetooth (HC‑05) – Baud 115200)</li>
+    <li><strong>Command format:</strong> <code>ARGBSE</code> (Address, Red, Green, Blue, Start, End)</li>
+ 
+  </ul>
+
+  <h2>Command Protocol — ARGBSE</h2>
+  <p>Every command must end with a newline (<code>\n</code> or <code>\r\n</code>). Only uppercase letters are accepted. No spaces.</p>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Letter</th>
+          <th>Meaning</th>
+          <th>Range</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>A</strong></td><td>Channel Address</td><td>1 – 50</td><td>Channel number</td></tr>
+        <tr><td><strong>R</strong></td><td>Red</td><td>0 – 255</td><td>Red intensity</td></tr>
+        <tr><td><strong>G</strong></td><td>Green</td><td>0 – 255</td><td>Green intensity</td></tr>
+        <tr><td><strong>B</strong></td><td>Blue</td><td>0 – 255</td><td>Blue intensity</td></tr>
+        <tr><td><strong>S</strong></td><td>Start</td><td>0 – 255</td><td>First pixel index</td></tr>
+        <tr><td><strong>E</strong></td><td>End</td><td>1 – 255</td><td>Last pixel index</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>ARGBSE Data Encoding — Hex Transmission</h2>
+  <p>To minimize character payload, each variable is converted to <strong>2-character hexadecimal</strong> before transmission. The microcontroller then decodes each byte and executes the command.</p>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Variable</th>
+          <th>Meaning</th>
+          <th>Range</th>
+          <th>Hex Range</th>
+          <th>Chars</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>A</strong></td><td>Channel Address</td><td>1 – 50</td><td>01 – 32</td><td>2</td></tr>
+        <tr><td><strong>R</strong></td><td>Red</td><td>0 – 255</td><td>00 – FF</td><td>2</td></tr>
+        <tr><td><strong>G</strong></td><td>Green</td><td>0 – 255</td><td>00 – FF</td><td>2</td></tr>
+        <tr><td><strong>B</strong></td><td>Blue</td><td>0 – 255</td><td>00 – FF</td><td>2</td></tr>
+        <tr><td><strong>S</strong></td><td>Start</td><td>0 – 255</td><td>00 – FF</td><td>2</td></tr>
+        <tr><td><strong>E</strong></td><td>End</td><td>1 – 255</td><td>01 – FF</td><td>2</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p><strong>Total per command:</strong> 6 variables × 2 hex chars = <strong>12 characters</strong></p>
+
+  <h3>Packet Structure — Multi-Command Transmission</h3>
+  <p>Commands are transmitted in <strong>packets of up to 20</strong> (updated from 10). Each packet can contain 1 to 20 commands, processed in order.</p>
+
+  <div class="color-fix-box">
+    <h3>Packet Rules</h3>
+    <ul>
+      <li><strong>Up to 20 commands</strong> can be sent in one transmission</li>
+      <li>If <strong>fewer than 20</strong>, only available commands are sent</li>
+      <li>Even a <strong>single command</strong> is valid and processed</li>
+      <li>Commands are processed <strong>in the order received</strong></li>
+    </ul>
+  </div>
+ 
+
+  <!-- ============================================================ -->
+  <!-- ===== NEW: RANGMANG 2 WEB TOOL — USER GUIDE ===== -->
+  <!-- ============================================================ -->
+
+  <hr style="border-color:#3a3a47; margin:50px 0 30px 0;">
+
+  <h2 style="color:#00ffcc;">🧰 RANGMANG 2 Web Tool — User Guide</h2>
+
+  <p>
+    The <strong>RANGMANG 2 Web Tool</strong> (available via the 
+    <a href="simulator2.html">Web Simulator</a>) is a companion application 
+    that converts images and pixel designs into <strong>hex‑encoded ARGBSE commands</strong> 
+    for direct transmission to the ATmega128 controller.
+  </p>
+
+  <!-- ===== 1. HOW TO USE ===== -->
+  <h3 style="color:#00ccff;">1. How to Use the Web Tool</h3>
+  <ul>
+    <li><strong>Upload Images:</strong> Click <em>“Choose Images”</em> or drag &amp; drop one or more images onto the canvas.</li>
+    <li><strong>Adjust Settings:</strong> Set <em>Channels</em> (1–50) and <em>Pixels per Channel</em> (1–255) to match your LED layout.</li>
+    <li><strong>Copy &amp; Send:</strong> Use <em>“Copy”</em> to copy the hex string to your clipboard, or send it directly via SoifGo.</li>
+  </ul>
+
+  <!-- ===== 2. PACKET SIZE ===== -->
+  <h3 style="color:#00ccff;">2. Packet Size — 20 Commands per Transmission</h3>
+  <p>
+    Unlike the earlier 10‑command limit, the <strong>Web Tool now groups up to 20 commands</strong> 
+    into a single packet for better efficiency. This means:
+  </p>
+  <ul>
+    <li>Each packet contains up to <strong>20 hex commands</strong> (12 chars each = 240 characters).</li>
+    <li>If you have fewer than 20, only the available commands are sent.</li>
+    <li>Even a <strong>single command</strong> is valid and processed correctly.</li>
+    <li>Commands are executed in the <strong>exact order</strong> they appear.</li>
+  </ul>
+
+  <!-- ===== 3. REFRESH TOGGLE ===== -->
+  <h3 style="color:#00ccff;">3. Refresh Toggle — <code>wait</code> vs <code>WAIT</code></h3>
+  <p>
+    The <strong>“Refresh”</strong> checkbox controls the case of the <code>wait</code> keyword 
+    that is inserted <strong>before each frame</strong> in the output.
+  </p>
+  <ul>
+    <li>
+      <strong>Enabled (Refresh ON):</strong> Output uses <code>WAIT=...</code> (uppercase).  
+      <span style="color:#00ffcc;">→ The microcontroller clears the screen before drawing the next frame.</span>
+    </li>
+    <li>
+      <strong>Disabled (Refresh OFF):</strong> Output uses <code>wait=...</code> (lowercase).  
+      <span style="color:#ffcc00;">→ The microcontroller does NOT clear the screen; the next frame overlays on the previous one.</span>
+    </li>
+  </ul>
+  <p>
+    This toggle is <strong>frame‑wise</strong> — changing it updates the entire output immediately.
+  </p>
+
+  <!-- ===== 4. WAIT VALUE ===== -->
+  <h3 style="color:#00ccff;">4. Wait Value — Inter‑Frame Delay</h3>
+  <p>
+    Each frame in the Web Tool has a <strong><code>wait</code> value</strong> (in milliseconds) 
+    that defines the delay after that frame is displayed.
+  </p>
+  <ul>
+    <li>
+      <strong>Default:</strong> <code>wait = 0</code> (no delay).
+    </li>
+    <li>
+      <strong>To set:</strong> Use the <em>“Wait (S)”</em> input box and click <em>“Apply”</em> 
+      to assign a delay to the current frame.
+    </li>
+    <li>
+      <strong>If no inter‑frame delay is needed, leave it at <code>0</code></strong> — 
+      the frame will be displayed immediately and the next frame will follow without pause.
+    </li>
+  </ul>
+
+  <!-- ===== 5. SoifGo Custom Wait ===== -->
+  <h3 style="color:#00ccff;">5. SoifGo Integration — Custom Wait</h3>
+  <p>
+    In the <strong>SoifGo</strong> application (on your smartphone), you have an additional 
+    option to control how <code>wait</code> commands are handled:
+  </p>
+  <ul>
+    <li>
+      Go to <strong>SoifGo Settings → Note Out</strong>.
+    </li>
+    <li>
+      Find the <strong>Custom Wait</strong> toggle.
+    </li>
+    <li>
+      <strong>Enable</strong> → SoifGo will respect and forward the <code>wait</code> / <code>WAIT</code> 
+      values exactly as generated by the Web Tool.
+    </li>
+    <li>
+      <strong>Disable</strong> → SoifGo will ignore the <code>wait</code> lines and send 
+      only the hex commands (useful if you want to manage timing manually).
+    </li>
+  </ul>
+
+  <!-- ===== 6. TROUBLESHOOTING ===== -->
+  <h3 style="color:#00ccff;">6. Quick Tips</h3>
+  <ul>
+    <li>
+      <strong>Output not updating?</strong> Make sure you have at least one frame (from images 
+      or the Pixel Editor) and click <em>“Process All”</em>.
+    </li>
+    <li>
+      <strong>Microcontroller not responding?</strong> Check baud rate (115200) and ensure 
+      your serial connection is active.
+    </li>
+    <li>
+      <strong>Colors look wrong?</strong> Toggle the <strong>“RBG (WS2811)”</strong> checkbox 
+      to swap Green and Blue channels if you are using WS2811/WS2812 LEDs.
+    </li>
+    <li>
+      <strong>Need to clear everything?</strong> Use the <em>“Clear”</em> button to reset 
+      all frames and images.
+    </li>
+  </ul>
+  
+  
+        <h3>Sample operation of MINI CAD-CAM</h3>
+      <video controls width="80%" poster="ws2812b.jpg" style="max-height:50%; border-radius:12px; margin:8px 0;">
+        <source src="design01.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+
+      <h2 style="margin-top: 20px;">PCB and Schematic Files Atmega 128A</h2>
+      <p><a href="rangmang2_file.zip" style="color:#2563eb; font-size:1.2rem; font-weight:bold;">📦 Download All File</a></p>
+    </div>
+  
+  
+  
+ 
+
+ 
+ 
+  <p style="text-align:center;">
+    <a href="https://soifgo.github.io/soifgo/tutorials/list.html" 
+       style="display:inline-block; padding:10px 20px; background:#0066cc; color:#fff; text-decoration:none; border-radius:5px;">
+      ⬅ Back to Tutorials
+    </a>
+  </p>
+
+  <hr>
+  <p style="text-align:center;">
+    <a href="https://soifgo.github.io/soifgo/index.html" 
+       style="display:inline-block; padding:10px 20px; background:#8B4513; color:#fff; text-decoration:none; border-radius:5px;">
+      ⬅ Back to Home
+    </a>
+  </p>
+
+</body>
+</html>
