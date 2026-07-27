@@ -423,6 +423,27 @@
     <li><strong>Microcontroller not responding?</strong> Check baud rate (115200 baud).</li>
     <li><strong>Colors look wrong?</strong> Toggle <strong>“RBG (WS2811)”</strong> to swap Green/Blue channels.</li>
   </ul>
+  
+  
+<h2>✅ Frame Speed Optimization</h2>
+<pre>
+ 
+
+------------------------------------------------------------
+⚡ Channel Buffer (Frame Speed Optimization)
+By default, the system clears 50 channels/threads before rendering each frame.
+If you are using fewer channels (e.g., only 12), you can send the exact count
+to the microcontroller. It will then skip clearing unused threads,
+which slightly increases the frame rate.
+
+Send the following command:
+CH=12
+
+Expected confirmation reply:
+OK CH=12
+
+(Replace 12 with your actual number of connected channels).
+</pre>
 
   <!-- ===== VIDEO & DOWNLOADS ===== -->
   <h3>Sample operation of MINI CAD-CAM</h3>
