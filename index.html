@@ -160,6 +160,19 @@
     section.active {
       display: block;
     }
+	.hero h1{
+    margin:0;
+
+    font-size:clamp(6rem,12vw,10rem);
+
+    font-weight:600;
+
+    line-height:.8;
+
+    letter-spacing:-6px;
+
+    color:#fff;
+}
 
     h2 {
       font-size: 1.6em;
@@ -290,13 +303,23 @@
 
 <body>
 
-  <header>
-    <h1>
-      SoifGo
-      <img src="soifgo-logo.png" alt="SoifGo Logo">
-    </h1>
-    <p><strong>Bluetooth & MQTT IoT Controller for Android</strong> — Control ESP32, Arduino, HC-05, and ESP8266 with buttons and seek bars. Supports 22 languages. Free and open-source.</p>
-  </header>
+<header class="hero">
+
+    <div class="hero-container">
+
+        <div class="hero-left">
+
+            <img src="soifgo-logo.png"
+                 alt="SoifGo Logo"
+                 class="hero-logo">
+
+            <h1>SoifGo</h1>
+ 
+        </div>
+
+    </div>
+
+</header>
 
   <nav>
     <button id="downloadBtn" onclick="switchTab('download', this)">Download</button>
