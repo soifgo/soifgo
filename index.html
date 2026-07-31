@@ -9,12 +9,12 @@
   <!-- Primary SEO Description -->
   <meta name="description" content="SoifGo is a powerful Android Bluetooth controller app for ESP32, Arduino, HC-05, and ESP8266. Supports MQTT, buttons, and seek bars. Free and open-source IoT controller.">
 
-  <!-- Comprehensive Keywords - All in One -->
-  <meta name="keywords" content="Bluetooth controller app for Android, ESP32 Android app, Arduino Bluetooth control app, MQTT client Android, IoT controller app Android, HC-05 Bluetooth app, ESP8266 Android controller, Android Bluetooth serial app, seek bar controller Android, open source IoT app, SoifGo, Saeid Moghadam, control ESP32 with phone, Arduino Bluetooth app, HC-06 Android app, Bluetooth IoT controller, MQTT Android client, best IoT app for Android, free Bluetooth controller">
+  <!-- Optimized Keywords (Removed Keyword Stuffing) -->
+  <meta name="keywords" content="Bluetooth controller, MQTT client, ESP32 Android app, Arduino IoT control, open source IoT, SoifGo">
 
   <!-- Open Graph -->
   <meta property="og:title" content="SoifGo — Free Bluetooth & MQTT IoT Controller for Android">
-  <meta property="og:description" content="Control ESP32, Arduino, HC-05, and ESP8266 via Bluetooth and MQTT. Features buttons, seek bars, and 22 languages. Free and open-source.">
+  <meta property="og:description" content="Control ESP32, Arduino, HC-05, and ESP8266 via Bluetooth and MQTT. Features buttons, seek bars, and 22 languages.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://soifgo.github.io/soifgo/">
   <meta property="og:image" content="https://soifgo.github.io/soifgo/soifgo-logo.png">
@@ -25,24 +25,23 @@
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="SoifGo — Bluetooth & MQTT IoT Controller for Android">
-  <meta name="twitter:description" content="Free Android app for controlling ESP32, Arduino, HC-05 via Bluetooth and MQTT. Buttons, seek bars, 22 languages.">
+  <meta name="twitter:description" content="Free Android app for controlling ESP32, Arduino, HC-05 via Bluetooth and MQTT.">
   <meta name="twitter:image" content="https://soifgo.github.io/soifgo/soifgo-logo.png">
 
   <!-- Canonical URL -->
   <link rel="canonical" href="https://soifgo.github.io/soifgo/">
 
-  <!-- Schema.org -->
+  <!-- Schema.org (Optimized Structure) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "name": "SoifGo",
     "operatingSystem": "Android",
-    "applicationCategory": "Utility",
+    "applicationCategory": "UtilityApplication",
     "description": "Bluetooth and MQTT IoT controller app for Android. Supports ESP32, Arduino, HC-05, ESP8266. Features buttons, seek bars, and 22 languages.",
     "url": "https://soifgo.github.io/soifgo/",
-    "keywords": "Bluetooth controller app for Android, ESP32 Android app, Arduino Bluetooth control app, MQTT client Android, IoT controller app Android, HC-05 Bluetooth app, ESP8266 Android controller",
-    "inLanguage": ["en", "es", "zh", "fr", "de", "ja", "ru", "ar", "fa", "it", "hi", "tr", "ko", "pt", "he", "ku", "ur", "bn", "id", "ta", "th", "sw"],
+    "inLanguage": ["en", "es", "zh", "fr", "de", "ja", "ru", "ar", "fa", "it", "hi", "tr", "ko", "pt"],
     "creator": {
       "@type": "Person",
       "name": "Saeid Moghadam"
@@ -98,6 +97,7 @@
       gap: 12px;
       font-size: 2.2em;
       margin: 0;
+      line-height: 1.1; /* Fixed: Critical overlay issue */
     }
     header h1 img {
       height: 40px;
@@ -160,22 +160,17 @@
     section.active {
       display: block;
     }
-	.hero h1{
-    margin:0;
-
-    font-size:clamp(5rem,10vw,8rem);
-
-    font-weight:400;
-
-    line-height:.5;
-
-    letter-spacing:-6px;
-
-    color:#fff;
-}
-.hero-logo{
-    width: 220px;
-}
+	.hero h1 {
+        margin: 0;
+        font-size: clamp(5rem, 10vw, 8rem);
+        font-weight: 400;
+        line-height: 1.1; /* Critical fix for mobile */
+        letter-spacing: -2px; /* Adjusted spacing */
+        color: #fff;
+    }
+    .hero-logo {
+        width: 220px;
+    }
 
     h2 {
       font-size: 1.6em;
@@ -286,6 +281,9 @@
         font-size: 1.7em;
         flex-direction: column;
       }
+      .hero h1 {
+         letter-spacing: -1px; /* Responsive spacing */
+      }
       nav button {
         width: 95%;
         font-size: 1.1em;
@@ -307,21 +305,12 @@
 <body>
 
 <header class="hero">
-
     <div class="hero-container">
-
         <div class="hero-left">
-
-            <img src="soifgo-logo.png"
-                 alt="SoifGo Logo"
-                 class="hero-logo">
-
+            <img src="soifgo-logo.png" alt="SoifGo Logo" class="hero-logo">
             <h1>SoifGo</h1>
- 
         </div>
-
     </div>
-
 </header>
 
   <nav>
@@ -338,14 +327,14 @@
 
       <ul>
         <li><a href="soifgo.zip">Download SoifGo v1.41 (ZIP Package)</a></li>
-        <li><a href="https://apkpure.com/soifgo/soifgo.saeidmoghadam">Download from APKPure</a></li>
+        <li><a href="https://apkpure.com/soifgo/soifgo.saeidmoghadam" target="_blank" rel="noopener noreferrer">Download from APKPure</a></li>
       </ul>
 
       <div class="security-box">
         <strong>Security Verified</strong><br>
         This APK has been scanned by 65+ global security vendors on VirusTotal.<br>
         No threats detected.<br>
-        <a href="https://www.virustotal.com/gui/file/5a28ee2acf881b4a300cc482e5691ee8313f1ca6fde0457e07e942e416d51d81" target="_blank">
+        <a href="https://www.virustotal.com/gui/file/5a28ee2acf881b4a300cc482e5691ee8313f1ca6fde0457e07e942e416d51d81" target="_blank" rel="noopener noreferrer">
           View Full VirusTotal Report
         </a>
       </div>
@@ -479,7 +468,8 @@
     }
 
     function openForum() {
-      window.location.href = "https://github.com/soifgo/soifgo/discussions/3";
+      // Using window.open to ensure external link opens in a new tab securely
+      window.open("https://github.com/soifgo/soifgo/discussions/3", "_blank");
     }
 
     async function getCount(path) {
@@ -501,10 +491,11 @@
       document.getElementById("totalVisits").textContent = "Visits: " + total;
     }
 
-    window.onload = function() {
+    // Fixed: Used DOMContentLoaded and removed the previous window.onload conflict
+    document.addEventListener('DOMContentLoaded', function() {
       switchTab('download', document.getElementById('downloadBtn'));
       loadTotal();
-    };
+    });
   </script>
 
 </body>
