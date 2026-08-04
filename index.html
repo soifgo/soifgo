@@ -1,57 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-  <title>SoifGo — Bluetooth & MQTT IoT Controller for Android | Control ESP32, Arduino, HC-05</title>
+  <title>SoifGo — Bluetooth &amp; MQTT IoT Controller for Android | Control ESP32, Arduino, HC-05</title>
 
   <!-- Primary SEO Description -->
-  <meta name="description" content="SoifGo is a powerful Android Bluetooth controller app for ESP32, Arduino, HC-05, and ESP8266. Supports MQTT, buttons, and seek bars. Free and open-source IoT controller.">
-
-  <!-- Optimized Keywords (Removed Keyword Stuffing) -->
-  <meta name="keywords" content="Bluetooth controller, MQTT client, ESP32 Android app, Arduino IoT control, open source IoT, SoifGo">
+  <meta name="description" content="SoifGo is a powerful Android Bluetooth controller app for ESP32, Arduino, HC-05, and ESP8266. Supports MQTT, buttons, seek bars. Free and open-source IoT controller." />
+  <meta name="keywords" content="Bluetooth controller, MQTT client, ESP32 Android app, Arduino IoT control, open source IoT, SoifGo" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="SoifGo — Free Bluetooth & MQTT IoT Controller for Android">
-  <meta property="og:description" content="Control ESP32, Arduino, HC-05, and ESP8266 via Bluetooth and MQTT. Features buttons, seek bars, and 22 languages.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://soifgo.github.io/soifgo/">
-  <meta property="og:image" content="https://soifgo.github.io/soifgo/soifgo-logo.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="SoifGo — Free Bluetooth &amp; MQTT IoT Controller for Android" />
+  <meta property="og:description" content="Control ESP32, Arduino, HC-05, and ESP8266 via Bluetooth and MQTT. Features buttons, seek bars, and 22 languages." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://soifgo.github.io/soifgo/" />
+  <meta property="og:image" content="https://soifgo.github.io/soifgo/soifgo-logo.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_US" />
 
   <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="SoifGo — Bluetooth & MQTT IoT Controller for Android">
-  <meta name="twitter:description" content="Free Android app for controlling ESP32, Arduino, HC-05 via Bluetooth and MQTT.">
-  <meta name="twitter:image" content="https://soifgo.github.io/soifgo/soifgo-logo.png">
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="SoifGo — Bluetooth &amp; MQTT IoT Controller for Android" />
+  <meta name="twitter:description" content="Free Android app for controlling ESP32, Arduino, HC-05 via Bluetooth and MQTT." />
+  <meta name="twitter:image" content="https://soifgo.github.io/soifgo/soifgo-logo.png" />
 
   <!-- Canonical URL -->
-  <link rel="canonical" href="https://soifgo.github.io/soifgo/">
+  <link rel="canonical" href="https://soifgo.github.io/soifgo/" />
 
-  <!-- Schema.org (Optimized Structure) -->
+  <!-- Schema.org -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "SoifGo",
-    "operatingSystem": "Android",
-    "applicationCategory": "UtilityApplication",
-    "description": "Bluetooth and MQTT IoT controller app for Android. Supports ESP32, Arduino, HC-05, ESP8266. Features buttons, seek bars, and 22 languages.",
-    "url": "https://soifgo.github.io/soifgo/",
-    "inLanguage": ["en", "es", "zh", "fr", "de", "ja", "ru", "ar", "fa", "it", "hi", "tr", "ko", "pt"],
-    "creator": {
-      "@type": "Person",
-      "name": "Saeid Moghadam"
-    },
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "SoifGo",
+      "operatingSystem": "Android",
+      "applicationCategory": "UtilityApplication",
+      "description": "Bluetooth and MQTT IoT controller app for Android. Supports ESP32, Arduino, HC-05, ESP8266. Features buttons, seek bars, and 22 languages.",
+      "url": "https://soifgo.github.io/soifgo/",
+      "inLanguage": ["en", "es", "zh", "fr", "de", "ja", "ru", "ar", "fa", "it", "hi", "tr", "ko", "pt"],
+      "creator": { "@type": "Person", "name": "Saeid Moghadam" },
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
     }
-  }
   </script>
 
   <!-- GoatCounter Analytics -->
@@ -67,13 +58,11 @@
       --text: #333333;
       --text-muted: #6b7280;
       --border: #e5e0db;
-      --shadow: rgba(0,0,0,0.08);
+      --shadow: rgba(0, 0, 0, 0.08);
     }
-
     * {
       box-sizing: border-box;
     }
-
     body {
       font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--bg);
@@ -83,32 +72,49 @@
       color: var(--text);
     }
 
+    /* ===== HEADER NEW (دو ستونه) ===== */
     header {
       background: linear-gradient(135deg, var(--primary), var(--primary-light));
       color: white;
-      padding: 2em 1em;
-      text-align: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      padding: 2rem 1rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     }
-    header h1 {
+    .header-container {
+      max-width: 900px;
+      margin: 0 auto;
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 12px;
-      font-size: 2.2em;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+    /* سمت چپ: توضیحات */
+    .header-left {
+      flex: 2;
+      text-align: left;
+    }
+    .header-left p {
       margin: 0;
-      line-height: 1.1; /* Fixed: Critical overlay issue */
+      font-size: 1.15rem;
+      opacity: 0.95;
+      max-width: 100%;
+      line-height: 1.6;
     }
-    header h1 img {
-      height: 40px;
+    /* سمت راست: لوگو + نام */
+    .header-right {
+      flex: 1;
+      text-align: right;
     }
-    header p {
-      margin-top: 10px;
-      opacity: 0.9;
-      font-size: 1.1em;
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
+    .header-right h1 {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 12px;
+      margin: 0;
+      font-size: 2.2em;
+      line-height: 1.1;
+    }
+    .header-right h1 img {
+      height: 144px;
     }
 
     nav {
@@ -120,9 +126,9 @@
       position: sticky;
       top: 0;
       z-index: 1000;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     }
-    nav button {
+    nav a {
       margin: 0.5em;
       padding: 0.7em 1.5em;
       border: none;
@@ -133,45 +139,26 @@
       color: var(--text);
       transition: 0.2s ease;
       font-weight: 500;
+      text-decoration: none;
+      display: inline-block;
     }
-    nav button:hover {
+    nav a:hover {
       background: #dcd8d3;
       transform: translateY(-2px);
     }
-    nav button.clicked {
-      background: var(--primary-dark);
-      color: white;
-      transform: translateY(2px);
-    }
 
     main {
-      max-width: 850px;
+      max-width: 900px;
       margin: auto;
       padding: 0 1em;
     }
     section {
-      display: none;
       padding: 2em;
       background: var(--card-bg);
       border-radius: 12px;
       box-shadow: 0 4px 12px var(--shadow);
       margin-top: 25px;
     }
-    section.active {
-      display: block;
-    }
-	.hero h1 {
-        margin: 0;
-        font-size: clamp(5rem, 10vw, 8rem);
-        font-weight: 400;
-        line-height: 1.1; /* Critical fix for mobile */
-        letter-spacing: -2px; /* Adjusted spacing */
-        color: #fff;
-    }
-    .hero-logo {
-        width: 220px;
-    }
-
     h2 {
       font-size: 1.6em;
       margin-bottom: 0.8em;
@@ -184,7 +171,6 @@
       color: var(--primary-dark);
       margin-top: 1.5em;
     }
-
     #download ul {
       list-style: none;
       padding: 0;
@@ -201,7 +187,6 @@
     #download a:hover {
       text-decoration: underline;
     }
-
     .security-box {
       margin-top: 25px;
       padding: 15px 20px;
@@ -215,7 +200,6 @@
       color: var(--primary);
       font-weight: bold;
     }
-
     .feature-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -230,7 +214,6 @@
       list-style: none;
       border-left: 3px solid var(--primary);
     }
-
     .faq-item {
       background: #f7f5f2;
       padding: 15px 20px;
@@ -243,7 +226,6 @@
       display: block;
       margin-bottom: 5px;
     }
-
     img.preview-img {
       max-width: 100%;
       height: auto;
@@ -252,7 +234,6 @@
       display: block;
       box-shadow: 0 4px 12px var(--shadow);
     }
-
     #totalVisits {
       text-align: center;
       margin: 40px 0;
@@ -260,7 +241,6 @@
       font-weight: bold;
       color: var(--primary);
     }
-
     footer {
       margin-top: 50px;
       text-align: center;
@@ -276,18 +256,90 @@
       text-decoration: underline;
     }
 
-    @media (max-width: 600px) {
-      header h1 {
-        font-size: 1.7em;
+    /* Tutorial list styles */
+    .tutorial-list {
+      list-style: none;
+      padding: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .tutorial-list li {
+      background: #f7f5f2;
+      border-radius: 8px;
+      border-left: 3px solid var(--primary);
+      padding: 0;
+      transition: 0.2s;
+    }
+    .tutorial-list li:hover {
+      background: #ede8e2;
+      transform: translateY(-2px);
+    }
+    .tutorial-list a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+    }
+    .tutorial-list .icon {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      border-radius: 6px;
+      background: #fff;
+      padding: 4px;
+      flex-shrink: 0;
+    }
+    .tutorial-list .no-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      border-radius: 6px;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 700px) {
+      .header-container {
         flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
       }
-      .hero h1 {
-         letter-spacing: -1px; /* Responsive spacing */
+      .header-left {
+        text-align: center;
       }
-      nav button {
+      .header-left p {
+        font-size: 1rem;
+      }
+      .header-right {
+        text-align: center;
+      }
+      .header-right h1 {
+        justify-content: center;
+        font-size: 1.7em;
+      }
+      .header-right h1 img {
+        height: 36px;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+      .tutorial-list {
+        grid-template-columns: 1fr;
+      }
+      nav a {
         width: 95%;
         font-size: 1.1em;
         padding: 0.6em 1em;
+        text-align: center;
       }
       section {
         padding: 1.2em;
@@ -295,147 +347,193 @@
       h2 {
         font-size: 1.3em;
       }
-      .feature-grid {
-        grid-template-columns: 1fr;
-      }
     }
   </style>
 </head>
 
 <body>
 
-<header class="hero">
-    <div class="hero-container">
-        <div class="hero-left">
-            <img src="soifgo-logo.png" alt="SoifGo Logo" class="hero-logo">
-            <h1>SoifGo</h1>
-        </div>
+  <!-- ===== HEADER جدید ===== -->
+  <header>
+    <div class="header-container">
+      <!-- سمت چپ: توضیحات -->
+      <div class="header-left">
+        <p><strong>Bluetooth &amp; MQTT IoT Controller for Android</strong> — Control ESP32, Arduino, HC-05, ESP8266 with buttons, sliders, and 22 languages. Free &amp; open source.</p>
+      </div>
+      <!-- سمت راست: لوگو + نام -->
+      <div class="header-right">
+        <h1>
+          <img src="soifgo-logo.png" alt="SoifGo Logo" />
+          SoifGo
+        </h1>
+      </div>
     </div>
-</header>
+  </header>
 
+  <!-- ===== NAV ===== -->
   <nav>
-    <button id="downloadBtn" onclick="switchTab('download', this)">Download</button>
-    <button onclick="switchTab('about', this)">About</button>
-    <button onclick="openTutorial()">SoifGo Tutorial</button>
-    <button onclick="openForum()">Forum</button>
+    <a href="#download">📥 Download</a>
+    <a href="#about">ℹ️ About</a>
+    <a href="#tutorials">📚 Tutorials</a>
+    <a href="#faq">❓ FAQ</a>
+    <a href="https://github.com/soifgo/soifgo/discussions/3" target="_blank">💬 Forum</a>
   </nav>
 
   <main>
-    <!-- Download Section -->
+
+    <!-- ===== DOWNLOAD SECTION ===== -->
     <section id="download">
-      <h2>Download SoifGo — Bluetooth Controller App for Android</h2>
+      <h2>📥 Download SoifGo — Bluetooth Controller App for Android</h2>
 
       <ul>
-        <li><a href="soifgo.zip">Download SoifGo v1.41 (ZIP Package)</a></li>
-        <li><a href="https://apkpure.com/soifgo/soifgo.saeidmoghadam" target="_blank" rel="noopener noreferrer">Download from APKPure</a></li>
+        <li><a href="soifgo.zip">⬇️ Download SoifGo v1.41 (ZIP Package)</a></li>
+        <li><a href="https://apkpure.com/soifgo/soifgo.saeidmoghadam" target="_blank" rel="noopener noreferrer">⬇️ Download from APKPure</a></li>
       </ul>
 
       <div class="security-box">
-        <strong>Security Verified</strong><br>
-        This APK has been scanned by 65+ global security vendors on VirusTotal.<br>
-        No threats detected.<br>
+        <strong>🔒 Security Verified</strong><br />
+        This APK has been scanned by 65+ global security vendors on VirusTotal.<br />
+        No threats detected.<br />
         <a href="https://www.virustotal.com/gui/file/5a28ee2acf881b4a300cc482e5691ee8313f1ca6fde0457e07e942e416d51d81" target="_blank" rel="noopener noreferrer">
           View Full VirusTotal Report
         </a>
       </div>
     </section>
 
-    <!-- About Section -->
+    <!-- ===== ABOUT SECTION ===== -->
     <section id="about">
-      <h2>About SoifGo — IoT Controller App for Android</h2>
+      <h2>ℹ️ About SoifGo — IoT Controller for Android</h2>
 
-      <h3>Developer: Saeid Moghadam</h3>
-      <p>Saeid Moghadam is the creator of SoifGo, a powerful and multilingual IoT controller for Android.</p>
+      <p><strong>SoifGo</strong> is an Android application that provides advanced control using <strong>buttons and seek bars</strong>. It supports <strong>Bluetooth</strong> and <strong>MQTT</strong> protocols, making it ideal for controlling ESP32, Arduino, HC‑05, and ESP8266 devices.</p>
 
-      <h3>What is SoifGo?</h3>
-      <p><strong>SoifGo</strong> is an Android application that provides users with advanced capabilities using <strong>buttons and seek bars</strong>. It supports Bluetooth and MQTT protocols, making it ideal for controlling ESP32, Arduino, HC-05, and ESP8266 devices.</p>
+      <p><strong>Developer:</strong> Saeid Moghadam</p>
 
-      <h3>Key Features</h3>
-      <ul>
+      <h3>✨ Key Features</h3>
+      <ul class="feature-grid">
         <li>Control ESP32 via Bluetooth from Android</li>
-        <li>Connect to HC-05 and HC-06 modules</li>
+        <li>Connect to HC‑05 and HC‑06 modules</li>
         <li>MQTT protocol support for internet communication</li>
         <li>Buttons and seek bars for precise control</li>
         <li>22 languages supported</li>
-        <li>Perfect for Arduino, ESP8266, and robotics projects</li>
-        <li>Two-way communication with IoT devices</li>
+        <li>Perfect for Arduino, ESP8266, and robotics</li>
+        <li>Two‑way communication with IoT devices</li>
         <li>Ideal for home automation and industrial projects</li>
       </ul>
 
-      <h3>Supported Languages</h3>
-      <ul>
-        <li>English (EN)</li>
-        <li>Spanish (Espanol)</li>
-        <li>Chinese (Simplified)</li>
-        <li>French (Francais)</li>
-        <li>German (Deutsch)</li>
-        <li>Japanese (Nihongo)</li>
-        <li>Russian (Russkiy)</li>
-        <li>Arabic (Al-Arabiya)</li>
-        <li>Persian (Farsi)</li>
-        <li>Italian (Italiano)</li>
-        <li>Hindi (Hindi)</li>
-        <li>Turkish (Turkce)</li>
-        <li>Korean (Hanguk)</li>
-        <li>Portuguese (Portugues)</li>
-        <li>Hebrew (Ivrit)</li>
-        <li>Kurdish (Kurdi)</li>
-        <li>Urdu (Urdu)</li>
-        <li>Bengali (Bangla)</li>
-        <li>Indonesian (Bahasa Indonesia)</li>
-        <li>Tamil (Tamil)</li>
-        <li>Thai (Thai)</li>
-        <li>Swahili (Kiswahili)</li>
-      </ul>
-
-      <h3>Frequently Asked Questions</h3>
-
-      <div class="faq-item">
-        <strong>How to connect ESP32 to Android via Bluetooth?</strong>
-        <p>SoifGo allows you to easily connect and control ESP32 via Bluetooth. Install the app, pair your device, and start sending commands through buttons and seek bars.</p>
-      </div>
-
-      <div class="faq-item">
-        <strong>What devices does SoifGo support?</strong>
-        <p>SoifGo supports ESP32, Arduino, HC-05, HC-06, ESP8266, and any device that communicates via Bluetooth SPP or MQTT protocol.</p>
-      </div>
-
-      <div class="faq-item">
-        <strong>Is SoifGo free and open-source?</strong>
-        <p>Yes! SoifGo is completely free to download and use. The source code is available for developers who want to contribute or customize it.</p>
-      </div>
-
-      <div class="faq-item">
-        <strong>Can I use SoifGo for robotics projects?</strong>
-        <p>Absolutely! SoifGo is perfect for controlling robots with Bluetooth modules like HC-05 and HC-06. Use buttons for movement and seek bars for speed control.</p>
-      </div>
-
-      <div class="faq-item">
-        <strong>Does SoifGo support MQTT?</strong>
-        <p>Yes, SoifGo includes MQTT support, allowing you to control your IoT devices over the internet in addition to Bluetooth.</p>
-      </div>
-
-      <div class="faq-item">
-        <strong>What languages does SoifGo support?</strong>
-        <p>SoifGo supports 22 languages including English, Spanish, Chinese, Arabic, Hindi, Russian, French, German, Japanese, Persian, and many more.</p>
-      </div>
-
-      <div class="faq-item">
-        <strong>How to control Arduino with Bluetooth from Android?</strong>
-        <p>Install SoifGo, pair with your Arduino's HC-05/06 module, and use the buttons and seek bars to send commands.</p>
-      </div>
-
-      <div class="faq-item">
-        <strong>Is SoifGo available on Google Play?</strong>
-        <p>SoifGo is currently available as a direct download (APK) and on APKPure. Google Play release is coming soon.</p>
-      </div>
-
-      <h3>Contact</h3>
-      <p>Email: <a href="mailto:SSM20985@gmail.com">SSM20985@gmail.com</a></p>
-      <p>Email: <a href="mailto:SSMQQMSS@gmail.com">SSMQQMSS@gmail.com</a></p>
+      <h3>🌍 Supported Languages</h3>
+      <p style="columns: 3 180px; column-gap: 20px;">
+        English · Spanish · Chinese · French · German · Japanese · Russian · Arabic · Persian · Italian · Hindi · Turkish · Korean · Portuguese · Hebrew · Kurdish · Urdu · Bengali · Indonesian · Tamil · Thai · Swahili
+      </p>
     </section>
 
-    <img src="soifgo_pic01.png" alt="SoifGo App Preview - Bluetooth and MQTT IoT Controller" class="preview-img" loading="lazy">
+    <!-- ===== TUTORIALS SECTION ===== -->
+    <section id="tutorials">
+      <h2>📚 SoifGo Tutorials</h2>
+      <p>Step‑by‑step guides to get the most out of SoifGo.</p>
+      <ul class="tutorial-list">
+
+        <li>
+          <a href="tutorials/server/soifgo_info/soifgo_info.html">
+            <img src="tutorials/server/icon/icon.png" alt="icon" class="icon" /> soifgo_info
+          </a>
+        </li>
+        <li>
+          <a href="tutorials/server/page/Create_Page.html">
+            <img src="tutorials/server/icon/new.png" alt="icon" class="icon" /> Create Page
+          </a>
+        </li>
+        <li>
+          <a href="tutorials/server/pagefolder/page_folder.html">
+            <img src="tutorials/server/icon/folder.png" alt="icon" class="icon" /> Page &amp; Folder Navigation
+          </a>
+        </li>
+        <li>
+          <a href="tutorials/server/BluetoothExample1/bluetooth_sample1.html">
+            <img src="tutorials/server/icon/blue.png" alt="icon" class="icon" /> Bluetooth Example 1 (Free Serial Monitor)
+          </a>
+        </li>
+        <li>
+          <a href="tutorials/server/WorkingwithHTMLFiles/html01.html">
+            <img src="tutorials/server/icon/html.png" alt="icon" class="icon" /> Working with HTML Files
+          </a>
+        </li>
+        <li>
+          <a href="tutorials/server/Effect/effects.html">
+            <img src="tutorials/server/icon/effect.png" alt="icon" class="icon" /> Effect
+          </a>
+        </li>
+        <li>
+          <a href="tutorials/server/LocalServerSetup/Local-server_api.html">
+            <span class="no-icon">💻</span> Local Server Setup (Fastify on PC_API JSON)
+          </a>
+        </li>
+        <li>
+          <a href="tutorials/server/ESP32Server/ESP8266_wifi_api.html">
+            <span class="no-icon">🌐</span> ESP32 Server (WiFiServer / WebServer_api)
+          </a>
+        </li>
+        <li>
+          <a href="tutorials/server/FetchingAPIs/Api-fetching_api.html">
+            <span class="no-icon">🔄</span> Fetching APIs (External Servers_api)
+          </a>
+        </li>
+        <li>
+          <a href="tutorials/server/Esp8266_wifi_mqtt/esp8266_mqtt.html">
+            <img src="tutorials/server/icon/mqtt.png" alt="icon" class="icon" /> ESP8266 MQTT (Online MQTT_iot)
+          </a>
+        </li>
+        <li>
+          <a href="tutorials/server/BluetoothSendReceive/Bluetooth_Send_Receive.html">
+            <img src="tutorials/server/icon/bluesend.png" alt="icon" class="icon" /> Bluetooth Send Receive
+          </a>
+        </li>
+        <li>
+          <a href="tutorials/server/send_bluetooth_html/html_guide_1.html">
+            <img src="tutorials/server/icon/bluesend_html.png" alt="icon" class="icon" /> Bluetooth Send by HTML
+          </a>
+        </li>
+        <li>
+          <a href="tutorials/server/note_out/note_out.html">
+            <img src="tutorials/server/icon/val.png" alt="icon" class="icon" /> Note SEND AND RECEIVE
+          </a>
+        </li>
+        <li>
+          <a href="tutorials/server/rangmang/Rangmang.html">
+            <img src="tutorials/server/rangmang/rangmang_pic.png" alt="icon" class="icon" /> RANGMANG
+          </a>
+        </li>
+        <li>
+          <a href="tutorials/server/rangmang2/rangmang2.html">
+            <img src="tutorials/server/rangmang2/rangmang2_pic.jpg" alt="icon" class="icon" /> RANGMANG 2
+          </a>
+        </li>
+        <li>
+          <a href="tutorials/server/cmi209/cmi209.html">
+            <img src="tutorials/server/cmi209/cmi209_01.jpg" alt="icon" class="icon" /> cmi209
+          </a>
+        </li>
+
+      </ul>
+    </section>
+
+    <!-- ===== FAQ SECTION ===== -->
+    <section id="faq">
+      <h2>❓ Frequently Asked Questions</h2>
+
+      <div class="faq-item"><strong>How to connect ESP32 to Android via Bluetooth?</strong> SoifGo allows you to easily connect and control ESP32 via Bluetooth. Install the app, pair your device, and start sending commands through buttons and seek bars.</div>
+      <div class="faq-item"><strong>What devices does SoifGo support?</strong> SoifGo supports ESP32, Arduino, HC‑05, HC‑06, ESP8266, and any device that communicates via Bluetooth SPP or MQTT protocol.</div>
+      <div class="faq-item"><strong>Is SoifGo free and open‑source?</strong> Yes! SoifGo is completely free to download and use. The source code is available for developers who want to contribute or customize it.</div>
+      <div class="faq-item"><strong>Can I use SoifGo for robotics projects?</strong> Absolutely! SoifGo is perfect for controlling robots with Bluetooth modules like HC‑05 and HC‑06. Use buttons for movement and seek bars for speed control.</div>
+      <div class="faq-item"><strong>Does SoifGo support MQTT?</strong> Yes, SoifGo includes MQTT support, allowing you to control your IoT devices over the internet in addition to Bluetooth.</div>
+      <div class="faq-item"><strong>What languages does SoifGo support?</strong> SoifGo supports 22 languages including English, Spanish, Chinese, Arabic, Hindi, Russian, French, German, Japanese, Persian, and many more.</div>
+      <div class="faq-item"><strong>How to control Arduino with Bluetooth from Android?</strong> Install SoifGo, pair with your Arduino's HC‑05/06 module, and use the buttons and seek bars to send commands.</div>
+      <div class="faq-item"><strong>Is SoifGo available on Google Play?</strong> SoifGo is currently available as a direct download (APK) and on APKPure. Google Play release is coming soon.</div>
+
+      <h3>📧 Contact</h3>
+      <p>Email: <a href="mailto:SSM20985@gmail.com">SSM20985@gmail.com</a> &middot; <a href="mailto:SSMQQMSS@gmail.com">SSMQQMSS@gmail.com</a></p>
+    </section>
+
+    <img src="soifgo_pic01.png" alt="SoifGo App Preview - Bluetooth and MQTT IoT Controller" class="preview-img" loading="lazy" />
 
     <div id="totalVisits">Loading...</div>
   </main>
@@ -446,56 +544,24 @@
       &nbsp;|&nbsp;
       <a href="policy_soifgo.html">Privacy Policy</a>
     </p>
-    <p style="font-size:0.85rem; margin-top:8px;">
-      &copy; 2026 SoifGo — Built by Saeid Moghadam
-    </p>
+    <p style="font-size:0.85rem; margin-top:8px;">&copy; 2026 SoifGo — Built by Saeid Moghadam</p>
   </footer>
 
   <script>
-    function switchTab(sectionId, buttonElement) {
-      document.querySelectorAll('section').forEach(function(s) {
-        s.classList.remove('active');
-      });
-      document.querySelectorAll('nav button').forEach(function(b) {
-        b.classList.remove('clicked');
-      });
-      document.getElementById(sectionId).classList.add('active');
-      if (buttonElement) buttonElement.classList.add('clicked');
-    }
-
-    function openTutorial() {
-      window.location.href = "tutorials/list.html";
-    }
-
-    function openForum() {
-      // Using window.open to ensure external link opens in a new tab securely
-      window.open("https://github.com/soifgo/soifgo/discussions/3", "_blank");
-    }
-
     async function getCount(path) {
       try {
-        var url = "https://soifgo.goatcounter.com/counter/" + path + ".json";
-        var res = await fetch(url);
+        const res = await fetch("https://soifgo.goatcounter.com/counter/" + path + ".json");
         if (!res.ok) return 0;
-        var data = await res.json();
+        const data = await res.json();
         return Number(data.count) || 0;
-      } catch (e) {
-        return 0;
-      }
+      } catch { return 0; }
     }
-
     async function loadTotal() {
-      var a = await getCount("soifgo/");
-      var b = await getCount("soifgo/index.html");
-      var total = a + b;
-      document.getElementById("totalVisits").textContent = "Visits: " + total;
+      const a = await getCount("soifgo/");
+      const b = await getCount("soifgo/index.html");
+      document.getElementById("totalVisits").textContent = "Visits: " + (a + b);
     }
-
-    // Fixed: Used DOMContentLoaded and removed the previous window.onload conflict
-    document.addEventListener('DOMContentLoaded', function() {
-      switchTab('download', document.getElementById('downloadBtn'));
-      loadTotal();
-    });
+    document.addEventListener('DOMContentLoaded', loadTotal);
   </script>
 
 </body>
