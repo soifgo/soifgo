@@ -173,6 +173,11 @@
       top: 0;
       z-index: 1000;
       border-bottom: 1px solid var(--border);
+      transition: transform 0.3s ease;
+    }
+
+    nav.hidden {
+      transform: translateY(-100%);
     }
 
     nav a {
@@ -448,31 +453,80 @@
 
     /* ===== RESPONSIVE ===== */
     @media (max-width: 700px) {
+      header {
+        padding: 0.5rem 0.5rem;
+      }
+
       .header-container {
-        flex-direction: column;
-        text-align: center;
-        gap: 0.5rem;
+        flex-direction: row !important;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.3rem;
       }
 
       .header-left {
-        text-align: center;
+        text-align: left !important;
+        flex: 2;
+        min-width: 0;
       }
 
-      .header-left p {
-        font-size: 1rem;
+      .header-left p:first-child {
+        font-size: 0.75rem !important;
+        font-weight: 700 !important;
+        margin-bottom: 0 !important;
+        letter-spacing: 0 !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .header-left p:last-child {
+        display: none;
       }
 
       .header-right {
-        text-align: center;
+        flex: 0 0 auto;
       }
 
       .header-right h1 {
-        justify-content: center;
-        font-size: 1.7em;
+        font-size: 0.9rem !important;
+        gap: 3px !important;
       }
 
       .header-right h1 img {
-        height: 44px;
+        height: 22px !important;
+      }
+
+      nav {
+        padding: 0.15rem 0.2rem;
+        gap: 2px;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: rgba(15, 10, 26, 0.92);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
+
+      nav a {
+        font-size: 0.55rem;
+        padding: 0.1rem 0.4rem;
+        margin: 1px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.04);
+      }
+
+      nav a:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      main {
+        padding-top: 0.3rem;
+      }
+
+      section:first-of-type {
+        margin-top: 10px;
       }
 
       .feature-grid {
@@ -481,13 +535,6 @@
 
       .tutorial-list {
         grid-template-columns: 1fr;
-      }
-
-      nav a {
-        width: 95%;
-        font-size: 1em;
-        padding: 0.5em 1em;
-        text-align: center;
       }
 
       section {
@@ -508,13 +555,31 @@
         font-size: 15px;
       }
 
-      section {
-        padding: 1em;
-        margin-top: 16px;
+      header {
+        padding: 0.3rem 0.3rem;
       }
 
-      .header-left p {
-        font-size: 0.92rem;
+      .header-left p:first-child {
+        font-size: 0.65rem !important;
+      }
+
+      .header-right h1 {
+        font-size: 0.8rem !important;
+      }
+
+      .header-right h1 img {
+        height: 18px !important;
+      }
+
+      nav a {
+        font-size: 0.5rem;
+        padding: 0.05rem 0.3rem;
+        margin: 0.5px;
+      }
+
+      section {
+        padding: 1em;
+        margin-top: 10px;
       }
 
       .security-box {
@@ -540,19 +605,13 @@
   <header>
     <div class="header-container">
       <div class="header-left">
-        <p style="font-size:1.4rem; font-weight:700; margin-bottom:0.3rem; letter-spacing:-0.5px;">
+        <p style="font-weight:700; letter-spacing:-0.5px;">
           Build Custom IoT Controllers Without Coding
         </p>
         <p style="font-size:1.05rem; opacity:0.95; max-width:90%;">
           Control <strong>ESP32, Arduino, ESP8266</strong> via <strong>Bluetooth (HC-05/06)</strong>, <strong>MQTT</strong>, or <strong>HTTP API</strong>.
           Design dashboards with buttons, sliders, graphs, and even full HTML/JS interfaces — all from your Android phone.
         </p>
-        <div style="margin-top:1.2rem; display:flex; flex-wrap:wrap; gap:12px; align-items:center;">
-          <a href="#download" style="background:#fff; color:var(--primary-dark); padding:0.7rem 2.5rem; border-radius:40px; font-weight:700; text-decoration:none; display:inline-block; box-shadow:0 4px 16px rgba(0,0,0,0.25); transition:var(--transition);">
-            ⬇ Download Free APK
-          </a>
-          <span style="font-size:0.9rem; opacity:0.8;">v1.41 • 22 Languages</span>
-        </div>
       </div>
       <div class="header-right">
         <h1>
@@ -564,27 +623,26 @@
   </header>
 
   <!-- ===== NAV ===== -->
-  <nav>
-    <a href="#download">📥 Download</a>
-    <a href="#about">ℹ️ About</a>
-    <a href="#tutorials">📚 Tutorials</a>
-    <a href="#faq">❓ FAQ</a>
-    <a href="https://github.com/soifgo/soifgo/discussions/3" target="_blank">💬 Forum</a>
+  <nav id="mainNav">
+    <a href="#about">About</a>
+    <a href="#tutorials">Tutorials</a>
+    <a href="#faq">FAQ</a>
+    <a href="https://github.com/soifgo/soifgo/discussions/3" target="_blank">Forum</a>
   </nav>
 
   <main>
 
     <!-- ===== DOWNLOAD SECTION ===== -->
     <section id="download">
-      <h2>📥 Download SoifGo — Bluetooth Controller App for Android</h2>
+      <h2>Download SoifGo — Bluetooth Controller App for Android</h2>
 
       <ul>
-        <li><a href="soifgo.zip">⬇️ Download SoifGo v1.41 (ZIP Package)</a></li>
-        <li><a href="https://apkpure.com/soifgo/soifgo.saeidmoghadam" target="_blank" rel="noopener noreferrer">⬇️ Download from APKPure</a></li>
+        <li><a href="soifgo.zip">Download SoifGo v1.41 (ZIP Package)</a></li>
+        <li><a href="https://apkpure.com/soifgo/soifgo.saeidmoghadam" target="_blank" rel="noopener noreferrer">Download from APKPure</a></li>
       </ul>
 
       <div class="security-box">
-        <strong>🔒 Security Verified</strong><br />
+        <strong>Security Verified</strong><br />
         This APK has been scanned by 65+ global security vendors on VirusTotal.<br />
         No threats detected.<br />
         <a href="https://www.virustotal.com/gui/file/5a28ee2acf881b4a300cc482e5691ee8313f1ca6fde0457e07e942e416d51d81" target="_blank" rel="noopener noreferrer">
@@ -595,14 +653,14 @@
 
     <!-- ===== ABOUT SECTION ===== -->
     <section id="about">
-      <h2>ℹ️ What is SoifGo?</h2>
+      <h2>What is SoifGo?</h2>
 
       <p style="font-size:1.05rem;">
         <strong>SoifGo</strong> is a free, open-source Android app that turns your smartphone into a professional <strong>IoT controller</strong>.
         It supports multiple communication protocols, a visual UI builder, and advanced features like real-time graphs, circular gauges, alarms, and sensor integration — all without writing a single line of code.
       </p>
 
-      <h3>🚀 Key Capabilities</h3>
+      <h3>Key Capabilities</h3>
       <ul class="feature-grid">
         <li>
           <strong>Bluetooth + MQTT + HTTP</strong><br>Connect via HC-05/06, ESP32, or any serial device, and use MQTT or REST API for cloud control.
@@ -614,20 +672,20 @@
           <strong>HTML/JS WebView</strong><br>Run your own interactive HTML pages inside the app and use JavaScript to send/receive data via Bluetooth, MQTT, or sensors.
         </li>
         <li>
-          <strong>Real‑Time Graphs & Gauges</strong><br>Visualize incoming data with dynamic line graphs and circular gauges, with adjustable colors and line widths.
+          <strong>Real-Time Graphs & Gauges</strong><br>Visualize incoming data with dynamic line graphs and circular gauges, with adjustable colors and line widths.
         </li>
         <li>
           <strong>Phone Sensors & Alarms</strong><br>Read light, accelerometer, and magnetometer data, and trigger alarms (audio, vibration, or SMS) based on values.
         </li>
         <li>
-          <strong>Multi‑Page & Multi‑Folder</strong><br>Organise your projects into pages and folders, load/save configurations, and even create startup sequences.
+          <strong>Multi-Page & Multi-Folder</strong><br>Organise your projects into pages and folders, load/save configurations, and even create startup sequences.
         </li>
       </ul>
       <p>
-        <strong>Example:</strong> Build a robot with Arduino + HC‑05. Create directional buttons, add a seek bar for speed control, and use the built‑in graph to monitor motor RPM. Or set up an MQTT dashboard to control home lighting from anywhere. SoifGo gives you the tools — you build the experience.
+        <strong>Example:</strong> Build a robot with Arduino + HC-05. Create directional buttons, add a seek bar for speed control, and use the built-in graph to monitor motor RPM. Or set up an MQTT dashboard to control home lighting from anywhere. SoifGo gives you the tools — you build the experience.
       </p>
 
-      <h3>🌍 Supported Languages</h3>
+      <h3>Supported Languages</h3>
       <p style="columns: 3 180px; column-gap: 20px;">
         English · Spanish · Chinese · French · German · Japanese · Russian · Arabic · Persian · Italian · Hindi · Turkish · Korean · Portuguese · Hebrew · Kurdish · Urdu · Bengali · Indonesian · Tamil · Thai · Swahili
       </p>
@@ -635,28 +693,28 @@
 
     <!-- ===== TUTORIALS SECTION ===== -->
     <section id="tutorials">
-      <h2>📚 SoifGo Tutorials</h2>
+      <h2>SoifGo Tutorials</h2>
 
       <div style="background:rgba(124,58,237,0.06); border-radius:var(--radius-sm); padding:18px 20px; margin-bottom:22px; border:1px solid rgba(124,58,237,0.12);">
-        <h3 style="margin:0 0 6px 0; color:var(--primary-light); font-size:1.1rem;">🚀 New to SoifGo?</h3>
+        <h3 style="margin:0 0 6px 0; color:var(--primary-light); font-size:1.1rem;">New to SoifGo?</h3>
         <p style="margin:0;">
           Start with the
           <a href="https://soifgo.github.io/soifgo/tutorials/soifgo_info/soifgo_info.html" style="font-weight:700; color:var(--primary-light); text-decoration:underline;">
             Complete User Guide
           </a>
-          — a comprehensive 11‑chapter manual covering everything from installation to advanced features like graphs, sensors, and automation.
+          — a comprehensive 11-chapter manual covering everything from installation to advanced features like graphs, sensors, and automation.
         </p>
       </div>
 
-      <p style="margin-bottom:1.5rem;">Step‑by‑step guides to get the most out of SoifGo.</p>
+      <p style="margin-bottom:1.5rem;">Step-by-step guides to get the most out of SoifGo.</p>
 
-      <h3 style="margin-top:1.5rem; font-size:1.1rem; color:var(--primary-light); border-bottom:1px solid var(--border); padding-bottom:5px;">📖 Getting Started</h3>
+      <h3 style="margin-top:1.5rem; font-size:1.1rem; color:var(--primary-light); border-bottom:1px solid var(--border); padding-bottom:5px;">Getting Started</h3>
       <ul class="tutorial-list">
         <li class="guide-highlight">
           <a href="https://soifgo.github.io/soifgo/tutorials/soifgo_info/soifgo_info.html">
             <img src="https://soifgo.github.io/soifgo/tutorials/icon/icon.png" alt="icon" class="icon" />
             <div>
-              <strong>📖 Complete User Guide</strong>
+              <strong>Complete User Guide</strong>
               <span style="display:block; font-size:0.85rem; color:var(--text-muted); font-weight:400;">
                 Everything from installation to advanced features — 11 chapters
               </span>
@@ -691,14 +749,14 @@
             <div>
               <strong>Bluetooth Example 1</strong>
               <span style="display:block; font-size:0.85rem; color:var(--text-muted); font-weight:400;">
-                Free Serial Monitor — connect and test your HC‑05/06
+                Free Serial Monitor — connect and test your HC-05/06
               </span>
             </div>
           </a>
         </li>
       </ul>
 
-      <h3 style="margin-top:1.5rem; font-size:1.1rem; color:var(--primary-light); border-bottom:1px solid var(--border); padding-bottom:5px;">📡 Communication</h3>
+      <h3 style="margin-top:1.5rem; font-size:1.1rem; color:var(--primary-light); border-bottom:1px solid var(--border); padding-bottom:5px;">Communication</h3>
       <ul class="tutorial-list">
         <li>
           <a href="https://soifgo.github.io/soifgo/tutorials/BluetoothSendReceive/Bluetooth_Send_Receive.html">
@@ -706,7 +764,7 @@
             <div>
               <strong>Bluetooth Send Receive</strong>
               <span style="display:block; font-size:0.85rem; color:var(--text-muted); font-weight:400;">
-                Two‑way communication with Bluetooth devices
+                Two-way communication with Bluetooth devices
               </span>
             </div>
           </a>
@@ -757,7 +815,7 @@
         </li>
       </ul>
 
-      <h3 style="margin-top:1.5rem; font-size:1.1rem; color:var(--primary-light); border-bottom:1px solid var(--border); padding-bottom:5px;">🎨 Custom UI &amp; Effects</h3>
+      <h3 style="margin-top:1.5rem; font-size:1.1rem; color:var(--primary-light); border-bottom:1px solid var(--border); padding-bottom:5px;">Custom UI &amp; Effects</h3>
       <ul class="tutorial-list">
         <li>
           <a href="https://soifgo.github.io/soifgo/tutorials/WorkingwithHTMLFiles/html01.html">
@@ -794,7 +852,7 @@
         </li>
       </ul>
 
-      <h3 style="margin-top:1.5rem; font-size:1.1rem; color:var(--primary-light); border-bottom:1px solid var(--border); padding-bottom:5px;">⚙️ Advanced &amp; Tools</h3>
+      <h3 style="margin-top:1.5rem; font-size:1.1rem; color:var(--primary-light); border-bottom:1px solid var(--border); padding-bottom:5px;">Advanced &amp; Tools</h3>
       <ul class="tutorial-list">
         <li>
           <a href="https://soifgo.github.io/soifgo/tutorials/note_out/note_out.html">
@@ -802,7 +860,7 @@
             <div>
               <strong>Note SEND AND RECEIVE</strong>
               <span style="display:block; font-size:0.85rem; color:var(--text-muted); font-weight:400;">
-                Stream text files line‑by‑line via Bluetooth, API, or MQTT
+                Stream text files line-by-line via Bluetooth, API, or MQTT
               </span>
             </div>
           </a>
@@ -845,9 +903,9 @@
 
     <!-- ===== FAQ SECTION ===== -->
     <section id="faq">
-      <h2>❓ Frequently Asked Questions</h2>
+      <h2>Frequently Asked Questions</h2>
 
-      <h3 style="margin-top:1.8rem; color:var(--primary-light); border-bottom:1px solid var(--border); padding-bottom:5px;">📌 Getting Started</h3>
+      <h3 style="margin-top:1.8rem; color:var(--primary-light); border-bottom:1px solid var(--border); padding-bottom:5px;">Getting Started</h3>
 
       <div class="faq-item">
         <strong>What exactly is SoifGo, and who is it for?</strong>
@@ -856,18 +914,18 @@
 
       <div class="faq-item">
         <strong>What hardware does it support?</strong>
-        <p>Any device that uses <strong>Bluetooth SPP</strong> (HC‑05, HC‑06, Bluetooth shields), <strong>MQTT</strong>, or <strong>HTTP REST APIs</strong>. This includes ESP32, ESP8266, Arduino (with BT modules), Raspberry Pi (with MQTT), and even GSM modules.</p>
+        <p>Any device that uses <strong>Bluetooth SPP</strong> (HC-05, HC-06, Bluetooth shields), <strong>MQTT</strong>, or <strong>HTTP REST APIs</strong>. This includes ESP32, ESP8266, Arduino (with BT modules), Raspberry Pi (with MQTT), and even GSM modules.</p>
       </div>
 
       <div class="faq-item">
         <strong>Do I need an internet connection?</strong>
-        <p><strong>No</strong> for Bluetooth — it works offline. <strong>Yes</strong> for MQTT and HTTP (you need Wi‑Fi or mobile data).</p>
+        <p><strong>No</strong> for Bluetooth — it works offline. <strong>Yes</strong> for MQTT and HTTP (you need Wi-Fi or mobile data).</p>
       </div>
 
-      <h3 style="margin-top:1.8rem; color:var(--primary-light); border-bottom:1px solid var(--border); padding-bottom:5px;">⚙️ Features & Technical Details</h3>
+      <h3 style="margin-top:1.8rem; color:var(--primary-light); border-bottom:1px solid var(--border); padding-bottom:5px;">Features & Technical Details</h3>
 
       <div class="faq-item">
-        <strong>Can I control a robot with two‑way communication?</strong>
+        <strong>Can I control a robot with two-way communication?</strong>
         <p>Yes. You can send commands (like 'F', 'B', 'L', 'R') and simultaneously receive sensor data (distance, battery voltage, etc.) from your robot. The app displays incoming values on buttons or in graphs, and you can even log them to files.</p>
       </div>
 
@@ -877,7 +935,7 @@
       </div>
 
       <div class="faq-item">
-        <strong>Does it support real‑time graphs and circular gauges?</strong>
+        <strong>Does it support real-time graphs and circular gauges?</strong>
         <p>Yes. Every button can be assigned a graph that plots incoming numeric values in real time. You can set the graph color, line width, and update interval. Additionally, you can create circular gauges (arcs) that visually represent values within a range, with adjustable start/end angles and colors.</p>
       </div>
 
@@ -892,11 +950,11 @@
       </div>
 
       <div class="faq-item">
-        <strong>Can I view or edit G‑Code files?</strong>
-        <p>Yes, the app includes a built‑in G‑Code viewer and editor. You can load a G‑Code file from the Note folder, and the app will render the toolpath with animated lines and arcs. This is useful for CNC or 3D printing monitoring.</p>
+        <strong>Can I view or edit G-Code files?</strong>
+        <p>Yes, the app includes a built-in G-Code viewer and editor. You can load a G-Code file from the Note folder, and the app will render the toolpath with animated lines and arcs. This is useful for CNC or 3D printing monitoring.</p>
       </div>
 
-      <h3 style="margin-top:1.8rem; color:var(--primary-light); border-bottom:1px solid var(--border); padding-bottom:5px;">🎨 Customisation & No‑Code Design</h3>
+      <h3 style="margin-top:1.8rem; color:var(--primary-light); border-bottom:1px solid var(--border); padding-bottom:5px;">Customisation & No-Code Design</h3>
 
       <div class="faq-item">
         <strong>How do I build a UI without programming?</strong>
@@ -910,7 +968,7 @@
 
       <div class="faq-item">
         <strong>What kind of effects can I apply to buttons?</strong>
-        <p>You can add rotation, circular gauges, max‑size scaling, colour shifts based on input values, and even custom move animations. There's also a "scrip" (formula) feature that lets you apply mathematical expressions (e.g., `val/2 + 10`) to a button's displayed value.</p>
+        <p>You can add rotation, circular gauges, max-size scaling, colour shifts based on input values, and even custom move animations. There's also a "scrip" (formula) feature that lets you apply mathematical expressions (e.g., `val/2 + 10`) to a button's displayed value.</p>
       </div>
 
       <div class="faq-item">
@@ -918,11 +976,11 @@
         <p>Yes. SoifGo supports folders and pages. Each folder can contain multiple pages, and each page can have its own set of buttons, seek bars, and settings. You can load and save pages at any time, and even create a startup sequence that automatically triggers buttons on load.</p>
       </div>
 
-      <h3 style="margin-top:1.8rem; color:var(--primary-light); border-bottom:1px solid var(--border); padding-bottom:5px;">🔒 Security & Installation</h3>
+      <h3 style="margin-top:1.8rem; color:var(--primary-light); border-bottom:1px solid var(--border); padding-bottom:5px;">Security & Installation</h3>
 
       <div class="faq-item">
         <strong>Is the APK safe to install?</strong>
-        <p>Yes. The APK has been scanned by <strong>65+ antivirus engines</strong> on VirusTotal with zero threats detected. The project is fully open‑source, so the code is transparent and auditable. <a href="https://www.virustotal.com/gui/file/5a28ee2acf881b4a300cc482e5691ee8313f1ca6fde0457e07e942e416d51d81" target="_blank" rel="noopener">View the full security report</a>.</p>
+        <p>Yes. The APK has been scanned by <strong>65+ antivirus engines</strong> on VirusTotal with zero threats detected. The project is fully open-source, so the code is transparent and auditable. <a href="https://www.virustotal.com/gui/file/5a28ee2acf881b4a300cc482e5691ee8313f1ca6fde0457e07e942e416d51d81" target="_blank" rel="noopener">View the full security report</a>.</p>
       </div>
 
       <div class="faq-item">
@@ -935,7 +993,7 @@
         <p>SoifGo supports <strong>Android 5.0 (Lollipop) and above</strong>. For Bluetooth, your device must support Bluetooth 4.0+ (most modern phones do).</p>
       </div>
 
-      <h3>📧 Contact Developer</h3>
+      <h3>Contact Developer</h3>
       <p>Email: <a href="mailto:SSM20985@gmail.com">SSM20985@gmail.com</a> &middot; <a href="mailto:SSMQQMSS@gmail.com">SSMQQMSS@gmail.com</a></p>
     </section>
 
@@ -969,6 +1027,27 @@
   </footer>
 
   <script>
+    // ===== NAV HIDE ON SCROLL (MOBILE) =====
+    let lastScroll = 0;
+    const nav = document.getElementById('mainNav');
+    let isMobile = window.innerWidth <= 700;
+
+    window.addEventListener('resize', () => {
+      isMobile = window.innerWidth <= 700;
+    });
+
+    window.addEventListener('scroll', () => {
+      if (!isMobile) return;
+      const currentScroll = window.pageYOffset;
+      if (currentScroll > 80) {
+        nav.classList.add('hidden');
+      } else {
+        nav.classList.remove('hidden');
+      }
+      lastScroll = currentScroll;
+    });
+
+    // ===== VISITS COUNTER =====
     async function getCount(path) {
       try {
         const res = await fetch("https://soifgo.goatcounter.com/counter/" + path + ".json");
@@ -977,6 +1056,7 @@
         return Number(data.count) || 0;
       } catch { return 0; }
     }
+
     async function loadTotal() {
       const a = await getCount("soifgo/");
       const b = await getCount("soifgo/index.html");
