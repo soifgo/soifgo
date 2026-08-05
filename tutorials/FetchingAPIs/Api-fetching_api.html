@@ -1,141 +1,455 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Online API Extraction – SoifGo</title>
- 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes" />
+  <meta name="theme-color" content="#0055aa" />
+  <meta name="color-scheme" content="light dark" />
+
+  <!-- ===== PRIMARY SEO ===== -->
+  <title>Online API Extraction with SoifGo — Fetch Crypto & Weather Data | API Tutorial</title>
+  <meta name="description" content="Complete tutorial for extracting online API data with SoifGo. Learn how to fetch crypto prices, weather data, and more using free APIs. Includes filtering, effects, and server integration." />
+  <meta name="keywords" content="API extraction, SoifGo API, fetch API, crypto API, weather API, online data, JSON parsing, server text, API filtering, DIA API, free API, IoT dashboard" />
+
+  <!-- ===== OPEN GRAPH (Social Media) ===== -->
+  <meta property="og:title" content="Online API Extraction with SoifGo — Fetch Crypto & Weather Data" />
+  <meta property="og:description" content="Complete tutorial for extracting online API data with SoifGo. Learn how to fetch crypto prices, weather data, and more using free APIs." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://soifgo.github.io/soifgo/tutorials/api-fetching/" />
+  <meta property="og:image" content="https://soifgo.github.io/soifgo/api-fetching-og.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="SoifGo Tutorials" />
+
+  <!-- ===== TWITTER CARD ===== -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Online API Extraction with SoifGo — Fetch Crypto & Weather Data" />
+  <meta name="twitter:description" content="Complete tutorial for extracting online API data with SoifGo. Learn how to fetch crypto prices, weather data, and more using free APIs." />
+  <meta name="twitter:image" content="https://soifgo.github.io/soifgo/api-fetching-og.jpg" />
+
+  <!-- ===== CANONICAL URL ===== -->
+  <link rel="canonical" href="https://soifgo.github.io/soifgo/tutorials/api-fetching/" />
+
+  <!-- ===== LANGUAGE ALTERNATES ===== -->
+  <link rel="alternate" hreflang="en" href="https://soifgo.github.io/soifgo/tutorials/api-fetching/" />
+
+  <!-- ===== SCHEMA.ORG (Structured Data) ===== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Online API Extraction with SoifGo — Fetch Crypto & Weather Data",
+    "description": "Complete tutorial for extracting online API data with SoifGo. Learn how to fetch crypto prices, weather data, and more using free APIs.",
+    "author": {
+      "@type": "Person",
+      "name": "Saeid Moghadam"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "SoifGo",
+      "url": "https://soifgo.github.io/soifgo/"
+    },
+    "datePublished": "2025-01-01",
+    "dateModified": "2025-01-01",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://soifgo.github.io/soifgo/tutorials/api-fetching/"
+    },
+    "about": {
+      "@type": "Thing",
+      "name": "API Data Extraction"
+    },
+    "teaches": [
+      "How to fetch data from free APIs",
+      "Crypto price extraction",
+      "Weather data fetching",
+      "JSON parsing in SoifGo",
+      "API key filtering",
+      "Visual effects based on API values"
+    ],
+    "inLanguage": "en",
+    "isAccessibleForFree": true,
+    "learningResourceType": "Tutorial"
+  }
+  </script>
+
   <style>
-    body {
-      font-family: sans-serif;
-      background-color: #f9f9f9;
-      padding: 1em;
-      margin: auto;
-      max-width: 100%;
-      line-height: 1.6;
+    /* ===== ROOT VARIABLES ===== */
+    :root {
+      --bg: #ffffff;
+      --fg: #1f2937;
+      --accent: #0055aa;
+      --card-bg: #f5f7fb;
+      --border: #d7dce4;
+      --muted: #6b7280;
+      --code-bg: #eef2f7;
+      --link: #0066cc;
+      --btn-home: #7a4a2e;
+      --code-dark: #0f172a;
+      --code-text: #e2e8f0;
     }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0b0e12;
+        --fg: #e5e7eb;
+        --accent: #4dabf7;
+        --card-bg: #12161d;
+        --border: #243041;
+        --muted: #9aa3af;
+        --link: #58a6ff;
+        --btn-home: #8B5A3A;
+        --code-bg: #1b2230;
+      }
+    }
+
+    /* ===== RESET & BASE ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.7;
+      -webkit-text-size-adjust: 100%;
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    /* ===== HEADINGS ===== */
     h1 {
-      color: #0055aa;
+      font-size: 1.8rem;
+      color: var(--accent);
       text-align: center;
-      font-size: 2em;
+      margin: 0.75rem 0 0.5rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      word-break: break-word;
     }
+
     h2 {
-      color: #333;
-      margin-top: 2em;
-      font-size: 1.5em;
+      font-size: 1.35rem;
+      color: var(--fg);
+      margin: 1.5rem 0 0.75rem;
+      font-weight: 600;
+      word-break: break-word;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 6px;
     }
+
+    h3 {
+      font-size: 1.1rem;
+      color: var(--accent);
+      margin: 1rem 0 0.5rem;
+      font-weight: 600;
+      word-break: break-word;
+    }
+
     p {
-      margin-bottom: 1em;
+      margin: 0.75em 0;
+      word-break: break-word;
     }
-    code {
-      background-color: #eee;
-      padding: 2px 6px;
-      border-radius: 4px;
-    }
-    pre {
-      background-color: #eee;
-      padding: 1em;
-      border-radius: 8px;
-      overflow-x: auto;
-      font-size: 1em;
-      font-family: Consolas, monospace;
-      line-height: 1.6;
-    }
-    img {
-      max-width: 100%;
-      height: auto;
-      margin: 1em 0;
-      border-radius: 6px;
-    }
+
     a {
-      color: #0055aa;
+      color: var(--link);
       text-decoration: none;
+      word-break: break-word;
     }
+
     a:hover {
       text-decoration: underline;
     }
-     
-    .btn {
-      display: inline-block;
-      padding: 10px 20px;
-      border-radius: 5px;
-      color: #fff;
-      text-decoration: none;
-      margin: 5px;
-    }
-    .btn-blue { background: #0066cc; }
-    .btn-brown { background: #8B4513; }
 
- 
+    /* ===== CARDS ===== */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1rem;
+      max-width: 100%;
+      overflow: hidden;
+    }
+
+    /* ===== IMAGES ===== */
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      display: block;
+      margin: 0.8rem 0;
+      background: var(--card-bg);
+    }
+
+    /* ===== CODE & PRE ===== */
+    pre {
+      background: var(--code-dark);
+      color: var(--code-text);
+      padding: 1rem;
+      border-radius: 12px;
+      overflow-x: auto;
+      margin: 0.8rem 0;
+      font-size: 0.9rem;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      line-height: 1.7;
+    }
+
+    code {
+      background: var(--code-bg);
+      padding: 0.2em 0.6em;
+      border-radius: 8px;
+      font-size: 0.9em;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      color: var(--fg);
+      word-break: break-word;
+    }
+
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: var(--code-text);
+    }
+
+    /* ===== LISTS ===== */
+    ul, ol {
+      padding-left: 1.4em;
+      margin: 0.5em 0;
+    }
+
+    li {
+      margin-bottom: 0.4em;
+      word-break: break-word;
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn-home {
+      display: inline-block;
+      background: var(--btn-home);
+      color: white;
+      padding: 14px 34px;
+      border-radius: 60px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.05rem;
+      text-align: center;
+      transition: background 0.15s, transform 0.1s;
+      touch-action: manipulation;
+      border: none;
+      min-width: 140px;
+      box-shadow: 0 4px 10px rgba(80, 45, 20, 0.06);
+    }
+
+    .btn-home:active {
+      transform: scale(0.97);
+      background: #5f3a22;
+    }
+
+    .btn-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin: 2rem 0 0.5rem 0;
+    }
+
+    .btn-link {
+      display: inline-block;
+      background: var(--accent);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 60px;
+      font-weight: 500;
+      font-size: 1rem;
+      text-decoration: none;
+      margin: 0.5rem 0;
+      transition: background 0.15s, transform 0.1s;
+      touch-action: manipulation;
+      border: none;
+      box-shadow: 0 4px 12px rgba(0, 50, 80, 0.08);
+    }
+
+    .btn-link:active {
+      transform: scale(0.97);
+      background: #004488;
+    }
+
+    /* ===== RESPONSIVE ===== */
     @media (max-width: 600px) {
-      body { font-size: 18px; line-height: 1.8; }
-      h1 { font-size: 24px; }
-      h2 { font-size: 20px; }
-      pre { font-size: 18px; line-height: 1.8; white-space: pre-wrap; word-wrap: break-word; }
+      .container {
+        padding: 10px;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      h2 {
+        font-size: 1.15rem;
+      }
+
+      .card {
+        padding: 0.8rem 0.9rem;
+        border-radius: 14px;
+      }
+
+      body {
+        font-size: 1rem;
+        line-height: 1.7;
+      }
+
+      pre {
+        font-size: 0.8rem;
+        padding: 0.8rem;
+      }
+
+      .btn-home {
+        width: 100%;
+        justify-content: center;
+        padding: 16px 18px;
+        font-size: 1rem;
+      }
+
+      .btn-wrap {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .btn-link {
+        width: 100%;
+        justify-content: center;
+        padding: 14px 18px;
+        font-size: 0.95rem;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 380px) {
+      h1 {
+        font-size: 1.3rem;
+      }
+
+      .card {
+        padding: 0.6rem 0.7rem;
+      }
+
+      pre {
+        font-size: 0.7rem;
+        padding: 0.6rem;
+      }
+    }
+
+    /* ===== UTILITY ===== */
+    .muted {
+      color: var(--muted);
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    hr {
+      border: none;
+      border-top: 2px solid var(--border);
+      margin: 1.5rem 0;
+    }
+
+    .api-url {
+      background: var(--code-dark);
+      color: var(--code-text);
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      word-break: break-all;
+      margin: 0.5rem 0;
+      display: inline-block;
+      max-width: 100%;
     }
   </style>
 </head>
 <body>
 
-  <h1>🌐 Online API Extraction in SoifGo</h1>
+  <div class="container">
 
-  <h2>Step 1: Choose a Free API</h2>
-  <p>Visit the following site that offers free crypto data:</p>
-  <p><a href="https://www.diadata.org/free-crypto-api/" target="_blank">🔗 DIA Free Crypto API</a></p>
-  <p>Select your desired coin (e.g., <code>BTC</code>) and click <strong>RUN FEED</strong>.</p>
-  <p>The API endpoint and keys like <code>Price</code> will be shown on the right.</p>
+    <!-- ===== TITLE ===== -->
+    <h1>🌐 Online API Extraction in SoifGo</h1>
 
-  <img src="Api-fetching1.png" alt="DIA API Selection Screenshot">
+    <!-- ===== STEP 1 ===== -->
+    <div class="card">
+      <h2>Step 1: Choose a Free API</h2>
+      <p>Visit the following site that offers free crypto data:</p>
+      <p><a href="https://www.diadata.org/free-crypto-api/" target="_blank" rel="noopener">🔗 DIA Free Crypto API</a></p>
+      <p>Select your desired coin (e.g., <code>BTC</code>) and click <strong>RUN FEED</strong>.</p>
+      <p>The API endpoint and keys like <code>Price</code> will be shown on the right.</p>
+      <img src="Api-fetching1.png" alt="DIA API Selection Screenshot" loading="lazy">
+    </div>
 
-  <h2>Step 2: Create a Button in SoifGo</h2>
-  <p>In SoifGo, create a button and set its behavior to <strong>Receive Server Text</strong>.</p>
-  <p>Paste the API address into the <code>Server Address</code> field:</p>
-  <pre><code>https://api.diadata.org/v1/assetQuotation/Bitcoin/0x0000000000000000000000000000000000000000</code></pre>
-  <p>Set the <code>Server Key</code> to <code>Price</code> or any other key you want to extract.</p>
+    <!-- ===== STEP 2 ===== -->
+    <div class="card">
+      <h2>Step 2: Create a Button in SoifGo</h2>
+      <p>In SoifGo, create a button and set its behavior to <strong>Receive Server Text</strong>.</p>
+      <p>Paste the API address into the <code>Server Address</code> field:</p>
+      <div class="api-url">https://api.diadata.org/v1/assetQuotation/Bitcoin/0x0000000000000000000000000000000000000000</div>
+      <p>Set the <code>Server Key</code> to <code>Price</code> or any other key you want to extract.</p>
+      <img src="Api-fetching2.png" alt="SoifGo Server Setup Screenshot" loading="lazy">
+    </div>
 
-  <img src="Api-fetching2.png" alt="SoifGo Server Setup Screenshot">
+    <!-- ===== STEP 3 ===== -->
+    <div class="card">
+      <h2>Step 3: Filter Complex Keys (Optional)</h2>
+      <p>If the value is embedded in a long string like <code>temp12_Abc</code>, use filters:</p>
+      <ul>
+        <li><strong>Start Filter:</strong> <code>temp</code></li>
+        <li><strong>End Filter:</strong> <code>_Abc</code></li>
+      </ul>
+      <p>This will extract only <code>12</code> and hide the rest.</p>
+      <img src="Api-fetching3.png" alt="Filter Setup Screenshot" loading="lazy">
+    </div>
 
-  <h2>Step 3: Filter Complex Keys (Optional)</h2>
-  <p>If the value is embedded in a long string like </p>
-    <code>temp12_Abc</code>, use filters:</p>
-  <ul>
-    <li><strong>Start Filter:</strong> <code>temp</code></li>
-    <li><strong>End Filter:</strong> <code>_Abc</code></li>
-  </ul>
-  <p>This will extract only <code>12</code> and hide the rest.</p>
+    <!-- ===== STEP 4 ===== -->
+    <div class="card">
+      <h2>Step 4: Apply Effects Based on API Value</h2>
+      <p>To trigger visual effects, set button behavior to <strong>Receive Server Value</strong>.</p>
+      <p>Define a <strong>Maximum Value</strong> and configure effects in the menu.</p>
+      <p>For more on effects, visit:</p>
+      <a href="https://soifgo.github.io/soifgo/tutorials/server/Effect/effects.html" class="btn-link" target="_blank" rel="noopener">🎨 Button Effects Tutorial</a>
+    </div>
 
-  <img src="Api-fetching3.png" alt="Filter Setup Screenshot">
-
-
-
-
-
-  <h2>Step 4: Apply Effects Based on API Value</h2>
-  <p>To trigger visual effects, set button behavior to <strong>Receive Server Value</strong>.</p>
-  <p>Define a <strong>Maximum Value</strong> and configure effects in the menu.</p>
-  <p>For more on effects, visit:</p>
-  <p><a href="https://soifgo.github.io/soifgo/tutorials/server/Effect/effects.html">🎨 Button Effects Tutorial</a></p>
-
-
-
-
-    <p>
-    If extracting an API key does not work due to malformed data, simply leave the key field empty to receive the entire dataset. 
-    Then, specify the word or phrase that comes before and after the desired value.
-    The system will filter the data between those markers and display the extracted result
+    <!-- ===== ADVANCED FILTERING ===== -->
+    <div class="card">
+      <h2>Advanced Filtering</h2>
+      <p>
+        If extracting an API key does not work due to malformed data, simply leave the key field empty to receive the entire dataset.
+        Then, specify the word or phrase that comes before and after the desired value.
+        The system will filter the data between those markers and display the extracted result.
       </p>
 
-      <h2>  https://api.mydummyapi.com/categories/weather </h2>
+      <h3>Example: Weather API</h3>
+      <div class="api-url">https://api.mydummyapi.com/categories/weather</div>
 
-   <img src="Api-fetching4.png" alt="Filter Setup Screenshot4">
-   <img src="Api-fetching5.png" alt="Filter Setup Screenshot5">
-  
+      <img src="Api-fetching4.png" alt="Filter Setup Screenshot 4" loading="lazy">
+      <img src="Api-fetching5.png" alt="Filter Setup Screenshot 5" loading="lazy">
+    </div>
 
-  <hr>
-  <p style="text-align:center;">
+    <!-- ===== HOME BUTTON ===== -->
+    <hr>
+    <div class="btn-wrap">
+      <a href="https://soifgo.github.io/soifgo/index.html" class="btn-home">⬅ Back to Home</a>
+    </div>
 
-    <a href="https://soifgo.github.io/soifgo/index.html" class="btn btn-brown">⬅ Back to Home</a>
-  </p>
+  </div>
 
 </body>
 </html>

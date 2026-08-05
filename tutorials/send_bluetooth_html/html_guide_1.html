@@ -1,161 +1,491 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SoifGo Guide - Complete</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes">
+    <meta name="theme-color" content="#2c3e50">
+    <meta name="color-scheme" content="light dark">
+
+    <!-- ===== PRIMARY SEO ===== -->
+    <title>SoifGo Complete Guide — HTML Bluetooth & Sensors Integration with WebView</title>
+    <meta name="description" content="Complete guide for integrating HTML pages with SoifGo. Learn Bluetooth send/receive, sensor data (Light, Movement, Magneto), and custom UI development with WebView.">
+    <meta name="keywords" content="SoifGo guide, HTML Bluetooth, B4A bridge, WebView integration, sensor data, light sensor, movement sensor, magneto sensor, Bluetooth send receive, custom UI, SoifGo tutorial">
+
+    <!-- ===== OPEN GRAPH (Social Media) ===== -->
+    <meta property="og:title" content="SoifGo Complete Guide — HTML Bluetooth & Sensors Integration">
+    <meta property="og:description" content="Complete guide for integrating HTML pages with SoifGo. Learn Bluetooth send/receive, sensor data (Light, Movement, Magneto), and custom UI development with WebView.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://soifgo.github.io/soifgo/tutorials/html-guide/">
+    <meta property="og:image" content="https://soifgo.github.io/soifgo/html-guide-og.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:site_name" content="SoifGo Tutorials">
+
+    <!-- ===== TWITTER CARD ===== -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SoifGo Complete Guide — HTML Bluetooth & Sensors Integration">
+    <meta name="twitter:description" content="Complete guide for integrating HTML pages with SoifGo. Bluetooth send/receive, sensor data, and custom UI development.">
+    <meta name="twitter:image" content="https://soifgo.github.io/soifgo/html-guide-og.jpg">
+
+    <!-- ===== CANONICAL URL ===== -->
+    <link rel="canonical" href="https://soifgo.github.io/soifgo/tutorials/html-guide/">
+
+    <!-- ===== LANGUAGE ALTERNATES ===== -->
+    <link rel="alternate" hreflang="en" href="https://soifgo.github.io/soifgo/tutorials/html-guide/">
+
+    <!-- ===== SCHEMA.ORG (Structured Data) ===== -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "SoifGo Complete Guide — HTML Bluetooth & Sensors Integration",
+        "description": "Complete guide for integrating HTML pages with SoifGo. Learn Bluetooth send/receive, sensor data (Light, Movement, Magneto), and custom UI development with WebView.",
+        "author": {
+            "@type": "Person",
+            "name": "Saeid Moghadam"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "SoifGo",
+            "url": "https://soifgo.github.io/soifgo/"
+        },
+        "datePublished": "2025-01-01",
+        "dateModified": "2025-01-01",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://soifgo.github.io/soifgo/tutorials/html-guide/"
+        },
+        "about": {
+            "@type": "Thing",
+            "name": "HTML WebView Integration with SoifGo"
+        },
+        "teaches": [
+            "Bluetooth send from WebView to SoifGo",
+            "Bluetooth receive from SoifGo to WebView",
+            "Sensor activation (Light, Movement, Magneto)",
+            "Sensor data reception in WebView",
+            "Custom UI development with HTML/CSS/JS"
+        ],
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "learningResourceType": "Tutorial"
+    }
+    </script>
+
     <style>
-        body {
+        /* ===== ROOT VARIABLES ===== */
+        :root {
+            --bg: #f5f5f5;
+            --fg: #333;
+            --card-bg: #ffffff;
+            --border: #ddd;
+            --accent: #2c3e50;
+            --accent2: #3498db;
+            --success: #e8f5e9;
+            --success-border: #4caf50;
+            --info: #e3f2fd;
+            --info-border: #2196f3;
+            --note: #fff8e1;
+            --note-border: #ff9800;
+            --code-bg: #1e1e1e;
+            --code-text: #d4d4d4;
+            --btn-home: #8B4513;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #121212;
+                --fg: #e0e0e0;
+                --card-bg: #1e1e1e;
+                --border: #333;
+                --accent: #4dabf7;
+                --success: #1a2a1a;
+                --success-border: #4caf50;
+                --info: #1a2a3a;
+                --info-border: #2196f3;
+                --note: #2a1a0a;
+                --note-border: #ff9800;
+            }
+        }
+
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            color: var(--fg);
+            line-height: 1.7;
+            -webkit-text-size-adjust: 100%;
+            min-height: 100vh;
+            padding: 0;
+        }
+
+        .container {
             max-width: 900px;
             margin: 0 auto;
-            padding: 20px;
-            background: #f5f5f5;
-            color: #333;
-            line-height: 1.6;
+            padding: 16px;
         }
+
+        /* ===== STICKY NAV ===== */
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: saturate(180%) blur(8px);
+            background: color-mix(in oklab, var(--bg) 92%, transparent);
+            border-bottom: 1px solid var(--border);
+            padding: 8px 0;
+        }
+
+        .nav-inner {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 10px;
+        }
+
+        .nav a {
+            flex: 1 1 auto;
+            text-align: center;
+            font-size: clamp(0.6rem, 1.6vw, 0.8rem);
+            padding: 5px 10px;
+            text-decoration: none;
+            color: var(--accent2);
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            transition: background 0.15s, color 0.15s;
+            font-weight: 500;
+        }
+
+        .nav a:hover,
+        .nav a:focus {
+            background: var(--accent2);
+            color: #fff;
+            border-color: var(--accent2);
+        }
+
+        /* ===== HEADINGS ===== */
         h2 {
-            color: #2c3e50;
-            border-bottom: 3px solid #3498db;
+            color: var(--accent);
+            border-bottom: 3px solid var(--accent2);
             padding-bottom: 10px;
+            margin: 1.5rem 0 0.5rem;
+            font-size: clamp(1.3rem, 4vw, 1.8rem);
+            word-break: break-word;
         }
+
         h3 {
-            color: #34495e;
-            margin-top: 25px;
+            color: var(--accent);
+            margin-top: 1.5rem;
+            font-size: clamp(1.1rem, 3vw, 1.4rem);
+            word-break: break-word;
         }
+
+        p {
+            margin: 0.75em 0;
+            word-break: break-word;
+        }
+
+        a {
+            color: var(--accent2);
+            text-decoration: none;
+            word-break: break-word;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== BOXES / CARDS ===== */
         .box {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            margin: 15px 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background: var(--card-bg);
+            padding: 1.2rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            border: 1px solid var(--border);
+            overflow: hidden;
         }
+
         .note {
-            background: #fff8e1;
-            border-left: 5px solid #ff9800;
-            padding: 15px;
-            margin: 20px 0;
+            background: var(--note);
+            border-left: 5px solid var(--note-border);
+            padding: 0.8rem 1.2rem;
+            margin: 1rem 0;
             border-radius: 4px;
         }
+
         .success {
-            background: #e8f5e9;
-            border-left: 5px solid #4caf50;
-            padding: 15px;
-            margin: 20px 0;
+            background: var(--success);
+            border-left: 5px solid var(--success-border);
+            padding: 0.8rem 1.2rem;
+            margin: 1rem 0;
             border-radius: 4px;
         }
+
         .info {
-            background: #e3f2fd;
-            border-left: 5px solid #2196f3;
-            padding: 15px;
-            margin: 20px 0;
+            background: var(--info);
+            border-left: 5px solid var(--info-border);
+            padding: 0.8rem 1.2rem;
+            margin: 1rem 0;
             border-radius: 4px;
         }
+
+        /* ===== CODE ===== */
         code {
-            background: #1e1e1e;
-            color: #d4d4d4;
+            background: var(--code-bg);
+            color: var(--code-text);
             padding: 2px 8px;
             border-radius: 4px;
-            font-size: 13px;
+            font-size: 0.85rem;
+            font-family: "Consolas", "Courier New", monospace;
+            word-break: break-word;
         }
+
         pre {
-            background: #1e1e1e;
-            color: #d4d4d4;
-            padding: 16px;
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 1rem;
             border-radius: 8px;
             overflow-x: auto;
-            font-size: 13px;
-            line-height: 1.5;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            font-family: "Consolas", "Courier New", monospace;
+            margin: 0.8rem 0;
         }
+
         pre code {
             background: none;
             padding: 0;
+            color: var(--code-text);
         }
+
+        /* ===== FILE NAME BADGE ===== */
         .file-name {
-            background: #2c3e50;
+            background: var(--accent);
             color: white;
-            padding: 4px 12px;
-            border-radius: 4px;
+            padding: 4px 14px;
+            border-radius: 6px;
             display: inline-block;
-            font-size: 14px;
-            margin: 10px 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 8px 0;
         }
+
+        /* ===== LISTS ===== */
+        ul, ol {
+            padding-left: 1.4em;
+            margin: 0.5em 0;
+        }
+
+        li {
+            margin-bottom: 0.4em;
+            word-break: break-word;
+        }
+
+        /* ===== GRID ===== */
         .grid-2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
-            margin: 15px 0;
+            margin: 1rem 0;
         }
+
         @media (max-width: 600px) {
             .grid-2 {
                 grid-template-columns: 1fr;
             }
         }
+
+        /* ===== BADGE ===== */
         .badge {
             display: inline-block;
-            padding: 3px 10px;
+            padding: 3px 12px;
             border-radius: 12px;
-            font-size: 12px;
+            font-size: 0.75rem;
             font-weight: bold;
         }
+
         .badge-blue {
-            background: #2196f3;
+            background: var(--info-border);
             color: white;
         }
+
         .badge-green {
-            background: #4caf50;
+            background: var(--success-border);
             color: white;
         }
+
         .badge-orange {
-            background: #ff9800;
+            background: var(--note-border);
             color: white;
         }
-        ul, ol {
-            padding-left: 25px;
+
+        /* ===== BUTTONS ===== */
+        .btn-home {
+            display: inline-block;
+            background: var(--btn-home);
+            color: white;
+            padding: 14px 34px;
+            border-radius: 60px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.05rem;
+            text-align: center;
+            transition: background 0.15s, transform 0.1s;
+            touch-action: manipulation;
+            border: none;
+            min-width: 140px;
+            box-shadow: 0 4px 10px rgba(80, 45, 20, 0.15);
         }
-        li {
-            margin: 8px 0;
+
+        .btn-home:active {
+            transform: scale(0.97);
+            background: #5f3a22;
         }
+
+        .btn-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin: 2rem 0 0.5rem 0;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+
+            .box {
+                padding: 0.8rem;
+            }
+
+            .nav a {
+                font-size: 0.55rem;
+                padding: 4px 6px;
+            }
+
+            pre {
+                font-size: 0.75rem;
+                padding: 0.8rem;
+            }
+
+            .btn-home {
+                width: 100%;
+                justify-content: center;
+                padding: 16px 18px;
+                font-size: 1rem;
+            }
+
+            .btn-wrap {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            h2 {
+                font-size: 1.1rem;
+            }
+
+            h3 {
+                font-size: 1rem;
+            }
+
+            .box {
+                padding: 0.6rem;
+            }
+
+            pre {
+                font-size: 0.65rem;
+                padding: 0.6rem;
+            }
+        }
+
+        /* ===== UTILITY ===== */
+        .text-center {
+            text-align: center;
+        }
+
         .arrow {
-            font-size: 24px;
-            color: #3498db;
+            font-size: 1.5rem;
+            color: var(--accent2);
+        }
+
+        hr {
+            border: none;
+            border-top: 2px solid var(--border);
+            margin: 1.5rem 0;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 1.5rem 0 0.5rem 0;
+            color: #999;
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+            margin-top: 1.5rem;
         }
     </style>
 </head>
 <body>
 
-    <h2>📱   HTML  Bluetooth & Sensors with SoifGo</h2>
+    <!-- ===== STICKY NAV ===== -->
+    <nav class="nav" aria-label="Table of Contents">
+        <div class="nav-inner">
+            <a href="#overview">Overview</a>
+            <a href="#bluetooth-send">BT Send</a>
+            <a href="#bluetooth-receive">BT Receive</a>
+            <a href="#sensors">Sensors</a>
+        </div>
+    </nav>
 
-    <div class="box">
-        <p style="font-size:18px;">
-            <strong>SoifGo</strong> is the B4A  bridge that handles Bluetooth communication and sensor data.
-            The HTML pages inside WebView act as the <strong>B4A interface</strong>.
-        </p>
-        <p>
-            This guide explains how to:
+    <div class="container">
+
+        <!-- ===== OVERVIEW ===== -->
+        <h2 id="overview">📱 HTML Bluetooth & Sensors with SoifGo</h2>
+
+        <div class="box">
+            <p style="font-size:1.1rem;">
+                <strong>SoifGo</strong> is the B4A bridge that handles Bluetooth communication and sensor data.
+                The HTML pages inside WebView act as the <strong>B4A interface</strong>.
+            </p>
+            <p>This guide explains how to:</p>
             <ul>
                 <li>✅ Send and receive Bluetooth data</li>
                 <li>✅ Activate and read sensors (Light, Movement, Magneto)</li>
                 <li>✅ Create custom UI with full control</li>
             </ul>
-        </p>
-    </div>
+        </div>
 
-    <!-- ============================================================ -->
-    <!-- PART 1: BLUETOOTH SEND                                        -->
-    <!-- ============================================================ -->
+        <!-- ============================================================ -->
+        <!-- PART 1: BLUETOOTH SEND                                        -->
+        <!-- ============================================================ -->
 
-    <h3>🔵 1. Bluetooth - Send Data (WebView → SoifGo → Bluetooth)</h3>
+        <h3 id="bluetooth-send">🔵 1. Bluetooth - Send Data (WebView → SoifGo → Bluetooth)</h3>
 
-    <div class="box">
-        <p>
-            This page allows the user to enter text and send it via Bluetooth.
-            The data goes from the WebView to SoifGo, then to the connected Bluetooth device.
-        </p>
+        <div class="box">
+            <p>
+                This page allows the user to enter text and send it via Bluetooth.
+                The data goes from the WebView to SoifGo, then to the connected Bluetooth device.
+            </p>
 
-        <div class="file-name">📄 html_bluetooth_send.html</div>
+            <div class="file-name">📄 html_bluetooth_send.html</div>
 
-        <pre><code>&lt;!DOCTYPE html&gt;
+            <pre><code>&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
   &lt;meta charset="utf-8"&gt;
@@ -181,33 +511,33 @@
 &lt;/body&gt;
 &lt;/html&gt;</code></pre>
 
-        <div class="success">
-            <strong>✅ How it works:</strong>
-            <ol>
-                <li>User types text in the input box.</li>
-                <li>Clicks the <strong>Send</strong> button.</li>
-                <li>JavaScript calls <code>window.soifgo.CallSub('html_bluetooth_rx', true, txt)</code>.</li>
-                <li>SoifGo receives the text in its <code>html_bluetooth_rx()</code> Sub.</li>
-                <li>SoifGo sends the text to the connected Bluetooth device.</li>
-            </ol>
+            <div class="success">
+                <strong>✅ How it works:</strong>
+                <ol>
+                    <li>User types text in the input box.</li>
+                    <li>Clicks the <strong>Send</strong> button.</li>
+                    <li>JavaScript calls <code>window.soifgo.CallSub('html_bluetooth_rx', true, txt)</code>.</li>
+                    <li>SoifGo receives the text in its <code>html_bluetooth_rx()</code> Sub.</li>
+                    <li>SoifGo sends the text to the connected Bluetooth device.</li>
+                </ol>
+            </div>
         </div>
-    </div>
-	
-    <!-- ============================================================ -->
-    <!-- PART 2: BLUETOOTH RECEIVE                                     -->
-    <!-- ============================================================ -->
 
-   <h3>🔵 2. Bluetooth - Receive Data (Bluetooth → SoifGo → WebView)</h3>
+        <!-- ============================================================ -->
+        <!-- PART 2: BLUETOOTH RECEIVE                                     -->
+        <!-- ============================================================ -->
 
-    <div class="box">
-        <p>
-            This page displays data received from Bluetooth.
-            SoifGo forwards incoming data to the WebView using JavaScript functions.
-        </p>
+        <h3 id="bluetooth-receive">🔵 2. Bluetooth - Receive Data (Bluetooth → SoifGo → WebView)</h3>
 
-        <div class="file-name">?? html_bluetooth_recive.html</div>
+        <div class="box">
+            <p>
+                This page displays data received from Bluetooth.
+                SoifGo forwards incoming data to the WebView using JavaScript functions.
+            </p>
 
-        <pre><code>&lt;!DOCTYPE html&gt;
+            <div class="file-name">📄 html_bluetooth_recive.html</div>
+
+            <pre><code>&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
     &lt;meta charset="UTF-8"&gt;
@@ -227,47 +557,46 @@
 &lt;/body&gt;
 &lt;/html&gt;</code></pre>
 
-        <div class="success">
-            <strong>? How it works:</strong>
-            <ol>
-                <li>Bluetooth device sends data to SoifGo.</li>
-                <li>SoifGo calls <code>html_bluetooth_tx(data)</code> in the WebView.</li>
-                <li>JavaScript updates the page with the received data.</li>
-            </ol>
+            <div class="success">
+                <strong>✅ How it works:</strong>
+                <ol>
+                    <li>Bluetooth device sends data to SoifGo.</li>
+                    <li>SoifGo calls <code>html_bluetooth_tx(data)</code> in the WebView.</li>
+                    <li>JavaScript updates the page with the received data.</li>
+                </ol>
+            </div>
         </div>
-    </div>
 
-   
+        <!-- ============================================================ -->
+        <!-- PART 3: SENSOR RECEIVE                                        -->
+        <!-- ============================================================ -->
 
-    <!-- ============================================================ -->
-    <!-- PART 3: SENSOR RECEIVE                                        -->
-    <!-- ============================================================ -->
-    <h3>🟢 3. Sensor Data - Receive (Sensors → SoifGo → WebView)</h3>
+        <h3 id="sensors">🟢 3. Sensor Data - Receive (Sensors → SoifGo → WebView)</h3>
 
-    <div class="box">
-        <p>
-            This page displays data from 3 sensors:
+        <div class="box">
+            <p>
+                This page displays data from 3 sensors:
+            </p>
             <ul>
                 <li><strong>Light</strong> - Light intensity sensor</li>
                 <li><strong>Move X/Y</strong> - Movement/acceleration sensor (X and Y axis)</li>
                 <li><strong>Magneto</strong> - Magnetic field sensor</li>
             </ul>
-        </p>
 
-        <div class="info">
-            <strong>⚠️ IMPORTANT:</strong> To activate sensors, you must call ALL THREE commands:
-            <pre style="background:#2c3e50; color:#ecf0f1; padding:12px; border-radius:6px; margin:10px 0;">
+            <div class="info">
+                <strong>⚠️ IMPORTANT:</strong> To activate sensors, you must call ALL THREE commands:
+                <pre style="background:#2c3e50; color:#ecf0f1; padding:12px; border-radius:6px; margin:10px 0;">
 window.soifgo.CallSub('sensor_light');   // Activate light sensor
 window.soifgo.CallSub('sensor_move');    // Activate movement sensor
 window.soifgo.CallSub('sensor_magno');   // Activate magneto sensor</pre>
-            <p style="margin-top:8px;">
-                These 3 commands are called inside <code>window.onload</code> to auto-start sensors when page loads.
-            </p>
-        </div>
+                <p style="margin-top:8px;">
+                    These 3 commands are called inside <code>window.onload</code> to auto-start sensors when page loads.
+                </p>
+            </div>
 
-        <div class="file-name">📄 html_sensor_recive.html</div>
+            <div class="file-name">📄 html_sensor_recive.html</div>
 
-        <pre><code>&lt;!DOCTYPE html&gt;
+            <pre><code>&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
     &lt;meta charset="UTF-8"&gt;
@@ -321,53 +650,51 @@ window.soifgo.CallSub('sensor_magno');   // Activate magneto sensor</pre>
 &lt;/body&gt;
 &lt;/html&gt;</code></pre>
 
-        <div class="success">
-            <strong>✅ How it works:</strong>
-            <ol>
-                <li>
-                    <strong>3 activation commands in <code>window.onload</code>:</strong>
-                    <ul>
-                        <li><code>window.soifgo.CallSub('sensor_light')</code></li>
-                        <li><code>window.soifgo.CallSub('sensor_move')</code></li>
-                        <li><code>window.soifgo.CallSub('sensor_magno')</code></li>
-                    </ul>
-                    These activate all three sensors when the page loads.
-                </li>
-                <li>
-                    <strong>4 receiver functions registered in <code>window</code>:</strong>
-                    <ul>
-                        <li><code>html_sensor_light(data)</code> — receives light data</li>
-                        <li><code>html_sensor_movex(data)</code> — receives move X data</li>
-                        <li><code>html_sensor_movey(data)</code> — receives move Y data</li>
-                        <li><code>html_sensor_magno(data)</code> — receives magneto data</li>
-                    </ul>
-                    SoifGo calls these functions when new sensor data arrives.
-                </li>
-                <li>
-                    <strong>UI updates automatically</strong> — each function updates its corresponding div.
-                </li>
-            </ol>
+            <div class="success">
+                <strong>✅ How it works:</strong>
+                <ol>
+                    <li>
+                        <strong>3 activation commands in <code>window.onload</code>:</strong>
+                        <ul>
+                            <li><code>window.soifgo.CallSub('sensor_light')</code></li>
+                            <li><code>window.soifgo.CallSub('sensor_move')</code></li>
+                            <li><code>window.soifgo.CallSub('sensor_magno')</code></li>
+                        </ul>
+                        These activate all three sensors when the page loads.
+                    </li>
+                    <li>
+                        <strong>4 receiver functions registered in <code>window</code>:</strong>
+                        <ul>
+                            <li><code>html_sensor_light(data)</code> — receives light data</li>
+                            <li><code>html_sensor_movex(data)</code> — receives move X data</li>
+                            <li><code>html_sensor_movey(data)</code> — receives move Y data</li>
+                            <li><code>html_sensor_magno(data)</code> — receives magneto data</li>
+                        </ul>
+                        SoifGo calls these functions when new sensor data arrives.
+                    </li>
+                    <li>
+                        <strong>UI updates automatically</strong> — each function updates its corresponding div.
+                    </li>
+                </ol>
+            </div>
         </div>
+
+        <!-- ============================================================ -->
+        <!-- FOOTER                                                        -->
+        <!-- ============================================================ -->
+
+        <div class="footer">
+            <strong>SoifGo Complete Guide</strong> — Bluetooth & Sensors Integration<br>
+            Custom UI with WebView
+        </div>
+
+        <!-- ===== HOME BUTTON ===== -->
+        <hr>
+        <div class="btn-wrap">
+            <a href="https://soifgo.github.io/soifgo/index.html" class="btn-home">⬅ Back to Home</a>
+        </div>
+
     </div>
- 
-
-    <!-- ============================================================ -->
-    <!-- FOOTER                                                        -->
-    <!-- ============================================================ -->
-
-    <div style="text-align:center; padding:30px 0 10px 0; color:#999; font-size:14px; border-top:1px solid #ddd; margin-top:30px;">
-        <strong>SoifGo Complete Guide</strong> — Bluetooth & Sensors Integration<br>
-        Custom UI with WebView  
-    </div>
-
-
- 
-<p style="text-align:center;">
-  <a href="https://soifgo.github.io/soifgo/index.html" 
-     style="display:inline-block; padding:10px 20px; background:#8B4513; color:#fff; text-decoration:none; border-radius:5px;">
-    ⬅ Back to Home
-  </a>
-</p>
 
 </body>
 </html>

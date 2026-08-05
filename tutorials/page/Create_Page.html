@@ -1,107 +1,451 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Tutorial — How to Create a Design Page</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes" />
+  <meta name="theme-color" content="#2c3e50" />
+  <meta name="color-scheme" content="light dark" />
+
+  <!-- ===== PRIMARY SEO ===== -->
+  <title>How to Create a Design Page in SoifGo — Complete Tutorial</title>
+  <meta name="description" content="Step-by-step tutorial on how to create a design page in SoifGo. Learn to create folders, pages, add buttons and sidebars, and customize your interface." />
+  <meta name="keywords" content="SoifGo design page, create page, create folder, page tutorial, SoifGo tutorial, design interface, button customization, sidebar, SoifGo edit mode" />
+
+  <!-- ===== OPEN GRAPH (Social Media) ===== -->
+  <meta property="og:title" content="How to Create a Design Page in SoifGo — Complete Tutorial" />
+  <meta property="og:description" content="Step-by-step tutorial on how to create a design page in SoifGo. Learn to create folders, pages, add buttons and sidebars, and customize your interface." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://soifgo.github.io/soifgo/tutorials/create-page/" />
+  <meta property="og:image" content="https://soifgo.github.io/soifgo/create-page-og.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="SoifGo Tutorials" />
+
+  <!-- ===== TWITTER CARD ===== -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="How to Create a Design Page in SoifGo" />
+  <meta name="twitter:description" content="Step-by-step tutorial on how to create a design page in SoifGo. Create folders, pages, add buttons and sidebars." />
+  <meta name="twitter:image" content="https://soifgo.github.io/soifgo/create-page-og.jpg" />
+
+  <!-- ===== CANONICAL URL ===== -->
+  <link rel="canonical" href="https://soifgo.github.io/soifgo/tutorials/create-page/" />
+
+  <!-- ===== LANGUAGE ALTERNATES ===== -->
+  <link rel="alternate" hreflang="en" href="https://soifgo.github.io/soifgo/tutorials/create-page/" />
+
+  <!-- ===== SCHEMA.ORG (Structured Data) ===== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "How to Create a Design Page in SoifGo — Complete Tutorial",
+    "description": "Step-by-step tutorial on how to create a design page in SoifGo. Learn to create folders, pages, add buttons and sidebars, and customize your interface.",
+    "author": {
+      "@type": "Person",
+      "name": "Saeid Moghadam"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "SoifGo",
+      "url": "https://soifgo.github.io/soifgo/"
+    },
+    "datePublished": "2025-01-01",
+    "dateModified": "2025-01-01",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://soifgo.github.io/soifgo/tutorials/create-page/"
+    },
+    "about": {
+      "@type": "Thing",
+      "name": "SoifGo Page Design"
+    },
+    "teaches": [
+      "Creating folders in SoifGo",
+      "Creating new pages",
+      "Adding buttons and sidebars",
+      "Editing button properties",
+      "Using Undo and Redo",
+      "Previewing designs"
+    ],
+    "inLanguage": "en",
+    "isAccessibleForFree": true,
+    "learningResourceType": "Tutorial"
+  }
+  </script>
+
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      line-height: 1.7;
-      margin: 20px;
-      background: #fdfdfd;
-      color: #333;
+    /* ===== ROOT VARIABLES ===== */
+    :root {
+      --bg: #ffffff;
+      --fg: #1f2937;
+      --accent: #2c3e50;
+      --card-bg: #f5f7fb;
+      --border: #d7dce4;
+      --muted: #6b7280;
+      --code-bg: #eef2f7;
+      --link: #0066cc;
+      --btn-home: #8B4513;
+      --code-dark: #0f172a;
+      --code-text: #e2e8f0;
     }
 
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0b0e12;
+        --fg: #e5e7eb;
+        --accent: #4dabf7;
+        --card-bg: #12161d;
+        --border: #243041;
+        --muted: #9aa3af;
+        --link: #58a6ff;
+        --btn-home: #8B5A3A;
+        --code-bg: #1b2230;
+      }
+    }
+
+    /* ===== RESET & BASE ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.7;
+      -webkit-text-size-adjust: 100%;
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    /* ===== HEADINGS ===== */
+    h1 {
+      font-size: 1.8rem;
+      color: var(--accent);
+      text-align: center;
+      margin: 0.75rem 0 0.5rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      word-break: break-word;
+    }
+
+    h2 {
+      font-size: 1.35rem;
+      color: var(--fg);
+      margin: 1.5rem 0 0.75rem;
+      font-weight: 600;
+      word-break: break-word;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 6px;
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      color: var(--accent);
+      margin: 1rem 0 0.5rem;
+      font-weight: 600;
+      word-break: break-word;
+    }
+
+    p {
+      margin: 0.75em 0;
+      word-break: break-word;
+    }
+
+    a {
+      color: var(--link);
+      text-decoration: none;
+      word-break: break-word;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* ===== CARDS ===== */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1rem;
+      max-width: 100%;
+      overflow: hidden;
+    }
+
+    /* ===== IMAGES ===== */
     img {
       max-width: 100%;
       height: auto;
+      border-radius: 12px;
       display: block;
+      margin: 0.8rem 0;
+      background: var(--card-bg);
     }
-    h1 {
-      color: #2c3e50;
-      font-size: 1.8em;
-      margin-top: 0.5em;
+
+    /* ===== CODE & PRE ===== */
+    pre {
+      background: var(--code-dark);
+      color: var(--code-text);
+      padding: 1rem;
+      border-radius: 12px;
+      overflow-x: auto;
+      margin: 0.8rem 0;
+      font-size: 0.9rem;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      line-height: 1.7;
     }
-    h2 {
-      color: #34495e;
-      margin-top: 1.2em;
-    }
-    ol {
-      padding-left: 1.2em;
-    }
-    li {
-      margin-bottom: 0.8em;
-    }
+
     code {
-      background: #eef;
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-family: Consolas, monospace;
+      background: var(--code-bg);
+      padding: 0.2em 0.6em;
+      border-radius: 8px;
+      font-size: 0.9em;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      color: var(--fg);
+      word-break: break-word;
     }
+
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: var(--code-text);
+    }
+
+    /* ===== LISTS ===== */
+    ul, ol {
+      padding-left: 1.4em;
+      margin: 0.5em 0;
+    }
+
+    li {
+      margin-bottom: 0.4em;
+      word-break: break-word;
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn-home {
+      display: inline-block;
+      background: var(--btn-home);
+      color: white;
+      padding: 14px 34px;
+      border-radius: 60px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.05rem;
+      text-align: center;
+      transition: background 0.15s, transform 0.1s;
+      touch-action: manipulation;
+      border: none;
+      min-width: 140px;
+      box-shadow: 0 4px 10px rgba(80, 45, 20, 0.06);
+    }
+
+    .btn-home:active {
+      transform: scale(0.97);
+      background: #5f3a22;
+    }
+
+    .btn-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin: 2rem 0 0.5rem 0;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 600px) {
+      .container {
+        padding: 10px;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      h2 {
+        font-size: 1.15rem;
+      }
+
+      .card {
+        padding: 0.8rem 0.9rem;
+        border-radius: 14px;
+      }
+
+      body {
+        font-size: 1rem;
+        line-height: 1.7;
+      }
+
+      pre {
+        font-size: 0.8rem;
+        padding: 0.8rem;
+      }
+
+      .btn-home {
+        width: 100%;
+        justify-content: center;
+        padding: 16px 18px;
+        font-size: 1rem;
+      }
+
+      .btn-wrap {
+        flex-direction: column;
+        gap: 12px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      h1 {
+        font-size: 1.3rem;
+      }
+
+      .card {
+        padding: 0.6rem 0.7rem;
+      }
+
+      pre {
+        font-size: 0.7rem;
+        padding: 0.6rem;
+      }
+    }
+
+    /* ===== UTILITY ===== */
+    .muted {
+      color: var(--muted);
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    hr {
+      border: none;
+      border-top: 2px solid var(--border);
+      margin: 1.5rem 0;
+    }
+
     .note {
       background: #eaf7ff;
       border-left: 4px solid #3498db;
-      padding: 10px;
-      margin: 15px 0;
+      padding: 0.8rem 1rem;
+      border-radius: 8px;
+      margin: 0.8rem 0;
     }
-    ul {
-      padding-left: 1.2em;
+
+    .note strong {
+      color: #2c3e50;
     }
-    @media (max-width: 600px) {
-      body {
-        font-size: 16px;
-        margin: 10px;
+
+    @media (prefers-color-scheme: dark) {
+      .note {
+        background: #1a2a3a;
+        border-left-color: #4dabf7;
       }
+      .note strong {
+        color: #4dabf7;
+      }
+    }
+
+    .step-number {
+      display: inline-block;
+      background: var(--accent);
+      color: white;
+      font-weight: 700;
+      padding: 0.2rem 0.8rem;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      margin-right: 0.5rem;
+    }
+
+    .path-highlight {
+      background: var(--code-dark);
+      color: var(--code-text);
+      padding: 0.3rem 0.8rem;
+      border-radius: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      display: inline-block;
+      margin: 0.3rem 0;
     }
   </style>
 </head>
 <body>
 
-  <h1>How to Create a Design Page at the Start</h1>
+  <div class="container">
 
-  <h2>Steps</h2>
-  <ol>
-    <li>
-      <strong>Open Play Page</strong><br>
-      Click the <em>Play icon</em>. A menu appears. Click the first line <code>Edit</code> to go to the edit page.
-    </li>
-    <li>
+    <!-- ===== TITLE ===== -->
+    <h1>How to Create a Design Page at the Start</h1>
 
-<img src="page01.png" alt="Recommended Converter">
+    <!-- ===== STEPS ===== -->
+    <div class="card">
+      <h2>Steps</h2>
 
-      <strong>Create a Folder</strong><br>
-      Click the <em>Edit icon</em> again. Select <code>Design Selection</code>, then click <code>Folder</code>.  
-      Choose <code>Create</code>, name it <code>folder01</code>, and click OK.
-    </li>
-    <li>
-<img src="page02.png" alt="Recommended Converter">
-      <strong>Create a Page</strong><br>
-      Click <code>Edit</code> → <code>Design Selection</code> → <code>Page</code> → <code>New Page</code>.  
-      Name it <code>p1</code> and click OK.  
-      Path becomes: <code>soifgo/folder01/page/p1</code>
-    </li>
-  </ol>
+      <ol>
+        <!-- Step 1 -->
+        <li>
+          <strong>Open Play Page</strong><br>
+          Click the <em>Play icon</em>. A menu appears. Click the first line <code>Edit</code> to go to the edit page.
+        </li>
+      </ol>
 
-<img src="page03.png" alt="Recommended Converter">
-  <h2>Page Features</h2>
-  <ul>
-    <li>Each page can contain up to <strong>40 buttons</strong> and <strong>10 sidebars</strong>.</li>
-    <li>Click a button or bar to edit properties such as size, background, name, and behavior.</li>
-    <li>If mistakes happen, use <code>Undo</code>/<code>Redo</code> in the Edit menu.</li>
-    <li>All changes are saved instantly.</li>
-    <li>Click the first menu option to return to Play and preview your work.</li>
-  </ul>
+      <img src="page01.png" alt="Open Play Page and click Edit" loading="lazy">
 
- 
-<p style="text-align:center;">
-  <a href="https://soifgo.github.io/soifgo/index.html" 
-     style="display:inline-block; padding:10px 20px; background:#8B4513; color:#fff; text-decoration:none; border-radius:5px;">
-    ⬅ Back to Home
-  </a>
-</p>
+      <ol start="2">
+        <!-- Step 2 -->
+        <li>
+          <strong>Create a Folder</strong><br>
+          Click the <em>Edit icon</em> again. Select <code>Design Selection</code>, then click <code>Folder</code>.
+          Choose <code>Create</code>, name it <code>folder01</code>, and click OK.
+        </li>
+      </ol>
+
+      <img src="page02.png" alt="Create a Folder in SoifGo" loading="lazy">
+
+      <ol start="3">
+        <!-- Step 3 -->
+        <li>
+          <strong>Create a Page</strong><br>
+          Click <code>Edit</code> → <code>Design Selection</code> → <code>Page</code> → <code>New Page</code>.
+          Name it <code>p1</code> and click OK.
+          <div class="path-highlight">soifgo/folder01/page/p1</div>
+        </li>
+      </ol>
+
+      <img src="page03.png" alt="Create a Page in SoifGo" loading="lazy">
+    </div>
+
+    <!-- ===== PAGE FEATURES ===== -->
+    <div class="card">
+      <h2>Page Features</h2>
+
+      <ul>
+        <li>Each page can contain up to <strong>40 buttons</strong> and <strong>10 sidebars</strong>.</li>
+        <li>Click a button or bar to edit properties such as size, background, name, and behavior.</li>
+        <li>If mistakes happen, use <code>Undo</code>/<code>Redo</code> in the Edit menu.</li>
+        <li>All changes are saved instantly.</li>
+        <li>Click the first menu option to return to Play and preview your work.</li>
+      </ul>
+    </div>
+
+    <!-- ===== HOME BUTTON ===== -->
+    <hr>
+    <div class="btn-wrap">
+      <a href="https://soifgo.github.io/soifgo/index.html" class="btn-home">⬅ Back to Home</a>
+    </div>
+
+  </div>
 
 </body>
 </html>
-
-

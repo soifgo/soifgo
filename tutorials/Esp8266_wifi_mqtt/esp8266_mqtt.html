@@ -1,136 +1,508 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>ESP8266 mqtt Setup  – SoifGo</title>
-  <script data-goatcounter="https://soifgo.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes" />
+  <meta name="theme-color" content="#0055aa" />
+  <meta name="color-scheme" content="light dark" />
 
+  <!-- ===== PRIMARY SEO ===== -->
+  <title>ESP8266 MQTT Setup with SoifGo — Complete Tutorial | Mosquitto, PubSubClient, IoT</title>
+  <meta name="description" content="Complete tutorial for ESP8266 MQTT setup with SoifGo. Learn how to configure ESP8266 as an MQTT client with Mosquitto broker, PubSubClient library, and integrate with SoifGo for IoT projects." />
+  <meta name="keywords" content="ESP8266, MQTT, SoifGo, Mosquitto, PubSubClient, IoT, MQTT broker, ESP8266 MQTT, wireless control, MQTT tutorial, WiFi module, Arduino IDE" />
 
+  <!-- ===== OPEN GRAPH (Social Media) ===== -->
+  <meta property="og:title" content="ESP8266 MQTT Setup with SoifGo — Complete Tutorial" />
+  <meta property="og:description" content="Complete tutorial for ESP8266 MQTT setup with SoifGo. Learn ESP8266 MQTT client configuration with Mosquitto broker and PubSubClient library." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://soifgo.github.io/soifgo/tutorials/esp8266-mqtt/" />
+  <meta property="og:image" content="https://soifgo.github.io/soifgo/esp8266-mqtt-og.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="SoifGo Tutorials" />
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <!-- ===== TWITTER CARD ===== -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ESP8266 MQTT Setup with SoifGo — Complete Tutorial" />
+  <meta name="twitter:description" content="Complete tutorial for ESP8266 MQTT setup with SoifGo. Mosquitto broker, PubSubClient, and IoT integration." />
+  <meta name="twitter:image" content="https://soifgo.github.io/soifgo/esp8266-mqtt-og.jpg" />
 
+  <!-- ===== CANONICAL URL ===== -->
+  <link rel="canonical" href="https://soifgo.github.io/soifgo/tutorials/esp8266-mqtt/" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"></script>
+  <!-- ===== LANGUAGE ALTERNATES ===== -->
+  <link rel="alternate" hreflang="en" href="https://soifgo.github.io/soifgo/tutorials/esp8266-mqtt/" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-clike.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-c.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-cpp.min.js"></script>
+  <!-- ===== SCHEMA.ORG (Structured Data) ===== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "ESP8266 MQTT Setup with SoifGo — Complete Tutorial",
+    "description": "Complete tutorial for ESP8266 MQTT setup with SoifGo. Learn ESP8266 MQTT client configuration with Mosquitto broker and PubSubClient library.",
+    "author": {
+      "@type": "Person",
+      "name": "Saeid Moghadam"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "SoifGo",
+      "url": "https://soifgo.github.io/soifgo/"
+    },
+    "datePublished": "2025-01-01",
+    "dateModified": "2025-01-01",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://soifgo.github.io/soifgo/tutorials/esp8266-mqtt/"
+    },
+    "about": {
+      "@type": "Thing",
+      "name": "ESP8266 MQTT Configuration"
+    },
+    "teaches": [
+      "ESP8266 MQTT client setup",
+      "Mosquitto broker configuration",
+      "PubSubClient library usage",
+      "WiFi configuration via Access Point",
+      "SoifGo MQTT integration",
+      "QoS levels explained",
+      "Topic management"
+    ],
+    "inLanguage": "en",
+    "isAccessibleForFree": true,
+    "learningResourceType": "Tutorial"
+  }
+  </script>
 
-
-<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
-
-
-<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/toolbar/prism-toolbar.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
-
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet" />
 
   <style>
-    body {
-      font-family: sans-serif;
-      background-color: #f9f9f9;
-      padding: 1em;
-      margin: auto;
-      max-width: 100%;
-      line-height: 1.6;
+    /* ===== ROOT VARIABLES ===== */
+    :root {
+      --bg: #ffffff;
+      --fg: #1f2937;
+      --accent: #0055aa;
+      --card-bg: #f5f7fb;
+      --border: #d7dce4;
+      --muted: #6b7280;
+      --code-bg: #1e293b;
+      --link: #0066cc;
+      --btn-home: #7a4a2e;
+      --warning-bg: #fff3cd;
+      --warning-border: #ffc107;
+      --warning-text: #856404;
     }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0b0e12;
+        --fg: #e5e7eb;
+        --accent: #4dabf7;
+        --card-bg: #12161d;
+        --border: #243041;
+        --muted: #9aa3af;
+        --link: #58a6ff;
+        --btn-home: #8B5A3A;
+        --warning-bg: #1e2a1e;
+        --warning-border: #f0ad4e;
+        --warning-text: #f5c842;
+      }
+    }
+
+    /* ===== RESET & BASE ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.7;
+      -webkit-text-size-adjust: 100%;
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    /* ===== HEADINGS ===== */
     h1 {
-      color: #0055aa;
+      font-size: 1.8rem;
+      color: var(--accent);
       text-align: center;
-      font-size: 2em;
+      margin: 0.75rem 0 0.5rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      word-break: break-word;
     }
+
     h2 {
-      color: #0055aa;
-      margin-top: 2em;
-      font-size: 1.5em;
-    }
-    p { margin-bottom: 1em; }
-a {
-  display: block;   /* makes each link take full width */
-  margin: 8px 0;    /* adds spacing between them */
-  color: #0077cc;
-  text-decoration: none;
-  font-size: 18px;  /* optional: make text larger */
-}
-
-a:hover {
-  text-decoration: underline;
- margin-right: 20px;
-}
-    img {
-      max-width:90%;
-      height: auto;
-      margin: 1em 0;
-      border-radius: 6px;
-    }
-    pre {
-    border-radius:8px;
-    max-height:300px;
-    overflow:auto;
-    }
-    code {
-      background-color: #eee;
-      padding: 2px 6px;
-      border-radius: 4px;
-    }
-    video {
-      max-width: 90%;
-      border-radius: 6px;
-      margin: 1em 0;
+      font-size: 1.35rem;
+      color: var(--accent);
+      margin: 1.5rem 0 0.75rem;
+      font-weight: 600;
+      word-break: break-word;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 6px;
     }
 
-    .btn {
-      display: inline-block;
-      padding: 10px 20px;
-      border-radius: 5px;
-      color: #fff;
+    h3 {
+      font-size: 1.1rem;
+      color: var(--accent);
+      margin: 1rem 0 0.5rem;
+      font-weight: 600;
+      word-break: break-word;
+    }
+
+    h4 {
+      font-size: 1rem;
+      color: var(--fg);
+      margin: 0.75rem 0 0.25rem;
+      font-weight: 600;
+      word-break: break-word;
+    }
+
+    p {
+      margin: 0.75em 0;
+      word-break: break-word;
+    }
+
+    a {
+      color: var(--link);
       text-decoration: none;
-      margin: 5px;
+      word-break: break-word;
     }
 
+    a:hover {
+      text-decoration: underline;
+    }
 
-    .btn-blue { background: #0066cc; }
-    .btn-brown { background: #8B4513; }
+    /* ===== CARDS ===== */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1rem;
+      max-width: 100%;
+      overflow: hidden;
+    }
 
+    /* ===== WARNING NOTE ===== */
+    .note-warning {
+      background: var(--warning-bg);
+      border: 1px solid var(--warning-border);
+      color: var(--warning-text);
+      padding: 1rem 1.2rem;
+      border-radius: 12px;
+      margin: 1rem 0;
+    }
+
+    .note-warning ul {
+      padding-left: 1.4em;
+      margin: 0.5em 0;
+    }
+
+    .note-warning li {
+      margin-bottom: 0.3em;
+    }
+
+    /* ===== IMAGES & VIDEOS ===== */
+    img, video {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      display: block;
+      margin: 0.8rem 0;
+      background: var(--card-bg);
+    }
+
+    video {
+      aspect-ratio: 16 / 9;
+      width: 100%;
+      background: #0a1a2a;
+      object-fit: contain;
+    }
+
+    /* ===== CODE & PRE ===== */
+    pre {
+      border-radius: 12px;
+      max-height: 400px;
+      overflow: auto;
+      margin: 0.8rem 0;
+      background: #0f172a;
+      padding: 1rem;
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-size: 0.85rem;
+    }
+
+    code {
+      background: var(--code-bg);
+      padding: 0.2em 0.6em;
+      border-radius: 8px;
+      font-size: 0.9em;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      color: var(--fg);
+      word-break: break-word;
+    }
+
+    .card code {
+      background: var(--code-bg);
+      color: #e2e8f0;
+    }
+
+    /* ===== LISTS ===== */
+    ul, ol {
+      padding-left: 1.4em;
+      margin: 0.5em 0;
+    }
+
+    li {
+      margin-bottom: 0.4em;
+      word-break: break-word;
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn-home {
+      display: inline-block;
+      background: var(--btn-home);
+      color: white;
+      padding: 14px 34px;
+      border-radius: 60px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.05rem;
+      text-align: center;
+      transition: background 0.15s, transform 0.1s;
+      touch-action: manipulation;
+      border: none;
+      min-width: 140px;
+      box-shadow: 0 4px 10px rgba(80, 45, 20, 0.06);
+    }
+
+    .btn-home:active {
+      transform: scale(0.97);
+      background: #5f3a22;
+    }
+
+    .btn-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin: 2rem 0 0.5rem 0;
+    }
+
+    .download-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--accent);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 60px;
+      font-weight: 500;
+      font-size: 1rem;
+      text-decoration: none;
+      margin: 0.5em 0.5em 0.5em 0;
+      transition: background 0.15s, transform 0.1s;
+      touch-action: manipulation;
+      border: none;
+      box-shadow: 0 4px 12px rgba(0, 50, 80, 0.08);
+    }
+
+    .download-link:active {
+      transform: scale(0.97);
+      background: #004488;
+    }
+
+    .download-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 0.5rem 0;
+    }
+
+    /* ===== MQTT NOTE ===== */
+    .mqtt-note {
+      background: var(--card-bg);
+      border: 2px solid var(--accent);
+      border-radius: 16px;
+      padding: 1rem 1.2rem;
+      margin: 1rem 0;
+    }
+
+    .mqtt-note h3 {
+      color: var(--accent);
+      margin-top: 0;
+    }
+
+    /* ===== RESPONSIVE ===== */
     @media (max-width: 600px) {
-      body { font-size: 18px; line-height: 1.8; }
-      h1 { font-size: 24px; }
-      h2 { font-size: 20px; }
-      pre { font-size: 18px; line-height: 1.8; white-space: pre-wrap; word-wrap: break-word; }
+      .container {
+        padding: 10px;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      h2 {
+        font-size: 1.15rem;
+      }
+
+      .card {
+        padding: 0.8rem 0.9rem;
+        border-radius: 14px;
+      }
+
+      body {
+        font-size: 1rem;
+        line-height: 1.7;
+      }
+
+      pre {
+        font-size: 0.8rem;
+        padding: 0.8rem;
+        max-height: 300px;
+      }
+
+      pre code {
+        font-size: 0.78rem;
+      }
+
+      .btn-home {
+        width: 100%;
+        justify-content: center;
+        padding: 16px 18px;
+        font-size: 1rem;
+      }
+
+      .btn-wrap {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .download-link {
+        width: 100%;
+        justify-content: center;
+        padding: 14px 18px;
+        font-size: 0.95rem;
+      }
+
+      .download-wrap {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .mqtt-note {
+        padding: 0.8rem 0.9rem;
+      }
+    }
+
+    @media (max-width: 380px) {
+      h1 {
+        font-size: 1.3rem;
+      }
+
+      .card {
+        padding: 0.6rem 0.7rem;
+      }
+
+      pre {
+        font-size: 0.7rem;
+        padding: 0.6rem;
+      }
+
+      pre code {
+        font-size: 0.7rem;
+      }
+    }
+
+    /* ===== UTILITY ===== */
+    .muted {
+      color: var(--muted);
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .mt-1 {
+      margin-top: 1rem;
+    }
+
+    .mb-1 {
+      margin-bottom: 1rem;
+    }
+
+    hr {
+      border: none;
+      border-top: 2px solid var(--border);
+      margin: 1.5rem 0;
     }
   </style>
 </head>
 <body>
 
-<h1>🚀 ESP8266 MQTT Setup with SoifGo</h1>
+  <div class="container">
 
-<h2>Step 1: Introduction</h2>
-<p>
-In this tutorial, you will learn how to configure the ESP8266 Wi-Fi module 
-and establish a reliable connection with the SoifGo MQTT broker. 
-We’ll cover the basics of MQTT, explain how publish/subscribe works, 
-and guide you step by step to get your device online.
-</p>
+    <!-- ===== TITLE ===== -->
+    <h1>🚀 ESP8266 MQTT Setup with SoifGo</h1>
 
+    <!-- ===== STEP 1: INTRODUCTION ===== -->
+    <div class="card">
+      <h2>Step 1: Introduction</h2>
+      <p>
+        In this tutorial, you will learn how to configure the ESP8266 Wi-Fi module
+        and establish a reliable connection with the SoifGo MQTT broker.
+        We'll cover the basics of MQTT, explain how publish/subscribe works,
+        and guide you step by step to get your device online.
+      </p>
+    </div>
 
-  <h2>Step 2: Preparing the Module</h2>
-  <p>Use a USB to TTL converter. It can be a single USB-to-TTL board or a combination of USB-to-UART and UART-to-TTL.</p>
-  <p>You’ll need both 5V and 3.3V power sources. Recommended converter:</p>
-  <img src="converter.png" alt="Recommended Converter">
+    <!-- ===== STEP 2: PREPARING ===== -->
+    <div class="card">
+      <h2>Step 2: Preparing the Module</h2>
+      <p>Use a USB to TTL converter. It can be a single USB-to-TTL board or a combination of USB-to-UART and UART-to-TTL.</p>
+      <p>You'll need both 5V and 3.3V power sources. Recommended converter:</p>
+      <img src="converter.png" alt="Recommended Converter" loading="lazy">
+    </div>
 
-  <h2>Step 3: Arduino IDE Setup</h2>
-  <p>Install the required libraries and check the port and board settings:</p>
-  <img src="arduino1.png" alt="Library Install">
-  <img src="arduino2.png" alt="Port Check">
-  <img src="arduino3.png" alt="Board Selection">
-   <img src="arduino4.png" alt="Board Selection">
+    <!-- ===== STEP 3: ARDUINO IDE ===== -->
+    <div class="card">
+      <h2>Step 3: Arduino IDE Setup</h2>
+      <p>Install the required libraries and check the port and board settings:</p>
+      <img src="arduino1.png" alt="Library Install" loading="lazy">
+      <img src="arduino2.png" alt="Port Check" loading="lazy">
+      <img src="arduino3.png" alt="Board Selection" loading="lazy">
+      <img src="arduino4.png" alt="Board Selection" loading="lazy">
+    </div>
 
-  <h2>Step 4: Uploading the Program</h2>
+    <!-- ===== STEP 4: UPLOADING ===== -->
+    <div class="card">
+      <h2>Step 4: Uploading the Program</h2>
 
-<pre class="line-numbers"><code class="language-cpp">
-#include &lt;ESP8266WiFi.h&gt;
+      <pre class="line-numbers"><code class="language-cpp">#include &lt;ESP8266WiFi.h&gt;
 #include &lt;ESP8266WebServer.h&gt;
 #include &lt;EEPROM.h&gt;
 #include &lt;PubSubClient.h&gt;
@@ -154,21 +526,21 @@ const int maxReconnectAttempts = 4;
 
 void handleRoot() {
   String mac = WiFi.macAddress();
-  String html = "<h1>WiFi Setup</h1>"
-                "<p><b>MAC Address:</b> " + mac + "</p>"
-                "<form action='/savewifi' method='POST'>"
-                "WiFi SSID: <input type='text' name='ssid'><br>"
-                "WiFi Password: <input type='text' name='pass'><br>"
-                "<input type='submit' value='Save WiFi'>"
-                "</form><hr>"
-                "<form action='/saveap' method='POST'>"
-                "AP SSID: <b>ESP_Config</b><br>"
-                "AP Password: <input type='text' name='ap_pass' placeholder='min 8 chars'><br>"
-                "<input type='submit' value='Save AP'>"
-                "</form><hr>"
-                "<form action='/reset' method='POST'>"
-                "<input type='submit' value='Reset EEPROM & Restart'>"
-                "</form>";
+  String html = "&lt;h1&gt;WiFi Setup&lt;/h1&gt;"
+                "&lt;p&gt;&lt;b&gt;MAC Address:&lt;/b&gt; " + mac + "&lt;/p&gt;"
+                "&lt;form action='/savewifi' method='POST'&gt;"
+                "WiFi SSID: &lt;input type='text' name='ssid'&gt;&lt;br&gt;"
+                "WiFi Password: &lt;input type='text' name='pass'&gt;&lt;br&gt;"
+                "&lt;input type='submit' value='Save WiFi'&gt;"
+                "&lt;/form&gt;&lt;hr&gt;"
+                "&lt;form action='/saveap' method='POST'&gt;"
+                "AP SSID: &lt;b&gt;ESP_Config&lt;/b&gt;&lt;br&gt;"
+                "AP Password: &lt;input type='text' name='ap_pass' placeholder='min 8 chars'&gt;&lt;br&gt;"
+                "&lt;input type='submit' value='Save AP'&gt;"
+                "&lt;/form&gt;&lt;hr&gt;"
+                "&lt;form action='/reset' method='POST'&gt;"
+                "&lt;input type='submit' value='Reset EEPROM &amp; Restart'&gt;"
+                "&lt;/form&gt;";
   server.send(200, "text/html", html);
 }
 
@@ -176,13 +548,13 @@ void handleSaveWiFi() {
   ssid = server.arg("ssid");
   password = server.arg("pass");
 
-  for (int i = 0; i < 200; i++) EEPROM.write(i, 0);
+  for (int i = 0; i &lt; 200; i++) EEPROM.write(i, 0);
 
   EEPROM.write(0, ssid.length());
-  for (int i = 0; i < ssid.length(); i++) EEPROM.write(i+1, ssid[i]);
+  for (int i = 0; i &lt; ssid.length(); i++) EEPROM.write(i+1, ssid[i]);
 
   EEPROM.write(100, password.length());
-  for (int i = 0; i < password.length(); i++) EEPROM.write(i+101, password[i]);
+  for (int i = 0; i &lt; password.length(); i++) EEPROM.write(i+101, password[i]);
 
   EEPROM.commit();
 
@@ -194,15 +566,15 @@ void handleSaveWiFi() {
 void handleSaveAP() {
   ap_pass = server.arg("ap_pass");
 
-  if (ap_pass.length() < 8) {
+  if (ap_pass.length() &lt; 8) {
     server.send(200, "text/html", "Error: Password must be at least 8 characters!");
     return;
   }
 
-  for (int i = 200; i < 400; i++) EEPROM.write(i, 0);
+  for (int i = 200; i &lt; 400; i++) EEPROM.write(i, 0);
 
   EEPROM.write(300, ap_pass.length());
-  for (int i = 0; i < ap_pass.length(); i++) EEPROM.write(i+301, ap_pass[i]);
+  for (int i = 0; i &lt; ap_pass.length(); i++) EEPROM.write(i+301, ap_pass[i]);
 
   EEPROM.commit();
 
@@ -212,7 +584,7 @@ void handleSaveAP() {
 }
 
 void handleReset() {
-  for (int i = 0; i < 512; i++) {
+  for (int i = 0; i &lt; 512; i++) {
     EEPROM.write(i, 0);
   }
   EEPROM.commit();
@@ -225,15 +597,15 @@ void handleReset() {
 void loadCredentials() {
   int ssidLen = EEPROM.read(0);
   ssid = "";
-  for (int i = 0; i < ssidLen; i++) ssid += char(EEPROM.read(i+1));
+  for (int i = 0; i &lt; ssidLen; i++) ssid += char(EEPROM.read(i+1));
 
   int passLen = EEPROM.read(100);
   password = "";
-  for (int i = 0; i < passLen; i++) password += char(EEPROM.read(i+101));
+  for (int i = 0; i &lt; passLen; i++) password += char(EEPROM.read(i+101));
 
   int apPassLen = EEPROM.read(300);
   ap_pass = "";
-  for (int i = 0; i < apPassLen; i++) ap_pass += char(EEPROM.read(i+301));
+  for (int i = 0; i &lt; apPassLen; i++) ap_pass += char(EEPROM.read(i+301));
 }
 
 void connectWiFi() {
@@ -241,12 +613,12 @@ void connectWiFi() {
 
   bool connected = false;
 
-  if (ssid.length() > 0) {
+  if (ssid.length() &gt; 0) {
     WiFi.begin(ssid.c_str(), password.c_str());
     Serial.print("Connecting to saved WiFi: ");
     Serial.println(ssid);
     int retries = 0;
-    while (WiFi.status() != WL_CONNECTED && retries < 5) {
+    while (WiFi.status() != WL_CONNECTED &amp;&amp; retries &lt; 5) {
       delay(500);
       Serial.print(".");
       retries++;
@@ -262,7 +634,7 @@ void connectWiFi() {
   }
 
   if (!connected) {
-    if (ap_pass.length() < 8) ap_pass = "12345678";
+    if (ap_pass.length() &lt; 8) ap_pass = "12345678";
     WiFi.softAP("ESP_Config", ap_pass.c_str());
     Serial.println("Started AP: ESP_Config, password: " + ap_pass);
     Serial.print("AP IP: ");
@@ -272,7 +644,7 @@ void connectWiFi() {
 
 void mqttCallback(char* topic, byte* payload, unsigned int length) {
   String message;
-  for (unsigned int i = 0; i < length; i++) {
+  for (unsigned int i = 0; i &lt; length; i++) {
     message += (char)payload[i];
   }
   if (String(topic) == mqtt_recv_topic) {
@@ -299,7 +671,7 @@ bool reconnectMQTT() {
 
 void setup() {
   Serial.begin(115200);
-  EEPROM.begin(512);    
+  EEPROM.begin(512);
 
   connectWiFi();
 
@@ -323,7 +695,7 @@ void loop() {
     client.loop();
   }
 
-  if (millis() - lastCheck > checkInterval) {
+  if (millis() - lastCheck &gt; checkInterval) {
     lastCheck = millis();
 
     if (WiFi.status() != WL_CONNECTED) {
@@ -332,23 +704,21 @@ void loop() {
     }
 
     if (!client.connected()) {
-      if (!reconnectMQTT() && reconnectAttempts >= maxReconnectAttempts) {
+      if (!reconnectMQTT() &amp;&amp; reconnectAttempts &gt;= maxReconnectAttempts) {
         Serial.println("Too many fails → Restarting...");
         ESP.restart();
       }
     }
   }
 
-
-
   static String serialBuffer = "";
   while (Serial.available()) {
     char c = Serial.read();
     if (c == '\n') {
       serialBuffer.trim();
-      if (serialBuffer.length() > 0) {
+      if (serialBuffer.length() &gt; 0) {
         int sepIndex = serialBuffer.indexOf(':');
-        if (sepIndex > 0) {
+        if (sepIndex &gt; 0) {
           String topicPart   = serialBuffer.substring(0, sepIndex);
           String payloadPart = serialBuffer.substring(sepIndex + 1);
           String fullTopic   = "soifgo_" + topicPart;
@@ -360,75 +730,75 @@ void loop() {
       serialBuffer += c;
     }
   }
-}
+}</code></pre>
 
+      <p>Download the program file:</p>
+      <a href="ESP8266_mqtt_Arduino.zip" class="download-link" download>📦 Download ESP8266_mqtt_Arduino.zip</a>
 
+      <p>Paste the code into Arduino IDE. You can configure Wi-Fi settings before upload:</p>
+      <pre><code>wifiName = "TPLINK";
+wifiPass = "abcd1234";</code></pre>
+    </div>
 
-</code></pre>
+    <!-- ===== STEP 5: WIRING ===== -->
+    <div class="card">
+      <h2>Step 5: Wiring and Upload</h2>
+      <img src="wiring1.png" alt="Wiring 1" loading="lazy">
+      <img src="wiring2.png" alt="Wiring 2" loading="lazy">
+      <img src="wiring3.png" alt="Wiring 3" loading="lazy">
+      <img src="wiring4.png" alt="Wiring 4" loading="lazy">
+      <p>Click <strong>Verify</strong> and then <strong>Upload</strong> in Arduino:</p>
+      <img src="upload1.png" alt="Verify and Upload" loading="lazy">
 
+      <video controls playsinline preload="metadata">
+        <source src="https://raw.githubusercontent.com/soifgo/soifgo/refs/heads/soifgo/tutorials/server/Esp8266_wifi_mqtt/Mqtt_Verifi.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
 
-  <p>Download the program file:</p>
-  <a href="ESP8266_mqtt_Arduino.zip" download>📦 Download ESP8266_mqtt_Arduino.zip</a>
-  <p>Paste the code into Arduino IDE. You can configure Wi-Fi settings before upload:</p>
-  <pre><code>
-wifiName = "TPLINK";
-wifiPass = "abcd1234";
+      <img src="upload2.png" alt="Upload Complete" loading="lazy">
 
-  </code></pre>
+      <video controls playsinline preload="metadata">
+        <source src="https://raw.githubusercontent.com/soifgo/soifgo/refs/heads/soifgo/tutorials/server/Esp8266_wifi_mqtt/Mqtt_Upload.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
 
+    <!-- ===== STEP 6: SERIAL ===== -->
+    <div class="card">
+      <h2>Step 6: Serial Monitor</h2>
+      <img src="serial1.png" alt="Open Serial Monitor" loading="lazy">
+      <img src="serial2.png" alt="Open Serial Monitor" loading="lazy">
+      <img src="wiring5.png" alt="Open Serial Monitor" loading="lazy">
+      <p>Restart the module. You should see output like:</p>
+      <img src="output1.png" alt="Serial Output" loading="lazy">
+    </div>
 
-  <h2>Step 5: Wiring and Upload</h2>
-  <img src="wiring1.png" alt="Wiring 1">
-  <img src="wiring2.png" alt="Wiring 2">
-  <img src="wiring3.png" alt="Wiring 3">
-  <img src="wiring4.png" alt="Wiring 4">
-  <p>Click <strong>Verify</strong> and then <strong>Upload</strong> in Arduino:</p>
-  <img src="upload1.png" alt="Verify and Upload">
-<video controls width="100%">
-  <source src="https://raw.githubusercontent.com/soifgo/soifgo/refs/heads/soifgo/tutorials/server/Esp8266_wifi_mqtt/Mqtt_Verifi.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
-  <img src="upload2.png" alt="Upload Complete">
+    <!-- ===== STEP 7: MICROCONTROLLER ===== -->
+    <div class="card">
+      <h2>Step 7: Microcontroller Connection</h2>
+      <p>
+        In this step, you need to program your microcontroller.
+        You have several options:
+      </p>
+      <ul>
+        <li>Use the <strong>Bascom software</strong> to upload the program directly.</li>
+        <li>Apply your own <strong>custom edits</strong> before programming.</li>
+        <li>Download the provided <strong>HEX or binary file</strong> and flash it using any compatible programmer.</li>
+      </ul>
+      <p>
+        If you are not familiar with the Bascom language, don't worry.
+        Simply copy the provided Bascom Basic code and use an AI assistant to translate it into Arduino C++ or any other programming language you are comfortable with.
+        This way, you can adapt the project to your preferred development environment.
+      </p>
+      <div class="note-warning">
+        <strong>⚠️ Important:</strong> Don't forget to configure the <em>oscillator fuse bits</em> to use an external crystal.
+        Without this setting, the microcontroller will not operate correctly.
+      </div>
 
-<video controls width="100%">
-  <source src="https://raw.githubusercontent.com/soifgo/soifgo/refs/heads/soifgo/tutorials/server/Esp8266_wifi_mqtt/Mqtt_Upload.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+      <img src="micro1.png" alt="Microcontroller Wiring" loading="lazy">
+      <p>Program your ATmega16 using a compatible programmer:</p>
 
-
-  <h2>Step 6: Serial Monitor</h2>
-  <img src="serial1.png" alt="Open Serial Monitor">
- <img src="serial2.png" alt="Open Serial Monitor">
- <img src="wiring5.png" alt="Open Serial Monitor">
-  <p>Restart the module. You should see output like:</p>
-  <img src="output1.png" alt="Serial Output">
-
-  <h2>Step 7: Microcontroller Connection</h2>
-<p>
-In this step, you need to program your microcontroller.  
-You have several options:
-</p>
-<ul>
-  <li>Use the <strong>Bascom software</strong> to upload the program directly.</li>
-  <li>Apply your own <strong>custom edits</strong> before programming.</li>
-  <li>Download the provided <strong>HEX or binary file</strong> and flash it using any compatible programmer.</li>
-</ul>
-<p>
-If you are not familiar with the Bascom language, don’t worry.  
-Simply copy the provided Bascom Basic code and use an AI assistant to translate it into Arduino C++ or any other programming language you are comfortable with.  
-This way, you can adapt the project to your preferred development environment.
-</p>
-<p>
-⚠️ <strong>Important:</strong> Don’t forget to configure the <em>oscillator fuse bits</em> to use an external crystal.  
-Without this setting, the microcontroller will not operate correctly.
-</p>
-
-  <img src="micro1.png" alt="Microcontroller Wiring">
-  <p>Program your ATmega16 using a compatible programmer:</p>
-
-
-<pre class="line-numbers"><code class="language-cpp">
-$regfile = "m16adef.dat"
+      <pre class="line-numbers"><code class="language-cpp">$regfile = "m16adef.dat"
 $crystal = 11059200
 
 Config Adc = Single , Prescaler = Auto , Reference = Avcc
@@ -479,7 +849,7 @@ If Ina = 1 Then Goto Red
 
 Reset Watchdog
 
-    If Step1 > 6 Then Step1 = 1
+    If Step1 &gt; 6 Then Step1 = 1
 
 
     Select Case Step1
@@ -555,20 +925,19 @@ Red:
 
 
 
-
-      If Instr(text , "rang") > 0 Then
+      If Instr(text , "rang") &gt; 0 Then
         Disable Interrupts
        Print #1 , Mid(text , 6 , 36)
         Enable Interrupts
        End If
 
-   If Instr(text , "pwm1a") > 0 Then
+   If Instr(text , "pwm1a") &gt; 0 Then
       Text3 = Mid(text , 7 , 4)
       Pwm1a = Val(text3)
       Writeeeprom pwm1a , 3
    End If
 
-  If Instr(text , "port") > 0 Then
+  If Instr(text , "port") &gt; 0 Then
      Text2 = Mid(Text , 7 , 1)
      Text = Mid(text , 5 , 1)
 
@@ -578,7 +947,7 @@ Red:
 
       t1=val(text)
 
-      If T1 < 8 Then Portb.t1 = T2
+      If T1 &lt; 8 Then Portb.t1 = T2
 
    If T1 = 9 Then
 
@@ -604,243 +973,235 @@ Red:
 Ina = 0
 
 
-Goto Main
-</code></pre>
+Goto Main</code></pre>
 
+      <div class="download-wrap">
+        <a href="Bascom_hex_bin_Atmega16_mqtt.zip" class="download-link" download>📦 Download Bascom_hex_bin_Atmega16_mqtt</a>
+      </div>
 
+      <img src="fusebits.png" alt="Fuse Bit Settings" loading="lazy">
 
+      <video controls playsinline preload="metadata">
+        <source src="https://raw.githubusercontent.com/soifgo/soifgo/refs/heads/soifgo/tutorials/server/Esp8266_wifi_mqtt/Mqtt_Atmega16_Bascom.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
 
+    <!-- ===== STEP 8: SOIFGO ===== -->
+    <div class="card">
+      <h2>Step 8: SoifGo Integration</h2>
+      <p>
+        If you need advanced configuration, don't worry.
+        Simply click on the <strong>Topic Options</strong> label to access additional settings.
+        Here you can adjust your <em>username</em>, <em>password</em>, <em>client ID</em>, and the <em>connection quality (QoS)</em>.
+        This ensures that your ESP8266 communicates reliably with the SoifGo MQTT broker.
+      </p>
 
-  <a href="Bascom_hex_bin_Atmega16_mqtt.zip" download>📦 Download Bascom_hex_bin_Atmega16_mqtt</a>
-  <img src="fusebits.png" alt="Fuse Bit Settings">
+      <h3>Understanding QoS Levels</h3>
+      <ul>
+        <li><strong>QoS 0 – At most once:</strong> Fastest, but no delivery guarantee. Suitable for non-critical sensor data.</li>
+        <li><strong>QoS 1 – At least once:</strong> Guaranteed delivery, but messages may be duplicated. Good for control commands.</li>
+        <li><strong>QoS 2 – Exactly once:</strong> Highest reliability, ensures no loss or duplication. Best for critical operations.</li>
+      </ul>
+      <p>
+        Choose the QoS level based on how important message delivery is for your project.
+        Higher QoS means more reliability, but also more overhead and slower performance.
+      </p>
 
-<video controls width="100%">
-  <source src="https://raw.githubusercontent.com/soifgo/soifgo/refs/heads/soifgo/tutorials/server/Esp8266_wifi_mqtt/Mqtt_Atmega16_Bascom.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+      <img src="soifgo-receive.png" alt="Receive Setup" loading="lazy">
+      <img src="soifgo-send.png" alt="Send Setup" loading="lazy">
+    </div>
 
- <h2>Step 8: SoifGo Integration</h2>
-<p>
-If you need advanced configuration, don’t worry.  
-Simply click on the <strong>Topic Options</strong> label to access additional settings.  
-Here you can adjust your <em>username</em>, <em>password</em>, <em>client ID</em>, and the <em>connection quality (QoS)</em>.  
-This ensures that your ESP8266 communicates reliably with the SoifGo MQTT broker.
-</p>
+    <!-- ===== STEP 9: VIDEO ===== -->
+    <div class="card">
+      <h2>Step 9: ESP8266 Setup Video</h2>
+      <p>
+        This video demonstrates how to install and set up the ESP8266 Wi-Fi module.
+        The process is the same across different setups, but make sure to use the provided MQTT Arduino sketch file.
+        Click the link below to download the sample project:
+      </p>
+      <a href="ESP8266_mqtt_Arduino.zip" class="download-link" download>📦 Download ESP8266_mqtt_Arduino.zip</a>
+    </div>
 
-<h3>Understanding QoS Levels</h3>
-<ul>
-  <li><strong>QoS 0 – At most once:</strong> Fastest, but no delivery guarantee. Suitable for non-critical sensor data.</li>
-  <li><strong>QoS 1 – At least once:</strong> Guaranteed delivery, but messages may be duplicated. Good for control commands.</li>
-  <li><strong>QoS 2 – Exactly once:</strong> Highest reliability, ensures no loss or duplication. Best for critical operations.</li>
-</ul>
-<p>
-Choose the QoS level based on how important message delivery is for your project.  
-Higher QoS means more reliability, but also more overhead and slower performance.
-</p>
+    <!-- ===== BONUS ===== -->
+    <div class="card">
+      <h2>Bonus: RANGMANG Module</h2>
+      <li><a href="https://soifgo.github.io/soifgo/tutorials/server/rangmang/Rangmang.html">🌈 RANGMANG Module</a></li>
 
-  <img src="soifgo-receive.png" alt="Receive Setup">
-  <img src="soifgo-send.png" alt="Send Setup">
+      <h2>Bonus: Proteus</h2>
+      <a href="Proteuse_esp8266.zip" class="download-link" download>📦 Download Proteus</a>
 
-<h2>Step 9: ESP8266 Setup Video</h2>
-<p>
-This video demonstrates how to install and set up the ESP8266 Wi-Fi module.  
-The process is the same across different setups, but make sure to use the provided MQTT Arduino sketch file.  
-Click the link below to download the sample project:
-</p>
-<a href="ESP8266_mqtt_Arduino.zip" download>📦 Download ESP8266_mqtt_Arduino.zip</a>
+      <h2>Bonus: Sample SoifGo File</h2>
+      <p>
+        If you don't already have your own project, you can start with the prepared SoifGo sample file.
+      </p>
+      <p>
+        1. Extract the file and copy it into the device memory.
+      </p>
+      <p>
+        2. (Optional) Rename the <code>p1</code> folder before placing it inside the SoifGo directory.
+      </p>
+      <p>
+        3. You can also move the file directly into the desired page folder within the SoifGo memory.
+      </p>
+      <p>
+        This way, you'll have a ready-to-use setup without needing to create a project from scratch.
+      </p>
+      <a href="soifgo_design_esp8266_mqtt.zip" class="download-link" download>📦 Download SoifGo File</a>
+    </div>
 
+    <!-- ===== WI-FI INSTRUCTIONS ===== -->
+    <div class="card">
+      <h2>Wi‑Fi Connection Instructions</h2>
 
+      <h3>Normal mode</h3>
+      <p>
+        The module will attempt to connect to your router using the SSID and password you have provided.
+        If the connection is successful, the device will remain stable and ready to use.
+      </p>
 
+      <h3>Access point (AP) mode</h3>
+      <p>
+        If the connection to the router fails (for example, due to an incorrect SSID or password),
+        the module will automatically switch to <strong>Access Point mode</strong>.
+        In this mode, a network named <code>ESP_Config</code> will be created.
+      </p>
+      <ul>
+        <li><strong>Connect</strong> to this network.</li>
+        <li><strong>Open</strong> your browser and enter the following address:</li>
+      </ul>
+      <pre><code class="language-none">192.168.4.1</code></pre>
+      <p>
+        On this page, you can enter a new SSID and password, and also view the
+        <strong>MAC Address</strong> of the module. After saving the information,
+        the module will attempt to reconnect to your router and <strong>restart automatically</strong>.
+      </p>
 
+      <h3>Reset EEPROM and restart</h3>
+      <p>
+        If you need to clear all saved settings (SSID, password, AP password), use the
+        <strong>Reset EEPROM &amp; Restart</strong> button on the same page. This will:
+      </p>
+      <ul>
+        <li><strong>Erase</strong> all stored credentials from EEPROM.</li>
+        <li><strong>Restart</strong> the module automatically.</li>
+        <li>After restart, the device will enter <strong>AP mode</strong> again if no valid Wi‑Fi is configured.</li>
+      </ul>
 
-  <h2>Bonus: RANGMANG Module</h2>
+      <img src="option01.png" alt="option" loading="lazy">
 
-<li><a href="https://soifgo.github.io/soifgo/tutorials/server/rangmang/Rangmang.html"> 🌈 RANGMANG Module</a></li>
+      <video controls playsinline preload="metadata">
+        <source src="https://raw.githubusercontent.com/soifgo/soifgo/refs/heads/soifgo/tutorials/server/Esp8266_wifi_mqtt/Mqtt_Wifinamepass.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
 
- <h2>Bonus: Proteuse </h2>
- <a href="Proteuse_esp8266.zip" download>📦 Download Proteuse </a>
-<h2>Bonus: Sample SoifGo File</h2>
-<p>
-If you don’t already have your own project, you can start with the prepared SoifGo sample file.  
-</p>
-<p>
-1. Extract the file and copy it into the device memory.  
-</p>
-<p>
-2. (Optional) Rename the <code>p1</code> folder before placing it inside the SoifGo directory. 
-</p>
-<p> 
-3. You can also move the file directly into the desired page folder within the SoifGo memory. 
-</p>
-<p> 
-This way, you’ll have a ready-to-use setup without needing to create a project from scratch.
+      <h3>Input requirements</h3>
+      <ul>
+        <li><strong>Wi‑Fi SSID</strong>: Plain text, avoid leading/trailing spaces.</li>
+        <li><strong>Wi‑Fi password</strong>: If your router uses a password, enter it exactly (case‑sensitive).</li>
+        <li><strong>AP password</strong>: Must be <strong>at least 8 characters</strong>. Shorter values will be rejected.</li>
+      </ul>
+      <p>
+        If the AP password is not set or is shorter than 8 characters, a fallback password
+        may be used to allow access, but it is <strong>not recommended</strong> for production.
+      </p>
 
-</p>
+      <h3>⚠️ Security note</h3>
+      <p>
+        If you plan to commercialize or sell this module:
+      </p>
+      <ul>
+        <li>Always set a <strong>custom</strong> password for AP mode (minimum 8 characters).</li>
+        <li>Include this password on the product packaging or a setup card.</li>
+        <li>Inform customers that the AP password is unique to their device and <strong>not</strong> a public default.</li>
+      </ul>
+      <p>
+        This prevents unauthorized access and protects your users.
+      </p>
+    </div>
 
+    <hr>
 
- <a href="soifgo_design_esp8266_mqtt.zip" download>📦 Download soifgo file </a>
+    <!-- ===== MQTT IMPORTANT NOTE ===== -->
+    <div class="mqtt-note">
+      <h3>Important Note</h3>
+      <p>
+        This example is configured using Mosquitto MQTT in public and free mode.
+        For better security, it is recommended that you create your own private path
+        with a username and password in Mosquitto, and then apply those credentials
+        in <strong>Soifgo</strong> as well.
+      </p>
+      <ul>
+        <li>If two or more phones are supposed to control the same device, each must have a unique ID. Otherwise, you will encounter problems.</li>
+        <li>If you still insist on using this free/public method, you must change the topic names.</li>
+        <li>Don't forget that the topic names on the microcontroller must also be updated and kept in sync.</li>
+      </ul>
+    </div>
 
+    <!-- ===== TOPIC EXAMPLES ===== -->
+    <div class="card">
+      <h3>🔄 Changing Topics &amp; Syncing Microcontroller</h3>
 
+      <div style="font-family: monospace; background: var(--card-bg); padding: 15px; border: 1px solid var(--border); border-radius: 12px; margin-top: 20px;">
+        <h4>Microcontroller String Parsing Examples</h4>
 
-<h1>Wi‑Fi Connection Instructions</h1>
-
-<h2>Normal mode</h2>
-<p>
-The module will attempt to connect to your router using the SSID and password you have provided.
-If the connection is successful, the device will remain stable and ready to use.
-</p>
-
-<h2>Access point (AP) mode</h2>
-<p>
-If the connection to the router fails (for example, due to an incorrect SSID or password),
-the module will automatically switch to <strong>Access Point mode</strong>.
-In this mode, a network named <code>ESP_Config</code> will be created.
-</p>
-<ul>
-  <li><strong>Connect</strong> to this network.</li>
-  <li><strong>Open</strong> your browser and enter the following address:</li>
-</ul>
-
-<pre><code class="language-none">192.168.4.1</code></pre>
-
-<p>
-On this page, you can enter a new SSID and password, and also view the
-<strong>MAC Address</strong> of the module. After saving the information,
-the module will attempt to reconnect to your router and <strong>restart automatically</strong>.
-</p>
-
-<h2>Reset EEPROM and restart</h2>
-<p>
-If you need to clear all saved settings (SSID, password, AP password), use the
-<strong>Reset EEPROM & Restart</strong> button on the same page. This will:
-</p>
-<ul>
-  <li><strong>Erase</strong> all stored credentials from EEPROM.</li>
-  <li><strong>Restart</strong> the module automatically.</li>
-  <li>After restart, the device will enter <strong>AP mode</strong> again if no valid Wi‑Fi is configured.</li>
-</ul>
-
-  <img src="option01.png" alt="option">
-
-
-<video controls width="100%">
-  <source src="https://raw.githubusercontent.com/soifgo/soifgo/refs/heads/soifgo/tutorials/server/Esp8266_wifi_mqtt/Mqtt_Wifinamepass.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
-
-<h2>Input requirements</h2>
-<ul>
-  <li><strong>Wi‑Fi SSID</strong>: Plain text, avoid leading/trailing spaces.</li>
-  <li><strong>Wi‑Fi password</strong>: If your router uses a password, enter it exactly (case‑sensitive).</li>
-  <li><strong>AP password</strong>: Must be <strong>at least 8 characters</strong>. Shorter values will be rejected.</li>
-</ul>
-<p>
-If the AP password is not set or is shorter than 8 characters, a fallback password
-may be used to allow access, but it is <strong>not recommended</strong> for production.
-</p>
-
-<h2>⚠️ Security note</h2>
-<p>
-If you plan to commercialize or sell this module:
-</p>
-<ul>
-  <li>Always set a <strong>custom</strong> password for AP mode (minimum 8 characters).</li>
-  <li>Include this password on the product packaging or a setup card.</li>
-  <li>Inform customers that the AP password is unique to their device and <strong>not</strong> a public default.</li>
-</ul>
-<p>
-This prevents unauthorized access and protects your users.
-</p>
-
-<hr>
-
-
-<div class="mqtt-note">
-  <h3>Important Note</h3>
-  <p>
-    This example is configured using Mosquitto MQTT in public and free mode.
-    For better security, it is recommended that you create your own private path
-    with a username and password in Mosquitto, and then apply those credentials
-    in <strong>Soifgo</strong> as well.
-  </p>
-  <ul>
-    <li>If two or more phones are supposed to control the same device, each must have a unique ID. Otherwise, you will encounter problems.</li>
-    <li>If you still insist on using this free/public method, you must change the topic names.</li>
-    <li>Don’t forget that the topic names on the microcontroller must also be updated and kept in sync.</li>
-  </ul>
-</div>
-
-
-<h3>🔄 Changing Topics & Syncing Microcontroller</h3>
-
-<!-- Microcontroller Parsing Examples -->
-<div style="font-family: monospace; background:#f4f4f4; padding:15px; border:1px solid #ccc; margin-top:20px;">
-  <h3>Microcontroller String Parsing Examples</h3>
-  
-  <h4>Example 1: Receiving <code>port3:1</code></h4>
-  <pre>
-If Instr(text , "port") > 0 Then
+        <h4>Example 1: Receiving <code>port3:1</code></h4>
+        <pre style="background: var(--code-bg); color: #e2e8f0;">If Instr(text , "port") &gt; 0 Then
     Text2 = Mid(text , 7 , 1)   ' Operand: ON=1, OFF=0
     Text  = Mid(text , 5 , 1)   ' Port number → "3"
-End If
-  </pre>
-  <p><strong>Result:</strong> Port 3 ON</p>
+End If</pre>
+        <p><strong>Result:</strong> Port 3 ON</p>
 
-  <h4>Example 2: Sending <code>outmotor3:1</code></h4>
-  <pre>
-If Instr(text , "outmotor") > 0 Then
+        <h4>Example 2: Sending <code>outmotor3:1</code></h4>
+        <pre style="background: var(--code-bg); color: #e2e8f0;">If Instr(text , "outmotor") &gt; 0 Then
     Text2 = Mid(text , 11 , 1)  ' Operand: ON=1, OFF=0
     Text  = Mid(text , 9 , 1)   ' Port number → "3"
-End If
-  </pre>
-  <p><strong>Result:</strong> Motor output 3 ON</p>
+End If</pre>
+        <p><strong>Result:</strong> Motor output 3 ON</p>
 
-  <h4>Example 3: Feedback Topic</h4>
-  <pre>
-' Original:
+        <h4>Example 3: Feedback Topic</h4>
+        <pre style="background: var(--code-bg); color: #e2e8f0;">' Original:
 Print "feedback:" ; Feedback
 ' → Topic in Soifgo: soifgo_feedback
 
 ' Changed:
 Print "myfeedback123:" ; Feedback
-' → Topic in Soifgo: soifgo_myfeedback123
-  </pre>
-</div>
+' → Topic in Soifgo: soifgo_myfeedback123</pre>
+      </div>
 
-<video controls width="100%">
-  <source src="https://raw.githubusercontent.com/soifgo/soifgo/refs/heads/soifgo/tutorials/server/Esp8266_wifi_mqtt/Mqtt_Test1.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+      <video controls playsinline preload="metadata" style="margin-top: 1rem;">
+        <source src="https://raw.githubusercontent.com/soifgo/soifgo/refs/heads/soifgo/tutorials/server/Esp8266_wifi_mqtt/Mqtt_Test1.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
 
-<h2>📦 Download the required files  📦</h2>
+    <!-- ===== DOWNLOAD ALL FILES ===== -->
+    <div class="card">
+      <h2>📦 Download the Required Files</h2>
 
- <a href="Bascom_hex_bin_Atmega16_mqtt.zip" download>📦 Download Bascom_hex_bin_Atmega16_mqtt</a>
- <a href="ESP8266_mqtt_Arduino.zip" download>📦 Download ESP8266_mqtt_Arduino.zip</a>
- <a href="Proteuse_esp8266.zip" download>📦 Download Proteuse </a>
- <a href="soifgo_design_esp8266_mqtt.zip" download>📦 Download soifgo file </a>
+      <div class="download-wrap">
+        <a href="Bascom_hex_bin_Atmega16_mqtt.zip" class="download-link" download>📦 Download Bascom_hex_bin_Atmega16_mqtt</a>
+        <a href="ESP8266_mqtt_Arduino.zip" class="download-link" download>📦 Download ESP8266_mqtt_Arduino.zip</a>
+        <a href="Proteuse_esp8266.zip" class="download-link" download>📦 Download Proteus</a>
+        <a href="soifgo_design_esp8266_mqtt.zip" class="download-link" download>📦 Download SoifGo File</a>
+      </div>
+    </div>
 
+    <!-- ===== HOME BUTTON ===== -->
+    <div class="btn-wrap">
+      <a href="https://soifgo.github.io/soifgo/index.html" class="btn-home">⬅ Back to Home</a>
+    </div>
 
- 
-<p style="text-align:center;">
-  <a href="https://soifgo.github.io/soifgo/index.html" 
-     style="display:inline-block; padding:10px 20px; background:#8B4513; color:#fff; text-decoration:none; border-radius:5px;">
-    ⬅ Back to Home
-  </a>
-</p>
+  </div>
 
-  
+  <!-- ===== PRISM SCRIPTS ===== -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-clike.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-c.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-cpp.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/toolbar/prism-toolbar.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-

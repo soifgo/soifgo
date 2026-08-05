@@ -1,332 +1,680 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>How to Use Note SEND and RECEIVE in SoifGo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 15px;
-      line-height: 1.6;
-      font-size: 16px;
-    }
-    h1 {
-      font-size: 1.8em;
-      text-align: center;
-      color: #2c3e50;
-    }
-    h2 {
-      color: #34495e;
-      margin-top: 20px;
-    }
-    code {
-      background-color: #f4f4f4;
-      padding: 3px 6px;
-      border-radius: 4px;
-      display: block;
-      margin: 5px 0;
-    }
-    ul {
-      padding-left: 20px;
-    }
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin: 10px auto;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes" />
+  <meta name="theme-color" content="#2c3e50" />
+  <meta name="color-scheme" content="light dark" />
 
+  <!-- ===== PRIMARY SEO ===== -->
+  <title>How to Use Note SEND and RECEIVE in SoifGo — Complete Tutorial</title>
+  <meta name="description" content="Complete tutorial for Note SEND and Note RECEIVE in SoifGo. Learn how to create notes, send commands via Bluetooth, API, MQTT, and receive real-time data. Includes practice simulator for robot control." />
+  <meta name="keywords" content="SoifGo note, note send, note receive, Bluetooth notes, API notes, MQTT notes, automation, robot control, CNC commands, data logging, real-time monitoring, PC simulator" />
+
+  <!-- ===== OPEN GRAPH (Social Media) ===== -->
+  <meta property="og:title" content="How to Use Note SEND and RECEIVE in SoifGo — Complete Tutorial" />
+  <meta property="og:description" content="Complete tutorial for Note SEND and Note RECEIVE in SoifGo. Learn automation, robot control, CNC commands, and real-time data logging with Bluetooth, API, and MQTT." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://soifgo.github.io/soifgo/tutorials/note-out/" />
+  <meta property="og:image" content="https://soifgo.github.io/soifgo/note-og.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="SoifGo Tutorials" />
+
+  <!-- ===== TWITTER CARD ===== -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="How to Use Note SEND and RECEIVE in SoifGo" />
+  <meta name="twitter:description" content="Complete tutorial for Note SEND and RECEIVE in SoifGo. Automation, robot control, and real-time data logging." />
+  <meta name="twitter:image" content="https://soifgo.github.io/soifgo/note-og.jpg" />
+
+  <!-- ===== CANONICAL URL ===== -->
+  <link rel="canonical" href="https://soifgo.github.io/soifgo/tutorials/note-out/" />
+
+  <!-- ===== LANGUAGE ALTERNATES ===== -->
+  <link rel="alternate" hreflang="en" href="https://soifgo.github.io/soifgo/tutorials/note-out/" />
+
+  <!-- ===== SCHEMA.ORG (Structured Data) ===== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "How to Use Note SEND and RECEIVE in SoifGo — Complete Tutorial",
+    "description": "Complete tutorial for Note SEND and Note RECEIVE in SoifGo. Learn how to create notes, send commands via Bluetooth, API, MQTT, and receive real-time data.",
+    "author": {
+      "@type": "Person",
+      "name": "Saeid Moghadam"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "SoifGo",
+      "url": "https://soifgo.github.io/soifgo/"
+    },
+    "datePublished": "2025-01-01",
+    "dateModified": "2025-01-01",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://soifgo.github.io/soifgo/tutorials/note-out/"
+    },
+    "about": {
+      "@type": "Thing",
+      "name": "Note SEND and RECEIVE in SoifGo"
+    },
+    "teaches": [
+      "Creating and managing notes",
+      "Sending commands via Bluetooth, API, MQTT",
+      "Receiving real-time data",
+      "Custom delay and wait commands",
+      "Echo and NEXT confirmation",
+      "Robot control and CNC automation",
+      "Using the PC simulator for practice"
+    ],
+    "inLanguage": "en",
+    "isAccessibleForFree": true,
+    "learningResourceType": "Tutorial"
+  }
+  </script>
+
+  <style>
+    /* ===== ROOT VARIABLES ===== */
+    :root {
+      --bg: #ffffff;
+      --fg: #1f2937;
+      --accent: #2c3e50;
+      --card-bg: #f5f7fb;
+      --border: #d7dce4;
+      --muted: #6b7280;
+      --code-bg: #eef2f7;
+      --link: #0066cc;
+      --btn-home: #8B4513;
+      --code-dark: #0f172a;
+      --code-text: #e2e8f0;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0b0e12;
+        --fg: #e5e7eb;
+        --accent: #4dabf7;
+        --card-bg: #12161d;
+        --border: #243041;
+        --muted: #9aa3af;
+        --link: #58a6ff;
+        --btn-home: #8B5A3A;
+        --code-bg: #1b2230;
+      }
+    }
+
+    /* ===== RESET & BASE ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.7;
+      -webkit-text-size-adjust: 100%;
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    /* ===== HEADINGS ===== */
+    h1 {
+      font-size: 1.8rem;
+      color: var(--accent);
+      text-align: center;
+      margin: 0.75rem 0 0.5rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      word-break: break-word;
+    }
+
+    h2 {
+      font-size: 1.35rem;
+      color: var(--fg);
+      margin: 1.5rem 0 0.75rem;
+      font-weight: 600;
+      word-break: break-word;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 6px;
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      color: var(--accent);
+      margin: 1rem 0 0.5rem;
+      font-weight: 600;
+      word-break: break-word;
+    }
+
+    p {
+      margin: 0.75em 0;
+      word-break: break-word;
+    }
+
+    a {
+      color: var(--link);
+      text-decoration: none;
+      word-break: break-word;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* ===== CARDS ===== */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1rem;
+      max-width: 100%;
+      overflow: hidden;
+    }
+
+    /* ===== IMAGES & VIDEOS ===== */
+    img, video {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      display: block;
+      margin: 0.8rem 0;
+      background: var(--card-bg);
+    }
+
+    video {
+      aspect-ratio: 16 / 9;
+      width: 100%;
+      background: #0a1a2a;
+      object-fit: contain;
+    }
+
+    /* ===== CODE & PRE ===== */
+    pre {
+      background: var(--code-dark);
+      color: var(--code-text);
+      padding: 1rem;
+      border-radius: 12px;
+      overflow-x: auto;
+      margin: 0.8rem 0;
+      font-size: 0.9rem;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      line-height: 1.7;
+    }
+
+    code {
+      background: var(--code-bg);
+      padding: 0.2em 0.6em;
+      border-radius: 8px;
+      font-size: 0.9em;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      color: var(--fg);
+      word-break: break-word;
+    }
+
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: var(--code-text);
+    }
+
+    /* ===== LISTS ===== */
+    ul, ol {
+      padding-left: 1.4em;
+      margin: 0.5em 0;
+    }
+
+    li {
+      margin-bottom: 0.4em;
+      word-break: break-word;
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn-home {
+      display: inline-block;
+      background: var(--btn-home);
+      color: white;
+      padding: 14px 34px;
+      border-radius: 60px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.05rem;
+      text-align: center;
+      transition: background 0.15s, transform 0.1s;
+      touch-action: manipulation;
+      border: none;
+      min-width: 140px;
+      box-shadow: 0 4px 10px rgba(80, 45, 20, 0.06);
+    }
+
+    .btn-home:active {
+      transform: scale(0.97);
+      background: #5f3a22;
+    }
+
+    .btn-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin: 2rem 0 0.5rem 0;
+    }
+
+    .download-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--accent);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 60px;
+      font-weight: 500;
+      font-size: 1rem;
+      text-decoration: none;
+      margin: 0.5em 0.5em 0.5em 0;
+      transition: background 0.15s, transform 0.1s;
+      touch-action: manipulation;
+      border: none;
+      box-shadow: 0 4px 12px rgba(0, 50, 80, 0.08);
+    }
+
+    .download-link:active {
+      transform: scale(0.97);
+      background: #004488;
+    }
+
+    .download-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 0.5rem 0;
+    }
+
+    .btn-link {
+      display: inline-block;
+      background: var(--accent);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 60px;
+      font-weight: 500;
+      font-size: 1rem;
+      text-decoration: none;
+      margin: 0.5rem 0;
+      transition: background 0.15s, transform 0.1s;
+      touch-action: manipulation;
+      border: none;
+      box-shadow: 0 4px 12px rgba(0, 50, 80, 0.08);
+    }
+
+    .btn-link:active {
+      transform: scale(0.97);
+      background: #004488;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 600px) {
+      .container {
+        padding: 10px;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      h2 {
+        font-size: 1.15rem;
+      }
+
+      .card {
+        padding: 0.8rem 0.9rem;
+        border-radius: 14px;
+      }
+
+      body {
+        font-size: 1rem;
+        line-height: 1.7;
+      }
+
+      pre {
+        font-size: 0.8rem;
+        padding: 0.8rem;
+      }
+
+      .btn-home {
+        width: 100%;
+        justify-content: center;
+        padding: 16px 18px;
+        font-size: 1rem;
+      }
+
+      .btn-wrap {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .download-link {
+        width: 100%;
+        justify-content: center;
+        padding: 14px 18px;
+        font-size: 0.95rem;
+      }
+
+      .download-wrap {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .btn-link {
+        width: 100%;
+        justify-content: center;
+        padding: 14px 18px;
+        font-size: 0.95rem;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 380px) {
+      h1 {
+        font-size: 1.3rem;
+      }
+
+      .card {
+        padding: 0.6rem 0.7rem;
+      }
+
+      pre {
+        font-size: 0.7rem;
+        padding: 0.6rem;
+      }
+    }
+
+    /* ===== UTILITY ===== */
+    .muted {
+      color: var(--muted);
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    hr {
+      border: none;
+      border-top: 2px solid var(--border);
+      margin: 1.5rem 0;
+    }
+
+    .command-block {
+      background: var(--code-dark);
+      color: var(--code-text);
+      padding: 0.8rem 1rem;
+      border-radius: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      word-break: break-all;
+      margin: 0.5rem 0;
+      display: block;
+      max-width: 100%;
+    }
   </style>
 </head>
 <body>
-  <h1>How to Use Note SEND and RECEIVE in SoifGo</h1>
-   
- 
-  <p>
-The Note feature in SoifGo, with both send and receive functionality, is designed to help you build automation processes using Bluetooth Serial, API, and MQTT communication modes. For example, if you send the joint angles of a three‑axis robotic arm (with encoders) over Bluetooth Serial and store them in a Note, you can later send the same recorded joint values back, and the robot will repeat the exact previous motion.
 
-In another example, if the receiver is a CNC machine and you load CNC codes into a Note, sending that Note will cause the CNC to start executing the commands.
+  <div class="container">
 
-A wide range of creative workflows can be built this way—limited only by the user’s imagination .</p>
- 
+    <!-- ===== TITLE ===== -->
+    <h1>How to Use Note SEND and RECEIVE in SoifGo</h1>
 
-<h1>How to Work with Note SEND : </h1>
-  <h2>Step 1: Create a Note</h2>
-  <p>
-    First, create a button and set its behavior to <strong>Note</strong>.  
-    Choose <em>Create</em> to generate a blank note.  
-    Then go to the <strong>Play</strong> page, click the button to open the note,  
-    and from the menu or play icon select <strong>Note send</strong> to see the list of communication methods.  
-    For example, choose <strong>Bluetooth</strong> and return to the note.  
-    Now you can start writing the required commands line by line.
-  </p>
+    <!-- ===== INTRODUCTION ===== -->
+    <div class="card">
+      <p>
+        The Note feature in SoifGo, with both send and receive functionality, is designed to help you build automation processes using Bluetooth Serial, API, and MQTT communication modes. For example, if you send the joint angles of a three‑axis robotic arm (with encoders) over Bluetooth Serial and store them in a Note, you can later send the same recorded joint values back, and the robot will repeat the exact previous motion.
+      </p>
+      <p>
+        In another example, if the receiver is a CNC machine and you load CNC codes into a Note, sending that Note will cause the CNC to start executing the commands.
+      </p>
+      <p>
+        A wide range of creative workflows can be built this way—limited only by the user's imagination.
+      </p>
+    </div>
 
-  <h2>Step 2: Sending Options</h2>
-  <p>
-    At the top of the page, you will see the <strong>Send</strong> icon.  
-    By long-clicking on this icon, a list of settings will appear:
-  </p>
-  <ul>
-    <li><strong>Manual Sending:</strong> No delay is applied.  
-      After clicking the send icon, another icon appears on the screen.  
-      Each time you click it, one line is sent. The next click sends the next line, and so on.</li>
-    <li><strong>Automatic Sending:</strong> Delay settings are applied.  
+    <!-- ===== NOTE SEND ===== -->
+    <div class="card">
+      <h1 style="font-size: 1.5rem; text-align: left; margin-top: 0;">How to Work with Note SEND</h1>
+
+      <h2>Step 1: Create a Note</h2>
+      <p>
+        First, create a button and set its behavior to <strong>Note</strong>.
+        Choose <em>Create</em> to generate a blank note.
+        Then go to the <strong>Play</strong> page, click the button to open the note,
+        and from the menu or play icon select <strong>Note send</strong> to see the list of communication methods.
+        For example, choose <strong>Bluetooth</strong> and return to the note.
+        Now you can start writing the required commands line by line.
+      </p>
+
+      <h2>Step 2: Sending Options</h2>
+      <p>
+        At the top of the page, you will see the <strong>Send</strong> icon.
+        By long-clicking on this icon, a list of settings will appear:
+      </p>
       <ul>
-        <li><em>Custom Wait Off:</em> A single delay time (e.g., 2 seconds) is set at the bottom of the page and applied to all lines equally.</li>
-        <li><em>Custom Wait On:</em> Different delays can be defined for each line, as explained below.</li>
+        <li><strong>Manual Sending:</strong> No delay is applied. After clicking the send icon, another icon appears on the screen. Each time you click it, one line is sent. The next click sends the next line, and so on.</li>
+        <li><strong>Automatic Sending:</strong> Delay settings are applied.
+          <ul>
+            <li><em>Custom Wait Off:</em> A single delay time (e.g., 2 seconds) is set at the bottom of the page and applied to all lines equally.</li>
+            <li><em>Custom Wait On:</em> Different delays can be defined for each line, as explained below.</li>
+          </ul>
+        </li>
       </ul>
-    </li>
-  </ul>
 
-  <h2>Method 1: Fixed Delay for All Lines (Custom Wait Off)</h2>
-  <p>
-    In this method, every line is sent with the same delay.  
-    You simply write the commands normally, and the system applies a uniform delay between each line.
-  </p>
-  <p><strong>Example:</strong></p>
-  <code>START_MACHINE</code>
-  <code>SET_SPEED 1200</code>
-  <code>MOVE_X 50</code>
-  <code>MOVE_Y 30</code>
-  <code>STOP_MACHINE</code>
-  <p>
-    Here, each command line will be sent one after another with the same delay (e.g., 2 seconds).
-  </p>
+      <h2>Method 1: Fixed Delay for All Lines (Custom Wait Off)</h2>
+      <p>
+        In this method, every line is sent with the same delay.
+        You simply write the commands normally, and the system applies a uniform delay between each line.
+      </p>
+      <p><strong>Example:</strong></p>
+      <div class="command-block">START_MACHINE</div>
+      <div class="command-block">SET_SPEED 1200</div>
+      <div class="command-block">MOVE_X 50</div>
+      <div class="command-block">MOVE_Y 30</div>
+      <div class="command-block">STOP_MACHINE</div>
+      <p>
+        Here, each command line will be sent one after another with the same delay (e.g., 2 seconds).
+      </p>
 
-  <h2>Method 2: Custom Delay   (Custom Wait On)</h2>
-  <p>
-In our method, wherever you need a custom delay before executing a command, simply write the desired delay time in seconds as wait=4. This way, upon seeing your command, the system will start counting down and then proceed to send the remaining lines.
-  </p>
-  <p><strong>Example:</strong></p>
-  <code>START_MACHINE</code>
-  <code>wait=3</code>
-  <code>SET_SPEED 1200</code>
-  <code>wait=5</code>
-  <code>MOVE_X 50</code>
-  <code>MOVE_Y 30</code>
-  <code>wait=4</code>
-  <code>STOP_MACHINE</code>
- 
+      <h2>Method 2: Custom Delay (Custom Wait On)</h2>
+      <p>
+        In our method, wherever you need a custom delay before executing a command, simply write the desired delay time in seconds as <code>wait=4</code>. This way, upon seeing your command, the system will start counting down and then proceed to send the remaining lines.
+      </p>
+      <p><strong>Example:</strong></p>
+      <div class="command-block">START_MACHINE</div>
+      <div class="command-block">wait=3</div>
+      <div class="command-block">SET_SPEED 1200</div>
+      <div class="command-block">wait=5</div>
+      <div class="command-block">MOVE_X 50</div>
+      <div class="command-block">MOVE_Y 30</div>
+      <div class="command-block">wait=4</div>
+      <div class="command-block">STOP_MACHINE</div>
 
-  <h2>Step 3: Communication Settings</h2>
-  <p>
-    Each communication method (Bluetooth, API, MQTT) has its own specific settings.  
-    Below are the main options for <strong>Bluetooth</strong> (similar concepts apply to API and MQTT):
-  </p>
+      <h2>Step 3: Communication Settings</h2>
+      <p>
+        Each communication method (Bluetooth, API, MQTT) has its own specific settings.
+        Below are the main options for <strong>Bluetooth</strong> (similar concepts apply to API and MQTT):
+      </p>
+      <ul>
+        <li><strong>Send Format:</strong> Choose how each line ends, e.g. <code>CR+LF</code>, <code>CR</code>, <code>NULL</code>, etc.</li>
+        <li><strong>Echo:</strong> After sending, the same data must be echoed back to Soifgo. If no echo is received, Soifgo retries the send up to 3 times. If still no response, an error is triggered. This ensures reliable delivery of each packet.</li>
+        <li><strong>Wait for NEXT:</strong> With this option enabled, Soifgo waits for the word <code>next</code> or <code>NEXT</code> after each command. This is useful for tasks with uncertain completion times. <em>Example:</em> A conveyor or crane may take 2–30 seconds to finish moving a heavy load. Once the task is complete, the destination sends <code>NEXT</code> back, signaling Soifgo to continue with the next line.</li>
+        <li><strong>Loop On/Off:</strong> In automatic sending mode, enabling <em>Loop On</em> makes the note repeat after finishing all lines. With <em>Loop Off</em>, the note stops after one full cycle.</li>
+      </ul>
+      <p>
+        These settings allow you to adapt Note SEND for different devices and scenarios, ensuring both reliability and flexibility in communication.
+      </p>
 
-  <ul>
-    <li><strong>Send Format:</strong> Choose how each line ends, e.g. <code>CR+LF</code>, <code>CR</code>, <code>NULL</code>, etc.</li>
-    <li><strong>Echo:</strong> After sending, the same data must be echoed back to Soifgo.  
-      If no echo is received, Soifgo retries the send up to 3 times.  
-      If still no response, an error is triggered.  
-      This ensures reliable delivery of each packet.</li>
-    <li><strong>Wait for NEXT:</strong> With this option enabled, Soifgo waits for the word <code>next</code> or <code>NEXT</code> after each command.  
-      This is useful for tasks with uncertain completion times.  
-      <em>Example:</em> A conveyor or crane may take 2–30 seconds to finish moving a heavy load.  
-      Once the task is complete, the destination sends <code>NEXT</code> back, signaling Soifgo to continue with the next line.</li>
-    <li><strong>Loop On/Off:</strong> In automatic sending mode, enabling <em>Loop On</em> makes the note repeat after finishing all lines.  
-      With <em>Loop Off</em>, the note stops after one full cycle.</li>
-  </ul>
+      <img src="note01.png" alt="Note SEND settings" loading="lazy">
+      <img src="note02.png" alt="Note SEND example" loading="lazy">
+      <img src="note03.png" alt="Note SEND options" loading="lazy">
+    </div>
 
-  <p>
-    These settings allow you to adapt Note SEND for different devices and scenarios, ensuring both reliability and flexibility in communication.
-  </p>
+    <!-- ===== NOTE RECEIVE ===== -->
+    <div class="card">
+      <h1 style="font-size: 1.5rem; text-align: left; margin-top: 0;">How to Work with Note RECEIVE</h1>
 
+      <h2>Receiving via Bluetooth</h2>
+      <p>
+        For Bluetooth receiving, you must tap the Bluetooth icon to establish the connection.
+        Each time a text message is sent, it is immediately received and added as a new line in the note.
+      </p>
 
-<img src="note01.png" alt=" ">
+      <h2>Receiving via API</h2>
+      <p>
+        In API receiving mode, any incoming value or size change is automatically added as a new line in the note.
+      </p>
 
-<img src="note02.png" alt=" ">
+      <h2>Receiving via MQTT</h2>
+      <p>
+        In MQTT receiving mode, every published value or payload change is captured and appended to the note in real time.
+      </p>
 
-<img src="note03.png" alt=" ">
+      <h2>Real‑Time Logging</h2>
+      <p>
+        Note RECEIVE can also be used as a real‑time logger for monitoring incoming data from devices.
+      </p>
+      <p>
+        Additionally, at the top-right of the screen, the Play/Pause icon allows you to pause or resume receiving with a single tap.
+        A long press on this icon opens the settings for API and MQTT.
+      </p>
+    </div>
 
+    <hr>
 
-<h1> How to Work with Note RECEIVE</h1>
+    <!-- ===== PRACTICE EXAMPLE ===== -->
+    <div class="card">
+      <h1 style="font-size: 1.5rem; text-align: left; margin-top: 0;">Practice Example: Using SoifGo with the PC Robot Simulator</h1>
 
-<h2>Receiving via Bluetooth</h2>
-<p>
-For Bluetooth receiving, you must tap the Bluetooth icon to establish the connection.  
-Each time a text message is sent, it is immediately received and added as a new line in the note.
-</p>
+      <p>
+        This example shows you how to practice <strong>Note SEND</strong> and <strong>Note RECEIVE</strong> in SoifGo without needing any hardware.
+        All you need is:
+      </p>
+      <ul>
+        <li><strong>SoifGo</strong> on your phone</li>
+        <li><strong>A PC or laptop</strong></li>
+        <li>The provided <strong>HTML simulator file</strong>, which runs directly in a desktop browser (Chrome, Edge, etc.)</li>
+      </ul>
+      <p>
+        The simulator creates a virtual robot point inside a box. You can move the point with your mouse (SEND mode), or let SoifGo move it by sending X/Y coordinates (RECEIVE mode).
+      </p>
 
-<h2>Receiving via API</h2>
-<p>
-In API receiving mode, any incoming value or size change is automatically added as a new line in the note.
-</p>
+      <h2>1. Open the simulator on your PC</h2>
 
-<h2>Receiving via MQTT</h2>
-<p>
-In MQTT receiving mode, every published value or payload change is captured and appended to the note in real time.
-</p>
+      <h3>Download and Open the Simulator</h3>
+      <p>Download the simulator file:</p>
+      <a href="soifgo_note_send_receive_simulator.zip" class="download-link" download>📦 Download soifgo_note_send_receive_simulator.zip</a>
 
-<h2>Real‑Time Logging</h2>
-<p>
-Note RECEIVE can also be used as a real‑time logger for monitoring incoming data from devices.
-</p>
+      <p>You can also open the simulator directly in your browser (PC only):</p>
+      <a href="soifgo_note_send_receive_simulator.html" class="btn-link" target="_blank">🖥️ Open soifgo_note_send_receive_simulator.html</a>
 
-<p>
-Additionally, at the top-right of the screen, the Play/Pause icon allows you to pause or resume receiving with a single tap.  
-A long press on this icon opens the settings for API and MQTT.
-</p>
+      <p>Use this simulator to practice Note SEND and Note RECEIVE with SoifGo over Bluetooth.</p>
 
+      <p>
+        Open the HTML file on your computer. You will see two sections:
+      </p>
+      <ul>
+        <li><strong>Serial Port Manager</strong> (connect, send, receive)</li>
+        <li><strong>Robot Simulator</strong> (a point inside a box)</li>
+      </ul>
+      <p>
+        The simulator uses the Web Serial API, so it works only on desktop browsers.
+      </p>
 
+      <h2>2. Connect SoifGo to the simulator</h2>
+      <p>On your PC:</p>
+      <ol>
+        <li><strong>Click "Connect"</strong> in the Serial Port Manager.</li>
+        <li>Select your <strong>Bluetooth serial device</strong> (for example HC-05, ESP32, etc.).</li>
+        <li>When connected, the button text changes to <strong>"Connected"</strong> and turns green.</li>
+      </ol>
 
-<hr>
+      <h2>3. Configure SoifGo</h2>
+      <p>Inside SoifGo:</p>
+      <ol>
+        <li>Open your <strong>Note</strong>.</li>
+        <li>From the menu, choose <strong>Note SEND</strong> or <strong>Note RECEIVE</strong>.</li>
+        <li>Select <strong>Bluetooth</strong> as the communication method.</li>
+        <li>Make sure your phone is paired with the PC over Bluetooth.</li>
+      </ol>
+      <p>
+        After receiving and sending in SoifGo, select <strong>Bluetooth</strong> as the Note send/receive method.
+      </p>
 
-<h1>Practice Example: Using SoifGo with the PC Robot Simulator</h1>
+      <h2>4. Practice Note SEND (move the point from SoifGo)</h2>
+      <p>In SoifGo, set the Note to <strong>Note SEND</strong> with <strong>Bluetooth</strong>, then write lines like:</p>
+      <div class="command-block">X:150,Y:120</div>
+      <div class="command-block">X:200,Y:80</div>
+      <div class="command-block">X:50,Y:200</div>
+      <p>Then press the <strong>Send</strong> icon in SoifGo.</p>
+      <p>In the simulator on the PC:</p>
+      <ul>
+        <li>Set the mode button to <strong>Mode: RECEIVE</strong>.</li>
+        <li>The red point inside the box will move to each X/Y position sent from SoifGo.</li>
+      </ul>
+      <p>This simulates controlling a robot arm, CNC head, or any XY device.</p>
 
-<p>
-This example shows you how to practice <strong>Note SEND</strong> and <strong>Note RECEIVE</strong> in SoifGo without needing any hardware.
-All you need is:
-</p>
+      <h2>5. Practice Note RECEIVE (record the motion path in SoifGo)</h2>
+      <p>In the simulator on the PC:</p>
+      <ul>
+        <li>Set the mode button to <strong>Mode: SEND</strong>.</li>
+        <li>Drag the red point with your mouse inside the box.</li>
+      </ul>
+      <p>The simulator sends coordinates like:</p>
+      <div class="command-block">X:197.66,Y:151.47</div>
+      <div class="command-block">X:191.66,Y:140.47</div>
+      <div class="command-block">X:185.66,Y:136.47</div>
+      <p>In SoifGo:</p>
+      <ol>
+        <li>Set the Note to <strong>Note RECEIVE</strong>.</li>
+        <li>Select <strong>Bluetooth</strong> as the receiving method.</li>
+        <li>Each movement of the point will appear as a new line in the Note.</li>
+      </ol>
+      <p>This simulates recording a robot's motion path with SoifGo.</p>
 
-<ul>
-  <li><strong>SoifGo</strong> on your phone</li>
-  <li><strong>A PC or laptop</strong></li>
-  <li>The provided <strong>HTML simulator file</strong>, which runs directly in a desktop browser (Chrome, Edge, etc.)</li>
-</ul>
+      <h2>6. What this exercise teaches you</h2>
+      <p>With this simple setup, you can practice:</p>
+      <ul>
+        <li><strong>Sending</strong> commands from SoifGo to an external device (the PC simulator)</li>
+        <li><strong>Receiving</strong> live data into a Note in SoifGo</li>
+        <li>Building motion sequences using X/Y coordinates</li>
+        <li>Testing automation logic without any physical hardware</li>
+      </ul>
+      <p>
+        The HTML simulator file can be executed on a PC and used as a training tool together with SoifGo.
+      </p>
 
-<p>
-The simulator creates a virtual robot point inside a box. You can move the point with your mouse (SEND mode), or let SoifGo move it by sending X/Y coordinates (RECEIVE mode).
-</p>
+      <video controls playsinline preload="metadata">
+        <source src="https://raw.githubusercontent.com/soifgo/soifgo/refs/heads/soifgo/tutorials/server/note_out/note_send_recive_simo.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
 
+    <!-- ===== HOME BUTTON ===== -->
+    <hr>
+    <div class="btn-wrap">
+      <a href="https://soifgo.github.io/soifgo/index.html" class="btn-home">⬅ Back to Home</a>
+    </div>
 
-
-
-
-<h2>1. Open the simulator on your PC</h2>
-
-
-<hr>
-
-<h2>Download and Open the Simulator</h2>
-
-<p>Download the simulator file:</p>
-<a href="soifgo_note_send_receive_simulator.zip" download>📦 Download soifgo_note_send_receive_simulator.zip</a>
-
-<p>You can also open the simulator directly in your browser (PC only):</p>
-<a href="soifgo_note_send_receive_simulator.html" target="_blank">🖥️ Open soifgo_note_send_receive_simulator.html</a>
-
-<p>Use this simulator to practice Note SEND and Note RECEIVE with SoifGo over Bluetooth.</p>
-
-<p>Paste the Arduino code into Arduino IDE if you are using the ESP8266 example.  
-You can configure Wi-Fi settings before uploading:</p>
-
-<pre><code>
-// Your Arduino code goes here...
-</code></pre>
-
-
-
-<p>
-Open the HTML file on your computer. You will see two sections:
-</p>
-<ul>
-  <li><strong>Serial Port Manager</strong> (connect, send, receive)</li>
-  <li><strong>Robot Simulator</strong> (a point inside a box)</li>
-</ul>
-<p>
-The simulator uses the Web Serial API, so it works only on desktop browsers.
-</p>
-
-<h2>2. Connect SoifGo to the simulator</h2>
-<p>
-On your PC:
-</p>
-<ol>
-  <li><strong>Click &quot;Connect&quot;</strong> in the Serial Port Manager.</li>
-  <li>Select your <strong>Bluetooth serial device</strong> (for example HC-05, ESP32, etc.).</li>
-  <li>When connected, the button text changes to <strong>&quot;Connected&quot;</strong> and turns green.</li>
-</ol>
-
-<h2>3. Configure SoifGo</h2>
-<p>
-Inside SoifGo:
-</p>
-<ol>
-  <li>Open your <strong>Note</strong>.</li>
-  <li>From the menu, choose <strong>Note SEND</strong> or <strong>Note RECEIVE</strong>.</li>
-  <li>Select <strong>Bluetooth</strong> as the communication method.</li>
-  <li>Make sure your phone is paired with the PC over Bluetooth.</li>
-</ol>
-<p>
-After receiving and sending in SoifGo, select <strong>Bluetooth</strong> as the Note send/receive method.
-</p>
-
-<h2>4. Practice Note SEND (move the point from SoifGo)</h2>
-<p>
-In SoifGo, set the Note to <strong>Note SEND</strong> with <strong>Bluetooth</strong>, then write lines like:
-</p>
-<code>X:150,Y:120</code><br>
-<code>X:200,Y:80</code><br>
-<code>X:50,Y:200</code>
-<p>
-Then press the <strong>Send</strong> icon in SoifGo.
-</p>
-<p>
-In the simulator on the PC:
-</p>
-<ul>
-  <li>Set the mode button to <strong>Mode: RECEIVE</strong>.</li>
-  <li>The red point inside the box will move to each X/Y position sent from SoifGo.</li>
-</ul>
-<p>
-This simulates controlling a robot arm, CNC head, or any XY device.
-</p>
-
-<h2>5. Practice Note RECEIVE (record the motion path in SoifGo)</h2>
-<p>
-In the simulator on the PC:
-</p>
-<ul>
-  <li>Set the mode button to <strong>Mode: SEND</strong>.</li>
-  <li>Drag the red point with your mouse inside the box.</li>
-</ul>
-<p>
-The simulator sends coordinates like:
-</p>
-<code>X:197.66,Y:151.47</code><br>
-<code>X:191.66,Y:140.47</code><br>
-<code>X:185.66,Y:136.47</code>
-<p>
-In SoifGo:
-</p>
-<ol>
-  <li>Set the Note to <strong>Note RECEIVE</strong>.</li>
-  <li>Select <strong>Bluetooth</strong> as the receiving method.</li>
-  <li>Each movement of the point will appear as a new line in the Note.</li>
-</ol>
-<p>
-This simulates recording a robot’s motion path with SoifGo.
-</p>
-
-<h2>6. What this exercise teaches you</h2>
-<p>
-With this simple setup, you can practice:
-</p>
-<ul>
-  <li><strong>Sending</strong> commands from SoifGo to an external device (the PC simulator)</li>
-  <li><strong>Receiving</strong> live data into a Note in SoifGo</li>
-  <li>Building motion sequences using X/Y coordinates</li>
-  <li>Testing automation logic without any physical hardware</li>
-</ul>
-<p>
-The HTML simulator file can be executed on a PC and used as a training tool together with SoifGo.
-</p>
-
-<video controls width="100%">
-  <source src="https://raw.githubusercontent.com/soifgo/soifgo/refs/heads/soifgo/tutorials/server/note_out/note_send_recive_simo.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
-
- 
-<p style="text-align:center;">
-  <a href="https://soifgo.github.io/soifgo/index.html" 
-     style="display:inline-block; padding:10px 20px; background:#8B4513; color:#fff; text-decoration:none; border-radius:5px;">
-    ⬅ Back to Home
-  </a>
-</p>
-
+  </div>
 
 </body>
 </html>

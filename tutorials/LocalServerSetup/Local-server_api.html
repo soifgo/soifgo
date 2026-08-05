@@ -1,150 +1,549 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Local Server api Setup – SoifGo</title>
- 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes" />
+  <meta name="theme-color" content="#0055aa" />
+  <meta name="color-scheme" content="light dark" />
+
+  <!-- ===== PRIMARY SEO ===== -->
+  <title>Local Server API Setup with SoifGo — Node.js & Express Tutorial</title>
+  <meta name="description" content="Complete tutorial for setting up a local server API with SoifGo. Learn how to run a Node.js Express server locally, send and receive data between SoifGo and your local server." />
+  <meta name="keywords" content="local server, Node.js, Express, SoifGo, local API, server setup, send server, receive server, localhost, IoT, REST API, JSON, data exchange" />
+
+  <!-- ===== OPEN GRAPH (Social Media) ===== -->
+  <meta property="og:title" content="Local Server API Setup with SoifGo — Node.js & Express Tutorial" />
+  <meta property="og:description" content="Complete tutorial for setting up a local server API with SoifGo. Learn how to run a Node.js Express server locally and exchange data." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://soifgo.github.io/soifgo/tutorials/local-server-api/" />
+  <meta property="og:image" content="https://soifgo.github.io/soifgo/local-server-og.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="SoifGo Tutorials" />
+
+  <!-- ===== TWITTER CARD ===== -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Local Server API Setup with SoifGo — Node.js & Express Tutorial" />
+  <meta name="twitter:description" content="Complete tutorial for setting up a local server API with SoifGo. Node.js Express server and data exchange." />
+  <meta name="twitter:image" content="https://soifgo.github.io/soifgo/local-server-og.jpg" />
+
+  <!-- ===== CANONICAL URL ===== -->
+  <link rel="canonical" href="https://soifgo.github.io/soifgo/tutorials/local-server-api/" />
+
+  <!-- ===== LANGUAGE ALTERNATES ===== -->
+  <link rel="alternate" hreflang="en" href="https://soifgo.github.io/soifgo/tutorials/local-server-api/" />
+
+  <!-- ===== SCHEMA.ORG (Structured Data) ===== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Local Server API Setup with SoifGo — Node.js & Express Tutorial",
+    "description": "Complete tutorial for setting up a local server API with SoifGo. Learn how to run a Node.js Express server locally and exchange data between SoifGo and your local server.",
+    "author": {
+      "@type": "Person",
+      "name": "Saeid Moghadam"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "SoifGo",
+      "url": "https://soifgo.github.io/soifgo/"
+    },
+    "datePublished": "2025-01-01",
+    "dateModified": "2025-01-01",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://soifgo.github.io/soifgo/tutorials/local-server-api/"
+    },
+    "about": {
+      "@type": "Thing",
+      "name": "Local Server API Configuration"
+    },
+    "teaches": [
+      "Node.js Express server setup",
+      "Local API creation",
+      "Sending data from SoifGo to server",
+      "Receiving data from server in SoifGo",
+      "Data filtering and extraction",
+      "Visual effects with server values"
+    ],
+    "inLanguage": "en",
+    "isAccessibleForFree": true,
+    "learningResourceType": "Tutorial"
+  }
+  </script>
+
   <style>
-    body {
-      font-family: sans-serif;
-      background-color: #f9f9f9;
-      padding: 1em;
-      margin: auto;
-      max-width: 100%;
-      line-height: 1.6;
+    /* ===== ROOT VARIABLES ===== */
+    :root {
+      --bg: #ffffff;
+      --fg: #1f2937;
+      --accent: #0055aa;
+      --card-bg: #f5f7fb;
+      --border: #d7dce4;
+      --muted: #6b7280;
+      --code-bg: #eef2f7;
+      --link: #0066cc;
+      --btn-home: #7a4a2e;
+      --code-dark: #0f172a;
+      --code-text: #e2e8f0;
+      --warning-bg: #fff3cd;
+      --warning-border: #ffc107;
+      --warning-text: #856404;
     }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0b0e12;
+        --fg: #e5e7eb;
+        --accent: #4dabf7;
+        --card-bg: #12161d;
+        --border: #243041;
+        --muted: #9aa3af;
+        --link: #58a6ff;
+        --btn-home: #8B5A3A;
+        --code-bg: #1b2230;
+        --warning-bg: #1e2a1e;
+        --warning-border: #f0ad4e;
+        --warning-text: #f5c842;
+      }
+    }
+
+    /* ===== RESET & BASE ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.7;
+      -webkit-text-size-adjust: 100%;
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    /* ===== HEADINGS ===== */
     h1 {
-      color: #0055aa;
+      font-size: 1.8rem;
+      color: var(--accent);
       text-align: center;
-      font-size: 2em;
+      margin: 0.75rem 0 0.5rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      word-break: break-word;
     }
+
     h2 {
-      color: #333;
-      margin-top: 2em;
-      font-size: 1.5em;
+      font-size: 1.35rem;
+      color: var(--fg);
+      margin: 1.5rem 0 0.75rem;
+      font-weight: 600;
+      word-break: break-word;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 6px;
     }
-    p { margin-bottom: 1em; }
-    a { color: #0055aa; text-decoration: none; }
-    a:hover { text-decoration: underline; }
+
+    h3 {
+      font-size: 1.1rem;
+      color: var(--accent);
+      margin: 1rem 0 0.5rem;
+      font-weight: 600;
+      word-break: break-word;
+    }
+
+    p {
+      margin: 0.75em 0;
+      word-break: break-word;
+    }
+
+    a {
+      color: var(--link);
+      text-decoration: none;
+      word-break: break-word;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* ===== CARDS ===== */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1rem;
+      max-width: 100%;
+      overflow: hidden;
+    }
+
+    /* ===== WARNING NOTE ===== */
+    .note-warning {
+      background: var(--warning-bg);
+      border: 1px solid var(--warning-border);
+      color: var(--warning-text);
+      padding: 1rem 1.2rem;
+      border-radius: 12px;
+      margin: 1rem 0;
+    }
+
+    .note-warning ul {
+      padding-left: 1.4em;
+      margin: 0.5em 0;
+    }
+
+    .note-warning li {
+      margin-bottom: 0.3em;
+    }
+
+    /* ===== IMAGES ===== */
     img {
       max-width: 100%;
       height: auto;
-      margin: 1em 0;
-      border-radius: 6px;
+      border-radius: 12px;
+      display: block;
+      margin: 0.8rem 0;
+      background: var(--card-bg);
     }
-    pre {
-      background-color: #eee;
-      padding: 1em;
-      border-radius: 6px;
-      overflow-x: auto;
-      font-size: 1em;
-      font-family: Consolas, monospace;
-      line-height: 1.6;
-    }
-    code {
-      background-color: #eee;
-      padding: 2px 6px;
-      border-radius: 4px;
-    }
- 
-    .btn {
-      display: inline-block;
-      padding: 10px 20px;
-      border-radius: 5px;
-      color: #fff;
-      text-decoration: none;
-      margin: 5px;
-    }
-    .btn-blue { background: #0066cc; }
-    .btn-brown { background: #8B4513; }
 
- 
+    /* ===== CODE & PRE ===== */
+    pre {
+      background: var(--code-dark);
+      color: var(--code-text);
+      padding: 1rem;
+      border-radius: 12px;
+      overflow-x: auto;
+      margin: 0.8rem 0;
+      font-size: 0.9rem;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      line-height: 1.7;
+    }
+
+    code {
+      background: var(--code-bg);
+      padding: 0.2em 0.6em;
+      border-radius: 8px;
+      font-size: 0.9em;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      color: var(--fg);
+      word-break: break-word;
+    }
+
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: var(--code-text);
+    }
+
+    /* ===== LISTS ===== */
+    ul, ol {
+      padding-left: 1.4em;
+      margin: 0.5em 0;
+    }
+
+    li {
+      margin-bottom: 0.4em;
+      word-break: break-word;
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn-home {
+      display: inline-block;
+      background: var(--btn-home);
+      color: white;
+      padding: 14px 34px;
+      border-radius: 60px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.05rem;
+      text-align: center;
+      transition: background 0.15s, transform 0.1s;
+      touch-action: manipulation;
+      border: none;
+      min-width: 140px;
+      box-shadow: 0 4px 10px rgba(80, 45, 20, 0.06);
+    }
+
+    .btn-home:active {
+      transform: scale(0.97);
+      background: #5f3a22;
+    }
+
+    .btn-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin: 2rem 0 0.5rem 0;
+    }
+
+    .btn-link {
+      display: inline-block;
+      background: var(--accent);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 60px;
+      font-weight: 500;
+      font-size: 1rem;
+      text-decoration: none;
+      margin: 0.5rem 0;
+      transition: background 0.15s, transform 0.1s;
+      touch-action: manipulation;
+      border: none;
+      box-shadow: 0 4px 12px rgba(0, 50, 80, 0.08);
+    }
+
+    .btn-link:active {
+      transform: scale(0.97);
+      background: #004488;
+    }
+
+    .download-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--accent);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 60px;
+      font-weight: 500;
+      font-size: 1rem;
+      text-decoration: none;
+      margin: 0.5em 0.5em 0.5em 0;
+      transition: background 0.15s, transform 0.1s;
+      touch-action: manipulation;
+      border: none;
+      box-shadow: 0 4px 12px rgba(0, 50, 80, 0.08);
+    }
+
+    .download-link:active {
+      transform: scale(0.97);
+      background: #004488;
+    }
+
+    .download-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 0.5rem 0;
+    }
+
+    /* ===== RESPONSIVE ===== */
     @media (max-width: 600px) {
-      body { font-size: 18px; line-height: 1.8; }
-      h1 { font-size: 24px; }
-      h2 { font-size: 20px; }
-      pre { font-size: 18px; line-height: 1.8; white-space: pre-wrap; word-wrap: break-word; }
+      .container {
+        padding: 10px;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      h2 {
+        font-size: 1.15rem;
+      }
+
+      .card {
+        padding: 0.8rem 0.9rem;
+        border-radius: 14px;
+      }
+
+      body {
+        font-size: 1rem;
+        line-height: 1.7;
+      }
+
+      pre {
+        font-size: 0.8rem;
+        padding: 0.8rem;
+      }
+
+      .btn-home {
+        width: 100%;
+        justify-content: center;
+        padding: 16px 18px;
+        font-size: 1rem;
+      }
+
+      .btn-wrap {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .btn-link {
+        width: 100%;
+        justify-content: center;
+        padding: 14px 18px;
+        font-size: 0.95rem;
+        text-align: center;
+      }
+
+      .download-link {
+        width: 100%;
+        justify-content: center;
+        padding: 14px 18px;
+        font-size: 0.95rem;
+      }
+
+      .download-wrap {
+        flex-direction: column;
+        gap: 8px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      h1 {
+        font-size: 1.3rem;
+      }
+
+      .card {
+        padding: 0.6rem 0.7rem;
+      }
+
+      pre {
+        font-size: 0.7rem;
+        padding: 0.6rem;
+      }
+    }
+
+    /* ===== UTILITY ===== */
+    .muted {
+      color: var(--muted);
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    hr {
+      border: none;
+      border-top: 2px solid var(--border);
+      margin: 1.5rem 0;
+    }
+
+    .api-url {
+      background: var(--code-dark);
+      color: var(--code-text);
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      word-break: break-all;
+      margin: 0.5rem 0;
+      display: inline-block;
+      max-width: 100%;
     }
   </style>
 </head>
 <body>
 
-  <h1>🖥️ Local Server api Setup for SoifGo</h1>
-  <h2>Step 1: Download and Start the Server</h2>
+  <div class="container">
 
+    <!-- ===== TITLE ===== -->
+    <h1>🖥️ Local Server API Setup for SoifGo</h1>
 
-<h2>Prerequisite: Install Node.js</h2>
-<p>⚠️ Before starting, make sure Node.js is installed. Without Node.js the server cannot run.</p>
-<p>You can install it using the file provided in your folder:</p>
-<p><a href="node-v22.17.1-x64.zip" download>📦 Download node-v22.17.1-x64</a></p>
-<p>Or download the latest version from the official website:</p>
-<p><a href="https://nodejs.org/en/download">🌐 Node.js Official Download</a></p>
+    <!-- ===== STEP 1: DOWNLOAD & START ===== -->
+    <div class="card">
+      <h2>Step 1: Download and Start the Server</h2>
 
-<p>
-## Important Note
+      <h3>Prerequisite: Install Node.js</h3>
+      <div class="note-warning">
+        <strong>⚠️ Important:</strong> Before starting, make sure Node.js is installed. Without Node.js the server cannot run.
+      </div>
 
-✅ All required npm packages have already been installed.  
-This means you do **not** need to run `npm install` again.  
+      <p>You can install it using the file provided in your folder:</p>
+      <a href="node-v22.17.1-x64.zip" class="download-link" download>📦 Download node-v22.17.1-x64</a>
 
-Everything needed to run the server is already included inside the folder:
-- `server.js`
-- `node_modules/` (all dependencies)
-- `Start server.bat` (for easy launch)
+      <p>Or download the latest version from the official website:</p>
+      <p><a href="https://nodejs.org/en/download" target="_blank" rel="noopener">🌐 Node.js Official Download</a></p>
 
-Simply extract the ZIP file and double‑click on **Start server.bat**.  
-The server will start immediately without any extra setup.</p>
+      <div class="note-warning">
+        <strong>✅ Important Note:</strong>
+        <ul>
+          <li>All required npm packages have already been installed.</li>
+          <li>You do <strong>not</strong> need to run <code>npm install</code> again.</li>
+          <li>Everything needed to run the server is already included inside the folder:
+            <ul>
+              <li><code>server.js</code></li>
+              <li><code>node_modules/</code> (all dependencies)</li>
+              <li><code>Start server.bat</code> (for easy launch)</li>
+            </ul>
+          </li>
+          <li>Simply extract the ZIP file and double‑click on <strong>Start server.bat</strong>.</li>
+          <li>The server will start immediately without any extra setup.</li>
+        </ul>
+      </div>
 
-  <p>Download the following ZIP file and extract it:</p>
-  <p><a href="Local_Server.zip" download>📦 Download Local_Server</a></p>
+      <p>Download the following ZIP file and extract it:</p>
+      <a href="Local_Server.zip" class="download-link" download>📦 Download Local_Server</a>
 
-  <p>After extraction, click on <code>Start server.bat</code> to launch the Local server on your computer.</p>
+      <p>After extraction, click on <code>Start server.bat</code> to launch the Local server on your computer.</p>
 
+      <p>If successful, you will see a message like this:</p>
+      <pre><code>{"level":30,"time":1761753122527,"pid":9856,"hostname":"ssm","msg":"Server listening at http://192.168.224.1:3000"}</code></pre>
 
+      <img src="Local-server1.png" alt="Server Start Screenshot" loading="lazy">
+    </div>
 
+    <!-- ===== STEP 2: SENDING DATA ===== -->
+    <div class="card">
+      <h2>Step 2: Sending Data from SoifGo</h2>
+      <p>Open SoifGo and create a button. Set its behavior to <strong>Send Server</strong>.</p>
+      <p>In play mode, clicking this button will send the value <code>1234</code> to the server.</p>
+      <p>You can verify the result by visiting the following address in your browser:</p>
+      <div class="api-url">http://192.168.224.1:3000/mydata</div>
+      <pre><code>{"key3":"1234"}</code></pre>
+      <p>✅ Upload successful.</p>
+      <img src="Local-server2.png" alt="Send Server Screenshot" loading="lazy">
+    </div>
 
-  <p>If successful, you will see a message like this:</p>
-  <pre><code>{"level":30,"time":1761753122527,"pid":9856,"hostname":"ssm","msg":"Server listening at http://192.168.224.1:3000"}</code></pre>
+    <!-- ===== STEP 3: RECEIVING DATA ===== -->
+    <div class="card">
+      <h2>Step 3: Receiving Data in SoifGo</h2>
+      <p>Create another button and set its behavior to <strong>Receive Server Text</strong>.</p>
+      <p>If your server response includes extra characters, you can use the <code>Start Filter</code> and <code>End Filter</code> fields to extract the desired part.</p>
+      <p>If no filtering is needed, leave those fields empty.</p>
+      <img src="Local-server3.png" alt="Receive Server Screenshot" loading="lazy">
+    </div>
 
-  <img src="Local-server1.png" alt="Server Start Screenshot">
+    <!-- ===== STEP 4: EFFECTS ===== -->
+    <div class="card">
+      <h2>Step 4: Using Effects with Received Values</h2>
+      <p>If you want to trigger visual effects based on received values, set the button behavior to <strong>Receive Server Value</strong> and specify the <strong>Maximum Value</strong>.</p>
+      <p>Once configured, effects will appear in the menu.</p>
+      <p>To learn more about applying effects to buttons, visit the following link:</p>
+      <a href="https://soifgo.github.io/soifgo/tutorials/server/Effect/effects.html" class="btn-link" target="_blank" rel="noopener">🎨 Effects Tutorial</a>
+    </div>
 
-  <h2>Step 2: Sending Data from SoifGo</h2>
-  <p>Open SoifGo and create a button. Set its behavior to <strong>Send Server</strong>.</p>
-  <p>In play mode, clicking this button will send the value <code>1234</code> to the server.</p>
-  <p>You can verify the result by visiting the following address in your browser:</p>
-  <p><a href="http://192.168.224.1:3000/mydata">http://192.168.224.1:3000/mydata</a></p>
-  <pre><code>{"key3":"1234"}</code></pre>
-  <p>✅ Upload successful.</p>
-
-  <img src="Local-server2.png" alt="Send Server Screenshot">
-
-  <h2>Step 3: Receiving Data in SoifGo</h2>
-  <p>Create another button and set its behavior to <strong>Receive Server Text</strong>.</p>
-  <p>If your server response includes extra characters, you can use the <code>Start Filter</code> and <code>End Filter</code> fields to extract the desired part.</p>
-  <p>If no filtering is needed, leave those fields empty.</p>
-
-  <img src="Local-server3.png" alt="Receive Server Screenshot">
-
-  <h2>Step 4: Using Effects with Received Values</h2>
-  <p>If you want to trigger visual effects based on received values, set the button behavior to <strong>Receive Server Value</strong> and specify the <strong>Maximum Value</strong>.</p>
-  <p>Once configured, effects will appear in the menu.</p>
-  <p>To learn more about applying effects to buttons, visit the following link:</p>
-  <p><a href="https://soifgo.github.io/soifgo/tutorials/server/Effect/effects.html">🎨 Effects Tutorial</a></p>
-
-
-    <p>
-    If extracting an API key does not work due to malformed data, simply leave the key field empty to receive the entire dataset. 
-    Then, specify the word or phrase that comes before and after the desired value.
-    The system will filter the data between those markers and display the extracted result
+    <!-- ===== ADVANCED FILTERING ===== -->
+    <div class="card">
+      <h2>Advanced Filtering</h2>
+      <p>
+        If extracting an API key does not work due to malformed data, simply leave the key field empty to receive the entire dataset.
+        Then, specify the word or phrase that comes before and after the desired value.
+        The system will filter the data between those markers and display the extracted result.
       </p>
+    </div>
 
+    <!-- ===== HOME BUTTON ===== -->
+    <hr>
+    <div class="btn-wrap">
+      <a href="https://soifgo.github.io/soifgo/index.html" class="btn-home">⬅ Back to Home</a>
+    </div>
 
-
-  <hr>
-  <p style="text-align:center;">
- 
-    <a href="https://soifgo.github.io/soifgo/index.html" class="btn btn-brown">⬅ Back to Home</a>
-  </p>
+  </div>
 
 </body>
 </html>

@@ -1,81 +1,413 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>SoifGo Notes</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes" />
+  <meta name="theme-color" content="#004466" />
+  <meta name="color-scheme" content="light dark" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- ===== PRIMARY SEO ===== -->
+  <title>Page and Folder Navigation in SoifGo — Complete Tutorial</title>
+  <meta name="description" content="Learn how to navigate between pages and folders in SoifGo. Create multiple branches, open pages and folders with buttons, and easily switch between designs." />
+  <meta name="keywords" content="SoifGo navigation, page navigation, folder navigation, SoifGo tutorial, page opening, folder opening, multi-page design, SoifGo folders" />
+
+  <!-- ===== OPEN GRAPH (Social Media) ===== -->
+  <meta property="og:title" content="Page and Folder Navigation in SoifGo — Complete Tutorial" />
+  <meta property="og:description" content="Learn how to navigate between pages and folders in SoifGo. Create multiple branches, open pages and folders with buttons, and easily switch between designs." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://soifgo.github.io/soifgo/tutorials/page-folder/" />
+  <meta property="og:image" content="https://soifgo.github.io/soifgo/page-folder-og.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="SoifGo Tutorials" />
+
+  <!-- ===== TWITTER CARD ===== -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Page and Folder Navigation in SoifGo" />
+  <meta name="twitter:description" content="Learn how to navigate between pages and folders in SoifGo. Create multiple branches, open pages and folders with buttons." />
+  <meta name="twitter:image" content="https://soifgo.github.io/soifgo/page-folder-og.jpg" />
+
+  <!-- ===== CANONICAL URL ===== -->
+  <link rel="canonical" href="https://soifgo.github.io/soifgo/tutorials/page-folder/" />
+
+  <!-- ===== LANGUAGE ALTERNATES ===== -->
+  <link rel="alternate" hreflang="en" href="https://soifgo.github.io/soifgo/tutorials/page-folder/" />
+
+  <!-- ===== SCHEMA.ORG (Structured Data) ===== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Page and Folder Navigation in SoifGo — Complete Tutorial",
+    "description": "Learn how to navigate between pages and folders in SoifGo. Create multiple branches, open pages and folders with buttons, and easily switch between designs.",
+    "author": {
+      "@type": "Person",
+      "name": "Saeid Moghadam"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "SoifGo",
+      "url": "https://soifgo.github.io/soifgo/"
+    },
+    "datePublished": "2025-01-01",
+    "dateModified": "2025-01-01",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://soifgo.github.io/soifgo/tutorials/page-folder/"
+    },
+    "about": {
+      "@type": "Thing",
+      "name": "Page and Folder Navigation in SoifGo"
+    },
+    "teaches": [
+      "Creating folders and subfolders",
+      "Page opening behavior",
+      "Folder opening behavior",
+      "Navigating between pages",
+      "Navigating between folders",
+      "Multi-page design workflow"
+    ],
+    "inLanguage": "en",
+    "isAccessibleForFree": true,
+    "learningResourceType": "Tutorial"
+  }
+  </script>
+
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 15px;
-      line-height: 1.6;
-      background-color: #f9f9f9;
-      color: #333;
-    }
-    h1, h2 {
-      color: #004466;
-    }
-    p {
-      margin-bottom: 12px;
+    /* ===== ROOT VARIABLES ===== */
+    :root {
+      --bg: #ffffff;
+      --fg: #1f2937;
+      --accent: #004466;
+      --card-bg: #f5f7fb;
+      --border: #d7dce4;
+      --muted: #6b7280;
+      --code-bg: #eef2f7;
+      --link: #0066cc;
+      --btn-home: #8B4513;
     }
 
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0b0e12;
+        --fg: #e5e7eb;
+        --accent: #4dabf7;
+        --card-bg: #12161d;
+        --border: #243041;
+        --muted: #9aa3af;
+        --link: #58a6ff;
+        --btn-home: #8B5A3A;
+        --code-bg: #1b2230;
+      }
+    }
+
+    /* ===== RESET & BASE ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.7;
+      -webkit-text-size-adjust: 100%;
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    /* ===== HEADINGS ===== */
+    h1 {
+      font-size: 1.8rem;
+      color: var(--accent);
+      text-align: center;
+      margin: 0.75rem 0 0.5rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      word-break: break-word;
+    }
+
+    h2 {
+      font-size: 1.35rem;
+      color: var(--fg);
+      margin: 1.5rem 0 0.75rem;
+      font-weight: 600;
+      word-break: break-word;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 6px;
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      color: var(--accent);
+      margin: 1rem 0 0.5rem;
+      font-weight: 600;
+      word-break: break-word;
+    }
+
+    p {
+      margin: 0.75em 0;
+      word-break: break-word;
+    }
+
+    a {
+      color: var(--link);
+      text-decoration: none;
+      word-break: break-word;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* ===== CARDS ===== */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1rem;
+      max-width: 100%;
+      overflow: hidden;
+    }
+
+    /* ===== VIDEOS ===== */
+    video {
+      max-width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9;
+      border-radius: 12px;
+      display: block;
+      margin: 0.8rem 0;
+      background: #0a1a2a;
+      object-fit: contain;
+      width: 100%;
+    }
+
+    /* ===== CODE ===== */
+    code {
+      background: var(--code-bg);
+      padding: 0.2em 0.6em;
+      border-radius: 8px;
+      font-size: 0.9em;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      color: var(--fg);
+      word-break: break-word;
+    }
+
+    /* ===== LISTS ===== */
+    ul, ol {
+      padding-left: 1.4em;
+      margin: 0.5em 0;
+    }
+
+    li {
+      margin-bottom: 0.4em;
+      word-break: break-word;
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn-home {
+      display: inline-block;
+      background: var(--btn-home);
+      color: white;
+      padding: 14px 34px;
+      border-radius: 60px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.05rem;
+      text-align: center;
+      transition: background 0.15s, transform 0.1s;
+      touch-action: manipulation;
+      border: none;
+      min-width: 140px;
+      box-shadow: 0 4px 10px rgba(80, 45, 20, 0.06);
+    }
+
+    .btn-home:active {
+      transform: scale(0.97);
+      background: #5f3a22;
+    }
+
+    .btn-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin: 2rem 0 0.5rem 0;
+    }
+
+    /* ===== RESPONSIVE ===== */
     @media (max-width: 600px) {
-      body {
-        font-size: 18px;
+      .container {
+        padding: 10px;
       }
+
       h1 {
-        font-size: 24px;
+        font-size: 1.5rem;
       }
+
       h2 {
-        font-size: 20px;
+        font-size: 1.15rem;
+      }
+
+      .card {
+        padding: 0.8rem 0.9rem;
+        border-radius: 14px;
+      }
+
+      body {
+        font-size: 1rem;
+        line-height: 1.7;
+      }
+
+      .btn-home {
+        width: 100%;
+        justify-content: center;
+        padding: 16px 18px;
+        font-size: 1rem;
+      }
+
+      .btn-wrap {
+        flex-direction: column;
+        gap: 12px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      h1 {
+        font-size: 1.3rem;
+      }
+
+      .card {
+        padding: 0.6rem 0.7rem;
+      }
+    }
+
+    /* ===== UTILITY ===== */
+    .muted {
+      color: var(--muted);
+    }
+
+    hr {
+      border: none;
+      border-top: 2px solid var(--border);
+      margin: 1.5rem 0;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 0.5rem 0;
+    }
+
+    .feature-item {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.8rem 1rem;
+    }
+
+    .feature-item strong {
+      color: var(--accent);
+      display: block;
+    }
+
+    @media (max-width: 500px) {
+      .feature-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
 <body>
 
-  <h1>Navigation in SoifGo</h1>
-  <p>
-    In SoifGo you can create multiple branches such as folders and subfolders.  
-    Each folder may contain separate pages, and these pages remain independent.  
-  </p>
+  <div class="container">
 
-  <h1>Page Opening Behavior</h1>
-  <p>
-    With the page-opening behavior, you can assign a button to load another page you have designed.  
-    From that page, you can also navigate back to the previous one.  
-  </p>
+    <!-- ===== TITLE ===== -->
+    <h1>Navigation in SoifGo</h1>
 
-  <h2>Folder Opening Behavior</h2>
-  <p>
-    Sometimes you need to access pages located in another folder.  
-    In this case, simply choose the folder-opening behavior and select the desired folder.  
-  </p>
+    <!-- ===== INTRODUCTION ===== -->
+    <div class="card">
+      <p>
+        In SoifGo you can create multiple branches such as folders and subfolders.
+        Each folder may contain separate pages, and these pages remain independent.
+      </p>
+    </div>
 
-  <h2>Demo Video</h2>
-  <p>
-    The video below shows how to travel between pages and folders in SoifGo.
-  </p>
+    <!-- ===== PAGE OPENING ===== -->
+    <div class="card">
+      <h1 style="font-size: 1.5rem; text-align: left; margin-top: 0;">Page Opening Behavior</h1>
+      <p>
+        With the page-opening behavior, you can assign a button to load another page you have designed.
+        From that page, you can also navigate back to the previous one.
+      </p>
+    </div>
 
-<video controls width="80%">
-  <source src="page_folder.mp4" type="video/mp4">
-</video>
- 
-<p style="text-align:center;">
-  <a href="https://soifgo.github.io/soifgo/index.html" 
-     style="display:inline-block; padding:10px 20px; background:#8B4513; color:#fff; text-decoration:none; border-radius:5px;">
-    ⬅ Back to Home
-  </a>
-</p>
+    <!-- ===== FOLDER OPENING ===== -->
+    <div class="card">
+      <h1 style="font-size: 1.5rem; text-align: left; margin-top: 0;">Folder Opening Behavior</h1>
+      <p>
+        Sometimes you need to access pages located in another folder.
+        In this case, simply choose the folder-opening behavior and select the desired folder.
+      </p>
+    </div>
 
+    <!-- ===== FEATURES ===== -->
+    <div class="card">
+      <h2>Navigation Features</h2>
 
-  
+      <div class="feature-grid">
+        <div class="feature-item">
+          <strong>📁 Folders</strong>
+          Create multiple folders and subfolders to organize your designs
+        </div>
+        <div class="feature-item">
+          <strong>📄 Pages</strong>
+          Each folder can contain separate, independent pages
+        </div>
+        <div class="feature-item">
+          <strong>🔗 Page Opening</strong>
+          Assign a button to load another page with back navigation
+        </div>
+        <div class="feature-item">
+          <strong>🗂️ Folder Opening</strong>
+          Access pages in other folders directly
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== VIDEO ===== -->
+    <div class="card">
+      <h2>Demo Video</h2>
+      <p>
+        The video below shows how to travel between pages and folders in SoifGo.
+      </p>
+
+      <video controls playsinline preload="metadata">
+        <source src="page_folder.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <!-- ===== HOME BUTTON ===== -->
+    <hr>
+    <div class="btn-wrap">
+      <a href="https://soifgo.github.io/soifgo/index.html" class="btn-home">⬅ Back to Home</a>
+    </div>
+
+  </div>
+
 </body>
 </html>
-
-
-
-
-
-

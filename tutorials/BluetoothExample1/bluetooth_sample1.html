@@ -1,94 +1,287 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Tutorial — How to Create a Design Page</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes" />
+
+  <!-- ===== PRIMARY SEO ===== -->
+  <title>Bluetooth Communication Example — SoifGo Serial Monitor &amp; Data Transfer</title>
+  <meta name="description" content="Learn how to send and receive Bluetooth data using SoifGo. Free serial monitor HTML with Bluetooth example for microcontrollers and computers." />
+  <meta name="keywords" content="Bluetooth communication, SoifGo, serial monitor, Bluetooth HTML, HC-05, Bluetooth data transfer, wireless serial, Bluetooth terminal" />
+
+  <!-- ===== OPEN GRAPH (Social Media) ===== -->
+  <meta property="og:title" content="Bluetooth Communication Example — SoifGo Serial Monitor" />
+  <meta property="og:description" content="Free serial monitor HTML for Bluetooth communication. Send and receive data between SoifGo and your computer or microcontroller." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://soifgo.github.io/soifgo/tutorials/bluetooth_sample1/" />
+  <meta property="og:image" content="https://soifgo.github.io/soifgo/bluetooth-sample.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="SoifGo Tutorials" />
+
+  <!-- ===== TWITTER CARD ===== -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Bluetooth Communication Example — SoifGo" />
+  <meta name="twitter:description" content="Free serial monitor HTML for Bluetooth data transfer. Works with SoifGo and any Bluetooth module." />
+  <meta name="twitter:image" content="https://soifgo.github.io/soifgo/bluetooth-sample.jpg" />
+
+  <!-- ===== CANONICAL URL ===== -->
+  <link rel="canonical" href="https://soifgo.github.io/soifgo/tutorials/bluetooth_sample1/" />
+
+  <!-- ===== SCHEMA.ORG (Structured Data) ===== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Bluetooth Communication Example — SoifGo Serial Monitor",
+    "description": "Free serial monitor HTML for Bluetooth communication between SoifGo and microcontrollers.",
+    "author": {
+      "@type": "Person",
+      "name": "Saeid Moghadam"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "SoifGo",
+      "url": "https://soifgo.github.io/soifgo/"
+    },
+    "datePublished": "2025-01-01",
+    "dateModified": "2025-01-01",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://soifgo.github.io/soifgo/tutorials/bluetooth_sample1/"
+    },
+    "about": {
+      "@type": "Thing",
+      "name": "Bluetooth Communication"
+    },
+    "teaches": {
+      "@type": "Thing",
+      "name": "Serial communication over Bluetooth using HTML"
+    },
+    "inLanguage": "en"
+  }
+  </script>
+
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      line-height: 1.7;
-      margin: 20px;
-      background: #fdfdfd;
-      color: #333;
+    /* ===== MOBILE-FIRST STYLES ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    img {
-      max-width: 100%;
-      height: auto;
-      display: block;
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.7;
+      padding: 16px;
+      background: #fafcfd;
+      color: #1a2634;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
+
+    .app {
+      max-width: 720px;
+      margin: 0 auto;
+      width: 100%;
+      background: #ffffff;
+      border-radius: 28px;
+      padding: 24px 20px 32px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    }
+
     h1 {
-      color: #2c3e50;
-      font-size: 1.8em;
-      margin-top: 0.5em;
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: #0b3b5c;
+      margin: 0.2em 0 0.3em 0;
+      word-break: break-word;
     }
+
     h2 {
-      color: #34495e;
-      margin-top: 1.2em;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #13507a;
+      margin: 1.2em 0 0.5em 0;
+      word-break: break-word;
     }
-    ol {
-      padding-left: 1.2em;
+
+    p {
+      margin: 0.75em 0;
+      word-break: break-word;
     }
+
+    ul, ol {
+      padding-left: 1.4em;
+      margin: 0.75em 0 1em 0;
+    }
+
     li {
-      margin-bottom: 0.8em;
+      margin-bottom: 0.6em;
+      word-break: break-word;
     }
+
+    li:last-child {
+      margin-bottom: 0;
+    }
+
     code {
-      background: #eef;
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-family: Consolas, monospace;
+      background: #eef3f8;
+      padding: 0.2em 0.6em;
+      border-radius: 10px;
+      font-size: 0.9em;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      color: #103b52;
+      word-break: break-word;
     }
+
     .note {
       background: #eaf7ff;
-      border-left: 4px solid #3498db;
-      padding: 10px;
-      margin: 15px 0;
+      border-left: 5px solid #2a7faa;
+      padding: 14px 16px;
+      border-radius: 14px;
+      margin: 1.2em 0;
+      font-size: 0.98rem;
+      color: #12364b;
     }
-    ul {
-      padding-left: 1.2em;
+
+    video {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9;
+      background: #0c1a26;
+      border-radius: 20px;
+      display: block;
+      margin: 1.2em 0 1em 0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      object-fit: contain;
     }
-    @media (max-width: 600px) {
+
+    .download-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: #1d5a7a;
+      color: white;
+      padding: 14px 24px;
+      border-radius: 60px;
+      font-weight: 500;
+      font-size: 1.05rem;
+      text-decoration: none;
+      margin: 0.8em 0 1.2em 0;
+      width: auto;
+      max-width: 100%;
+      transition: background 0.15s, transform 0.1s;
+      touch-action: manipulation;
+      box-shadow: 0 4px 12px rgba(0, 50, 80, 0.08);
+    }
+
+    .download-link:active {
+      transform: scale(0.97);
+      background: #12425b;
+    }
+
+    .btn-home {
+      display: inline-block;
+      background: #7a4a2e;
+      color: white;
+      padding: 14px 34px;
+      border-radius: 60px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.05rem;
+      text-align: center;
+      transition: background 0.15s, transform 0.1s;
+      touch-action: manipulation;
+      min-width: 140px;
+      box-shadow: 0 4px 10px rgba(80, 45, 20, 0.06);
+    }
+
+    .btn-home:active {
+      transform: scale(0.97);
+      background: #5f3a22;
+    }
+
+    .btn-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin: 2.4rem 0 0.4rem 0;
+    }
+
+    /* small screens */
+    @media (max-width: 520px) {
       body {
-        font-size: 16px;
-        margin: 10px;
+        padding: 10px;
+      }
+      .app {
+        padding: 18px 14px 24px;
+        border-radius: 24px;
+      }
+      h1 {
+        font-size: 1.5rem;
+      }
+      .download-link,
+      .btn-home {
+        width: 100%;
+        justify-content: center;
+        padding: 16px 18px;
+        font-size: 1rem;
+      }
+      .btn-wrap {
+        flex-direction: column;
+        gap: 12px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .app {
+        padding: 14px 10px 20px;
+      }
+      h1 {
+        font-size: 1.3rem;
+      }
+      li,
+      p {
+        font-size: 0.95rem;
       }
     }
   </style>
 </head>
 <body>
 
-  <h1>Bluetooth example 1 </h1>
+  <div class="app">
+    <h1>Bluetooth example 1</h1>
 
-<li>
-  <strong>Sample Exercise: Bluetooth Communication</strong><br>
-  In this example, you can see how <em>SoifGo</em> sends and receives data between SoifGo and the computer, demonstrating the addressing method.  
-  The file below is the HTML file on the computer side.  
-  Alternatively, you can perform this exercise using any serial terminal or with a microcontroller equipped with a Bluetooth module.
-</li>
+    <ul style="list-style: none; padding-left: 0;">
+      <li>
+        <strong>Sample Exercise: Bluetooth Communication</strong><br>
+        In this example, you can see how <em>SoifGo</em> sends and receives data between SoifGo and the computer, demonstrating the addressing method.
+        The file below is the HTML file on the computer side.
+        Alternatively, you can perform this exercise using any serial terminal or with a microcontroller equipped with a Bluetooth module.
+      </li>
+    </ul>
 
-<h1>Free  Serial  Monitor  HTML </h1>
-  <a href="Serial_Port_Soifgo.zip" download>📦 Download Serial_Port</a>
+    <h2>Free Serial Monitor HTML</h2>
+    <a href="Serial_Port_Soifgo.zip" download class="download-link">📦 Download Serial_Port</a>
 
-  <p>Bluetooth example 1</p>
+    <p><strong>Bluetooth example 1</strong></p>
 
-<video controls width="80%">
-  <source src="bluetooth_sample01.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+    <video controls playsinline preload="metadata">
+      <source src="bluetooth_sample01.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
 
- 
-<p style="text-align:center;">
-  <a href="https://soifgo.github.io/soifgo/index.html" 
-     style="display:inline-block; padding:10px 20px; background:#8B4513; color:#fff; text-decoration:none; border-radius:5px;">
-    ⬅ Back to Home
-  </a>
-</p>
+    <div class="btn-wrap">
+      <a href="https://soifgo.github.io/soifgo/index.html" class="btn-home">⬅ Back to Home</a>
+    </div>
+  </div>
 
 </body>
 </html>
-
-
-
-
-

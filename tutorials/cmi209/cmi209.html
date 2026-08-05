@@ -1,36 +1,39 @@
-﻿﻿<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes" />
   <meta name="theme-color" content="#2563eb">
 
   <!-- ===== PRIMARY SEO ===== -->
-  <title>CMI209 CNC Module — ATmega328P, Soifgo Bluetooth & G-Code Controller</title>
+  <title>CMI209 CNC Module — ATmega328P, Soifgo Bluetooth &amp; G-Code Controller</title>
   <meta name="description" content="CMI209 is a CNC-like module based on ATmega328P, controlled via Soifgo Android app over Bluetooth (115200 baud). Supports G-code, manual arcs, homing, limit switches, PWM spindle, and Mini CAD-CAM v3.0.0 with Canny edge detection." />
   <meta name="keywords" content="CMI209, ATmega328P CNC, Soifgo controller, Bluetooth CNC, G-code interpreter, Mini CAD-CAM, Canny edge detection, Arduino CNC, stepper driver, PWM spindle, homing, limit switch, emergency stop, CNC mobile interface, Saeid Moghadam, CNC shield, GRBL alternative, wireless CNC" />
+
+  <!-- ===== CANONICAL ===== -->
   <link rel="canonical" href="https://soifgo.github.io/soifgo/tutorials/server/cmi209/" />
 
-  <!-- ===== LANGUAGE ALTERNATES   ===== -->
+  <!-- ===== LANGUAGE ALTERNATES ===== -->
   <link rel="alternate" hreflang="x-default" href="https://soifgo.github.io/soifgo/tutorials/server/cmi209/" />
   <link rel="alternate" hreflang="en" href="https://soifgo.github.io/soifgo/tutorials/server/cmi209/" />
- 
 
-  <!-- ===== OPEN GRAPH (SOCIAL) ===== -->
-  <meta property="og:title" content="CMI209 — ATmega328P CNC Module with Bluetooth & Soifgo" />
+  <!-- ===== OPEN GRAPH (Social Media) ===== -->
+  <meta property="og:title" content="CMI209 — ATmega328P CNC Module with Bluetooth &amp; Soifgo" />
   <meta property="og:description" content="Complete CNC module: G-code, arc drawing, homing, spindle PWM, limit switches, and Mini CAD-CAM V3.0 with Canny edge detection. Controlled via Soifgo Android app." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://soifgo.github.io/soifgo/tutorials/server/cmi209/" />
   <meta property="og:image" content="https://soifgo.github.io/soifgo/tutorials/server/cmi209/cmi209_01.jpg" />
-  <meta property="og:image:width" content="800" />
-  <meta property="og:image:height" content="600" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="SoifGo Tutorials" />
 
   <!-- ===== TWITTER CARD ===== -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="CMI209 CNC Module — ATmega328P, Bluetooth, G-Code & Mini CAD-CAM" />
+  <meta name="twitter:title" content="CMI209 CNC Module — ATmega328P, Bluetooth, G-Code &amp; Mini CAD-CAM" />
   <meta name="twitter:description" content="CNC controller module with Soifgo app, G-code interpreter, homing, limit switches, spindle PWM, and integrated Mini CAD-CAM V3 with Canny edge detection." />
   <meta name="twitter:image" content="https://soifgo.github.io/soifgo/tutorials/server/cmi209/cmi209_01.jpg" />
+  <meta name="twitter:site" content="@soifgo" />
 
   <!-- ===== STRUCTURED DATA (JSON-LD) ===== -->
   <script type="application/ld+json">
@@ -43,6 +46,10 @@
       "@type": "Brand",
       "name": "Soifgo"
     },
+    "manufacturer": {
+      "@type": "Organization",
+      "name": "SoifGo"
+    },
     "offers": {
       "@type": "Offer",
       "price": "0",
@@ -52,643 +59,655 @@
     "image": "https://soifgo.github.io/soifgo/tutorials/server/cmi209/cmi209_01.jpg",
     "creator": {
       "@type": "Person",
-      "name": "Saeid Moghadam"
+      "name": "Saeid Moghadam",
+      "url": "https://soifgo.github.io/soifgo/"
+    },
+    "applicationCategory": "CNC Controller",
+    "operatingSystem": "Android, Windows, Linux",
+    "datePublished": "2025-01-01",
+    "dateModified": "2025-01-01",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://soifgo.github.io/soifgo/tutorials/server/cmi209/"
+    },
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://soifgo.github.io/soifgo/" },
+        { "@type": "ListItem", "position": 2, "name": "Tutorials", "item": "https://soifgo.github.io/soifgo/tutorials/" },
+        { "@type": "ListItem", "position": 3, "name": "CMI209 CNC Module", "item": "https://soifgo.github.io/soifgo/tutorials/server/cmi209/" }
+      ]
     }
   }
   </script>
 
-  <!-- ===== STYLES ===== -->
+ 
   <style>
-    :root{
-      --bg:#f7f9fc;
-      --card:#ffffff;
-      --text:#1f2937;
-      --muted:#6b7280;
-      --accent:#2563eb;
-      --border:#dbe3ef;
-      --code-bg:#0f172a;
-      --code-text:#e2e8f0;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
+    /* Reset & base */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-      background:var(--bg);
-      color:var(--text);
-      line-height:1.6;
-      -webkit-text-size-adjust:100%;
-    }
-    .container{
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 16px;
-    }
-    .header{
-      background: linear-gradient(135deg, #2563eb, #1d4ed8);
-      color:#fff;
-      padding: 24px 18px;
-      border-radius: 18px;
-      box-shadow: 0 10px 25px rgba(37,99,235,.18);
-      margin-bottom: 16px;
-    }
-    .header h1{
-      margin:0 0 8px;
-      font-size: 1.55rem;
-      line-height:1.25;
-    }
-    .header p{
-      margin:0;
-      opacity:.92;
-      font-size:.98rem;
-    }
-    .card{
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:16px;
-      padding:16px;
-      margin-bottom:14px;
-      box-shadow: 0 4px 14px rgba(15,23,42,.04);
-    }
-    h2{
-      font-size:1.3rem;
-      margin:0 0 10px;
-      color:#0f172a;
-      border-bottom:1px solid var(--border);
-      padding-bottom:8px;
-    }
-    h3{
-      font-size:1.05rem;
-      margin:14px 0 8px;
-      color:#111827;
-    }
-    img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 10px;
-    }
-    p{margin:8px 0}
-    ul{margin:8px 0 8px 20px}
-    li{margin:4px 0}
-    code, pre{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-    }
-    .cmd{
-      background:#eef2ff;
-      color:#1e3a8a;
-      padding:2px 8px;
-      border-radius:8px;
-      font-weight:600;
-      display:inline-block;
-      margin:2px 0;
-    }
-    pre{
-      background:var(--code-bg);
-      color:var(--code-text);
-      padding:12px 14px;
-      border-radius:12px;
-      overflow-x:auto;
-      margin:10px 0;
-      font-size:.95rem;
-      white-space:pre-wrap;
-      word-break:break-word;
-    }
-    .note{
-      background:#fff7ed;
-      border:1px solid #fed7aa;
-      color:#9a3412;
-      padding:12px 14px;
-      border-radius:12px;
-      margin:10px 0;
-    }
-    .small{
-      color:var(--muted);
-      font-size:.92rem;
-    }
-    .section-title{
-      margin-top:0;
-    }
-    .divider{
-      height:1px;
-      background:var(--border);
-      margin:14px 0;
-    }
-    .footer{
-      text-align:center;
-      color:var(--muted);
-      font-size:.9rem;
-      padding:10px 0 20px;
+      background: #f2f6fc;
+      color: #1a2634;
+      line-height: 1.6;
+      padding: 14px;
+      -webkit-text-size-adjust: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
-    /* ===== CAD-CAM Guide Styles ===== */
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      width: 100%;
+      background: #ffffff;
+      border-radius: 28px;
+      padding: 20px 18px 28px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+    }
+
+    /* header */
+    .header {
+      background: linear-gradient(145deg, #1e4b8a, #2563eb);
+      color: #fff;
+      padding: 20px 16px;
+      border-radius: 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 8px 20px rgba(37,99,235,0.15);
+    }
+    .header h1 {
+      font-size: 1.7rem;
+      font-weight: 700;
+      margin: 0 0 6px 0;
+      letter-spacing: -0.01em;
+      word-break: break-word;
+    }
+    .header img {
+      border-radius: 14px;
+      margin-top: 10px;
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* cards */
+    .card {
+      background: #ffffff;
+      border: 1px solid #e5edf5;
+      border-radius: 18px;
+      padding: 16px 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+    }
+
+    h2 {
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: #0f2a44;
+      border-bottom: 2px solid #eaf0f8;
+      padding-bottom: 8px;
+      margin: 0 0 12px 0;
+      word-break: break-word;
+    }
+    h3 {
+      font-size: 1.08rem;
+      font-weight: 600;
+      color: #1a3a5c;
+      margin: 16px 0 8px 0;
+    }
+
+    p { margin: 8px 0; word-break: break-word; }
+    ul, ol { padding-left: 1.4em; margin: 8px 0 12px 0; }
+    li { margin-bottom: 4px; word-break: break-word; }
+
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    .cmd {
+      background: #eaf0fa;
+      color: #1a3f6a;
+      padding: 2px 10px;
+      border-radius: 20px;
+      font-weight: 600;
+      display: inline-block;
+      margin: 2px 0;
+      font-size: 0.9rem;
+    }
+    pre {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 14px 16px;
+      border-radius: 14px;
+      overflow-x: auto;
+      margin: 12px 0;
+      font-size: 0.92rem;
+      white-space: pre-wrap;
+      word-break: break-word;
+      line-height: 1.7;
+    }
+    .note {
+      background: #fef9e7;
+      border: 1px solid #f7dba7;
+      color: #7a5d2b;
+      padding: 14px 16px;
+      border-radius: 16px;
+      margin: 12px 0;
+    }
+    .note img {
+      margin-top: 8px;
+      border-radius: 10px;
+      width: 100%;
+      height: auto;
+    }
+    .small { color: #64748b; font-size: 0.9rem; }
+
+    /* images & video */
+    img, video {
+      max-width: 100%;
+      height: auto;
+      border-radius: 14px;
+      display: block;
+      margin: 10px 0;
+    }
+    video {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #0a1a2a;
+      object-fit: contain;
+      border-radius: 14px;
+    }
+
+    /* guide grid */
     .guide-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      gap: 10px;
       margin: 10px 0;
     }
     .guide-grid .item {
-      background: #f1f5f9;
-      border-radius: 10px;
-      padding: 12px 14px;
+      background: #f1f6fd;
+      border-radius: 12px;
+      padding: 10px 12px;
+      word-break: break-word;
     }
-    .guide-grid .item strong {
-      display: block;
-      color: #0f172a;
-      margin-bottom: 4px;
-    }
-    .guide-grid .item span {
-      color: #475569;
-      font-size: 0.92rem;
-    }
+    .guide-grid .item strong { display: block; color: #0f2a44; margin-bottom: 2px; }
+    .guide-grid .item span { color: #3d5a78; font-size: 0.9rem; }
+
     .shortcut-grid {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      gap: 8px;
+      gap: 6px;
       margin: 10px 0;
     }
     .shortcut-grid .key {
-      background: #e2e8f0;
-      border-radius: 6px;
-      padding: 4px 10px;
+      background: #e2eaf3;
+      border-radius: 8px;
+      padding: 4px 8px;
       font-family: monospace;
       font-weight: 600;
-      color: #0f172a;
+      color: #0f2a44;
       text-align: center;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
     }
     .shortcut-grid .action {
-      color: #475569;
-      font-size: 0.85rem;
+      color: #3d5a78;
+      font-size: 0.8rem;
       padding: 4px 0;
     }
-    @media (max-width: 600px){
-      .container{padding:10px}
-      .card{padding:14px}
-      .header{padding:18px 14px; border-radius:14px}
-      .header h1{font-size:1.28rem}
-      h2{font-size:1.08rem}
-      .guide-grid{grid-template-columns:1fr}
-      .shortcut-grid{grid-template-columns:1fr 1fr}
+
+    /* download button */
+    .download-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #1d5a7a;
+      color: white;
+      padding: 14px 24px;
+      border-radius: 60px;
+      font-weight: 500;
+      font-size: 1.05rem;
+      text-decoration: none;
+      margin: 10px 0 6px 0;
+      width: auto;
+      max-width: 100%;
+      transition: background 0.15s, transform 0.1s;
+      touch-action: manipulation;
+      border: none;
+      box-shadow: 0 4px 12px rgba(0, 50, 80, 0.08);
+    }
+    .download-link:active { transform: scale(0.97); background: #12425b; }
+
+    .btn-home {
+      display: inline-block;
+      background: #7a4a2e;
+      color: white;
+      padding: 14px 34px;
+      border-radius: 60px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.05rem;
+      text-align: center;
+      transition: background 0.15s, transform 0.1s;
+      touch-action: manipulation;
+      border: none;
+      min-width: 140px;
+      box-shadow: 0 4px 10px rgba(80, 45, 20, 0.06);
+    }
+    .btn-home:active { transform: scale(0.97); background: #5f3a22; }
+
+    .btn-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin: 24px 0 10px 0;
+    }
+
+    .footer {
+      text-align: center;
+      color: #64748b;
+      font-size: 0.9rem;
+      padding: 12px 0 4px 0;
+    }
+
+    /* iframe */
+    .code-frame {
+      width: 100%;
+      height: 280px;
+      border: none;
+      border-radius: 14px;
+      background: #0f172a;
+      color: #e2e8f0;
+      font-family: monospace;
+      margin: 8px 0;
+    }
+
+    /* responsive */
+    @media (max-width: 600px) {
+      body { padding: 10px; }
+      .container { padding: 14px 12px 20px; border-radius: 20px; }
+      .header { padding: 16px 14px; }
+      .header h1 { font-size: 1.4rem; }
+      h2 { font-size: 1.15rem; }
+      .guide-grid { grid-template-columns: 1fr; }
+      .shortcut-grid { grid-template-columns: 1fr 1fr; }
+      .download-link, .btn-home { width: 100%; justify-content: center; padding: 16px 18px; }
+      .btn-wrap { flex-direction: column; gap: 12px; }
+      .code-frame { height: 200px; }
+    }
+
+    @media (max-width: 380px) {
+      .container { padding: 10px 8px 16px; }
+      .header h1 { font-size: 1.2rem; }
+      pre { font-size: 0.8rem; padding: 10px 12px; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
+<div class="container">
 
-    <!-- ===== HEADER ===== -->
-    <div class="header">
-      <h1>CMi209</h1>
-      <img src="cmi209_01.jpg" alt="CMI209 CNC Module main board" style="border-radius: 12px; margin-top: 8px;">
+  <!-- ===== HEADER ===== -->
+  <div class="header">
+    <h1>CMi209</h1>
+    <img src="cmi209_01.jpg" alt="CMI209 CNC Module main board" loading="lazy">
+  </div>
+
+  <!-- ===== OVERVIEW ===== -->
+  <div class="card">
+    <h2>Overview</h2>
+    <p><strong>CMI209</strong> is a CNC-like module based on the <strong>ATmega328P</strong> microcontroller. It is controlled by the <strong>Soifgo Android app</strong> through the <strong>CMI (CNC Mobile Interface)</strong>. Communication is done via a <strong>Bluetooth module</strong> at a baud rate of <strong>115200</strong>.</p>
+    <div class="note">
+      <strong>Note:</strong> Before using the Bluetooth module, it must be set to <strong>115200 baud</strong>.
+      <img src="cmi209_02.png" alt="Bluetooth wiring diagram" loading="lazy">
     </div>
+    <p>The following files are included in the project: PCB file, programmer file, BASCOM file, Proteus file, and reference images. All of these files are available for download at the end of the page.</p>
+  </div>
 
-    <!-- ===== OVERVIEW ===== -->
-    <div class="card">
-      <h2 class="section-title">Overview</h2>
-      <p>
-        <strong>CMI209</strong> is a CNC-like module based on the <strong>ATmega328P</strong> microcontroller.
-        It is controlled by the <strong>Soifgo Android app</strong> through the <strong>CMI (CNC Mobile Interface)</strong>.
-        Communication is done via a <strong>Bluetooth module</strong> at a baud rate of <strong>115200</strong>.
-      </p>
-      <div class="note">
-        <strong>Note:</strong> Before using the Bluetooth module, it must be set to <strong>115200 baud</strong>.
-        <img src="cmi209_02.png" alt="Bluetooth wiring diagram" style="margin-top: 8px;">
-      </div>
-      <p>
-        The following files are included in the project: PCB file, programmer file, BASCOM file, Proteus file, and reference images. All of these files are available for download at the end of the page.
-      </p>
-    </div>
-
-    <!-- ===== SAVED SETTINGS ===== -->
-    <div class="card">
-      <h2>Saved Settings</h2>
-      <p>The following settings are stored in memory:</p>
-      <pre>pulse=100</pre>
-      <p>
-        This means that <strong>100 pulses</strong> move the stepper motor by <strong>1 mm</strong> in this project.
-        If you use a different device, adjust the <strong>pulses per millimeter</strong> value in Soifgo.
-      </p>
-      <pre>Max_x=40
+  <!-- ===== SAVED SETTINGS ===== -->
+  <div class="card">
+    <h2>Saved Settings</h2>
+    <p>The following settings are stored in memory:</p>
+    <pre>pulse=100</pre>
+    <p>This means that <strong>100 pulses</strong> move the stepper motor by <strong>1 mm</strong> in this project. If you use a different device, adjust the <strong>pulses per millimeter</strong> value in Soifgo.</p>
+    <pre>Max_x=40
 Max_y=40
 Max_z=40</pre>
-      <p>
-        The maximum travel range for the X, Y, and Z axes is <strong>40 mm</strong> for this setup.
-      </p>
-      <pre>feedm=1200</pre>
-      <p>
-        Default movement speed is set to <strong>1400 mm/min</strong>. If no speed is received, the module uses the stored/default speed value.
-      </p>
-      <pre>feeds=5.7</pre>
-      <p>
-        This is the speed correction coefficient used to match the machine behavior. In this device, the measured value is <strong>5.7</strong>.
-      </p>
-    </div>
+    <p>The maximum travel range for the X, Y, and Z axes is <strong>40 mm</strong> for this setup.</p>
+    <pre>feedm=1200</pre>
+    <p>Default movement speed is set to <strong>1400 mm/min</strong>. If no speed is received, the module uses the stored/default speed value.</p>
+    <pre>feeds=5.7</pre>
+    <p>This is the speed correction coefficient used to match the machine behavior. In this device, the measured value is <strong>5.7</strong>.</p>
+  </div>
 
-    <!-- ===== POSITION COMMANDS ===== -->
-    <div class="card">
-      <h2>Position Setting Commands</h2>
-      <p>
-        These commands can be received either from <strong>G-code</strong> or entered manually.
-        Values are in <strong>millimeters</strong>, and <strong>uppercase letters</strong> must be used.
-      </p>
-      <p>Examples:</p>
-      <pre>X12
+  <!-- ===== POSITION COMMANDS ===== -->
+  <div class="card">
+    <h2>Position Setting Commands</h2>
+    <p>These commands can be received either from <strong>G-code</strong> or entered manually. Values are in <strong>millimeters</strong>, and <strong>uppercase letters</strong> must be used.</p>
+    <p>Examples:</p>
+    <pre>X12
 Y2
 Z-3</pre>
-      <p>
-        For <strong>X</strong> and <strong>Y</strong>, decimal values, zero, and positive values are allowed.
-        For <strong>Z</strong>, negative values are also allowed.
-      </p>
-      <p>
-        Length and width are defined from <strong>0</strong> to their maximum limits.
-        Height has a special meaning because it depends on identifying the work surface.
-        After setting the work surface, the Z axis must be zeroed using:
-      </p>
-      <pre>resetz</pre>
-      <p>
-        Then, to move the tool to a safe height, for example <strong>5 mm</strong> above the surface:
-      </p>
-      <pre>Z5</pre>
-      <p>To move downward by <strong>1 mm</strong>:</p>
-      <pre>Z-1</pre>
-      <p>To zero the X and Y axes:</p>
-      <pre>resetx
+    <p>For <strong>X</strong> and <strong>Y</strong>, decimal values, zero, and positive values are allowed. For <strong>Z</strong>, negative values are also allowed.</p>
+    <p>Length and width are defined from <strong>0</strong> to their maximum limits. Height has a special meaning because it depends on identifying the work surface. After setting the work surface, the Z axis must be zeroed using:</p>
+    <pre>resetz</pre>
+    <p>Then, to move the tool to a safe height, for example <strong>5 mm</strong> above the surface:</p>
+    <pre>Z5</pre>
+    <p>To move downward by <strong>1 mm</strong>:</p>
+    <pre>Z-1</pre>
+    <p>To zero the X and Y axes:</p>
+    <pre>resetx
 resety</pre>
-    </div>
+  </div>
 
-    <!-- ===== SPINDLE ===== -->
-    <div class="card">
-      <h2>Spindle Speed Control</h2>
-      <p>
-        An initial spindle control circuit is included on the board.
-        If you control the module using <strong>PWM</strong>, do not install the MOSFET input; instead, use the PWM input.
-      </p>
-      <p>
-        Spindle speed can be set up to <strong>20,000 RPM</strong>.
-        The corresponding PWM output range is <strong>0 to 1024</strong> (<strong>10-bit</strong>).
-        This command can be used in both G-code and manual mode, using uppercase letters.
-      </p>
-      <pre>S0</pre>
-      <p>Spindle off</p>
-      <pre>S12000</pre>
-      <p>Spindle speed set to <strong>12,000 RPM</strong></p>
-    </div>
+  <!-- ===== SPINDLE ===== -->
+  <div class="card">
+    <h2>Spindle Speed Control</h2>
+    <p>An initial spindle control circuit is included on the board. If you control the module using <strong>PWM</strong>, do not install the MOSFET input; instead, use the PWM input.</p>
+    <p>Spindle speed can be set up to <strong>20,000 RPM</strong>. The corresponding PWM output range is <strong>0 to 1024</strong> (<strong>10-bit</strong>). This command can be used in both G-code and manual mode, using uppercase letters.</p>
+    <pre>S0</pre>
+    <p>Spindle off</p>
+    <pre>S12000</pre>
+    <p>Spindle speed set to <strong>12,000 RPM</strong></p>
+  </div>
 
-    <!-- ===== FEED SPEED ===== -->
-    <div class="card">
-      <h2>Axis Feed Speed</h2>
-      <p>
-        If no initial speed is received, the default speed described above is applied.
-        In both G-code and manual mode, you can send values between <strong>1 and 4800</strong>.
-      </p>
-      <pre>F600</pre>
-      <p>Feed speed: <strong>600 mm/min</strong> (uppercase letters)</p>
-    </div>
+  <!-- ===== FEED SPEED ===== -->
+  <div class="card">
+    <h2>Axis Feed Speed</h2>
+    <p>If no initial speed is received, the default speed described above is applied. In both G-code and manual mode, you can send values between <strong>1 and 4800</strong>.</p>
+    <pre>F600</pre>
+    <p>Feed speed: <strong>600 mm/min</strong> (uppercase letters)</p>
+  </div>
 
-    <!-- ===== PWM OUTPUT ===== -->
-    <div class="card">
-      <h2>Reserved PWM Output</h2>
-      <p>
-        Another reserved PWM output is available on the board, near the limit switch pins.
-        It is intended for manual control tasks and can be used for:
-      </p>
-      <ul>
-        <li>Laser power control</li>
-        <li>Plasma cutter on/off control</li>
-        <li>Servo motor rotation</li>
-      </ul>
-      <p>The output range is <strong>0 to 1024</strong> (<strong>10-bit</strong>):</p>
-      <pre>W510</pre>
-    </div>
+  <!-- ===== PWM OUTPUT ===== -->
+  <div class="card">
+    <h2>Reserved PWM Output</h2>
+    <p>Another reserved PWM output is available on the board, near the limit switch pins. It is intended for manual control tasks and can be used for:</p>
+    <ul>
+      <li>Laser power control</li>
+      <li>Plasma cutter on/off control</li>
+      <li>Servo motor rotation</li>
+    </ul>
+    <p>The output range is <strong>0 to 1024</strong> (<strong>10-bit</strong>):</p>
+    <pre>W510</pre>
+  </div>
 
-    <!-- ===== ARC / CIRCLE ===== -->
-    <div class="card">
-      <h2>Manual Arc and Circle Drawing</h2>
-      <p>
-        The module supports linear G-code and arc G-code.
-        It also supports a manual method for drawing arcs or circles.
-      </p>
-      <h3>Command Parameters</h3>
-      <ul>
-        <li><strong>A</strong>: Starting angle, from 0 to 360. It must always be the first part of the command.</li>
-        <li><strong>B</strong>: Ending angle, from 0 to 360.</li>
-        <li><strong>R</strong>: Radius of the circle.</li>
-        <li><strong>X</strong>, <strong>Y</strong>: X and Y coordinates of the circle or arc center. These must be written after the angles.</li>
-        <li><strong>Z</strong>: Height/depth of the circle or arc. This must also come after the angles.</li>
-      </ul>
-      <h3>Example</h3>
-      <p>A full circle with a <strong>10 mm radius</strong> at <strong>X=20</strong>, <strong>Y=20</strong>, and a depth of <strong>1 mm</strong>:</p>
-      <p>Before this command, raise the tool:</p>
-      <pre>Z5
+  <!-- ===== ARC / CIRCLE ===== -->
+  <div class="card">
+    <h2>Manual Arc and Circle Drawing</h2>
+    <p>The module supports linear G-code and arc G-code. It also supports a manual method for drawing arcs or circles.</p>
+    <h3>Command Parameters</h3>
+    <ul>
+      <li><strong>A</strong>: Starting angle, from 0 to 360. It must always be the first part of the command.</li>
+      <li><strong>B</strong>: Ending angle, from 0 to 360.</li>
+      <li><strong>R</strong>: Radius of the circle.</li>
+      <li><strong>X</strong>, <strong>Y</strong>: X and Y coordinates of the circle or arc center. These must be written after the angles.</li>
+      <li><strong>Z</strong>: Height/depth of the circle or arc. This must also come after the angles.</li>
+    </ul>
+    <h3>Example</h3>
+    <p>A full circle with a <strong>10 mm radius</strong> at <strong>X=20</strong>, <strong>Y=20</strong>, and a depth of <strong>1 mm</strong>:</p>
+    <p>Before this command, raise the tool:</p>
+    <pre>Z5
 A0B360X20Y20Z-1</pre>
-      <p>
-        In arc drawing and arc G-code, the number of points used to generate the circle is initially set to <strong>50</strong>.
-        If needed, you can reduce it for a polygon-like shape, such as a hexagon, or increase it up to a maximum of <strong>99</strong> for higher precision.
-      </p>
-      <pre>res23</pre>
-      <p>
-        Sometimes it is necessary to wait before starting an action, for example in plasma cutting where a few seconds of delay may be needed before piercing.
-        The following command creates a delay in seconds, from <strong>1 to 300</strong> seconds:
-      </p>
-      <pre>sec2</pre>
-    </div>
+    <p>In arc drawing and arc G-code, the number of points used to generate the circle is initially set to <strong>50</strong>. If needed, you can reduce it for a polygon-like shape, such as a hexagon, or increase it up to a maximum of <strong>99</strong> for higher precision.</p>
+    <pre>res23</pre>
+    <p>Sometimes it is necessary to wait before starting an action, for example in plasma cutting where a few seconds of delay may be needed before piercing. The following command creates a delay in seconds, from <strong>1 to 300</strong> seconds:</p>
+    <pre>sec2</pre>
+  </div>
 
-    <!-- ===== PRECISE MOVEMENT ===== -->
-    <div class="card">
-      <h2>Precise Movement Commands</h2>
-      <p>
-        Sometimes the axes need to move manually in small or large increments.
-        For example, movement in <strong>0.5 mm</strong> steps for X, Y, and Z
-        (<strong>0.001 to 999</strong>) using signed lowercase commands:
-      </p>
-      <pre>+x0.5
+  <!-- ===== PRECISE MOVEMENT ===== -->
+  <div class="card">
+    <h2>Precise Movement Commands</h2>
+    <p>Sometimes the axes need to move manually in small or large increments. For example, movement in <strong>0.5 mm</strong> steps for X, Y, and Z (<strong>0.001 to 999</strong>) using signed lowercase commands:</p>
+    <pre>+x0.5
 -x0.5
 +y0.5
 -y0.5
 +z0.5
 -z0.5</pre>
-    </div>
+  </div>
 
-    <!-- ===== HOMING ===== -->
-    <div class="card">
-      <h2>Homing</h2>
-      <p>
-        The home or initial position of the machine is available through:
-      </p>
-      <pre>G28</pre>
-      <p>and in the module:</p>
-      <pre>home</pre>
-      <p>
-        Both commands move the axes to the home position.
-      </p>
-      <div class="note">
-        Three normally-open switches should be installed for X home, Y home, and Z home.
-        The Z home switch should allow some extra travel, at least <strong>6 mm to 10 mm</strong>, because homing includes position zero and the safe tool height is about <strong>6 mm</strong>.
-        <img src="limit_switch.png" alt="Limit switch wiring" style="margin-top: 8px;">
-      </div>
-    </div>
-
-    <!-- ===== LIMIT SWITCHES ===== -->
-    <div class="card">
-      <h2>Limit Switches and Emergency Stop Error Input</h2>
-      <p>
-        A dedicated input is provided in the module so that when it is pulled low, the axes, spindle, and the entire machine stop.
-      </p>
-      <p>
-        In most machines, limit switches are installed at the end of each axis travel so that the machine is not damaged if it moves beyond its allowed range.
-        All switches are wired in parallel, including the emergency stop push button.
-        The circuit and wiring should be done according to the schematic.
-      </p>
-      <p>
-        When this fault occurs, the module will no longer accept movement commands unless the error is cleared, the machine is power-cycled, or the following command is sent through Soifgo:
-      </p>
-      <pre>resetall</pre>
-      <p>
-        If the axis remains stuck on the protective limit switch and the fault is not cleared, the module will return to the stop state again.
-      </p>
-      <p>A dedicated stop command is also available through Soifgo:</p>
-      <pre>stop</pre>
-      <p>
-        When this command is sent, the machine stops and requires:
-      </p>
-      <pre>resetall</pre>
-      <p>to resume operation.</p>
-    </div>
-
-    <!-- ===== STEPPER DRIVERS ===== -->
-    <div class="card">
-      <h2>Stepper Driver Connections</h2>
-      <p>
-        This module uses <strong>three stepper motor driver modules</strong>.
-        If you want to use another driver, do not install the onboard modules.
-        Instead, use the <strong>four pins</strong> provided for each axis to connect an external driver:
-      </p>
-      <pre>GND
-ENABLE
-STEP
-DIR</pre>
-    </div>
-
-    <!-- ===== VIDEOS & FILES (ساختار اصلاح‌شده) ===== -->
-    <div class="card">
-      <h2>Video and Usage Sections</h2>
-
-      <h3>How to program the module (USBASP)</h3>
-      <img src="programmer.jpg" alt="USBASP programmer" style="margin: 8px 0;">
-      <video controls width="100%" poster="cmi209_01.jpg" style="max-height:400px; border-radius:12px; margin:8px 0;">
-        <source src="Avrdude_Programing.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-
-      <h3>How to design sample pages in Soifgo</h3>
-      <video controls width="100%" poster="cmi209_01.jpg" style="max-height:400px; border-radius:12px; margin:8px 0;">
-        <source src="design01.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-      <video controls width="100%" poster="cmi209_01.jpg" style="max-height:400px; border-radius:12px; margin:8px 0;">
-        <source src="design02.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-
-      <h3>Sample design using Aspire software and export file creation</h3>
-      <video controls width="100%" poster="cmi209_01.jpg" style="max-height:400px; border-radius:12px; margin:8px 0;">
-        <source src="design03.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-
-      <h3>How to transfer the Aspire export file to the phone</h3>
-      <video controls width="100%" poster="cmi209_01.jpg" style="max-height:400px; border-radius:12px; margin:8px 0;">
-        <source src="design04.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-
-      <h3>How to load the file with Soifgo and operate CMI209</h3>
-      <video controls width="100%" poster="cmi209_01.jpg" style="max-height:400px; border-radius:12px; margin:8px 0;">
-        <source src="design05.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-
-      <h3>Manual direct input example in Soifgo</h3>
-      <video controls width="100%" poster="cmi209_01.jpg" style="max-height:400px; border-radius:12px; margin:8px 0;">
-        <source src="design06.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-
-      <h3>Understanding arc resolution settings</h3>
-      <video controls width="100%" poster="cmi209_01.jpg" style="max-height:400px; border-radius:12px; margin:8px 0;">
-        <source src="design07.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-
-      <h3>Designing reset-all and stop functions in Soifgo</h3>
-      <video controls width="100%" poster="cmi209_01.jpg" style="max-height:400px; border-radius:12px; margin:8px 0;">
-        <source src="design08.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-
-      <h3>Sample operation of CMI209</h3>
-      <video controls width="100%" poster="cmi209_01.jpg" style="max-height:400px; border-radius:12px; margin:8px 0;">
-        <source src="design09.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-
-      <h3>Sample operation of MINI CAD-CAM</h3>
-      <video controls width="100%" poster="cmi209_01.jpg" style="max-height:400px; border-radius:12px; margin:8px 0;">
-        <source src="design10.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-
-      <h2 style="margin-top: 20px;">PCB and Schematic Files Atmega 328P</h2>
-      <p><a href="cmi209_File.zip" style="color:#2563eb; font-size:1.2rem; font-weight:bold;">📦 Download All File</a></p>
-    </div>
-
-    <!-- ===== CODE IFRAME ===== -->
-    <div class="card">
-      <h2>Firmware (ATmega328P)</h2>
-      <iframe src="cmi209_code.txt"
-              width="100%"
-              height="300px"
-              style="border: none; border-radius: 8px; background: #0f172a; font-family: monospace; color:#e2e8f0;">
-      </iframe>
-    </div>
-
-    <!-- ============================================================== -->
-    <!-- =====  UPDATED: MINI CAD-CAM USER GUIDE (ENGLISH) v3.0.0  ===== -->
-    <!-- ============================================================== -->
-    <div class="card" style="border:2px solid #2563eb;">
-      <h2 style="color:#2563eb;">✨ Mini CAD-CAM V3.0.0 – Complete User Guide</h2>
-      <p style="color:#475569;">
-        This is a <strong>lightweight CAD-CAM tool</strong> for creating 2D vector shapes, editing them, and generating
-        <strong>G-Code</strong> for CNC machines. All coordinates are in <strong>millimeters (mm)</strong>
-        within a user-defined work area. The app is fully touch-compatible and saves your work automatically in your browser.
-      </p>
-
-      <h3>🆕 What's New in V3.0.0</h3>
-      <ul>
-        <li><strong>🔍 Magnifier</strong>: Tap &amp; hold (or hover) to see a zoomed-in view for fine adjustments.</li>
-        <li><strong>🖼 Canny Edge Detection</strong>: Import images with advanced edge detection.</li>
-        <li><strong>⌨️ Shortcut P</strong>: Quick toggle for Pan mode.</li>
-        <li><strong>⚙️ Simple vs Canny</strong>: Choose between classic or Canny algorithm.</li>
-        <li><strong>🎯 Improved Arc Resolution</strong>: Smoother arcs and circles.</li>
-      </ul>
-
-      <h3>📐 Interface Overview</h3>
-      <div class="guide-grid">
-        <div class="item"><strong>Toolbar</strong><span>All drawing, editing, and export tools</span></div>
-        <div class="item"><strong>Canvas</strong><span>Interactive drawing area</span></div>
-        <div class="item"><strong>Info Bar</strong><span>Shows mode, zoom, selection, etc.</span></div>
-        <div class="item"><strong>G-Code Output</strong><span>Displays generated G-Code</span></div>
-      </div>
-
-      <h3>✏️ Drawing Shapes</h3>
-      <p>Click the <strong>Shapes</strong> dropdown and choose:</p>
-      <div class="guide-grid">
-        <div class="item"><strong>Rect ▭</strong><span>Adds a centered rectangle</span></div>
-        <div class="item"><strong>Circle ○</strong><span>Adds a centered circle</span></div>
-        <div class="item"><strong>Ellipse ◯</strong><span>Adds a centered ellipse</span></div>
-        <div class="item"><strong>Triangle ▲</strong><span>Adds an equilateral triangle</span></div>
-        <div class="item"><strong>Line ➖</strong><span>Click start → end</span></div>
-        <div class="item"><strong>Arc ⟳</strong><span>Click 3 points</span></div>
-        <div class="item"><strong>Text ✎</strong><span>Enter text and adjust size</span></div>
-        <div class="item"><strong>Freehand ✏</strong><span>Draw freeform polygon</span></div>
-        <div class="item"><strong>Import Image 🖼</strong><span>Convert image to vector</span></div>
-      </div>
-
-      <h3>🛠️ Editing Shapes</h3>
-      <div class="guide-grid">
-        <div class="item"><strong>Move ✋</strong><span>Select and drag</span></div>
-        <div class="item"><strong>Resize 📐</strong><span>Drag corner handles</span></div>
-        <div class="item"><strong>Rotate 🔄</strong><span>Drag rotation handle</span></div>
-        <div class="item"><strong>Delete 🗑</strong><span>Remove selected shape</span></div>
-        <div class="item"><strong>Copy 📄</strong><span>Copy selected</span></div>
-        <div class="item"><strong>Paste 📋</strong><span>Paste copied object</span></div>
-      </div>
-
-      <h3>⚙️ Tools</h3>
-      <div class="guide-grid">
-        <div class="item"><strong>Snap 🎯</strong><span>Snap to shape centers</span></div>
-        <div class="item"><strong>Ortho ⊾</strong><span>Restrict movement to 45° increments</span></div>
-        <div class="item"><strong>Center ⊙</strong><span>Show center points</span></div>
-        <div class="item"><strong>Clear All 🧹</strong><span>Delete all shapes</span></div>
-      </div>
-
-      <h3>↩ Undo / Redo</h3>
-      <ul>
-        <li><strong>Undo</strong>: Ctrl+Z</li>
-        <li><strong>Redo</strong>: Ctrl+Y</li>
-      </ul>
-
-      <h3>📏 Work Area &amp; G-Code Settings</h3>
-      <ul>
-        <li><strong>Work Area</strong>: Define CNC bed size</li>
-        <li><strong>Z Depth</strong>: Cutting depth</li>
-        <li><strong>Feed Rate</strong>: Movement speed</li>
-      </ul>
-
-      <h3>📤 Generating &amp; Exporting G-Code</h3>
-      <ol>
-        <li>Add shapes</li>
-        <li>Adjust settings</li>
-        <li>Click Generate G-Code</li>
-        <li>Copy or send to Notes</li>
-      </ol>
-
-      <h3>🖐 Touch Helper &amp; Pan Mode</h3>
-      <ul>
-        <li><strong>Touch Helper</strong>: Larger handles</li>
-        <li><strong>Pan Mode</strong>: Move view freely</li>
-      </ul>
-
-      <h3>🔍 Magnifier</h3>
-      <p>Tap &amp; hold or hover to see zoomed view.</p>
-
-      <h3>🖼 Import Image – Canny Edge Detection</h3>
-      <ul>
-        <li><strong>Threshold</strong>: Edge sensitivity</li>
-        <li><strong>Connection Distance</strong>: Connect edge points</li>
-        <li><strong>Canny Mode</strong>: High-quality tracing</li>
-      </ul>
-
-      <h3>📐 Properties Modal</h3>
-      <p>Edit absolute coordinates of shapes.</p>
-
-      <h3>⌨️ Keyboard Shortcuts</h3>
-      <div class="shortcut-grid">
-        <span class="key">Ctrl+Z</span><span class="action">Undo</span>
-        <span class="key">Ctrl+Y</span><span class="action">Redo</span>
-        <span class="key">Delete</span><span class="action">Delete</span>
-        <span class="key">Ctrl+C</span><span class="action">Copy</span>
-        <span class="key">Ctrl+V</span><span class="action">Paste</span>
-        <span class="key">Esc</span><span class="action">Deselect</span>
-        <span class="key">P</span><span class="action">Pan Mode</span>
-      </div>
-
-      <h3>🗺️ Canvas Navigation</h3>
-      <ul>
-        <li><strong>Zoom</strong>: Mouse wheel or pinch</li>
-        <li><strong>Pan</strong>: Right-drag or two-finger drag</li>
-        <li><strong>Magnifier</strong>: Tap &amp; hold</li>
-        <li><strong>Reset View</strong>: Restore default</li>
-      </ul>
-
-      <p style="text-align:right; color:#6b7280; font-size:0.9rem; margin-top:12px;">
-        <strong>Mini CAD-CAM V3.0.0</strong> — Full Feature Set • LocalStorage Auto-Save • Canny Edge • Magnifier
-      </p>
-    </div>
-    <!-- ===== END OF UPDATED CAD-CAM GUIDE ===== -->
-
-    <!-- ===== FOOTER ===== -->
-    <div class="footer">
-      Saeid Moghadam — CMI209 Module
+  <!-- ===== HOMING ===== -->
+  <div class="card">
+    <h2>Homing</h2>
+    <p>The home or initial position of the machine is available through:</p>
+    <pre>G28</pre>
+    <p>and in the module:</p>
+    <pre>home</pre>
+    <p>Both commands move the axes to the home position.</p>
+    <div class="note">
+      Three normally-open switches should be installed for X home, Y home, and Z home. The Z home switch should allow some extra travel, at least <strong>6 mm to 10 mm</strong>, because homing includes position zero and the safe tool height is about <strong>6 mm</strong>.
+      <img src="limit_switch.png" alt="Limit switch wiring" loading="lazy">
     </div>
   </div>
 
- 
-  <p style="text-align:center;">
-    <a href="https://soifgo.github.io/soifgo/index.html" 
-       style="display:inline-block; padding:10px 20px; background:#8B4513; color:#fff; text-decoration:none; border-radius:5px;">
-      ⬅ Back to Home
-    </a>
-  </p>
+  <!-- ===== LIMIT SWITCHES ===== -->
+  <div class="card">
+    <h2>Limit Switches and Emergency Stop</h2>
+    <p>A dedicated input is provided in the module so that when it is pulled low, the axes, spindle, and the entire machine stop.</p>
+    <p>In most machines, limit switches are installed at the end of each axis travel so that the machine is not damaged if it moves beyond its allowed range. All switches are wired in parallel, including the emergency stop push button. The circuit and wiring should be done according to the schematic.</p>
+    <p>When this fault occurs, the module will no longer accept movement commands unless the error is cleared, the machine is power-cycled, or the following command is sent through Soifgo:</p>
+    <pre>resetall</pre>
+    <p>If the axis remains stuck on the protective limit switch and the fault is not cleared, the module will return to the stop state again.</p>
+    <p>A dedicated stop command is also available through Soifgo:</p>
+    <pre>stop</pre>
+    <p>When this command is sent, the machine stops and requires:</p>
+    <pre>resetall</pre>
+    <p>to resume operation.</p>
+  </div>
 
+  <!-- ===== STEPPER DRIVERS ===== -->
+  <div class="card">
+    <h2>Stepper Driver Connections</h2>
+    <p>This module uses <strong>three stepper motor driver modules</strong>. If you want to use another driver, do not install the onboard modules. Instead, use the <strong>four pins</strong> provided for each axis to connect an external driver:</p>
+    <pre>GND
+ENABLE
+STEP
+DIR</pre>
+  </div>
+
+  <!-- ===== VIDEOS ===== -->
+  <div class="card">
+    <h2>Video and Usage Sections</h2>
+
+    <h3>How to program the module (USBASP)</h3>
+    <img src="programmer.jpg" alt="USBASP programmer" loading="lazy">
+    <video controls playsinline preload="metadata" poster="cmi209_01.jpg">
+      <source src="Avrdude_Programing.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+
+    <h3>How to design sample pages in Soifgo</h3>
+    <video controls playsinline preload="metadata" poster="cmi209_01.jpg">
+      <source src="design01.mp4" type="video/mp4">
+    </video>
+    <video controls playsinline preload="metadata" poster="cmi209_01.jpg">
+      <source src="design02.mp4" type="video/mp4">
+    </video>
+
+    <h3>Sample design using Aspire software</h3>
+    <video controls playsinline preload="metadata" poster="cmi209_01.jpg">
+      <source src="design03.mp4" type="video/mp4">
+    </video>
+
+    <h3>Transfer Aspire export file to phone</h3>
+    <video controls playsinline preload="metadata" poster="cmi209_01.jpg">
+      <source src="design04.mp4" type="video/mp4">
+    </video>
+
+    <h3>Load file with Soifgo and operate CMI209</h3>
+    <video controls playsinline preload="metadata" poster="cmi209_01.jpg">
+      <source src="design05.mp4" type="video/mp4">
+    </video>
+
+    <h3>Manual direct input example</h3>
+    <video controls playsinline preload="metadata" poster="cmi209_01.jpg">
+      <source src="design06.mp4" type="video/mp4">
+    </video>
+
+    <h3>Understanding arc resolution settings</h3>
+    <video controls playsinline preload="metadata" poster="cmi209_01.jpg">
+      <source src="design07.mp4" type="video/mp4">
+    </video>
+
+    <h3>Designing reset-all and stop functions</h3>
+    <video controls playsinline preload="metadata" poster="cmi209_01.jpg">
+      <source src="design08.mp4" type="video/mp4">
+    </video>
+
+    <h3>Sample operation of CMI209</h3>
+    <video controls playsinline preload="metadata" poster="cmi209_01.jpg">
+      <source src="design09.mp4" type="video/mp4">
+    </video>
+
+    <h3>Sample operation of MINI CAD-CAM</h3>
+    <video controls playsinline preload="metadata" poster="cmi209_01.jpg">
+      <source src="design10.mp4" type="video/mp4">
+    </video>
+
+    <h2 style="margin-top: 20px;">PCB and Schematic Files Atmega 328P</h2>
+    <a href="cmi209_File.zip" class="download-link">📦 Download All File</a>
+  </div>
+
+  <!-- ===== CODE IFRAME ===== -->
+  <div class="card">
+    <h2>Firmware (ATmega328P)</h2>
+    <iframe src="cmi209_code.txt" class="code-frame" loading="lazy"></iframe>
+  </div>
+
+  <!-- ===== MINI CAD-CAM GUIDE ===== -->
+  <div class="card" style="border:2px solid #2563eb;">
+    <h2 style="color:#2563eb;">✨ Mini CAD-CAM V3.0.0 – Complete User Guide</h2>
+    <p style="color:#475569;">
+      This is a <strong>lightweight CAD-CAM tool</strong> for creating 2D vector shapes, editing them, and generating
+      <strong>G-Code</strong> for CNC machines. All coordinates are in <strong>millimeters (mm)</strong>
+      within a user-defined work area. The app is fully touch-compatible and saves your work automatically in your browser.
+    </p>
+
+    <h3>🆕 What's New in V3.0.0</h3>
+    <ul>
+      <li><strong>🔍 Magnifier</strong>: Tap &amp; hold (or hover) to see a zoomed-in view for fine adjustments.</li>
+      <li><strong>🖼 Canny Edge Detection</strong>: Import images with advanced edge detection.</li>
+      <li><strong>⌨️ Shortcut P</strong>: Quick toggle for Pan mode.</li>
+      <li><strong>⚙️ Simple vs Canny</strong>: Choose between classic or Canny algorithm.</li>
+      <li><strong>🎯 Improved Arc Resolution</strong>: Smoother arcs and circles.</li>
+    </ul>
+
+    <h3>📐 Interface Overview</h3>
+    <div class="guide-grid">
+      <div class="item"><strong>Toolbar</strong><span>All drawing, editing, and export tools</span></div>
+      <div class="item"><strong>Canvas</strong><span>Interactive drawing area</span></div>
+      <div class="item"><strong>Info Bar</strong><span>Shows mode, zoom, selection, etc.</span></div>
+      <div class="item"><strong>G-Code Output</strong><span>Displays generated G-Code</span></div>
+    </div>
+
+    <h3>✏️ Drawing Shapes</h3>
+    <p>Click the <strong>Shapes</strong> dropdown and choose:</p>
+    <div class="guide-grid">
+      <div class="item"><strong>Rect ▭</strong><span>Adds a centered rectangle</span></div>
+      <div class="item"><strong>Circle ○</strong><span>Adds a centered circle</span></div>
+      <div class="item"><strong>Ellipse ◯</strong><span>Adds a centered ellipse</span></div>
+      <div class="item"><strong>Triangle ▲</strong><span>Adds an equilateral triangle</span></div>
+      <div class="item"><strong>Line ➖</strong><span>Click start → end</span></div>
+      <div class="item"><strong>Arc ⟳</strong><span>Click 3 points</span></div>
+      <div class="item"><strong>Text ✎</strong><span>Enter text and adjust size</span></div>
+      <div class="item"><strong>Freehand ✏</strong><span>Draw freeform polygon</span></div>
+      <div class="item"><strong>Import Image 🖼</strong><span>Convert image to vector</span></div>
+    </div>
+
+    <h3>🛠️ Editing Shapes</h3>
+    <div class="guide-grid">
+      <div class="item"><strong>Move ✋</strong><span>Select and drag</span></div>
+      <div class="item"><strong>Resize 📐</strong><span>Drag corner handles</span></div>
+      <div class="item"><strong>Rotate 🔄</strong><span>Drag rotation handle</span></div>
+      <div class="item"><strong>Delete 🗑</strong><span>Remove selected shape</span></div>
+      <div class="item"><strong>Copy 📄</strong><span>Copy selected</span></div>
+      <div class="item"><strong>Paste 📋</strong><span>Paste copied object</span></div>
+    </div>
+
+    <h3>⚙️ Tools</h3>
+    <div class="guide-grid">
+      <div class="item"><strong>Snap 🎯</strong><span>Snap to shape centers</span></div>
+      <div class="item"><strong>Ortho ⊾</strong><span>Restrict movement to 45° increments</span></div>
+      <div class="item"><strong>Center ⊙</strong><span>Show center points</span></div>
+      <div class="item"><strong>Clear All 🧹</strong><span>Delete all shapes</span></div>
+    </div>
+
+    <h3>↩ Undo / Redo</h3>
+    <ul>
+      <li><strong>Undo</strong>: Ctrl+Z</li>
+      <li><strong>Redo</strong>: Ctrl+Y</li>
+    </ul>
+
+    <h3>📏 Work Area &amp; G-Code Settings</h3>
+    <ul>
+      <li><strong>Work Area</strong>: Define CNC bed size</li>
+      <li><strong>Z Depth</strong>: Cutting depth</li>
+      <li><strong>Feed Rate</strong>: Movement speed</li>
+    </ul>
+
+    <h3>📤 Generating &amp; Exporting G-Code</h3>
+    <ol>
+      <li>Add shapes</li>
+      <li>Adjust settings</li>
+      <li>Click Generate G-Code</li>
+      <li>Copy or send to Notes</li>
+    </ol>
+
+    <h3>🖐 Touch Helper &amp; Pan Mode</h3>
+    <ul>
+      <li><strong>Touch Helper</strong>: Larger handles</li>
+      <li><strong>Pan Mode</strong>: Move view freely</li>
+    </ul>
+
+    <h3>🔍 Magnifier</h3>
+    <p>Tap &amp; hold or hover to see zoomed view.</p>
+
+    <h3>🖼 Import Image – Canny Edge Detection</h3>
+    <ul>
+      <li><strong>Threshold</strong>: Edge sensitivity</li>
+      <li><strong>Connection Distance</strong>: Connect edge points</li>
+      <li><strong>Canny Mode</strong>: High-quality tracing</li>
+    </ul>
+
+    <h3>📐 Properties Modal</h3>
+    <p>Edit absolute coordinates of shapes.</p>
+
+    <h3>⌨️ Keyboard Shortcuts</h3>
+    <div class="shortcut-grid">
+      <span class="key">Ctrl+Z</span><span class="action">Undo</span>
+      <span class="key">Ctrl+Y</span><span class="action">Redo</span>
+      <span class="key">Delete</span><span class="action">Delete</span>
+      <span class="key">Ctrl+C</span><span class="action">Copy</span>
+      <span class="key">Ctrl+V</span><span class="action">Paste</span>
+      <span class="key">Esc</span><span class="action">Deselect</span>
+      <span class="key">P</span><span class="action">Pan Mode</span>
+    </div>
+
+    <h3>🗺️ Canvas Navigation</h3>
+    <ul>
+      <li><strong>Zoom</strong>: Mouse wheel or pinch</li>
+      <li><strong>Pan</strong>: Right-drag or two-finger drag</li>
+      <li><strong>Magnifier</strong>: Tap &amp; hold</li>
+      <li><strong>Reset View</strong>: Restore default</li>
+    </ul>
+
+    <p style="text-align:right; color:#6b7280; font-size:0.9rem; margin-top:12px;">
+      <strong>Mini CAD-CAM V3.0.0</strong> — Full Feature Set • LocalStorage Auto-Save • Canny Edge • Magnifier
+    </p>
+  </div>
+
+  <!-- ===== HOME BUTTON ===== -->
+  <div class="btn-wrap">
+    <a href="https://soifgo.github.io/soifgo/index.html" class="btn-home">⬅ Back to Home</a>
+  </div>
+
+  <div class="footer">
+    Saeid Moghadam — CMI209 Module
+  </div>
+
+</div>
 </body>
 </html>

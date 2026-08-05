@@ -1,10 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>SoifGo Effects Tutorial</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="color-scheme" content="light dark">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes" />
+  <meta name="theme-color" content="#0b7bbf" />
+  <meta name="color-scheme" content="light dark" />
+
+  <!-- ===== PRIMARY SEO ===== -->
+  <title>SoifGo Effects Tutorial — Visual Effects for Button Controls | Size, Circle, Move, Rotate, Color, Graph, Formula</title>
+  <meta name="description" content="Complete tutorial for SoifGo button effects: Size, Circle, Move, Rotate, Color, Graph, Formula, and ALARM. Learn how to use visual effects with numeric input, Bluetooth, MQTT, and sensors." />
+  <meta name="keywords" content="SoifGo effects, button effects tutorial, visual effects, size effect, circle gauge, move effect, rotate effect, color effect, graph effect, formula math, alarm notification, Bluetooth visualization, MQTT dashboard" />
+
+  <!-- ===== OPEN GRAPH (Social Media) ===== -->
+  <meta property="og:title" content="SoifGo Effects Tutorial — Visual Effects for Button Controls" />
+  <meta property="og:description" content="Complete tutorial for SoifGo button effects: Size, Circle, Move, Rotate, Color, Graph, Formula, and ALARM. Perfect for dashboards and IoT visualization." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://soifgo.github.io/soifgo/tutorials/effects/" />
+  <meta property="og:image" content="https://soifgo.github.io/soifgo/effects-og.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="SoifGo Tutorials" />
+
+  <!-- ===== TWITTER CARD ===== -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="SoifGo Effects Tutorial — Visual Effects for Button Controls" />
+  <meta name="twitter:description" content="Complete tutorial for SoifGo button effects: Size, Circle, Move, Rotate, Color, Graph, Formula, and ALARM." />
+  <meta name="twitter:image" content="https://soifgo.github.io/soifgo/effects-og.jpg" />
+
+  <!-- ===== CANONICAL URL ===== -->
+  <link rel="canonical" href="https://soifgo.github.io/soifgo/tutorials/effects/" />
+
+  <!-- ===== LANGUAGE ALTERNATES ===== -->
+  <link rel="alternate" hreflang="en" href="https://soifgo.github.io/soifgo/tutorials/effects/" />
+
+  <!-- ===== SCHEMA.ORG (Structured Data) ===== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "SoifGo Effects Tutorial — Visual Effects for Button Controls",
+    "description": "Complete tutorial for SoifGo button effects: Size, Circle, Move, Rotate, Color, Graph, Formula, and ALARM. Learn how to use visual effects with numeric input, Bluetooth, MQTT, and sensors.",
+    "author": {
+      "@type": "Person",
+      "name": "Saeid Moghadam"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "SoifGo",
+      "url": "https://soifgo.github.io/soifgo/"
+    },
+    "datePublished": "2025-01-01",
+    "dateModified": "2025-01-01",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://soifgo.github.io/soifgo/tutorials/effects/"
+    },
+    "about": {
+      "@type": "Thing",
+      "name": "Visual Effects for IoT Dashboards"
+    },
+    "teaches": [
+      "Size effect for balancers and level indicators",
+      "Circle gauge for power and throttle",
+      "Move effect for thermometers and scales",
+      "Rotate effect for gauges and speedometers",
+      "Color effect for status visualization",
+      "Graph effect for data logging",
+      "Formula math functions for custom calculations",
+      "ALARM for threshold notifications"
+    ],
+    "inLanguage": "en",
+    "isAccessibleForFree": true,
+    "learningResourceType": "Tutorial"
+  }
+  </script>
+
   <style>
     :root {
       --bg: #ffffff;
@@ -37,38 +108,72 @@
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
       line-height: 1.6;
       -webkit-text-size-adjust: 100%;
+      min-height: 100vh;
     }
+
     .container {
       max-width: 860px;
       margin: 0 auto;
       padding: 16px;
     }
 
-    h1 { font-size: 1.6rem; margin: 0.75rem 0 0.5rem; color: var(--accent); }
-    h2 { font-size: 1.25rem; margin: 1.25rem 0 0.5rem; color: var(--accent); }
-    h3 { font-size: 1.1rem; margin: 1rem 0 0.5rem; color: var(--accent); }
-    p, li { font-size: 1rem; }
-    small { color: var(--muted); }
+    h1 {
+      font-size: 1.8rem;
+      margin: 0.75rem 0 0.5rem;
+      color: var(--accent);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.35rem;
+      margin: 1.25rem 0 0.5rem;
+      color: var(--accent);
+      font-weight: 600;
+      word-break: break-word;
+    }
+    h3 {
+      font-size: 1.1rem;
+      margin: 1rem 0 0.5rem;
+      color: var(--accent);
+      font-weight: 600;
+      word-break: break-word;
+    }
+    p, li {
+      font-size: 1rem;
+      word-break: break-word;
+    }
+    small {
+      color: var(--muted);
+    }
 
-.card {
-  max-width: 100%;
-  overflow-x: auto;  
-  padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-}
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1rem 1.2rem;
+      max-width: 100%;
+      overflow-x: auto;
+      margin-bottom: 0.5rem;
+    }
 
-.card table {
-  width: 100%;      
-  border-collapse: collapse;
-}
+    .card table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 500px;
+    }
 
-.card th, .card td {
-  padding: 8px;
-  text-align: left;
-  word-break: break-word;  
-}
+    .card th, .card td {
+      padding: 8px 10px;
+      text-align: left;
+      word-break: break-word;
+      border-bottom: 1px solid var(--border);
+    }
 
+    .card th {
+      background: var(--bg);
+      font-weight: 600;
+    }
 
     .nav {
       position: sticky;
@@ -78,53 +183,193 @@
       background: color-mix(in oklab, var(--bg) 92%, transparent);
       border-bottom: 1px solid var(--border);
     }
+
     .nav-inner {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 8px;
       justify-content: center;
       padding: 10px 16px;
     }
+
     .nav a {
       flex: 1 1 auto;
       text-align: center;
-      font-size: clamp(0.8rem, 2.5vw, 1rem);
-      padding: 8px 10px;
+      font-size: clamp(0.75rem, 2.5vw, 1rem);
+      padding: 6px 12px;
       text-decoration: none;
       color: var(--link);
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 10px;
+      transition: background 0.15s;
+      font-weight: 500;
+    }
+
+    .nav a:hover,
+    .nav a:focus {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
     }
 
     img {
       max-width: 100%;
       height: auto;
       display: block;
+      border-radius: 14px;
+      margin: 0.8rem 0;
+      background: var(--card-bg);
     }
 
+    video {
+      max-width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9;
+      border-radius: 14px;
+      display: block;
+      margin: 0.8rem 0;
+      background: #0a1a2a;
+      object-fit: contain;
+      width: 100%;
+    }
 
     .table-wrapper {
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
     }
+
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 600px;
+      min-width: 500px;
     }
+
     table th, table td {
-      padding: 6px 8px;
+      padding: 6px 10px;
       text-align: left;
+      word-break: break-word;
+      border-bottom: 1px solid var(--border);
+    }
+
+    table th {
+      background: var(--bg);
+      font-weight: 600;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    code {
+      background: var(--code-bg);
+      padding: 0.2em 0.6em;
+      border-radius: 8px;
+      font-size: 0.9em;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      color: var(--fg);
       word-break: break-word;
     }
 
-    .muted { color: var(--muted); }
+    .btn-home {
+      display: inline-block;
+      background: #7a4a2e;
+      color: white;
+      padding: 14px 34px;
+      border-radius: 60px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.05rem;
+      text-align: center;
+      transition: background 0.15s, transform 0.1s;
+      touch-action: manipulation;
+      border: none;
+      min-width: 140px;
+      box-shadow: 0 4px 10px rgba(80, 45, 20, 0.06);
+    }
+
+    .btn-home:active {
+      transform: scale(0.97);
+      background: #5f3a22;
+    }
+
+    .btn-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin: 2rem 0 0.5rem 0;
+    }
+
+    ul, ol {
+      padding-left: 1.4em;
+      margin: 0.5em 0;
+    }
+
+    li {
+      margin-bottom: 0.4em;
+    }
+
+    /* responsive */
+    @media (max-width: 600px) {
+      .container {
+        padding: 10px;
+      }
+      h1 {
+        font-size: 1.5rem;
+      }
+      h2 {
+        font-size: 1.15rem;
+      }
+      .card {
+        padding: 0.8rem 0.9rem;
+      }
+      .nav-inner {
+        gap: 4px;
+        padding: 8px 10px;
+      }
+      .nav a {
+        font-size: 0.7rem;
+        padding: 4px 8px;
+      }
+      .btn-home {
+        width: 100%;
+        justify-content: center;
+        padding: 16px 18px;
+        font-size: 1rem;
+      }
+      .btn-wrap {
+        flex-direction: column;
+        gap: 12px;
+      }
+      .card table {
+        min-width: 350px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      h1 {
+        font-size: 1.3rem;
+      }
+      .card {
+        padding: 0.6rem 0.7rem;
+      }
+      .card table {
+        min-width: 280px;
+      }
+      table th, table td {
+        padding: 4px 6px;
+        font-size: 0.85rem;
+      }
+    }
   </style>
 </head>
 <body>
-  <header class="nav">
-    <nav class="nav-inner" aria-label="Inline navigation">
+
+  <!-- ===== STICKY NAV ===== -->
+  <header class="nav" role="navigation" aria-label="Table of Contents">
+    <nav class="nav-inner">
       <a href="#overview">Overview</a>
       <a href="#setup">Setup</a>
       <a href="#size">Size</a>
@@ -134,71 +379,78 @@
       <a href="#color">Color</a>
       <a href="#graph">Graph</a>
       <a href="#formula">Formula</a>
-      <a href="#ALARM">ALARM</a>
+      <a href="#alarm">ALARM</a>
     </nav>
   </header>
 
+  <!-- ===== MAIN CONTENT ===== -->
   <main class="container">
-    <h1 id="overview">SoifGo Tutorial: How effects work</h1>
 
+    <h1 id="overview">SoifGo Tutorial: How Effects Work</h1>
 
+    <!-- ===== SIMULATION SETUP ===== -->
     <div class="card">
-<section>
-  <h2>Simulation Setup</h2>
-  <p>
-    If the required hardware for applying values by address to test button actions is unavailable,
-    you can enable the simulator. It provides an internal counter ranging from <code>1</code> to
-    <code>1024</code>  <code> </code>, allowing you to prototype and test your button behavior.
-The input can also have negative values, so when setting the maximum input value, click on the label and also enter the negative input value. For example, if our input is between -20 and 100, we set the maximum positive input value to 100 and by clicking on the label and changing its name to ‘maximum negative input value’, we set the maximum negative input value to 20
-  </p>
+      <h2>Simulation Setup</h2>
+      <p>
+        If the required hardware for applying values by address to test button actions is unavailable,
+        you can enable the simulator. It provides an internal counter ranging from <code>1</code> to
+        <code>1024</code>, allowing you to prototype and test your button behavior.
+      </p>
+      <p>
+        The input can also have negative values. When setting the maximum input value, click on the label and also enter the negative input value. For example, if your input is between <code>-20</code> and <code>100</code>, set the maximum positive input value to <code>100</code> and the maximum negative input value to <code>20</code>.
+      </p>
 
-  <h3>How to Use</h3>
-  <ul>
-    <li>Set the button behavior to <strong>numeric input</strong> (Bluetooth or API or MQTT ).</li>
-    <li> <code></code>   maximum input value <code>1024</code>.</li>
-    <li>Enable <strong>Simulation Input Value</strong> from the <em>Play</em> menu.</li>
-    <li>The simulator will apply values from <code>1</code> to <code>1024</code> automatically.</li>
-    <li>Once testing is complete, configure the external hardware address as needed.</li>
-
-
-  </ul>
-</section>
-
+      <h3>How to Use</h3>
+      <ul>
+        <li>Set the button behavior to <strong>numeric input</strong> (Bluetooth, API, or MQTT).</li>
+        <li>Set <strong>maximum input value</strong> to <code>1024</code>.</li>
+        <li>Enable <strong>Simulation Input Value</strong> from the <em>Play</em> menu.</li>
+        <li>The simulator will apply values from <code>1</code> to <code>1024</code> automatically.</li>
+        <li>Once testing is complete, configure the external hardware address as needed.</li>
+      </ul>
     </div>
 
-<img src="effect01.png" alt="Recommended Converter">
+    <img src="effect01.png" alt="Simulation setup in SoifGo" loading="lazy">
 
+    <!-- ===== SETUP ===== -->
     <h2 id="setup">Setup</h2>
     <div class="card">
       <ul>
-        <li><strong>Create the button:</strong> Set behavior to numeric input (Bluetooth or API or MQTT).</li>
-        <li><strong></strong> <code></code>. <strong>Maximum:</strong> <code>1024</code>.</li>
+        <li><strong>Create the button:</strong> Set behavior to numeric input (Bluetooth, API, or MQTT).</li>
+        <li><strong>Maximum:</strong> <code>1024</code>.</li>
         <li><strong>Enable simulator:</strong> Use <em>simulation input value</em> in Play to generate values <code>1 → 1024</code>.</li>
-        <li><strong>Edit mode:</strong> Click the button and open <em>Effects</em>. Options include Size, Circle, Move, Rotate, Color, Graph, Formula.</li>
+        <li><strong>Edit mode:</strong> Click the button and open <em>Effects</em>. Options include Size, Circle, Move, Rotate, Color, Graph, Formula, and ALARM.</li>
       </ul>
     </div>
-<img src="effect02.png" alt="Recommended Converter">
-<img src="effect03.png" alt="Recommended Converter">
 
+    <img src="effect02.png" alt="Effect settings in SoifGo" loading="lazy">
+    <img src="effect03.png" alt="Effect options menu" loading="lazy">
+
+    <!-- ===== SIZE ===== -->
     <h2 id="size">Size</h2>
     <div class="card">
       <p>
         Two sliders appear: the upper slider sets width to the far right; the next slider sets height to the top. For maximum variation,
-        place the button at the leftmost and lowest position. In the Play screen, when a numeric value is received — whether via Bluetooth,            simulator, API, MQTT, or internal sensors — the button’s size begins to change from its initial state toward the configured maximum, in    proportion to that value (up to 1024).
-
-This effect can be used in applications such as vertical or horizontal balancers, temperature indicators, tank fill-level displays, and similar cases.
+        place the button at the leftmost and lowest position. In the Play screen, when a numeric value is received — whether via Bluetooth,
+        simulator, API, MQTT, or internal sensors — the button's size begins to change from its initial state toward the configured maximum,
+        in proportion to that value (up to <code>1024</code>).
+      </p>
+      <p>
+        This effect can be used in applications such as vertical or horizontal balancers, temperature indicators, tank fill-level displays, and similar cases.
       </p>
       <p>Suitable for balancing visuals like rising water or fuel level, or any growing variable.</p>
     </div>
 
+    <!-- ===== CIRCLE ===== -->
     <h2 id="circle">Circle</h2>
     <div class="card">
       <p>
         Renders a circular chart (full or partial) behind the button. Set start and end degrees for the minimum and maximum input.
-        Adjust the button’s background for visibility. Ideal for showing input power, throttle, and similar gauges.
+        Adjust the button's background for visibility. Ideal for showing input power, throttle, and similar gauges.
       </p>
     </div>
 
+    <!-- ===== MOVE ===== -->
     <h2 id="move">Move</h2>
     <div class="card">
       <p>
@@ -207,6 +459,7 @@ This effect can be used in applications such as vertical or horizontal balancers
       </p>
     </div>
 
+    <!-- ===== ROTATE ===== -->
     <h2 id="rotate">Rotate</h2>
     <div class="card">
       <p>
@@ -217,6 +470,7 @@ This effect can be used in applications such as vertical or horizontal balancers
       <p>Suitable for clocks, pressure/temperature/current/voltage gauges, speedometers, and more.</p>
     </div>
 
+    <!-- ===== COLOR ===== -->
     <h2 id="color">Color</h2>
     <div class="card">
       <p>
@@ -225,137 +479,126 @@ This effect can be used in applications such as vertical or horizontal balancers
       </p>
     </div>
 
+    <!-- ===== VIDEO: Effects Demo ===== -->
+    <h2>Size · Circle · Move · Rotation · Color · Formula</h2>
+    <video controls playsinline preload="metadata">
+      <source src="effect1.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
 
-        <h2>Size Circular Move Rotation Color    Math Furmula </h2>
-<video controls width="50%">
-  <source src="effect1.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
-
-<h2 id="graph">Graph</h2>
-<div class="card">
-  <p>
-    Draws a line graph for the input on the button. In settings, select graph line color and thickness. In the trigger section you have
-    four options:
-  </p>
-  <ul>
-    <li><strong>Phone/internal timing with saving</strong></li>
-    <li><strong>Internal timing without saving</strong></li>
-    <li><strong>External trigger with saving</strong></li>
-    <li><strong>External trigger without saving</strong></li>
-  </ul>
-  <p>
-    For external triggers, each input stores both the value and time—ensure your sending cadence is correct (e.g., per second or hourly),
-    since transmission errors affect recorded time. At the bottom, two sliders are available: the first sets internal timing from
-    <code>100 ms</code> to <code>48 s</code>; the second controls graph line thickness. Graphs are saved in the SoifGo folder and can
-    be shared or transferred. In Play, you can zoom and navigate history pages.
-  </p>
-  <p>
-    If you want to create another graph or a new group using the same button, simply change the button name in the <em>Edit</em> section.
-    With the new name, fresh graphs will be recorded. To revisit a previous graph, rename the button back to its former name.  
-    Don’t worry if you forget—graphs are stored under their names in the <strong>SoifGo/graph</strong> folder. Use your file manager to
-    browse and access them anytime.
-  </p>
-</div>
-
-    <h2>Graph </h2>
-<video controls width="50%">
-  <source src="graph1.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
-
-
-    <h2 id="formula">Formula</h2>
-
-
-<div class="card">
-  <p>
-    This feature displays a custom value derived from the input. For example, if input range is <code>0–1024</code> but you want
-    <code>0–512</code>, write <code>val/2</code>. The input variable name is <code>val</code>. Formula authoring uses HTML-like
-    functions.
-  </p>
-
-  <h3>Available Math Functions with Examples</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>Function</th>
-        <th>Description</th>
-        <th>Example</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td><code>+</code></td><td>Adds two numbers</td><td><code>val+10</code> → if val=5 → 15</td></tr>
-      <tr><td><code>-</code></td><td>Subtracts second number from first</td><td><code>val-2</code> → if val=7 → 5</td></tr>
-      <tr><td><code>*</code></td><td>Multiplies two numbers</td><td><code>val*3</code> → if val=4 → 12</td></tr>
-      <tr><td><code>/</code></td><td>Divides first number by second</td><td><code>val/2</code> → if val=10 → 5</td></tr>
-      <tr><td><code>%</code></td><td>Remainder of division</td><td><code>val%3</code> → if val=10 → 1</td></tr>
-      <tr><td><code>Math.pow</code></td><td>Exponentiation</td><td><code>Math.pow(val,2)</code> → if val=4 → 16</td></tr>
-      <tr><td><code>Math.sqrt</code></td><td>Square root</td><td><code>Math.sqrt(val)</code> → if val=9 → 3</td></tr>
-      <tr><td><code>Math.cbrt</code></td><td>Cube root</td><td><code>Math.cbrt(val)</code> → if val=8 → 2</td></tr>
-      <tr><td><code>Math.round</code></td><td>Rounds to nearest integer</td><td><code>Math.round(3.6)</code> → 4</td></tr>
-      <tr><td><code>Math.floor</code></td><td>Rounds down</td><td><code>Math.floor(3.9)</code> → 3</td></tr>
-      <tr><td><code>Math.ceil</code></td><td>Rounds up</td><td><code>Math.ceil(3.1)</code> → 4</td></tr>
-      <tr><td><code>Math.trunc</code></td><td>Removes decimal part</td><td><code>Math.trunc(5.7)</code> → 5</td></tr>
-      <tr><td><code>Math.fround</code></td><td>Rounds to 32-bit float</td><td><code>Math.fround(1.337)</code> → 1.337000012</td></tr>
-      <tr><td><code>Math.abs</code></td><td>Absolute value</td><td><code>Math.abs(-7)</code> → 7</td></tr>
-      <tr><td><code>Math.sign</code></td><td>Sign of number</td><td><code>Math.sign(-5)</code> → -1</td></tr>
-      <tr><td><code>Math.random</code></td><td>Random number 0–1</td><td><code>Math.random()</code> → e.g. 0.42</td></tr>
-      <tr><td><code>Math.PI</code></td><td>Pi constant</td><td><code>Math.PI</code> → 3.14159…</td></tr>
-      <tr><td><code>Math.E</code></td><td>Euler's number</td><td><code>Math.E</code> → 2.718…</td></tr>
-      <tr><td><code>Math.sin</code></td><td>Sine of angle</td><td><code>Math.sin(Math.PI/2)</code> → 1</td></tr>
-      <tr><td><code>Math.cos</code></td><td>Cosine of angle</td><td><code>Math.cos(0)</code> → 1</td></tr>
-      <tr><td><code>Math.tan</code></td><td>Tangent of angle</td><td><code>Math.tan(Math.PI/4)</code> → 1</td></tr>
-      <tr><td><code>Math.log</code></td><td>Natural log</td><td><code>Math.log(Math.E)</code> → 1</td></tr>
-      <tr><td><code>Math.exp</code></td><td>e^x</td><td><code>Math.exp(1)</code> → 2.718…</td></tr>
-      <tr><td><code>Math.hypot</code></td><td>Hypotenuse length</td><td><code>Math.hypot(3,4)</code> → 5</td></tr>
-      <tr><td><code>Math.max</code></td><td>Maximum</td><td><code>Math.max(1,9,3)</code> → 9</td></tr>
-      <tr><td><code>Math.min</code></td><td>Minimum</td><td><code>Math.min(1,9,3)</code> → 1</td></tr>
-      <tr><td><code>Math.clz32</code></td><td>Leading zeros in 32-bit</td><td><code>Math.clz32(1)</code> → 31</td></tr>
-      <tr><td><code>toRadians</code></td><td>Degrees → radians</td><td><code>toRadians(180)</code> → 3.14159…</td></tr>
-      <tr><td><code>toDegrees</code></td><td>Radians → degrees</td><td><code>toDegrees(Math.PI)</code> → 180</td></tr>
-    </tbody>
-  </table>
-</div>
-
-
-
-        <h2 id="ALARM">ALARM</h2>
+    <!-- ===== GRAPH ===== -->
+    <h2 id="graph">Graph</h2>
     <div class="card">
       <p>
-The alarm provides both text and sound notifications. It is triggered when the measured value becomes greater or less than the configured threshold.
-
-Alarm Value: The numeric threshold that activates the alarm.
-
-Alarm Message: The text notification displayed when the alarm is triggered.
-
-Alarm Option: Can be enabled for either "greater than" or "less than" conditions.
-
-Delay Setting: A configurable delay bar is available at the bottom to manage consecutive alarms.
-
-Sound Notification: The alarm sound uses the same configuration as the button sound setting.
+        Draws a line graph for the input on the button. In settings, select graph line color and thickness. In the trigger section you have
+        four options:
+      </p>
+      <ul>
+        <li><strong>Phone/internal timing with saving</strong></li>
+        <li><strong>Internal timing without saving</strong></li>
+        <li><strong>External trigger with saving</strong></li>
+        <li><strong>External trigger without saving</strong></li>
+      </ul>
+      <p>
+        For external triggers, each input stores both the value and time—ensure your sending cadence is correct (e.g., per second or hourly),
+        since transmission errors affect recorded time. At the bottom, two sliders are available: the first sets internal timing from
+        <code>100 ms</code> to <code>48 s</code>; the second controls graph line thickness. Graphs are saved in the SoifGo folder and can
+        be shared or transferred. In Play, you can zoom and navigate history pages.
+      </p>
+      <p>
+        If you want to create another graph or a new group using the same button, simply change the button name in the <em>Edit</em> section.
+        With the new name, fresh graphs will be recorded. To revisit a previous graph, rename the button back to its former name.
+        Don't worry if you forget—graphs are stored under their names in the <strong>SoifGo/graph</strong> folder. Use your file manager to
+        browse and access them anytime.
       </p>
     </div>
 
-    <video controls width="50%">
-  <source src="Alarm1.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+    <h2>Graph Demo</h2>
+    <video controls playsinline preload="metadata">
+      <source src="graph1.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
 
+    <!-- ===== FORMULA ===== -->
+    <h2 id="formula">Formula</h2>
+    <div class="card">
+      <p>
+        This feature displays a custom value derived from the input. For example, if input range is <code>0–1024</code> but you want
+        <code>0–512</code>, write <code>val/2</code>. The input variable name is <code>val</code>. Formula authoring uses HTML-like
+        functions.
+      </p>
 
-<p style="text-align:center;">
-  <a href="https://soifgo.github.io/soifgo/index.html" 
-     style="display:inline-block; padding:10px 20px; background:#8B4513; color:#fff; text-decoration:none; border-radius:5px;">
-    ⬅ Back to Home
-  </a>
-</p>
+      <h3>Available Math Functions with Examples</h3>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Function</th>
+              <th>Description</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>+</code></td><td>Adds two numbers</td><td><code>val+10</code> → if val=5 → 15</td></tr>
+            <tr><td><code>-</code></td><td>Subtracts second number from first</td><td><code>val-2</code> → if val=7 → 5</td></tr>
+            <tr><td><code>*</code></td><td>Multiplies two numbers</td><td><code>val*3</code> → if val=4 → 12</td></tr>
+            <tr><td><code>/</code></td><td>Divides first number by second</td><td><code>val/2</code> → if val=10 → 5</td></tr>
+            <tr><td><code>%</code></td><td>Remainder of division</td><td><code>val%3</code> → if val=10 → 1</td></tr>
+            <tr><td><code>Math.pow</code></td><td>Exponentiation</td><td><code>Math.pow(val,2)</code> → if val=4 → 16</td></tr>
+            <tr><td><code>Math.sqrt</code></td><td>Square root</td><td><code>Math.sqrt(val)</code> → if val=9 → 3</td></tr>
+            <tr><td><code>Math.cbrt</code></td><td>Cube root</td><td><code>Math.cbrt(val)</code> → if val=8 → 2</td></tr>
+            <tr><td><code>Math.round</code></td><td>Rounds to nearest integer</td><td><code>Math.round(3.6)</code> → 4</td></tr>
+            <tr><td><code>Math.floor</code></td><td>Rounds down</td><td><code>Math.floor(3.9)</code> → 3</td></tr>
+            <tr><td><code>Math.ceil</code></td><td>Rounds up</td><td><code>Math.ceil(3.1)</code> → 4</td></tr>
+            <tr><td><code>Math.trunc</code></td><td>Removes decimal part</td><td><code>Math.trunc(5.7)</code> → 5</td></tr>
+            <tr><td><code>Math.fround</code></td><td>Rounds to 32-bit float</td><td><code>Math.fround(1.337)</code> → 1.337000012</td></tr>
+            <tr><td><code>Math.abs</code></td><td>Absolute value</td><td><code>Math.abs(-7)</code> → 7</td></tr>
+            <tr><td><code>Math.sign</code></td><td>Sign of number</td><td><code>Math.sign(-5)</code> → -1</td></tr>
+            <tr><td><code>Math.random</code></td><td>Random number 0–1</td><td><code>Math.random()</code> → e.g. 0.42</td></tr>
+            <tr><td><code>Math.PI</code></td><td>Pi constant</td><td><code>Math.PI</code> → 3.14159…</td></tr>
+            <tr><td><code>Math.E</code></td><td>Euler's number</td><td><code>Math.E</code> → 2.718…</td></tr>
+            <tr><td><code>Math.sin</code></td><td>Sine of angle</td><td><code>Math.sin(Math.PI/2)</code> → 1</td></tr>
+            <tr><td><code>Math.cos</code></td><td>Cosine of angle</td><td><code>Math.cos(0)</code> → 1</td></tr>
+            <tr><td><code>Math.tan</code></td><td>Tangent of angle</td><td><code>Math.tan(Math.PI/4)</code> → 1</td></tr>
+            <tr><td><code>Math.log</code></td><td>Natural log</td><td><code>Math.log(Math.E)</code> → 1</td></tr>
+            <tr><td><code>Math.exp</code></td><td>e^x</td><td><code>Math.exp(1)</code> → 2.718…</td></tr>
+            <tr><td><code>Math.hypot</code></td><td>Hypotenuse length</td><td><code>Math.hypot(3,4)</code> → 5</td></tr>
+            <tr><td><code>Math.max</code></td><td>Maximum</td><td><code>Math.max(1,9,3)</code> → 9</td></tr>
+            <tr><td><code>Math.min</code></td><td>Minimum</td><td><code>Math.min(1,9,3)</code> → 1</td></tr>
+            <tr><td><code>Math.clz32</code></td><td>Leading zeros in 32-bit</td><td><code>Math.clz32(1)</code> → 31</td></tr>
+            <tr><td><code>toRadians</code></td><td>Degrees → radians</td><td><code>toRadians(180)</code> → 3.14159…</td></tr>
+            <tr><td><code>toDegrees</code></td><td>Radians → degrees</td><td><code>toDegrees(Math.PI)</code> → 180</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ===== ALARM ===== -->
+    <h2 id="alarm">ALARM</h2>
+    <div class="card">
+      <p>
+        The alarm provides both text and sound notifications. It is triggered when the measured value becomes greater or less than the configured threshold.
+      </p>
+      <ul>
+        <li><strong>Alarm Value:</strong> The numeric threshold that activates the alarm.</li>
+        <li><strong>Alarm Message:</strong> The text notification displayed when the alarm is triggered.</li>
+        <li><strong>Alarm Option:</strong> Can be enabled for either "greater than" or "less than" conditions.</li>
+        <li><strong>Delay Setting:</strong> A configurable delay bar is available at the bottom to manage consecutive alarms.</li>
+        <li><strong>Sound Notification:</strong> The alarm sound uses the same configuration as the button sound setting.</li>
+      </ul>
+    </div>
+
+    <video controls playsinline preload="metadata">
+      <source src="Alarm1.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+
+    <!-- ===== HOME BUTTON ===== -->
+    <div class="btn-wrap">
+      <a href="https://soifgo.github.io/soifgo/index.html" class="btn-home">⬅ Back to Home</a>
+    </div>
 
   </main>
+
 </body>
 </html>
-
-
-
-
-
-

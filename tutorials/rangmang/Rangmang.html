@@ -2,19 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes">
   <meta name="theme-color" content="#1e1e24">
 
   <!-- ===== PRIMARY SEO ===== -->
   <title>RANGMANG — ATmega128/328 Serial RGB Controller for Addressable LEDs</title>
   <meta name="description" content="RANGMANG is a professional serial RGB controller based on ATmega128 and ATmega328, supporting addressable LEDs such as WS2811, WS2812B, WS2813, WS2815, SK6812, and TM1814. Features include Dance Mode, Solid Color Mode, Pixel Addressing, and support for up to 999 pixels.">
-  <meta name="keywords" content="RANGMANG, Serial RGB Controller, ATmega128, ATmega328P, WS2812B Controller, Addressable LED, RGB LED Controller, Soifgo">
+  <meta name="keywords" content="RANGMANG, Serial RGB Controller, ATmega128, ATmega328P, WS2812B Controller, Addressable LED, RGB LED Controller, Soifgo, WS2811, SK6812, LED Dance Mode, Pixel Addressing">
+
   <link rel="canonical" href="https://soifgo.github.io/soifgo/tutorials/server/rangmang/">
 
   <!-- ===== LANGUAGE ALTERNATES ===== -->
   <link rel="alternate" hreflang="x-default" href="https://soifgo.github.io/soifgo/tutorials/server/rangmang/" />
   <link rel="alternate" hreflang="en" href="https://soifgo.github.io/soifgo/tutorials/server/rangmang/" />
- 
 
   <!-- ===== OPEN GRAPH ===== -->
   <meta property="og:title" content="RANGMANG — Professional Serial RGB Controller for ATmega128/328">
@@ -25,355 +25,683 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="SoifGo Tutorials">
 
   <!-- ===== TWITTER CARD ===== -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="RANGMANG — ATmega Serial RGB Controller">
-  <meta name="twitter:description" content="Serial RGB controller for addressable LEDs with Dance Mode, Solid Color Mode, and Pixel Addressing.">
+  <meta name="twitter:title" content="RANGMANG — ATmega Serial RGB Controller for Addressable LEDs">
+  <meta name="twitter:description" content="Serial RGB controller for addressable LEDs with Dance Mode, Solid Color Mode, and Pixel Addressing. Supports WS2811, WS2812B, SK6812, and more.">
   <meta name="twitter:image" content="https://soifgo.github.io/soifgo/tutorials/server/rangmang/rangmang_pic.png">
 
   <!-- ===== SCHEMA.ORG ===== -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
+    "@type": "Product",
     "name": "RANGMANG Serial RGB Controller",
-    "operatingSystem": "Embedded / Microcontroller",
-    "applicationCategory": "LED Controller, RGB Controller",
     "description": "RANGMANG is a serial RGB controller for ATmega128 and ATmega328 supporting addressable LED strips such as WS2811, WS2812B, WS2813, WS2815, SK6812 and TM1814.",
-    "url": "https://soifgo.github.io/soifgo/tutorials/server/rangmang/"
+    "brand": {
+      "@type": "Brand",
+      "name": "SoifGo"
+    },
+    "manufacturer": {
+      "@type": "Organization",
+      "name": "SoifGo"
+    },
+    "applicationCategory": "LED Controller",
+    "operatingSystem": "Embedded / Microcontroller",
+    "url": "https://soifgo.github.io/soifgo/tutorials/server/rangmang/",
+    "image": "https://soifgo.github.io/soifgo/tutorials/server/rangmang/rangmang_pic.png",
+    "creator": {
+      "@type": "Person",
+      "name": "Saeid Moghadam"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://soifgo.github.io/soifgo/tutorials/server/rangmang/"
+    },
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://soifgo.github.io/soifgo/" },
+        { "@type": "ListItem", "position": 2, "name": "Tutorials", "item": "https://soifgo.github.io/soifgo/tutorials/" },
+        { "@type": "ListItem", "position": 3, "name": "RANGMANG RGB Controller", "item": "https://soifgo.github.io/soifgo/tutorials/server/rangmang/" }
+      ]
+    }
   }
   </script>
 
   <style>
-    /* Modern Dark Theme for Electronics/RGB Projects */
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
-      line-height: 1.7;
-      background-color: #1e1e24;
-      color: #e0e0e0;
-    }
-    
-    /* Center and constrain content width for better readability */
-    body > * {
-      max-width: 900px;
-      margin-left: auto;
-      margin-right: auto;
+    /* ===== ROOT VARIABLES ===== */
+    :root {
+      --bg: #1e1e24;
+      --fg: #e0e0e0;
+      --accent: #00ffcc;
+      --accent2: #ff007f;
+      --accent3: #00ccff;
+      --card-bg: #2a2a35;
+      --border: #3a3a47;
+      --muted: #b8b8c4;
+      --btn-home: #8B4513;
     }
 
-    /* Cyan/Neon heading styles matching RGB themes */
+    /* ===== RESET & BASE ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.7;
+      -webkit-text-size-adjust: 100%;
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    /* ===== STICKY NAV ===== */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: saturate(180%) blur(8px);
+      background: color-mix(in oklab, var(--bg) 92%, transparent);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 0;
+    }
+
+    .nav-inner {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: center;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 10px;
+    }
+
+    .nav a {
+      flex: 1 1 auto;
+      text-align: center;
+      font-size: clamp(0.7rem, 2vw, 0.9rem);
+      padding: 6px 12px;
+      text-decoration: none;
+      color: var(--accent);
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      transition: background 0.15s, color 0.15s;
+      font-weight: 500;
+    }
+
+    .nav a:hover,
+    .nav a:focus {
+      background: var(--accent);
+      color: var(--bg);
+      border-color: var(--accent);
+    }
+
+    /* ===== HEADINGS ===== */
     h1 {
-      font-size: 2.5rem;
-      color: #00ffcc;
+      font-size: 2.2rem;
+      color: var(--accent);
       text-transform: uppercase;
-      border-bottom: 2px solid #3a3a47;
+      border-bottom: 2px solid var(--border);
       padding-bottom: 10px;
       text-align: center;
+      margin: 0.5rem 0 0.5rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      word-break: break-word;
     }
 
     h2 {
-      color: #ff007f; 
-      margin-top: 40px;
-      border-left: 4px solid #ff007f;
-      padding-left: 10px;
+      font-size: 1.4rem;
+      color: var(--accent2);
+      margin-top: 2rem;
+      border-left: 4px solid var(--accent2);
+      padding-left: 12px;
+      font-weight: 600;
+      word-break: break-word;
     }
 
     h3 {
-      color: #00ccff;
-      margin-top: 30px;
-      border-left: 4px solid #00ccff;
-      padding-left: 10px;
+      font-size: 1.1rem;
+      color: var(--accent3);
+      margin-top: 1.5rem;
+      border-left: 4px solid var(--accent3);
+      padding-left: 12px;
+      font-weight: 600;
+      word-break: break-word;
     }
 
-    p, li {
-      color: #b8b8c4;
+    p {
+      margin: 0.75em 0;
+      color: var(--muted);
+      word-break: break-word;
     }
 
     strong {
       color: #ffffff;
     }
 
-    /* Responsive Images & Videos with soft shadows */
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      word-break: break-word;
+      transition: color 0.2s;
+    }
+
+    a:hover {
+      color: var(--accent2);
+      text-decoration: underline;
+    }
+
+    /* ===== CARDS ===== */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1rem;
+      max-width: 100%;
+      overflow: hidden;
+    }
+
+    /* ===== IMAGES & VIDEOS ===== */
     img, video {
       max-width: 100%;
       height: auto;
-      display: block;
-      margin: 25px auto;
       border-radius: 8px;
+      display: block;
+      margin: 1.2rem auto;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
     }
 
-    /* Modern Table UI */
+    video {
+      aspect-ratio: 16 / 9;
+      width: 100%;
+      background: #0a0a0f;
+      object-fit: contain;
+    }
+
+    /* ===== TABLES ===== */
+    .table-container {
+      overflow-x: auto;
+      border-radius: 8px;
+      margin: 1rem 0;
+    }
+
     table {
       width: 100%;
       border-collapse: collapse;
-      margin: 20px 0;
-      background-color: #2a2a35;
+      background: var(--card-bg);
       border-radius: 8px;
       overflow: hidden;
       box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      min-width: 500px;
     }
 
     th, td {
-      padding: 12px 15px;
+      padding: 10px 14px;
       text-align: center;
-      border: 1px solid #3a3a47;
+      border: 1px solid var(--border);
+      word-break: break-word;
     }
 
     th {
-      background-color: #333344;
-      color: #00ffcc;
+      background: #333344;
+      color: var(--accent);
       font-weight: 600;
     }
 
     tr:nth-child(even) {
-      background-color: #24242d;
+      background: #24242d;
     }
 
-    /* Compiler/IDE style for code blocks */
+    /* ===== CODE & PRE ===== */
     pre {
-      background-color: #111116;
-      color: #a9ffb4; 
-      padding: 15px;
-      border-radius: 6px;
+      background: #111116;
+      color: #a9ffb4;
+      padding: 1rem;
+      border-radius: 8px;
       overflow-x: auto;
       font-family: "Consolas", "Courier New", Courier, monospace;
-      border-left: 3px solid #00ffcc;
-      font-size: 0.9rem;
+      border-left: 3px solid var(--accent);
+      font-size: 0.85rem;
+      line-height: 1.7;
+      margin: 0.8rem 0;
     }
 
-    ul {
-      padding-left: 20px;
-      list-style-type: square;
-    }
-    
-    ul li {
-      margin: 8px 0;
-    }
-
-    /* Interactive UI Links */
-    a {
-      color: #00ffff;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    a:hover {
-      color: #ff007f;
-      text-decoration: underline;
+    code {
+      background: #22222d;
+      padding: 0.2em 0.6em;
+      border-radius: 6px;
+      font-family: "Consolas", "Courier New", Courier, monospace;
+      font-size: 0.9em;
+      color: #a9ffb4;
+      word-break: break-word;
     }
 
-    .table-container {
-      overflow-x: auto;
-      border-radius: 8px;
+    pre code {
+      background: transparent;
+      padding: 0;
     }
 
-    .download-box {
-      background: #2a2a35;
-      border: 1px solid #3a3a47;
-      border-radius: 8px;
-      padding: 15px 20px;
-      margin: 10px 0;
-    }
-    .download-box a {
-      font-size: 1.1rem;
-      display: inline-block;
-      margin: 5px 0;
+    /* ===== LISTS ===== */
+    ul, ol {
+      padding-left: 1.4em;
+      margin: 0.5em 0;
     }
 
+    li {
+      margin-bottom: 0.4em;
+      color: var(--muted);
+      word-break: break-word;
+    }
+
+    /* ===== NOTE BOXES ===== */
     .note-box {
       background: #1a1a2e;
-      border-left: 4px solid #ff007f;
-      padding: 15px 20px;
+      border-left: 4px solid var(--accent2);
+      padding: 1rem 1.2rem;
       border-radius: 8px;
-      margin: 20px 0;
+      margin: 1rem 0;
+    }
+
+    .note-box h3 {
+      color: var(--accent2);
+      border-left: none;
+      padding-left: 0;
+      margin-top: 0;
     }
 
     .color-fix-box {
       background: #1a1a2e;
-      border: 1px solid #00ffcc;
+      border: 1px solid var(--accent);
       border-radius: 8px;
-      padding: 20px;
-      margin: 20px 0;
-    }
-    .color-fix-box h3 {
-      color: #00ffcc;
-      border-left-color: #00ffcc;
+      padding: 1.2rem 1.5rem;
+      margin: 1rem 0;
     }
 
+    .color-fix-box h3 {
+      color: var(--accent);
+      border-left: none;
+      padding-left: 0;
+      margin-top: 0;
+    }
+
+    .download-box {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+      margin: 0.5rem 0;
+    }
+
+    .download-box a {
+      display: inline-block;
+      margin: 4px 0;
+      font-size: 1rem;
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn-home {
+      display: inline-block;
+      background: var(--btn-home);
+      color: white;
+      padding: 14px 34px;
+      border-radius: 60px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.05rem;
+      text-align: center;
+      transition: background 0.15s, transform 0.1s;
+      touch-action: manipulation;
+      border: none;
+      min-width: 140px;
+      box-shadow: 0 4px 10px rgba(80, 45, 20, 0.2);
+    }
+
+    .btn-home:active {
+      transform: scale(0.97);
+      background: #5f3a22;
+    }
+
+    .btn-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin: 2rem 0 0.5rem 0;
+    }
+
+    .btn-simulator {
+      display: inline-block;
+      background: #555;
+      color: #ffff00;
+      padding: 12px 28px;
+      border-radius: 60px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1rem;
+      text-align: center;
+      transition: background 0.15s, transform 0.1s;
+      touch-action: manipulation;
+      border: none;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .btn-simulator:active {
+      transform: scale(0.97);
+      background: #444;
+    }
+
+    /* ===== RESPONSIVE ===== */
     @media (max-width: 600px) {
-      body { padding: 10px; }
-      h1 { font-size: 1.8rem; }
-      h2 { font-size: 1.3rem; }
-      pre { font-size: 0.8rem; padding: 10px; }
-      table { font-size: 0.85rem; }
-      th, td { padding: 8px 10px; }
+      .container {
+        padding: 10px;
+      }
+
+      h1 {
+        font-size: 1.6rem;
+      }
+
+      h2 {
+        font-size: 1.15rem;
+      }
+
+      .card {
+        padding: 0.8rem 0.9rem;
+      }
+
+      .nav a {
+        font-size: 0.65rem;
+        padding: 4px 8px;
+      }
+
+      pre {
+        font-size: 0.75rem;
+        padding: 0.8rem;
+      }
+
+      table {
+        font-size: 0.8rem;
+        min-width: 350px;
+      }
+
+      th, td {
+        padding: 6px 8px;
+      }
+
+      .btn-home {
+        width: 100%;
+        justify-content: center;
+        padding: 16px 18px;
+        font-size: 1rem;
+      }
+
+      .btn-wrap {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .btn-simulator {
+        width: 100%;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 380px) {
+      h1 {
+        font-size: 1.3rem;
+      }
+
+      .card {
+        padding: 0.6rem 0.7rem;
+      }
+
+      pre {
+        font-size: 0.65rem;
+        padding: 0.6rem;
+      }
+
+      table {
+        font-size: 0.7rem;
+        min-width: 280px;
+      }
+
+      th, td {
+        padding: 4px 6px;
+      }
+    }
+
+    /* ===== UTILITY ===== */
+    hr {
+      border: none;
+      border-top: 2px solid var(--border);
+      margin: 1.5rem 0;
+    }
+
+    .text-center {
+      text-align: center;
     }
   </style>
 </head>
 <body>
-  <h1>RANGMANG</h1>
-  <p><strong>RANGMANG</strong> is an RGB controller based on the ATmega128 microcontroller, Programmed with serial communication.</p>
 
-  <img src="rangmang_pic.png" alt="RANGMANG RGB Controller Module">
+  <!-- ===== STICKY NAV ===== -->
+  <nav class="nav" aria-label="Table of Contents">
+    <div class="nav-inner">
+      <a href="#overview">Overview</a>
+      <a href="#features">Features</a>
+      <a href="#dance-mode">Dance Mode</a>
+      <a href="#solid-color">Solid Color</a>
+      <a href="#addressing">Addressing</a>
+      <a href="#color-fix">Color Fix</a>
+      <a href="#downloads">Downloads</a>
+    </div>
+  </nav>
 
-  <h2>LED Strip Types and Features</h2>
-  <p>The following table introduces various LED strips and their specifications:</p>
+  <div class="container">
 
-  <div class="table-container">
-    <table>
-      <thead>
-        <tr>
-          <th>LED Strip Model</th>
-          <th>Operating Voltage</th>
-          <th>Control Type</th>
-          <th>Addressable</th>
-          <th>Special Features</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>WS2811</td><td>12V</td><td>Digital</td><td>Yes</td><td>Suitable for long strips</td></tr>
-        <tr><td>WS2812B</td><td>5V</td><td>Digital</td><td>Yes</td><td>Built-in chip in each LED</td></tr>
-        <tr><td>WS2813</td><td>5V</td><td>Digital</td><td>Yes</td><td>Resistant to data line failure</td></tr>
-        <tr><td>WS2815</td><td>12V</td><td>Digital</td><td>Yes</td><td>Industrial-grade, low voltage drop</td></tr>
-        <tr><td>SK6812</td><td>5V</td><td>Digital</td><td>Yes</td><td>Supports RGBW (white channel)</td></tr>
-        <tr><td>SK9822</td><td>5V</td><td>Digital</td><td>Yes</td><td>High-speed, similar to APA102</td></tr>
-        <tr><td>APA102</td><td>5V</td><td>Digital (Clock + Data)</td><td>Yes</td><td>Fast animations, dual-wire control</td></tr>
-        <tr><td>TM1814</td><td>12V</td><td>Digital</td><td>Yes</td><td>RGBW, high-power applications</td></tr>
-      </tbody>
-    </table>
-  </div>
+    <!-- ===== TITLE ===== -->
+    <h1 id="overview">RANGMANG</h1>
+    <p><strong>RANGMANG</strong> is an RGB controller based on the ATmega128 microcontroller, Programmed with serial communication.</p>
 
-  <p>
-    Official download link for USBasp Programmer: You can find complete files and information about the USBasp programmer on the developer's official website: 
-    <a href="https://www.fischl.de/usbasp" target="_blank">fischl.de/usbasp</a>.
-  </p>
-  
-  <h2>PCB and Schematic Files Atmega 128A</h2>
-  <img src="rangmang_schematics_128a.png" alt="ATmega128A PCB Schematic">
+    <img src="rangmang_pic.png" alt="RANGMANG RGB Controller Module" loading="lazy">
 
-  <h2>PCB and Schematic Files Atmega 328P</h2>
-  <img src="rangmang_schematics_328p.png" alt="ATmega328P PCB Schematic">
+    <!-- ===== LED TYPES ===== -->
+    <div class="card" id="features">
+      <h2>LED Strip Types and Features</h2>
+      <p>The following table introduces various LED strips and their specifications:</p>
 
-  <h2>RANGMANG Dance Mode Demo</h2>
-  <video controls width="80%" height="500" poster="rangmang_pic.png">
-    <source src="rangmang_dance.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>LED Strip Model</th>
+              <th>Operating Voltage</th>
+              <th>Control Type</th>
+              <th>Addressable</th>
+              <th>Special Features</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>WS2811</td><td>12V</td><td>Digital</td><td>Yes</td><td>Suitable for long strips</td></tr>
+            <tr><td>WS2812B</td><td>5V</td><td>Digital</td><td>Yes</td><td>Built-in chip in each LED</td></tr>
+            <tr><td>WS2813</td><td>5V</td><td>Digital</td><td>Yes</td><td>Resistant to data line failure</td></tr>
+            <tr><td>WS2815</td><td>12V</td><td>Digital</td><td>Yes</td><td>Industrial-grade, low voltage drop</td></tr>
+            <tr><td>SK6812</td><td>5V</td><td>Digital</td><td>Yes</td><td>Supports RGBW (white channel)</td></tr>
+            <tr><td>SK9822</td><td>5V</td><td>Digital</td><td>Yes</td><td>High-speed, similar to APA102</td></tr>
+            <tr><td>APA102</td><td>5V</td><td>Digital (Clock + Data)</td><td>Yes</td><td>Fast animations, dual-wire control</td></tr>
+            <tr><td>TM1814</td><td>12V</td><td>Digital</td><td>Yes</td><td>RGBW, high-power applications</td></tr>
+          </tbody>
+        </table>
+      </div>
 
-  <h2>RANGMANG Dance Mode Configuration</h2>
-  <p>
-    This configuration defines how the RANGMANG module controls LED dance modes.  
-    Each row encodes the following parameters (ADRGBSEM format)
-  </p>
+      <p>
+        Official download link for USBasp Programmer: You can find complete files and information about the USBasp programmer on the developer's official website:
+        <a href="https://www.fischl.de/usbasp" target="_blank" rel="noopener">fischl.de/usbasp</a>.
+      </p>
+    </div>
 
-  <ul>
-    <li><strong>A (Address)</strong> – Module address (1–98 for specific module, 99 for all).</li>
-    <li><strong>D (Mode)</strong> – Dance styles (1–55), or 99 for random dance selection.</li>
-    <li><strong>R / G / B</strong> – Color intensity values. Normal range: 0–250.  
-      Special values:  
+    <!-- ===== PCB SCHEMATICS ===== -->
+    <div class="card">
+      <h2>PCB and Schematic Files Atmega 128A</h2>
+      <img src="rangmang_schematics_128a.png" alt="ATmega128A PCB Schematic" loading="lazy">
+    </div>
+
+    <div class="card">
+      <h2>PCB and Schematic Files Atmega 328P</h2>
+      <img src="rangmang_schematics_328p.png" alt="ATmega328P PCB Schematic" loading="lazy">
+    </div>
+
+    <!-- ===== DANCE MODE ===== -->
+    <div class="card" id="dance-mode">
+      <h2>RANGMANG Dance Mode Demo</h2>
+      <video controls playsinline preload="metadata" poster="rangmang_pic.png">
+        <source src="rangmang_dance.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <div class="card">
+      <h2>RANGMANG Dance Mode Configuration</h2>
+      <p>
+        This configuration defines how the RANGMANG module controls LED dance modes.
+        Each row encodes the following parameters (ADRGBSEM format):
+      </p>
+
       <ul>
-        <li>251–255 → Random Red / Green / Blue</li>
+        <li><strong>A (Address)</strong> – Module address (1–98 for specific module, 99 for all).</li>
+        <li><strong>D (Mode)</strong> – Dance styles (1–55), or 99 for random dance selection.</li>
+        <li><strong>R / G / B</strong> – Color intensity values. Normal range: 0–250.
+          <ul>
+            <li>251–255 → Random Red / Green / Blue</li>
+          </ul>
+        </li>
+        <li><strong>S (Dance Time 1)</strong> – Milliseconds per pixel move (first timing), range: 0–999.</li>
+        <li><strong>E (Dance Time 2)</strong> – Milliseconds per pixel move (second timing), range: 0–999.</li>
+        <li><strong>M (Pixel Count)</strong> – Number of dancing pixels.
+          <ul>
+            <li>ATmega328: range 1–450</li>
+            <li>ATmega128: range 1–999</li>
+          </ul>
+        </li>
       </ul>
-    </li>
-    <li><strong>S (Dance Time 1)</strong> – Milliseconds per pixel move (first timing), range: 0–999.</li>
-    <li><strong>E (Dance Time 2)</strong> – Milliseconds per pixel move (second timing), range: 0–999.</li>
-    <li><strong>M (Pixel Count)</strong> – Number of dancing pixels.  
-      - ATmega328: range 1–450  
-      - ATmega128: range 1–999  
-    </li>
-  </ul>
 
-  <div class="table-container">
-    <table>
-      <thead>
-        <tr>
-          <th>A (Channel)</th>
-          <th>D (Mode)</th>
-          <th>R (Red)</th>
-          <th>G (Green)</th>
-          <th>B (Blue)</th>
-          <th>S (Dance Time 1)</th>
-          <th>E (Dance Time 2)</th>
-          <th>M (Pixel Count)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>A1</td>
-          <td>D12</td>
-          <td>R251</td>
-          <td>G251</td>
-          <td>B251</td>
-          <td>S1</td>
-          <td>E1</td>
-          <td>M128</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>A (Channel)</th>
+              <th>D (Mode)</th>
+              <th>R (Red)</th>
+              <th>G (Green)</th>
+              <th>B (Blue)</th>
+              <th>S (Dance Time 1)</th>
+              <th>E (Dance Time 2)</th>
+              <th>M (Pixel Count)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>A1</td>
+              <td>D12</td>
+              <td>R251</td>
+              <td>G251</td>
+              <td>B251</td>
+              <td>S1</td>
+              <td>E1</td>
+              <td>M128</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-  <h2>RANGMANG Fixed Color Mode Configuration (ATmega128 – 999 Pixels)</h2>
+    <!-- ===== SOLID COLOR ===== -->
+    <div class="card" id="solid-color">
+      <h2>RANGMANG Fixed Color Mode Configuration (ATmega128 – 999 Pixels)</h2>
 
-  <ul>
-    <li><strong>A (Address)</strong> – Module address (1–98 for specific module, 99 for all).</li>
-    <li><strong>D (Mode)</strong> – Must always be 0 (D0) for solid color.</li>
-    <li><strong>R / G / B</strong> – Color intensity values, range: 0–255.</li>
-    <li><strong>S (Start Pixel)</strong> – Start position for colored pixels, range: 0–999.</li>
-    <li><strong>E (End Pixel)</strong> – End position for colored pixels, range: 0–999.</li>
-    <li><strong>M (Memory Slot)</strong> – Memory control: 0 (M0) without save, 1–99 for saving to slots.</li>
-  </ul>
+      <ul>
+        <li><strong>A (Address)</strong> – Module address (1–98 for specific module, 99 for all).</li>
+        <li><strong>D (Mode)</strong> – Must always be 0 (D0) for solid color.</li>
+        <li><strong>R / G / B</strong> – Color intensity values, range: 0–255.</li>
+        <li><strong>S (Start Pixel)</strong> – Start position for colored pixels, range: 0–999.</li>
+        <li><strong>E (End Pixel)</strong> – End position for colored pixels, range: 0–999.</li>
+        <li><strong>M (Memory Slot)</strong> – Memory control: 0 (M0) without save, 1–99 for saving to slots.</li>
+      </ul>
 
-  <div class="table-container">
-    <table>
-      <thead>
-        <tr>
-          <th>A (Channel)</th>
-          <th>D (Mode)</th>
-          <th>R (Red)</th>
-          <th>G (Green)</th>
-          <th>B (Blue)</th>
-          <th>S (Start Pixel)</th>
-          <th>E (End Pixel)</th>
-          <th>M (Memory Slot)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>A1</td>
-          <td>D0</td>
-          <td>R200</td>
-          <td>G50</td>
-          <td>B100</td>
-          <td>S1</td>
-          <td>E120</td>
-          <td>M10</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>A (Channel)</th>
+              <th>D (Mode)</th>
+              <th>R (Red)</th>
+              <th>G (Green)</th>
+              <th>B (Blue)</th>
+              <th>S (Start Pixel)</th>
+              <th>E (End Pixel)</th>
+              <th>M (Memory Slot)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>A1</td>
+              <td>D0</td>
+              <td>R200</td>
+              <td>G50</td>
+              <td>B100</td>
+              <td>S1</td>
+              <td>E120</td>
+              <td>M10</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-  <h2>Power Regulation Notes</h2>
-  <pre>
-If the module is used individually, connect the Bluetooth power jumper.
+    <!-- ===== POWER REGULATION ===== -->
+    <div class="card">
+      <h2>Power Regulation Notes</h2>
+      <pre>If the module is used individually, connect the Bluetooth power jumper.
 
 If the modules are used in parallel, only connect the jumper for the module linked to Bluetooth and disconnect the rest.
 
 Install a 5V regulator for 12V LED strips; for 5V LED strips, no regulator is needed.
 
-Use a single wire to solder and connect the input and output pins of the regulator directly on the board.
-  </pre>
-  
-  <ul>
-    <li>For 5V LED strips: You can remove the regulator and directly power the microcontroller from the strip's 5V socket.</li>
-    <li>For 12V LED strips: You must use a 12V-to-5V regulator to power the microcontroller safely.</li>
-    <li>Note: To prevent reverse connection of the LED strip to the module, use a properly keyed connector. If necessary, add a diode in series with the microcontroller's power input to protect against polarity reversal.</li>
-  </ul>
+Use a single wire to solder and connect the input and output pins of the regulator directly on the board.</pre>
 
-  <h2>RANGMANG ATmega128 – 999 Pixels</h2>
-  <pre>
-' Inputs format: ADRGBSEM (Leading zeros are optional)
+      <ul>
+        <li>For 5V LED strips: You can remove the regulator and directly power the microcontroller from the strip's 5V socket.</li>
+        <li>For 12V LED strips: You must use a 12V-to-5V regulator to power the microcontroller safely.</li>
+        <li>Note: To prevent reverse connection of the LED strip to the module, use a properly keyed connector. If necessary, add a diode in series with the microcontroller's power input to protect against polarity reversal.</li>
+      </ul>
+    </div>
+
+    <!-- ===== ATmega128 ===== -->
+    <div class="card">
+      <h2>RANGMANG ATmega128 – 999 Pixels</h2>
+      <pre>' Inputs format: ADRGBSEM (Leading zeros are optional)
 ' Example: A1D0R0G0B0S0E0M0
 ' A1 TO A98    FOR ADDRESS MODULE   A99 FOR ALL
 ' IF D0 THEN SOLID COLOR
@@ -391,12 +719,13 @@ Use a single wire to solder and connect the input and output pins of the regulat
 ' B: 0 TO 250   BLUE COLOR   251 TO 255 FOR RANDOM BLUE COLOR
 ' S: 0 TO 999   RGB STRIP FIRST DELAY EFFECT (ms)
 ' E: 0 TO 999   RGB STRIP SECOND DELAY EFFECT (ms)
-' M: 1 TO 999   SET HOW MANY PIXELS DANCING
-  </pre>
+' M: 1 TO 999   SET HOW MANY PIXELS DANCING</pre>
+    </div>
 
-  <h2>RANGMANG ATmega328 – 450 Pixels</h2>
-  <pre>
-' Inputs format: ADRGBSEM (Leading zeros are optional)
+    <!-- ===== ATmega328 ===== -->
+    <div class="card">
+      <h2>RANGMANG ATmega328 – 450 Pixels</h2>
+      <pre>' Inputs format: ADRGBSEM (Leading zeros are optional)
 ' Example: A1D0R0G0B0S0E0M0
 ' A1 TO A98    FOR ADDRESS MODULE   A99 FOR ALL
 ' IF D0 THEN SOLID COLOR
@@ -411,7 +740,7 @@ Use a single wire to solder and connect the input and output pins of the regulat
 'M997 clears all pixels on the LED strip without affecting any memory
 'M998 quickly fills all pixels on the LED strip without using or modifying memory
 'M999 colors all pixels on the LED strip and saves it as memory slot 1
-  
+
 ' IF D1 TO D55   DANCE
 ' D99   FOR RANDOM SELECT D1 TO D55 DANCE
 ' R: 0 TO 250   RED COLOR   251 TO 255 FOR RANDOM RED COLOR
@@ -419,12 +748,13 @@ Use a single wire to solder and connect the input and output pins of the regulat
 ' B: 0 TO 250   BLUE COLOR   251 TO 255 FOR RANDOM BLUE COLOR
 ' S: 0 TO 999   RGB STRIP FIRST DELAY EFFECT (ms)
 ' E: 0 TO 999   RGB STRIP SECOND DELAY EFFECT (ms)
-' M: 1 TO 450   SET HOW MANY PIXELS DANCING
-  </pre>
+' M: 1 TO 450   SET HOW MANY PIXELS DANCING</pre>
+    </div>
 
-  <h2>✅ Module Addressing Instructions</h2>
-  <pre>
-To address a module, simply follow the method below.
+    <!-- ===== ADDRESSING ===== -->
+    <div class="card" id="addressing">
+      <h2>✅ Module Addressing Instructions</h2>
+      <pre>To address a module, simply follow the method below.
 
 For example:
 Old address 1   New Address 2  →  CH1=2
@@ -448,132 +778,143 @@ Please note:
 Valid addresses range from 1 to 98.
 Address 99 is a shared address that applies to all modules.
 
-Therefore, each module will respond and act to its assigned address (between 1 and 98) as well as to the shared address 99.
-  </pre>
+Therefore, each module will respond and act to its assigned address (between 1 and 98) as well as to the shared address 99.</pre>
 
-  <p>
-    In each microcontroller's folder, the software directory "dude 6.4" is available. Using the file "Program Chip.bat," you simply need to connect the USBasp to the microcontroller and then click on "Program Chip.bat" to program the microcontroller.
-  </p>
-  
-  <img src="rangmang_design_soifgo.png" alt="Soifgo Design for RANGMANG">
-  <img src="rangmang_design_1.jpg" alt="RANGMANG Design 1">
-  <img src="rangmang_design_2.jpg" alt="RANGMANG Design 2">
+      <p>
+        In each microcontroller's folder, the software directory "dude 6.4" is available. Using the file "Program Chip.bat," you simply need to connect the USBasp to the microcontroller and then click on "Program Chip.bat" to program the microcontroller.
+      </p>
+    </div>
 
-  <h2>Color Swap Issue: WS2811 vs WS2812</h2>
-  <p>
-    When working with addressable LED strips like the WS2811 and WS2812, you might notice a classic issue: when you test your LEDs, the Red color displays perfectly, but Green and Blue are completely swapped.
-  </p>
+    <!-- ===== SOIFGO DESIGN ===== -->
+    <div class="card">
+      <img src="rangmang_design_soifgo.png" alt="Soifgo Design for RANGMANG" loading="lazy">
+      <img src="rangmang_design_1.jpg" alt="RANGMANG Design 1" loading="lazy">
+      <img src="rangmang_design_2.jpg" alt="RANGMANG Design 2" loading="lazy">
+    </div>
 
-  <h3>Why does this happen?</h3>
-  <p>
-    While the Red channel remains in its correct first position, the order of the Green and Blue channels varies due to hardware layout designs:
-  </p>
-  <ul>
-    <li><strong>WS2812</strong> LEDs typically use the internal GRB or standard RGB color ordering profile.</li>
-    <li><strong>WS2811</strong> ICs are external controllers often used in 12V strips or pixel strings. To simplify PCB routing and prevent copper traces from crossing over each other, manufacturers frequently cross-wire the Green and Blue output pins to the LED.</li>
-  </ul>
-  <p>
-    As a result, from a programmer's and user's perspective, the strip ends up behaving as an <strong>RBG (Red, Blue, Green)</strong> device instead of a standard RGB device.
-  </p>
+    <!-- ===== COLOR FIX ===== -->
+    <div class="card" id="color-fix">
+      <h2>Color Swap Issue: WS2811 vs WS2812</h2>
+      <p>
+        When working with addressable LED strips like the WS2811 and WS2812, you might notice a classic issue: when you test your LEDs, the Red color displays perfectly, but Green and Blue are completely swapped.
+      </p>
 
-  <h3>Why We Inverted the Logic in the Code</h3>
-  <p>
-    To prevent any confusion or "color dizziness" while designing your light patterns, Soifgo handles all the heavy lifting behind the scenes.
-  </p>
-  <p>
-    Most modern WS2811 strips available on the market today use an internal RBG chip methodology. However, to keep things intuitive for you, the app lets you think and work in the universal RGB standard.
-  </p>
-  <p>
-    When you pick a color in the app—for example, setting R=123, G=22, B=12—you don't have to worry about the strip's internal layout. When the RBG mode is active:
-  </p>
-  <ul>
-    <li>You interact with the familiar RGB values naturally.</li>
-    <li>The microcontroller intentionally and automatically swaps the Green and Blue bytes right before transmitting them over the wire.</li>
-    <li>The flipped data matches the physical cross-wiring of the WS2811 chip perfectly.</li>
-  </ul>
-  <p>
-    In short, we deliberately inverted the software logic for the WS2811 setting so that your workflow remains simple, consistent, and strictly RGB on the screen, while the hardware gets exactly what it needs!
-  </p>
+      <h3>Why does this happen?</h3>
+      <p>
+        While the Red channel remains in its correct first position, the order of the Green and Blue channels varies due to hardware layout designs:
+      </p>
+      <ul>
+        <li><strong>WS2812</strong> LEDs typically use the internal GRB or standard RGB color ordering profile.</li>
+        <li><strong>WS2811</strong> ICs are external controllers often used in 12V strips or pixel strings. To simplify PCB routing and prevent copper traces from crossing over each other, manufacturers frequently cross-wire the Green and Blue output pins to the LED.</li>
+      </ul>
+      <p>
+        As a result, from a programmer's and user's perspective, the strip ends up behaving as an <strong>RBG (Red, Blue, Green)</strong> device instead of a standard RGB device.
+      </p>
 
-  <div class="color-fix-box">
-    <h3>💡 Solution in Soifgo Settings</h3>
-    <p>
-      If you are experiencing this color mismatch, there is no need to change your hardware wiring. You can fix this instantly via software inside the app:
-    </p>
-    <p>
-      <strong>Important Note for Soifgo Users:</strong>
-      When using certain WS2811 LED strips where the Green and Blue colors are reversed, simply go to the application settings and tap on the <strong>RGB</strong> label to switch it to <strong>RBG</strong>.
-    </p>
-    <p>
-      By changing this setting to RBG, Soifgo will automatically swap the Green and Blue bytes during data transmission, ensuring that your color palette and light animations are applied accurately to your strip!
-    </p>
+      <h3>Why We Inverted the Logic in the Code</h3>
+      <p>
+        To prevent any confusion or "color dizziness" while designing your light patterns, Soifgo handles all the heavy lifting behind the scenes.
+      </p>
+      <p>
+        Most modern WS2811 strips available on the market today use an internal RBG chip methodology. However, to keep things intuitive for you, the app lets you think and work in the universal RGB standard.
+      </p>
+      <p>
+        When you pick a color in the app—for example, setting R=123, G=22, B=12—you don't have to worry about the strip's internal layout. When the RBG mode is active:
+      </p>
+      <ul>
+        <li>You interact with the familiar RGB values naturally.</li>
+        <li>The microcontroller intentionally and automatically swaps the Green and Blue bytes right before transmitting them over the wire.</li>
+        <li>The flipped data matches the physical cross-wiring of the WS2811 chip perfectly.</li>
+      </ul>
+      <p>
+        In short, we deliberately inverted the software logic for the WS2811 setting so that your workflow remains simple, consistent, and strictly RGB on the screen, while the hardware gets exactly what it needs!
+      </p>
+
+      <div class="color-fix-box">
+        <h3>💡 Solution in Soifgo Settings</h3>
+        <p>
+          If you are experiencing this color mismatch, there is no need to change your hardware wiring. You can fix this instantly via software inside the app:
+        </p>
+        <p>
+          <strong>Important Note for Soifgo Users:</strong>
+          When using certain WS2811 LED strips where the Green and Blue colors are reversed, simply go to the application settings and tap on the <strong>RGB</strong> label to switch it to <strong>RBG</strong>.
+        </p>
+        <p>
+          By changing this setting to RBG, Soifgo will automatically swap the Green and Blue bytes during data transmission, ensuring that your color palette and light animations are applied accurately to your strip!
+        </p>
+      </div>
+
+      <div class="note-box">
+        <h3>💻 Developer Note: Coding Static Colors for WS2811</h3>
+        <p>
+          If you are writing your own custom firmware or setting up static colors directly in your microcontroller code for a WS2811 strip, you must manually swap the Green and Blue values to achieve the correct output.
+        </p>
+        <p>
+          Since the physical hardware layout of these strips interprets data differently than our standard mental model, you need to trick the strip by reversing the variables.
+        </p>
+        <p>
+          <strong>For Example:</strong><br>
+          If your desired color is Red: 10, Green: 123, Blue: 44, writing it in the standard order will result in swapped colors on the strip.
+        </p>
+        <p>
+          To fix this in your code, you must pass the values like this:
+        </p>
+        <pre>Standard RGB Intended Color: R: 10, G: 123, B: 44
+
+Actual Code to Write for WS2811: R: 10, G: 44, B: 123</pre>
+        <p>
+          By intentionally swapping the Green (123) and Blue (44) values inside your code, the WS2811 strip will display the exact shade you originally intended!
+        </p>
+      </div>
+    </div>
+
+    <!-- ===== BLUETOOTH BAUD ===== -->
+    <div class="card">
+      <h2>The default baud rate of the Bluetooth module is 9600</h2>
+    </div>
+
+    <!-- ===== DOWNLOADS ===== -->
+    <div class="card" id="downloads">
+      <h2>Downloads</h2>
+      <div class="download-box">
+        <p><a href="soifgo_rangmang_design.zip" download>📦 Download soifgo_rangmang_design</a></p>
+        <p><a href="Atmega128.zip" download>📦 Download Atmega128 File</a></p>
+        <p><a href="Atmega328P.zip" download>📦 Download Atmega328P File</a></p>
+      </div>
+    </div>
+
+    <!-- ===== HARDWARE ASSEMBLY ===== -->
+    <div class="card">
+      <h2>Hardware Assembly Notes</h2>
+      <p>
+        If you need the module as a single unit, you can use regular sockets. However, when using multiple modules in parallel, only the Bluetooth socket should be connected through long-pin headers so that the remaining modules can receive Bluetooth serial data.
+      </p>
+      <p>
+        Next, it is better to mechanically connect the modules together using spacer screws. For the final module, you can insulate the pins or use a suitable cover. Alternatively, if you are certain that you will not expand the number of modules in the future, you may use short-pin headers instead.
+      </p>
+
+      <img src="board01.png" alt="Board Assembly Diagram" loading="lazy">
+
+      <div class="note-box">
+        <h3>⚠️ Important Power Note</h3>
+        <p>
+          When using long RGB strips, make sure to pay attention to the voltage of the microcontroller and Bluetooth. Using an unsuitable regulator or a power supply with insufficient current capacity can cause severe voltage drops, which may lead to the Bluetooth and microcontroller shutting down.
+        </p>
+      </div>
+    </div>
+
+    <!-- ===== BUTTONS ===== -->
+    <hr>
+
+    <div class="btn-wrap">
+      <a href="simulator.html" class="btn-simulator">🔮 Rangmang Web Simulator</a>
+    </div>
+
+    <div class="btn-wrap">
+      <a href="https://soifgo.github.io/soifgo/index.html" class="btn-home">⬅ Back to Home</a>
+    </div>
+
   </div>
-
-  <div class="note-box">
-    <h3>💻 Developer Note: Coding Static Colors for WS2811</h3>
-    <p>
-      If you are writing your own custom firmware or setting up static colors directly in your microcontroller code for a WS2811 strip, you must manually swap the Green and Blue values to achieve the correct output.
-    </p>
-    <p>
-      Since the physical hardware layout of these strips interprets data differently than our standard mental model, you need to trick the strip by reversing the variables.
-    </p>
-    <p>
-      <strong>For Example:</strong><br>
-      If your desired color is Red: 10, Green: 123, Blue: 44, writing it in the standard order will result in swapped colors on the strip.
-    </p>
-    <p>
-      To fix this in your code, you must pass the values like this:
-    </p>
-    <pre>
-Standard RGB Intended Color: R: 10, G: 123, B: 44
-
-Actual Code to Write for WS2811: R: 10, G: 44, B: 123
-    </pre>
-    <p>
-      By intentionally swapping the Green (123) and Blue (44) values inside your code, the WS2811 strip will display the exact shade you originally intended!
-    </p>
-  </div>
-
-  <h2>The default baud rate of the Bluetooth module is 9600</h2>
-
-  <h2>Downloads</h2>
-  <div class="download-box">
-    <p><a href="soifgo_rangmang_design.zip">📦 Download soifgo_rangmang_design</a></p>
-    <p><a href="Atmega128.zip">📦 Download Atmega128 File</a></p>
-    <p><a href="Atmega328P.zip">📦 Download Atmega328P File</a></p>
-  </div>
-
-  <h2>Hardware Assembly Notes</h2>
-  <p>
-    If you need the module as a single unit, you can use regular sockets. However, when using multiple modules in parallel, only the Bluetooth socket should be connected through long-pin headers so that the remaining modules can receive Bluetooth serial data.
-  </p>
-  <p>
-    Next, it is better to mechanically connect the modules together using spacer screws. For the final module, you can insulate the pins or use a suitable cover. Alternatively, if you are certain that you will not expand the number of modules in the future, you may use short-pin headers instead.
-  </p>
-  
-  <img src="board01.png" alt="Board Assembly Diagram">
-
-  <div class="note-box">
-    <h3>⚠️ Important Power Note</h3>
-    <p>
-      When using long RGB strips, make sure to pay attention to the voltage of the microcontroller and Bluetooth. Using an unsuitable regulator or a power supply with insufficient current capacity can cause severe voltage drops, which may lead to the Bluetooth and microcontroller shutting down.
-    </p>
-  </div>
-
-  <hr>
-  <p style="text-align:center;">
-    <a href="simulator.html" 
-       style="display:inline-block; padding:10px 20px; background:gray; color:yellow; text-decoration:none; border-radius:5px;">
-      Rangmang Web Simulator
-    </a>
-  </p>
- 
-  <p style="text-align:center;">
-    <a href="https://soifgo.github.io/soifgo/index.html" 
-       style="display:inline-block; padding:10px 20px; background:#8B4513; color:#fff; text-decoration:none; border-radius:5px;">
-      ⬅ Back to Home
-    </a>
-  </p>
 
 </body>
 </html>

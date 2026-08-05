@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes">
   <meta name="theme-color" content="#1e1e24">
 
   <!-- ===== PRIMARY SEO & SAFESEARCH RATING ===== -->
   <title>RANGMANG 2 — ATmega128 Hardware RGB LED Matrix Controller</title>
   <meta name="description" content="RANGMANG 2 is an open-source ATmega128 microcontroller hardware project for WS2812/WS2811 LED matrix and scrolling signs. Supports 50 channels and 12,750 addressable pixels.">
-  <meta name="keywords" content="RANGMANG 2, RANGMANG 2 LED Controller, ATmega128 microcontroller, embedded system, WS2812 hardware, WS2811 PCB design, open source hardware, ARGBSE protocol, SoifGo">
-  
+  <meta name="keywords" content="RANGMANG 2, RANGMANG 2 LED Controller, ATmega128 microcontroller, embedded system, WS2812 hardware, WS2811 PCB design, open source hardware, ARGBSE protocol, SoifGo, LED matrix, scrolling sign, digital advertising">
+
   <!-- Explicit SafeSearch & Rating Tags -->
   <meta name="rating" content="general">
   <meta name="rating" content="safe for kids">
@@ -22,18 +22,19 @@
 
   <!-- ===== OPEN GRAPH ===== -->
   <meta property="og:title" content="RANGMANG 2 — ATmega128 Hardware RGB LED Controller">
-  <meta property="og:description" content="Open-source hardware project based on ATmega128 for WS2812 and WS2811 LED matrix displays. Free web simulator included.">
+  <meta property="og:description" content="Open-source hardware project based on ATmega128 for WS2812 and WS2811 LED matrix displays. Free web simulator included. 50 channels, 12,750 pixels.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://soifgo.github.io/soifgo/tutorials/server/rangmang2/">
   <meta property="og:image" content="https://soifgo.github.io/soifgo/tutorials/server/rangmang2/rangmang2_pic.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="SoifGo Tutorials">
 
   <!-- ===== TWITTER CARD ===== -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="RANGMANG 2 — Open Source ATmega128 RGB LED Controller">
-  <meta name="twitter:description" content="50 channels, 255 pixels per channel, ATmega128 embedded controller, ARGBSE hex protocol.">
+  <meta name="twitter:description" content="50 channels, 255 pixels per channel, ATmega128 embedded controller, ARGBSE hex protocol. Perfect for LED matrix and scrolling signs.">
   <meta name="twitter:image" content="https://soifgo.github.io/soifgo/tutorials/server/rangmang2/rangmang2_pic.png">
 
   <!-- ===== ENHANCED HARDWARE & TECH SCHEMA.ORG ===== -->
@@ -57,6 +58,25 @@
         "author": {
           "@type": "Organization",
           "name": "SoifGo Project"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "SoifGo",
+          "url": "https://soifgo.github.io/soifgo/"
+        },
+        "datePublished": "2025-01-01",
+        "dateModified": "2025-01-01",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://soifgo.github.io/soifgo/tutorials/server/rangmang2/"
+        },
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://soifgo.github.io/soifgo/" },
+            { "@type": "ListItem", "position": 2, "name": "Tutorials", "item": "https://soifgo.github.io/soifgo/tutorials/" },
+            { "@type": "ListItem", "position": 3, "name": "RANGMANG 2", "item": "https://soifgo.github.io/soifgo/tutorials/server/rangmang2/" }
+          ]
         }
       },
       {
@@ -77,155 +97,334 @@
   </script>
 
   <style>
+    /* ===== ROOT VARIABLES ===== */
+    :root {
+      --bg: #1e1e24;
+      --fg: #e0e0e0;
+      --accent: #00ffcc;
+      --accent2: #ff007f;
+      --accent3: #00ccff;
+      --card-bg: #2a2a35;
+      --border: #3a3a47;
+      --muted: #b8b8c4;
+      --btn-home: #8B4513;
+      --btn-blue: #2563eb;
+    }
+
+    /* ===== RESET & BASE ===== */
     * {
       box-sizing: border-box;
-    }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       margin: 0;
-      padding: 15px;
-      line-height: 1.6;
-      background-color: #1e1e24;
-      color: #e0e0e0;
+      padding: 0;
+    }
+
+    html, body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.7;
+      -webkit-text-size-adjust: 100%;
+      min-height: 100vh;
+      padding: 0;
       word-wrap: break-word;
       overflow-x: hidden;
     }
-    body > * { 
-      max-width: 1000px; 
-      margin-left: auto; 
-      margin-right: auto; 
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 16px;
     }
-    
-    h1 { 
-      font-size: clamp(1.8rem, 5vw, 2.8rem); 
-      color: #00ffcc; 
-      text-transform: uppercase; 
-      border-bottom: 2px solid #3a3a47; 
-      padding-bottom: 10px; 
-      text-align: center; 
+
+    /* ===== STICKY NAV ===== */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: saturate(180%) blur(8px);
+      background: color-mix(in oklab, var(--bg) 92%, transparent);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 0;
+    }
+
+    .nav-inner {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: center;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 10px;
+    }
+
+    .nav a {
+      flex: 1 1 auto;
+      text-align: center;
+      font-size: clamp(0.65rem, 1.8vw, 0.85rem);
+      padding: 6px 10px;
+      text-decoration: none;
+      color: var(--accent);
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      transition: background 0.15s, color 0.15s;
+      font-weight: 500;
+    }
+
+    .nav a:hover,
+    .nav a:focus {
+      background: var(--accent);
+      color: var(--bg);
+      border-color: var(--accent);
+    }
+
+    /* ===== HEADINGS ===== */
+    h1 {
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      color: var(--accent);
+      text-transform: uppercase;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 10px;
+      text-align: center;
       letter-spacing: 1.5px;
       word-break: break-word;
+      margin: 0.5rem 0;
     }
-    h2 { 
-      color: #ff007f; 
-      margin-top: 35px; 
-      border-left: 4px solid #ff007f; 
-      padding-left: 12px; 
+
+    h2 {
+      color: var(--accent2);
+      margin-top: 2rem;
+      border-left: 4px solid var(--accent2);
+      padding-left: 12px;
       font-size: clamp(1.3rem, 4vw, 1.8rem);
+      font-weight: 600;
+      word-break: break-word;
     }
-    h3 { 
-      color: #00ccff; 
-      margin-top: 25px; 
-      border-left: 4px solid #00ccff; 
-      padding-left: 10px; 
+
+    h3 {
+      color: var(--accent3);
+      margin-top: 1.5rem;
+      border-left: 4px solid var(--accent3);
+      padding-left: 10px;
       font-size: clamp(1.1rem, 3.5vw, 1.4rem);
+      font-weight: 600;
+      word-break: break-word;
     }
-    p, li { 
-      color: #b8b8c4; 
+
+    p {
+      margin: 0.75em 0;
+      color: var(--muted);
+      word-break: break-word;
+    }
+
+    strong {
+      color: #ffffff;
+    }
+
+    a {
+      color: #00ffff;
+      text-decoration: none;
+      word-break: break-word;
+      transition: color 0.2s;
+    }
+
+    a:hover {
+      color: var(--accent2);
+      text-decoration: underline;
+    }
+
+    /* ===== CARDS ===== */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1rem;
+      max-width: 100%;
+      overflow: hidden;
+    }
+
+    /* ===== IMAGES & VIDEOS ===== */
+    img, video {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      display: block;
+      margin: 1.2rem auto;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    }
+
+    video {
+      aspect-ratio: 16 / 9;
+      width: 100%;
+      background: #0a0a0f;
+      object-fit: contain;
+    }
+
+    /* ===== TABLES ===== */
+    .table-container {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border-radius: 8px;
+      margin: 1rem 0;
+      background: var(--card-bg);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 500px;
+    }
+
+    th, td {
+      padding: 10px 12px;
+      text-align: center;
+      border: 1px solid var(--border);
+      font-size: 0.9rem;
+      word-break: break-word;
+    }
+
+    th {
+      background: #333344;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    tr:nth-child(even) {
+      background: #24242d;
+    }
+
+    /* ===== CODE & PRE ===== */
+    pre {
+      background: #111116;
+      color: #ffffff;
+      padding: 1rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-family: "Consolas", "Courier New", Courier, monospace;
+      border-left: 3px solid var(--accent);
+      font-size: 0.85rem;
+      line-height: 1.7;
+      margin: 0.8rem 0;
+    }
+
+    code {
+      background: #22222d;
+      padding: 0.2em 0.6em;
+      border-radius: 6px;
+      font-family: "Consolas", "Courier New", Courier, monospace;
+      font-size: 0.9em;
+      color: #a9ffb4;
+      word-break: break-word;
+    }
+
+    pre code {
+      background: transparent;
+      padding: 0;
+    }
+
+    /* ===== LISTS ===== */
+    ul, ol {
+      padding-left: 1.4em;
+      margin: 0.5em 0;
+    }
+
+    li {
+      margin-bottom: 0.4em;
+      color: var(--muted);
+      word-break: break-word;
+    }
+
+    /* ===== BOXES ===== */
+    .note-box {
+      background: #1a1a2e;
+      border-left: 4px solid var(--accent2);
+      padding: 1rem 1.2rem;
+      border-radius: 8px;
+      margin: 1rem 0;
+    }
+
+    .note-box h3 {
+      color: var(--accent2);
+      border-left: none;
+      padding-left: 0;
+      margin-top: 0;
+    }
+
+    .color-fix-box {
+      background: #1a1a2e;
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      padding: 1.2rem 1.5rem;
+      margin: 1rem 0;
+    }
+
+    .color-fix-box h3 {
+      color: var(--accent);
+      border-left: none;
+      padding-left: 0;
+      margin-top: 0;
+    }
+
+    .download-box {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+      margin: 0.5rem 0;
+    }
+
+    .download-box a {
+      display: inline-block;
+      margin: 4px 0;
       font-size: 1rem;
     }
-    strong { color: #ffffff; }
-    
-    img, video { 
-      max-width: 100%; 
-      height: auto; 
-      display: block; 
-      margin: 20px auto; 
-      border-radius: 8px; 
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); 
-    }
-    
-    .table-container { 
-      overflow-x: auto; 
-      -webkit-overflow-scrolling: touch;
-      border-radius: 8px; 
-      margin: 20px 0;
-      background-color: #2a2a35;
-    }
-    table { 
-      width: 100%; 
-      border-collapse: collapse; 
-      min-width: 500px; /* Ensures table remains readable on mobile via scrolling */
-    }
-    th, td { 
-      padding: 10px 12px; 
-      text-align: center; 
-      border: 1px solid #3a3a47; 
-      font-size: 0.9rem;
-    }
-    th { 
-      background-color: #333344; 
-      color: #00ffcc; 
-      font-weight: 600; 
-    }
-    tr:nth-child(even) { background-color: #24242d; }
-    
-    pre { 
-      background-color: #111116; 
-      color: #ffffff; 
-      padding: 12px; 
-      border-radius: 6px; 
-      overflow-x: auto; 
-      font-family: "Consolas", "Courier New", Courier, monospace; 
-      border-left: 3px solid #00ffcc; 
-      font-size: 0.85rem; 
-    }
-    
-    ul { padding-left: 20px; list-style-type: square; }
-    ul li { margin: 8px 0; }
-    
-    a { 
-      color: #00ffff; 
-      text-decoration: none; 
-      transition: color 0.2s; 
-    }
-    a:hover { 
-      color: #ff007f; 
-      text-decoration: underline; 
-    }
-    
-    .download-box, .note-box, .color-fix-box { 
-      background: #1a1a2e; 
-      border-radius: 8px; 
-      padding: 15px 18px; 
-      margin: 20px 0; 
-    }
-    .note-box { border-left: 4px solid #ff007f; }
-    .color-fix-box { border: 1px solid #00ffcc; }
-    .color-fix-box h3 { border-left-color: #00ffcc; margin-top: 0; }
-    
-    .badge { 
-      display: inline-block; 
-      background: #ff007f; 
-      color: #fff; 
-      padding: 2px 10px; 
-      border-radius: 20px; 
-      font-size: 0.8rem; 
-      font-weight: bold; 
-      letter-spacing: 0.5px; 
+
+    /* ===== BADGE ===== */
+    .badge {
+      display: inline-block;
+      background: var(--accent2);
+      color: #fff;
+      padding: 2px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      letter-spacing: 0.5px;
       vertical-align: middle;
     }
-    
-    .feature-grid { 
-      display: grid; 
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
-      gap: 12px; 
-      margin: 15px 0; 
+
+    /* ===== FEATURE GRID ===== */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin: 1rem 0;
     }
-    .feature-card { 
-      background: #252530; 
-      padding: 14px; 
-      border-radius: 8px; 
-      border-left: 3px solid #00ffcc; 
+
+    .feature-card {
+      background: #252530;
+      padding: 14px;
+      border-radius: 8px;
+      border-left: 3px solid var(--accent);
     }
-    .feature-card strong { color: #00ffcc; }
-    
+
+    .feature-card strong {
+      color: var(--accent);
+      display: block;
+    }
+
+    .feature-card p {
+      margin: 4px 0 0 0;
+      font-size: 0.9rem;
+    }
+
+    /* ===== BANNER ===== */
     .banner-box {
-      background: #0f1a1a; 
-      border: 1px solid #00ffcc; 
-      border-radius: 12px; 
-      padding: 15px; 
-      margin: 20px 0; 
+      background: #0f1a1a;
+      border: 1px solid var(--accent);
+      border-radius: 12px;
+      padding: 15px;
+      margin: 1rem 0;
       text-align: center;
       display: flex;
       flex-wrap: wrap;
@@ -233,203 +432,339 @@
       align-items: center;
       gap: 8px;
     }
-    .highlight-led { 
-      background: #2a2a3a; 
-      border-radius: 6px; 
-      padding: 4px 8px; 
-      display: inline-block; 
-      color: #ffcc00; 
+
+    .highlight-led {
+      background: #2a2a3a;
+      border-radius: 6px;
+      padding: 4px 10px;
+      display: inline-block;
+      color: #ffcc00;
       font-size: 0.85rem;
       font-weight: bold;
     }
 
-    .btn-link {
+    /* ===== BUTTONS ===== */
+    .btn-home {
       display: inline-block;
-      min-height: 44px;
-      line-height: 24px;
-      padding: 10px 20px;
-      border-radius: 6px;
+      background: var(--btn-home);
+      color: white;
+      padding: 14px 34px;
+      border-radius: 60px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.05rem;
       text-align: center;
-      font-weight: bold;
+      transition: background 0.15s, transform 0.1s;
+      touch-action: manipulation;
+      border: none;
+      min-width: 140px;
+      box-shadow: 0 4px 10px rgba(80, 45, 20, 0.2);
     }
 
-    /* ===== MOBILE OPTIMIZATIONS ===== */
+    .btn-home:active {
+      transform: scale(0.97);
+      background: #5f3a22;
+    }
+
+    .btn-blue {
+      display: inline-block;
+      background: var(--btn-blue);
+      color: white;
+      padding: 12px 28px;
+      border-radius: 60px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1rem;
+      text-align: center;
+      transition: background 0.15s, transform 0.1s;
+      touch-action: manipulation;
+      border: none;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+    }
+
+    .btn-blue:active {
+      transform: scale(0.97);
+      background: #1d4ed8;
+    }
+
+    .btn-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin: 2rem 0 0.5rem 0;
+    }
+
+    /* ===== RESPONSIVE ===== */
     @media (max-width: 600px) {
-      body { padding: 10px; }
-      .feature-grid { grid-template-columns: 1fr; }
-      .banner-box { flex-direction: column; }
-      .btn-link { display: block; width: 100%; margin: 8px 0; }
+      .container {
+        padding: 10px;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .banner-box {
+        flex-direction: column;
+      }
+
+      .btn-home, .btn-blue {
+        width: 100%;
+        justify-content: center;
+        padding: 16px 18px;
+        font-size: 1rem;
+      }
+
+      .btn-wrap {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .nav a {
+        font-size: 0.6rem;
+        padding: 4px 6px;
+      }
+
+      pre {
+        font-size: 0.75rem;
+        padding: 0.8rem;
+      }
+
+      table {
+        font-size: 0.8rem;
+        min-width: 350px;
+      }
+
+      th, td {
+        padding: 6px 8px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      h1 {
+        font-size: 1.3rem;
+      }
+
+      .card {
+        padding: 0.6rem 0.7rem;
+      }
+
+      pre {
+        font-size: 0.65rem;
+        padding: 0.6rem;
+      }
+
+      table {
+        font-size: 0.7rem;
+        min-width: 280px;
+      }
+
+      th, td {
+        padding: 4px 6px;
+      }
+    }
+
+    /* ===== UTILITY ===== */
+    hr {
+      border: none;
+      border-top: 2px solid var(--border);
+      margin: 1.5rem 0;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .mt-1 {
+      margin-top: 1rem;
+    }
+
+    .mb-1 {
+      margin-bottom: 1rem;
     }
   </style>
 </head>
 <body>
 
-  <!-- ===== HEADER ===== -->
-  <h1>RANGMANG 2 <span class="badge">v2.0</span></h1>
-
-  <p><strong>RANGMANG 2</strong> is a professional serial RGB controller based on the ATmega128 microcontroller, designed for single‑module operation. It supports <strong>50 channels</strong>, each with <strong>255 pixels</strong> — giving you a total of <strong>12,750 addressable pixels</strong> per module.</p>
-
-  <!-- ===== LED COMPATIBILITY BANNER ===== -->
-  <div class="banner-box">
-    <span style="font-size: 1.1rem; color: #00ffcc; width: 100%;">🔹 Compatible with </span>
-    <span class="highlight-led">WS2812</span> 
-    <span class="highlight-led">WS2812B</span> 
-    <span class="highlight-led">WS2811</span> 
-    <span class="highlight-led">WS2813</span> 
-    <span class="highlight-led">WS2815</span>
-    <p style="color: #ffcc00; margin: 8px 0 0 0; font-size: 0.9rem; width: 100%;">✨ Ideal for cheap LED matrix, free scrolling signs, and digital advertising</p>
-  </div>
-
-  <!-- ===== IMAGES ===== -->
-  <img src="rangmang2_pic.jpg" alt="RANGMANG 2 RGB Controller Module - compatible with WS2812 LED strips">
-  <img src="rangmang2.png" alt="RANGMANG 2 PCB and schematic based on ATmega128">
-
-  <!-- ===== KEY FEATURES ===== -->
-  <h2>Key Features</h2>
-  <div class="feature-grid">
-    <div class="feature-card"><strong>MCU:</strong> ATmega128 (11.0592 MHz)</div>
-    <div class="feature-card"><strong>Channels:</strong> 50 (A1–A50)</div>
-    <div class="feature-card"><strong>Pixels/Ch:</strong> 255 (1–255)</div>
-    <div class="feature-card"><strong>Total LEDs:</strong> 12,750</div>
-    <div class="feature-card"><strong>Protocol:</strong> UART / BT (HC‑05) 115200</div>
-    <div class="feature-card"><strong>Command:</strong> ARGBSE (hex encoded)</div>
-    <div class="feature-card"><strong>LEDs:</strong> WS2812, WS2811, WS2813, WS2815</div>
-    <div class="feature-card"><strong>Use:</strong> LED matrix, scrolling signs, advertising</div>
-  </div>
-
-  <!-- ===== WHY CHOOSE ===== -->
-  <h2>Why Choose RANGMANG 2 for Your LED Project?</h2>
-  <div class="feature-grid">
-    <div class="feature-card">
-      <strong>💰 Budget-Friendly</strong>
-      <p>Build a professional LED display without breaking the bank. Perfect for small businesses and hobbyists.</p>
+  <!-- ===== STICKY NAV ===== -->
+  <nav class="nav" aria-label="Table of Contents">
+    <div class="nav-inner">
+      <a href="#overview">Overview</a>
+      <a href="#features">Features</a>
+      <a href="#protocol">Protocol</a>
+      <a href="#web-tool">Web Tool</a>
+      <a href="#downloads">Downloads</a>
     </div>
-    <div class="feature-card">
-      <strong>🆓 Free Software</strong>
-      <p>No paid licenses or subscriptions. Use the free Web Tool to design and generate commands instantly.</p>
+  </nav>
+
+  <div class="container">
+
+    <!-- ===== HEADER ===== -->
+    <h1 id="overview">RANGMANG 2 <span class="badge">v2.0</span></h1>
+
+    <p><strong>RANGMANG 2</strong> is a professional serial RGB controller based on the ATmega128 microcontroller, designed for single‑module operation. It supports <strong>50 channels</strong>, each with <strong>255 pixels</strong> — giving you a total of <strong>12,750 addressable pixels</strong> per module.</p>
+
+    <!-- ===== LED COMPATIBILITY BANNER ===== -->
+    <div class="banner-box">
+      <span style="font-size: 1.1rem; color: #00ffcc; width: 100%;">🔹 Compatible with</span>
+      <span class="highlight-led">WS2812</span>
+      <span class="highlight-led">WS2812B</span>
+      <span class="highlight-led">WS2811</span>
+      <span class="highlight-led">WS2813</span>
+      <span class="highlight-led">WS2815</span>
+      <p style="color: #ffcc00; margin: 8px 0 0 0; font-size: 0.9rem; width: 100%;">✨ Ideal for cheap LED matrix, free scrolling signs, and digital advertising</p>
     </div>
-    <div class="feature-card">
-      <strong>🔌 Plug & Play</strong>
-      <p>Works with WS2812, WS2811, WS2813, WS2815 strips. Just connect and start controlling.</p>
+
+    <!-- ===== IMAGES ===== -->
+    <img src="rangmang2_pic.jpg" alt="RANGMANG 2 RGB Controller Module - compatible with WS2812 LED strips" loading="lazy">
+    <img src="rangmang2.png" alt="RANGMANG 2 PCB and schematic based on ATmega128" loading="lazy">
+
+    <!-- ===== KEY FEATURES ===== -->
+    <h2 id="features">Key Features</h2>
+    <div class="feature-grid">
+      <div class="feature-card"><strong>MCU:</strong> ATmega128 (11.0592 MHz)</div>
+      <div class="feature-card"><strong>Channels:</strong> 50 (A1–A50)</div>
+      <div class="feature-card"><strong>Pixels/Ch:</strong> 255 (1–255)</div>
+      <div class="feature-card"><strong>Total LEDs:</strong> 12,750</div>
+      <div class="feature-card"><strong>Protocol:</strong> UART / BT (HC‑05) 115200</div>
+      <div class="feature-card"><strong>Command:</strong> ARGBSE (hex encoded)</div>
+      <div class="feature-card"><strong>LEDs:</strong> WS2812, WS2811, WS2813, WS2815</div>
+      <div class="feature-card"><strong>Use:</strong> LED matrix, scrolling signs, advertising</div>
     </div>
-    <div class="feature-card">
-      <strong>📡 50 Independent Channels</strong>
-      <p>Control up to 50 separate LED strips or segments – ideal for large installations.</p>
+
+    <!-- ===== WHY CHOOSE ===== -->
+    <h2>Why Choose RANGMANG 2 for Your LED Project?</h2>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <strong>💰 Budget-Friendly</strong>
+        <p>Build a professional LED display without breaking the bank. Perfect for small businesses and hobbyists.</p>
+      </div>
+      <div class="feature-card">
+        <strong>🆓 Free Software</strong>
+        <p>No paid licenses or subscriptions. Use the free Web Tool to design and generate commands instantly.</p>
+      </div>
+      <div class="feature-card">
+        <strong>🔌 Plug & Play</strong>
+        <p>Works with WS2812, WS2811, WS2813, WS2815 strips. Just connect and start controlling.</p>
+      </div>
+      <div class="feature-card">
+        <strong>📡 50 Independent Channels</strong>
+        <p>Control up to 50 separate LED strips or segments – ideal for large installations.</p>
+      </div>
     </div>
-  </div>
 
-  <!-- ===== APPLICATIONS ===== -->
-  <h2>Perfect for Your Next LED Project</h2>
-  <ul>
-    <li><strong>📢 Free Advertising Displays:</strong> Build a low-cost scrolling text sign for your shop window or event.</li>
-    <li><strong>🎨 DIY LED Matrix:</strong> Create a colorful, animated matrix panel using affordable WS2812B or WS2811 strips.</li>
-    <li><strong>💡 Custom RGB Lighting:</strong> Control large-scale architectural or decorative lighting installations with 50 independent channels.</li>
-    <li><strong>🛠️ Education & Prototyping:</strong> An ideal platform for learning about addressable LEDs, serial communication, and embedded systems.</li>
-  </ul>
+    <!-- ===== APPLICATIONS ===== -->
+    <div class="card">
+      <h2>Perfect for Your Next LED Project</h2>
+      <ul>
+        <li><strong>📢 Free Advertising Displays:</strong> Build a low-cost scrolling text sign for your shop window or event.</li>
+        <li><strong>🎨 DIY LED Matrix:</strong> Create a colorful, animated matrix panel using affordable WS2812B or WS2811 strips.</li>
+        <li><strong>💡 Custom RGB Lighting:</strong> Control large-scale architectural or decorative lighting installations with 50 independent channels.</li>
+        <li><strong>🛠️ Education & Prototyping:</strong> An ideal platform for learning about addressable LEDs, serial communication, and embedded systems.</li>
+      </ul>
+    </div>
 
-  <!-- ===== COMMAND PROTOCOL ===== -->
-  <h2>Command Protocol — ARGBSE</h2>
-  <p>Every command must end with a newline (<code>\n</code> or <code>\r\n</code>). Only uppercase letters are accepted. No spaces.</p>
+    <!-- ===== COMMAND PROTOCOL ===== -->
+    <div class="card" id="protocol">
+      <h2>Command Protocol — ARGBSE</h2>
+      <p>Every command must end with a newline (<code>\n</code> or <code>\r\n</code>). Only uppercase letters are accepted. No spaces.</p>
 
-  <div class="table-container">
-    <table>
-      <thead>
-        <tr><th>Letter</th><th>Meaning</th><th>Range</th><th>Description</th></tr>
-      </thead>
-      <tbody>
-        <tr><td><strong>A</strong></td><td>Channel Address</td><td>1 – 50</td><td>Channel number</td></tr>
-        <tr><td><strong>R</strong></td><td>Red</td><td>0 – 255</td><td>Red intensity</td></tr>
-        <tr><td><strong>G</strong></td><td>Green</td><td>0 – 255</td><td>Green intensity</td></tr>
-        <tr><td><strong>B</strong></td><td>Blue</td><td>0 – 255</td><td>Blue intensity</td></tr>
-        <tr><td><strong>S</strong></td><td>Start</td><td>0 – 255</td><td>First pixel index</td></tr>
-        <tr><td><strong>E</strong></td><td>End</td><td>1 – 255</td><td>Last pixel index</td></tr>
-      </tbody>
-    </table>
-  </div>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr><th>Letter</th><th>Meaning</th><th>Range</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>A</strong></td><td>Channel Address</td><td>1 – 50</td><td>Channel number</td></tr>
+            <tr><td><strong>R</strong></td><td>Red</td><td>0 – 255</td><td>Red intensity</td></tr>
+            <tr><td><strong>G</strong></td><td>Green</td><td>0 – 255</td><td>Green intensity</td></tr>
+            <tr><td><strong>B</strong></td><td>Blue</td><td>0 – 255</td><td>Blue intensity</td></tr>
+            <tr><td><strong>S</strong></td><td>Start</td><td>0 – 255</td><td>First pixel index</td></tr>
+            <tr><td><strong>E</strong></td><td>End</td><td>1 – 255</td><td>Last pixel index</td></tr>
+          </tbody>
+        </table>
+      </div>
 
-  <h2>ARGBSE Data Encoding — Hex Transmission</h2>
-  <p>To minimize character payload, each variable is converted to <strong>2-character hexadecimal</strong> before transmission. The microcontroller then decodes each byte and executes the command.</p>
+      <h3>ARGBSE Data Encoding — Hex Transmission</h3>
+      <p>To minimize character payload, each variable is converted to <strong>2-character hexadecimal</strong> before transmission. The microcontroller then decodes each byte and executes the command.</p>
 
-  <div class="table-container">
-    <table>
-      <thead><tr><th>Variable</th><th>Meaning</th><th>Range</th><th>Hex Range</th><th>Chars</th></tr></thead>
-      <tbody>
-        <tr><td><strong>A</strong></td><td>Channel Address</td><td>1 – 50</td><td>01 – 32</td><td>2</td></tr>
-        <tr><td><strong>R</strong></td><td>Red</td><td>0 – 255</td><td>00 – FF</td><td>2</td></tr>
-        <tr><td><strong>G</strong></td><td>Green</td><td>0 – 255</td><td>00 – FF</td><td>2</td></tr>
-        <tr><td><strong>B</strong></td><td>Blue</td><td>0 – 255</td><td>00 – FF</td><td>2</td></tr>
-        <tr><td><strong>S</strong></td><td>Start</td><td>0 – 255</td><td>00 – FF</td><td>2</td></tr>
-        <tr><td><strong>E</strong></td><td>End</td><td>1 – 255</td><td>01 – FF</td><td>2</td></tr>
-      </tbody>
-    </table>
-  </div>
-  <p><strong>Total per command:</strong> 6 variables × 2 hex chars = <strong>12 characters</strong></p>
+      <div class="table-container">
+        <table>
+          <thead><tr><th>Variable</th><th>Meaning</th><th>Range</th><th>Hex Range</th><th>Chars</th></tr></thead>
+          <tbody>
+            <tr><td><strong>A</strong></td><td>Channel Address</td><td>1 – 50</td><td>01 – 32</td><td>2</td></tr>
+            <tr><td><strong>R</strong></td><td>Red</td><td>0 – 255</td><td>00 – FF</td><td>2</td></tr>
+            <tr><td><strong>G</strong></td><td>Green</td><td>0 – 255</td><td>00 – FF</td><td>2</td></tr>
+            <tr><td><strong>B</strong></td><td>Blue</td><td>0 – 255</td><td>00 – FF</td><td>2</td></tr>
+            <tr><td><strong>S</strong></td><td>Start</td><td>0 – 255</td><td>00 – FF</td><td>2</td></tr>
+            <tr><td><strong>E</strong></td><td>End</td><td>1 – 255</td><td>01 – FF</td><td>2</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><strong>Total per command:</strong> 6 variables × 2 hex chars = <strong>12 characters</strong></p>
 
-  <!-- ===== PACKET STRUCTURE ===== -->
-  <h3>Packet Structure — Multi-Command Transmission</h3>
-  <p>Commands are transmitted in <strong>packets of up to 20</strong>. Each packet can contain 1 to 20 commands, processed in order.</p>
-  <div class="color-fix-box">
-    <h3>Packet Rules</h3>
-    <ul>
-      <li><strong>Up to 20 commands</strong> can be sent in one transmission</li>
-      <li>If <strong>fewer than 20</strong>, only available commands are sent</li>
-      <li>Even a <strong>single command</strong> is valid and processed</li>
-      <li>Commands are processed <strong>in the order received</strong></li>
-    </ul>
-  </div>
+      <h3>Packet Structure — Multi-Command Transmission</h3>
+      <p>Commands are transmitted in <strong>packets of up to 20</strong>. Each packet can contain 1 to 20 commands, processed in order.</p>
+      <div class="color-fix-box">
+        <h3>Packet Rules</h3>
+        <ul>
+          <li><strong>Up to 20 commands</strong> can be sent in one transmission</li>
+          <li>If <strong>fewer than 20</strong>, only available commands are sent</li>
+          <li>Even a <strong>single command</strong> is valid and processed</li>
+          <li>Commands are processed <strong>in the order received</strong></li>
+        </ul>
+      </div>
+    </div>
 
-  <!-- ===== WEB TOOL USER GUIDE ===== -->
-  <hr style="border-color:#3a3a47; margin:40px 0 20px 0;">
-  <h2 style="color:#00ffcc;">🧰 RANGMANG 2 Web Tool — User Guide</h2>
-  <p>
-    The <strong>RANGMANG 2 Web Tool</strong> (available via the 
-    <a href="simulator2.html">Web Simulator</a>) is a companion application 
-    that converts images and pixel designs into <strong>hex‑encoded ARGBSE commands</strong> 
-    for direct transmission to the ATmega128 controller. Perfect for creating 
-    <strong>cheap LED matrix displays, free scrolling signs, and digital advertising</strong> 
-    using WS2812 / WS2811 / WS2813 / WS2815 strips.
-  </p>
+    <!-- ===== WEB TOOL ===== -->
+    <div class="card" id="web-tool">
+      <h2 style="color: #00ffcc;">🧰 RANGMANG 2 Web Tool — User Guide</h2>
+      <p>
+        The <strong>RANGMANG 2 Web Tool</strong> (available via the
+        <a href="simulator2.html">Web Simulator</a>) is a companion application
+        that converts images and pixel designs into <strong>hex‑encoded ARGBSE commands</strong>
+        for direct transmission to the ATmega128 controller. Perfect for creating
+        <strong>cheap LED matrix displays, free scrolling signs, and digital advertising</strong>
+        using WS2812 / WS2811 / WS2813 / WS2815 strips.
+      </p>
 
-  <h3>1. How to Use the Web Tool</h3>
-  <ul>
-    <li><strong>Upload Images:</strong> Click <em>“Choose Images”</em> or drag &amp; drop one or more images onto the canvas.</li>
-    <li><strong>Adjust Settings:</strong> Set <em>Channels</em> (1–50) and <em>Pixels per Channel</em> (1–255) to match your LED layout.</li>
-    <li><strong>Copy &amp; Send:</strong> Use <em>“Copy”</em> to copy the hex string to your clipboard, or send it directly via SoifGo.</li>
-  </ul>
+      <h3>1. How to Use the Web Tool</h3>
+      <ul>
+        <li><strong>Upload Images:</strong> Click <em>"Choose Images"</em> or drag &amp; drop one or more images onto the canvas.</li>
+        <li><strong>Adjust Settings:</strong> Set <em>Channels</em> (1–50) and <em>Pixels per Channel</em> (1–255) to match your LED layout.</li>
+        <li><strong>Copy &amp; Send:</strong> Use <em>"Copy"</em> to copy the hex string to your clipboard, or send it directly via SoifGo.</li>
+      </ul>
 
-  <h3>2. Packet Size — 20 Commands per Transmission</h3>
-  <p>The <strong>Web Tool groups up to 20 commands</strong> into a single packet for better efficiency. This means:</p>
-  <ul>
-    <li>Each packet contains up to <strong>20 hex commands</strong> (12 chars each = 240 characters).</li>
-    <li>If you have fewer than 20, only the available commands are sent.</li>
-    <li>Even a <strong>single command</strong> is valid and processed correctly.</li>
-    <li>Commands are executed in the <strong>exact order</strong> they appear.</li>
-  </ul>
+      <h3>2. Packet Size — 20 Commands per Transmission</h3>
+      <p>The <strong>Web Tool groups up to 20 commands</strong> into a single packet for better efficiency. This means:</p>
+      <ul>
+        <li>Each packet contains up to <strong>20 hex commands</strong> (12 chars each = 240 characters).</li>
+        <li>If you have fewer than 20, only the available commands are sent.</li>
+        <li>Even a <strong>single command</strong> is valid and processed correctly.</li>
+        <li>Commands are executed in the <strong>exact order</strong> they appear.</li>
+      </ul>
 
+      <h3>3. Wait Value — Inter‑Frame Delay</h3>
+      <p>Each frame in the Web Tool has a <strong><code>wait</code> value</strong> (in milliseconds) defining display delay:</p>
+      <ul>
+        <li><strong>Default:</strong> <code>wait = 0</code> (no delay).</li>
+        <li><strong>To set:</strong> Use <em>"Wait (S)"</em> input box and click <em>"Apply"</em>.</li>
+      </ul>
 
-  <h3>3. Wait Value — Inter‑Frame Delay</h3>
-  <p>Each frame in the Web Tool has a <strong><code>wait</code> value</strong> (in milliseconds) defining display delay:</p>
-  <ul>
-    <li><strong>Default:</strong> <code>wait = 0</code> (no delay).</li>
-    <li><strong>To set:</strong> Use <em>“Wait (S)”</em> input box and click <em>“Apply”</em>.</li>
-  </ul>
+      <h3>4. SoifGo Integration — Custom Wait</h3>
+      <p>In the <strong>SoifGo</strong> smartphone app, navigate to <strong>SoifGo Settings → Note Out</strong> and toggle <strong>Custom Wait</strong> to enable or disable timing parsing.</p>
 
-  <h3>4. SoifGo Integration — Custom Wait</h3>
-  <p>In the <strong>SoifGo</strong> smartphone app, navigate to <strong>SoifGo Settings → Note Out</strong> and toggle <strong>Custom Wait</strong> to enable or disable timing parsing.</p>
+      <h3>5. Quick Tips</h3>
+      <ul>
+        <li><strong>Output not updating?</strong> Click <em>"Process All"</em> after uploading images.</li>
+        <li><strong>Microcontroller not responding?</strong> Check baud rate (115200 baud).</li>
+        <li><strong>Colors look wrong?</strong> Toggle <strong>"RBG (WS2811)"</strong> to swap Green/Blue channels.</li>
+      </ul>
 
-  <h3>5. Quick Tips</h3>
-  <ul>
-    <li><strong>Output not updating?</strong> Click <em>“Process All”</em> after uploading images.</li>
-    <li><strong>Microcontroller not responding?</strong> Check baud rate (115200 baud).</li>
-    <li><strong>Colors look wrong?</strong> Toggle <strong>“RBG (WS2811)”</strong> to swap Green/Blue channels.</li>
-  </ul>
-  
-  
-<h2>✅ Frame Speed Optimization</h2>
-<pre>
- 
-
-------------------------------------------------------------
+      <h3>✅ Frame Speed Optimization</h3>
+      <pre>------------------------------------------------------------
 ⚡ Channel Buffer (Frame Speed Optimization)
 By default, the system clears 50 channels/threads before rendering each frame.
 If you are using fewer channels (e.g., only 12), you can send the exact count
@@ -442,32 +777,36 @@ CH=12
 Expected confirmation reply:
 OK CH=12
 
-(Replace 12 with your actual number of connected channels).
-</pre>
+(Replace 12 with your actual number of connected channels).</pre>
+    </div>
 
-  <!-- ===== VIDEO & DOWNLOADS ===== -->
-  <h3>Sample operation of MINI CAD-CAM</h3>
-  <video controls poster="ws2812b.jpg">
-    <source src="design01.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
+    <!-- ===== VIDEO & DOWNLOADS ===== -->
+    <div class="card">
+      <h3>Sample operation of MINI CAD-CAM</h3>
+      <video controls playsinline preload="metadata" poster="ws2812b.jpg">
+        <source src="design01.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
 
-  <h2>PCB and Schematic Files ATmega128A</h2>
-  <div style="text-align: center; margin: 20px 0;">
-    <a href="rangmang2_file.zip" class="btn-link" style="background:#2563eb; color:#fff;">📦 Download All Project Files</a>
-  </div>
+    <div class="card" id="downloads">
+      <h2>PCB and Schematic Files ATmega128A</h2>
+      <div class="text-center" style="margin: 1rem 0;">
+        <a href="rangmang2_file.zip" class="btn-blue" download>📦 Download All Project Files</a>
+      </div>
+    </div>
 
-  <!-- ===== BACK LINKS ===== -->
-  <div style="text-align:center; margin: 30px 0 10px 0;">
- 
-    <a href="https://soifgo.github.io/soifgo/index.html" class="btn-link" style="background:#8B4513; color:#fff;">
-      ⬅ Back to SoifGo Home
-    </a>
-  </div>
+    <!-- ===== BACK LINKS ===== -->
+    <hr>
+    <div class="btn-wrap">
+      <a href="https://soifgo.github.io/soifgo/index.html" class="btn-home">⬅ Back to SoifGo Home</a>
+    </div>
 
-  <!-- ===== FOOTER ===== -->
-  <div style="margin-top: 40px; font-size: 0.8rem; color: #888; text-align: center; border-top: 1px solid #2a2a35; padding-top: 20px;">
-    <p>RANGMANG 2 — ATmega128 Hardware RGB LED Controller for WS2812, WS2811, WS2813, WS2815. Ideal for LED matrix, scrolling signs, and digital advertising. 50 channels, 255 pixels per channel.</p>
+    <!-- ===== FOOTER ===== -->
+    <div style="margin-top: 40px; font-size: 0.8rem; color: #888; text-align: center; border-top: 1px solid #2a2a35; padding-top: 20px;">
+      <p>RANGMANG 2 — ATmega128 Hardware RGB LED Controller for WS2812, WS2811, WS2813, WS2815. Ideal for LED matrix, scrolling signs, and digital advertising. 50 channels, 255 pixels per channel.</p>
+    </div>
+
   </div>
 
 </body>
