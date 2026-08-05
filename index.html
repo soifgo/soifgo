@@ -305,6 +305,14 @@
       flex-shrink: 0;
     }
 
+    .guide-highlight {
+      border-left: 4px solid #FFD700 !important;
+      background: #FFF8E1 !important;
+    }
+    .guide-highlight a {
+      font-weight: 700 !important;
+    }
+
     /* ===== RESPONSIVE ===== */
     @media (max-width: 700px) {
       .header-container {
@@ -353,7 +361,7 @@
 
 <body>
 
-  <!-- ===== HEADER ===== (Improved) -->
+  <!-- ===== HEADER ===== -->
   <header>
     <div class="header-container">
       <div class="header-left">
@@ -368,7 +376,7 @@
           <a href="#download" style="background:#fff; color:#8B4513; padding:0.7rem 2.5rem; border-radius:40px; font-weight:700; text-decoration:none; display:inline-block; box-shadow:0 4px 12px rgba(0,0,0,0.2);">
             ⬇ Download Free APK
           </a>
-          <span style="font-size:0.9rem; opacity:0.8;">v1.41 • 22 Languages •</span>
+          <span style="font-size:0.9rem; opacity:0.8;">v1.41 • 22 Languages • </span>
         </div>
       </div>
       <div class="header-right">
@@ -410,7 +418,7 @@
       </div>
     </section>
 
-    <!-- ===== ABOUT SECTION ===== (Improved) -->
+    <!-- ===== ABOUT SECTION ===== -->
     <section id="about">
       <h2>ℹ️ What is SoifGo?</h2>
 
@@ -453,94 +461,219 @@
     <!-- ===== TUTORIALS SECTION ===== -->
     <section id="tutorials">
       <h2>📚 SoifGo Tutorials</h2>
-      <p>Step‑by‑step guides to get the most out of SoifGo.</p>
-      <ul class="tutorial-list">
 
-        <li>
+      <!-- Quick Start Box -->
+      <div style="background:#f0ebe6; border-radius:12px; padding:20px; margin-bottom:25px; border-left:5px solid #8B4513;">
+        <h3 style="margin:0 0 10px 0; color:#6b3a1f; font-size:1.1rem;">🚀 New to SoifGo?</h3>
+        <p style="margin:0;">
+          Start with the 
+          <a href="tutorials/soifgo_info/soifgo_info.html" style="font-weight:700; color:#8B4513; text-decoration:underline;">
+            Complete User Guide
+          </a> 
+          — a comprehensive 11‑chapter manual covering everything from installation to advanced features like graphs, sensors, and automation.
+        </p>
+      </div>
+
+      <p style="margin-bottom:1.5rem;">Step‑by‑step guides to get the most out of SoifGo.</p>
+
+      <!-- CATEGORY: Getting Started -->
+      <h3 style="margin-top:1.5rem; font-size:1.1rem; color:#8B4513; border-bottom:1px solid #ddd; padding-bottom:5px;">📖 Getting Started</h3>
+      <ul class="tutorial-list">
+        <li class="guide-highlight">
           <a href="tutorials/soifgo_info/soifgo_info.html">
-            <img src="tutorials/icon/icon.png" alt="icon" class="icon" /> soifgo_info
+            <img src="tutorials/icon/icon.png" alt="icon" class="icon" />
+            <div>
+              <strong>📖 Complete User Guide</strong>
+              <span style="display:block; font-size:0.85rem; color:#6b7280; font-weight:400;">
+                Everything from installation to advanced features — 11 chapters
+              </span>
+            </div>
           </a>
         </li>
         <li>
           <a href="tutorials/page/Create_Page.html">
-            <img src="tutorials/icon/new.png" alt="icon" class="icon" /> Create Page
+            <img src="tutorials/icon/new.png" alt="icon" class="icon" />
+            <div>
+              <strong>Create Page</strong>
+              <span style="display:block; font-size:0.85rem; color:#6b7280; font-weight:400;">
+                Build your first dashboard with buttons and sliders
+              </span>
+            </div>
           </a>
         </li>
         <li>
           <a href="tutorials/pagefolder/page_folder.html">
-            <img src="tutorials/icon/folder.png" alt="icon" class="icon" /> Page &amp; Folder Navigation
+            <img src="tutorials/icon/folder.png" alt="icon" class="icon" />
+            <div>
+              <strong>Page &amp; Folder Navigation</strong>
+              <span style="display:block; font-size:0.85rem; color:#6b7280; font-weight:400;">
+                Organise your projects with folders and multiple pages
+              </span>
+            </div>
           </a>
         </li>
         <li>
           <a href="tutorials/BluetoothExample1/bluetooth_sample1.html">
-            <img src="tutorials/icon/blue.png" alt="icon" class="icon" /> Bluetooth Example 1 (Free Serial Monitor)
+            <img src="tutorials/icon/blue.png" alt="icon" class="icon" />
+            <div>
+              <strong>Bluetooth Example 1</strong>
+              <span style="display:block; font-size:0.85rem; color:#6b7280; font-weight:400;">
+                Free Serial Monitor — connect and test your HC‑05/06
+              </span>
+            </div>
           </a>
         </li>
+      </ul>
+
+      <!-- CATEGORY: Communication -->
+      <h3 style="margin-top:1.5rem; font-size:1.1rem; color:#8B4513; border-bottom:1px solid #ddd; padding-bottom:5px;">📡 Communication</h3>
+      <ul class="tutorial-list">
         <li>
-          <a href="tutorials/WorkingwithHTMLFiles/html01.html">
-            <img src="tutorials/icon/html.png" alt="icon" class="icon" /> Working with HTML Files
-          </a>
-        </li>
-        <li>
-          <a href="tutorials/Effect/effects.html">
-            <img src="tutorials/icon/effect.png" alt="icon" class="icon" /> Effect
-          </a>
-        </li>
-        <li>
-          <a href="tutorials/LocalServerSetup/Local-server_api.html">
-            <span class="no-icon">💻</span> Local Server Setup (Fastify on PC_API JSON)
-          </a>
-        </li>
-        <li>
-          <a href="tutorials/ESP32Server/ESP8266_wifi_api.html">
-            <span class="no-icon">🌐</span> ESP32 Server (WiFiServer / WebServer_api)
-          </a>
-        </li>
-        <li>
-          <a href="tutorials/FetchingAPIs/Api-fetching_api.html">
-            <span class="no-icon">🔄</span> Fetching APIs (External Servers_api)
+          <a href="tutorials/BluetoothSendReceive/Bluetooth_Send_Receive.html">
+            <img src="tutorials/icon/bluesend.png" alt="icon" class="icon" />
+            <div>
+              <strong>Bluetooth Send Receive</strong>
+              <span style="display:block; font-size:0.85rem; color:#6b7280; font-weight:400;">
+                Two‑way communication with Bluetooth devices
+              </span>
+            </div>
           </a>
         </li>
         <li>
           <a href="tutorials/Esp8266_wifi_mqtt/esp8266_mqtt.html">
-            <img src="tutorials/icon/mqtt.png" alt="icon" class="icon" /> ESP8266 MQTT (Online MQTT_iot)
+            <img src="tutorials/icon/mqtt.png" alt="icon" class="icon" />
+            <div>
+              <strong>ESP8266 MQTT</strong>
+              <span style="display:block; font-size:0.85rem; color:#6b7280; font-weight:400;">
+                Connect to MQTT brokers and control devices online
+              </span>
+            </div>
           </a>
         </li>
         <li>
-          <a href="tutorials/BluetoothSendReceive/Bluetooth_Send_Receive.html">
-            <img src="tutorials/icon/bluesend.png" alt="icon" class="icon" /> Bluetooth Send Receive
+          <a href="tutorials/LocalServerSetup/Local-server_api.html">
+            <span class="no-icon">💻</span>
+            <div>
+              <strong>Local Server Setup</strong>
+              <span style="display:block; font-size:0.85rem; color:#6b7280; font-weight:400;">
+                Fastify server on PC for JSON API communication
+              </span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="tutorials/ESP32Server/ESP8266_wifi_api.html">
+            <span class="no-icon">🌐</span>
+            <div>
+              <strong>ESP32 Server</strong>
+              <span style="display:block; font-size:0.85rem; color:#6b7280; font-weight:400;">
+                WiFiServer / WebServer API on ESP8266/ESP32
+              </span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="tutorials/FetchingAPIs/Api-fetching_api.html">
+            <span class="no-icon">🔄</span>
+            <div>
+              <strong>Fetching APIs</strong>
+              <span style="display:block; font-size:0.85rem; color:#6b7280; font-weight:400;">
+                Connect to external REST APIs and parse JSON
+              </span>
+            </div>
+          </a>
+        </li>
+      </ul>
+
+      <!-- CATEGORY: Custom UI & Effects -->
+      <h3 style="margin-top:1.5rem; font-size:1.1rem; color:#8B4513; border-bottom:1px solid #ddd; padding-bottom:5px;">🎨 Custom UI &amp; Effects</h3>
+      <ul class="tutorial-list">
+        <li>
+          <a href="tutorials/WorkingwithHTMLFiles/html01.html">
+            <img src="tutorials/icon/html.png" alt="icon" class="icon" />
+            <div>
+              <strong>Working with HTML Files</strong>
+              <span style="display:block; font-size:0.85rem; color:#6b7280; font-weight:400;">
+                Build custom interfaces using HTML, CSS, and JavaScript
+              </span>
+            </div>
           </a>
         </li>
         <li>
           <a href="tutorials/send_bluetooth_html/html_guide_1.html">
-            <img src="tutorials/icon/bluesend_html.png" alt="icon" class="icon" /> Bluetooth Send by HTML
+            <img src="tutorials/icon/bluesend_html.png" alt="icon" class="icon" />
+            <div>
+              <strong>Bluetooth Send by HTML</strong>
+              <span style="display:block; font-size:0.85rem; color:#6b7280; font-weight:400;">
+                Send Bluetooth commands from your HTML page
+              </span>
+            </div>
           </a>
         </li>
         <li>
+          <a href="tutorials/Effect/effects.html">
+            <img src="tutorials/icon/effect.png" alt="icon" class="icon" />
+            <div>
+              <strong>Effects</strong>
+              <span style="display:block; font-size:0.85rem; color:#6b7280; font-weight:400;">
+                Dynamic effects: rotation, circular gauge, color shift, and more
+              </span>
+            </div>
+          </a>
+        </li>
+      </ul>
+
+      <!-- CATEGORY: Advanced & Tools -->
+      <h3 style="margin-top:1.5rem; font-size:1.1rem; color:#8B4513; border-bottom:1px solid #ddd; padding-bottom:5px;">⚙️ Advanced &amp; Tools</h3>
+      <ul class="tutorial-list">
+        <li>
           <a href="tutorials/note_out/note_out.html">
-            <img src="tutorials/icon/val.png" alt="icon" class="icon" /> Note SEND AND RECEIVE
+            <img src="tutorials/icon/val.png" alt="icon" class="icon" />
+            <div>
+              <strong>Note SEND AND RECEIVE</strong>
+              <span style="display:block; font-size:0.85rem; color:#6b7280; font-weight:400;">
+                Stream text files line‑by‑line via Bluetooth, API, or MQTT
+              </span>
+            </div>
           </a>
         </li>
         <li>
           <a href="tutorials/rangmang/Rangmang.html">
-            <img src="tutorials/rangmang/rangmang_pic.png" alt="icon" class="icon" /> RANGMANG
+            <img src="tutorials/rangmang/rangmang_pic.png" alt="icon" class="icon" />
+            <div>
+              <strong>RANGMANG</strong>
+              <span style="display:block; font-size:0.85rem; color:#6b7280; font-weight:400;">
+                Advanced data display and visualisation tool
+              </span>
+            </div>
           </a>
         </li>
         <li>
           <a href="tutorials/rangmang2/rangmang2.html">
-            <img src="tutorials/rangmang2/rangmang2_pic.jpg" alt="icon" class="icon" /> RANGMANG 2
+            <img src="tutorials/rangmang2/rangmang2_pic.jpg" alt="icon" class="icon" />
+            <div>
+              <strong>RANGMANG 2</strong>
+              <span style="display:block; font-size:0.85rem; color:#6b7280; font-weight:400;">
+                Enhanced version with 2D plotting and transformations
+              </span>
+            </div>
           </a>
         </li>
         <li>
           <a href="tutorials/cmi209/cmi209.html">
-            <img src="tutorials/cmi209/cmi209_01.jpg" alt="icon" class="icon" /> cmi209
+            <img src="tutorials/cmi209/cmi209_01.jpg" alt="icon" class="icon" />
+            <div>
+              <strong>cmi209</strong>
+              <span style="display:block; font-size:0.85rem; color:#6b7280; font-weight:400;">
+                Complete IoT project example with hardware integration
+              </span>
+            </div>
           </a>
         </li>
-
       </ul>
     </section>
 
-    <!-- ===== FAQ SECTION ===== (Completely rewritten) -->
+    <!-- ===== FAQ SECTION ===== -->
     <section id="faq">
       <h2>❓ Frequently Asked Questions</h2>
 
