@@ -8,7 +8,7 @@
 
   <!-- Primary SEO Description -->
   <meta name="description" content="SoifGo is a powerful Android Bluetooth controller app for ESP32, Arduino, HC-05, and ESP8266. Supports MQTT, buttons, seek bars. Free and open-source IoT controller." />
-  <meta name="keywords" content="Bluetooth controller, MQTT client, ESP32 Android app, Arduino IoT control, open source IoT, SoifGo" />
+  <meta name="keywords" content="Bluetooth controller, MQTT client, ESP32 Android app, Arduino IoT control, IoT, SoifGo" />
 
   <!-- Open Graph -->
   <meta property="og:title" content="SoifGo — Free Bluetooth &amp; MQTT IoT Controller for Android" />
@@ -353,15 +353,27 @@
 
 <body>
 
-  <!-- ===== HEADER ===== -->
+  <!-- ===== HEADER ===== (Improved) -->
   <header>
     <div class="header-container">
       <div class="header-left">
-        <p><strong>Bluetooth &amp; MQTT IoT Controller for Android</strong> — Control ESP32, Arduino, HC-05, ESP8266 with buttons, sliders, and 22 languages. Free   </p>
+        <p style="font-size:1.4rem; font-weight:700; margin-bottom:0.3rem; letter-spacing:-0.5px;">
+          Build Custom IoT Controllers Without Coding
+        </p>
+        <p style="font-size:1.05rem; opacity:0.95; max-width:90%;">
+          Control <strong>ESP32, Arduino, ESP8266</strong> via <strong>Bluetooth (HC-05/06)</strong>, <strong>MQTT</strong>, or <strong>HTTP API</strong>.
+          Design dashboards with buttons, sliders, graphs, and even full HTML/JS interfaces — all from your Android phone.
+        </p>
+        <div style="margin-top:1.2rem; display:flex; flex-wrap:wrap; gap:12px; align-items:center;">
+          <a href="#download" style="background:#fff; color:#8B4513; padding:0.7rem 2.5rem; border-radius:40px; font-weight:700; text-decoration:none; display:inline-block; box-shadow:0 4px 12px rgba(0,0,0,0.2);">
+            ⬇ Download Free APK
+          </a>
+          <span style="font-size:0.9rem; opacity:0.8;">v1.41 • 22 Languages •</span>
+        </div>
       </div>
       <div class="header-right">
         <h1>
-          <img src="soifgo-logo.png" alt="SoifGo Logo" />
+          <img src="soifgo-logo.png" alt="SoifGo Logo" style="height:72px;" />
           SoifGo
         </h1>
       </div>
@@ -398,25 +410,39 @@
       </div>
     </section>
 
-    <!-- ===== ABOUT SECTION ===== -->
+    <!-- ===== ABOUT SECTION ===== (Improved) -->
     <section id="about">
-      <h2>ℹ️ About SoifGo — IoT Controller for Android</h2>
+      <h2>ℹ️ What is SoifGo?</h2>
 
-      <p><strong>SoifGo</strong> is an Android application that provides advanced control using <strong>buttons and seek bars</strong>. It supports <strong>Bluetooth</strong> and <strong>MQTT</strong> protocols, making it ideal for controlling ESP32, Arduino, HC‑05, and ESP8266 devices.</p>
+      <p style="font-size:1.05rem;">
+        <strong>SoifGo</strong> is a free, open-source Android app that turns your smartphone into a professional <strong>IoT controller</strong>.
+        It supports multiple communication protocols, a visual UI builder, and advanced features like real-time graphs, circular gauges, alarms, and sensor integration — all without writing a single line of code.
+      </p>
 
-      <p><strong>Developer:</strong> Saeid Moghadam</p>
-
-      <h3>✨ Key Features</h3>
-      <ul class="feature-grid">
-        <li>Control ESP32 via Bluetooth from Android</li>
-        <li>Connect to HC‑05 and HC‑06 modules</li>
-        <li>MQTT protocol support for internet communication</li>
-        <li>Buttons and seek bars for precise control</li>
-        <li>22 languages supported</li>
-        <li>Perfect for Arduino, ESP8266, and robotics</li>
-        <li>Two‑way communication with IoT devices</li>
-        <li>Ideal for home automation and industrial projects</li>
+      <h3>🚀 Key Capabilities</h3>
+      <ul class="feature-grid" style="list-style:none; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:15px 0;">
+        <li style="background:#f7f5f2; padding:12px 16px; border-radius:8px; border-left:3px solid #8B4513;">
+          <strong>Bluetooth + MQTT + HTTP</strong><br>Connect via HC-05/06, ESP32, or any serial device, and use MQTT or REST API for cloud control.
+        </li>
+        <li style="background:#f7f5f2; padding:12px 16px; border-radius:8px; border-left:3px solid #8B4513;">
+          <strong>Visual UI Builder</strong><br>Add buttons, seek bars, and text displays with custom colors, sizes, and behaviors — no programming needed.
+        </li>
+        <li style="background:#f7f5f2; padding:12px 16px; border-radius:8px; border-left:3px solid #8B4513;">
+          <strong>HTML/JS WebView</strong><br>Run your own interactive HTML pages inside the app and use JavaScript to send/receive data via Bluetooth, MQTT, or sensors.
+        </li>
+        <li style="background:#f7f5f2; padding:12px 16px; border-radius:8px; border-left:3px solid #8B4513;">
+          <strong>Real‑Time Graphs & Gauges</strong><br>Visualize incoming data with dynamic line graphs and circular gauges, with adjustable colors and line widths.
+        </li>
+        <li style="background:#f7f5f2; padding:12px 16px; border-radius:8px; border-left:3px solid #8B4513;">
+          <strong>Phone Sensors & Alarms</strong><br>Read light, accelerometer, and magnetometer data, and trigger alarms (audio, vibration, or SMS) based on values.
+        </li>
+        <li style="background:#f7f5f2; padding:12px 16px; border-radius:8px; border-left:3px solid #8B4513;">
+          <strong>Multi‑Page & Multi‑Folder</strong><br>Organise your projects into pages and folders, load/save configurations, and even create startup sequences.
+        </li>
       </ul>
+      <p>
+        <strong>Example:</strong> Build a robot with Arduino + HC‑05. Create directional buttons, add a seek bar for speed control, and use the built‑in graph to monitor motor RPM. Or set up an MQTT dashboard to control home lighting from anywhere. SoifGo gives you the tools — you build the experience.
+      </p>
 
       <h3>🌍 Supported Languages</h3>
       <p style="columns: 3 180px; column-gap: 20px;">
@@ -514,38 +540,103 @@
       </ul>
     </section>
 
-    <!-- ===== FAQ SECTION ===== -->
+    <!-- ===== FAQ SECTION ===== (Completely rewritten) -->
     <section id="faq">
       <h2>❓ Frequently Asked Questions</h2>
 
-      <div class="faq-item"><strong>How to connect ESP32 to Android via Bluetooth?</strong> SoifGo allows you to easily connect and control ESP32 via Bluetooth. Install the app, pair your device, and start sending commands through buttons and seek bars.</div>
-      
-      <div class="faq-item"><strong>What devices does SoifGo support?</strong> SoifGo supports ESP32, Arduino, HC‑05, HC‑06, ESP8266, and any device that communicates via Bluetooth SPP or MQTT protocol.</div>
-      
-      <div class="faq-item"><strong>Is SoifGo free and open‑source?</strong> Yes! SoifGo is completely free to download and use. The source code is available for developers who want to contribute or customize it.</div>
-      
-      <div class="faq-item"><strong>Can I use SoifGo for robotics projects?</strong> Absolutely! SoifGo is perfect for controlling robots with Bluetooth modules like HC‑05 and HC‑06. You can have up to 40 separate notes (commands) per page, each with send and receive capabilities. This allows you to send motion data to your robot via Bluetooth and reflect the same data back to monitor its status. Additionally, you can use the WebView feature in SoifGo to build your own custom user interface with HTML and CSS. By following the Bluetooth send/receive instructions, you can establish full two-way communication with your robot. Everything depends on your creativity and skills — SoifGo provides the tools, and you build the experience!</div>
-      
-      <div class="faq-item"><strong>Does SoifGo support MQTT?</strong> Yes, SoifGo includes MQTT support, allowing you to control your IoT devices over the internet in addition to Bluetooth.</div>
-      
-      <div class="faq-item"><strong>What languages does SoifGo support?</strong> SoifGo supports 22 languages including English, Spanish, Chinese, Arabic, Hindi, Russian, French, German, Japanese, Persian, and many more.</div>
-      
-      <div class="faq-item"><strong>How to control Arduino with Bluetooth from Android?</strong> Install SoifGo, pair with your Arduino's HC‑05/06 module, and use the buttons and seek bars to send commands.</div>
-      
-      <div class="faq-item"><strong>Is SoifGo available on Google Play?</strong> SoifGo is currently available as a direct download (APK) and on APKPure. Google Play release is coming soon.</div>
-      
-<div class="faq-item">
-    <strong>Can SoifGo be used to build custom apps?</strong>
-    <p><strong>Yes, absolutely!</strong> SoifGo acts as a powerful platform for building lightweight, custom IoT control interfaces without needing traditional Android development knowledge. You can create your app in two ways:</p>
-    <ul>
-        <li><strong>No-Code UI Builder:</strong> Easily create folders, multi-page layouts, shortcut buttons, and custom seek bars directly through the built-in visual interface.</li>
-        <li><strong>Advanced WebView (HTML/JS):</strong> For complete design freedom, you can link buttons to open offline HTML files. This opens a native WebView environment where you can run custom interactive layouts, render animations, and leverage a JavaScript bridge to access phone sensors or send Bluetooth commands.</li>
-    </ul>
-    <p><em>Pro Tip:</em> Today, you don't even need to write HTML/JavaScript from scratch. You can simply ask any modern AI tool to generate the exact web-based controller layout you want and paste it into SoifGo. This turns the app into an incredibly fast, flexible rapid-prototyping ecosystem for your hardware projects.</p>
-</div>
+      <!-- CATEGORY 1: BASICS -->
+      <h3 style="margin-top:1.8rem; color:#6b3a1f; border-bottom:1px solid #eee; padding-bottom:5px;">📌 Getting Started</h3>
 
+      <div class="faq-item">
+        <strong>What exactly is SoifGo, and who is it for?</strong>
+        <p>SoifGo is an Android app for makers, engineers, and hobbyists who want to create custom remote controls for microcontrollers (ESP32, Arduino, ESP8266) without writing code. It supports Bluetooth (SPP), MQTT, and HTTP APIs, and lets you design your own UI with buttons, sliders, graphs, and even HTML pages.</p>
+      </div>
 
-      <h3>📧 Contact</h3>
+      <div class="faq-item">
+        <strong>What hardware does it support?</strong>
+        <p>Any device that uses <strong>Bluetooth SPP</strong> (HC‑05, HC‑06, Bluetooth shields), <strong>MQTT</strong>, or <strong>HTTP REST APIs</strong>. This includes ESP32, ESP8266, Arduino (with BT modules), Raspberry Pi (with MQTT), and even GSM modules.</p>
+      </div>
+
+      <div class="faq-item">
+        <strong>Do I need an internet connection?</strong>
+        <p><strong>No</strong> for Bluetooth — it works offline. <strong>Yes</strong> for MQTT and HTTP (you need Wi‑Fi or mobile data).</p>
+      </div>
+
+      <!-- CATEGORY 2: FEATURES & TECHNICAL DETAILS -->
+      <h3 style="margin-top:1.8rem; color:#6b3a1f; border-bottom:1px solid #eee; padding-bottom:5px;">⚙️ Features & Technical Details</h3>
+
+      <div class="faq-item">
+        <strong>Can I control a robot with two‑way communication?</strong>
+        <p>Yes. You can send commands (like 'F', 'B', 'L', 'R') and simultaneously receive sensor data (distance, battery voltage, etc.) from your robot. The app displays incoming values on buttons or in graphs, and you can even log them to files.</p>
+      </div>
+
+      <div class="faq-item">
+        <strong>How does the WebView (HTML/JS) feature work?</strong>
+        <p>You can create offline HTML files with JavaScript and place them in the app's folder. When you tap a button linked to that file, it opens in a native WebView. Your JavaScript can call B4A subroutines via the JavaScript interface to send Bluetooth commands, publish MQTT messages, read phone sensors, or capture data. This gives you unlimited design freedom.</p>
+      </div>
+
+      <div class="faq-item">
+        <strong>Does it support real‑time graphs and circular gauges?</strong>
+        <p>Yes. Every button can be assigned a graph that plots incoming numeric values in real time. You can set the graph color, line width, and update interval. Additionally, you can create circular gauges (arcs) that visually represent values within a range, with adjustable start/end angles and colors.</p>
+      </div>
+
+      <div class="faq-item">
+        <strong>Can I use phone sensors (light, accelerometer, magnetometer)?</strong>
+        <p>Absolutely. SoifGo can read the ambient light sensor, accelerometer (X/Y movement), and magnetic field sensor. You can display these values on buttons, send them via Bluetooth or MQTT, and even use them to trigger alarms or animate UI elements.</p>
+      </div>
+
+      <div class="faq-item">
+        <strong>What about alarms and notifications?</strong>
+        <p>You can set numerical thresholds on received values. When a value goes above or below the threshold, the app can play an audio file, vibrate, or send an SMS. You can also customise the alarm message.</p>
+      </div>
+
+      <div class="faq-item">
+        <strong>Can I view or edit G‑Code files?</strong>
+        <p>Yes, the app includes a built‑in G‑Code viewer and editor. You can load a G‑Code file from the Note folder, and the app will render the toolpath with animated lines and arcs. This is useful for CNC or 3D printing monitoring.</p>
+      </div>
+
+      <!-- CATEGORY 3: CUSTOMISATION & NO‑CODE -->
+      <h3 style="margin-top:1.8rem; color:#6b3a1f; border-bottom:1px solid #eee; padding-bottom:5px;">🎨 Customisation & No‑Code Design</h3>
+
+      <div class="faq-item">
+        <strong>How do I build a UI without programming?</strong>
+        <p>Use the visual editor: add buttons and seek bars, then configure their properties (size, position, colour, text, behaviour) directly from the app. You can assign actions like "send Bluetooth data", "open another page", "change a seek bar value", or "execute a JavaScript function". No coding required.</p>
+      </div>
+
+      <div class="faq-item">
+        <strong>Can I use HTML/CSS/JS to create a custom interface?</strong>
+        <p>Yes. This is one of the most powerful features. You can write your own HTML page with CSS and JavaScript, and run it inside SoifGo's WebView. Your JavaScript can interact with the app via a bridge, allowing you to send/receive Bluetooth data, publish MQTT messages, read sensors, and even open other pages.</p>
+      </div>
+
+      <div class="faq-item">
+        <strong>What kind of effects can I apply to buttons?</strong>
+        <p>You can add rotation, circular gauges, max‑size scaling, colour shifts based on input values, and even custom move animations. There's also a "scrip" (formula) feature that lets you apply mathematical expressions (e.g., `val/2 + 10`) to a button's displayed value.</p>
+      </div>
+
+      <div class="faq-item">
+        <strong>Can I organise multiple projects?</strong>
+        <p>Yes. SoifGo supports folders and pages. Each folder can contain multiple pages, and each page can have its own set of buttons, seek bars, and settings. You can load and save pages at any time, and even create a startup sequence that automatically triggers buttons on load.</p>
+      </div>
+
+      <!-- CATEGORY 4: SECURITY & INSTALLATION -->
+      <h3 style="margin-top:1.8rem; color:#6b3a1f; border-bottom:1px solid #eee; padding-bottom:5px;">🔒 Security & Installation</h3>
+
+      <div class="faq-item">
+        <strong>Is the APK safe to install?</strong>
+        <p>Yes. The APK has been scanned by <strong>65+ antivirus engines</strong> on VirusTotal with zero threats detected. The project is fully open‑source, so the code is transparent and auditable. <a href="https://www.virustotal.com/gui/file/5a28ee2acf881b4a300cc482e5691ee8313f1ca6fde0457e07e942e416d51d81" target="_blank" rel="noopener">View the full security report</a>.</p>
+      </div>
+
+      <div class="faq-item">
+        <strong>Is SoifGo available on Google Play?</strong>
+        <p>Currently, it is available as a direct APK download and on <a href="https://apkpure.com/soifgo/soifgo.saeidmoghadam" target="_blank" rel="noopener">APKPure</a>. The Google Play Store release is planned soon.</p>
+      </div>
+
+      <div class="faq-item">
+        <strong>What Android version do I need?</strong>
+        <p>SoifGo supports <strong>Android 5.0 (Lollipop) and above</strong>. For Bluetooth, your device must support Bluetooth 4.0+ (most modern phones do).</p>
+      </div>
+
+      <h3>📧 Contact Developer</h3>
       <p>Email: <a href="mailto:SSM20985@gmail.com">SSM20985@gmail.com</a> &middot; <a href="mailto:SSMQQMSS@gmail.com">SSMQQMSS@gmail.com</a></p>
     </section>
 
