@@ -100,7 +100,7 @@
     header {
       background: linear-gradient(135deg, var(--primary-dark), var(--primary));
       color: white;
-      padding: 2rem 1rem;
+      padding: 2.5rem 1rem;
       box-shadow: 0 4px 20px rgba(124, 58, 237, 0.3);
       position: relative;
       overflow: hidden;
@@ -157,7 +157,7 @@
     }
 
     .header-right h1 img {
-      height: 150px;
+      height: 120px;
     }
 
     /* ===== NAV ===== */
@@ -165,10 +165,10 @@
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      background: rgba(255, 255, 255, 0.03);
+      background: rgba(15, 10, 26, 0.85);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      padding: 0.6em;
+      padding: 0.8rem;
       position: sticky;
       top: 0;
       z-index: 1000;
@@ -181,9 +181,9 @@
     }
 
     nav a {
-      margin: 0.3em;
-      padding: 0.6em 1.4em;
-      border: none;
+      margin: 0.3rem;
+      padding: 0.6rem 1.4rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
       background: rgba(255, 255, 255, 0.04);
       cursor: pointer;
       font-size: 0.95em;
@@ -193,13 +193,12 @@
       font-weight: 500;
       text-decoration: none;
       display: inline-block;
-      border: 1px solid transparent;
     }
 
     nav a:hover {
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.1);
       color: #fff;
-      border-color: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.15);
       transform: translateY(-1px);
     }
 
@@ -454,67 +453,64 @@
     /* ===== RESPONSIVE ===== */
     @media (max-width: 700px) {
       header {
-        padding: 0.5rem 0.5rem;
+        padding: 1.5rem 1rem;
       }
 
       .header-container {
-        flex-direction: row !important;
-        justify-content: space-between;
-        align-items: center;
-        gap: 0.3rem;
+        flex-direction: column !important;
+        text-align: center;
+        gap: 1.2rem;
       }
 
       .header-left {
-        text-align: left !important;
-        flex: 2;
-        min-width: 0;
+        text-align: center !important;
+        flex: unset;
       }
 
       .header-left p:first-child {
-        font-size: 0.75rem !important;
+        font-size: 1rem !important;
         font-weight: 700 !important;
-        margin-bottom: 0 !important;
-        letter-spacing: 0 !important;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        margin-bottom: 0.5rem !important;
+        white-space: normal !important;
       }
 
       .header-left p:last-child {
-        display: none;
+        display: block !important;
+        font-size: 0.95rem !important;
       }
 
       .header-right {
-        flex: 0 0 auto;
+        flex: unset;
       }
 
       .header-right h1 {
-        font-size: 0.9rem !important;
-        gap: 3px !important;
+        justify-content: center !important;
+        font-size: 1.6rem !important;
+        gap: 8px !important;
       }
 
       .header-right h1 img {
-        height: 22px !important;
+        height: 45px !important;
       }
 
       nav {
-        padding: 0.15rem 0.2rem;
-        gap: 2px;
+        padding: 0.5rem;
+        gap: 6px;
         position: sticky;
         top: 0;
         z-index: 1000;
-        background: rgba(15, 10, 26, 0.92);
+        background: rgba(15, 10, 26, 0.95);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
       }
 
       nav a {
-        font-size: 0.55rem;
-        padding: 0.1rem 0.4rem;
-        margin: 1px;
-        border-radius: 10px;
+        font-size: 0.85rem;
+        padding: 0.4rem 0.9rem;
+        margin: 2px;
+        border-radius: 20px;
         background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
       }
 
       nav a:hover {
@@ -522,11 +518,12 @@
       }
 
       main {
-        padding-top: 0.3rem;
+        padding: 0 0.8rem;
+        padding-top: 0.5rem;
       }
 
       section:first-of-type {
-        margin-top: 10px;
+        margin-top: 15px;
       }
 
       .feature-grid {
@@ -538,7 +535,7 @@
       }
 
       section {
-        padding: 1.2em;
+        padding: 1.2rem;
       }
 
       h2 {
@@ -546,7 +543,7 @@
       }
 
       img.preview-img {
-        max-width: 90%;
+        max-width: 95%;
       }
     }
 
@@ -556,30 +553,30 @@
       }
 
       header {
-        padding: 0.3rem 0.3rem;
+        padding: 1.2rem 0.8rem;
       }
 
       .header-left p:first-child {
-        font-size: 0.65rem !important;
+        font-size: 0.9rem !important;
       }
 
       .header-right h1 {
-        font-size: 0.8rem !important;
+        font-size: 1.4rem !important;
       }
 
       .header-right h1 img {
-        height: 18px !important;
+        height: 38px !important;
       }
 
       nav a {
-        font-size: 0.5rem;
-        padding: 0.05rem 0.3rem;
-        margin: 0.5px;
+        font-size: 0.8rem;
+        padding: 0.35rem 0.7rem;
+        margin: 2px;
       }
 
       section {
-        padding: 1em;
-        margin-top: 10px;
+        padding: 1rem;
+        margin-top: 15px;
       }
 
       .security-box {
