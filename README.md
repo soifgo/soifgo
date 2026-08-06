@@ -167,30 +167,30 @@ This enables rapid CNC operation and prototyping directly from an Android device
 
 ## Pages & HTML
 
-- [Create Page](https://soifgo.github.io/soifgo/tutorials/server/page/Create_Page.html)
-- [Page & Folder Navigation](https://soifgo.github.io/soifgo/tutorials/server/pagefolder/page_folder.html)
-- [Working with HTML Files](https://soifgo.github.io/soifgo/tutorials/server/WorkingwithHTMLFiles/html01.html)
+- [Create Page](https://soifgo.github.io/soifgo/tutorials/page/Create_Page.html)
+- [Page & Folder Navigation](https://soifgo.github.io/soifgo/tutorials/pagefolder/page_folder.html)
+- [Working with HTML Files](https://soifgo.github.io/soifgo/tutorials/WorkingwithHTMLFiles/html01.html)
 
 ## Bluetooth
 
-- [Bluetooth Example](https://soifgo.github.io/soifgo/tutorials/server/BlutoothExample1/blutooth_sample1.html)
-- [Bluetooth Send & Receive](https://soifgo.github.io/soifgo/tutorials/server/BluetoothSendReceive/Bluetooth_Send_Receive.html)
+- [Bluetooth Example](https://soifgo.github.io/soifgo/tutorials/BlutoothExample1/blutooth_sample1.html)
+- [Bluetooth Send & Receive](https://soifgo.github.io/soifgo/tutorials/BluetoothSendReceive/Bluetooth_Send_Receive.html)
 
 ## Servers & APIs
 
-- [Local Server Setup](https://soifgo.github.io/soifgo/tutorials/server/LocalServerSetup/Local-server.html)
-- [ESP8266 Web Server](https://soifgo.github.io/soifgo/tutorials/server/ESP32Server/ESP8266_wifi.html)
-- [Fetching APIs](https://soifgo.github.io/soifgo/tutorials/server/FetchingAPIs/Api-fetching.html)
+- [Local Server Setup](https://soifgo.github.io/soifgo/tutorials/LocalServerSetup/Local-server.html)
+- [ESP8266 Web Server](https://soifgo.github.io/soifgo/tutorials/ESP32ESP8266_wifi.html)
+- [Fetching APIs](https://soifgo.github.io/soifgo/tutorials/FetchingAPIs/Api-fetching.html)
 
 ## MQTT
 
-- [ESP8266 MQTT Example](https://soifgo.github.io/soifgo/tutorials/server/Esp8266_wifi_mqtt/esp8266_mqtt.html)
+- [ESP8266 MQTT Example](https://soifgo.github.io/soifgo/tutorials/Esp8266_wifi_mqtt/esp8266_mqtt.html)
 
 ## Additional Projects
 
-- [RANGMANG](https://soifgo.github.io/soifgo/tutorials/server/rangmang/Rangmang.html)
-- [CMI209](https://soifgo.github.io/soifgo/tutorials/server/cmi209/cmi209.html)
-- [Effects](https://soifgo.github.io/soifgo/tutorials/server/Effect/effects.html)
+- [RANGMANG](https://soifgo.github.io/soifgo/tutorials/rangmang/Rangmang.html)
+- [CMI209](https://soifgo.github.io/soifgo/tutorials/cmi209/cmi209.html)
+- [Effects](https://soifgo.github.io/soifgo/tutorials/Effect/effects.html)
 
 ---
 
