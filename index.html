@@ -96,68 +96,58 @@
       border-radius: 10px;
     }
 
-    /* ===== HEADER ===== */
+    /* ===== MODERN HEADER ===== */
     header {
-      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      background: linear-gradient(135deg, #0f0a1a, #2d1b4e);
       color: white;
-      padding: 2.5rem 1rem;
-      box-shadow: 0 4px 20px rgba(124, 58, 237, 0.3);
+      padding: 80px 20px;
+      text-align: center;
       position: relative;
-      overflow: hidden;
-    }
-
-    header::after {
-      content: '';
-      position: absolute;
-      top: -50%;
-      right: -20%;
-      width: 60%;
-      height: 200%;
-      background: radial-gradient(ellipse, rgba(255,255,255,0.05), transparent 70%);
-      pointer-events: none;
     }
 
     .header-container {
-      max-width: 900px;
+      max-width: 800px;
       margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 2rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    .header-left {
-      flex: 2;
-      text-align: left;
-    }
-
-    .header-left p {
-      margin: 0;
-      font-size: 1.15rem;
-      opacity: 0.95;
-      max-width: 100%;
-      line-height: 1.6;
-    }
-
-    .header-right {
-      flex: 1;
-      text-align: right;
     }
 
     .header-right h1 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
       display: flex;
+      justify-content: center;
       align-items: center;
-      justify-content: flex-end;
-      gap: 12px;
-      margin: 0;
-      font-size: 2.2em;
-      line-height: 1.1;
+      gap: 15px;
     }
 
     .header-right h1 img {
-      height: 120px;
+      height: 80px;
+    }
+
+    .header-left p {
+      font-size: 1.3rem;
+      color: #cbd5e1;
+      margin-bottom: 35px;
+      line-height: 1.5;
+    }
+
+    /* Modern CTA Button */
+    .cta-button {
+      background: #7C3AED;
+      color: white;
+      padding: 18px 40px;
+      border-radius: 50px;
+      font-weight: bold;
+      font-size: 1.2rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 25px rgba(124, 58, 237, 0.4);
+      display: inline-block;
+    }
+
+    .cta-button:hover {
+      background: #8B5CF6;
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(124, 58, 237, 0.6);
     }
 
     /* ===== NAV ===== */
@@ -453,44 +443,26 @@
     /* ===== RESPONSIVE ===== */
     @media (max-width: 700px) {
       header {
-        padding: 1.5rem 1rem;
-      }
-
-      .header-container {
-        flex-direction: column !important;
-        text-align: center;
-        gap: 1.2rem;
-      }
-
-      .header-left {
-        text-align: center !important;
-        flex: unset;
-      }
-
-      .header-left p:first-child {
-        font-size: 1rem !important;
-        font-weight: 700 !important;
-        margin-bottom: 0.5rem !important;
-        white-space: normal !important;
-      }
-
-      .header-left p:last-child {
-        display: block !important;
-        font-size: 0.95rem !important;
-      }
-
-      .header-right {
-        flex: unset;
+        padding: 60px 20px;
       }
 
       .header-right h1 {
-        justify-content: center !important;
-        font-size: 1.6rem !important;
-        gap: 8px !important;
+        font-size: 2.5rem;
+        flex-direction: row;
+        gap: 10px;
       }
 
       .header-right h1 img {
-        height: 45px !important;
+        height: 60px;
+      }
+
+      .header-left p {
+        font-size: 1.1rem;
+      }
+
+      .cta-button {
+        padding: 16px 32px;
+        font-size: 1rem;
       }
 
       nav {
@@ -553,19 +525,24 @@
       }
 
       header {
-        padding: 1.2rem 0.8rem;
-      }
-
-      .header-left p:first-child {
-        font-size: 0.9rem !important;
+        padding: 40px 16px;
       }
 
       .header-right h1 {
-        font-size: 1.4rem !important;
+        font-size: 2rem;
       }
 
       .header-right h1 img {
-        height: 38px !important;
+        height: 50px;
+      }
+
+      .header-left p {
+        font-size: 1rem;
+      }
+
+      .cta-button {
+        padding: 14px 28px;
+        font-size: 0.95rem;
       }
 
       nav a {
@@ -601,20 +578,18 @@
   <!-- ===== HEADER ===== -->
   <header>
     <div class="header-container">
-      <div class="header-left">
-        <p style="font-weight:700; letter-spacing:-0.5px;">
-          Build Custom IoT Controllers Without Coding
-        </p>
-        <p style="font-size:1.05rem; opacity:0.95; max-width:90%;">
-          Control <strong>ESP32, Arduino, ESP8266</strong> via <strong>Bluetooth (HC-05/06)</strong>, <strong>MQTT</strong>, or <strong>HTTP API</strong>.
-          Design dashboards with buttons, sliders, graphs, and even full HTML/JS interfaces — all from your Android phone.
-        </p>
-      </div>
       <div class="header-right">
         <h1>
           <img src="soifgo-logo.png" alt="SoifGo Logo" />
           SoifGo
         </h1>
+      </div>
+      <div class="header-left">
+        <p>
+          Transform your phone into a professional IoT controller.<br>
+          Design custom dashboards for Arduino and ESP32 – no coding required.
+        </p>
+        <a href="soifgo.zip" class="cta-button">Download Android APK</a>
       </div>
     </div>
   </header>
