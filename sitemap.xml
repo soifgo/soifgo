@@ -5,105 +5,130 @@
  
   <url>
     <loc>https://soifgo.github.io/soifgo/</loc>
-    <lastmod>2026-07-09</lastmod>
+    <lastmod>2026-08-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <image:image>
-      <image:loc>https://soifgo.github.io/soifgo/soifgo-logo.png</image:loc>
-      <image:title>SoifGo Logo - Bluetooth &amp; MQTT IoT Controller</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://soifgo.github.io/soifgo/soifgo_pic01.png</image:loc>
-      <image:title>SoifGo App Preview - Bluetooth and MQTT IoT Controller</image:title>
-    </image:image>
   </url>
 
  
   <url>
     <loc>https://soifgo.github.io/soifgo/policy_soifgo.html</loc>
-    <lastmod>2026-07-09</lastmod>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
- 
- 
 
  
   <url>
-    <loc>https://soifgo.github.io/soifgo/tutorials/BluetoothExample1/</loc>
-    <lastmod>2026-07-09</lastmod>
+    <loc>https://soifgo.github.io/soifgo/tutorials/BluetoothExample1/bluetooth_sample1.html</loc>
+    <lastmod>2026-06-13</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://soifgo.github.io/soifgo/tutorials/BluetoothSendReceive/</loc>
-    <lastmod>2026-07-09</lastmod>
+    <loc>https://soifgo.github.io/soifgo/tutorials/BluetoothSendReceive/Bluetooth_Send_Receive.html</loc>
+    <lastmod>2025-11-27</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://soifgo.github.io/soifgo/tutorials/cmi209/</loc>
-    <lastmod>2026-07-09</lastmod>
+    <loc>https://soifgo.github.io/soifgo/tutorials/cmi209/cmi209.html</loc>
+    <lastmod>2026-08-05</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://soifgo.github.io/soifgo/tutorials/Effect/</loc>
-    <lastmod>2026-07-09</lastmod>
+    <loc>https://soifgo.github.io/soifgo/tutorials/Effect/effects.html</loc>
+    <lastmod>2025-12-08</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://soifgo.github.io/soifgo/tutorials/ESP32Server/</loc>
-    <lastmod>2026-07-09</lastmod>
+    <loc>https://soifgo.github.io/soifgo/tutorials/ESP32Server/ESP8266_wifi_api.html</loc>
+    <lastmod>2025-12-06</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://soifgo.github.io/soifgo/tutorials/Esp8266_wifi_mqtt/</loc>
-    <lastmod>2026-07-09</lastmod>
+    <loc>https://soifgo.github.io/soifgo/tutorials/Esp8266_wifi_mqtt/esp8266_mqtt.html</loc>
+    <lastmod>2025-12-29</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://soifgo.github.io/soifgo/tutorials/FetchingAPIs/</loc>
-    <lastmod>2026-07-09</lastmod>
+    <loc>https://soifgo.github.io/soifgo/tutorials/FetchingAPIs/Api-fetching_api.html</loc>
+    <lastmod>2025-12-01</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://soifgo.github.io/soifgo/tutorials/LocalServerSetup/</loc>
-    <lastmod>2026-07-09</lastmod>
+    <loc>https://soifgo.github.io/soifgo/tutorials/LocalServerSetup/Local-server_api.html</loc>
+    <lastmod>2025-12-01</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://soifgo.github.io/soifgo/tutorials/note_out/</loc>
-    <lastmod>2026-07-09</lastmod>
+    <loc>https://soifgo.github.io/soifgo/tutorials/note_out/note_out.html</loc>
+    <lastmod>2025-12-24</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://soifgo.github.io/soifgo/tutorials/rangmang/</loc>
-    <lastmod>2026-07-09</lastmod>
+    <loc>https://soifgo.github.io/soifgo/tutorials/page/Create_Page.html</loc>
+    <lastmod>2025-11-24</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://soifgo.github.io/soifgo/tutorials/WorkingwithHTMLFiles/</loc>
-    <lastmod>2026-07-09</lastmod>
+    <loc>https://soifgo.github.io/soifgo/tutorials/pagefolder/page_folder.html</loc>
+    <lastmod>2025-11-25</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://soifgo.github.io/soifgo/tutorials/rangmang/Rangmang.html</loc>
+    <lastmod>2026-07-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://soifgo.github.io/soifgo/tutorials/rangmang2/rangmang2.html</loc>
+    <lastmod>2026-07-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://soifgo.github.io/soifgo/tutorials/send_bluetooth_html/html_guide_1.html</loc>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://soifgo.github.io/soifgo/tutorials/soifgo_info/soifgo_info.html</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://soifgo.github.io/soifgo/tutorials/WorkingwithHTMLFiles/html01.html</loc>
+    <lastmod>2025-11-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 
 </urlset>
