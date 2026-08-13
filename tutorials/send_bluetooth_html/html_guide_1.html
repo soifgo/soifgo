@@ -439,6 +439,35 @@
             border-top: 1px solid var(--border);
             margin-top: 1.5rem;
         }
+
+        /* ===== AI WORKFLOW BOX (PURPLE THEME) ===== */
+        .ai-box {
+            border-left: 6px solid #9b59b6;
+            background: var(--card-bg);
+            border: 1px solid #9b59b6;
+            background: color-mix(in oklab, var(--card-bg) 90%, #9b59b6);
+            padding: 1.2rem 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0 1.5rem 0;
+            box-shadow: 0 2px 10px rgba(155, 89, 182, 0.1);
+        }
+        .ai-box h3 {
+            margin-top: 0;
+            color: #9b59b6;
+            font-size: clamp(1.1rem, 3vw, 1.4rem);
+        }
+        .ai-box strong {
+            color: var(--fg);
+        }
+        .ai-box ol {
+            margin: 0.5rem 0 0.2rem 0;
+        }
+        @media (prefers-color-scheme: dark) {
+            .ai-box {
+                background: color-mix(in oklab, var(--card-bg) 90%, #9b59b6);
+                border-color: #9b59b6;
+            }
+        }
     </style>
 </head>
 <body>
@@ -458,6 +487,35 @@
         <!-- ===== OVERVIEW ===== -->
         <h2 id="overview">📱 HTML Bluetooth & Sensors with SoifGo</h2>
 
+        <!-- ============================================================ -->
+        <!-- ===== AI WORKFLOW SECTION (ENGLISH) ======================== -->
+        <!-- ============================================================ -->
+        <div class="ai-box">
+            <h3>🤖 Build Your Custom App Without Hard Coding!</h3>
+            <p>
+                <strong>Don't stress!</strong> You don't need to be an HTML or JavaScript expert to use this golden feature.
+                Just <strong>copy this entire guide page</strong> (the text you're reading right now) and paste it into an AI assistant like <strong>DeepSeek</strong> or any other AI.
+                Then, simply describe what you want in plain English, for example:
+                <em>"Create an HTML page with 4 directional buttons to control a robot, and display ultrasonic sensor data received via Bluetooth."</em>
+                The AI will generate the complete code for you!
+            </p>
+            <p>
+                <strong>📋 How to use it in SoifGo:</strong>
+            </p>
+            <ol>
+                <li>In SoifGo, <strong>create a new button</strong>, set its Behavior to <strong>Web</strong>, select <strong>Web Offline HTML</strong>, and tap <strong>Create</strong>.</li>
+                <li>Tap the <strong>Edit</strong> button, then choose <strong>Play</strong>.</li>
+                <li>In the Play screen, <strong>tap</strong> the button you just created, then open the left‑hand menu (top‑left) and select <strong>Edit</strong>.</li>
+                <li>You are now in the edit screen. <strong>Select All</strong>, delete everything, and <strong>Paste</strong> the code you got from the AI. Wait a moment for the syntax highlighting to appear.</li>
+                <li>Finally, tap the <strong>Close (×)</strong> icon to exit the editor and see your custom app in action!</li>
+            </ol>
+            <p style="margin-top:10px; font-weight:bold; color: #9b59b6;">
+                🎯 That's it! Ask the AI to build any app you want and run it inside SoifGo instantly.
+            </p>
+        </div>
+        <!-- ===== END OF AI WORKFLOW SECTION ===== -->
+
+        <!-- ===== ORIGINAL OVERVIEW BOX ===== -->
         <div class="box">
             <p style="font-size:1.1rem;">
                 <strong>SoifGo</strong> is the B4A bridge that handles Bluetooth communication and sensor data.

@@ -7,7 +7,7 @@
   <title>SoifGo — Bluetooth &amp; MQTT IoT Controller for Android | Control ESP32, Arduino, HC-05</title>
 
   <!-- Primary SEO Description -->
-  <meta name="description" content="SoifGo is a powerful Android Bluetooth controller app for ESP32, Arduino, HC-05, and ESP8266. Supports MQTT, buttons, seek bars. Free   IoT controller." />
+  <meta name="description" content="SoifGo is a powerful Android Bluetooth controller app for ESP32, Arduino, HC-05, and ESP8266. Supports MQTT, buttons, seek bars. Free IoT controller." />
   <meta name="keywords" content="Bluetooth controller, MQTT client, ESP32 Android app, Arduino IoT control, IoT, SoifGo" />
 
   <!-- Open Graph -->
@@ -378,6 +378,113 @@
       text-decoration: underline;
     }
 
+    .faq-item ul, .faq-item ol {
+      color: var(--text-muted);
+      margin: 6px 0 6px 20px;
+    }
+
+    .faq-item code {
+      background: rgba(255, 255, 255, 0.06);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.85em;
+      color: #a5b4fc;
+    }
+
+    .faq-item pre {
+      background: #0F0A1A;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      overflow-x: auto;
+      color: #a5b4fc;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      margin: 8px 0;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .golden-banner {
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(45, 212, 191, 0.10));
+      border: 2px solid #7C3AED;
+      border-radius: var(--radius);
+      padding: 28px 30px;
+      margin-bottom: 35px;
+      box-shadow: 0 0 40px rgba(124, 58, 237, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .golden-banner .glow {
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 50%, rgba(124,58,237,0.08), transparent 60%);
+      animation: pulseGlow 4s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.2); opacity: 1; }
+    }
+
+    .golden-banner .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .golden-banner .header-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .golden-banner .header-row span {
+      font-size: 2.5rem;
+      line-height: 1;
+    }
+
+    .golden-banner .header-row h3 {
+      margin: 0;
+      color: #7C3AED;
+      font-size: 1.8rem;
+      border: none;
+      padding: 0;
+    }
+
+    .golden-banner p {
+      font-size: 1.1rem;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    .feature-grid-mini {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .feature-grid-mini div {
+      background: rgba(255,255,255,0.04);
+      padding: 14px 18px;
+      border-radius: var(--radius-sm);
+      border-left: 3px solid #7C3AED;
+    }
+
+    .feature-grid-mini div strong {
+      color: #fff;
+      display: block;
+    }
+    .feature-grid-mini div .desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
     /* ===== TUTORIAL LIST ===== */
     .tutorial-list {
       list-style: none;
@@ -542,7 +649,7 @@
         margin-top: 15px;
       }
 
-      .feature-grid {
+      .feature-grid, .feature-grid-mini {
         grid-template-columns: 1fr;
       }
 
@@ -560,6 +667,10 @@
 
       img.preview-img {
         max-width: 95%;
+      }
+
+      .golden-banner .header-row h3 {
+        font-size: 1.3rem;
       }
     }
 
@@ -612,6 +723,11 @@
       .tutorial-list a {
         padding: 10px 12px;
         font-size: 0.9rem;
+      }
+
+      .faq-item pre {
+        font-size: 0.7rem;
+        padding: 10px;
       }
     }
   </style>
@@ -672,7 +788,7 @@
       <h2>What is SoifGo?</h2>
 
       <p style="font-size:1.05rem;">
-        <strong>SoifGo</strong> is a free,   Android app that turns your smartphone into a professional <strong>IoT controller</strong>.
+        <strong>SoifGo</strong> is a free, open-source Android app that turns your smartphone into a professional <strong>IoT controller</strong>.
         It supports multiple communication protocols, a visual UI builder, and advanced features like real-time graphs, circular gauges, alarms, and sensor integration — all without writing a single line of code.
       </p>
 
@@ -691,7 +807,7 @@
           <strong>Real-Time Graphs & Gauges</strong><br>Visualize incoming data with dynamic line graphs and circular gauges, with adjustable colors and line widths.
         </li>
         <li>
-          <strong>Phone Sensors & Alarms</strong><br>Read light, accelerometer, and magnetometer data, and trigger alarms (audio, vibration ) based on values.
+          <strong>Phone Sensors & Alarms</strong><br>Read light, accelerometer, and magnetometer data, and trigger alarms (audio, vibration) based on values.
         </li>
         <li>
           <strong>Multi-Page & Multi-Folder</strong><br>Organise your projects into pages and folders, load/save configurations, and even create startup sequences.
@@ -844,17 +960,17 @@
             </div>
           </a>
         </li>
-<li>
-  <a href="https://soifgo.github.io/soifgo/tutorials/send_bluetooth_html/html_guide_1.html">
-    <img src="https://soifgo.github.io/soifgo/tutorials/icon/bluesend_html.png" alt="icon" class="icon" />
-    <div>
-      <strong>Bluetooth Send/Receive & Phone Sensors in HTML</strong>
-      <span style="display:block; font-size:0.85rem; color:var(--text-muted); font-weight:400;">
-        Send/receive Bluetooth data, and activate light, movement, and magneto sensors from your HTML page
-      </span>
-    </div>
-  </a>
-</li>
+        <li>
+          <a href="https://soifgo.github.io/soifgo/tutorials/send_bluetooth_html/html_guide_1.html">
+            <img src="https://soifgo.github.io/soifgo/tutorials/icon/bluesend_html.png" alt="icon" class="icon" />
+            <div>
+              <strong>Bluetooth Send/Receive & Phone Sensors in HTML</strong>
+              <span style="display:block; font-size:0.85rem; color:var(--text-muted); font-weight:400;">
+                Send/receive Bluetooth data, and activate light, movement, and magneto sensors from your HTML page
+              </span>
+            </div>
+          </a>
+        </li>
         <li>
           <a href="https://soifgo.github.io/soifgo/tutorials/Effect/effects.html">
             <img src="https://soifgo.github.io/soifgo/tutorials/icon/effect.png" alt="icon" class="icon" />
@@ -917,15 +1033,54 @@
       </ul>
     </section>
 
-    <!-- ===== FAQ SECTION ===== -->
+    <!-- ============================================================ -->
+    <!-- ===== FAQ SECTION - IMPROVED WITH GOLDEN FEATURE =====       -->
+    <!-- ============================================================ -->
     <section id="faq">
       <h2>Frequently Asked Questions</h2>
 
+      <!-- ========== GOLDEN FEATURE BANNER ========== -->
+      <div class="golden-banner">
+        <div class="glow"></div>
+        <div class="content">
+          <div class="header-row">
+            <span>⚡</span>
+            <h3>The Golden Feature: WebView + Bluetooth + Sensors</h3>
+          </div>
+
+          <p>
+            <strong>This is what makes SoifGo truly powerful!</strong> You can build a fully custom HTML page that simultaneously:
+          </p>
+
+          <div class="feature-grid-mini">
+            <div style="border-left-color:#2196f3;"><strong style="color:#64b5f6;">📤 Send Bluetooth</strong><span class="desc">Send commands to your device</span></div>
+            <div style="border-left-color:#4caf50;"><strong style="color:#81c784;">📥 Receive Bluetooth</strong><span class="desc">Display incoming data in real-time</span></div>
+            <div style="border-left-color:#ff9800;"><strong style="color:#ffb74d;">💡 Light Sensor</strong><span class="desc">Read ambient light intensity</span></div>
+            <div style="border-left-color:#e91e63;"><strong style="color:#f06292;">📳 Movement Sensor</strong><span class="desc">Detect X/Y acceleration</span></div>
+            <div style="border-left-color:#9c27b0;"><strong style="color:#ce93d8;">🧲 Magneto Sensor</strong><span class="desc">Measure magnetic field</span></div>
+            <div style="border-left-color:#00bcd4;"><strong style="color:#4dd0e1;">🎨 Custom UI</strong><span class="desc">Full HTML/CSS/JS freedom</span></div>
+          </div>
+
+          <div style="background:rgba(0,0,0,0.3); border-radius:var(--radius-sm); padding:16px 20px; border:1px solid rgba(124,58,237,0.2);">
+            <p style="margin:0; color:var(--text);">
+              <strong>👉 Ready to build?</strong>
+              <a href="https://soifgo.github.io/soifgo/tutorials/send_bluetooth_html/html_guide_1.html" target="_blank" style="color:#7C3AED; font-weight:bold; text-decoration:underline;">
+                Start with the Complete HTML + Bluetooth + Sensors Tutorial
+              </a>
+              <span style="color:var(--text-muted); font-size:0.9rem; display:block; margin-top:4px;">
+                Includes ready-to-use code examples for send, receive, and all 3 sensors
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== GETTING STARTED ========== -->
       <h3 style="margin-top:1.8rem; color:#f59e0b; border-bottom:1px solid rgba(245,158,11,0.2); padding-bottom:5px;">Getting Started</h3>
 
       <div class="faq-item">
         <strong>What exactly is SoifGo, and who is it for?</strong>
-        <p>SoifGo is an Android app for makers, engineers, and tech enthusiasts – its main focus is on electronics and device communication. But with its WebView capability and web app support, it's no longer limited to just that field – you can easily build or run any custom app you want, in any area you like.
+        <p>SoifGo is an Android app for makers, engineers, and tech enthusiasts – its main focus is on electronics and device communication. But with its WebView capability and web app support, it's no longer limited to just that field – you can easily build or run any custom app you want, in any area you like.</p>
       </div>
 
       <div class="faq-item">
@@ -938,6 +1093,226 @@
         <p><strong>No</strong> for Bluetooth — it works offline. <strong>Yes</strong> for MQTT and HTTP (you need Wi-Fi or mobile data).</p>
       </div>
 
+      <!-- ========== GOLDEN FEATURE DETAILED QUESTIONS ========== -->
+      <h3 style="margin-top:1.8rem; color:#7C3AED; border-bottom:1px solid rgba(124,58,237,0.2); padding-bottom:5px;">
+        ⚡ The Golden Feature: WebView + Bluetooth + Sensors
+      </h3>
+
+      <!-- Q1: Complete integration -->
+      <div class="faq-item" style="border-left:4px solid #7C3AED; background:rgba(124,58,237,0.05);">
+        <strong>🔑 How do I build a complete HTML page with Bluetooth Send/Receive AND Sensors?</strong>
+        <p>
+          This is the <strong>most powerful feature of SoifGo</strong>. You create an offline HTML file with JavaScript and run it inside WebView. Through
+          <code>window.soifgo.CallSub()</code>, you get access to ALL of SoifGo's capabilities:
+        </p>
+
+        <div style="background:#0F0A1A; border-radius:8px; padding:14px 18px; margin:12px 0; border:1px solid rgba(255,255,255,0.06);">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px 20px; font-size:0.9rem;">
+            <div><span style="color:#64b5f6;">📤 Send Bluetooth:</span> <code style="color:#a5b4fc; font-size:0.8rem;">window.soifgo.CallSub('html_bluetooth_rx', true, 'text')</code></div>
+            <div><span style="color:#81c784;">📥 Receive Bluetooth:</span> <code style="color:#a5b4fc; font-size:0.8rem;">html_bluetooth_tx(data)</code> function</div>
+            <div><span style="color:#ffb74d;">💡 Activate Light:</span> <code style="color:#a5b4fc; font-size:0.8rem;">window.soifgo.CallSub('sensor_light')</code></div>
+            <div><span style="color:#f06292;">📳 Activate Movement:</span> <code style="color:#a5b4fc; font-size:0.8rem;">window.soifgo.CallSub('sensor_move')</code></div>
+            <div><span style="color:#ce93d8;">🧲 Activate Magneto:</span> <code style="color:#a5b4fc; font-size:0.8rem;">window.soifgo.CallSub('sensor_magno')</code></div>
+            <div><span style="color:#4dd0e1;">📊 Receive Sensors:</span> <code style="color:#a5b4fc; font-size:0.8rem;">html_sensor_*(data)</code> functions</div>
+          </div>
+        </div>
+
+        <p style="margin-top:8px;">
+          <strong>✨ Result:</strong> A fully custom HTML/CSS/JS interface that simultaneously communicates via Bluetooth and displays real-time sensor data — <strong>all offline, all in one page</strong>.
+        </p>
+        <p style="margin-top:6px;">
+          👉 <a href="https://soifgo.github.io/soifgo/tutorials/send_bluetooth_html/html_guide_1.html" target="_blank" style="color:#7C3AED; font-weight:bold;">
+            Full Tutorial with Complete Working Code
+          </a>
+        </p>
+      </div>
+
+      <!-- Q2: Bluetooth Send -->
+      <div class="faq-item" style="border-left:4px solid #2196f3;">
+        <strong>📤 How do I send data from my HTML page to Bluetooth?</strong>
+        <p>
+          It's just one line of JavaScript! Use <code>window.soifgo.CallSub()</code> to call SoifGo's Bluetooth send function:
+        </p>
+        <pre>
+// Send text to Bluetooth device
+function sendData() {
+    var message = document.getElementById("input").value;
+    window.soifgo.CallSub('html_bluetooth_rx', true, message);
+}</pre>
+        <p style="margin-top:6px;">
+          SoifGo receives this in its <code>html_bluetooth_rx()</code> Sub and forwards it to the connected Bluetooth device.
+        </p>
+        <p style="margin-top:4px; font-size:0.9rem; color:var(--text-muted);">
+          💡 <strong>Tip:</strong> You can send numbers, text, or even JSON strings!
+        </p>
+      </div>
+
+      <!-- Q3: Bluetooth Receive -->
+      <div class="faq-item" style="border-left:4px solid #4caf50;">
+        <strong>📥 How do I receive Bluetooth data in my HTML page?</strong>
+        <p>
+          Define a global JavaScript function named <code>html_bluetooth_tx(data)</code>. SoifGo will call it automatically whenever data arrives from Bluetooth:
+        </p>
+        <pre>
+// This function is called by SoifGo when Bluetooth data arrives
+function html_bluetooth_tx(data) {
+    document.getElementById('output').innerHTML = data;
+}
+window.html_bluetooth_tx = html_bluetooth_tx;  // Register it globally</pre>
+        <p style="margin-top:6px;">
+          You can display the data anywhere — in a div, a graph, or even trigger animations based on values.
+        </p>
+      </div>
+
+      <!-- Q4: Sensors Activation -->
+      <div class="faq-item" style="border-left:4px solid #ff9800;">
+        <strong>📱 How do I activate and read phone sensors (Light, Movement, Magneto)?</strong>
+        <p>
+          <strong>Step 1:</strong> Activate each sensor with <code>window.soifgo.CallSub()</code>:
+        </p>
+        <pre>
+// Activate ALL THREE sensors (best placed in window.onload)
+window.soifgo.CallSub('sensor_light');   // Ambient light sensor
+window.soifgo.CallSub('sensor_move');    // Accelerometer (X/Y movement)
+window.soifgo.CallSub('sensor_magno');   // Magnetic field sensor</pre>
+        <p>
+          <strong>Step 2:</strong> Define receiver functions for each sensor:
+        </p>
+        <pre>
+// These are called by SoifGo when sensor data updates
+function html_sensor_light(data)  { /* update light display */ }
+function html_sensor_movex(data)  { /* update move X display */ }
+function html_sensor_movey(data)  { /* update move Y display */ }
+function html_sensor_magno(data)  { /* update magneto display */ }
+
+// Register all functions globally
+window.html_sensor_light = html_sensor_light;
+window.html_sensor_movex = html_sensor_movex;
+window.html_sensor_movey = html_sensor_movey;
+window.html_sensor_magno = html_sensor_magno;</pre>
+        <p style="margin-top:6px;">
+          <strong>✅ Done!</strong> Your HTML page now receives real-time sensor data continuously.
+        </p>
+      </div>
+
+      <!-- Q5: Complete Working Example -->
+      <div class="faq-item" style="border-left:4px solid #e91e63; background:rgba(233,30,99,0.05);">
+        <strong>🚀 Can you show me a complete working HTML example with ALL features?</strong>
+        <p>
+          Here's a minimal but complete HTML page that does <strong>everything</strong>:
+        </p>
+        <pre>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;Bluetooth + Sensors Demo&lt;/title&gt;
+&lt;/head&gt;
+&lt;body style="font-family:sans-serif; padding:20px; background:#0F0A1A; color:#fff;"&gt;
+  &lt;h2&gt;⚡ Bluetooth + Sensors&lt;/h2&gt;
+
+  &lt;!-- Send Section --&gt;
+  &lt;div style="background:#1a1a2e; padding:15px; border-radius:8px; margin:10px 0;"&gt;
+    &lt;h3&gt;📤 Send Command&lt;/h3&gt;
+    &lt;input type="text" id="cmdInput" placeholder="Enter command..." style="padding:10px; width:70%; border-radius:6px; border:none;"&gt;
+    &lt;button onclick="sendCommand()" style="padding:10px 25px; background:#2196f3; color:white; border:none; border-radius:6px; cursor:pointer;"&gt;Send&lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Receive Section --&gt;
+  &lt;div style="background:#1a1a2e; padding:15px; border-radius:8px; margin:10px 0;"&gt;
+    &lt;h3&gt;📥 Bluetooth Data&lt;/h3&gt;
+    &lt;div id="btOutput" style="background:#0a0a1a; padding:15px; border-radius:6px; min-height:60px; font-family:monospace; color:#4caf50;"&gt;
+      Waiting for data...
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Sensors Section --&gt;
+  &lt;div style="background:#1a1a2e; padding:15px; border-radius:8px; margin:10px 0;"&gt;
+    &lt;h3&gt;📱 Phone Sensors&lt;/h3&gt;
+    &lt;div id="sensorLight" style="background:#0a0a1a; padding:10px; border-radius:6px; margin:5px 0; color:#ffb74d;"&gt;💡 Light: waiting...&lt;/div&gt;
+    &lt;div id="sensorMoveX" style="background:#0a0a1a; padding:10px; border-radius:6px; margin:5px 0; color:#f06292;"&gt;📳 Move X: waiting...&lt;/div&gt;
+    &lt;div id="sensorMoveY" style="background:#0a0a1a; padding:10px; border-radius:6px; margin:5px 0; color:#f06292;"&gt;📳 Move Y: waiting...&lt;/div&gt;
+    &lt;div id="sensorMagneto" style="background:#0a0a1a; padding:10px; border-radius:6px; margin:5px 0; color:#ce93d8;"&gt;🧲 Magneto: waiting...&lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;script&gt;
+    // ========== BLUETOOTH SEND ==========
+    function sendCommand() {
+      var msg = document.getElementById('cmdInput').value;
+      if (msg) {
+        window.soifgo.CallSub('html_bluetooth_rx', true, msg);
+        document.getElementById('cmdInput').value = '';
+      }
+    }
+
+    // ========== BLUETOOTH RECEIVE ==========
+    function html_bluetooth_tx(data) {
+      document.getElementById('btOutput').innerHTML = data;
+    }
+    window.html_bluetooth_tx = html_bluetooth_tx;
+
+    // ========== SENSOR RECEIVERS ==========
+    function html_sensor_light(data) {
+      document.getElementById('sensorLight').innerHTML = '💡 Light: ' + data;
+    }
+    function html_sensor_movex(data) {
+      document.getElementById('sensorMoveX').innerHTML = '📳 Move X: ' + data;
+    }
+    function html_sensor_movey(data) {
+      document.getElementById('sensorMoveY').innerHTML = '📳 Move Y: ' + data;
+    }
+    function html_sensor_magno(data) {
+      document.getElementById('sensorMagneto').innerHTML = '🧲 Magneto: ' + data;
+    }
+
+    window.html_sensor_light = html_sensor_light;
+    window.html_sensor_movex = html_sensor_movex;
+    window.html_sensor_movey = html_sensor_movey;
+    window.html_sensor_magno = html_sensor_magno;
+
+    // ========== ACTIVATE SENSORS ON LOAD ==========
+    window.onload = function() {
+      if (window.soifgo) {
+        window.soifgo.CallSub('sensor_light');
+        window.soifgo.CallSub('sensor_move');
+        window.soifgo.CallSub('sensor_magno');
+      }
+    }
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+        <p style="margin-top:8px;">
+          <strong>🎯 Copy this code, save as <code>demo.html</code>, place it in SoifGo's folder, and run it!</strong>
+        </p>
+        <p style="margin-top:4px;">
+          👉 <a href="https://soifgo.github.io/soifgo/tutorials/send_bluetooth_html/html_guide_1.html" target="_blank" style="color:#7C3AED; font-weight:bold;">
+            See the full tutorial with step-by-step explanations
+          </a>
+        </p>
+      </div>
+
+      <!-- Q6: Use Cases -->
+      <div class="faq-item" style="border-left:4px solid #00bcd4;">
+        <strong>💡 What can I build with this WebView + Bluetooth + Sensors feature?</strong>
+        <p>
+          The possibilities are <strong>endless</strong>! Here are some real-world examples:
+        </p>
+        <ul style="display:grid; grid-template-columns:1fr 1fr; gap:6px 20px; padding-left:20px; color:var(--text-muted);">
+          <li>🤖 <strong>Robot Controller</strong> — directional buttons + speed slider + live sensor feedback</li>
+          <li>📊 <strong>Data Dashboard</strong> — display temperature, humidity, RPM with custom gauges</li>
+          <li>🎮 <strong>Custom Gamepad</strong> — tilt controls using accelerometer + button mapping</li>
+          <li>🏠 <strong>Smart Home Panel</strong> — control lights, fans, and monitor sensors</li>
+          <li>📈 <strong>Real-time Graph</strong> — plot Bluetooth data with canvas or Chart.js</li>
+          <li>🔦 <strong>Light-Activated Switch</strong> — use light sensor to trigger Bluetooth commands</li>
+          <li>🧭 <strong>Digital Compass</strong> — display direction using magneto sensor</li>
+          <li>📱 <strong>Motion Detector</strong> — shake phone to send alerts via Bluetooth</li>
+        </ul>
+        <p style="margin-top:6px; color:var(--text);">
+          <strong>🎨 The design is completely up to you</strong> — use any CSS framework, animations, or libraries you want!
+        </p>
+      </div>
+
+      <!-- ========== FEATURES & TECHNICAL DETAILS ========== -->
       <h3 style="margin-top:1.8rem; color:#f59e0b; border-bottom:1px solid rgba(245,158,11,0.2); padding-bottom:5px;">Features & Technical Details</h3>
 
       <div class="faq-item">
@@ -946,18 +1321,8 @@
       </div>
 
       <div class="faq-item">
-        <strong>How does the WebView (HTML/JS) feature work?</strong>
-        <p>You can create offline HTML files with JavaScript and place them in the app's folder. When you tap a button linked to that file, it opens in a native WebView. Your JavaScript can call B4A subroutines via the JavaScript interface to send Bluetooth commands, publish MQTT messages, read phone sensors, or capture data. This gives you unlimited design freedom.</p>
-      </div>
-
-      <div class="faq-item">
         <strong>Does it support real-time graphs and circular gauges?</strong>
         <p>Yes. Every button can be assigned a graph that plots incoming numeric values in real time. You can set the graph color, line width, and update interval. Additionally, you can create circular gauges (arcs) that visually represent values within a range, with adjustable start/end angles and colors.</p>
-      </div>
-
-      <div class="faq-item">
-        <strong>Can I use phone sensors (light, accelerometer, magnetometer)?</strong>
-        <p>Absolutely. SoifGo can read the ambient light sensor, accelerometer (X/Y movement), and magnetic field sensor. You can display these values on buttons, send them via Bluetooth or MQTT, and even use them to trigger alarms or animate UI elements.</p>
       </div>
 
       <div class="faq-item">
@@ -970,6 +1335,7 @@
         <p>Yes, the app includes a built-in G-Code viewer and editor. You can load a G-Code file from the Note folder, and the app will render the toolpath with animated lines and arcs. This is useful for CNC or 3D printing monitoring.</p>
       </div>
 
+      <!-- ========== CUSTOMISATION & NO-CODE DESIGN ========== -->
       <h3 style="margin-top:1.8rem; color:#f59e0b; border-bottom:1px solid rgba(245,158,11,0.2); padding-bottom:5px;">Customisation & No-Code Design</h3>
 
       <div class="faq-item">
@@ -977,14 +1343,31 @@
         <p>Use the visual editor: add buttons and seek bars, then configure their properties (size, position, colour, text, behaviour) directly from the app. You can assign actions like "send Bluetooth data", "open another page", "change a seek bar value", or "execute a JavaScript function". No coding required.</p>
       </div>
 
-      <div class="faq-item">
-        <strong>Can I use HTML/CSS/JS to create a custom interface?</strong>
-        <p>Yes. This is one of the most powerful features. You can write your own HTML page with CSS and JavaScript, and run it inside SoifGo's WebView. Your JavaScript can interact with the app via a bridge, allowing you to send/receive Bluetooth data, publish MQTT messages, read sensors, and even open other pages.</p>
+      <div class="faq-item" style="border-left:4px solid #7C3AED; background:rgba(124,58,237,0.04);">
+        <strong>🎨 Can I use HTML/CSS/JS to create a fully custom interface with Bluetooth and sensors?</strong>
+        <p>
+          <strong>Yes — and this is the most powerful feature of SoifGo!</strong> You're not limited to pre-built buttons. You can:
+        </p>
+        <ul style="padding-left:20px; color:var(--text-muted); margin:8px 0;">
+          <li>✅ Build any design with HTML, CSS, and JavaScript</li>
+          <li>✅ Access Bluetooth, MQTT, and sensors via <code>window.soifgo.CallSub()</code></li>
+          <li>✅ Receive Bluetooth data and display it anywhere</li>
+          <li>✅ Activate light, movement, and magneto sensors and see live values</li>
+          <li>✅ Use this page to control robots, display sensor data, create custom gamepads, or any other idea</li>
+        </ul>
+        <p>
+          <strong>Practical example:</strong> Build an HTML page with 4 directional buttons to control a robot, a slider for speed control, receive ultrasonic sensor data via Bluetooth, and display it on screen — <strong>all in one simple HTML file</strong>.
+        </p>
+        <p>
+          👉 <a href="https://soifgo.github.io/soifgo/tutorials/send_bluetooth_html/html_guide_1.html" target="_blank" style="color:#7C3AED; font-weight:bold;">
+            Step-by-step tutorial with ready-to-use code
+          </a>
+        </p>
       </div>
 
       <div class="faq-item">
         <strong>What kind of effects can I apply to buttons?</strong>
-        <p>You can add rotation, circular gauges, max-size scaling, colour shifts based on input values, and even custom move animations. There's also a "scrip" (formula) feature that lets you apply mathematical expressions (e.g., `val/2 + 10`) to a button's displayed value.</p>
+        <p>You can add rotation, circular gauges, max-size scaling, colour shifts based on input values, and even custom move animations. There's also a "scrip" (formula) feature that lets you apply mathematical expressions (e.g., <code>val/2 + 10</code>) to a button's displayed value.</p>
       </div>
 
       <div class="faq-item">
@@ -992,11 +1375,12 @@
         <p>Yes. SoifGo supports folders and pages. Each folder can contain multiple pages, and each page can have its own set of buttons, seek bars, and settings. You can load and save pages at any time, and even create a startup sequence that automatically triggers buttons on load.</p>
       </div>
 
+      <!-- ========== SECURITY & INSTALLATION ========== -->
       <h3 style="margin-top:1.8rem; color:#f59e0b; border-bottom:1px solid rgba(245,158,11,0.2); padding-bottom:5px;">Security & Installation</h3>
 
       <div class="faq-item">
         <strong>Is the APK safe to install?</strong>
-        <p>Yes. The APK has been scanned by <strong>65+ antivirus engines</strong> on VirusTotal with zero threats detected. The project is fully  , so the code is transparent and auditable. <a href="https://www.virustotal.com/gui/file/5a28ee2acf881b4a300cc482e5691ee8313f1ca6fde0457e07e942e416d51d81" target="_blank" rel="noopener">View the full security report</a>.</p>
+        <p>Yes. The APK has been scanned by <strong>65+ antivirus engines</strong> on VirusTotal with zero threats detected. The project is fully open-source, so the code is transparent and auditable. <a href="https://www.virustotal.com/gui/file/5a28ee2acf881b4a300cc482e5691ee8313f1ca6fde0457e07e942e416d51d81" target="_blank" rel="noopener">View the full security report</a>.</p>
       </div>
 
       <div class="faq-item">
@@ -1009,9 +1393,19 @@
         <p>SoifGo supports <strong>Android 5.0 (Lollipop) and above</strong>. For Bluetooth, your device must support Bluetooth 4.0+ (most modern phones do).</p>
       </div>
 
-      <h3>Contact Developer</h3>
+      <div class="faq-item">
+        <strong>Can I use this WebView feature without internet?</strong>
+        <p><strong>Yes!</strong> The HTML files run locally from your device's storage. Everything — Bluetooth communication and sensor reading — works completely offline. No internet connection is required.</p>
+      </div>
+
+      <!-- ========== CONTACT ========== -->
+      <h3 style="margin-top:1.8rem; color:#f59e0b; border-bottom:1px solid rgba(245,158,11,0.2); padding-bottom:5px;">Contact Developer</h3>
       <p>Email: <a href="mailto:SSM20985@gmail.com">SSM20985@gmail.com</a> &middot; <a href="mailto:SSMQQMSS@gmail.com">SSMQQMSS@gmail.com</a></p>
+      <p style="margin-top:8px;">
+        💬 <a href="https://github.com/soifgo/soifgo/discussions/3" target="_blank">Join the SoifGo Forum</a> for questions, ideas, and community support.
+      </p>
     </section>
+    <!-- ===== END OF IMPROVED FAQ ===== -->
 
     <!-- ===== DEMO GIF SECTION ===== -->
     <section id="demo">
