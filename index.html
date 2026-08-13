@@ -103,6 +103,7 @@
       padding: 80px 20px;
       text-align: center;
       position: relative;
+      border-bottom: 3px solid var(--primary);
     }
 
     .header-container {
@@ -164,6 +165,8 @@
       z-index: 1000;
       border-bottom: 1px solid var(--border);
       transition: transform 0.3s ease;
+      background: #1a0f2e;
+      border-bottom: 2px solid #4a2c7a;
     }
 
     nav.hidden {
@@ -202,7 +205,6 @@
     /* ===== SECTION / CARD ===== */
     section {
       padding: 2em;
-      background: var(--card-bg);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       border-radius: var(--radius);
@@ -214,6 +216,46 @@
 
     section:hover {
       border-color: rgba(255, 255, 255, 0.08);
+    }
+
+    /* ===== COLORFUL SECTIONS ===== */
+    #download {
+      background: linear-gradient(145deg, #0d1b2a, #1b2838);
+      border-left: 5px solid #00b4d8;
+      border-right: 1px solid rgba(0, 180, 216, 0.2);
+    }
+
+    #about {
+      background: linear-gradient(145deg, #1a0f2e, #25153d);
+      border-left: 5px solid #7c3aed;
+      border-right: 1px solid rgba(124, 58, 237, 0.2);
+    }
+
+    #tutorials {
+      background: linear-gradient(145deg, #0d1f1f, #162b2b);
+      border-left: 5px solid #2dd4bf;
+      border-right: 1px solid rgba(45, 212, 191, 0.2);
+    }
+
+    #faq {
+      background: linear-gradient(145deg, #1a1420, #261d30);
+      border-left: 5px solid #f59e0b;
+      border-right: 1px solid rgba(245, 158, 11, 0.2);
+    }
+
+    #demo {
+      background: linear-gradient(145deg, #141d2b, #1e2a3a);
+      border-left: 5px solid #f472b6;
+      border-right: 1px solid rgba(244, 114, 182, 0.2);
+    }
+
+    #totalVisits {
+      background: linear-gradient(145deg, #0f0a1a, #1a0f2e);
+      border-left: 5px solid #a78bfa;
+      border-right: 1px solid rgba(167, 139, 250, 0.2);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin: 30px 0;
     }
 
     h2 {
@@ -241,7 +283,7 @@
     }
 
     #download a {
-      color: var(--primary-light);
+      color: #00b4d8;
       font-weight: bold;
       text-decoration: none;
       font-size: 1.1em;
@@ -256,16 +298,16 @@
     .security-box {
       margin-top: 25px;
       padding: 15px 20px;
-      background: rgba(124, 58, 237, 0.06);
-      border-left: 4px solid var(--primary);
+      background: rgba(0, 180, 216, 0.08);
+      border-left: 4px solid #00b4d8;
       border-radius: var(--radius-sm);
       font-size: 0.95em;
       line-height: 1.6;
-      border: 1px solid rgba(124, 58, 237, 0.1);
+      border: 1px solid rgba(0, 180, 216, 0.15);
     }
 
     .security-box a {
-      color: var(--primary-light);
+      color: #00b4d8;
       font-weight: bold;
       text-decoration: none;
     }
@@ -391,8 +433,8 @@
     }
 
     .guide-highlight {
-      border-color: var(--primary) !important;
-      background: rgba(124, 58, 237, 0.06) !important;
+      border-color: #2dd4bf !important;
+      background: rgba(45, 212, 191, 0.08) !important;
     }
 
     .guide-highlight a {
@@ -427,6 +469,8 @@
       color: var(--text-dim);
       padding: 20px;
       border-top: 1px solid var(--border);
+      background: #0f0a1a;
+      border-top: 2px solid #2d1b4e;
     }
 
     footer a {
@@ -667,11 +711,11 @@
     <section id="tutorials">
       <h2>SoifGo Tutorials</h2>
 
-      <div style="background:rgba(124,58,237,0.06); border-radius:var(--radius-sm); padding:18px 20px; margin-bottom:22px; border:1px solid rgba(124,58,237,0.12);">
-        <h3 style="margin:0 0 6px 0; color:var(--primary-light); font-size:1.1rem;">New to SoifGo?</h3>
+      <div style="background:rgba(45,212,191,0.08); border-radius:var(--radius-sm); padding:18px 20px; margin-bottom:22px; border:1px solid rgba(45,212,191,0.15);">
+        <h3 style="margin:0 0 6px 0; color:#2dd4bf; font-size:1.1rem;">New to SoifGo?</h3>
         <p style="margin:0;">
           Start with the
-          <a href="https://soifgo.github.io/soifgo/tutorials/soifgo_info/soifgo_info.html" style="font-weight:700; color:var(--primary-light); text-decoration:underline;">
+          <a href="https://soifgo.github.io/soifgo/tutorials/soifgo_info/soifgo_info.html" style="font-weight:700; color:#2dd4bf; text-decoration:underline;">
             Complete User Guide
           </a>
           — a comprehensive 11-chapter manual covering everything from installation to advanced features like graphs, sensors, and automation.
@@ -680,7 +724,7 @@
 
       <p style="margin-bottom:1.5rem;">Step-by-step guides to get the most out of SoifGo.</p>
 
-      <h3 style="margin-top:1.5rem; font-size:1.1rem; color:var(--primary-light); border-bottom:1px solid var(--border); padding-bottom:5px;">Getting Started</h3>
+      <h3 style="margin-top:1.5rem; font-size:1.1rem; color:#2dd4bf; border-bottom:1px solid rgba(45,212,191,0.2); padding-bottom:5px;">Getting Started</h3>
       <ul class="tutorial-list">
         <li class="guide-highlight">
           <a href="https://soifgo.github.io/soifgo/tutorials/soifgo_info/soifgo_info.html">
@@ -728,7 +772,7 @@
         </li>
       </ul>
 
-      <h3 style="margin-top:1.5rem; font-size:1.1rem; color:var(--primary-light); border-bottom:1px solid var(--border); padding-bottom:5px;">Communication</h3>
+      <h3 style="margin-top:1.5rem; font-size:1.1rem; color:#2dd4bf; border-bottom:1px solid rgba(45,212,191,0.2); padding-bottom:5px;">Communication</h3>
       <ul class="tutorial-list">
         <li>
           <a href="https://soifgo.github.io/soifgo/tutorials/BluetoothSendReceive/Bluetooth_Send_Receive.html">
@@ -787,7 +831,7 @@
         </li>
       </ul>
 
-      <h3 style="margin-top:1.5rem; font-size:1.1rem; color:var(--primary-light); border-bottom:1px solid var(--border); padding-bottom:5px;">Custom UI &amp; Effects</h3>
+      <h3 style="margin-top:1.5rem; font-size:1.1rem; color:#2dd4bf; border-bottom:1px solid rgba(45,212,191,0.2); padding-bottom:5px;">Custom UI &amp; Effects</h3>
       <ul class="tutorial-list">
         <li>
           <a href="https://soifgo.github.io/soifgo/tutorials/WorkingwithHTMLFiles/html01.html">
@@ -800,17 +844,17 @@
             </div>
           </a>
         </li>
-        <li>
-          <a href="https://soifgo.github.io/soifgo/tutorials/send_bluetooth_html/html_guide_1.html">
-            <img src="https://soifgo.github.io/soifgo/tutorials/icon/bluesend_html.png" alt="icon" class="icon" />
-            <div>
-              <strong>Bluetooth Send by HTML</strong>
-              <span style="display:block; font-size:0.85rem; color:var(--text-muted); font-weight:400;">
-                Send Bluetooth commands from your HTML page
-              </span>
-            </div>
-          </a>
-        </li>
+<li>
+  <a href="https://soifgo.github.io/soifgo/tutorials/send_bluetooth_html/html_guide_1.html">
+    <img src="https://soifgo.github.io/soifgo/tutorials/icon/bluesend_html.png" alt="icon" class="icon" />
+    <div>
+      <strong>Bluetooth Send/Receive & Phone Sensors in HTML</strong>
+      <span style="display:block; font-size:0.85rem; color:var(--text-muted); font-weight:400;">
+        Send/receive Bluetooth data, and activate light, movement, and magneto sensors from your HTML page
+      </span>
+    </div>
+  </a>
+</li>
         <li>
           <a href="https://soifgo.github.io/soifgo/tutorials/Effect/effects.html">
             <img src="https://soifgo.github.io/soifgo/tutorials/icon/effect.png" alt="icon" class="icon" />
@@ -824,7 +868,7 @@
         </li>
       </ul>
 
-      <h3 style="margin-top:1.5rem; font-size:1.1rem; color:var(--primary-light); border-bottom:1px solid var(--border); padding-bottom:5px;">Advanced &amp; Tools</h3>
+      <h3 style="margin-top:1.5rem; font-size:1.1rem; color:#2dd4bf; border-bottom:1px solid rgba(45,212,191,0.2); padding-bottom:5px;">Advanced &amp; Tools</h3>
       <ul class="tutorial-list">
         <li>
           <a href="https://soifgo.github.io/soifgo/tutorials/note_out/note_out.html">
@@ -877,7 +921,7 @@
     <section id="faq">
       <h2>Frequently Asked Questions</h2>
 
-      <h3 style="margin-top:1.8rem; color:var(--primary-light); border-bottom:1px solid var(--border); padding-bottom:5px;">Getting Started</h3>
+      <h3 style="margin-top:1.8rem; color:#f59e0b; border-bottom:1px solid rgba(245,158,11,0.2); padding-bottom:5px;">Getting Started</h3>
 
       <div class="faq-item">
         <strong>What exactly is SoifGo, and who is it for?</strong>
@@ -894,7 +938,7 @@
         <p><strong>No</strong> for Bluetooth — it works offline. <strong>Yes</strong> for MQTT and HTTP (you need Wi-Fi or mobile data).</p>
       </div>
 
-      <h3 style="margin-top:1.8rem; color:var(--primary-light); border-bottom:1px solid var(--border); padding-bottom:5px;">Features & Technical Details</h3>
+      <h3 style="margin-top:1.8rem; color:#f59e0b; border-bottom:1px solid rgba(245,158,11,0.2); padding-bottom:5px;">Features & Technical Details</h3>
 
       <div class="faq-item">
         <strong>Can I control a robot with two-way communication?</strong>
@@ -926,7 +970,7 @@
         <p>Yes, the app includes a built-in G-Code viewer and editor. You can load a G-Code file from the Note folder, and the app will render the toolpath with animated lines and arcs. This is useful for CNC or 3D printing monitoring.</p>
       </div>
 
-      <h3 style="margin-top:1.8rem; color:var(--primary-light); border-bottom:1px solid var(--border); padding-bottom:5px;">Customisation & No-Code Design</h3>
+      <h3 style="margin-top:1.8rem; color:#f59e0b; border-bottom:1px solid rgba(245,158,11,0.2); padding-bottom:5px;">Customisation & No-Code Design</h3>
 
       <div class="faq-item">
         <strong>How do I build a UI without programming?</strong>
@@ -948,7 +992,7 @@
         <p>Yes. SoifGo supports folders and pages. Each folder can contain multiple pages, and each page can have its own set of buttons, seek bars, and settings. You can load and save pages at any time, and even create a startup sequence that automatically triggers buttons on load.</p>
       </div>
 
-      <h3 style="margin-top:1.8rem; color:var(--primary-light); border-bottom:1px solid var(--border); padding-bottom:5px;">Security & Installation</h3>
+      <h3 style="margin-top:1.8rem; color:#f59e0b; border-bottom:1px solid rgba(245,158,11,0.2); padding-bottom:5px;">Security & Installation</h3>
 
       <div class="faq-item">
         <strong>Is the APK safe to install?</strong>
