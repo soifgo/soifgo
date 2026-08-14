@@ -4,15 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-  <title>SoifGo — Bluetooth &amp; MQTT IoT Controller for Android | Control ESP32, Arduino, HC-05</title>
+  <title>SoifGo — Build Custom Android Hardware Controllers with Bluetooth, MQTT &amp; HTML/JS</title>
 
   <!-- Primary SEO Description -->
-  <meta name="description" content="SoifGo is a powerful Android Bluetooth controller app for ESP32, Arduino, HC-05, and ESP8266. Supports MQTT, buttons, seek bars. Free IoT controller." />
-  <meta name="keywords" content="Bluetooth controller, MQTT client, ESP32 Android app, Arduino IoT control, IoT, SoifGo" />
+  <meta name="description" content="SoifGo is a free Android hardware controller for Arduino, ESP32, ESP8266 and HC-05. Build custom Bluetooth, MQTT and HTML/JavaScript controllers with phone sensors, graphs, gauges and offline WebView support." />
+  <meta name="keywords" content="Android hardware controller, Arduino Bluetooth controller, ESP32 controller, HC-05 Android, MQTT Android, HTML JavaScript hardware controller, WebView Bluetooth, phone sensor controller, SoifGo" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="SoifGo — Free Bluetooth &amp; MQTT IoT Controller for Android" />
-  <meta property="og:description" content="Control ESP32, Arduino, HC-05, and ESP8266 via Bluetooth and MQTT. Features buttons, seek bars, and 22 languages." />
+  <meta property="og:title" content="SoifGo — Build Custom Hardware Controllers with Android + HTML/JS" />
+  <meta property="og:description" content="Turn an Android phone into a custom hardware controller. Bluetooth, MQTT, HTML/JS WebView, phone sensors, graphs and gauges for Arduino, ESP32 and ESP8266." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://soifgo.github.io/soifgo/" />
   <meta property="og:image" content="https://soifgo.github.io/soifgo/soifgo-logo.png" />
@@ -22,8 +22,8 @@
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="SoifGo — Bluetooth &amp; MQTT IoT Controller for Android" />
-  <meta name="twitter:description" content="Free Android app for controlling ESP32, Arduino, HC-05 via Bluetooth and MQTT." />
+  <meta name="twitter:title" content="SoifGo — Custom Android Hardware Controller" />
+  <meta name="twitter:description" content="Build custom Android hardware controllers with Bluetooth, MQTT, HTML/JS WebView and phone sensors." />
   <meta name="twitter:image" content="https://soifgo.github.io/soifgo/soifgo-logo.png" />
 
   <!-- Canonical URL -->
@@ -37,12 +37,54 @@
       "name": "SoifGo",
       "operatingSystem": "Android",
       "applicationCategory": "UtilityApplication",
-      "description": "Bluetooth and MQTT IoT controller app for Android. Supports ESP32, Arduino, HC-05, ESP8266. Features buttons, seek bars, and 22 languages.",
+      "description": "Free Android hardware controller for Arduino, ESP32, ESP8266 and HC-05 with Bluetooth, MQTT, HTML/JavaScript WebView, phone sensors, graphs and gauges.",
       "url": "https://soifgo.github.io/soifgo/",
       "inLanguage": ["en", "es", "zh", "fr", "de", "ja", "ru", "ar", "fa", "it", "hi", "tr", "ko", "pt"],
       "creator": { "@type": "Person", "name": "Saeid Moghadam" },
       "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
     }
+  </script>
+
+  <!-- FAQ structured data for search engines -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is SoifGo?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "SoifGo is a free Android app for controlling and monitoring hardware through Bluetooth, MQTT and HTTP, with a visual UI builder and custom HTML/CSS/JavaScript WebView interfaces."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can SoifGo use HTML and JavaScript with Bluetooth?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. A local HTML page running inside SoifGo WebView can use JavaScript to send and receive Bluetooth data and read supported phone sensors."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can SoifGo work with Arduino and ESP32?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. The project documentation describes Bluetooth, MQTT and HTTP communication with devices including Arduino, ESP32, ESP8266 and HC-05/HC-06."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Bluetooth control require internet?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Bluetooth control can work offline. MQTT and HTTP require network connectivity."
+        }
+      }
+    ]
+  }
   </script>
 
   <!-- GoatCounter Analytics -->
@@ -591,6 +633,204 @@
       text-decoration: underline;
     }
 
+
+    /* ===== HIGH-CONVERSION HERO ===== */
+    .hero-subline {
+      font-size: 1.05rem;
+      color: #cbd5e1;
+      margin: 0 auto 22px;
+      max-width: 760px;
+    }
+
+    .hero-pills {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 auto 25px;
+    }
+
+    .hero-pill {
+      display: inline-block;
+      padding: 7px 13px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+      color: #e2e8f0;
+      font-size: 0.85rem;
+    }
+
+    .hero-proof {
+      margin: 30px auto 0;
+      max-width: 860px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+      gap: 8px;
+      align-items: center;
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(0,0,0,0.22);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .hero-step {
+      padding: 13px 9px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.045);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .hero-step .icon {
+      font-size: 1.7rem;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .hero-step strong {
+      display: block;
+      color: #fff;
+      font-size: 0.9rem;
+    }
+
+    .hero-step span {
+      display: block;
+      color: #94a3b8;
+      font-size: 0.75rem;
+      line-height: 1.4;
+    }
+
+    .hero-arrow {
+      color: #a78bfa;
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+
+    .hero-result {
+      margin: 16px auto 0;
+      max-width: 860px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      background: rgba(45,212,191,0.08);
+      border: 1px solid rgba(45,212,191,0.18);
+      color: #ccfbf1;
+      font-size: 0.9rem;
+    }
+
+    .quick-demo {
+      background: linear-gradient(145deg, #111827, #172033);
+      border-left: 5px solid #2dd4bf;
+      border-right: 1px solid rgba(45,212,191,0.18);
+    }
+
+    .quick-demo h2 {
+      color: #fff;
+    }
+
+    .motion-demo {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .phone-demo {
+      min-height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: radial-gradient(circle at center, rgba(124,58,237,0.18), transparent 62%);
+      border-radius: 18px;
+    }
+
+    .phone {
+      width: 145px;
+      height: 255px;
+      border: 6px solid #334155;
+      border-radius: 25px;
+      background: #0b1020;
+      box-shadow: 0 20px 45px rgba(0,0,0,0.45);
+      transform: rotate(-8deg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .phone-notch {
+      width: 45px;
+      height: 6px;
+      border-radius: 10px;
+      background: #475569;
+      position: absolute;
+      top: 32px;
+    }
+
+    .phone-title {
+      font-size: 0.75rem;
+      color: #94a3b8;
+      margin-top: 18px;
+    }
+
+    .phone-command {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #2dd4bf;
+    }
+
+    .motion-arrow {
+      position: absolute;
+      font-size: 2rem;
+      color: #a78bfa;
+    }
+
+    .motion-arrow.left { left: 8%; top: 45%; }
+    .motion-arrow.right { right: 8%; top: 45%; }
+    .motion-arrow.up { left: 47%; top: 3%; }
+    .motion-arrow.down { left: 47%; bottom: 3%; }
+
+    .demo-copy h3 {
+      margin-top: 0;
+      color: #2dd4bf;
+    }
+
+    .demo-command-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+      margin: 15px 0;
+    }
+
+    .demo-command {
+      padding: 11px 13px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      font-family: monospace;
+      color: #e2e8f0;
+    }
+
+    .demo-command b {
+      color: #2dd4bf;
+    }
+
+    .trust-row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 14px 24px;
+      margin-top: 22px;
+      color: #94a3b8;
+      font-size: 0.85rem;
+    }
+
+    .trust-row span::before {
+      content: "✓ ";
+      color: #4ade80;
+      font-weight: 800;
+    }
+
     /* ===== RESPONSIVE ===== */
     @media (max-width: 700px) {
       header {
@@ -647,6 +887,23 @@
 
       section:first-of-type {
         margin-top: 15px;
+      }
+
+      .hero-proof {
+        grid-template-columns: 1fr;
+        gap: 7px;
+      }
+
+      .hero-arrow {
+        transform: rotate(90deg);
+      }
+
+      .motion-demo {
+        grid-template-columns: 1fr;
+      }
+
+      .phone-demo {
+        min-height: 270px;
       }
 
       .feature-grid, .feature-grid-mini {
@@ -735,21 +992,75 @@
 
 <body>
 
-  <!-- ===== HEADER ===== -->
+  <!-- ===== HERO ===== -->
   <header>
     <div class="header-container">
       <div class="header-right">
         <h1>
-          <img src="soifgo-logo.png" alt="SoifGo Logo" />
+          <img src="soifgo-logo.png" alt="SoifGo Android Hardware Controller Logo" />
           SoifGo
         </h1>
       </div>
+
       <div class="header-left">
         <p>
-          Transform your phone into a professional IoT controller.<br>
-          Design custom dashboards for Arduino and ESP32 – no coding required.
+          <strong>Turn your Android phone into a custom hardware controller.</strong><br>
+          Bluetooth • MQTT • HTML/JS WebView • Phone Sensors
         </p>
-        <a href="soifgo.zip" class="cta-button">Download Android APK</a>
+
+        <div class="hero-subline">
+          Build controllers and dashboards for Arduino, ESP32, ESP8266 and HC-05 —
+          from simple buttons to fully custom HTML/CSS/JavaScript interfaces.
+        </div>
+
+        <div class="hero-pills">
+          <span class="hero-pill">📡 Bluetooth SPP</span>
+          <span class="hero-pill">☁️ MQTT</span>
+          <span class="hero-pill">🌐 HTTP</span>
+          <span class="hero-pill">🎨 HTML / CSS / JS</span>
+          <span class="hero-pill">📱 Sensors</span>
+          <span class="hero-pill">📊 Graphs &amp; Gauges</span>
+        </div>
+
+        <a href="soifgo.zip" class="cta-button">Download SoifGo for Android</a>
+
+        <div class="hero-proof">
+          <div class="hero-step">
+            <span class="icon">💡</span>
+            <strong>Your idea</strong>
+            <span>Describe the controller you want</span>
+          </div>
+          <div class="hero-arrow">→</div>
+          <div class="hero-step">
+            <span class="icon">🎨</span>
+            <strong>HTML / JS</strong>
+            <span>Build the interface you need</span>
+          </div>
+          <div class="hero-arrow">→</div>
+          <div class="hero-step">
+            <span class="icon">📱</span>
+            <strong>SoifGo</strong>
+            <span>Run it inside Android WebView</span>
+          </div>
+          <div class="hero-arrow">→</div>
+          <div class="hero-step">
+            <span class="icon">⚙️</span>
+            <strong>Hardware</strong>
+            <span>Control Arduino, ESP32 or other devices</span>
+          </div>
+        </div>
+
+        <div class="hero-result">
+          <strong>Build → Paste → Run → Test.</strong>
+          Bluetooth and phone-sensor projects can work locally without an internet connection.
+        </div>
+
+        <div class="trust-row">
+          <span>Free Android app</span>
+          <span>Open-source project</span>
+          <span>Bluetooth works offline</span>
+          <span>Custom WebView interfaces</span>
+        </div>
       </div>
     </div>
   </header>
@@ -757,6 +1068,7 @@
   <!-- ===== NAV ===== -->
   <nav id="mainNav">
     <a href="#about">About</a>
+    <a href="#demo">Demo</a>
     <a href="#tutorials">Tutorials</a>
     <a href="#faq">FAQ</a>
     <a href="https://github.com/soifgo/soifgo/discussions/3" target="_blank">Forum</a>
@@ -783,13 +1095,62 @@
       </div>
     </section>
 
+    <!-- ===== QUICK DEMO ===== -->
+    <section id="quick-demo" class="quick-demo">
+      <h2>See What SoifGo Can Do in Seconds</h2>
+
+      <div class="motion-demo">
+        <div class="phone-demo" aria-label="Phone motion controller demonstration">
+          <div class="motion-arrow left">←</div>
+          <div class="motion-arrow right">→</div>
+          <div class="motion-arrow up">↑</div>
+          <div class="motion-arrow down">↓</div>
+
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="phone-title">Motion Controller</div>
+            <div class="phone-command">LEFT</div>
+            <div class="phone-title">Bluetooth</div>
+          </div>
+        </div>
+
+        <div class="demo-copy">
+          <h3>📱 Phone movement → Bluetooth command</h3>
+          <p>
+            With SoifGo's HTML/JavaScript WebView interface, a custom page can read
+            phone movement data and send commands to a Bluetooth device.
+          </p>
+
+          <div class="demo-command-grid">
+            <div class="demo-command">Tilt left → <b>LEFT</b></div>
+            <div class="demo-command">Tilt right → <b>RIGHT</b></div>
+            <div class="demo-command">Tilt forward → <b>FRONT</b></div>
+            <div class="demo-command">Tilt backward → <b>REVERSE</b></div>
+          </div>
+
+          <p style="color:var(--text-muted); font-size:0.92rem;">
+            This same approach can be used for robot controllers, custom gamepads,
+            dashboards, automation panels and other hardware projects.
+          </p>
+
+          <p style="margin-top:14px;">
+            <a href="https://soifgo.github.io/soifgo/tutorials/send_bluetooth_html/html_guide_1.html"
+               style="color:#2dd4bf; font-weight:700; text-decoration:underline;">
+              Open the HTML + Bluetooth + Sensors tutorial →
+            </a>
+          </p>
+        </div>
+      </div>
+    </section>
+
     <!-- ===== ABOUT SECTION ===== -->
     <section id="about">
       <h2>What is SoifGo?</h2>
 
       <p style="font-size:1.05rem;">
         <strong>SoifGo</strong> is a free, open-source Android app that turns your smartphone into a professional <strong>IoT controller</strong>.
-        It supports multiple communication protocols, a visual UI builder, and advanced features like real-time graphs, circular gauges, alarms, and sensor integration — all without writing a single line of code.
+        It supports multiple communication protocols, a visual UI builder, and advanced features like real-time graphs, circular gauges, alarms, and sensor integration.
+        For developers who want complete freedom, its HTML/JavaScript WebView layer can turn a simple page into a custom hardware controller.
       </p>
 
       <h3>Key Capabilities</h3>
@@ -814,7 +1175,9 @@
         </li>
       </ul>
       <p>
-        <strong>Example:</strong> Build a robot with Arduino + HC-05. Create directional buttons, add a seek bar for speed control, and use the built-in graph to monitor motor RPM. Or set up an MQTT dashboard to control home lighting from anywhere. SoifGo gives you the tools — you build the experience.
+        <strong>Example:</strong> Build a robot with Arduino + HC-05, create directional buttons and speed control, or use phone movement to send commands.
+        You can also build an MQTT dashboard for home automation or a custom HTML interface for a specialized machine.
+        SoifGo gives you the communication layer and the tools — you build the experience.
       </p>
 
       <h3>Supported Languages</h3>
@@ -1412,12 +1775,12 @@ window.html_sensor_magno = html_sensor_magno;</pre>
       <div style="text-align:center; background:rgba(255,255,255,0.02); border-radius:var(--radius-sm); padding:20px; border:1px solid var(--border);">
         <img
           src="soifgo-demo.gif"
-          alt="SoifGo Demo - Control ESP32 via Bluetooth"
+          alt="SoifGo Demo - Android Bluetooth controller for ESP32 and Arduino"
           style="max-width:100%; height:auto; border-radius:var(--radius-sm);"
           loading="lazy"
         />
         <p style="margin-top:10px; font-size:0.9rem; color:var(--text-muted);">
-          Connect to HC-05, add a button, and control your device in seconds
+          Connect to HC-05, create a control interface, and send commands to your hardware in seconds
         </p>
       </div>
     </section>
@@ -1470,7 +1833,7 @@ window.html_sensor_magno = html_sensor_magno;</pre>
     async function loadTotal() {
       const a = await getCount("soifgo/");
       const b = await getCount("soifgo/index.html");
-      document.getElementById("totalVisits").textContent = "Visits: " + (a + b);
+      document.getElementById("totalVisits").textContent = "SoifGo page visits: " + (a + b);
     }
     document.addEventListener('DOMContentLoaded', loadTotal);
   </script>
