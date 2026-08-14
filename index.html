@@ -6,11 +6,9 @@
 
   <title>SoifGo — Build Custom Android Hardware Controllers with Bluetooth, MQTT &amp; HTML/JS</title>
 
-  <!-- Primary SEO Description -->
   <meta name="description" content="SoifGo is a free Android hardware controller for Arduino, ESP32, ESP8266 and HC-05. Build custom Bluetooth, MQTT and HTML/JavaScript controllers with phone sensors, graphs, gauges and offline WebView support." />
   <meta name="keywords" content="Android hardware controller, Arduino Bluetooth controller, ESP32 controller, HC-05 Android, MQTT Android, HTML JavaScript hardware controller, WebView Bluetooth, phone sensor controller, SoifGo" />
 
-  <!-- Open Graph -->
   <meta property="og:title" content="SoifGo — Build Custom Hardware Controllers with Android + HTML/JS" />
   <meta property="og:description" content="Turn an Android phone into a custom hardware controller. Bluetooth, MQTT, HTML/JS WebView, phone sensors, graphs and gauges for Arduino, ESP32 and ESP8266." />
   <meta property="og:type" content="website" />
@@ -20,16 +18,13 @@
   <meta property="og:image:height" content="630" />
   <meta property="og:locale" content="en_US" />
 
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="SoifGo — Custom Android Hardware Controller" />
   <meta name="twitter:description" content="Build custom Android hardware controllers with Bluetooth, MQTT, HTML/JS WebView and phone sensors." />
   <meta name="twitter:image" content="https://soifgo.github.io/soifgo/soifgo-logo.png" />
 
-  <!-- Canonical URL -->
   <link rel="canonical" href="https://soifgo.github.io/soifgo/" />
 
-  <!-- Schema.org -->
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -45,7 +40,6 @@
     }
   </script>
 
-  <!-- FAQ structured data for search engines -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -87,11 +81,9 @@
   }
   </script>
 
-  <!-- GoatCounter Analytics -->
   <script data-goatcounter="https://soifgo.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 
   <style>
-    /* ===== RESET & VARIABLES ===== */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -126,7 +118,6 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ===== SCROLLBAR ===== */
     ::-webkit-scrollbar {
       width: 5px;
     }
@@ -138,7 +129,6 @@
       border-radius: 10px;
     }
 
-    /* ===== MODERN HEADER ===== */
     header {
       background: linear-gradient(135deg, #0f0a1a, #2d1b4e);
       color: white;
@@ -173,7 +163,6 @@
       line-height: 1.5;
     }
 
-    /* Modern CTA Button */
     .cta-button {
       background: #7C3AED;
       color: white;
@@ -193,7 +182,6 @@
       box-shadow: 0 15px 30px rgba(124, 58, 237, 0.6);
     }
 
-    /* ===== NAV ===== */
     nav {
       display: flex;
       justify-content: center;
@@ -237,14 +225,12 @@
       transform: translateY(-1px);
     }
 
-    /* ===== MAIN ===== */
     main {
       max-width: 900px;
       margin: auto;
       padding: 0 1em;
     }
 
-    /* ===== SECTION / CARD ===== */
     section {
       padding: 2em;
       backdrop-filter: blur(8px);
@@ -260,7 +246,6 @@
       border-color: rgba(255, 255, 255, 0.08);
     }
 
-    /* ===== COLORFUL SECTIONS ===== */
     #download {
       background: linear-gradient(145deg, #0d1b2a, #1b2838);
       border-left: 5px solid #00b4d8;
@@ -314,7 +299,6 @@
       margin-top: 1.5em;
     }
 
-    /* ===== DOWNLOAD ===== */
     #download ul {
       list-style: none;
       padding: 0;
@@ -358,7 +342,6 @@
       text-decoration: underline;
     }
 
-    /* ===== FEATURE GRID ===== */
     .feature-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -386,7 +369,6 @@
       display: block;
     }
 
-    /* ===== FAQ ===== */
     .faq-item {
       background: rgba(255, 255, 255, 0.02);
       padding: 16px 20px;
@@ -527,7 +509,6 @@
       color: var(--text-muted);
     }
 
-    /* ===== TUTORIAL LIST ===== */
     .tutorial-list {
       list-style: none;
       padding: 0;
@@ -590,7 +571,6 @@
       font-weight: 700 !important;
     }
 
-    /* ===== IMAGES ===== */
     img.preview-img {
       max-width: 60%;
       height: auto;
@@ -601,7 +581,6 @@
       box-shadow: 0 4px 20px var(--shadow);
     }
 
-    /* ===== VISITS ===== */
     #totalVisits {
       text-align: center;
       margin: 40px 0;
@@ -611,7 +590,6 @@
       letter-spacing: 0.5px;
     }
 
-    /* ===== FOOTER ===== */
     footer {
       margin-top: 50px;
       text-align: center;
@@ -633,8 +611,6 @@
       text-decoration: underline;
     }
 
-
-    /* ===== HIGH-CONVERSION HERO ===== */
     .hero-subline {
       font-size: 1.05rem;
       color: #cbd5e1;
@@ -831,7 +807,60 @@
       font-weight: 800;
     }
 
-    /* ===== RESPONSIVE ===== */
+    .carousel-container {
+      position: relative;
+      max-width: 100%;
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin: 1.5em auto;
+      box-shadow: 0 4px 20px var(--shadow);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .carousel-slides {
+      display: flex;
+      transition: transform 0.6s ease-in-out;
+    }
+
+    .carousel-slide {
+      min-width: 100%;
+      box-sizing: border-box;
+    }
+
+    .carousel-slide img {
+      width: 60%;
+       height: auto; 
+      object-fit: cover;
+      display: block;
+      border-radius: var(--radius);
+    }
+
+    .carousel-indicators {
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 5;
+    }
+
+    .carousel-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .carousel-dot.active {
+      background: #7C3AED;
+      border-color: #7C3AED;
+      box-shadow: 0 0 12px rgba(124, 58, 237, 0.6);
+    }
+
     @media (max-width: 700px) {
       header {
         padding: 60px 20px;
@@ -929,6 +958,10 @@
       .golden-banner .header-row h3 {
         font-size: 1.3rem;
       }
+
+      .carousel-slide img {
+        height: 300px;
+      }
     }
 
     @media (max-width: 480px) {
@@ -986,13 +1019,16 @@
         font-size: 0.7rem;
         padding: 10px;
       }
+
+      .carousel-slide img {
+        height: 220px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- ===== HERO ===== -->
   <header>
     <div class="header-container">
       <div class="header-right">
@@ -1065,7 +1101,6 @@
     </div>
   </header>
 
-  <!-- ===== NAV ===== -->
   <nav id="mainNav">
     <a href="#about">About</a>
     <a href="#demo">Demo</a>
@@ -1076,7 +1111,6 @@
 
   <main>
 
-    <!-- ===== DOWNLOAD SECTION ===== -->
     <section id="download">
       <h2>Download SoifGo — Bluetooth Controller App for Android</h2>
 
@@ -1095,7 +1129,6 @@
       </div>
     </section>
 
-    <!-- ===== QUICK DEMO ===== -->
     <section id="quick-demo" class="quick-demo">
       <h2>See What SoifGo Can Do in Seconds</h2>
 
@@ -1143,7 +1176,6 @@
       </div>
     </section>
 
-    <!-- ===== ABOUT SECTION ===== -->
     <section id="about">
       <h2>What is SoifGo?</h2>
 
@@ -1186,7 +1218,6 @@
       </p>
     </section>
 
-    <!-- ===== TUTORIALS SECTION ===== -->
     <section id="tutorials">
       <h2>SoifGo Tutorials</h2>
 
@@ -1396,13 +1427,9 @@
       </ul>
     </section>
 
-    <!-- ============================================================ -->
-    <!-- ===== FAQ SECTION - IMPROVED WITH GOLDEN FEATURE =====       -->
-    <!-- ============================================================ -->
     <section id="faq">
       <h2>Frequently Asked Questions</h2>
 
-      <!-- ========== GOLDEN FEATURE BANNER ========== -->
       <div class="golden-banner">
         <div class="glow"></div>
         <div class="content">
@@ -1438,7 +1465,6 @@
         </div>
       </div>
 
-      <!-- ========== GETTING STARTED ========== -->
       <h3 style="margin-top:1.8rem; color:#f59e0b; border-bottom:1px solid rgba(245,158,11,0.2); padding-bottom:5px;">Getting Started</h3>
 
       <div class="faq-item">
@@ -1456,12 +1482,10 @@
         <p><strong>No</strong> for Bluetooth — it works offline. <strong>Yes</strong> for MQTT and HTTP (you need Wi-Fi or mobile data).</p>
       </div>
 
-      <!-- ========== GOLDEN FEATURE DETAILED QUESTIONS ========== -->
       <h3 style="margin-top:1.8rem; color:#7C3AED; border-bottom:1px solid rgba(124,58,237,0.2); padding-bottom:5px;">
         ⚡ The Golden Feature: WebView + Bluetooth + Sensors
       </h3>
 
-      <!-- Q1: Complete integration -->
       <div class="faq-item" style="border-left:4px solid #7C3AED; background:rgba(124,58,237,0.05);">
         <strong>🔑 How do I build a complete HTML page with Bluetooth Send/Receive AND Sensors?</strong>
         <p>
@@ -1490,7 +1514,6 @@
         </p>
       </div>
 
-      <!-- Q2: Bluetooth Send -->
       <div class="faq-item" style="border-left:4px solid #2196f3;">
         <strong>📤 How do I send data from my HTML page to Bluetooth?</strong>
         <p>
@@ -1510,7 +1533,6 @@ function sendData() {
         </p>
       </div>
 
-      <!-- Q3: Bluetooth Receive -->
       <div class="faq-item" style="border-left:4px solid #4caf50;">
         <strong>📥 How do I receive Bluetooth data in my HTML page?</strong>
         <p>
@@ -1527,7 +1549,6 @@ window.html_bluetooth_tx = html_bluetooth_tx;  // Register it globally</pre>
         </p>
       </div>
 
-      <!-- Q4: Sensors Activation -->
       <div class="faq-item" style="border-left:4px solid #ff9800;">
         <strong>📱 How do I activate and read phone sensors (Light, Movement, Magneto)?</strong>
         <p>
@@ -1558,7 +1579,6 @@ window.html_sensor_magno = html_sensor_magno;</pre>
         </p>
       </div>
 
-      <!-- Q5: Complete Working Example -->
       <div class="faq-item" style="border-left:4px solid #e91e63; background:rgba(233,30,99,0.05);">
         <strong>🚀 Can you show me a complete working HTML example with ALL features?</strong>
         <p>
@@ -1654,7 +1674,6 @@ window.html_sensor_magno = html_sensor_magno;</pre>
         </p>
       </div>
 
-      <!-- Q6: Use Cases -->
       <div class="faq-item" style="border-left:4px solid #00bcd4;">
         <strong>💡 What can I build with this WebView + Bluetooth + Sensors feature?</strong>
         <p>
@@ -1675,7 +1694,6 @@ window.html_sensor_magno = html_sensor_magno;</pre>
         </p>
       </div>
 
-      <!-- ========== FEATURES & TECHNICAL DETAILS ========== -->
       <h3 style="margin-top:1.8rem; color:#f59e0b; border-bottom:1px solid rgba(245,158,11,0.2); padding-bottom:5px;">Features & Technical Details</h3>
 
       <div class="faq-item">
@@ -1698,7 +1716,6 @@ window.html_sensor_magno = html_sensor_magno;</pre>
         <p>Yes, the app includes a built-in G-Code viewer and editor. You can load a G-Code file from the Note folder, and the app will render the toolpath with animated lines and arcs. This is useful for CNC or 3D printing monitoring.</p>
       </div>
 
-      <!-- ========== CUSTOMISATION & NO-CODE DESIGN ========== -->
       <h3 style="margin-top:1.8rem; color:#f59e0b; border-bottom:1px solid rgba(245,158,11,0.2); padding-bottom:5px;">Customisation & No-Code Design</h3>
 
       <div class="faq-item">
@@ -1738,7 +1755,6 @@ window.html_sensor_magno = html_sensor_magno;</pre>
         <p>Yes. SoifGo supports folders and pages. Each folder can contain multiple pages, and each page can have its own set of buttons, seek bars, and settings. You can load and save pages at any time, and even create a startup sequence that automatically triggers buttons on load.</p>
       </div>
 
-      <!-- ========== SECURITY & INSTALLATION ========== -->
       <h3 style="margin-top:1.8rem; color:#f59e0b; border-bottom:1px solid rgba(245,158,11,0.2); padding-bottom:5px;">Security & Installation</h3>
 
       <div class="faq-item">
@@ -1761,31 +1777,33 @@ window.html_sensor_magno = html_sensor_magno;</pre>
         <p><strong>Yes!</strong> The HTML files run locally from your device's storage. Everything — Bluetooth communication and sensor reading — works completely offline. No internet connection is required.</p>
       </div>
 
-      <!-- ========== CONTACT ========== -->
       <h3 style="margin-top:1.8rem; color:#f59e0b; border-bottom:1px solid rgba(245,158,11,0.2); padding-bottom:5px;">Contact Developer</h3>
       <p>Email: <a href="mailto:SSM20985@gmail.com">SSM20985@gmail.com</a> &middot; <a href="mailto:SSMQQMSS@gmail.com">SSMQQMSS@gmail.com</a></p>
       <p style="margin-top:8px;">
         💬 <a href="https://github.com/soifgo/soifgo/discussions/3" target="_blank">Join the SoifGo Forum</a> for questions, ideas, and community support.
       </p>
     </section>
-    <!-- ===== END OF IMPROVED FAQ ===== -->
 
-    <!-- ===== DEMO GIF SECTION ===== -->
     <section id="demo">
       <div style="text-align:center; background:rgba(255,255,255,0.02); border-radius:var(--radius-sm); padding:20px; border:1px solid var(--border);">
-        <img
-          src="soifgo-demo.gif"
-          alt="SoifGo Demo - Android Bluetooth controller for ESP32 and Arduino"
-          style="max-width:100%; height:auto; border-radius:var(--radius-sm);"
-          loading="lazy"
-        />
+        <div class="carousel-container">
+          <div class="carousel-slides" id="carouselSlides">
+            <div class="carousel-slide"><img src="tutorials/icon/pic1.jpg" alt="SoifGo screenshot 1" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="tutorials/icon/pic2.jpg" alt="SoifGo screenshot 2" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="tutorials/icon/pic3.jpg" alt="SoifGo screenshot 3" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="tutorials/icon/pic4.jpg" alt="SoifGo screenshot 4" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="tutorials/icon/pic5.jpg" alt="SoifGo screenshot 5" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="tutorials/icon/pic6.jpg" alt="SoifGo screenshot 6" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="tutorials/icon/pic7.jpg" alt="SoifGo screenshot 7" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="tutorials/icon/pic8.jpg" alt="SoifGo screenshot 8" loading="lazy" /></div>
+          </div>
+          <div class="carousel-indicators" id="carouselIndicators"></div>
+        </div>
         <p style="margin-top:10px; font-size:0.9rem; color:var(--text-muted);">
           Connect to HC-05, create a control interface, and send commands to your hardware in seconds
         </p>
       </div>
     </section>
-
-    <img src="soifgo_pic01.png" alt="SoifGo App Preview - Bluetooth and MQTT IoT Controller" class="preview-img" loading="lazy" />
 
     <div id="totalVisits">Loading...</div>
   </main>
@@ -1800,7 +1818,6 @@ window.html_sensor_magno = html_sensor_magno;</pre>
   </footer>
 
   <script>
-    // ===== NAV HIDE ON SCROLL (MOBILE) =====
     let lastScroll = 0;
     const nav = document.getElementById('mainNav');
     let isMobile = window.innerWidth <= 700;
@@ -1820,7 +1837,6 @@ window.html_sensor_magno = html_sensor_magno;</pre>
       lastScroll = currentScroll;
     });
 
-    // ===== VISITS COUNTER =====
     async function getCount(path) {
       try {
         const res = await fetch("https://soifgo.goatcounter.com/counter/" + path + ".json");
@@ -1836,6 +1852,62 @@ window.html_sensor_magno = html_sensor_magno;</pre>
       document.getElementById("totalVisits").textContent = "SoifGo page visits: " + (a + b);
     }
     document.addEventListener('DOMContentLoaded', loadTotal);
+
+    (function() {
+      const slides = document.getElementById('carouselSlides');
+      const indicators = document.getElementById('carouselIndicators');
+      const totalSlides = document.querySelectorAll('.carousel-slide').length;
+      let currentIndex = 0;
+      let intervalId = null;
+
+      for (let i = 0; i < totalSlides; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+        dot.dataset.index = i;
+        dot.addEventListener('click', function() {
+          goToSlide(parseInt(this.dataset.index));
+          resetInterval();
+        });
+        indicators.appendChild(dot);
+      }
+
+      function goToSlide(index) {
+        if (index < 0) index = totalSlides - 1;
+        if (index >= totalSlides) index = 0;
+        currentIndex = index;
+        slides.style.transform = 'translateX(-' + (index * 100) + '%)';
+        document.querySelectorAll('.carousel-dot').forEach((dot, i) => {
+          dot.classList.toggle('active', i === index);
+        });
+      }
+
+      function nextSlide() {
+        goToSlide(currentIndex + 1);
+      }
+
+      function resetInterval() {
+        if (intervalId) {
+          clearInterval(intervalId);
+          intervalId = null;
+        }
+        intervalId = setInterval(nextSlide, 1000);
+      }
+
+      resetInterval();
+
+      const container = document.querySelector('.carousel-container');
+      container.addEventListener('mouseenter', function() {
+        if (intervalId) {
+          clearInterval(intervalId);
+          intervalId = null;
+        }
+      });
+      container.addEventListener('mouseleave', function() {
+        if (!intervalId) {
+          resetInterval();
+        }
+      });
+    })();
   </script>
 
 </body>
