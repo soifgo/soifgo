@@ -807,6 +807,7 @@
       font-weight: 800;
     }
 
+    /* ===== CAROUSEL - FIXED ===== */
     .carousel-container {
       position: relative;
       max-width: 100%;
@@ -814,7 +815,8 @@
       overflow: hidden;
       margin: 1.5em auto;
       box-shadow: 0 4px 20px var(--shadow);
-      border: 1px solid rgba(255, 255, 255, 0.04);
+      border: none; 
+      background: transparent;
     }
 
     .carousel-slides {
@@ -825,14 +827,17 @@
     .carousel-slide {
       min-width: 100%;
       box-sizing: border-box;
+      padding: 0;  
+      margin: 0;
     }
 
     .carousel-slide img {
-      width: 60%;
-       height: auto; 
-      object-fit: cover;
+      width: 35%;
+      height: auto;         
       display: block;
-      border-radius: var(--radius);
+      border-radius: 0;     
+      object-fit: contain;  
+      background: #0F0A1A;  
     }
 
     .carousel-indicators {
@@ -861,6 +866,7 @@
       box-shadow: 0 0 12px rgba(124, 58, 237, 0.6);
     }
 
+    /* ===== RESPONSIVE ===== */
     @media (max-width: 700px) {
       header {
         padding: 60px 20px;
@@ -960,7 +966,7 @@
       }
 
       .carousel-slide img {
-        height: 300px;
+        height: auto; /* همیشه auto برای نمایش کامل */
       }
     }
 
@@ -1021,7 +1027,7 @@
       }
 
       .carousel-slide img {
-        height: 220px;
+        height: auto;
       }
     }
   </style>
@@ -1796,6 +1802,12 @@ window.html_sensor_magno = html_sensor_magno;</pre>
             <div class="carousel-slide"><img src="tutorials/icon/pic6.jpg" alt="SoifGo screenshot 6" loading="lazy" /></div>
             <div class="carousel-slide"><img src="tutorials/icon/pic7.jpg" alt="SoifGo screenshot 7" loading="lazy" /></div>
             <div class="carousel-slide"><img src="tutorials/icon/pic8.jpg" alt="SoifGo screenshot 8" loading="lazy" /></div>
+			<div class="carousel-slide"><img src="tutorials/icon/pic9.jpg" alt="SoifGo screenshot 9" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="tutorials/icon/pic10.jpg" alt="SoifGo screenshot 10" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="tutorials/icon/pic11.jpg" alt="SoifGo screenshot 11" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="tutorials/icon/pic12.jpg" alt="SoifGo screenshot 12" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="tutorials/icon/pic13.jpg" alt="SoifGo screenshot 13" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="tutorials/icon/pic14.jpg" alt="SoifGo screenshot 14" loading="lazy" /></div>
           </div>
           <div class="carousel-indicators" id="carouselIndicators"></div>
         </div>
