@@ -81,8 +81,6 @@
   }
   </script>
 
-  <script data-goatcounter="https://soifgo.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
-
   <style>
     * {
       box-sizing: border-box;
@@ -274,15 +272,6 @@
       background: linear-gradient(145deg, #141d2b, #1e2a3a);
       border-left: 5px solid #f472b6;
       border-right: 1px solid rgba(244, 114, 182, 0.2);
-    }
-
-    #totalVisits {
-      background: linear-gradient(145deg, #0f0a1a, #1a0f2e);
-      border-left: 5px solid #a78bfa;
-      border-right: 1px solid rgba(167, 139, 250, 0.2);
-      border-radius: var(--radius);
-      padding: 1.5rem;
-      margin: 30px 0;
     }
 
     h2 {
@@ -579,15 +568,6 @@
       display: block;
       border: 1px solid rgba(255, 255, 255, 0.04);
       box-shadow: 0 4px 20px var(--shadow);
-    }
-
-    #totalVisits {
-      text-align: center;
-      margin: 40px 0;
-      font-size: 20px;
-      font-weight: 600;
-      color: var(--text-muted);
-      letter-spacing: 0.5px;
     }
 
     footer {
@@ -1802,7 +1782,7 @@ window.html_sensor_magno = html_sensor_magno;</pre>
             <div class="carousel-slide"><img src="tutorials/icon/pic6.jpg" alt="SoifGo screenshot 6" loading="lazy" /></div>
             <div class="carousel-slide"><img src="tutorials/icon/pic7.jpg" alt="SoifGo screenshot 7" loading="lazy" /></div>
             <div class="carousel-slide"><img src="tutorials/icon/pic8.jpg" alt="SoifGo screenshot 8" loading="lazy" /></div>
-			<div class="carousel-slide"><img src="tutorials/icon/pic9.jpg" alt="SoifGo screenshot 9" loading="lazy" /></div>
+            <div class="carousel-slide"><img src="tutorials/icon/pic9.jpg" alt="SoifGo screenshot 9" loading="lazy" /></div>
             <div class="carousel-slide"><img src="tutorials/icon/pic10.jpg" alt="SoifGo screenshot 10" loading="lazy" /></div>
             <div class="carousel-slide"><img src="tutorials/icon/pic11.jpg" alt="SoifGo screenshot 11" loading="lazy" /></div>
             <div class="carousel-slide"><img src="tutorials/icon/pic12.jpg" alt="SoifGo screenshot 12" loading="lazy" /></div>
@@ -1816,8 +1796,6 @@ window.html_sensor_magno = html_sensor_magno;</pre>
         </p>
       </div>
     </section>
-
-    <div id="totalVisits">Loading...</div>
   </main>
 
   <footer>
@@ -1848,22 +1826,6 @@ window.html_sensor_magno = html_sensor_magno;</pre>
       }
       lastScroll = currentScroll;
     });
-
-    async function getCount(path) {
-      try {
-        const res = await fetch("https://soifgo.goatcounter.com/counter/" + path + ".json");
-        if (!res.ok) return 0;
-        const data = await res.json();
-        return Number(data.count) || 0;
-      } catch { return 0; }
-    }
-
-    async function loadTotal() {
-      const a = await getCount("soifgo/");
-      const b = await getCount("soifgo/index.html");
-      document.getElementById("totalVisits").textContent = "SoifGo page visits: " + (a + b);
-    }
-    document.addEventListener('DOMContentLoaded', loadTotal);
 
     (function() {
       const slides = document.getElementById('carouselSlides');
