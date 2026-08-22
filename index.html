@@ -88,19 +88,22 @@
       padding: 0;
     }
 
+    /* ====== تم جدید شبیه DeepSeek ====== */
     :root {
-      --primary: #7C3AED;
-      --primary-dark: #6D28D9;
-      --primary-light: #8B5CF6;
-      --primary-glow: rgba(124, 58, 237, 0.25);
-      --bg: #0F0A1A;
-      --card-bg: rgba(255, 255, 255, 0.04);
+      --primary: #4f8cff;
+      --primary-dark: #3a7bd5;
+      --primary-light: #6aa0ff;
+      --primary-glow: rgba(79, 140, 255, 0.25);
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --bg-card-hover: #263348;
       --card-border: rgba(255, 255, 255, 0.06);
-      --text: #F1F5F9;
-      --text-muted: #94A3B8;
-      --text-dim: #64748B;
-      --border: rgba(255, 255, 255, 0.06);
-      --shadow: rgba(0, 0, 0, 0.3);
+      --text: #e8edf5;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --border: rgba(255, 255, 255, 0.07);
+      --shadow: rgba(0, 0, 0, 0.35);
       --radius: 14px;
       --radius-sm: 10px;
       --transition: 0.25s ease;
@@ -127,8 +130,9 @@
       border-radius: 10px;
     }
 
+    /* ====== HEADER ====== */
     header {
-      background: linear-gradient(135deg, #0f0a1a, #2d1b4e);
+      background: linear-gradient(135deg, #0f172a, #1a2a4a);
       color: white;
       padding: 80px 20px;
       text-align: center;
@@ -148,6 +152,7 @@
       justify-content: center;
       align-items: center;
       gap: 15px;
+      color: #fff;
     }
 
     .header-right h1 img {
@@ -162,7 +167,7 @@
     }
 
     .cta-button {
-      background: #7C3AED;
+      background: var(--primary);
       color: white;
       padding: 18px 40px;
       border-radius: 50px;
@@ -170,21 +175,22 @@
       font-size: 1.2rem;
       text-decoration: none;
       transition: all 0.3s ease;
-      box-shadow: 0 10px 25px rgba(124, 58, 237, 0.4);
+      box-shadow: 0 10px 25px rgba(79, 140, 255, 0.4);
       display: inline-block;
     }
 
     .cta-button:hover {
-      background: #8B5CF6;
+      background: var(--primary-light);
       transform: translateY(-5px);
-      box-shadow: 0 15px 30px rgba(124, 58, 237, 0.6);
+      box-shadow: 0 15px 30px rgba(79, 140, 255, 0.6);
     }
 
+    /* ====== NAV ====== */
     nav {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      background: rgba(15, 10, 26, 0.85);
+      background: rgba(15, 23, 42, 0.92);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       padding: 0.8rem;
@@ -193,8 +199,6 @@
       z-index: 1000;
       border-bottom: 1px solid var(--border);
       transition: transform 0.3s ease;
-      background: #1a0f2e;
-      border-bottom: 2px solid #4a2c7a;
     }
 
     nav.hidden {
@@ -217,12 +221,13 @@
     }
 
     nav a:hover {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(79, 140, 255, 0.15);
       color: #fff;
-      border-color: rgba(255, 255, 255, 0.15);
+      border-color: var(--primary);
       transform: translateY(-1px);
     }
 
+    /* ====== MAIN ====== */
     main {
       max-width: 900px;
       margin: auto;
@@ -231,8 +236,7 @@
 
     section {
       padding: 2em;
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      background: var(--bg-card);
       border-radius: var(--radius);
       border: 1px solid var(--card-border);
       box-shadow: 0 4px 20px var(--shadow);
@@ -241,43 +245,37 @@
     }
 
     section:hover {
-      border-color: rgba(255, 255, 255, 0.08);
+      border-color: rgba(79, 140, 255, 0.15);
     }
 
     #download {
-      background: linear-gradient(145deg, #0d1b2a, #1b2838);
-      border-left: 5px solid #00b4d8;
-      border-right: 1px solid rgba(0, 180, 216, 0.2);
+      border-left: 5px solid var(--primary);
     }
 
     #about {
-      background: linear-gradient(145deg, #1a0f2e, #25153d);
-      border-left: 5px solid #7c3aed;
-      border-right: 1px solid rgba(124, 58, 237, 0.2);
+      border-left: 5px solid var(--primary);
     }
 
     #tutorials {
-      background: linear-gradient(145deg, #0d1f1f, #162b2b);
       border-left: 5px solid #2dd4bf;
-      border-right: 1px solid rgba(45, 212, 191, 0.2);
     }
 
     #faq {
-      background: linear-gradient(145deg, #1a1420, #261d30);
       border-left: 5px solid #f59e0b;
-      border-right: 1px solid rgba(245, 158, 11, 0.2);
     }
 
     #demo {
-      background: linear-gradient(145deg, #141d2b, #1e2a3a);
       border-left: 5px solid #f472b6;
-      border-right: 1px solid rgba(244, 114, 182, 0.2);
+    }
+
+    .quick-demo {
+      border-left: 5px solid #2dd4bf;
     }
 
     h2 {
       font-size: 1.6em;
       margin-bottom: 0.8em;
-      color: #fff;
+      color: var(--text-main);
       border-bottom: 1px solid var(--border);
       padding-bottom: 0.3em;
     }
@@ -288,6 +286,7 @@
       margin-top: 1.5em;
     }
 
+    /* ====== DOWNLOAD ====== */
     #download ul {
       list-style: none;
       padding: 0;
@@ -298,7 +297,7 @@
     }
 
     #download a {
-      color: #00b4d8;
+      color: var(--primary-light);
       font-weight: bold;
       text-decoration: none;
       font-size: 1.1em;
@@ -313,16 +312,16 @@
     .security-box {
       margin-top: 25px;
       padding: 15px 20px;
-      background: rgba(0, 180, 216, 0.08);
-      border-left: 4px solid #00b4d8;
+      background: rgba(79, 140, 255, 0.08);
+      border-left: 4px solid var(--primary);
       border-radius: var(--radius-sm);
       font-size: 0.95em;
       line-height: 1.6;
-      border: 1px solid rgba(0, 180, 216, 0.15);
+      border: 1px solid rgba(79, 140, 255, 0.12);
     }
 
     .security-box a {
-      color: #00b4d8;
+      color: var(--primary-light);
       font-weight: bold;
       text-decoration: none;
     }
@@ -331,6 +330,7 @@
       text-decoration: underline;
     }
 
+    /* ====== FEATURE GRID ====== */
     .feature-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -350,14 +350,15 @@
 
     .feature-grid li:hover {
       background: rgba(255, 255, 255, 0.06);
-      border-color: rgba(255, 255, 255, 0.08);
+      border-color: rgba(79, 140, 255, 0.15);
     }
 
     .feature-grid li strong {
-      color: #fff;
+      color: var(--text-main);
       display: block;
     }
 
+    /* ====== FAQ ====== */
     .faq-item {
       background: rgba(255, 255, 255, 0.02);
       padding: 16px 20px;
@@ -372,7 +373,7 @@
     }
 
     .faq-item strong {
-      color: #fff;
+      color: var(--text-main);
       display: block;
       margin-bottom: 4px;
     }
@@ -397,7 +398,7 @@
     }
 
     .faq-item code {
-      background: rgba(255, 255, 255, 0.06);
+      background: rgba(79, 140, 255, 0.12);
       padding: 2px 8px;
       border-radius: 4px;
       font-size: 0.85em;
@@ -405,25 +406,26 @@
     }
 
     .faq-item pre {
-      background: #0F0A1A;
+      background: #0f172a;
       padding: 12px 16px;
       border-radius: 8px;
       font-size: 0.8rem;
       overflow-x: auto;
       color: #a5b4fc;
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(79, 140, 255, 0.1);
       margin: 8px 0;
       max-height: 400px;
       overflow-y: auto;
     }
 
+    /* ====== GOLDEN BANNER ====== */
     .golden-banner {
-      background: linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(45, 212, 191, 0.10));
-      border: 2px solid #7C3AED;
+      background: linear-gradient(135deg, rgba(79, 140, 255, 0.12), rgba(45, 212, 191, 0.08));
+      border: 2px solid var(--primary);
       border-radius: var(--radius);
       padding: 28px 30px;
       margin-bottom: 35px;
-      box-shadow: 0 0 40px rgba(124, 58, 237, 0.15);
+      box-shadow: 0 0 40px rgba(79, 140, 255, 0.12);
       position: relative;
       overflow: hidden;
     }
@@ -434,7 +436,7 @@
       left: -50%;
       width: 200%;
       height: 200%;
-      background: radial-gradient(circle at 30% 50%, rgba(124,58,237,0.08), transparent 60%);
+      background: radial-gradient(circle at 30% 50%, rgba(79, 140, 255, 0.08), transparent 60%);
       animation: pulseGlow 4s ease-in-out infinite;
       pointer-events: none;
     }
@@ -463,7 +465,7 @@
 
     .golden-banner .header-row h3 {
       margin: 0;
-      color: #7C3AED;
+      color: var(--primary);
       font-size: 1.8rem;
       border: none;
       padding: 0;
@@ -486,11 +488,11 @@
       background: rgba(255,255,255,0.04);
       padding: 14px 18px;
       border-radius: var(--radius-sm);
-      border-left: 3px solid #7C3AED;
+      border-left: 3px solid var(--primary);
     }
 
     .feature-grid-mini div strong {
-      color: #fff;
+      color: var(--text-main);
       display: block;
     }
     .feature-grid-mini div .desc {
@@ -498,6 +500,7 @@
       color: var(--text-muted);
     }
 
+    /* ====== TUTORIAL LIST ====== */
     .tutorial-list {
       list-style: none;
       padding: 0;
@@ -516,7 +519,7 @@
     .tutorial-list li:hover {
       background: rgba(255, 255, 255, 0.05);
       transform: translateY(-2px);
-      border-color: rgba(255, 255, 255, 0.08);
+      border-color: rgba(79, 140, 255, 0.15);
     }
 
     .tutorial-list a {
@@ -560,37 +563,7 @@
       font-weight: 700 !important;
     }
 
-    img.preview-img {
-      max-width: 60%;
-      height: auto;
-      border-radius: var(--radius);
-      margin: 1.5em auto;
-      display: block;
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      box-shadow: 0 4px 20px var(--shadow);
-    }
-
-    footer {
-      margin-top: 50px;
-      text-align: center;
-      color: var(--text-dim);
-      padding: 20px;
-      border-top: 1px solid var(--border);
-      background: #0f0a1a;
-      border-top: 2px solid #2d1b4e;
-    }
-
-    footer a {
-      color: var(--text-muted);
-      text-decoration: none;
-      transition: var(--transition);
-    }
-
-    footer a:hover {
-      color: #fff;
-      text-decoration: underline;
-    }
-
+    /* ====== HERO ====== */
     .hero-subline {
       font-size: 1.05rem;
       color: #cbd5e1;
@@ -656,7 +629,7 @@
     }
 
     .hero-arrow {
-      color: #a78bfa;
+      color: var(--primary-light);
       font-size: 1.3rem;
       font-weight: 700;
     }
@@ -672,16 +645,23 @@
       font-size: 0.9rem;
     }
 
-    .quick-demo {
-      background: linear-gradient(145deg, #111827, #172033);
-      border-left: 5px solid #2dd4bf;
-      border-right: 1px solid rgba(45,212,191,0.18);
+    .trust-row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 14px 24px;
+      margin-top: 22px;
+      color: #94a3b8;
+      font-size: 0.85rem;
     }
 
-    .quick-demo h2 {
-      color: #fff;
+    .trust-row span::before {
+      content: "✓ ";
+      color: #4ade80;
+      font-weight: 800;
     }
 
+    /* ====== DEMO PHONE ====== */
     .motion-demo {
       display: grid;
       grid-template-columns: 0.9fr 1.1fr;
@@ -695,7 +675,7 @@
       align-items: center;
       justify-content: center;
       position: relative;
-      background: radial-gradient(circle at center, rgba(124,58,237,0.18), transparent 62%);
+      background: radial-gradient(circle at center, rgba(79,140,255,0.18), transparent 62%);
       border-radius: 18px;
     }
 
@@ -738,7 +718,7 @@
     .motion-arrow {
       position: absolute;
       font-size: 2rem;
-      color: #a78bfa;
+      color: var(--primary-light);
     }
 
     .motion-arrow.left { left: 8%; top: 45%; }
@@ -771,23 +751,7 @@
       color: #2dd4bf;
     }
 
-    .trust-row {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 14px 24px;
-      margin-top: 22px;
-      color: #94a3b8;
-      font-size: 0.85rem;
-    }
-
-    .trust-row span::before {
-      content: "✓ ";
-      color: #4ade80;
-      font-weight: 800;
-    }
-
-    /* ===== CAROUSEL - FIXED ===== */
+    /* ====== CAROUSEL ====== */
     .carousel-container {
       position: relative;
       max-width: 100%;
@@ -795,7 +759,7 @@
       overflow: hidden;
       margin: 1.5em auto;
       box-shadow: 0 4px 20px var(--shadow);
-      border: none; 
+      border: none;
       background: transparent;
     }
 
@@ -807,17 +771,17 @@
     .carousel-slide {
       min-width: 100%;
       box-sizing: border-box;
-      padding: 0;  
+      padding: 0;
       margin: 0;
     }
 
     .carousel-slide img {
       width: 35%;
-      height: auto;         
+      height: auto;
       display: block;
-      border-radius: 0;     
-      object-fit: contain;  
-      background: #0F0A1A;  
+      border-radius: 0;
+      object-fit: contain;
+      background: #0F172A;
     }
 
     .carousel-indicators {
@@ -841,12 +805,34 @@
     }
 
     .carousel-dot.active {
-      background: #7C3AED;
-      border-color: #7C3AED;
-      box-shadow: 0 0 12px rgba(124, 58, 237, 0.6);
+      background: var(--primary);
+      border-color: var(--primary);
+      box-shadow: 0 0 12px rgba(79, 140, 255, 0.6);
     }
 
-    /* ===== RESPONSIVE ===== */
+    /* ====== FOOTER ====== */
+    footer {
+      margin-top: 50px;
+      text-align: center;
+      color: var(--text-dim);
+      padding: 20px;
+      border-top: 1px solid var(--border);
+      background: #0f172a;
+      border-top: 2px solid #1a2a4a;
+    }
+
+    footer a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    footer a:hover {
+      color: var(--primary-light);
+      text-decoration: underline;
+    }
+
+    /* ====== RESPONSIVE ====== */
     @media (max-width: 700px) {
       header {
         padding: 60px 20px;
@@ -877,7 +863,7 @@
         position: sticky;
         top: 0;
         z-index: 1000;
-        background: rgba(15, 10, 26, 0.95);
+        background: rgba(15, 23, 42, 0.95);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
       }
@@ -892,7 +878,7 @@
       }
 
       nav a:hover {
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(79, 140, 255, 0.15);
       }
 
       main {
@@ -937,16 +923,12 @@
         font-size: 1.3em;
       }
 
-      img.preview-img {
-        max-width: 95%;
-      }
-
       .golden-banner .header-row h3 {
         font-size: 1.3rem;
       }
 
       .carousel-slide img {
-        height: auto; /* همیشه auto برای نمایش کامل */
+        height: auto;
       }
     }
 
@@ -1437,10 +1419,10 @@
             <div style="border-left-color:#00bcd4;"><strong style="color:#4dd0e1;">🎨 Custom UI</strong><span class="desc">Full HTML/CSS/JS freedom</span></div>
           </div>
 
-          <div style="background:rgba(0,0,0,0.3); border-radius:var(--radius-sm); padding:16px 20px; border:1px solid rgba(124,58,237,0.2);">
+          <div style="background:rgba(0,0,0,0.3); border-radius:var(--radius-sm); padding:16px 20px; border:1px solid rgba(79,140,255,0.2);">
             <p style="margin:0; color:var(--text);">
               <strong>👉 Ready to build?</strong>
-              <a href="https://soifgo.github.io/soifgo/tutorials/send_bluetooth_html/html_guide_1.html" target="_blank" style="color:#7C3AED; font-weight:bold; text-decoration:underline;">
+              <a href="https://soifgo.github.io/soifgo/tutorials/send_bluetooth_html/html_guide_1.html" target="_blank" style="color:var(--primary); font-weight:bold; text-decoration:underline;">
                 Start with the Complete HTML + Bluetooth + Sensors Tutorial
               </a>
               <span style="color:var(--text-muted); font-size:0.9rem; display:block; margin-top:4px;">
@@ -1468,18 +1450,18 @@
         <p><strong>No</strong> for Bluetooth — it works offline. <strong>Yes</strong> for MQTT and HTTP (you need Wi-Fi or mobile data).</p>
       </div>
 
-      <h3 style="margin-top:1.8rem; color:#7C3AED; border-bottom:1px solid rgba(124,58,237,0.2); padding-bottom:5px;">
+      <h3 style="margin-top:1.8rem; color:var(--primary); border-bottom:1px solid rgba(79,140,255,0.2); padding-bottom:5px;">
         ⚡ The Golden Feature: WebView + Bluetooth + Sensors
       </h3>
 
-      <div class="faq-item" style="border-left:4px solid #7C3AED; background:rgba(124,58,237,0.05);">
+      <div class="faq-item" style="border-left:4px solid var(--primary); background:rgba(79,140,255,0.05);">
         <strong>🔑 How do I build a complete HTML page with Bluetooth Send/Receive AND Sensors?</strong>
         <p>
           This is the <strong>most powerful feature of SoifGo</strong>. You create an offline HTML file with JavaScript and run it inside WebView. Through
           <code>window.soifgo.CallSub()</code>, you get access to ALL of SoifGo's capabilities:
         </p>
 
-        <div style="background:#0F0A1A; border-radius:8px; padding:14px 18px; margin:12px 0; border:1px solid rgba(255,255,255,0.06);">
+        <div style="background:#0f172a; border-radius:8px; padding:14px 18px; margin:12px 0; border:1px solid rgba(79,140,255,0.1);">
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px 20px; font-size:0.9rem;">
             <div><span style="color:#64b5f6;">📤 Send Bluetooth:</span> <code style="color:#a5b4fc; font-size:0.8rem;">window.soifgo.CallSub('html_bluetooth_rx', true, 'text')</code></div>
             <div><span style="color:#81c784;">📥 Receive Bluetooth:</span> <code style="color:#a5b4fc; font-size:0.8rem;">html_bluetooth_tx(data)</code> function</div>
@@ -1494,7 +1476,7 @@
           <strong>✨ Result:</strong> A fully custom HTML/CSS/JS interface that simultaneously communicates via Bluetooth and displays real-time sensor data — <strong>all offline, all in one page</strong>.
         </p>
         <p style="margin-top:6px;">
-          👉 <a href="https://soifgo.github.io/soifgo/tutorials/send_bluetooth_html/html_guide_1.html" target="_blank" style="color:#7C3AED; font-weight:bold;">
+          👉 <a href="https://soifgo.github.io/soifgo/tutorials/send_bluetooth_html/html_guide_1.html" target="_blank" style="color:var(--primary); font-weight:bold;">
             Full Tutorial with Complete Working Code
           </a>
         </p>
@@ -1577,31 +1559,31 @@ window.html_sensor_magno = html_sensor_magno;</pre>
   &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
   &lt;title&gt;Bluetooth + Sensors Demo&lt;/title&gt;
 &lt;/head&gt;
-&lt;body style="font-family:sans-serif; padding:20px; background:#0F0A1A; color:#fff;"&gt;
+&lt;body style="font-family:sans-serif; padding:20px; background:#0F172A; color:#fff;"&gt;
   &lt;h2&gt;⚡ Bluetooth + Sensors&lt;/h2&gt;
 
   &lt;!-- Send Section --&gt;
-  &lt;div style="background:#1a1a2e; padding:15px; border-radius:8px; margin:10px 0;"&gt;
+  &lt;div style="background:#1E293B; padding:15px; border-radius:8px; margin:10px 0;"&gt;
     &lt;h3&gt;📤 Send Command&lt;/h3&gt;
     &lt;input type="text" id="cmdInput" placeholder="Enter command..." style="padding:10px; width:70%; border-radius:6px; border:none;"&gt;
-    &lt;button onclick="sendCommand()" style="padding:10px 25px; background:#2196f3; color:white; border:none; border-radius:6px; cursor:pointer;"&gt;Send&lt;/button&gt;
+    &lt;button onclick="sendCommand()" style="padding:10px 25px; background:#4f8cff; color:white; border:none; border-radius:6px; cursor:pointer;"&gt;Send&lt;/button&gt;
   &lt;/div&gt;
 
   &lt;!-- Receive Section --&gt;
-  &lt;div style="background:#1a1a2e; padding:15px; border-radius:8px; margin:10px 0;"&gt;
+  &lt;div style="background:#1E293B; padding:15px; border-radius:8px; margin:10px 0;"&gt;
     &lt;h3&gt;📥 Bluetooth Data&lt;/h3&gt;
-    &lt;div id="btOutput" style="background:#0a0a1a; padding:15px; border-radius:6px; min-height:60px; font-family:monospace; color:#4caf50;"&gt;
+    &lt;div id="btOutput" style="background:#0F172A; padding:15px; border-radius:6px; min-height:60px; font-family:monospace; color:#4caf50;"&gt;
       Waiting for data...
     &lt;/div&gt;
   &lt;/div&gt;
 
   &lt;!-- Sensors Section --&gt;
-  &lt;div style="background:#1a1a2e; padding:15px; border-radius:8px; margin:10px 0;"&gt;
+  &lt;div style="background:#1E293B; padding:15px; border-radius:8px; margin:10px 0;"&gt;
     &lt;h3&gt;📱 Phone Sensors&lt;/h3&gt;
-    &lt;div id="sensorLight" style="background:#0a0a1a; padding:10px; border-radius:6px; margin:5px 0; color:#ffb74d;"&gt;💡 Light: waiting...&lt;/div&gt;
-    &lt;div id="sensorMoveX" style="background:#0a0a1a; padding:10px; border-radius:6px; margin:5px 0; color:#f06292;"&gt;📳 Move X: waiting...&lt;/div&gt;
-    &lt;div id="sensorMoveY" style="background:#0a0a1a; padding:10px; border-radius:6px; margin:5px 0; color:#f06292;"&gt;📳 Move Y: waiting...&lt;/div&gt;
-    &lt;div id="sensorMagneto" style="background:#0a0a1a; padding:10px; border-radius:6px; margin:5px 0; color:#ce93d8;"&gt;🧲 Magneto: waiting...&lt;/div&gt;
+    &lt;div id="sensorLight" style="background:#0F172A; padding:10px; border-radius:6px; margin:5px 0; color:#ffb74d;"&gt;💡 Light: waiting...&lt;/div&gt;
+    &lt;div id="sensorMoveX" style="background:#0F172A; padding:10px; border-radius:6px; margin:5px 0; color:#f06292;"&gt;📳 Move X: waiting...&lt;/div&gt;
+    &lt;div id="sensorMoveY" style="background:#0F172A; padding:10px; border-radius:6px; margin:5px 0; color:#f06292;"&gt;📳 Move Y: waiting...&lt;/div&gt;
+    &lt;div id="sensorMagneto" style="background:#0F172A; padding:10px; border-radius:6px; margin:5px 0; color:#ce93d8;"&gt;🧲 Magneto: waiting...&lt;/div&gt;
   &lt;/div&gt;
 
   &lt;script&gt;
@@ -1654,7 +1636,7 @@ window.html_sensor_magno = html_sensor_magno;</pre>
           <strong>🎯 Copy this code, save as <code>demo.html</code>, place it in SoifGo's folder, and run it!</strong>
         </p>
         <p style="margin-top:4px;">
-          👉 <a href="https://soifgo.github.io/soifgo/tutorials/send_bluetooth_html/html_guide_1.html" target="_blank" style="color:#7C3AED; font-weight:bold;">
+          👉 <a href="https://soifgo.github.io/soifgo/tutorials/send_bluetooth_html/html_guide_1.html" target="_blank" style="color:var(--primary); font-weight:bold;">
             See the full tutorial with step-by-step explanations
           </a>
         </p>
@@ -1709,7 +1691,7 @@ window.html_sensor_magno = html_sensor_magno;</pre>
         <p>Use the visual editor: add buttons and seek bars, then configure their properties (size, position, colour, text, behaviour) directly from the app. You can assign actions like "send Bluetooth data", "open another page", "change a seek bar value", or "execute a JavaScript function". No coding required.</p>
       </div>
 
-      <div class="faq-item" style="border-left:4px solid #7C3AED; background:rgba(124,58,237,0.04);">
+      <div class="faq-item" style="border-left:4px solid var(--primary); background:rgba(79,140,255,0.04);">
         <strong>🎨 Can I use HTML/CSS/JS to create a fully custom interface with Bluetooth and sensors?</strong>
         <p>
           <strong>Yes — and this is the most powerful feature of SoifGo!</strong> You're not limited to pre-built buttons. You can:
@@ -1725,7 +1707,7 @@ window.html_sensor_magno = html_sensor_magno;</pre>
           <strong>Practical example:</strong> Build an HTML page with 4 directional buttons to control a robot, a slider for speed control, receive ultrasonic sensor data via Bluetooth, and display it on screen — <strong>all in one simple HTML file</strong>.
         </p>
         <p>
-          👉 <a href="https://soifgo.github.io/soifgo/tutorials/send_bluetooth_html/html_guide_1.html" target="_blank" style="color:#7C3AED; font-weight:bold;">
+          👉 <a href="https://soifgo.github.io/soifgo/tutorials/send_bluetooth_html/html_guide_1.html" target="_blank" style="color:var(--primary); font-weight:bold;">
             Step-by-step tutorial with ready-to-use code
           </a>
         </p>
