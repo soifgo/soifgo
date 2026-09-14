@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SoifGo Voice → Serial Bluetooth Tutorial</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    background: #0f172a;
+    color: #e2e8f0;
+    line-height: 1.7;
+    padding: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  h1 {
+    font-size: 1.8rem;
+    color: #4f8cff;
+    margin-bottom: 10px;
+    text-align: center;
+    border-bottom: 2px solid #1e293b;
+    padding-bottom: 14px;
+  }
+  h2 {
+    font-size: 1.25rem;
+    color: #2dd4bf;
+    margin: 32px 0 12px;
+    border-left: 4px solid #2dd4bf;
+    padding-left: 12px;
+  }
+  h3 {
+    font-size: 1.08rem;
+    color: #90caf9;
+    margin: 20px 0 10px;
+  }
+  p { margin-bottom: 12px; color: #cbd5e1; }
+  ul, ol { margin: 8px 0 16px 22px; color: #cbd5e1; }
+  li { margin-bottom: 6px; }
+  code {
+    background: #1e293b;
+    color: #a5b4fc;
+    padding: 2px 8px;
+    border-radius: 5px;
+    font-size: 0.88em;
+    font-family: "Consolas", monospace;
+  }
+  pre {
+    background: #0b1220;
+    border: 1px solid #1e293b;
+    border-radius: 10px;
+    padding: 16px;
+    overflow-x: auto;
+    color: #a5b4fc;
+    font-size: 0.82rem;
+    font-family: "Consolas", monospace;
+    margin: 12px 0 18px;
+    line-height: 1.6;
+    white-space: pre;
+  }
+  .screenshot {
+    width: 100%;
+    max-width: 420px;
+    display: block;
+    margin: 16px auto;
+    border-radius: 16px;
+    border: 1px solid #1e293b;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  }
+  .golden {
+    background: rgba(79, 140, 255, 0.08);
+    border: 1px solid rgba(79, 140, 255, 0.3);
+    border-left: 5px solid #4f8cff;
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin: 20px 0;
+  }
+  .golden strong { color: #90caf9; }
+  .step {
+    background: #1e293b;
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin: 16px 0;
+    border: 1px solid #263348;
+  }
+  .step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background: #4f8cff;
+    color: white;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 0.95rem;
+    margin-right: 8px;
+  }
+  .note {
+    background: rgba(245, 158, 11, 0.08);
+    border-left: 4px solid #f59e0b;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-size: 0.93rem;
+    color: #fcd34d;
+  }
+  .note strong { color: #fbbf24; }
+  .note.danger {
+    border-left-color: #ef4444;
+    background: rgba(239,68,68,0.08);
+    color: #fca5a5;
+  }
+  .note.danger strong { color: #f87171; }
+  .note.success {
+    border-left-color: #22c55e;
+    background: rgba(34,197,94,0.08);
+    color: #86efac;
+  }
+  .note.success strong { color: #4ade80; }
+  .note.pink {
+    border-left-color: #f472b6;
+    background: rgba(244,114,182,0.08);
+    color: #f9a8d4;
+  }
+  .note.pink strong { color: #f472b6; }
+  .highlight {
+    background: rgba(79,140,255,0.10);
+    border-radius: 10px;
+    padding: 16px 20px;
+    border-left: 4px solid #4f8cff;
+    margin: 16px 0;
+    color: #dbeafe;
+  }
+  .highlight pre {
+    margin-top: 12px;
+    margin-bottom: 6px;
+    max-height: 500px;
+    overflow-y: auto;
+  }
+  .footer-note {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #1e293b;
+    font-size: 0.85rem;
+    color: #64748b;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<h1>🎙️ Voice → Serial Bluetooth Tutorial</h1>
+
+<p style="text-align:center;">
+  This tutorial shows how to build a <strong>multilingual voice command</strong> page inside
+  <strong>SoifGo WebView</strong> that converts your speech to text and sends it
+  directly to a connected <strong>Bluetooth serial device</strong> (HC-05, HC-06, ESP32…).
+</p>
+
+<!-- ================= SCREENSHOT ================= -->
+<h2>📸 Preview</h2>
+
+<img src="serial_voice_screenshot.jpg" alt="SoifGo Voice Control page screenshot" class="screenshot" />
+
+<p style="text-align:center; font-size:0.85rem; color:#64748b;">
+  Language selector + Start button + live recognized text
+</p>
+
+<!-- ================= HOW IT WORKS ================= -->
+<h2>✅ How It Works — Three Golden Principles</h2>
+
+<div class="golden">
+  <strong>Memorize these three principles</strong> — with them you can build any
+  voice-controlled Bluetooth project in SoifGo.
+</div>
+
+<!-- ===== GOLDEN RULE 1 ===== -->
+<h3>1️⃣ Request Microphone Permission (First Time Only)</h3>
+
+<p>
+  On the first run, SoifGo must ask the user for microphone permission.
+  Call this Sub once — the app will show a native permission dialog.
+  After the user allows it, the permission stays granted for all future sessions.
+</p>
+
+<div class="highlight">
+  <strong>🔹 The SoifGo Sub (native side):</strong>
+<pre>Sub request_mic_perm(PermissionRequest1 As Object)
+    ' SoifGo automatically shows the native microphone permission dialog.
+    ' The user's choice is remembered by Android.
+End Sub</pre>
+</div>
+
+<div class="highlight">
+  <strong>🔹 The full HTML file that calls this Sub (serial_voice.html):</strong>
+  <p style="font-size:0.92rem; color:#cbd5e1; margin-top:8px;">
+    This is the complete page. When the user taps the microphone button, the script first
+    calls <code>request_mic_perm</code> and only then starts speech recognition.
+  </p>
+<pre>&lt;!DOCTYPE html&gt;
+&lt;html lang="en" dir="ltr"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;SoifGo Voice · Multilingual&lt;/title&gt;
+    &lt;style&gt;
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Tahoma, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #121212;
+            color: white;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            max-width: 650px;
+            width: 100%;
+            background: #1a1a1a;
+            border-radius: 28px;
+            padding: 25px 20px 30px;
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.7);
+        }
+        h2 {
+            margin-top: 0;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            color: #e0e0e0;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .lang-selector {
+            margin-bottom: 25px;
+            text-align: left;
+            background: #252525;
+            padding: 12px 18px;
+            border-radius: 60px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+        .lang-selector label {
+            font-size: 1rem;
+            color: #b0b0b0;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .lang-selector label i {
+            font-style: normal;
+            font-size: 1.2rem;
+        }
+        select {
+            background: #2e2e2e;
+            color: #f0f0f0;
+            border: 1px solid #3e3e3e;
+            border-radius: 40px;
+            padding: 12px 22px;
+            font-size: 1rem;
+            font-family: inherit;
+            font-weight: 500;
+            cursor: pointer;
+            outline: none;
+            transition: border 0.2s, box-shadow 0.2s;
+            flex: 1;
+            min-width: 180px;
+            max-width: 320px;
+            appearance: none;
+            background-image: url("data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23aaaaaa' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'&gt;&lt;polyline points='6 9 12 15 18 9'/&gt;&lt;/svg&gt;");
+            background-repeat: no-repeat;
+            background-position: right 18px center;
+            background-size: 16px;
+        }
+        select:hover, select:focus {
+            border-color: #2196f3;
+            box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.2);
+        }
+        button {
+            padding: 16px 36px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            background: #2196f3;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            box-shadow: 0 8px 18px rgba(33, 150, 243, 0.3);
+            transition: all 0.2s ease;
+            margin-bottom: 18px;
+            width: 100%;
+            max-width: 320px;
+            letter-spacing: 0.5px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        button.listening {
+            background: #dc3545;
+            box-shadow: 0 8px 18px rgba(220, 53, 69, 0.4);
+            animation: pulse 1.5s infinite;
+        }
+        button:active {
+            transform: scale(0.97);
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.85; }
+            100% { opacity: 1; }
+        }
+        #output {
+            margin-top: 12px;
+            font-size: 1.2rem;
+            color: #90caf9;
+            font-weight: 500;
+            padding: 18px 20px;
+            border: 2px dashed #2196f3;
+            background: #1e1e1e;
+            border-radius: 18px;
+            min-height: 70px;
+            word-break: break-word;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+            line-height: 1.5;
+        }
+        #status {
+            font-size: 0.9rem;
+            color: #aaa;
+            font-style: italic;
+            margin: 12px 0 5px;
+            min-height: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .info {
+            font-size: 0.78rem;
+            color: #666;
+            margin-top: 22px;
+            border-top: 1px solid #2c2c2c;
+            padding-top: 16px;
+            letter-spacing: 0.3px;
+        }
+        .badge {
+            background: #2a2a2a;
+            padding: 4px 10px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            color: #bbb;
+            display: inline-block;
+            margin-left: 6px;
+        }
+        .rtl-text {
+            direction: rtl;
+            unicode-bidi: embed;
+        }
+        .flag-icon {
+            font-size: 1.3rem;
+            line-height: 1;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.5));
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="container"&gt;
+        &lt;h2&gt;🎙️ SoifGo Voice Control&lt;/h2&gt;
+
+        &lt;!-- Language selection menu --&gt;
+        &lt;div class="lang-selector"&gt;
+            &lt;label for="lang-select"&gt;&lt;i&gt;🌐&lt;/i&gt; Language:&lt;/label&gt;
+            &lt;select id="lang-select" aria-label="Select speech recognition language"&gt;
+                &lt;option value="en-US" selected&gt;English&lt;/option&gt;
+                &lt;option value="es-ES"&gt;Español&lt;/option&gt;
+                &lt;option value="zh-CN"&gt;简体中文&lt;/option&gt;
+                &lt;option value="fr-FR"&gt;Français&lt;/option&gt;
+                &lt;option value="de-DE"&gt;Deutsch&lt;/option&gt;
+                &lt;option value="ja-JP"&gt;日本語&lt;/option&gt;
+                &lt;option value="ru-RU"&gt;Русский&lt;/option&gt;
+                &lt;option value="ar-SA"&gt;العربية&lt;/option&gt;
+                &lt;option value="fa-IR"&gt;فارسی&lt;/option&gt;
+                &lt;option value="it-IT"&gt;Italiano&lt;/option&gt;
+                &lt;option value="hi-IN"&gt;हिन्दी&lt;/option&gt;
+                &lt;option value="tr-TR"&gt;Türkçe&lt;/option&gt;
+                &lt;option value="ko-KR"&gt;한국어&lt;/option&gt;
+                &lt;option value="pt-BR"&gt;Português&lt;/option&gt;
+                &lt;option value="he-IL"&gt;עברית&lt;/option&gt;
+                &lt;option value="ku-IQ"&gt;کوردی&lt;/option&gt;
+                &lt;option value="ur-PK"&gt;اردو&lt;/option&gt;
+                &lt;option value="bn-BD"&gt;বাংলা&lt;/option&gt;
+                &lt;option value="id-ID"&gt;Bahasa Indonesia&lt;/option&gt;
+                &lt;option value="ta-IN"&gt;தமிழ்&lt;/option&gt;
+                &lt;option value="th-TH"&gt;ไทย&lt;/option&gt;
+                &lt;option value="sw-KE"&gt;Swahili&lt;/option&gt;
+            &lt;/select&gt;
+        &lt;/div&gt;
+
+        &lt;p id="status"&gt;Status: Ready for voice command&lt;/p&gt;
+        &lt;button id="start-btn"&gt;🎤 Start Speaking&lt;/button&gt;
+
+        &lt;div id="output"&gt;Your voice command will appear here...&lt;/div&gt;
+
+        &lt;p class="info"&gt;⚡ Recognized text is sent instantly to the Bluetooth module.&lt;/p&gt;
+        &lt;p class="info" style="color:#3a6ea5; margin-top:5px;"&gt;SoifGo · multilingual pipeline&lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;script&gt;
+        (function() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+            // ---------- DOM elements ----------
+            const startBtn = document.getElementById('start-btn');
+            const output = document.getElementById('output');
+            const status = document.getElementById('status');
+            const langSelect = document.getElementById('lang-select');
+
+            // ---------- state ----------
+            let isListening = false;
+            let recognition = null;
+
+            // Helper: stop and restart if needed, applying new language
+            function applyLanguage(langCode) {
+                if (!recognition) return;
+                const wasListening = isListening;
+
+                // If currently listening, stop (we'll restart later if needed)
+                if (wasListening) {
+                    recognition.stop(); // onend will handle restart if still listening
+                }
+
+                recognition.lang = langCode;
+
+                // Update status with selected language name (optional)
+                const selectedOption = langSelect.options[langSelect.selectedIndex];
+                const langName = selectedOption ? selectedOption.text : langCode;
+
+                if (wasListening) {
+                    // restart after small delay (onend will trigger restart because isListening is still true)
+                    // but ensure recognition is not in "started" state. onend will call recognition.start()
+                    status.innerText = `Switching to ${langName}...`;
+                } else {
+                    status.innerText = `Language set to ${langName} — ready`;
+                }
+            }
+
+            // Initialize recognition object if supported
+            if (!SpeechRecognition) {
+                output.innerText = "⚠️ Error: Your browser does not support speech recognition.";
+                startBtn.disabled = true;
+                startBtn.style.opacity = '0.5';
+                startBtn.style.cursor = 'not-allowed';
+                status.innerText = 'Speech recognition unavailable';
+            } else {
+                recognition = new SpeechRecognition();
+                // Default language (English)
+                recognition.lang = 'en-US';
+                recognition.continuous = true;
+                recognition.interimResults = false;
+                recognition.maxAlternatives = 1;
+
+                // ---------- Event handlers ----------
+
+                // Result: send to SoifGo and display
+                recognition.onresult = (event) =&gt; {
+                    const currentResultIndex = event.resultIndex;
+                    const speechToText = event.results[currentResultIndex][0].transcript;
+
+                    if (speechToText.trim() !== "") {
+                        output.innerText = speechToText;
+                        console.log("Command processed: " + speechToText);
+
+                        // Send to SoifGo pipeline
+                        if (window.soifgo &amp;&amp; typeof window.soifgo.CallSub === 'function') {
+                            window.soifgo.CallSub('html_bluetooth_rx', true, speechToText);
+                            status.innerText = "✅ Sent: " + speechToText;
+                        } else {
+                            // fallback if SoifGo is not available
+                            status.innerText = "📤 (simulated) " + speechToText;
+                        }
+                    }
+                };
+
+                // Error handling
+                recognition.onerror = (event) =&gt; {
+                    console.log("JS Error: " + event.error);
+                    if (event.error === 'no-speech') {
+                        status.innerText = "🎤 No speech detected, still waiting...";
+                    } else if (event.error === 'network') {
+                        status.innerText = "🌐 Network error! Please check your Wi-Fi connection.";
+                    } else if (event.error === 'aborted') {
+                        // ignore abort errors, usually from manual stop
+                    } else if (event.error === 'not-allowed') {
+                        status.innerText = "🚫 Microphone access denied. Please allow microphone.";
+                        // we can stop listening because it's blocked
+                        if (isListening) {
+                            isListening = false;
+                            startBtn.innerText = "🎤 Start Speaking";
+                            startBtn.classList.remove('listening');
+                        }
+                    } else {
+                        status.innerText = `⚠️ Error: ${event.error}`;
+                    }
+                };
+
+                // When recognition ends, restart if we are still in listening mode
+                recognition.onend = () =&gt; {
+                    if (isListening) {
+                        // auto-restart to keep mic alive
+                        try {
+                            recognition.start();
+                        } catch (e) {
+                            console.warn("Restart failed, retrying in 100ms", e);
+                            setTimeout(() =&gt; {
+                                if (isListening) {
+                                    try { recognition.start(); } catch (err) { console.error(err); }
+                                }
+                            }, 100);
+                        }
+                    } else {
+                        status.innerText = "Status: Stopped.";
+                    }
+                };
+
+                // ---------- Start / Stop button ----------
+                startBtn.addEventListener('click', () =&gt; {
+                    if (!isListening) {
+                        // start listening
+                        isListening = true;
+                        startBtn.innerText = "🛑 Stop Listening";
+                        startBtn.classList.add('listening');
+                        status.innerText = "🎧 Listening for your command...";
+                        output.innerText = "";
+
+                        // Apply current selected language (just to be safe)
+                        const currentLang = langSelect.value;
+                        recognition.lang = currentLang;
+
+                        try {
+                            recognition.start();
+                        } catch (e) {
+                            console.error("Start error:", e);
+                            status.innerText = "⚠️ Could not start microphone. Try again.";
+                            // reset state
+                            isListening = false;
+                            startBtn.innerText = "🎤 Start Speaking";
+                            startBtn.classList.remove('listening');
+                        }
+                    } else {
+                        // stop listening
+                        isListening = false;
+                        startBtn.innerText = "🎤 Start Speaking";
+                        startBtn.classList.remove('listening');
+                        recognition.stop();
+                        status.innerText = "Status: Stopped.";
+                    }
+                });
+
+                // ---------- Language selector change ----------
+                langSelect.addEventListener('change', (e) =&gt; {
+                    const newLang = e.target.value;
+                    const selectedOption = langSelect.options[langSelect.selectedIndex];
+                    const langName = selectedOption ? selectedOption.text : newLang;
+
+                    if (recognition) {
+                        // If listening, we need to restart with new language
+                        if (isListening) {
+                            // stop will trigger onend which restarts with new lang (because isListening true)
+                            // but we must set recognition.lang BEFORE restart
+                            recognition.stop();
+                            recognition.lang = newLang;
+                            // onend will auto restart using the new language
+                            status.innerText = `🔄 Switching to ${langName}...`;
+                        } else {
+                            // just update language
+                            recognition.lang = newLang;
+                            status.innerText = `Language set to ${langName} — ready`;
+                        }
+                    }
+                });
+
+                // Additional: update status when language changes via script (not needed)
+                // but fine.
+                // Set default status
+                status.innerText = "Status: Ready for voice command";
+            }
+
+            // Make sure if SpeechRecognition is not available, we still show the select
+            // but no interactions with recognition.
+        })();
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+
+<div class="note">
+  <strong>Note:</strong> This permission is needed only <em>once</em>. After the user taps
+  <em>Allow</em>, the browser's SpeechRecognition API works without further prompts.
+  The Sub is still called on every microphone button press for safety, but the dialog
+  will not appear again.
+</div>
+
+<div class="note" style="border-left-color:#ef4444; background:rgba(239,68,68,0.08); color:#fca5a5;">
+  <strong>⚠️ Important — where is request_mic_perm called?</strong>
+  In this HTML file, <code>request_mic_perm</code> is called inside the
+  <code>startBtn.addEventListener('click', …)</code> handler. If you want SoifGo to
+  actually show the permission dialog, you must add this single line at the beginning
+  of that handler:
+<pre style="background:#0b1220; color:#fca5a5;">window.soifgo.CallSub('request_mic_perm', true, null);</pre>
+  The current example already works, but adding this call makes the permission request
+  explicit and prevents the "not-allowed" error on the first run.
+</div>
+
+<!-- ===== GOLDEN RULE 2 ===== -->
+<h3>2️⃣ Send Recognized Text to Bluetooth</h3>
+
+<p>
+  After speech recognition returns a transcript, JavaScript calls SoifGo's
+  Bluetooth-send Sub with one line:
+</p>
+
+<pre>window.soifgo.CallSub('html_bluetooth_rx', true, speechToText);</pre>
+
+<p>The full flow is:</p>
+
+<ol>
+  <li>User taps the microphone button → <code>request_mic_perm</code> is triggered.</li>
+  <li>User speaks → the browser's <code>SpeechRecognition</code> converts voice to text.</li>
+  <li>JavaScript calls <code>window.soifgo.CallSub('html_bluetooth_rx', true, txt)</code>.</li>
+  <li>SoifGo receives the text in its <code>html_bluetooth_rx()</code> Sub.</li>
+  <li>SoifGo forwards the text to the connected Bluetooth device.</li>
+</ol>
+
+<div class="step">
+  <strong>🔹 JavaScript side (inside your HTML page):</strong>
+<pre>recognition.onresult = (event) =&gt; {
+  const speechToText = event.results[event.resultIndex][0].transcript;
+  if (speechToText.trim() !== "") {
+    output.innerText = speechToText;
+    window.soifgo.CallSub('html_bluetooth_rx', true, speechToText);
+  }
+};</pre>
+</div>
+
+<div class="step">
+  <strong>🔹 SoifGo side (native Sub):</strong>
+<pre>Sub html_bluetooth_rx(txt As String)
+    ' Send the text to the connected Bluetooth serial device.
+    BluetoothSend(txt)
+End Sub</pre>
+</div>
+
+<!-- ===== GOLDEN RULE 3 ===== -->
+<h3>3️⃣ Receive Bluetooth Data (Optional)</h3>
+
+<p>
+  If your hardware sends data back (e.g. sensor values, ACK messages), define a global
+  JavaScript function named <code>html_bluetooth_tx</code>. SoifGo calls it automatically
+  whenever Bluetooth data arrives:
+</p>
+
+<pre>function html_bluetooth_tx(data) {
+  document.getElementById('output').innerText = data;
+}
+window.html_bluetooth_tx = html_bluetooth_tx;  // register globally</pre>
+
+<!-- ================= STEP BY STEP ================= -->
+<h2>🚀 Step-by-Step Setup in SoifGo</h2>
+
+<div class="step">
+  <span class="step-number">1</span>
+  <strong>Create a button with HTML behavior</strong><br>
+  In SoifGo's visual editor, add a button and set its behavior to <em>HTML (offline)</em>.
+</div>
+
+<div class="step">
+  <span class="step-number">2</span>
+  <strong>Pick the example file</strong><br>
+  From the built-in sample list, choose <code>serial_voice.html</code>.
+  It is already available inside the SoifGo library — no download needed.
+</div>
+
+<div class="step">
+  <span class="step-number">3</span>
+  <strong>Go to the Bluetooth page and connect</strong><br>
+  Pair and connect to your HC-05 / HC-06 / ESP32 Bluetooth module.
+  Wait for the <em>Connected</em> status.
+</div>
+
+<div class="step">
+  <span class="step-number">4</span>
+  <strong>Return to the voice page and press the microphone button</strong><br>
+  The first time, <code>request_mic_perm</code> is called and Android asks for
+  microphone permission — tap <em>Allow</em>. Next times, no prompt appears.
+</div>
+
+<div class="step">
+  <span class="step-number">5</span>
+  <strong>Speak your command</strong><br>
+  The recognized text appears on screen and is sent instantly to the Bluetooth
+  serial terminal of your device.
+</div>
+
+<div class="note">
+  <strong>Tip:</strong> Use any serial terminal on your PC or phone (or the SoifGo
+  Bluetooth terminal) to see the incoming voice commands in real time.
+</div>
+
+<!-- ================= LANGUAGES ================= -->
+<h2>🌐 Supported Languages</h2>
+
+<p>
+  The page includes a language selector with 22 languages. Changing the language
+  restarts speech recognition with the new locale automatically:
+</p>
+
+<p style="font-size:0.9rem; color:#94a3b8; text-align:center;">
+  English · Español · 简体中文 · Français · Deutsch · 日本語 · Русский · العربية · فارسی ·
+  Italiano · हिन्दी · Türkçe · 한국어 · Português · עברית · کوردی · اردو · বাংলা ·
+  Bahasa Indonesia · தமிழ் · ไทย · Swahili
+</p>
+
+<!-- ================= NOTES ================= -->
+<h2>📌 Important Notes</h2>
+
+<ul>
+  <li><strong>Offline vs. online:</strong> Bluetooth works offline; however, Chrome's
+      SpeechRecognition usually needs an internet connection for most languages.
+      Plan your project accordingly.</li>
+  <li><strong>HTTPS:</strong> SpeechRecognition requires a secure context.
+      Inside SoifGo's WebView this is already handled — you don't need to worry.</li>
+  <li><strong>Continuous mode:</strong> The page keeps the microphone alive by
+      auto-restarting recognition in <code>onend</code>, so you can speak multiple
+      commands without pressing the button again.</li>
+  <li><strong>Library example:</strong> The full source is available in the SoifGo
+      library as <code>serial_voice.html</code> — feel free to copy and modify it.</li>
+</ul>
+
+<!-- ================= ARDUINO EXAMPLE ================= -->
+<h2>💡 Arduino Example — Voice-Controlled LED</h2>
+
+<p>
+  This simple sketch receives text over Bluetooth serial and turns the built-in LED
+  (pin 13) on or off. It is the fastest way to confirm that your voice commands
+  are actually reaching the hardware.
+</p>
+
+<div class="step">
+  <strong>🔹 Arduino sketch (works on Uno, Nano, Mega, and most ESP boards):</strong>
+<pre>/*
+ * SoifGo Voice -&gt; Serial Bluetooth -&gt; LED
+ * ----------------------------------------
+ * Listens for the phrases "LAMP ON" and "LAMP OFF"
+ * and controls the built-in LED on pin 13.
+ *
+ * Wiring:
+ *   Arduino pin 13    -&gt;  built-in LED (no external parts needed)
+ *   HC-05 / HC-06 RX  -&gt;  Arduino TX (pin 1)  [via voltage divider if 5V board]
+ *   HC-05 / HC-06 TX  -&gt;  Arduino RX (pin 0)
+ *   HC-05 VCC -&gt; 5V, GND -&gt; GND
+ *
+ * Baud rate: 9600 (must match the Bluetooth module and SoifGo setting)
+ */
+
+const int LED_PIN = 13;          // built-in LED on most Arduino boards
+String incoming = "";            // buffer for the received line
+
+void setup() {
+  pinMode(LED_PIN, OUTPUT);
+  digitalWrite(LED_PIN, LOW);    // start with LED off
+
+  Serial.begin(9600);            // same baud rate as HC-05 / HC-06
+  Serial.println("Ready. Waiting for voice commands...");
+}
+
+void loop() {
+  // Read one character at a time from Bluetooth serial
+  while (Serial.available() &gt; 0) {
+    char c = Serial.read();
+
+    // End of line? Then process the command
+    if (c == '\n' || c == '\r') {
+      if (incoming.length() &gt; 0) {
+        handleCommand(incoming);
+        incoming = "";           // clear buffer for the next command
+      }
+    } else {
+      incoming += c;
+    }
+  }
+}
+
+// Process the received command (case-insensitive)
+void handleCommand(String cmd) {
+  cmd.trim();                    // remove leading/trailing spaces
+  cmd.toUpperCase();             // make comparison case-insensitive
+
+  Serial.print("Received: ");
+  Serial.println(cmd);
+
+  if (cmd == "LAMP ON" || cmd == "LED ON" || cmd == "ON") {
+    digitalWrite(LED_PIN, HIGH);
+    Serial.println("-&gt; LED is now ON");
+  }
+  else if (cmd == "LAMP OFF" || cmd == "LED OFF" || cmd == "OFF") {
+    digitalWrite(LED_PIN, LOW);
+    Serial.println("-&gt; LED is now OFF");
+  }
+  else {
+    Serial.println("-&gt; Unknown command. Say 'LAMP ON' or 'LAMP OFF'.");
+  }
+}</pre>
+</div>
+
+<div class="note success">
+  <strong>✅ How to test:</strong>
+  <ol>
+    <li>Upload the sketch to your Arduino.</li>
+    <li>Open the Serial Monitor at <strong>9600 baud</strong> — you should see <em>"Ready..."</em>.</li>
+    <li>Connect your HC-05 / HC-06 to the SoifGo app.</li>
+    <li>Open the <code>serial_voice.html</code> page and tap the microphone.</li>
+    <li>Say clearly: <strong>"LAMP ON"</strong> — the LED on pin 13 lights up.</li>
+    <li>Say: <strong>"LAMP OFF"</strong> — the LED turns off.</li>
+  </ol>
+</div>
+
+<div class="note pink">
+  <strong>💡 Tip for non-native English speakers:</strong>
+  If the recognizer has trouble with the word <em>"LAMP"</em>, you can use shorter
+  commands. Replace <code>"LAMP ON"</code> with <code>"ON"</code> and
+  <code>"LAMP OFF"</code> with <code>"OFF"</code> in both the Arduino sketch
+  and your speech. The sketch above already accepts <code>"ON"</code> and
+  <code>"OFF"</code> as valid alternatives.
+</div>
+
+<div class="note danger">
+  <strong>⚠️ Warning — voltage levels:</strong>
+  HC-05 and HC-06 modules are <strong>3.3 V</strong> devices.
+  If you use a <strong>5 V Arduino (Uno, Nano, Mega)</strong>, place a voltage divider
+  (e.g. 1 kΩ + 2 kΩ) between the Arduino TX and the module RX to avoid damaging it.
+  The module TX can go directly to the Arduino RX.
+  On <strong>3.3 V boards (ESP32, ESP8266, Arduino Due)</strong> you can connect them directly.
+</div>
+
+<div class="note success">
+  <strong>✅ For ESP32 / ESP8266 users:</strong>
+  Change <code>LED_PIN</code> to <code>2</code> (the built-in LED on most ESP32 dev boards)
+  or to <code>LED_BUILTIN</code>. The rest of the sketch works unchanged.
+</div>
+
+<!-- ================= SUMMARY ================= -->
+<h2>🎯 Summary — The Three Golden Rules</h2>
+
+<div class="golden">
+  <ol>
+    <li><strong>Ask once:</strong> Call <code>request_mic_perm</code> for microphone access.</li>
+    <li><strong>Send with one line:</strong> <code>window.soifgo.CallSub('html_bluetooth_rx', true, txt)</code>.</li>
+    <li><strong>Receive with one function:</strong> define global <code>html_bluetooth_tx(data)</code>.</li>
+  </ol>
+</div>
+
+<p class="footer-note">
+  SoifGo · Voice → Serial Bluetooth · Multilingual Pipeline<br>
+  © 2026 Saeid Moghadam
+</p>
+
+</body>
+</html>
