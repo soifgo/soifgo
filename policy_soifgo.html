@@ -22,6 +22,12 @@
         a {
             color: #58a6ff;
         }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
         .footer {
             margin-top: 40px;
             padding-top: 20px;
@@ -34,27 +40,33 @@
 <body>
 
     <h1>🔒 Privacy Policy for Soifgo</h1>
-    <p><strong>Last Updated:</strong> June 25, 2026</p>
+    <p><strong>Last Updated:</strong> September 14, 2026</p>
 
-    <h2>1. Information Collection</h2>
-    <p>Soifgo does <strong>not</strong> collect, store, or transmit any personal or sensitive user data. The application operates entirely offline and does not use any analytics, tracking, or advertising services.</p>
+    <h2>1. Information Collection and Use</h2>
+    <p>Saeid Moghadam built the <strong>Soifgo</strong> application as a customizable Android tool designed for Bluetooth serial communication, MQTT IoT interaction, seekbar controls, programmable note command playback, and direct hardware command tools. The application operates primarily locally on your device and does not use any third-party analytics, tracking, or advertising services.</p>
 
-    <h2>2. Data Usage</h2>
-    <p>The app processes only user-created project files, which are stored locally on the device. No data is ever sent to external servers or third parties.</p>
+    <h2>2. Data Usage and Local Storage</h2>
+    <p>The app processes and saves user-created project files, custom button layouts, and configurations locally on your device. No personal identification information (such as your name, email, or address) is ever collected, stored, or transmitted to external servers.</p>
 
-    <h2>3. Required Permissions</h2>
+    <h2>3. Required Permissions and Features</h2>
     <ul>
-        <li><strong>Storage:</strong> To save and load project files, themes, and exported assets.</li>
-        <li><strong>Internet (optional):</strong> Only if you choose to sync projects across devices (if this feature is implemented).</li>
+        <li><strong>Storage:</strong> Used solely for saving and loading user-defined workspace configurations, themes, exported data files, and logs locally on the device.</li>
+        <li><strong>Bluetooth & Location (if applicable by Android system requirements for BLE):</strong> Used strictly to discover, pair, and communicate with nearby hardware modules and microcontrollers.</li>
+        <li><strong>Microphone (Audio Recording):</strong> Used exclusively on-device and in real-time when you activate the <strong>Voice-to-Serial</strong> feature. The audio input is processed locally to convert spoken words into serial data commands sent directly to your connected hardware. <strong>No audio recordings, voice samples, or speech data are ever stored, recorded, or transmitted to any external server or third party.</strong></li>
+        <li><strong>SMS (Short Message Service):</strong> Used solely to allow you (the user) to send text commands directly from the app to external hardware devices such as <strong>SMS Controllers</strong> (or optionally to communicate with peers). <strong>The app initiates SMS sending strictly under your direct control and explicit action; it cannot and does not read, receive, or harvest incoming text messages, nor does it operate in the background without your knowledge. Furthermore, WebView interactions are isolated to prevent any unintended background actions.</strong></li>
+        <li><strong>Internet (optional):</strong> Used only if you choose to interact with custom user-configured external MQTT brokers.</li>
     </ul>
 
     <h2>4. Data Security</h2>
-    <p>Since no data is collected or transmitted, there is no risk of personal data exposure. All project files remain solely on the user's device.</p>
+    <p>We value your trust in providing data for local utility. Since no personal data, audio recordings, or private messages are harvested or transmitted externally, there is no risk of personal data exposure. All configurations and temporary processes remain entirely under your control on your device.</p>
 
     <h2>5. Third-Party Links</h2>
-    <p>The app may contain links to external sites (e.g., download pages). These sites have their own privacy policies, and we are not responsible for their practices.</p>
+    <p>The app may contain links to external sites or custom hardware documentation. These sites have their own privacy policies, and we are not responsible for their practices.</p>
 
-    <h2>6. Contact</h2>
+    <h2>6. Changes to This Privacy Policy</h2>
+    <p>This Privacy Policy may be updated from time to time. You are advised to review this page periodically for any changes, which become effective immediately after being posted.</p>
+
+    <h2>7. Contact</h2>
     <p>For any privacy concerns or questions, please contact:</p>
     <ul>
         <li><strong>Developer:</strong> Saeid Moghadam</li>
