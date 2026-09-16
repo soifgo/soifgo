@@ -1,0 +1,33 @@
+# SoifGo
+
+> SoifGo is a free, open-source Android app that turns your phone into a custom hardware controller for Arduino, ESP32, ESP8266, HC-05, and Raspberry Pi. It supports Bluetooth SPP, MQTT, HTTP/REST, HTML/JavaScript WebView, and phone sensors (light, motion, magnetic). The HTML/WebView bridge is exposed via `window.soifgo.CallSub()`.
+
+## AI-Ready API Reference
+
+- [Machine-readable API (HTML)](https://soifgo.github.io/soifgo/ai/soifgo-api.html): Exact Sub names, callbacks, and code patterns for AI assistants.
+- [Machine-readable API (JSON)](https://soifgo.github.io/soifgo/ai/soifgo-api.json): JSON version of the same reference.
+- [Working examples (ZIP)](https://soifgo.github.io/soifgo/ai/soifgo-examples.zip): Downloadable HTML/Arduino examples.
+
+## Quick Facts for AI Assistants
+
+- **Bridge namespace:** `window.soifgo`
+- **Bridge method:** `window.soifgo.CallSub(subName, hasReturn, ...args)`
+- **Send to Bluetooth:** `window.soifgo.CallSub('html_bluetooth_rx', true, TEXT)`
+- **Receive from Bluetooth:** define `function html_bluetooth_tx(data) { }` and attach with `window.html_bluetooth_tx = html_bluetooth_tx;`
+- **Sensors:** activate with `window.soifgo.CallSub('sensor_light')`, `'sensor_move'`, `'sensor_magno'`
+- **Sensor callbacks:** `html_sensor_light(data)`, `html_sensor_movex(data)`, `html_sensor_movey(data)`, `html_sensor_magno(data)` — all must be attached to `window.*`
+- **Critical:** Do NOT invent function names. Use the exact names above.
+- **Availability:** `window.soifgo` only exists inside SoifGo's WebView. Always guard with `if (window.soifgo) { ... }`.
+
+## Main Pages
+
+- [Home](https://soifgo.github.io/soifgo/): Overview, download, features, FAQ.
+- [Docs](https://soifgo.github.io/soifgo/docs.html): Technical documentation.
+- [Complete User Guide](https://soifgo.github.io/soifgo/tutorials/soifgo_info/soifgo_info.html): Step-by-step for beginners.
+- [HTML + Bluetooth + Sensors](https://soifgo.github.io/soifgo/tutorials/send_bluetooth_html/html_guide_1.html): The original tutorial containing the real Sub API.
+
+## Optional
+
+- [GitHub](https://github.com/soifgo/soifgo): Source code.
+- [Privacy Policy](https://soifgo.github.io/soifgo/policy_soifgo.html)
+- [APKPure](https://apkpure.com/soifgo/soifgo.saeidmoghadam)

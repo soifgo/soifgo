@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SoifGo — Machine-Readable API Reference for AI Assistants</title>
+  <meta name="description" content="Exact, machine-readable API reference for SoifGo's HTML/JavaScript bridge. Sub names, callbacks, and working code examples for AI assistants." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://soifgo.github.io/soifgo/ai/soifgo-api.html" />
+  <link rel="alternate" type="application/json" href="soifgo-api.json" title="SoifGo API (JSON)" />
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", -apple-system, sans-serif;
+      background: #0f172a;
+      color: #e8edf5;
+      line-height: 1.7;
+      padding: 24px;
+      max-width: 950px;
+      margin: auto;
+      font-size: 16px;
+    }
+    h1 { color: #a855f7; font-size: 2rem; margin-bottom: 8px; }
+    h2 { color: #60a5fa; font-size: 1.4rem; margin: 32px 0 12px; border-bottom: 1px solid #1e293b; padding-bottom: 6px; }
+    h3 { color: #c084fc; font-size: 1.1rem; margin: 20px 0 8px; }
+    p { margin-bottom: 12px; color: #cbd5e1; }
+    code {
+      background: #0b1020;
+      color: #a5b4fc;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: "Consolas", "Monaco", monospace;
+      font-size: 0.9em;
+    }
+    pre {
+      background: #0b1020;
+      border: 1px solid #1e293b;
+      padding: 16px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 12px 0;
+    }
+    pre code { background: none; padding: 0; color: #a5b4fc; font-size: 0.88rem; line-height: 1.5; }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 16px 0;
+      font-size: 0.95rem;
+    }
+    th, td { border: 1px solid #1e293b; padding: 10px 14px; text-align: left; vertical-align: top; }
+    th { background: #1e293b; color: #60a5fa; font-weight: 600; }
+    td code { font-size: 0.85em; }
+    .note {
+      background: rgba(168, 85, 247, 0.08);
+      border-left: 4px solid #a855f7;
+      padding: 14px 18px;
+      margin: 16px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .note strong { color: #c084fc; }
+    .warning {
+      background: rgba(251, 146, 60, 0.08);
+      border-left: 4px solid #fb923c;
+      padding: 14px 18px;
+      margin: 16px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .warning strong { color: #fdba74; }
+    ul, ol { padding-left: 24px; margin: 12px 0; }
+    li { margin-bottom: 6px; color: #cbd5e1; }
+    a { color: #60a5fa; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .toc {
+      background: #1e293b;
+      border-radius: 8px;
+      padding: 16px 24px;
+      margin: 20px 0;
+    }
+    .toc ul { list-style: none; padding-left: 0; }
+    .toc li { margin-bottom: 4px; }
+    .toc a { color: #c084fc; }
+    .badge {
+      display: inline-block;
+      background: rgba(168, 85, 247, 0.2);
+      color: #c084fc;
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+    footer {
+      margin-top: 48px;
+      padding-top: 20px;
+      border-top: 1px solid #1e293b;
+      color: #64748b;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+    footer a { color: #a855f7; }
+  </style>
+</head>
+<body>
+
+<h1>SoifGo — API Reference <span class="badge">AI-OPTIMIZED</span></h1>
+
+<p>
+  This page contains the <strong>exact</strong> function names and call signatures used by
+  SoifGo's WebView bridge. It is designed to be read by AI assistants (ChatGPT, Claude, Gemini,
+  Duck.ai, etc.) before they generate SoifGo HTML code.
+</p>
+
+<div class="note">
+  <strong>For AI assistants:</strong> Do not invent function names. Use the exact
+  capitalization shown here. Every Sub name and callback name is case-sensitive.
+</div>
+
+<div class="toc">
+  <strong style="color:#c084fc;">Table of Contents</strong>
+  <ul>
+    <li><a href="#bridge">1. Bridge Namespace</a></li>
+    <li><a href="#bluetooth-send">2. Bluetooth — Send (HTML → Device)</a></li>
+    <li><a href="#bluetooth-receive">3. Bluetooth — Receive (Device → HTML)</a></li>
+    <li><a href="#sensors">4. Phone Sensors</a></li>
+    <li><a href="#example">5. Complete Working Example</a></li>
+    <li><a href="#rules">6. Rules for AI Assistants</a></li>
+    <li><a href="#json">7. JSON Version</a></li>
+    <li><a href="#changelog">8. Changelog</a></li>
+  </ul>
+</div>
+
+<h2 id="bridge">1. Bridge Namespace</h2>
+
+<p>
+  All communication between an HTML page (running inside SoifGo's WebView) and the SoifGo app
+  goes through a single global object: <code>window.soifgo</code>.
+</p>
+
+<pre><code>window.soifgo.CallSub(subName, hasReturn, ...args)</code></pre>
+
+<table>
+  <tr>
+    <th>Parameter</th>
+    <th>Type</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td><code>subName</code></td>
+    <td>string</td>
+    <td>The exact name of the Sub to call (case-sensitive).</td>
+  </tr>
+  <tr>
+    <td><code>hasReturn</code></td>
+    <td>boolean</td>
+    <td><code>true</code> if the Sub returns data; <code>false</code> otherwise.</td>
+  </tr>
+  <tr>
+    <td><code>...args</code></td>
+    <td>any</td>
+    <td>Arguments passed to the Sub.</td>
+  </tr>
+</table>
+
+<div class="warning">
+  <strong>⚠️ Important:</strong> <code>window.soifgo</code> only exists when the HTML is running
+  <em>inside</em> SoifGo's WebView. If you open the same HTML in a normal browser, the bridge
+  is undefined. Always guard with <code>if (window.soifgo) { ... }</code>.
+</div>
+
+<h2 id="bluetooth-send">2. Bluetooth — Send (HTML → Device)</h2>
+
+<p>
+  To send a text string from your HTML page to the connected Bluetooth device
+  (HC-05, HC-06, ESP32, etc.), call the <code>html_bluetooth_rx</code> Sub.
+</p>
+
+<table>
+  <tr>
+    <th>Action</th>
+    <th>Sub Name</th>
+    <th>Syntax</th>
+  </tr>
+  <tr>
+    <td>Send text to Bluetooth</td>
+    <td><code>html_bluetooth_rx</code></td>
+    <td><code>window.soifgo.CallSub('html_bluetooth_rx', true, 'LED_ON')</code></td>
+  </tr>
+</table>
+
+<h3>Example</h3>
+<pre><code>function sendBluetooth(text) {
+  if (window.soifgo) {
+    window.soifgo.CallSub('html_bluetooth_rx', true, text);
+  }
+}
+
+// Usage
+sendBluetooth('LED_ON');
+sendBluetooth('LED_OFF');
+sendBluetooth('GET_DATA');</code></pre>
+
+<div class="note">
+  <strong>💡 Note:</strong> The name <code>html_bluetooth_rx</code> means "HTML → Bluetooth rx".
+  It may look backwards, but this is the actual SoifGo Sub name. Do not rename it.
+</div>
+
+<h2 id="bluetooth-receive">3. Bluetooth — Receive (Device → HTML)</h2>
+
+<p>
+  When the Bluetooth device sends data back to SoifGo, the app calls a JavaScript function
+  named <code>html_bluetooth_tx(data)</code>. You must define this function and attach it
+  to <code>window</code>.
+</p>
+
+<table>
+  <tr>
+    <th>Action</th>
+    <th>Callback Function</th>
+  </tr>
+  <tr>
+    <td>Receive data from Bluetooth</td>
+    <td><code>function html_bluetooth_tx(data) { }</code></td>
+  </tr>
+</table>
+
+<h3>Example</h3>
+<pre><code>function html_bluetooth_tx(data) {
+  console.log('Received from Bluetooth:', data);
+  document.getElementById('output').innerText = data;
+}
+
+// CRITICAL: attach to window
+window.html_bluetooth_tx = html_bluetooth_tx;</code></pre>
+
+<div class="warning">
+  <strong>⚠️ Required:</strong> You <em>must</em> write <code>window.html_bluetooth_tx = html_bluetooth_tx;</code>
+  after defining the function. Without this line, SoifGo cannot find your callback.
+</div>
+
+<h2 id="sensors">4. Phone Sensors</h2>
+
+<p>
+  SoifGo can stream phone sensor data into your HTML page. Each sensor has an
+  <strong>activate Sub</strong> (which you call once) and one or more
+  <strong>callback functions</strong> (which SoifGo calls repeatedly with new data).
+</p>
+
+<table>
+  <tr>
+    <th>Sensor</th>
+    <th>Activate Sub</th>
+    <th>Callback Function(s)</th>
+  </tr>
+  <tr>
+    <td>💡 Light</td>
+    <td><code>sensor_light</code></td>
+    <td><code>html_sensor_light(data)</code></td>
+  </tr>
+  <tr>
+    <td>🏃 Motion (X axis)</td>
+    <td><code>sensor_move</code></td>
+    <td><code>html_sensor_movex(data)</code></td>
+  </tr>
+  <tr>
+    <td>🏃 Motion (Y axis)</td>
+    <td><code>sensor_move</code></td>
+    <td><code>html_sensor_movey(data)</code></td>
+  </tr>
+  <tr>
+    <td>🧲 Magnetic field</td>
+    <td><code>sensor_magno</code></td>
+    <td><code>html_sensor_magno(data)</code></td>
+  </tr>
+</table>
+
+<h3>Activate + receive example</h3>
+<pre><code>// Define callbacks
+function html_sensor_light(data) {
+  document.getElementById('light').innerText = 'Light: ' + data;
+}
+function html_sensor_movex(data) {
+  document.getElementById('movex').innerText = 'X: ' + data;
+}
+function html_sensor_movey(data) {
+  document.getElementById('movey').innerText = 'Y: ' + data;
+}
+function html_sensor_magno(data) {
+  document.getElementById('magno').innerText = 'Magnetic: ' + data;
+}
+
+// Attach all to window
+window.html_sensor_light = html_sensor_light;
+window.html_sensor_movex = html_sensor_movex;
+window.html_sensor_movey = html_sensor_movey;
+window.html_sensor_magno = html_sensor_magno;
+
+// Activate sensors on page load
+window.onload = function () {
+  if (window.soifgo) {
+    window.soifgo.CallSub('sensor_light');
+    window.soifgo.CallSub('sensor_move');
+    window.soifgo.CallSub('sensor_magno');
+  }
+};</code></pre>
+
+<h2 id="example">5. Complete Working Example</h2>
+
+<p>
+  This is a minimal, fully-functional SoifGo HTML page that:
+</p>
+<ul>
+  <li>Sends <code>LED_ON</code> / <code>LED_OFF</code> to Bluetooth</li>
+  <li>Receives Bluetooth data and displays it</li>
+  <li>Streams light sensor data</li>
+</ul>
+
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;title&gt;SoifGo Controller&lt;/title&gt;
+  &lt;style&gt;
+    body { font-family: sans-serif; padding: 20px; background: #111; color: #eee; }
+    button { padding: 14px 20px; margin: 6px; border: none; border-radius: 8px; font-size: 16px; color: white; }
+    .on  { background: #16a34a; }
+    .off { background: #dc2626; }
+    .data { background: #2563eb; }
+    .card { background: #1f2937; padding: 14px; border-radius: 10px; margin: 10px 0; }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+  &lt;h2&gt;SoifGo Controller&lt;/h2&gt;
+
+  &lt;button class="on"  onclick="sendBluetooth('LED_ON')"&gt;LED ON&lt;/button&gt;
+  &lt;button class="off" onclick="sendBluetooth('LED_OFF')"&gt;LED OFF&lt;/button&gt;
+  &lt;button class="data" onclick="sendBluetooth('GET_DATA')"&gt;Get Data&lt;/button&gt;
+
+  &lt;div class="card"&gt;Bluetooth: &lt;span id="bt"&gt;—&lt;/span&gt;&lt;/div&gt;
+  &lt;div class="card"&gt;Light sensor: &lt;span id="light"&gt;—&lt;/span&gt;&lt;/div&gt;
+
+  &lt;script&gt;
+    // ---- Send to Bluetooth ----
+    function sendBluetooth(text) {
+      if (window.soifgo) {
+        window.soifgo.CallSub('html_bluetooth_rx', true, text);
+      }
+    }
+
+    // ---- Receive from Bluetooth ----
+    function html_bluetooth_tx(data) {
+      document.getElementById('bt').innerText = data;
+    }
+    window.html_bluetooth_tx = html_bluetooth_tx;
+
+    // ---- Light sensor ----
+    function html_sensor_light(data) {
+      document.getElementById('light').innerText = data;
+    }
+    window.html_sensor_light = html_sensor_light;
+
+    // ---- Activate sensors ----
+    window.onload = function () {
+      if (window.soifgo) {
+        window.soifgo.CallSub('sensor_light');
+      } else {
+        document.getElementById('bt').innerText = 'SoifGo not detected';
+      }
+    };
+  &lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+<h2 id="rules">6. Rules for AI Assistants</h2>
+
+<ol>
+  <li>
+    <strong>Never invent Sub names.</strong> Use only:
+    <code>html_bluetooth_rx</code>, <code>sensor_light</code>, <code>sensor_move</code>,
+    <code>sensor_magno</code>.
+  </li>
+  <li>
+    <strong>Case matters.</strong> <code>html_bluetooth_rx</code> is not
+    <code>html_bluetooth_RX</code> or <code>html_Bluetooth_rx</code>.
+  </li>
+  <li>
+    <strong>Always attach callbacks to <code>window</code>.</strong>
+    <pre><code>window.html_bluetooth_tx = html_bluetooth_tx;</code></pre>
+  </li>
+  <li>
+    <strong>Guard the bridge.</strong> Wrap all <code>window.soifgo.CallSub</code> calls in
+    <code>if (window.soifgo) { ... }</code>.
+  </li>
+  <li>
+    <strong>Do not use <code>fetch()</code> for local files.</strong> HTML runs inside
+    SoifGo's WebView; use the Sub bridge for device communication instead.
+  </li>
+  <li>
+    <strong>For MQTT and HTTP</strong>, SoifGo has separate Subs. Refer to the
+    <a href="https://soifgo.github.io/soifgo/">main documentation</a> for those.
+  </li>
+  <li>
+    <strong>Do not rename <code>html_bluetooth_rx</code> to <code>sendBluetooth</code></strong>
+    in your generated code. You may wrap it in a helper function named
+    <code>sendBluetooth</code>, but the actual Sub call must remain
+    <code>html_bluetooth_rx</code>.
+  </li>
+</ol>
+
+<h2 id="json">7. JSON Version</h2>
+
+<p>
+  A machine-readable JSON version of this API is available at:
+  <a href="soifgo-api.json"><code>ai/soifgo-api.json</code></a>
+</p>
+
+<p>
+  AI assistants with tool-use or file-reading capabilities should prefer the JSON version,
+  as it is easier to parse and less prone to HTML parsing errors.
+</p>
+
+<h2 id="changelog">8. Changelog</h2>
+
+<table>
+  <tr>
+    <th>Version</th>
+    <th>Date</th>
+    <th>Changes</th>
+  </tr>
+  <tr>
+    <td>1.0</td>
+    <td>2026-09-16</td>
+    <td>Initial AI-optimized API reference. Documented <code>html_bluetooth_rx</code>, <code>html_bluetooth_tx</code>, and sensor Subs.</td>
+  </tr>
+</table>
+
+<footer>
+  <p>
+    SoifGo — Machine-Readable API Reference &nbsp;|&nbsp;
+    <a href="../index.html">← Back to SoifGo Home</a> &nbsp;|&nbsp;
+    <a href="soifgo-api.json">JSON Version</a> &nbsp;|&nbsp;
+    <a href="../llms.txt">llms.txt</a>
+  </p>
+  <p style="margin-top:8px;">© 2026 SoifGo — Built by Saeid Moghadam</p>
+</footer>
+
+</body>
+</html>

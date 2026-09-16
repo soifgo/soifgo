@@ -1,4 +1,41 @@
+# robots.txt for SoifGo
+# https://soifgo.github.io/soifgo/
+
 User-agent: *
 Allow: /
+Disallow: /soifgo.zip
+Disallow: /*.apk$
 
+# Explicitly welcome AI crawlers — they help users generate correct code
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: DuckAssistBot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+# Sitemap
 Sitemap: https://soifgo.github.io/soifgo/sitemap.xml

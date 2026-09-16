@@ -1,0 +1,126 @@
+{
+  "$schema": "https://soifgo.github.io/soifgo/ai/soifgo-api.schema.json",
+  "product": "SoifGo",
+  "version": "1.41",
+  "apiVersion": "1.0",
+  "lastUpdated": "2026-09-16",
+  "description": "Machine-readable API reference for SoifGo's HTML/JavaScript WebView bridge. AI assistants should read this before generating SoifGo HTML code.",
+
+  "bridge": {
+    "namespace": "window.soifgo",
+    "method": "CallSub",
+    "syntax": "window.soifgo.CallSub(subName, hasReturn, ...args)",
+    "parameters": {
+      "subName": {
+        "type": "string",
+        "description": "Exact name of the Sub to call (case-sensitive)",
+        "required": true
+      },
+      "hasReturn": {
+        "type": "boolean",
+        "description": "true if the Sub returns data; false otherwise",
+        "required": true
+      },
+      "args": {
+        "type": "any",
+        "description": "Arguments passed to the Sub",
+        "required": false,
+        "variadic": true
+      }
+    },
+    "availability": "Only available when HTML runs inside SoifGo's WebView"
+  },
+
+  "bluetooth": {
+    "send": {
+      "description": "Send a text string from HTML to the connected Bluetooth device",
+      "sub": "html_bluetooth_rx",
+      "hasReturn": true,
+      "syntax": "window.soifgo.CallSub('html_bluetooth_rx', true, TEXT)",
+      "example": "window.soifgo.CallSub('html_bluetooth_rx', true, 'LED_ON')",
+      "notes": [
+        "The name 'html_bluetooth_rx' may look backwards but is the actual Sub name.",
+        "Do not rename it. You may wrap it in a helper function."
+      ]
+    },
+    "receive": {
+      "description": "Receive data from the Bluetooth device in HTML",
+      "callback": "html_bluetooth_tx",
+      "syntax": "function html_bluetooth_tx(data) { }",
+      "attach": "window.html_bluetooth_tx = html_bluetooth_tx;",
+      "example": "function html_bluetooth_tx(data) { console.log(data); }\nwindow.html_bluetooth_tx = html_bluetooth_tx;",
+      "notes": [
+        "The callback MUST be attached to window.",
+        "SoifGo calls this function every time data arrives from Bluetooth."
+      ]
+    }
+  },
+
+  "sensors": {
+    "light": {
+      "description": "Phone ambient light sensor",
+      "activate": "window.soifgo.CallSub('sensor_light')",
+      "callback": "html_sensor_light(data)",
+      "attach": "window.html_sensor_light = html_sensor_light;"
+    },
+    "motion": {
+      "description": "Phone accelerometer / motion sensor",
+      "activate": "window.soifgo.CallSub('sensor_move')",
+      "callbacks": [
+        {
+          "name": "html_sensor_movex(data)",
+          "axis": "X",
+          "attach": "window.html_sensor_movex = html_sensor_movex;"
+        },
+        {
+          "name": "html_sensor_movey(data)",
+          "axis": "Y",
+          "attach": "window.html_sensor_movey = html_sensor_movey;"
+        }
+      ]
+    },
+    "magnetic": {
+      "description": "Phone magnetic field sensor (magnetometer)",
+      "activate": "window.soifgo.CallSub('sensor_magno')",
+      "callback": "html_sensor_magno(data)",
+      "attach": "window.html_sensor_magno = html_sensor_magno;"
+    }
+  },
+
+  "otherSubs": {
+    "note": "MQTT, HTTP, and other SoifGo Subs are documented separately. See main documentation.",
+    "reference": "https://soifgo.github.io/soifgo/"
+  },
+
+  "rules": [
+    "Do not invent function names. Use only the exact names listed in this file.",
+    "Function and Sub names are case-sensitive.",
+    "Callbacks must be attached to window.* before SoifGo can call them.",
+    "Always guard bridge calls with: if (window.soifgo) { ... }",
+    "HTML runs inside SoifGo's WebView — do not use fetch() for local files.",
+    "The actual Sub for sending Bluetooth is 'html_bluetooth_rx' (not 'sendBluetooth').",
+    "You may wrap 'html_bluetooth_rx' in a helper function named sendBluetooth."
+  ],
+
+  "completeExample": {
+    "description": "Minimal working SoifGo HTML page",
+    "code": "<!DOCTYPE html>\n<html>\n<head><meta charset=\"UTF-8\"></head>\n<body>\n  <button onclick=\"sendBluetooth('LED_ON')\">LED ON</button>\n  <button onclick=\"sendBluetooth('LED_OFF')\">LED OFF</button>\n  <div id=\"data\">waiting...</div>\n\n  <script>\n    function sendBluetooth(text) {\n      if (window.soifgo) {\n        window.soifgo.CallSub('html_bluetooth_rx', true, text);\n      }\n    }\n\n    function html_bluetooth_tx(data) {\n      document.getElementById('data').innerText = data;\n    }\n    window.html_bluetooth_tx = html_bluetooth_tx;\n\n    function html_sensor_light(data) {\n      console.log('Light:', data);\n    }\n    window.html_sensor_light = html_sensor_light;\n\n    window.onload = function () {\n      if (window.soifgo) {\n        window.soifgo.CallSub('sensor_light');\n      }\n    };\n  </script>\n</body>\n</html>"
+  },
+
+  "links": {
+    "home": "https://soifgo.github.io/soifgo/",
+    "htmlApiReference": "https://soifgo.github.io/soifgo/ai/soifgo-api.html",
+    "jsonApiReference": "https://soifgo.github.io/soifgo/ai/soifgo-api.json",
+    "mainTutorial": "https://soifgo.github.io/soifgo/tutorials/send_bluetooth_html/html_guide_1.html",
+    "completeUserGuide": "https://soifgo.github.io/soifgo/tutorials/soifgo_info/soifgo_info.html",
+    "github": "https://github.com/soifgo/soifgo"
+  },
+
+  "changelog": [
+    {
+      "version": "1.0",
+      "date": "2026-09-16",
+      "changes": "Initial AI-optimized API reference."
+    }
+  ]
+}

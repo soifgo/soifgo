@@ -6,8 +6,12 @@
 
   <title>SoifGo — Custom Android Hardware Controller for Arduino, ESP32 & HC-05</title>
 
-  <meta name="description" content="SoifGo is a free Android app that turns your phone into a custom hardware controller. Control Arduino, ESP32, ESP8266 and HC-05 via Bluetooth, MQTT or HTML/JS WebView. Works offline." />
-  <meta name="keywords" content="Android hardware controller, Arduino Bluetooth controller, ESP32 controller, HC-05 Android, MQTT Android, HTML JavaScript hardware controller, WebView Bluetooth, phone sensor controller, SoifGo" />
+  <meta name="description" content="SoifGo is a free Android app that turns your phone into a custom hardware controller. Control Arduino, ESP32, ESP8266 and HC-05 via Bluetooth, MQTT or HTML/JS WebView. Works offline. AI-ready API reference included." />
+  <meta name="keywords" content="Android hardware controller, Arduino Bluetooth controller, ESP32 controller, HC-05 Android, MQTT Android, HTML JavaScript hardware controller, WebView Bluetooth, phone sensor controller, SoifGo, AI API reference, machine-readable docs" />
+
+  <!-- AI-specific hints -->
+  <meta name="ai-content-declaration" content="This site provides a machine-readable API reference at /ai/soifgo-api.html and /ai/soifgo-api.json for AI assistants generating SoifGo code." />
+  <link rel="alternate" type="application/json" href="https://soifgo.github.io/soifgo/ai/soifgo-api.json" title="SoifGo API (JSON)" />
 
   <meta property="og:title" content="SoifGo — Custom Android Hardware Controller" />
   <meta property="og:description" content="Control Arduino, ESP32, ESP8266 and HC-05 with your Android phone. Bluetooth, MQTT, HTML/JS WebView, and phone sensors. Free and offline-capable." />
@@ -37,7 +41,8 @@
       "url": "https://soifgo.github.io/soifgo/",
       "inLanguage": ["en"],
       "creator": { "@type": "Person", "name": "Saeid Moghadam" },
-      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "softwareVersion": "1.41"
     }
   </script>
 
@@ -91,14 +96,13 @@
   }
   </script>
 
-  <!-- ====== THEME INITIALIZER (Prevent Flash of Wrong Theme) ====== -->
+  <!-- ====== THEME INITIALIZER ====== -->
   <script>
     (function() {
       var savedTheme = localStorage.getItem('soifgo-theme');
       if (savedTheme === 'light' || savedTheme === 'dark') {
         document.documentElement.setAttribute('data-theme', savedTheme);
       } else {
-        // Default: dark
         document.documentElement.setAttribute('data-theme', 'dark');
       }
     })();
@@ -107,11 +111,13 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* ====== DARK THEME (Default) ====== */
+    /* ====== DARK THEME ====== */
     :root,
     [data-theme="dark"] {
       --primary: #4f8cff;
       --primary-light: #6aa0ff;
+      --ai-accent: #a855f7;
+      --ai-accent-light: #c084fc;
       --bg: #0f172a;
       --bg-card: #1e293b;
       --bg-nav: rgba(15, 23, 42, 0.92);
@@ -144,6 +150,8 @@
     [data-theme="light"] {
       --primary: #2563eb;
       --primary-light: #3b82f6;
+      --ai-accent: #9333ea;
+      --ai-accent-light: #a855f7;
       --bg: #f8fafc;
       --bg-card: #ffffff;
       --bg-nav: rgba(255, 255, 255, 0.92);
@@ -194,10 +202,7 @@
       transition: background 0.3s ease;
     }
 
-    .header-container {
-      max-width: 720px;
-      margin: 0 auto;
-    }
+    .header-container { max-width: 720px; margin: 0 auto; }
 
     .logo-row {
       display: flex;
@@ -207,9 +212,7 @@
       margin-bottom: 20px;
     }
 
-    .logo-row img {
-      height: 70px;
-    }
+    .logo-row img { height: 70px; }
 
     .logo-row h1 {
       font-size: 2.8rem;
@@ -261,7 +264,7 @@
       font-weight: 800;
     }
 
-    /* ====== THEME TOGGLE BUTTON ====== */
+    /* ====== THEME TOGGLE ====== */
     .theme-toggle {
       position: absolute;
       top: 20px;
@@ -324,12 +327,18 @@
       border-color: var(--primary);
     }
 
-    /* ====== MAIN ====== */
-    main {
-      max-width: 900px;
-      margin: auto;
-      padding: 0 1em;
+    nav a.ai-link {
+      border-color: var(--ai-accent);
+      color: var(--ai-accent-light);
     }
+
+    nav a.ai-link:hover {
+      background: rgba(168, 85, 247, 0.15);
+      color: var(--ai-accent-light);
+    }
+
+    /* ====== MAIN ====== */
+    main { max-width: 900px; margin: auto; padding: 0 1em; }
 
     section {
       padding: 2em;
@@ -379,7 +388,7 @@
     .security-box a { color: var(--primary); font-weight: bold; text-decoration: none; }
     .security-box a:hover { text-decoration: underline; }
 
-    /* ====== STORY SECTION ====== */
+    /* ====== STORY ====== */
     .story-section {
       background: linear-gradient(135deg, var(--story-bg-from), var(--story-bg-to));
       border: 2px solid var(--primary);
@@ -416,9 +425,7 @@
       line-height: 1.8;
     }
 
-    .story-content strong {
-      color: var(--text-main);
-    }
+    .story-content strong { color: var(--text-main); }
 
     .story-highlight {
       background: var(--hover-bg-card);
@@ -436,10 +443,10 @@
       font-weight: 700;
     }
 
-    /* ====== 3 BIG CARDS ====== */
+    /* ====== CARDS ====== */
     .card-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
       gap: 16px;
       margin-top: 20px;
     }
@@ -459,6 +466,11 @@
       background: var(--hover-bg-card);
       border-color: var(--primary);
       transform: translateY(-4px);
+    }
+
+    .card.ai-card:hover {
+      border-color: var(--ai-accent);
+      background: rgba(168, 85, 247, 0.08);
     }
 
     .card .card-icon {
@@ -487,10 +499,12 @@
       font-size: 0.9rem;
     }
 
-    /* ====== 2 BIG BUTTONS ====== */
+    .card.ai-card .card-link { color: var(--ai-accent); }
+
+    /* ====== START BUTTONS ====== */
     .start-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
       gap: 16px;
       margin-top: 20px;
     }
@@ -522,6 +536,16 @@
     }
     .start-btn.dev:hover {
       background: rgba(79, 140, 255, 0.12);
+      transform: translateY(-3px);
+    }
+
+    .start-btn.ai {
+      border-color: var(--ai-accent);
+      background: rgba(168, 85, 247, 0.06);
+      color: var(--ai-accent);
+    }
+    .start-btn.ai:hover {
+      background: rgba(168, 85, 247, 0.12);
       transform: translateY(-3px);
     }
 
@@ -597,9 +621,7 @@
       transition: var(--transition);
     }
 
-    .faq-item:hover {
-      background: var(--hover-bg-card);
-    }
+    .faq-item:hover { background: var(--hover-bg-card); }
 
     .faq-item strong {
       color: var(--text-main);
@@ -607,15 +629,9 @@
       margin-bottom: 4px;
     }
 
-    .faq-item p {
-      color: var(--text-muted);
-      margin: 0;
-    }
+    .faq-item p { color: var(--text-muted); margin: 0; }
 
-    .faq-item a {
-      color: var(--primary);
-      text-decoration: none;
-    }
+    .faq-item a { color: var(--primary); text-decoration: none; }
     .faq-item a:hover { text-decoration: underline; }
 
     /* ====== CAROUSEL ====== */
@@ -679,6 +695,61 @@
       box-shadow: 0 0 12px rgba(79, 140, 255, 0.6);
     }
 
+    /* ====== AI SECTION ====== */
+    .ai-section {
+      border: 2px solid var(--ai-accent);
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.06), rgba(79, 140, 255, 0.04));
+      border-radius: var(--radius);
+      padding: 2em;
+      margin-top: 25px;
+    }
+
+    .ai-section h2 {
+      color: var(--ai-accent-light);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .ai-section p { color: var(--text); margin-bottom: 14px; }
+
+    .ai-links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .ai-link {
+      display: block;
+      padding: 14px 18px;
+      background: var(--hover-bg);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      color: var(--text);
+      transition: var(--transition);
+    }
+
+    .ai-link:hover {
+      border-color: var(--ai-accent);
+      background: rgba(168, 85, 247, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .ai-link strong {
+      display: block;
+      color: var(--ai-accent-light);
+      font-size: 0.98rem;
+      margin-bottom: 4px;
+    }
+
+    .ai-link code {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      background: var(--code-bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
     /* ====== FOOTER ====== */
     footer {
       margin-top: 50px;
@@ -697,6 +768,9 @@
     }
     footer a:hover { color: var(--primary); text-decoration: underline; }
 
+    footer a.ai-footer-link { color: var(--ai-accent-light); }
+    footer a.ai-footer-link:hover { color: var(--ai-accent); }
+
     /* ====== RESPONSIVE ====== */
     @media (max-width: 700px) {
       header { padding: 60px 20px 40px; }
@@ -707,6 +781,7 @@
       .card-grid { grid-template-columns: 1fr; }
       .start-grid { grid-template-columns: 1fr; }
       .tutorial-list { grid-template-columns: 1fr; }
+      .ai-links { grid-template-columns: 1fr; }
       section { padding: 1.4rem; }
       h2 { font-size: 1.3em; }
       nav a { font-size: 0.85rem; padding: 0.5rem 1rem; }
@@ -714,6 +789,7 @@
       .story-section { padding: 1.4rem; }
       .story-content p { font-size: 0.98rem; }
       .story-highlight p { font-size: 1.05rem; }
+      .ai-section { padding: 1.4rem; }
     }
 
     @media (max-width: 480px) {
@@ -727,6 +803,7 @@
       .story-section { padding: 1.1rem; }
       .story-content p { font-size: 0.95rem; }
       .story-highlight p { font-size: 1rem; }
+      .ai-section { padding: 1.1rem; }
     }
   </style>
 </head>
@@ -735,7 +812,6 @@
 
   <!-- ====== HEADER ====== -->
   <header>
-    <!-- Theme toggle button -->
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Switch theme">
       <span id="themeIcon">☀️</span>
     </button>
@@ -759,7 +835,8 @@
       <div class="hero-trust">
         <span>Free &amp; open-source</span> &nbsp;&nbsp;
         <span>Works offline</span> &nbsp;&nbsp;
-        <span>No ads</span>
+        <span>No ads</span> &nbsp;&nbsp;
+        <span>AI-ready API</span>
       </div>
     </div>
   </header>
@@ -771,8 +848,10 @@
     <a href="#what">What it does</a>
     <a href="#start">Get Started</a>
     <a href="#tutorials">Tutorials</a>
+    <a href="#ai">For AI</a>
     <a href="#faq">FAQ</a>
     <a href="docs.html">Docs</a>
+    <a href="ai/soifgo-api.html" class="ai-link">API</a>
   </nav>
 
   <main>
@@ -795,7 +874,7 @@
       </div>
     </section>
 
-    <!-- ====== THE STORY ====== -->
+    <!-- ====== STORY ====== -->
     <section id="story" class="story-section">
       <h2>The Story Behind SoifGo</h2>
 
@@ -829,7 +908,7 @@
       </div>
     </section>
 
-    <!-- ====== WHAT IT DOES (3 BIG CARDS) ====== -->
+    <!-- ====== WHAT IT DOES ====== -->
     <section id="what">
       <h2>What can you build with SoifGo?</h2>
 
@@ -854,10 +933,17 @@
           <p>Build any interface with HTML/CSS/JS and connect it to Bluetooth and phone sensors.</p>
           <span class="card-link">View tutorial →</span>
         </a>
+
+        <a href="ai/soifgo-api.html" class="card ai-card">
+          <span class="card-icon">🤖</span>
+          <h3>AI-Ready API Reference</h3>
+          <p>Structured JSON + HTML reference so AI assistants generate correct SoifGo code on the first try.</p>
+          <span class="card-link">Open API reference →</span>
+        </a>
       </div>
     </section>
 
-    <!-- ====== GET STARTED (2 BIG BUTTONS) ====== -->
+    <!-- ====== GET STARTED ====== -->
     <section id="start">
       <h2>Where do you want to start?</h2>
 
@@ -872,6 +958,52 @@
           <span class="start-icon">👨‍💻</span>
           <strong>I'm a developer</strong>
           <span>Read the technical docs and code examples</span>
+        </a>
+
+        <a href="ai/soifgo-api.html" class="start-btn ai">
+          <span class="start-icon">🤖</span>
+          <strong>I'm using an AI assistant</strong>
+          <span>Machine-readable API reference</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ====== AI SECTION ====== -->
+    <section id="ai" class="ai-section">
+      <h2>🤖 For AI Assistants &amp; Developers</h2>
+
+      <p>
+        If you're using an AI assistant (ChatGPT, Claude, Gemini, Duck.ai, etc.) to generate
+        SoifGo HTML controllers, point it to the <strong>machine-readable API reference</strong> first.
+        It contains the exact Sub names, callbacks, and code patterns — no guessing required.
+      </p>
+
+      <p>
+        <strong>Why this exists:</strong> AI assistants often invent function names like
+        <code>sendBluetooth()</code> when the real SoifGo API uses
+        <code>window.soifgo.CallSub('html_bluetooth_rx', ...)</code>.
+        This page fixes that problem permanently.
+      </p>
+
+      <div class="ai-links">
+        <a href="ai/soifgo-api.html" class="ai-link">
+          <strong>📄 HTML API Reference</strong>
+          <code>ai/soifgo-api.html</code>
+        </a>
+
+        <a href="ai/soifgo-api.json" class="ai-link">
+          <strong>🔧 JSON API Reference</strong>
+          <code>ai/soifgo-api.json</code>
+        </a>
+
+        <a href="ai/soifgo-examples.zip" class="ai-link">
+          <strong>📦 Working Examples (ZIP)</strong>
+          <code>ai/soifgo-examples.zip</code>
+        </a>
+
+        <a href="llms.txt" class="ai-link">
+          <strong>📋 llms.txt (LLM Index)</strong>
+          <code>llms.txt</code>
         </a>
       </div>
     </section>
@@ -904,7 +1036,7 @@
             <span class="no-icon">🎨</span>
             <div>
               <strong>HTML + Bluetooth + Sensors</strong>
-              <span>Build a custom controller with HTML/JS</span>
+              <span>Build a custom controller with HTML/JS (contains the real API)</span>
             </div>
           </a>
         </li>
@@ -1065,6 +1197,11 @@
         <strong>How do I get started with SoifGo?</strong>
         <p>Download the app, open the <a href="https://soifgo.github.io/soifgo/tutorials/soifgo_info/soifgo_info.html">Complete User Guide</a>, and follow the step-by-step tutorials. No programming knowledge is required for basic use.</p>
       </div>
+
+      <div class="faq-item">
+        <strong>Can I use an AI assistant to generate SoifGo code?</strong>
+        <p>Yes — and we made it easy. Point your AI to <a href="ai/soifgo-api.html">ai/soifgo-api.html</a> (or the <a href="ai/soifgo-api.json">JSON version</a>) before asking it to write code. This ensures it uses the correct Sub names like <code>html_bluetooth_rx</code> instead of inventing its own.</p>
+      </div>
     </section>
 
     <!-- ====== DEMO CAROUSEL ====== -->
@@ -1106,6 +1243,8 @@
       &nbsp;|&nbsp;
       <a href="docs.html">Documentation</a>
       &nbsp;|&nbsp;
+      <a href="ai/soifgo-api.html" class="ai-footer-link">🤖 AI API Reference</a>
+      &nbsp;|&nbsp;
       <a href="https://github.com/soifgo/soifgo" target="_blank" rel="noopener">GitHub</a>
     </p>
     <p style="font-size:0.85rem; margin-top:8px;">&copy; 2026 SoifGo — Built by Saeid Moghadam</p>
@@ -1119,15 +1258,14 @@
 
       function updateIcon(theme) {
         if (theme === 'light') {
-          themeIcon.textContent = '🌙';  // In light mode, moon icon to switch to dark
+          themeIcon.textContent = '🌙';
           themeToggle.title = 'Switch to dark mode';
         } else {
-          themeIcon.textContent = '☀️';  // In dark mode, sun icon to switch to light
+          themeIcon.textContent = '☀️';
           themeToggle.title = 'Switch to light mode';
         }
       }
 
-      // Initialize icon
       var currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
       updateIcon(currentTheme);
 
