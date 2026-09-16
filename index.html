@@ -91,14 +91,14 @@
   }
   </script>
 
-  <!-- ====== THEME INITIALIZER (جلوگیری از پرش رنگ) ====== -->
+  <!-- ====== THEME INITIALIZER (Prevent Flash of Wrong Theme) ====== -->
   <script>
     (function() {
       var savedTheme = localStorage.getItem('soifgo-theme');
       if (savedTheme === 'light' || savedTheme === 'dark') {
         document.documentElement.setAttribute('data-theme', savedTheme);
       } else {
-        // پیش‌فرض: تاریک
+        // Default: dark
         document.documentElement.setAttribute('data-theme', 'dark');
       }
     })();
@@ -107,7 +107,7 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* ====== تم تاریک (پیش‌فرض) ====== */
+    /* ====== DARK THEME (Default) ====== */
     :root,
     [data-theme="dark"] {
       --primary: #4f8cff;
@@ -132,12 +132,15 @@
       --scrollbar-track: #0f172a;
       --security-bg: rgba(79, 140, 255, 0.08);
       --security-border: rgba(79, 140, 255, 0.12);
+      --story-bg-from: rgba(79, 140, 255, 0.06);
+      --story-bg-to: rgba(45, 212, 191, 0.04);
+      --story-accent: #2dd4bf;
       --radius: 14px;
       --radius-sm: 10px;
       --transition: 0.25s ease;
     }
 
-    /* ====== تم روشن ====== */
+    /* ====== LIGHT THEME ====== */
     [data-theme="light"] {
       --primary: #2563eb;
       --primary-light: #3b82f6;
@@ -161,6 +164,9 @@
       --scrollbar-track: #e2e8f0;
       --security-bg: rgba(37, 99, 235, 0.08);
       --security-border: rgba(37, 99, 235, 0.15);
+      --story-bg-from: rgba(37, 99, 235, 0.05);
+      --story-bg-to: rgba(20, 184, 166, 0.04);
+      --story-accent: #0d9488;
     }
 
     body {
@@ -372,6 +378,63 @@
     }
     .security-box a { color: var(--primary); font-weight: bold; text-decoration: none; }
     .security-box a:hover { text-decoration: underline; }
+
+    /* ====== STORY SECTION ====== */
+    .story-section {
+      background: linear-gradient(135deg, var(--story-bg-from), var(--story-bg-to));
+      border: 2px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 2em;
+      margin-top: 25px;
+      box-shadow: 0 4px 20px var(--shadow);
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s ease, border 0.3s ease;
+    }
+
+    .story-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--story-accent));
+    }
+
+    .story-section h2 {
+      color: var(--text-main);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.3em;
+      margin-bottom: 1em;
+    }
+
+    .story-content p {
+      color: var(--text);
+      margin-bottom: 16px;
+      font-size: 1.02rem;
+      line-height: 1.8;
+    }
+
+    .story-content strong {
+      color: var(--text-main);
+    }
+
+    .story-highlight {
+      background: var(--hover-bg-card);
+      border-left: 4px solid var(--story-accent);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      padding: 16px 20px;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .story-highlight p {
+      margin: 0;
+      font-size: 1.15rem;
+      color: var(--text-main);
+      font-weight: 700;
+    }
 
     /* ====== 3 BIG CARDS ====== */
     .card-grid {
@@ -648,6 +711,9 @@
       h2 { font-size: 1.3em; }
       nav a { font-size: 0.85rem; padding: 0.5rem 1rem; }
       .theme-toggle { top: 12px; right: 12px; width: 40px; height: 40px; font-size: 1.1rem; }
+      .story-section { padding: 1.4rem; }
+      .story-content p { font-size: 0.98rem; }
+      .story-highlight p { font-size: 1.05rem; }
     }
 
     @media (max-width: 480px) {
@@ -658,6 +724,9 @@
       .cta-button { padding: 14px 26px; font-size: 0.95rem; }
       section { padding: 1.1rem; margin-top: 15px; }
       .tutorial-list .no-icon { width: 40px; height: 40px; font-size: 1.2rem; }
+      .story-section { padding: 1.1rem; }
+      .story-content p { font-size: 0.95rem; }
+      .story-highlight p { font-size: 1rem; }
     }
   </style>
 </head>
@@ -666,7 +735,7 @@
 
   <!-- ====== HEADER ====== -->
   <header>
-    <!-- دکمه تغییر تم -->
+    <!-- Theme toggle button -->
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Switch theme">
       <span id="themeIcon">☀️</span>
     </button>
@@ -698,6 +767,7 @@
   <!-- ====== NAV ====== -->
   <nav id="mainNav">
     <a href="#download">Download</a>
+    <a href="#story">Story</a>
     <a href="#what">What it does</a>
     <a href="#start">Get Started</a>
     <a href="#tutorials">Tutorials</a>
@@ -722,6 +792,40 @@
         <a href="https://www.virustotal.com/gui/file/5a28ee2acf881b4a300cc482e5691ee8313f1ca6fde0457e07e942e416d51d81" target="_blank" rel="noopener noreferrer">
           View Full VirusTotal Report
         </a>
+      </div>
+    </section>
+
+    <!-- ====== THE STORY ====== -->
+    <section id="story" class="story-section">
+      <h2>The Story Behind SoifGo</h2>
+
+      <div class="story-content">
+        <p>
+          <strong>SoifGo started as a personal project.</strong> I wanted an Android app with
+          <strong>40 customizable buttons</strong> — each one designable and programmable
+          <strong>without writing a single line of code</strong>. But over time, the limitations became clear.
+          No matter how many options I added, the app could never be flexible enough. I hit a wall.
+        </p>
+
+        <p>
+          Then came the breakthrough: <strong>why not let each button run its own HTML/WebView?</strong>
+          I defined callable interfaces (Subs) for the WebView, and suddenly SoifGo became truly flexible.
+          Today, with WebView inside buttons, <strong>almost any design, theme, or behavior is possible</strong>.
+        </p>
+
+        <p>
+          But what about the "no-code" dream? A few years ago, this would have been hard — users had to
+          know HTML. <strong>Today, that's no longer true.</strong> Anyone — even a complete beginner —
+          can describe their idea to an AI assistant, get the code, and paste it into the WebView.
+          Remember: the HTML world is <strong>vast, powerful, and flexible</strong> — from 3D engines to
+          specialized libraries.
+        </p>
+
+        <div class="story-highlight">
+          <p>
+            🌉 <strong>SoifGo becomes your bridge to the HTML app universe.</strong>
+          </p>
+        </div>
       </div>
     </section>
 
@@ -1015,15 +1119,15 @@
 
       function updateIcon(theme) {
         if (theme === 'light') {
-          themeIcon.textContent = '🌙';  // در تم روشن، آیکون ماه برای رفتن به تاریک
+          themeIcon.textContent = '🌙';  // In light mode, moon icon to switch to dark
           themeToggle.title = 'Switch to dark mode';
         } else {
-          themeIcon.textContent = '☀️';  // در تم تاریک، آیکون خورشید برای رفتن به روشن
+          themeIcon.textContent = '☀️';  // In dark mode, sun icon to switch to light
           themeToggle.title = 'Switch to light mode';
         }
       }
 
-      // مقداردهی اولیه آیکون
+      // Initialize icon
       var currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
       updateIcon(currentTheme);
 
