@@ -6,12 +6,12 @@
     <meta name="theme-color" content="#2c3e50">
     <meta name="color-scheme" content="light dark">
 
-    <title>SoifGo Complete Guide — HTML Bluetooth & Sensors Integration with WebView</title>
-    <meta name="description" content="Complete guide for integrating HTML pages with SoifGo. Learn Bluetooth send/receive, sensor data (Light, Movement, Magneto), and custom UI development with WebView.">
-    <meta name="keywords" content="SoifGo guide, HTML Bluetooth, B4A bridge, WebView integration, sensor data, light sensor, movement sensor, magneto sensor, Bluetooth send receive, custom UI, SoifGo tutorial">
+    <title>SoifGo HTML Guide — Bluetooth, Sensors & Storage with WebView</title>
+    <meta name="description" content="Complete guide for building HTML apps inside SoifGo. Learn Bluetooth send/receive, sensor data (Light, Movement, Magneto), persistent storage with localStorage, and custom UI with WebView.">
+    <meta name="keywords" content="SoifGo guide, HTML Bluetooth, WebView integration, sensor data, light sensor, movement sensor, magneto sensor, Bluetooth send receive, custom UI, SoifGo tutorial, localStorage, persistent storage, HTML WebView">
 
-    <meta property="og:title" content="SoifGo Complete Guide — HTML Bluetooth & Sensors Integration">
-    <meta property="og:description" content="Complete guide for integrating HTML pages with SoifGo. Learn Bluetooth send/receive, sensor data (Light, Movement, Magneto), and custom UI development with WebView.">
+    <meta property="og:title" content="SoifGo HTML Guide — Bluetooth, Sensors & Storage">
+    <meta property="og:description" content="Complete guide for building HTML apps inside SoifGo. Bluetooth, sensors, persistent storage, and custom UI with WebView.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://soifgo.github.io/soifgo/tutorials/html-guide/">
     <meta property="og:image" content="https://soifgo.github.io/soifgo/html-guide-og.jpg">
@@ -21,8 +21,8 @@
     <meta property="og:site_name" content="SoifGo Tutorials">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="SoifGo Complete Guide — HTML Bluetooth & Sensors Integration">
-    <meta name="twitter:description" content="Complete guide for integrating HTML pages with SoifGo. Bluetooth send/receive, sensor data, and custom UI development.">
+    <meta name="twitter:title" content="SoifGo HTML Guide — Bluetooth, Sensors & Storage">
+    <meta name="twitter:description" content="Complete guide for building HTML apps inside SoifGo. Bluetooth, sensors, persistent storage, and custom UI.">
     <meta name="twitter:image" content="https://soifgo.github.io/soifgo/html-guide-og.jpg">
 
     <link rel="canonical" href="https://soifgo.github.io/soifgo/tutorials/html-guide/">
@@ -32,8 +32,8 @@
     {
         "@context": "https://schema.org",
         "@type": "TechArticle",
-        "headline": "SoifGo Complete Guide — HTML Bluetooth & Sensors Integration",
-        "description": "Complete guide for integrating HTML pages with SoifGo. Learn Bluetooth send/receive, sensor data (Light, Movement, Magneto), and custom UI development with WebView.",
+        "headline": "SoifGo HTML Guide — Bluetooth, Sensors & Storage",
+        "description": "Complete guide for building HTML apps inside SoifGo. Bluetooth, sensors, persistent storage, and custom UI with WebView.",
         "author": {
             "@type": "Person",
             "name": "Saeid Moghadam"
@@ -58,6 +58,7 @@
             "Bluetooth receive from SoifGo to WebView",
             "Sensor activation (Light, Movement, Magneto)",
             "Sensor data reception in WebView",
+            "Persistent storage with localStorage",
             "Custom UI development with HTML/CSS/JS"
         ],
         "inLanguage": "en",
@@ -625,13 +626,14 @@
             <a href="#bluetooth-send">BT Send</a>
             <a href="#bluetooth-receive">BT Receive</a>
             <a href="#sensors">Sensors</a>
+            <a href="#storage">Storage</a>
         </div>
     </nav>
 
     <div class="container">
 
         <!-- ===== OVERVIEW ===== -->
-        <h2 id="overview">📱 HTML Bluetooth & Sensors with SoifGo</h2>
+        <h2 id="overview">📱 HTML Bluetooth, Sensors & Storage with SoifGo</h2>
 
         <!-- ============================================================ -->
         <!-- ===== AI WORKFLOW SECTION ================================== -->
@@ -736,15 +738,76 @@
         <!-- ===== ORIGINAL OVERVIEW BOX ===== -->
         <div class="box">
             <p style="font-size:1.1rem;">
-                <strong>SoifGo</strong> is the B4A bridge that handles Bluetooth communication and sensor data.
-                The HTML pages inside WebView act as the <strong>B4A interface</strong>.
+                <strong>SoifGo</strong> turns your HTML pages into a real Android app.
+                Inside its WebView, your page can talk to Bluetooth, read phone sensors,
+                and store data — all with plain HTML, CSS, and JavaScript.
             </p>
-            <p>This guide explains how to:</p>
+            <p>This guide shows you how to:</p>
             <ul>
                 <li>✅ Send and receive Bluetooth data</li>
                 <li>✅ Activate and read sensors (Light, Movement, Magneto)</li>
-                <li>✅ Create custom UI with full control</li>
+                <li>✅ Save and reload data with localStorage</li>
+                <li>✅ Build a custom UI with full control</li>
             </ul>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- BRIDGE HELPER (new)                                           -->
+        <!-- ============================================================ -->
+
+        <div class="box">
+            <h3>🔌 The Bridge — How HTML Talks to SoifGo</h3>
+            <p>
+                Inside SoifGo's WebView, a JavaScript object called <code>window.soifgo</code>
+                is automatically injected. You use it to call B4A Subs from JavaScript.
+            </p>
+
+            <div class="file-name">📄 bridge-helper.js — Recommended pattern</div>
+
+            <pre><code>// Works with both "soifgo" (new) and "b4a" (legacy) names
+const bridge = window.soifgo || window.b4a;
+
+// Safe wrapper — never throws if bridge is missing
+function callB4A(subName, ...args) {
+    if (!bridge) {
+        console.warn('SoifGo bridge not available');
+        return false;
+    }
+    try {
+        bridge.CallSub(subName, ...args);
+        return true;
+    } catch (e) {
+        console.error('CallSub failed:', e);
+        return false;
+    }
+}
+
+// Register a function that B4A can call from the other side
+function expose(name, fn) {
+    window[name] = fn;
+}
+
+// Example: send text to Bluetooth
+function sendBluetooth() {
+    const txt = document.getElementById('txt').value;
+    callB4A('html_bluetooth_rx', true, txt);
+}
+
+// Example: activate all sensors
+function startSensors() {
+    callB4A('sensor_light');
+    callB4A('sensor_move');
+    callB4A('sensor_magno');
+}</code></pre>
+
+            <div class="success">
+                <strong>✅ Why use this helper?</strong>
+                <ul>
+                    <li>Works whether SoifGo exposes the bridge as <code>soifgo</code> or <code>b4a</code>.</li>
+                    <li>Never crashes if the page is opened in a normal browser (bridge is missing).</li>
+                    <li>Clear error messages in the console when something goes wrong.</li>
+                </ul>
+            </div>
         </div>
 
         <!-- ============================================================ -->
@@ -767,23 +830,33 @@
   &lt;meta charset="utf-8"&gt;
   &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
   &lt;title&gt;Send Command&lt;/title&gt;
-
-  &lt;script type="text/javascript"&gt;
-    function send_bluetooth() {
-      var txt = document.getElementById("txt").value;
-      // Call SoifGo Sub: html_bluetooth_rx(txt)
-      window.soifgo.CallSub('html_bluetooth_rx', true, txt);
-    }
-  &lt;/script&gt;
 &lt;/head&gt;
-
 &lt;body style="text-align:center; margin-top:50px; font-family:sans-serif;"&gt;
+
   &lt;h3&gt;📤 Send Command to Bluetooth&lt;/h3&gt;
   &lt;input type="text" id="txt" placeholder="Enter text..."&gt;
   &lt;br&gt;&lt;br&gt;
-  &lt;button onclick="send_bluetooth()" style="padding:10px 30px; font-size:16px; background:#2196f3; color:white; border:none; border-radius:6px; cursor:pointer;"&gt;
+  &lt;button onclick="sendBluetooth()"
+          style="padding:10px 30px; font-size:16px; background:#2196f3;
+                 color:white; border:none; border-radius:6px; cursor:pointer;"&gt;
     Send
   &lt;/button&gt;
+
+  &lt;script&gt;
+    // Bridge helper
+    const bridge = window.soifgo || window.b4a;
+
+    function callB4A(subName, ...args) {
+      if (!bridge) { console.warn('No bridge'); return false; }
+      try { bridge.CallSub(subName, ...args); return true; }
+      catch (e) { console.error(e); return false; }
+    }
+
+    function sendBluetooth() {
+      const txt = document.getElementById('txt').value;
+      callB4A('html_bluetooth_rx', true, txt);
+    }
+  &lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;</code></pre>
 
@@ -792,7 +865,7 @@
                 <ol>
                     <li>User types text in the input box.</li>
                     <li>Clicks the <strong>Send</strong> button.</li>
-                    <li>JavaScript calls <code>window.soifgo.CallSub('html_bluetooth_rx', true, txt)</code>.</li>
+                    <li>JavaScript calls <code>bridge.CallSub('html_bluetooth_rx', true, txt)</code>.</li>
                     <li>SoifGo receives the text in its <code>html_bluetooth_rx()</code> Sub.</li>
                     <li>SoifGo sends the text to the connected Bluetooth device.</li>
                 </ol>
@@ -817,9 +890,13 @@
 &lt;html&gt;
 &lt;head&gt;
     &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;BT Receive&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
-    &lt;div id="output" style="font-size:20px;color:white;background:black;padding:20px;min-height:100vh;"&gt;
+    &lt;div id="output"
+         style="font-size:20px;color:white;background:black;
+                padding:20px;min-height:100vh;"&gt;
         waiting for data...
     &lt;/div&gt;
 
@@ -828,6 +905,7 @@
         function html_bluetooth_tx(data) {
             document.getElementById('output').innerHTML = data;
         }
+        // Expose to window so SoifGo can find it
         window.html_bluetooth_tx = html_bluetooth_tx;
     &lt;/script&gt;
 &lt;/body&gt;
@@ -862,11 +940,11 @@
             <div class="info">
                 <strong>⚠️ IMPORTANT:</strong> To activate sensors, you must call ALL THREE commands:
                 <pre style="background:#2c3e50; color:#ecf0f1; padding:12px; border-radius:6px; margin:10px 0;">
-window.soifgo.CallSub('sensor_light');   // Activate light sensor
-window.soifgo.CallSub('sensor_move');    // Activate movement sensor
-window.soifgo.CallSub('sensor_magno');   // Activate magneto sensor</pre>
+callB4A('sensor_light');   // Activate light sensor
+callB4A('sensor_move');    // Activate movement sensor
+callB4A('sensor_magno');   // Activate magneto sensor</pre>
                 <p style="margin-top:8px;">
-                    These 3 commands are called inside <code>window.onload</code> to auto-start sensors when page loads.
+                    These 3 commands are called inside <code>window.onload</code> to auto-start sensors when the page loads.
                 </p>
             </div>
 
@@ -877,23 +955,32 @@ window.soifgo.CallSub('sensor_magno');   // Activate magneto sensor</pre>
 &lt;head&gt;
     &lt;meta charset="UTF-8"&gt;
     &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Sensor Receive&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
-    &lt;div id="light" style="font-size:20px;color:white;background:#333;padding:15px;margin:5px;border-radius:8px;"&gt;
+    &lt;div id="light"  style="font-size:20px;color:white;background:#333;padding:15px;margin:5px;border-radius:8px;"&gt;
         Light: waiting...
     &lt;/div&gt;
-    &lt;div id="movex" style="font-size:20px;color:white;background:#444;padding:15px;margin:5px;border-radius:8px;"&gt;
+    &lt;div id="movex"  style="font-size:20px;color:white;background:#444;padding:15px;margin:5px;border-radius:8px;"&gt;
         Move X: waiting...
     &lt;/div&gt;
-    &lt;div id="movey" style="font-size:20px;color:white;background:#555;padding:15px;margin:5px;border-radius:8px;"&gt;
+    &lt;div id="movey"  style="font-size:20px;color:white;background:#555;padding:15px;margin:5px;border-radius:8px;"&gt;
         Move Y: waiting...
     &lt;/div&gt;
-    &lt;div id="magno" style="font-size:20px;color:white;background:#666;padding:15px;margin:5px;border-radius:8px;"&gt;
+    &lt;div id="magno"  style="font-size:20px;color:white;background:#666;padding:15px;margin:5px;border-radius:8px;"&gt;
         Magneto: waiting...
     &lt;/div&gt;
 
     &lt;script&gt;
-        // Receiver functions - called by SoifGo when sensor data arrives
+        // ---- Bridge helper ----
+        const bridge = window.soifgo || window.b4a;
+        function callB4A(subName, ...args) {
+            if (!bridge) { console.warn('No bridge'); return false; }
+            try { bridge.CallSub(subName, ...args); return true; }
+            catch (e) { console.error(e); return false; }
+        }
+
+        // ---- Receiver functions (called by SoifGo) ----
         function html_sensor_light(data) {
             document.getElementById('light').innerHTML = 'Light: ' + data;
         }
@@ -907,21 +994,18 @@ window.soifgo.CallSub('sensor_magno');   // Activate magneto sensor</pre>
             document.getElementById('magno').innerHTML = 'Magneto: ' + data;
         }
 
-        // Register functions to window so SoifGo can call them
+        // Expose them
         window.html_sensor_light = html_sensor_light;
         window.html_sensor_movex = html_sensor_movex;
         window.html_sensor_movey = html_sensor_movey;
         window.html_sensor_magno = html_sensor_magno;
 
-        // Start sensors automatically when page loads
+        // ---- Auto-start sensors on page load ----
         window.onload = function() {
-            if (window.soifgo) {
-                // ✅ ALL THREE activation commands
-                window.soifgo.CallSub('sensor_light');
-                window.soifgo.CallSub('sensor_move');
-                window.soifgo.CallSub('sensor_magno');
-            }
-        }
+            callB4A('sensor_light');
+            callB4A('sensor_move');
+            callB4A('sensor_magno');
+        };
     &lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;</code></pre>
@@ -932,9 +1016,9 @@ window.soifgo.CallSub('sensor_magno');   // Activate magneto sensor</pre>
                     <li>
                         <strong>3 activation commands in <code>window.onload</code>:</strong>
                         <ul>
-                            <li><code>window.soifgo.CallSub('sensor_light')</code></li>
-                            <li><code>window.soifgo.CallSub('sensor_move')</code></li>
-                            <li><code>window.soifgo.CallSub('sensor_magno')</code></li>
+                            <li><code>callB4A('sensor_light')</code></li>
+                            <li><code>callB4A('sensor_move')</code></li>
+                            <li><code>callB4A('sensor_magno')</code></li>
                         </ul>
                         These activate all three sensors when the page loads.
                     </li>
@@ -952,6 +1036,172 @@ window.soifgo.CallSub('sensor_magno');   // Activate magneto sensor</pre>
                         <strong>UI updates automatically</strong> — each function updates its corresponding div.
                     </li>
                 </ol>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- PART 4: PERSISTENT STORAGE                                    -->
+        <!-- ============================================================ -->
+
+        <h3 id="storage">💾 4. Save & Reload Data (Persistent Storage)</h3>
+
+        <div class="box">
+            <div class="success">
+                <strong>✅ Good news:</strong> <code>alert()</code>, <code>confirm()</code>,
+                and <code>prompt()</code> all <strong>work natively</strong> in SoifGo's WebView
+                when the updated <code>MyChromeClient</code> is installed.
+                You can use standard browser dialogs in your code.
+            </div>
+
+            <div class="note">
+                <strong>💡 Tip:</strong> If your app targets older SoifGo versions, or you want a
+                fully themed look that matches your UI, build a custom HTML modal.
+                The example below shows <strong>both</strong> approaches so you can choose.
+            </div>
+
+            <p>
+                Use <code>localStorage</code> to save and reload data. It persists across page
+                reloads and WebView restarts, so your users never lose their settings.
+            </p>
+
+            <div class="file-name">📄 html_storage.html</div>
+
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Save &amp; Reload&lt;/title&gt;
+    &lt;style&gt;
+        body { font-family: sans-serif; background:#1e1e1e; color:#e0e0e0; padding:16px; }
+        input, button { padding:10px; border-radius:6px; border:1px solid #444;
+                        background:#2b2b2b; color:#fff; font-size:16px; margin:4px 0; }
+        button { background:#3498db; border:none; cursor:pointer; }
+        button.danger { background:#c0392b; }
+        .row { display:flex; gap:8px; align-items:center; margin:4px 0; }
+        .row button { flex:0 0 auto; }
+        #output { margin-top:16px; }
+        .item { padding:8px 12px; background:#2b2b2b; border-radius:6px;
+                margin:4px 0; display:flex; justify-content:space-between; }
+        .item .time { color:#888; font-size:0.85rem; }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+    &lt;h3&gt;💾 Save &amp; Reload Demo&lt;/h3&gt;
+
+    &lt;div class="row"&gt;
+        &lt;input type="text" id="nameInput" placeholder="Enter name..."&gt;
+        &lt;button onclick="saveItem()"&gt;Save&lt;/button&gt;
+        &lt;button onclick="loadItems()"&gt;Reload&lt;/button&gt;
+        &lt;button class="danger" onclick="clearAll()"&gt;Clear&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;div id="output"&gt;&lt;/div&gt;
+
+    &lt;script&gt;
+        const KEY = 'my_data';
+
+        /* ---- Bridge helper ---- */
+        const bridge = window.soifgo || window.b4a;
+        function callB4A(subName, ...args) {
+            if (!bridge) return false;
+            try { bridge.CallSub(subName, ...args); return true; }
+            catch (e) { console.error(e); return false; }
+        }
+
+        /* ---- Save ---- */
+        function saveItem() {
+            // prompt() works in updated SoifGo, but we use the input field
+            const name = document.getElementById('nameInput').value.trim();
+            if (!name) {
+                alert('Please enter a name.');
+                return;
+            }
+            let list = load();
+            list.push({ name: name, time: Date.now() });
+            persist(list);
+            render(list);
+            document.getElementById('nameInput').value = '';
+        }
+
+        /* ---- Delete one item ---- */
+        function removeItem(index) {
+            const list = load();
+            list.splice(index, 1);
+            persist(list);
+            render(list);
+        }
+
+        /* ---- Clear all ---- */
+        function clearAll() {
+            if (!confirm('Delete all saved items?')) return;   // works now
+            localStorage.removeItem(KEY);
+            render([]);
+        }
+
+        /* ---- Storage helpers (always wrapped in try/catch) ---- */
+        function load() {
+            try {
+                return JSON.parse(localStorage.getItem(KEY)) || [];
+            } catch (e) {
+                console.error('Load failed:', e);
+                return [];
+            }
+        }
+
+        function persist(list) {
+            try {
+                localStorage.setItem(KEY, JSON.stringify(list));
+            } catch (e) {
+                console.error('Save failed (quota?):', e);
+                alert('Could not save. Storage may be full.');
+            }
+        }
+
+        /* ---- Render ---- */
+        function render(list) {
+            const out = document.getElementById('output');
+            if (!list.length) {
+                out.innerHTML = '&lt;p style="color:#888;"&gt;No items saved yet.&lt;/p&gt;';
+                return;
+            }
+            out.innerHTML = list.map((x, i) =&gt; `
+                &lt;div class="item"&gt;
+                    &lt;span&gt;${i + 1}. ${escapeHtml(x.name)}&lt;/span&gt;
+                    &lt;span&gt;
+                        &lt;span class="time"&gt;${new Date(x.time).toLocaleTimeString()}&lt;/span&gt;
+                        &lt;button class="danger" onclick="removeItem(${i})"&gt;×&lt;/button&gt;
+                    &lt;/span&gt;
+                &lt;/div&gt;`).join('');
+        }
+
+        /* ---- Tiny XSS guard (for display only) ---- */
+        function escapeHtml(s) {
+            return String(s)
+                .replace(/&/g, '&amp;amp;')
+                .replace(/&lt;/g, '&amp;lt;')
+                .replace(/&gt;/g, '&amp;gt;')
+                .replace(/"/g, '&amp;quot;');
+        }
+
+        /* ---- Auto-load on page open ---- */
+        window.onload = function() {
+            render(load());
+        };
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+            <div class="success">
+                <strong>✅ Key points:</strong>
+                <ul>
+                    <li><strong><code>alert()</code>, <code>confirm()</code>, <code>prompt()</code> work</strong> in updated SoifGo — no custom modal needed.</li>
+                    <li>Wrap <code>localStorage</code> calls in <code>try/catch</code> to handle quota errors gracefully.</li>
+                    <li>Call <code>render(load())</code> inside <code>window.onload</code> so data reloads every time the page opens.</li>
+                    <li>Use a unique key like <code>'my_data'</code> per page to avoid clashes with other pages.</li>
+                    <li>Always escape user input before injecting it into <code>innerHTML</code> (XSS guard).</li>
+                </ul>
             </div>
         </div>
 
