@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sensor Readout — SoifGo</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #111827;
+      color: #f3f4f6;
+      text-align: center;
+      padding: 24px;
+      margin: 0;
+    }
+    h1 { color: #60a5fa; font-size: 1.6rem; }
+    button {
+      width: 90%;
+      max-width: 320px;
+      padding: 18px;
+      margin: 8px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: white;
+      background: #2563eb;
+      cursor: pointer;
+    }
+    .card {
+      background: #1f2937;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 16px auto;
+      max-width: 320px;
+    }
+    .value {
+      font-size: 2rem;
+      color: #4ade80;
+      font-weight: 700;
+    }
+    .raw {
+      font-size: 0.9rem;
+      color: #94a3b8;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📊 Sensor Readout</h1>
+
+  <button onclick="sendBluetooth('GET_DATA')">Read Sensor</button>
+
+  <div class="card">
+    <div class="value" id="value">—</div>
+    <div class="raw" id="raw">Tap the button to read sensor</div>
+  </div>
+
+  <script>
+    function sendBluetooth(text) {
+      if (window.soifgo) {
+        window.soifgo.CallSub('html_bluetooth_rx', true, text);
+      }
+    }
+
+    function html_bluetooth_tx(data) {
+      document.getElementById('raw').innerText = 'Received: ' + data;
+
+      if (data.indexOf('SENSOR:') === 0) {
+        var val = data.replace('SENSOR:', '').trim();
+        document.getElementById('value').innerText = val;
+      }
+    }
+    window.html_bluetooth_tx = html_bluetooth_tx;
+  </script>
+
+</body>
+</html>

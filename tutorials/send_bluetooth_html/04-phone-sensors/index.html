@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Phone Sensors — SoifGo</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #111827;
+      color: #f3f4f6;
+      padding: 24px;
+      margin: 0;
+    }
+    h1 { color: #60a5fa; text-align: center; font-size: 1.5rem; }
+    .card {
+      background: #1f2937;
+      padding: 16px 20px;
+      border-radius: 10px;
+      margin: 12px auto;
+      max-width: 360px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .label { color: #94a3b8; font-size: 0.95rem; }
+    .value { color: #4ade80; font-weight: 700; font-size: 1.1rem; }
+  </style>
+</head>
+<body>
+
+  <h1>📱 Phone Sensors</h1>
+
+  <div class="card"><span class="label">💡 Light</span><span class="value" id="light">—</span></div>
+  <div class="card"><span class="label">🏃 Motion X</span><span class="value" id="mx">—</span></div>
+  <div class="card"><span class="label">🏃 Motion Y</span><span class="value" id="my">—</span></div>
+  <div class="card"><span class="label">🧲 Magnetic</span><span class="value" id="magno">—</span></div>
+
+  <script>
+    function html_sensor_light(data)  { document.getElementById('light').innerText = data; }
+    function html_sensor_movex(data)  { document.getElementById('mx').innerText = data; }
+    function html_sensor_movey(data)  { document.getElementById('my').innerText = data; }
+    function html_sensor_magno(data)  { document.getElementById('magno').innerText = data; }
+
+    window.html_sensor_light = html_sensor_light;
+    window.html_sensor_movex = html_sensor_movex;
+    window.html_sensor_movey = html_sensor_movey;
+    window.html_sensor_magno = html_sensor_magno;
+
+    window.onload = function () {
+      if (window.soifgo) {
+        window.soifgo.CallSub('sensor_light');
+        window.soifgo.CallSub('sensor_move');
+        window.soifgo.CallSub('sensor_magno');
+      }
+    };
+  </script>
+
+</body>
+</html>

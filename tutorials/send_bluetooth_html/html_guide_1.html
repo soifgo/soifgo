@@ -6,12 +6,10 @@
     <meta name="theme-color" content="#2c3e50">
     <meta name="color-scheme" content="light dark">
 
-    <!-- ===== PRIMARY SEO ===== -->
     <title>SoifGo Complete Guide — HTML Bluetooth & Sensors Integration with WebView</title>
     <meta name="description" content="Complete guide for integrating HTML pages with SoifGo. Learn Bluetooth send/receive, sensor data (Light, Movement, Magneto), and custom UI development with WebView.">
     <meta name="keywords" content="SoifGo guide, HTML Bluetooth, B4A bridge, WebView integration, sensor data, light sensor, movement sensor, magneto sensor, Bluetooth send receive, custom UI, SoifGo tutorial">
 
-    <!-- ===== OPEN GRAPH (Social Media) ===== -->
     <meta property="og:title" content="SoifGo Complete Guide — HTML Bluetooth & Sensors Integration">
     <meta property="og:description" content="Complete guide for integrating HTML pages with SoifGo. Learn Bluetooth send/receive, sensor data (Light, Movement, Magneto), and custom UI development with WebView.">
     <meta property="og:type" content="website">
@@ -22,19 +20,14 @@
     <meta property="og:locale" content="en_US">
     <meta property="og:site_name" content="SoifGo Tutorials">
 
-    <!-- ===== TWITTER CARD ===== -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="SoifGo Complete Guide — HTML Bluetooth & Sensors Integration">
     <meta name="twitter:description" content="Complete guide for integrating HTML pages with SoifGo. Bluetooth send/receive, sensor data, and custom UI development.">
     <meta name="twitter:image" content="https://soifgo.github.io/soifgo/html-guide-og.jpg">
 
-    <!-- ===== CANONICAL URL ===== -->
     <link rel="canonical" href="https://soifgo.github.io/soifgo/tutorials/html-guide/">
-
-    <!-- ===== LANGUAGE ALTERNATES ===== -->
     <link rel="alternate" hreflang="en" href="https://soifgo.github.io/soifgo/tutorials/html-guide/">
 
-    <!-- ===== SCHEMA.ORG (Structured Data) ===== -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -74,7 +67,6 @@
     </script>
 
     <style>
-        /* ===== ROOT VARIABLES ===== */
         :root {
             --bg: #f5f5f5;
             --fg: #333;
@@ -91,6 +83,8 @@
             --code-bg: #1e1e1e;
             --code-text: #d4d4d4;
             --btn-home: #8B4513;
+            --purple: #9b59b6;
+            --arduino-teal: #00979C;
         }
 
         @media (prefers-color-scheme: dark) {
@@ -109,7 +103,6 @@
             }
         }
 
-        /* ===== RESET & BASE ===== */
         * {
             margin: 0;
             padding: 0;
@@ -206,7 +199,6 @@
             text-decoration: underline;
         }
 
-        /* ===== BOXES / CARDS ===== */
         .box {
             background: var(--card-bg);
             padding: 1.2rem;
@@ -241,7 +233,6 @@
             border-radius: 4px;
         }
 
-        /* ===== CODE ===== */
         code {
             background: var(--code-bg);
             color: var(--code-text);
@@ -270,7 +261,6 @@
             color: var(--code-text);
         }
 
-        /* ===== FILE NAME BADGE ===== */
         .file-name {
             background: var(--accent);
             color: white;
@@ -282,7 +272,6 @@
             margin: 8px 0;
         }
 
-        /* ===== LISTS ===== */
         ul, ol {
             padding-left: 1.4em;
             margin: 0.5em 0;
@@ -293,7 +282,6 @@
             word-break: break-word;
         }
 
-        /* ===== GRID ===== */
         .grid-2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -307,31 +295,6 @@
             }
         }
 
-        /* ===== BADGE ===== */
-        .badge {
-            display: inline-block;
-            padding: 3px 12px;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: bold;
-        }
-
-        .badge-blue {
-            background: var(--info-border);
-            color: white;
-        }
-
-        .badge-green {
-            background: var(--success-border);
-            color: white;
-        }
-
-        .badge-orange {
-            background: var(--note-border);
-            color: white;
-        }
-
-        /* ===== BUTTONS ===== */
         .btn-home {
             display: inline-block;
             background: var(--btn-home);
@@ -363,7 +326,6 @@
             margin: 2rem 0 0.5rem 0;
         }
 
-        /* ===== RESPONSIVE ===== */
         @media (max-width: 600px) {
             .container {
                 padding: 10px;
@@ -415,7 +377,6 @@
             }
         }
 
-        /* ===== UTILITY ===== */
         .text-center {
             text-align: center;
         }
@@ -440,12 +401,12 @@
             margin-top: 1.5rem;
         }
 
-        /* ===== AI WORKFLOW BOX (PURPLE THEME) ===== */
+        /* ===== AI WORKFLOW BOX (PURPLE) ===== */
         .ai-box {
-            border-left: 6px solid #9b59b6;
+            border-left: 6px solid var(--purple);
             background: var(--card-bg);
-            border: 1px solid #9b59b6;
-            background: color-mix(in oklab, var(--card-bg) 90%, #9b59b6);
+            border: 1px solid var(--purple);
+            background: color-mix(in oklab, var(--card-bg) 90%, var(--purple));
             padding: 1.2rem 1.5rem;
             border-radius: 10px;
             margin: 1rem 0 1.5rem 0;
@@ -453,7 +414,7 @@
         }
         .ai-box h3 {
             margin-top: 0;
-            color: #9b59b6;
+            color: var(--purple);
             font-size: clamp(1.1rem, 3vw, 1.4rem);
         }
         .ai-box strong {
@@ -464,8 +425,192 @@
         }
         @media (prefers-color-scheme: dark) {
             .ai-box {
-                background: color-mix(in oklab, var(--card-bg) 90%, #9b59b6);
-                border-color: #9b59b6;
+                background: color-mix(in oklab, var(--card-bg) 90%, var(--purple));
+                border-color: var(--purple);
+            }
+        }
+
+        /* ===== EXAMPLES SECTION ===== */
+        .examples-box {
+            border: 2px solid var(--purple);
+        }
+
+        .examples-box h3 {
+            margin-top: 0;
+            color: var(--purple);
+        }
+
+        .download-zip-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--purple);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin: 8px 0 4px 0;
+            transition: transform 0.15s, background 0.15s;
+            box-shadow: 0 4px 12px rgba(155, 89, 182, 0.3);
+            cursor: pointer;
+            border: none;
+        }
+
+        .download-zip-btn:hover {
+            background: #8e44ad;
+            transform: translateY(-2px);
+            text-decoration: none;
+            color: white;
+        }
+
+        .download-zip-btn:active {
+            transform: scale(0.98);
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .example-card {
+            display: flex;
+            flex-direction: column;
+            padding: 16px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            transition: transform 0.2s, border-color 0.2s, background 0.2s;
+        }
+
+        .example-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--purple);
+            background: color-mix(in oklab, var(--card-bg) 92%, var(--purple));
+        }
+
+        .ex-main-link {
+            display: block;
+            text-decoration: none;
+            color: var(--fg);
+        }
+
+        .ex-main-link:hover {
+            text-decoration: none;
+            color: var(--fg);
+        }
+
+        .example-card .ex-icon {
+            font-size: 1.8rem;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .example-card .ex-title {
+            color: var(--accent2);
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .example-card .ex-desc {
+            font-size: 0.85rem;
+            color: #888;
+            display: block;
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+
+        .ex-badges {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-top: auto;
+            padding-top: 8px;
+        }
+
+        .ex-badge {
+            font-size: 0.72rem;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            text-decoration: none;
+            transition: transform 0.15s, filter 0.15s;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .ex-badge:hover {
+            text-decoration: none;
+            transform: translateY(-1px);
+            filter: brightness(1.1);
+        }
+
+        .ex-badge-html {
+            background: rgba(52, 152, 219, 0.15);
+            color: #3498db;
+            border: 1px solid rgba(52, 152, 219, 0.3);
+        }
+
+        .ex-badge-html:hover {
+            background: rgba(52, 152, 219, 0.25);
+            color: #3498db;
+        }
+
+        .ex-badge-code {
+            background: rgba(155, 89, 182, 0.15);
+            color: var(--purple);
+            border: 1px solid rgba(155, 89, 182, 0.3);
+        }
+
+        .ex-badge-code:hover {
+            background: rgba(155, 89, 182, 0.25);
+            color: var(--purple);
+        }
+
+        .ex-badge-arduino {
+            background: rgba(0, 151, 156, 0.15);
+            color: var(--arduino-teal);
+            border: 1px solid rgba(0, 151, 156, 0.3);
+        }
+
+        .ex-badge-arduino:hover {
+            background: rgba(0, 151, 156, 0.25);
+            color: var(--arduino-teal);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .ex-badge-html {
+                background: rgba(52, 152, 219, 0.2);
+                color: #5dade2;
+            }
+            .ex-badge-html:hover {
+                background: rgba(52, 152, 219, 0.3);
+            }
+            .ex-badge-code {
+                background: rgba(155, 89, 182, 0.2);
+                color: #c084fc;
+            }
+            .ex-badge-code:hover {
+                background: rgba(155, 89, 182, 0.3);
+            }
+            .ex-badge-arduino {
+                background: rgba(0, 151, 156, 0.2);
+                color: #1abc9c;
+            }
+            .ex-badge-arduino:hover {
+                background: rgba(0, 151, 156, 0.3);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .examples-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -476,6 +621,7 @@
     <nav class="nav" aria-label="Table of Contents">
         <div class="nav-inner">
             <a href="#overview">Overview</a>
+            <a href="#examples">Examples</a>
             <a href="#bluetooth-send">BT Send</a>
             <a href="#bluetooth-receive">BT Receive</a>
             <a href="#sensors">Sensors</a>
@@ -488,7 +634,7 @@
         <h2 id="overview">📱 HTML Bluetooth & Sensors with SoifGo</h2>
 
         <!-- ============================================================ -->
-        <!-- ===== AI WORKFLOW SECTION (ENGLISH) ======================== -->
+        <!-- ===== AI WORKFLOW SECTION ================================== -->
         <!-- ============================================================ -->
         <div class="ai-box">
             <h3>🤖 Build Your Custom App Without Hard Coding!</h3>
@@ -502,18 +648,90 @@
             <p>
                 <strong>📋 How to use it in SoifGo:</strong>
             </p>
-                  <ol>
-    <li>In SoifGo, <strong>create a new button</strong>, set its Behavior to <strong>Web</strong>, select <strong>Web Offline HTML</strong>, and tap <strong>Create</strong>.</li>
-    <li>Tap the <strong>Edit</strong> button, then choose <strong>Play</strong>.</li>
-    <li>In the Play screen, <strong>tap</strong> the button you just created, then open the left‑hand menu (top‑left) and select <strong>Edit</strong>.</li>
-    <li>You are now in the edit screen. You can manually <strong>Select All</strong>, delete everything, and <strong>Paste</strong> your code, or simply use the <strong>"Select All and Paste"</strong> option from the menu to do it all in one step. Wait a moment for the syntax highlighting to appear.</li>
-    <li>Wait until the code changes from solid black to colored (syntax highlighting has finished loading). Once it's ready, tap the <strong>Close (×)</strong> icon to exit the editor and see your custom app in action!</li>
-</ol>
-            <p style="margin-top:10px; font-weight:bold; color: #9b59b6;">
+            <ol>
+                <li>In SoifGo, <strong>create a new button</strong>, set its Behavior to <strong>Web</strong>, select <strong>Web Offline HTML</strong>, and tap <strong>Create</strong>.</li>
+                <li>Tap the <strong>Edit</strong> button, then choose <strong>Play</strong>.</li>
+                <li>In the Play screen, <strong>tap</strong> the button you just created, then open the left‑hand menu (top‑left) and select <strong>Edit</strong>.</li>
+                <li>You are now in the edit screen. You can manually <strong>Select All</strong>, delete everything, and <strong>Paste</strong> your code, or simply use the <strong>"Select All and Paste"</strong> option from the menu to do it all in one step. Wait a moment for the syntax highlighting to appear.</li>
+                <li>Wait until the code changes from solid black to colored (syntax highlighting has finished loading). Once it's ready, tap the <strong>Close (×)</strong> icon to exit the editor and see your custom app in action!</li>
+            </ol>
+            <p style="margin-top:10px; font-weight:bold; color: var(--purple);">
                 🎯 That's it! Ask the AI to build any app you want and run it inside SoifGo instantly.
             </p>
         </div>
         <!-- ===== END OF AI WORKFLOW SECTION ===== -->
+
+        <!-- ============================================================ -->
+        <!-- ===== WORKING EXAMPLES SECTION ============================= -->
+        <!-- ============================================================ -->
+        <div class="box examples-box" id="examples">
+            <h3>📦 Working Examples</h3>
+            <p>
+                Ready-to-use controllers. Each example includes:
+                <span class="ex-badge ex-badge-html">HTML</span> live demo,
+                <span class="ex-badge ex-badge-code">HTML Code</span> copyable code,
+                and where available
+                <span class="ex-badge ex-badge-arduino">Arduino ↓</span> sketch.
+            </p>
+
+            <a href="html_sample.zip" class="download-zip-btn" download>
+                📥 Download all examples as ZIP
+            </a>
+
+            <div class="examples-grid">
+                <div class="example-card">
+                    <a href="01-led-blink/index.html" class="ex-main-link">
+                        <span class="ex-icon">💡</span>
+                        <span class="ex-title">LED Blink</span>
+                        <span class="ex-desc">Toggle an LED on/off via Bluetooth</span>
+                    </a>
+                    <div class="ex-badges">
+                        <a href="01-led-blink/index.html" class="ex-badge ex-badge-html" title="Live demo">HTML</a>
+                        <a href="01-led-blink/code.html" class="ex-badge ex-badge-code" title="View & copy code">HTML Code</a>
+                        <a href="01-led-blink/arduino.ino" class="ex-badge ex-badge-arduino" download title="Download Arduino sketch">Arduino ↓</a>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <a href="02-sensor-readout/index.html" class="ex-main-link">
+                        <span class="ex-icon">📊</span>
+                        <span class="ex-title">Sensor Readout</span>
+                        <span class="ex-desc">Read analog sensor values on your phone</span>
+                    </a>
+                    <div class="ex-badges">
+                        <a href="02-sensor-readout/index.html" class="ex-badge ex-badge-html" title="Live demo">HTML</a>
+                        <a href="02-sensor-readout/code.html" class="ex-badge ex-badge-code" title="View & copy code">HTML Code</a>
+                        <a href="02-sensor-readout/arduino.ino" class="ex-badge ex-badge-arduino" download title="Download Arduino sketch">Arduino ↓</a>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <a href="03-robot-controller/index.html" class="ex-main-link">
+                        <span class="ex-icon">🤖</span>
+                        <span class="ex-title">Robot Controller</span>
+                        <span class="ex-desc">Directional buttons for robot control</span>
+                    </a>
+                    <div class="ex-badges">
+                        <a href="03-robot-controller/index.html" class="ex-badge ex-badge-html" title="Live demo">HTML</a>
+                        <a href="03-robot-controller/code.html" class="ex-badge ex-badge-code" title="View & copy code">HTML Code</a>
+                        <a href="03-robot-controller/arduino.ino" class="ex-badge ex-badge-arduino" download title="Download Arduino sketch">Arduino ↓</a>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <a href="04-phone-sensors/index.html" class="ex-main-link">
+                        <span class="ex-icon">📱</span>
+                        <span class="ex-title">Phone Sensors</span>
+                        <span class="ex-desc">Stream phone light / motion / magnetic data</span>
+                    </a>
+                    <div class="ex-badges">
+                        <a href="04-phone-sensors/index.html" class="ex-badge ex-badge-html" title="Live demo">HTML</a>
+                        <a href="04-phone-sensors/code.html" class="ex-badge ex-badge-code" title="View & copy code">HTML Code</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ===== END WORKING EXAMPLES SECTION ========================= -->
 
         <!-- ===== ORIGINAL OVERVIEW BOX ===== -->
         <div class="box">
