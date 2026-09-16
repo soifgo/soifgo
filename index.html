@@ -6,8 +6,8 @@
 
   <title>SoifGo — Custom Android Hardware Controller for Arduino, ESP32 & HC-05</title>
 
-  <meta name="description" content="SoifGo is a free Android app that turns your phone into a custom hardware controller. Control Arduino, ESP32, ESP8266 and HC-05 via Bluetooth, MQTT or HTML/JS WebView. Works offline." />
-  <meta name="keywords" content="Android hardware controller, Arduino Bluetooth controller, ESP32 controller, HC-05 Android, MQTT Android, HTML JavaScript hardware controller, WebView Bluetooth, phone sensor controller, SoifGo" />
+  <meta name="description" content="SoifGo is a free Android app that turns your phone into a custom hardware controller. Control Arduino, ESP32, ESP8266 and HC-05 via Bluetooth, MQTT or HTML/JS WebView. Works offline. Includes 4 working examples." />
+  <meta name="keywords" content="Android hardware controller, Arduino Bluetooth controller, ESP32 controller, HC-05 Android, MQTT Android, HTML JavaScript hardware controller, WebView Bluetooth, phone sensor controller, SoifGo, HTML examples" />
 
   <meta property="og:title" content="SoifGo — Custom Android Hardware Controller" />
   <meta property="og:description" content="Control Arduino, ESP32, ESP8266 and HC-05 with your Android phone. Bluetooth, MQTT, HTML/JS WebView, and phone sensors. Free and offline-capable." />
@@ -92,7 +92,7 @@
   }
   </script>
 
-  <!-- ====== THEME INITIALIZER (Prevent Flash of Wrong Theme) ====== -->
+  <!-- ====== THEME INITIALIZER ====== -->
   <script>
     (function() {
       var savedTheme = localStorage.getItem('soifgo-theme');
@@ -112,6 +112,9 @@
     [data-theme="dark"] {
       --primary: #4f8cff;
       --primary-light: #6aa0ff;
+      --purple: #9b59b6;
+      --purple-light: #c084fc;
+      --arduino-teal: #1abc9c;
       --bg: #0f172a;
       --bg-card: #1e293b;
       --bg-nav: rgba(15, 23, 42, 0.92);
@@ -142,6 +145,9 @@
     [data-theme="light"] {
       --primary: #2563eb;
       --primary-light: #3b82f6;
+      --purple: #9333ea;
+      --purple-light: #a855f7;
+      --arduino-teal: #0d9488;
       --bg: #f8fafc;
       --bg-card: #ffffff;
       --bg-nav: rgba(255, 255, 255, 0.92);
@@ -421,55 +427,197 @@
       font-weight: 700;
     }
 
-    /* ====== CARDS ====== */
-    .card-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 16px;
-      margin-top: 20px;
-    }
-
-    .card {
-      background: var(--hover-bg);
-      padding: 24px 20px;
+    /* ====== FEATURE CARD (FULL WIDTH) ====== */
+    .feature-card {
+      display: block;
+      padding: 28px 24px;
+      background: linear-gradient(135deg, rgba(155, 89, 182, 0.08), rgba(79, 140, 255, 0.04));
+      border: 2px solid var(--purple);
       border-radius: var(--radius);
-      border: 1px solid var(--border-card);
       transition: var(--transition);
       text-decoration: none;
       color: var(--text);
-      display: block;
+      margin-top: 20px;
+      position: relative;
+      overflow: hidden;
     }
 
-    .card:hover {
-      background: var(--hover-bg-card);
-      border-color: var(--primary);
+    .feature-card:hover {
+      background: linear-gradient(135deg, rgba(155, 89, 182, 0.15), rgba(79, 140, 255, 0.08));
       transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(155, 89, 182, 0.2);
     }
 
-    .card .card-icon {
-      font-size: 2.5rem;
+    .feature-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--purple), var(--primary));
+    }
+
+    .feature-card .feature-icon {
+      font-size: 3rem;
       display: block;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
 
-    .card h3 {
+    .feature-card h3 {
       color: var(--text-main);
-      margin: 0 0 8px 0;
-      font-size: 1.15rem;
+      margin: 0 0 10px 0;
+      font-size: 1.4rem;
     }
 
-    .card p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      margin: 0;
+    .feature-card p {
+      color: var(--text);
+      font-size: 1rem;
+      margin: 0 0 14px 0;
+      max-width: 700px;
     }
 
-    .card .card-link {
+    .feature-card .feature-cta {
       display: inline-block;
+      color: var(--purple-light);
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    /* ====== EXAMPLES MINI-GRID ====== */
+    .examples-mini-title {
+      color: var(--text-main);
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 28px 0 12px 0;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .examples-mini-title .badge-new {
+      font-size: 0.7rem;
+      background: var(--purple);
+      color: white;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .examples-mini-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 12px;
       margin-top: 12px;
-      color: var(--primary);
+    }
+
+    .mini-card {
+      display: flex;
+      flex-direction: column;
+      padding: 14px 12px;
+      background: var(--hover-bg);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-sm);
+      transition: var(--transition);
+    }
+
+    .mini-card:hover {
+      background: var(--hover-bg-card);
+      border-color: var(--purple);
+      transform: translateY(-3px);
+    }
+
+    .mini-main-link {
+      display: block;
+      text-decoration: none;
+      color: var(--text);
+      flex: 1;
+    }
+
+    .mini-main-link:hover {
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .mini-card .mini-icon {
+      font-size: 1.8rem;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .mini-card .mini-title {
+      color: var(--text-main);
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .mini-card .mini-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .mini-badges {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+      margin-top: auto;
+      padding-top: 8px;
+      border-top: 1px solid var(--border-card);
+    }
+
+    .mini-badge {
+      font-size: 0.65rem;
+      padding: 3px 7px;
+      border-radius: 4px;
       font-weight: 600;
-      font-size: 0.9rem;
+      text-decoration: none;
+      transition: transform 0.15s, filter 0.15s;
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    .mini-badge:hover {
+      text-decoration: none;
+      transform: translateY(-1px);
+      filter: brightness(1.15);
+    }
+
+    .mini-badge.html {
+      background: rgba(52, 152, 219, 0.15);
+      color: #5dade2;
+    }
+
+    .mini-badge.html:hover {
+      background: rgba(52, 152, 219, 0.3);
+      color: #5dade2;
+    }
+
+    .mini-badge.code {
+      background: rgba(155, 89, 182, 0.15);
+      color: var(--purple-light);
+    }
+
+    .mini-badge.code:hover {
+      background: rgba(155, 89, 182, 0.3);
+      color: var(--purple-light);
+    }
+
+    .mini-badge.arduino {
+      background: rgba(26, 188, 156, 0.15);
+      color: var(--arduino-teal);
+    }
+
+    .mini-badge.arduino:hover {
+      background: rgba(26, 188, 156, 0.3);
+      color: var(--arduino-teal);
     }
 
     /* ====== START BUTTONS ====== */
@@ -681,9 +829,9 @@
       .logo-row img { height: 55px; }
       .hero-tagline { font-size: 1.1rem; }
       .cta-button { padding: 16px 32px; font-size: 1rem; }
-      .card-grid { grid-template-columns: 1fr; }
       .start-grid { grid-template-columns: 1fr; }
       .tutorial-list { grid-template-columns: 1fr; }
+      .examples-mini-grid { grid-template-columns: 1fr 1fr; }
       section { padding: 1.4rem; }
       h2 { font-size: 1.3em; }
       nav a { font-size: 0.85rem; padding: 0.5rem 1rem; }
@@ -691,6 +839,8 @@
       .story-section { padding: 1.4rem; }
       .story-content p { font-size: 0.98rem; }
       .story-highlight p { font-size: 1.05rem; }
+      .feature-card { padding: 20px 18px; }
+      .feature-card h3 { font-size: 1.2rem; }
     }
 
     @media (max-width: 480px) {
@@ -704,6 +854,9 @@
       .story-section { padding: 1.1rem; }
       .story-content p { font-size: 0.95rem; }
       .story-highlight p { font-size: 1rem; }
+      .examples-mini-grid { grid-template-columns: 1fr; }
+      .feature-card { padding: 18px 16px; }
+      .feature-card h3 { font-size: 1.1rem; }
     }
   </style>
 </head>
@@ -809,27 +962,76 @@
     <section id="what">
       <h2>What can you build with SoifGo?</h2>
 
-      <div class="card-grid">
-        <a href="https://soifgo.github.io/soifgo/tutorials/BluetoothExample1/bluetooth_sample1.html" class="card">
-          <span class="card-icon">🤖</span>
-          <h3>Robot Controller</h3>
-          <p>Control a robot with directional buttons, speed sliders, and live sensor feedback via Bluetooth.</p>
-          <span class="card-link">View tutorial →</span>
-        </a>
+      <!-- Custom HTML Interface — Full Width Feature -->
+      <a href="tutorials/send_bluetooth_html/html_guide_1.html" class="feature-card">
+        <span class="feature-icon">🎨</span>
+        <h3>Custom HTML Interface</h3>
+        <p>
+          Build any interface with HTML, CSS, and JavaScript — then connect it to Bluetooth
+          and phone sensors. The complete guide covers everything: sending and receiving
+          Bluetooth data, reading phone sensors, and running your custom UI inside SoifGo's WebView.
+        </p>
+        <span class="feature-cta">Open the complete guide →</span>
+      </a>
 
-        <a href="https://soifgo.github.io/soifgo/tutorials/Esp8266_wifi_mqtt/esp8266_mqtt.html" class="card">
-          <span class="card-icon">📊</span>
-          <h3>IoT Dashboard</h3>
-          <p>Display temperature, humidity, RPM, and other sensor data from MQTT or HTTP sources.</p>
-          <span class="card-link">View tutorial →</span>
-        </a>
+      <!-- Working Examples — Mini Grid -->
+      <div class="examples-mini-title">
+        <span>📦</span>
+        <span>Working Examples</span>
+        <span class="badge-new">4 NEW</span>
+      </div>
 
-        <a href="https://soifgo.github.io/soifgo/tutorials/send_bluetooth_html/html_guide_1.html" class="card">
-          <span class="card-icon">🎨</span>
-          <h3>Custom HTML Interface</h3>
-          <p>Build any interface with HTML/CSS/JS and connect it to Bluetooth and phone sensors.</p>
-          <span class="card-link">View tutorial →</span>
-        </a>
+      <div class="examples-mini-grid">
+        <div class="mini-card">
+          <a href="tutorials/send_bluetooth_html/01-led-blink/index.html" class="mini-main-link">
+            <span class="mini-icon">💡</span>
+            <span class="mini-title">LED Blink</span>
+            <span class="mini-desc">Toggle an LED on/off via Bluetooth</span>
+          </a>
+          <div class="mini-badges">
+            <a href="tutorials/send_bluetooth_html/01-led-blink/index.html" class="mini-badge html" title="Live demo">HTML</a>
+            <a href="tutorials/send_bluetooth_html/01-led-blink/code.html" class="mini-badge code" title="View & copy code">Code</a>
+            <a href="tutorials/send_bluetooth_html/01-led-blink/arduino.ino" class="mini-badge arduino" download title="Download Arduino sketch">Arduino ↓</a>
+          </div>
+        </div>
+
+        <div class="mini-card">
+          <a href="tutorials/send_bluetooth_html/02-sensor-readout/index.html" class="mini-main-link">
+            <span class="mini-icon">📊</span>
+            <span class="mini-title">Sensor Readout</span>
+            <span class="mini-desc">Read analog sensor values</span>
+          </a>
+          <div class="mini-badges">
+            <a href="tutorials/send_bluetooth_html/02-sensor-readout/index.html" class="mini-badge html" title="Live demo">HTML</a>
+            <a href="tutorials/send_bluetooth_html/02-sensor-readout/code.html" class="mini-badge code" title="View & copy code">Code</a>
+            <a href="tutorials/send_bluetooth_html/02-sensor-readout/arduino.ino" class="mini-badge arduino" download title="Download Arduino sketch">Arduino ↓</a>
+          </div>
+        </div>
+
+        <div class="mini-card">
+          <a href="tutorials/send_bluetooth_html/03-robot-controller/index.html" class="mini-main-link">
+            <span class="mini-icon">🤖</span>
+            <span class="mini-title">Robot Controller</span>
+            <span class="mini-desc">Directional buttons for robots</span>
+          </a>
+          <div class="mini-badges">
+            <a href="tutorials/send_bluetooth_html/03-robot-controller/index.html" class="mini-badge html" title="Live demo">HTML</a>
+            <a href="tutorials/send_bluetooth_html/03-robot-controller/code.html" class="mini-badge code" title="View & copy code">Code</a>
+            <a href="tutorials/send_bluetooth_html/03-robot-controller/arduino.ino" class="mini-badge arduino" download title="Download Arduino sketch">Arduino ↓</a>
+          </div>
+        </div>
+
+        <div class="mini-card">
+          <a href="tutorials/send_bluetooth_html/04-phone-sensors/index.html" class="mini-main-link">
+            <span class="mini-icon">📱</span>
+            <span class="mini-title">Phone Sensors</span>
+            <span class="mini-desc">Stream phone sensor data</span>
+          </a>
+          <div class="mini-badges">
+            <a href="tutorials/send_bluetooth_html/04-phone-sensors/index.html" class="mini-badge html" title="Live demo">HTML</a>
+            <a href="tutorials/send_bluetooth_html/04-phone-sensors/code.html" class="mini-badge code" title="View & copy code">Code</a>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -876,11 +1078,11 @@
           </a>
         </li>
         <li>
-          <a href="https://soifgo.github.io/soifgo/tutorials/send_bluetooth_html/html_guide_1.html">
+          <a href="tutorials/send_bluetooth_html/html_guide_1.html">
             <span class="no-icon">🎨</span>
             <div>
               <strong>HTML + Bluetooth + Sensors</strong>
-              <span>Build a custom controller with HTML/JS</span>
+              <span>Full guide + 4 working examples</span>
             </div>
           </a>
         </li>
@@ -1041,6 +1243,11 @@
         <strong>How do I get started with SoifGo?</strong>
         <p>Download the app, open the <a href="https://soifgo.github.io/soifgo/tutorials/soifgo_info/soifgo_info.html">Complete User Guide</a>, and follow the step-by-step tutorials. No programming knowledge is required for basic use.</p>
       </div>
+
+      <div class="faq-item">
+        <strong>Are there ready-to-use examples?</strong>
+        <p>Yes. The <a href="tutorials/send_bluetooth_html/html_guide_1.html">HTML + Bluetooth + Sensors</a> guide includes 4 complete examples: LED Blink, Sensor Readout, Robot Controller, and Phone Sensors. Each one shows the live demo, the copyable HTML code, and (where relevant) the Arduino sketch.</p>
+      </div>
     </section>
 
     <!-- ====== DEMO CAROUSEL ====== -->
@@ -1081,6 +1288,8 @@
       <a href="policy_soifgo.html">Privacy Policy</a>
       &nbsp;|&nbsp;
       <a href="docs.html">Documentation</a>
+      &nbsp;|&nbsp;
+      <a href="tutorials/send_bluetooth_html/html_guide_1.html">📦 Examples</a>
       &nbsp;|&nbsp;
       <a href="https://github.com/soifgo/soifgo" target="_blank" rel="noopener">GitHub</a>
     </p>
