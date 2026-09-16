@@ -96,7 +96,7 @@
   }
   </script>
 
-  <!-- ====== THEME INITIALIZER ====== -->
+  <!-- ====== THEME INITIALIZER (Prevent Flash of Wrong Theme) ====== -->
   <script>
     (function() {
       var savedTheme = localStorage.getItem('soifgo-theme');
@@ -111,7 +111,7 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* ====== DARK THEME ====== */
+    /* ====== DARK THEME (Default) ====== */
     :root,
     [data-theme="dark"] {
       --primary: #4f8cff;
