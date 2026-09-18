@@ -1,6 +1,6 @@
 /*
-  SoifGo — Robot Controller for TDA7073A (Software PWM)
-  Translated from BASCOM-AVR by Saeid Moghadam
+  SoifGo — Speed Control  for TDA7073A (Software PWM)
+ 
   Target: Arduino Uno R3 (ATmega328P)
 */
 
