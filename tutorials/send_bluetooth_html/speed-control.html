@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoifGo — Speed Control Example</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.7;
+            color: #e8edf5;
+            background: #0f172a;
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h2, h3 {
+            color: #f1f5f9;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            padding-bottom: 8px;
+        }
+        h2 { font-size: 1.6em; margin-top: 30px; }
+        h3 { font-size: 1.2em; border-bottom: none; color: #6aa0ff; margin-top: 25px; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: #1e293b;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        th {
+            background: #1a2a4a;
+            color: #cbd5e1;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85em;
+            letter-spacing: 0.5px;
+        }
+        tr:last-child td { border-bottom: none; }
+        tr:hover { background: rgba(79, 140, 255, 0.08); }
+        code {
+            background: rgba(255,255,255,0.06);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: "Consolas", "Monaco", monospace;
+            font-size: 0.9em;
+            color: #c084fc;
+        }
+        pre {
+            background: #1e293b;
+            padding: 18px;
+            border-radius: 10px;
+            overflow-x: auto;
+            border: 1px solid rgba(255,255,255,0.06);
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+        pre code {
+            background: none;
+            padding: 0;
+            color: #e8edf5;
+        }
+        .schematic-placeholder {
+            margin: 25px 0;
+            padding: 20px;
+            background: #1e293b;
+            border: 1px dashed rgba(255,255,255,0.15);
+            border-radius: 10px;
+            text-align: center;
+            color: #94a3b8;
+        }
+        .schematic-placeholder video {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-top: 10px;
+            background: #000;
+        }
+        .note {
+            background: rgba(79, 140, 255, 0.08);
+            border-left: 4px solid #4f8cff;
+            padding: 15px 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+            font-size: 0.95em;
+        }
+        .note strong { color: #6aa0ff; }
+    </style>
+</head>
+<body>
+
+    <h2>📋 Compatible Motor Driver Chips (Dual DC Motor)</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Chip</th>
+                <th>Max Current per Channel</th>
+                <th>Voltage Range</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>TDA7073A</strong></td>
+                <td>600 mA</td>
+                <td>3V – 18V</td>
+                <td>The one you have; great for small motors</td>
+            </tr>
+            <tr>
+                <td><strong>L293D</strong></td>
+                <td>600 mA</td>
+                <td>4.5V – 36V</td>
+                <td>Very common but old; high voltage drop</td>
+            </tr>
+            <tr>
+                <td><strong>SN754410</strong></td>
+                <td>1A</td>
+                <td>4.5V – 36V</td>
+                <td>Improved L293 with thermal protection</td>
+            </tr>
+            <tr>
+                <td><strong>TA7291P</strong></td>
+                <td>1A (2A peak)</td>
+                <td>4.5V – 20V</td>
+                <td>Designed for DC motors; built-in flyback diodes</td>
+            </tr>
+            <tr>
+                <td><strong>TB6612FNG</strong></td>
+                <td>1.2A (3.2A peak)</td>
+                <td>15V max</td>
+                <td>Very efficient, low drop; modern L293D replacement</td>
+            </tr>
+            <tr>
+                <td><strong>DRV8833</strong></td>
+                <td>1.5A (2A peak)</td>
+                <td>2.7V – 10.8V</td>
+                <td>Battery-friendly; full protection features</td>
+            </tr>
+            <tr>
+                <td><strong>MX1508</strong></td>
+                <td>1.5A (2.5A peak)</td>
+                <td>1.8V – 10V</td>
+                <td>Very cheap; ideal for toys and small robots</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>📝 About the Speed Control Example</h2>
+
+    <p>This Arduino sketch lets you control the <strong>speed of two DC motors independently</strong> over Bluetooth. It listens for commands via a module like <strong>HC-05</strong> or <strong>JDY-31</strong> on pins 10 and 11, and drives two motors through a motor driver chip.</p>
+
+    <h3>How it works:</h3>
+    <ul>
+        <li><code>setup()</code> – Configures all motor driver pins as outputs, starts serial communication at 9600 baud, and sets the initial speed for each motor (<code>speedA</code> and <code>speedB</code>, default 180).</li>
+        <li><code>applySpeed()</code> – Applies the current <code>speedA</code> and <code>speedB</code> values to the PWM pins. Called after every speed change.</li>
+        <li><code>forward()</code> / <code>backward()</code> / <code>left()</code> / <code>right()</code> – Each function sets the direction pins HIGH or LOW to make the motors turn in the desired direction, then calls <code>applySpeed()</code>.</li>
+        <li><code>stopAll()</code> – Sets all direction pins LOW and PWM to 0, cutting power to both motors.</li>
+        <li><code>loop()</code> – Waits for a command from Bluetooth, trims whitespace, and compares it to known strings. It also handles <code>SPD_A:xxx</code> and <code>SPD_B:xxx</code> to update each motor's speed independently.</li>
+    </ul>
+
+    <h3>Commands accepted:</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Command</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><code>FWD</code></td><td>Move forward</td></tr>
+            <tr><td><code>BACK</code></td><td>Move backward</td></tr>
+            <tr><td><code>LEFT</code></td><td>Turn left</td></tr>
+            <tr><td><code>RIGHT</code></td><td>Turn right</td></tr>
+            <tr><td><code>STOP</code></td><td>Stop both motors</td></tr>
+            <tr><td><code>SPD_A:200</code></td><td>Set Motor A speed (0–255)</td></tr>
+            <tr><td><code>SPD_B:150</code></td><td>Set Motor B speed (0–255)</td></tr>
+        </tbody>
+    </table>
+
+    <h3>📄 Full Arduino Sketch</h3>
+    <pre><code>/*
+  SoifGo — Speed Control Example (independent speed per motor)
+  Receives FWD / BACK / LEFT / RIGHT / STOP / SPD_A:xxx / SPD_B:xxx
+*/
+
+#include &lt;SoftwareSerial.h&gt;
+
+SoftwareSerial bluetooth(10, 11);
+
+// Motor driver pins
+const byte ENA = 5;  // PWM speed for motor A
+const byte IN1 = 6;
+const byte IN2 = 7;
+const byte ENB = 9;  // PWM speed for motor B
+const byte IN3 = 8;
+const byte IN4 = 12;
+
+// Independent speed for each motor (0-255)
+byte speedA = 180;
+byte speedB = 180;
+
+void setup() {
+  pinMode(ENA, OUTPUT); pinMode(IN1, OUTPUT); pinMode(IN2, OUTPUT);
+  pinMode(ENB, OUTPUT); pinMode(IN3, OUTPUT); pinMode(IN4, OUTPUT);
+
+  Serial.begin(9600);
+  bluetooth.begin(9600);
+  bluetooth.println("READY");
+
+  analogWrite(ENA, speedA);
+  analogWrite(ENB, speedB);
+}
+
+void applySpeed() {
+  analogWrite(ENA, speedA);
+  analogWrite(ENB, speedB);
+}
+
+void forward() { digitalWrite(IN1, HIGH); digitalWrite(IN2, LOW); digitalWrite(IN3, HIGH); digitalWrite(IN4, LOW); }
+void backward(){ digitalWrite(IN1, LOW);  digitalWrite(IN2, HIGH);digitalWrite(IN3, LOW);  digitalWrite(IN4, HIGH); }
+void left()    { digitalWrite(IN1, LOW);  digitalWrite(IN2, HIGH);digitalWrite(IN3, HIGH); digitalWrite(IN4, LOW); }
+void right()   { digitalWrite(IN1, HIGH); digitalWrite(IN2, LOW); digitalWrite(IN3, LOW);  digitalWrite(IN4, HIGH); }
+void stopAll() { digitalWrite(IN1, LOW);  digitalWrite(IN2, LOW); digitalWrite(IN3, LOW);  digitalWrite(IN4, LOW); }
+
+void loop() {
+  if (bluetooth.available()) {
+    String cmd = bluetooth.readStringUntil('\n');
+    cmd.trim();
+
+    if (cmd == "FWD") { forward(); applySpeed(); }
+    else if (cmd == "BACK") { backward(); applySpeed(); }
+    else if (cmd == "LEFT") { left(); applySpeed(); }
+    else if (cmd == "RIGHT") { right(); applySpeed(); }
+    else if (cmd == "STOP") { stopAll(); }
+    else if (cmd.startsWith("SPD_A:")) {
+      int val = cmd.substring(6).toInt();
+      if (val &gt;= 0 &amp;&amp; val &lt;= 255) {
+        speedA = val;
+        applySpeed();
+        bluetooth.print("SPEED_A:");
+        bluetooth.println(speedA);
+      } else {
+        bluetooth.println("ERR:SPEED_RANGE");
+      }
+    }
+    else if (cmd.startsWith("SPD_B:")) {
+      int val = cmd.substring(6).toInt();
+      if (val &gt;= 0 &amp;&amp; val &lt;= 255) {
+        speedB = val;
+        applySpeed();
+        bluetooth.print("SPEED_B:");
+        bluetooth.println(speedB);
+      } else {
+        bluetooth.println("ERR:SPEED_RANGE");
+      }
+    }
+  }
+}</code></pre>
+
+    <div class="note">
+        <strong>⚠️ Wiring notes for Arduino Uno R3:</strong><br>
+        • Bluetooth module: TX → pin 10, RX → pin 11 (via voltage divider if using 3.3V module)<br>
+        • Motor driver pins used in this example: ENA=5, IN1=6, IN2=7, ENB=9, IN3=8, IN4=12<br>
+        • You can adapt these pin numbers to match your specific driver chip (TDA7073A, L293D, TB6612, etc.) by changing the <code>const byte</code> definitions at the top.<br>
+        • For TDA7073A, replace the pin definitions with IN+ / IN− pairs and adjust the direction functions accordingly. The speed logic remains the same.
+    </div>
+	
+	  <h3> Schematic (Arduino Uno R3 Target)</h3>
+
+<div class="schematic-placeholder">
+    <img src="speed_control.png" alt="Arduino Uno R3 + Bluetooth + Motor Driver Schematic"
+         style="width:80%; max-width:800px; height:auto; border-radius:10px; margin-top:10px; display:block; margin-left:auto; margin-right:auto;">
+</div>
+<div class="schematic-placeholder">
+    <img src="speed_control2.jpg" alt="Arduino Uno R3 + Bluetooth + Motor Driver Schematic"
+         style="width:80%; max-width:800px; height:auto; border-radius:10px; margin-top:10px; display:block; margin-left:auto; margin-right:auto;">
+</div>
+    <h3>🎬 Test Video</h3>
+
+<div class="schematic-placeholder">
+    <video controls style="width:40%; max-width:720px; aspect-ratio:720/1024; border-radius:10px; margin-top:10px; background:#000;">
+        <source src="Speed_Control.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <p style="font-size:0.85em; margin-top:10px;">Speed Control test � two motors with independent speed</p>
+</div>
+
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Robot Controller — HTML Code</title>
+    <title>Speed Control — HTML Code</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -58,7 +58,7 @@
 <body>
 
     <div class="header">
-        <h1>🤖 Robot Controller — HTML Code</h1>
+        <h1>⚙️ Speed Control — HTML Code</h1>
         <div class="actions">
             <button class="copy-btn" id="copyBtn" onclick="copyCode()">📋 Copy Code</button>
             <a href="index.html" class="back-btn">← View Demo</a>
@@ -70,7 +70,7 @@
 &lt;head&gt;
   &lt;meta charset="UTF-8"&gt;
   &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
-  &lt;title&gt;Robot Controller — SoifGo&lt;/title&gt;
+  &lt;title&gt;Speed Control — SoifGo&lt;/title&gt;
   &lt;style&gt;
     body {
       font-family: sans-serif;
@@ -82,27 +82,45 @@
       touch-action: manipulation;
     }
     h1 { color: #60a5fa; font-size: 1.5rem; }
-    .pad {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      grid-template-rows: 1fr 1fr 1fr;
-      gap: 10px;
-      max-width: 340px;
-      margin: 20px auto;
-    }
-    .pad button {
-      padding: 24px 0;
-      border: none;
+
+    .speed-box {
+      background: #1f2937;
+      padding: 18px;
       border-radius: 12px;
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: white;
-      background: #2563eb;
-      cursor: pointer;
+      max-width: 320px;
+      margin: 20px auto;
+      text-align: left;
     }
-    .pad .stop { background: #dc2626; }
-    .pad button:active { transform: scale(0.95); }
-    .empty { visibility: hidden; }
+    .speed-box h3 {
+      font-size: 1rem;
+      color: #9ca3af;
+      margin-bottom: 12px;
+      text-align: center;
+      font-weight: 600;
+    }
+    .speed-row {
+      margin-bottom: 16px;
+    }
+    .speed-row:last-child {
+      margin-bottom: 0;
+    }
+    .speed-row label {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 6px;
+      color: #d1d5db;
+    }
+    .speed-row input[type="range"] {
+      width: 100%;
+      accent-color: #60a5fa;
+    }
+    .speed-row .val {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #60a5fa;
+      float: right;
+    }
+
     .status {
       background: #1f2937;
       padding: 14px;
@@ -116,20 +134,20 @@
 &lt;/head&gt;
 &lt;body&gt;
 
-  &lt;h1&gt;🤖 Robot Controller&lt;/h1&gt;
+  &lt;h1&gt;⚙️ Speed Control&lt;/h1&gt;
 
-  &lt;div class="pad"&gt;
-    &lt;button class="empty"&gt;&lt;/button&gt;
-    &lt;button onclick="send('FWD')"&gt;↑&lt;/button&gt;
-    &lt;button class="empty"&gt;&lt;/button&gt;
+  &lt;div class="speed-box"&gt;
+    &lt;h3&gt;Motor Speed&lt;/h3&gt;
 
-    &lt;button onclick="send('LEFT')"&gt;←&lt;/button&gt;
-    &lt;button class="stop" onclick="send('STOP')"&gt;■&lt;/button&gt;
-    &lt;button onclick="send('RIGHT')"&gt;→&lt;/button&gt;
+    &lt;div class="speed-row"&gt;
+      &lt;label for="speedA"&gt;Motor A (Left) &lt;span class="val" id="speedAVal"&gt;180&lt;/span&gt;&lt;/label&gt;
+      &lt;input type="range" id="speedA" min="0" max="255" value="180"&gt;
+    &lt;/div&gt;
 
-    &lt;button class="empty"&gt;&lt;/button&gt;
-    &lt;button onclick="send('BACK')"&gt;↓&lt;/button&gt;
-    &lt;button class="empty"&gt;&lt;/button&gt;
+    &lt;div class="speed-row"&gt;
+      &lt;label for="speedB"&gt;Motor B (Right) &lt;span class="val" id="speedBVal"&gt;180&lt;/span&gt;&lt;/label&gt;
+      &lt;input type="range" id="speedB" min="0" max="255" value="180"&gt;
+    &lt;/div&gt;
   &lt;/div&gt;
 
   &lt;div class="status" id="status"&gt;Ready.&lt;/div&gt;
@@ -141,6 +159,24 @@
         document.getElementById('status').innerText = 'Sent: ' + cmd;
       }
     }
+
+    const sliderA = document.getElementById('speedA');
+    const speedAVal = document.getElementById('speedAVal');
+    sliderA.addEventListener('input', function () {
+      speedAVal.textContent = this.value;
+    });
+    sliderA.addEventListener('change', function () {
+      send('SPD_A:' + this.value);
+    });
+
+    const sliderB = document.getElementById('speedB');
+    const speedBVal = document.getElementById('speedBVal');
+    sliderB.addEventListener('input', function () {
+      speedBVal.textContent = this.value;
+    });
+    sliderB.addEventListener('change', function () {
+      send('SPD_B:' + this.value);
+    });
   &lt;/script&gt;
 
 &lt;/body&gt;
