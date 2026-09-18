@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SoifGo — Speed Control Example</title>
+    <title>SoifGo — Speed Control (TDA7073A / Software PWM)</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -76,6 +76,7 @@
             text-align: center;
             color: #94a3b8;
         }
+        .schematic-placeholder img,
         .schematic-placeholder video {
             max-width: 100%;
             border-radius: 10px;
@@ -91,6 +92,15 @@
             font-size: 0.95em;
         }
         .note strong { color: #6aa0ff; }
+        .warn {
+            background: rgba(255, 193, 7, 0.08);
+            border-left: 4px solid #ffc107;
+            padding: 15px 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+            font-size: 0.95em;
+        }
+        .warn strong { color: #ffc107; }
     </style>
 </head>
 <body>
@@ -111,7 +121,7 @@
                 <td><strong>TDA7073A</strong></td>
                 <td>600 mA</td>
                 <td>3V – 18V</td>
-                <td>The one you have; great for small motors</td>
+                <td>The one used here; great for small motors</td>
             </tr>
             <tr>
                 <td><strong>L293D</strong></td>
@@ -154,15 +164,25 @@
 
     <h2>📝 About the Speed Control Example</h2>
 
-    <p>This Arduino sketch lets you control the <strong>speed of two DC motors independently</strong> over Bluetooth. It listens for commands via a module like <strong>HC-05</strong> or <strong>JDY-31</strong> on pins 10 and 11, and drives two motors through a motor driver chip.</p>
+    <p>This Arduino sketch lets you control the <strong>speed of two DC motors independently</strong> over Bluetooth using a <strong>TDA7073A</strong> motor driver. It uses <strong>software PWM</strong> (no hardware PWM pins required) and communicates via the Arduino Uno's built-in hardware serial (pins 0 and 1).</p>
+
+    <div class="warn">
+        <strong>⚠️ Important — Software PWM:</strong><br>
+        Unlike the typical <code>analogWrite()</code> approach, this sketch generates PWM in software inside <code>loop()</code>. This means:
+        <ul>
+            <li>Any output pin can be used (here: <code>A2, A3, A4, A5</code>).</li>
+            <li>The PWM frequency is low (~a few hundred Hz) and depends on loop speed.</li>
+            <li>Serial parsing is done in the same loop, so keep commands short.</li>
+        </ul>
+    </div>
 
     <h3>How it works:</h3>
     <ul>
-        <li><code>setup()</code> – Configures all motor driver pins as outputs, starts serial communication at 9600 baud, and sets the initial speed for each motor (<code>speedA</code> and <code>speedB</code>, default 180).</li>
-        <li><code>applySpeed()</code> – Applies the current <code>speedA</code> and <code>speedB</code> values to the PWM pins. Called after every speed change.</li>
-        <li><code>forward()</code> / <code>backward()</code> / <code>left()</code> / <code>right()</code> – Each function sets the direction pins HIGH or LOW to make the motors turn in the desired direction, then calls <code>applySpeed()</code>.</li>
-        <li><code>stopAll()</code> – Sets all direction pins LOW and PWM to 0, cutting power to both motors.</li>
-        <li><code>loop()</code> – Waits for a command from Bluetooth, trims whitespace, and compares it to known strings. It also handles <code>SPD_A:xxx</code> and <code>SPD_B:xxx</code> to update each motor's speed independently.</li>
+        <li><code>setup()</code> – Configures the four motor driver pins (<code>M11, M12, M21, M22</code>) as outputs, sets them LOW (motors stopped), and starts serial communication at 9600 baud.</li>
+        <li><code>loop()</code> – Runs the software PWM for both motors and checks for incoming serial data.</li>
+        <li><strong>Motor 1 (A):</strong> If <code>stopm1</code> is false, <code>spd1</code> increments each loop. While <code>spd1 &lt; pw1</code>, the motor is driven in the direction set by <code>dir1</code>. When <code>spd1</code> exceeds <code>pw1</code>, the motor is turned off for the rest of the cycle.</li>
+        <li><strong>Motor 2 (B):</strong> Same logic using <code>spd2</code>, <code>pw2</code>, and <code>dir2</code>.</li>
+        <li><code>parseSerial()</code> – Called when a newline is received. Parses the accumulated <code>text</code> string for commands.</li>
     </ul>
 
     <h3>Commands accepted:</h3>
@@ -174,113 +194,186 @@
             </tr>
         </thead>
         <tbody>
-            <tr><td><code>FWD</code></td><td>Move forward</td></tr>
-            <tr><td><code>BACK</code></td><td>Move backward</td></tr>
-            <tr><td><code>LEFT</code></td><td>Turn left</td></tr>
-            <tr><td><code>RIGHT</code></td><td>Turn right</td></tr>
-            <tr><td><code>STOP</code></td><td>Stop both motors</td></tr>
-            <tr><td><code>SPD_A:200</code></td><td>Set Motor A speed (0–255)</td></tr>
-            <tr><td><code>SPD_B:150</code></td><td>Set Motor B speed (0–255)</td></tr>
+            <tr><td><code>FWD</code></td><td>Motor 1 forward (<code>dir1 = true</code>)</td></tr>
+            <tr><td><code>BACK</code></td><td>Motor 1 backward (<code>dir1 = false</code>)</td></tr>
+            <tr><td><code>LEFT</code></td><td>Motor 2 left (<code>dir2 = true</code>)</td></tr>
+            <tr><td><code>RIGHT</code></td><td>Motor 2 right (<code>dir2 = false</code>)</td></tr>
+            <tr><td><code>STOP</code></td><td>Stop both motors (<code>stopm1 = true; stopm2 = true</code>)</td></tr>
+            <tr><td><code>SPD_A:200</code></td><td>Set Motor A speed (0–255) → <code>pw1</code></td></tr>
+            <tr><td><code>SPD_B:150</code></td><td>Set Motor B speed (0–255) → <code>pw2</code></td></tr>
         </tbody>
     </table>
 
+    <div class="note">
+        <strong>ℹ️ Note:</strong> After each valid command, the sketch prints the current speed values:
+        <code>pw1   pw2</code> (e.g. <code>55   55</code>). This is useful for debugging but is not a formal acknowledgment.
+    </div>
+
     <h3>📄 Full Arduino Sketch</h3>
     <pre><code>/*
-  SoifGo — Speed Control Example (independent speed per motor)
-  Receives FWD / BACK / LEFT / RIGHT / STOP / SPD_A:xxx / SPD_B:xxx
+  SoifGo — Speed Control  for TDA7073A (Software PWM)
+ 
+  Target: Arduino Uno R3 (ATmega328P)
 */
 
-#include &lt;SoftwareSerial.h&gt;
+// ============================================
+// PIN CONFIGURATIONS (same as Bascom)
+// ============================================
+const byte M11 = A2;  // PORTC.2
+const byte M12 = A3;  // PORTC.3
+const byte M21 = A4;  // PORTC.4
+const byte M22 = A5;  // PORTC.5
 
-SoftwareSerial bluetooth(10, 11);
+// ============================================
+// VARIABLES
+// ============================================
+bool dir1 = false;
+bool dir2 = false;
+bool stopm1 = true;
+bool stopm2 = true;
 
-// Motor driver pins
-const byte ENA = 5;  // PWM speed for motor A
-const byte IN1 = 6;
-const byte IN2 = 7;
-const byte ENB = 9;  // PWM speed for motor B
-const byte IN3 = 8;
-const byte IN4 = 12;
+byte spd1 = 0;
+byte spd2 = 0;
+byte pw1 = 55;
+byte pw2 = 55;
 
-// Independent speed for each motor (0-255)
-byte speedA = 180;
-byte speedB = 180;
+String text = "";
+String text2 = "";
 
+// ============================================
+// SETUP
+// ============================================
 void setup() {
-  pinMode(ENA, OUTPUT); pinMode(IN1, OUTPUT); pinMode(IN2, OUTPUT);
-  pinMode(ENB, OUTPUT); pinMode(IN3, OUTPUT); pinMode(IN4, OUTPUT);
+  pinMode(M11, OUTPUT);
+  pinMode(M12, OUTPUT);
+  pinMode(M21, OUTPUT);
+  pinMode(M22, OUTPUT);
+
+  // All motors stopped initially
+  digitalWrite(M11, LOW);
+  digitalWrite(M12, LOW);
+  digitalWrite(M21, LOW);
+  digitalWrite(M22, LOW);
 
   Serial.begin(9600);
-  bluetooth.begin(9600);
-  bluetooth.println("READY");
-
-  analogWrite(ENA, speedA);
-  analogWrite(ENB, speedB);
 }
 
-void applySpeed() {
-  analogWrite(ENA, speedA);
-  analogWrite(ENB, speedB);
-}
-
-void forward() { digitalWrite(IN1, HIGH); digitalWrite(IN2, LOW); digitalWrite(IN3, HIGH); digitalWrite(IN4, LOW); }
-void backward(){ digitalWrite(IN1, LOW);  digitalWrite(IN2, HIGH);digitalWrite(IN3, LOW);  digitalWrite(IN4, HIGH); }
-void left()    { digitalWrite(IN1, LOW);  digitalWrite(IN2, HIGH);digitalWrite(IN3, HIGH); digitalWrite(IN4, LOW); }
-void right()   { digitalWrite(IN1, HIGH); digitalWrite(IN2, LOW); digitalWrite(IN3, LOW);  digitalWrite(IN4, HIGH); }
-void stopAll() { digitalWrite(IN1, LOW);  digitalWrite(IN2, LOW); digitalWrite(IN3, LOW);  digitalWrite(IN4, LOW); }
-
+// ============================================
+// SOFTWARE PWM LOOP
+// ============================================
 void loop() {
-  if (bluetooth.available()) {
-    String cmd = bluetooth.readStringUntil('\n');
-    cmd.trim();
-
-    if (cmd == "FWD") { forward(); applySpeed(); }
-    else if (cmd == "BACK") { backward(); applySpeed(); }
-    else if (cmd == "LEFT") { left(); applySpeed(); }
-    else if (cmd == "RIGHT") { right(); applySpeed(); }
-    else if (cmd == "STOP") { stopAll(); }
-    else if (cmd.startsWith("SPD_A:")) {
-      int val = cmd.substring(6).toInt();
-      if (val &gt;= 0 &amp;&amp; val &lt;= 255) {
-        speedA = val;
-        applySpeed();
-        bluetooth.print("SPEED_A:");
-        bluetooth.println(speedA);
+  // ---- Motor 1 (A) ----
+  if (!stopm1) {
+    spd1++;
+    if (pw1 > spd1) {
+      if (!dir1) {
+        digitalWrite(M11, HIGH);
+        digitalWrite(M12, LOW);
       } else {
-        bluetooth.println("ERR:SPEED_RANGE");
+        digitalWrite(M11, LOW);
+        digitalWrite(M12, HIGH);
       }
+    } else {
+      digitalWrite(M11, LOW);
+      digitalWrite(M12, LOW);
     }
-    else if (cmd.startsWith("SPD_B:")) {
-      int val = cmd.substring(6).toInt();
-      if (val &gt;= 0 &amp;&amp; val &lt;= 255) {
-        speedB = val;
-        applySpeed();
-        bluetooth.print("SPEED_B:");
-        bluetooth.println(speedB);
+  } else {
+    digitalWrite(M11, LOW);
+    digitalWrite(M12, LOW);
+  }
+
+  // ---- Motor 2 (B) ----
+  if (!stopm2) {
+    spd2++;
+    if (pw2 > spd2) {
+      if (!dir2) {
+        digitalWrite(M21, HIGH);
+        digitalWrite(M22, LOW);
       } else {
-        bluetooth.println("ERR:SPEED_RANGE");
+        digitalWrite(M21, LOW);
+        digitalWrite(M22, HIGH);
       }
+    } else {
+      digitalWrite(M21, LOW);
+      digitalWrite(M22, LOW);
+    }
+  } else {
+    digitalWrite(M21, LOW);
+    digitalWrite(M22, LOW);
+  }
+
+  // ---- Serial parse ----
+  if (Serial.available()) {
+    char c = Serial.read();
+    if (c == '\r' || c == '\n') {
+      if (text.length() > 1) {
+        parseSerial();
+      }
+      text = "";
+    } else {
+      text += c;
     }
   }
+}
+
+// ============================================
+// PARSE SERIAL
+// ============================================
+void parseSerial() {
+  if (text.indexOf("FWD") >= 0) {
+    dir1 = true;
+    stopm1 = false;
+  }
+  if (text.indexOf("BACK") >= 0) {
+    dir1 = false;
+    stopm1 = false;
+  }
+  if (text.indexOf("LEFT") >= 0) {
+    dir2 = true;
+    stopm2 = false;
+  }
+  if (text.indexOf("RIGHT") >= 0) {
+    dir2 = false;
+    stopm2 = false;
+  }
+  if (text.indexOf("STOP") >= 0) {
+    stopm1 = true;
+    stopm2 = true;
+  }
+  if (text.indexOf("SPD_A:") >= 0) {
+    text2 = text.substring(6, 9);
+    pw1 = text2.toInt();
+  }
+  if (text.indexOf("SPD_B:") >= 0) {
+    text2 = text.substring(6, 9);
+    pw2 = text2.toInt();
+  }
+
+  Serial.print(pw1);
+  Serial.print("   ");
+  Serial.println(pw2);
+
+  text = "";
+  text2 = "";
 }</code></pre>
 
     <div class="note">
         <strong>⚠️ Wiring notes for Arduino Uno R3:</strong><br>
-        • Bluetooth module: TX → pin 10, RX → pin 11 (via voltage divider if using 3.3V module)<br>
-        • Motor driver pins used in this example: ENA=5, IN1=6, IN2=7, ENB=9, IN3=8, IN4=12<br>
-        • You can adapt these pin numbers to match your specific driver chip (TDA7073A, L293D, TB6612, etc.) by changing the <code>const byte</code> definitions at the top.<br>
-        • For TDA7073A, replace the pin definitions with IN+ / IN− pairs and adjust the direction functions accordingly. The speed logic remains the same.
+        • <strong>Bluetooth module</strong> (HC-05 / JDY-31): connects to the Arduino's <strong>hardware serial</strong> — module TX → Arduino <strong>RX (pin 0)</strong>, module RX → Arduino <strong>TX (pin 1)</strong> (use a voltage divider if the module is 3.3V).<br>
+        • <strong>Motor driver pins:</strong> M11=A2, M12=A3 (Motor 1), M21=A4, M22=A5 (Motor 2).<br>
+        • For <strong>TDA7073A</strong>, each motor is driven by a pair of inputs (IN+ / IN−). Connect <code>M11</code> → IN1+, <code>M12</code> → IN1−, <code>M21</code> → IN2+, <code>M22</code> → IN2−.<br>
+        • Because the sketch uses <strong>hardware serial</strong>, disconnect the Bluetooth module while uploading the sketch to avoid conflicts.
     </div>
 
     <h3>🔌 Schematic (Arduino Uno R3 Target)</h3>
 
     <div class="schematic-placeholder">
-        <img src="speed_control.png" alt="Arduino Uno R3 + Bluetooth + Motor Driver Schematic"
+        <img src="speed_control.png" alt="Arduino Uno R3 + Bluetooth + TDA7073A Schematic"
              style="width:80%; max-width:800px; height:auto; border-radius:10px; margin-top:10px; display:block; margin-left:auto; margin-right:auto;">
     </div>
 
     <div class="schematic-placeholder">
-        <img src="speed_control2.jpg" alt="Arduino Uno R3 + Bluetooth + Motor Driver Wiring"
+        <img src="speed_control2.jpg" alt="Arduino Uno R3 + Bluetooth + TDA7073A Wiring"
              style="width:80%; max-width:800px; height:auto; border-radius:10px; margin-top:10px; display:block; margin-left:auto; margin-right:auto;">
     </div>
 
@@ -291,7 +384,7 @@ void loop() {
             <source src="Speed_Control.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
-        <p style="font-size:0.85em; margin-top:10px;">Speed Control test — two motors with independent speed</p>
+        <p style="font-size:0.85em; margin-top:10px;">Speed Control test — two motors with independent speed (TDA7073A, software PWM)</p>
     </div>
 
 </body>
