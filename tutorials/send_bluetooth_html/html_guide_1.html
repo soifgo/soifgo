@@ -6,12 +6,12 @@
     <meta name="theme-color" content="#2c3e50">
     <meta name="color-scheme" content="light dark">
 
-    <title>SoifGo HTML Guide — Bluetooth, Sensors & Storage with WebView</title>
-    <meta name="description" content="Complete guide for building HTML apps inside SoifGo. Learn Bluetooth send/receive, sensor data (Light, Movement, Magneto), persistent storage with localStorage, and custom UI with WebView.">
-    <meta name="keywords" content="SoifGo guide, HTML Bluetooth, WebView integration, sensor data, light sensor, movement sensor, magneto sensor, Bluetooth send receive, custom UI, SoifGo tutorial, localStorage, persistent storage, HTML WebView">
+    <title>SoifGo HTML Guide — Bluetooth, Sensors, MQTT & Storage with WebView</title>
+    <meta name="description" content="Complete guide for building HTML apps inside SoifGo. Learn Bluetooth send/receive, sensor data (Light, Movement, Magneto), MQTT publish/subscribe, persistent storage with localStorage, and custom UI with WebView.">
+    <meta name="keywords" content="SoifGo guide, HTML Bluetooth, WebView integration, sensor data, MQTT, WebView MQTT, publish subscribe, light sensor, movement sensor, magneto sensor, Bluetooth send receive, custom UI, SoifGo tutorial, localStorage, persistent storage">
 
-    <meta property="og:title" content="SoifGo HTML Guide — Bluetooth, Sensors & Storage">
-    <meta property="og:description" content="Complete guide for building HTML apps inside SoifGo. Bluetooth, sensors, persistent storage, and custom UI with WebView.">
+    <meta property="og:title" content="SoifGo HTML Guide — Bluetooth, Sensors, MQTT & Storage">
+    <meta property="og:description" content="Complete guide for building HTML apps inside SoifGo. Bluetooth, sensors, MQTT, persistent storage, and custom UI.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://soifgo.github.io/soifgo/tutorials/html-guide/">
     <meta property="og:image" content="https://soifgo.github.io/soifgo/html-guide-og.jpg">
@@ -21,8 +21,8 @@
     <meta property="og:site_name" content="SoifGo Tutorials">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="SoifGo HTML Guide — Bluetooth, Sensors & Storage">
-    <meta name="twitter:description" content="Complete guide for building HTML apps inside SoifGo. Bluetooth, sensors, persistent storage, and custom UI.">
+    <meta name="twitter:title" content="SoifGo HTML Guide — Bluetooth, Sensors, MQTT & Storage">
+    <meta name="twitter:description" content="Complete guide for building HTML apps inside SoifGo. Bluetooth, sensors, MQTT, persistent storage, and custom UI.">
     <meta name="twitter:image" content="https://soifgo.github.io/soifgo/html-guide-og.jpg">
 
     <link rel="canonical" href="https://soifgo.github.io/soifgo/tutorials/html-guide/">
@@ -32,8 +32,8 @@
     {
         "@context": "https://schema.org",
         "@type": "TechArticle",
-        "headline": "SoifGo HTML Guide — Bluetooth, Sensors & Storage",
-        "description": "Complete guide for building HTML apps inside SoifGo. Bluetooth, sensors, persistent storage, and custom UI with WebView.",
+        "headline": "SoifGo HTML Guide — Bluetooth, Sensors, MQTT & Storage",
+        "description": "Complete guide for building HTML apps inside SoifGo. Bluetooth, sensors, MQTT, persistent storage, and custom UI with WebView.",
         "author": {
             "@type": "Person",
             "name": "Saeid Moghadam"
@@ -58,6 +58,8 @@
             "Bluetooth receive from SoifGo to WebView",
             "Sensor activation (Light, Movement, Magneto)",
             "Sensor data reception in WebView",
+            "MQTT connect, publish, subscribe from WebView",
+            "MQTT message reception in WebView",
             "Persistent storage with localStorage",
             "Custom UI development with HTML/CSS/JS"
         ],
@@ -126,7 +128,6 @@
             padding: 16px;
         }
 
-        /* ===== STICKY NAV ===== */
         .nav {
             position: sticky;
             top: 0;
@@ -168,7 +169,6 @@
             border-color: var(--accent2);
         }
 
-        /* ===== HEADINGS ===== */
         h2 {
             color: var(--accent);
             border-bottom: 3px solid var(--accent2);
@@ -402,7 +402,6 @@
             margin-top: 1.5rem;
         }
 
-        /* ===== AI WORKFLOW BOX (PURPLE) ===== */
         .ai-box {
             border-left: 6px solid var(--purple);
             background: var(--card-bg);
@@ -431,7 +430,6 @@
             }
         }
 
-        /* ===== EXAMPLES SECTION ===== */
         .examples-box {
             border: 2px solid var(--purple);
         }
@@ -618,7 +616,6 @@
 </head>
 <body>
 
-    <!-- ===== STICKY NAV ===== -->
     <nav class="nav" aria-label="Table of Contents">
         <div class="nav-inner">
             <a href="#overview">Overview</a>
@@ -626,18 +623,15 @@
             <a href="#bluetooth-send">BT Send</a>
             <a href="#bluetooth-receive">BT Receive</a>
             <a href="#sensors">Sensors</a>
+            <a href="#mqtt">MQTT</a>
             <a href="#storage">Storage</a>
         </div>
     </nav>
 
     <div class="container">
 
-        <!-- ===== OVERVIEW ===== -->
-        <h2 id="overview">📱 HTML Bluetooth, Sensors & Storage with SoifGo</h2>
+        <h2 id="overview">📱 HTML Bluetooth, Sensors, MQTT & Storage with SoifGo</h2>
 
-        <!-- ============================================================ -->
-        <!-- ===== AI WORKFLOW SECTION ================================== -->
-        <!-- ============================================================ -->
         <div class="ai-box">
             <h3>🤖 Build Your Custom App Without Hard Coding!</h3>
             <p>
@@ -661,11 +655,7 @@
                 🎯 That's it! Ask the AI to build any app you want and run it inside SoifGo instantly.
             </p>
         </div>
-        <!-- ===== END OF AI WORKFLOW SECTION ===== -->
 
-        <!-- ============================================================ -->
-        <!-- ===== WORKING EXAMPLES SECTION ============================= -->
-        <!-- ============================================================ -->
         <div class="box examples-box" id="examples">
             <h3>📦 Working Examples</h3>
             <p>
@@ -733,86 +723,51 @@
                 </div>
             </div>
         </div>
-        <!-- ===== END WORKING EXAMPLES SECTION ========================= -->
 
-        <!-- ===== ORIGINAL OVERVIEW BOX ===== -->
         <div class="box">
             <p style="font-size:1.1rem;">
                 <strong>SoifGo</strong> turns your HTML pages into a real Android app.
                 Inside its WebView, your page can talk to Bluetooth, read phone sensors,
-                and store data — all with plain HTML, CSS, and JavaScript.
+                connect to MQTT brokers, and store data — all with plain HTML, CSS, and JavaScript.
             </p>
             <p>This guide shows you how to:</p>
             <ul>
                 <li>✅ Send and receive Bluetooth data</li>
                 <li>✅ Activate and read sensors (Light, Movement, Magneto)</li>
+                <li>✅ Connect, publish, and receive MQTT messages</li>
                 <li>✅ Save and reload data with localStorage</li>
                 <li>✅ Build a custom UI with full control</li>
             </ul>
         </div>
 
-        <!-- ============================================================ -->
-        <!-- BRIDGE HELPER (new)                                           -->
-        <!-- ============================================================ -->
-
         <div class="box">
             <h3>🔌 The Bridge — How HTML Talks to SoifGo</h3>
             <p>
                 Inside SoifGo's WebView, a JavaScript object called <code>window.soifgo</code>
-                is automatically injected. You use it to call B4A Subs from JavaScript.
+                is automatically injected. Use it to call native functions from JavaScript.
             </p>
 
-            <div class="file-name">📄 bridge-helper.js — Recommended pattern</div>
+            <div class="file-name">📄 Bridge call pattern</div>
 
-            <pre><code>// Works with both "soifgo" (new) and "b4a" (legacy) names
-const bridge = window.soifgo || window.b4a;
+            <pre><code>// Basic call pattern
+window.soifgo.CallSub('subName', true, arg1, arg2, arg3);
 
-// Safe wrapper — never throws if bridge is missing
-function callB4A(subName, ...args) {
-    if (!bridge) {
-        console.warn('SoifGo bridge not available');
-        return false;
-    }
-    try {
-        bridge.CallSub(subName, ...args);
-        return true;
-    } catch (e) {
-        console.error('CallSub failed:', e);
-        return false;
-    }
-}
+// Real example — send text to Bluetooth
+window.soifgo.CallSub('html_bluetooth_rx', true, txt);
 
-// Register a function that B4A can call from the other side
-function expose(name, fn) {
-    window[name] = fn;
-}
-
-// Example: send text to Bluetooth
-function sendBluetooth() {
-    const txt = document.getElementById('txt').value;
-    callB4A('html_bluetooth_rx', true, txt);
-}
-
-// Example: activate all sensors
-function startSensors() {
-    callB4A('sensor_light');
-    callB4A('sensor_move');
-    callB4A('sensor_magno');
-}</code></pre>
+// Real example — connect to MQTT broker (step 1)
+window.soifgo.CallSub('connecte_mqtt_ai', true, address, id);</code></pre>
 
             <div class="success">
-                <strong>✅ Why use this helper?</strong>
+                <strong>✅ Golden rules:</strong>
                 <ul>
-                    <li>Works whether SoifGo exposes the bridge as <code>soifgo</code> or <code>b4a</code>.</li>
-                    <li>Never crashes if the page is opened in a normal browser (bridge is missing).</li>
-                    <li>Clear error messages in the console when something goes wrong.</li>
+                    <li>Always call <code>window.soifgo.CallSub(...)</code> directly.</li>
+                    <li>The second argument is a boolean flag — pass <code>true</code> or <code>false</code>.</li>
+                    <li>After the flag, you can pass <strong>up to 3 arguments</strong>.</li>
+                    <li>Empty strings must still be passed as <code>''</code> — never omit them.</li>
                 </ul>
             </div>
         </div>
-
-        <!-- ============================================================ -->
-        <!-- PART 1: BLUETOOTH SEND                                        -->
-        <!-- ============================================================ -->
 
         <h3 id="bluetooth-send">🔵 1. Bluetooth - Send Data (WebView → SoifGo → Bluetooth)</h3>
 
@@ -843,18 +798,9 @@ function startSensors() {
   &lt;/button&gt;
 
   &lt;script&gt;
-    // Bridge helper
-    const bridge = window.soifgo || window.b4a;
-
-    function callB4A(subName, ...args) {
-      if (!bridge) { console.warn('No bridge'); return false; }
-      try { bridge.CallSub(subName, ...args); return true; }
-      catch (e) { console.error(e); return false; }
-    }
-
     function sendBluetooth() {
       const txt = document.getElementById('txt').value;
-      callB4A('html_bluetooth_rx', true, txt);
+      window.soifgo.CallSub('html_bluetooth_rx', true, txt);
     }
   &lt;/script&gt;
 &lt;/body&gt;
@@ -865,16 +811,11 @@ function startSensors() {
                 <ol>
                     <li>User types text in the input box.</li>
                     <li>Clicks the <strong>Send</strong> button.</li>
-                    <li>JavaScript calls <code>bridge.CallSub('html_bluetooth_rx', true, txt)</code>.</li>
-                    <li>SoifGo receives the text in its <code>html_bluetooth_rx()</code> Sub.</li>
+                    <li>JavaScript calls <code>window.soifgo.CallSub('html_bluetooth_rx', true, txt)</code>.</li>
                     <li>SoifGo sends the text to the connected Bluetooth device.</li>
                 </ol>
             </div>
         </div>
-
-        <!-- ============================================================ -->
-        <!-- PART 2: BLUETOOTH RECEIVE                                     -->
-        <!-- ============================================================ -->
 
         <h3 id="bluetooth-receive">🔵 2. Bluetooth - Receive Data (Bluetooth → SoifGo → WebView)</h3>
 
@@ -921,10 +862,6 @@ function startSensors() {
             </div>
         </div>
 
-        <!-- ============================================================ -->
-        <!-- PART 3: SENSOR RECEIVE                                        -->
-        <!-- ============================================================ -->
-
         <h3 id="sensors">🟢 3. Sensor Data - Receive (Sensors → SoifGo → WebView)</h3>
 
         <div class="box">
@@ -940,9 +877,9 @@ function startSensors() {
             <div class="info">
                 <strong>⚠️ IMPORTANT:</strong> To activate sensors, you must call ALL THREE commands:
                 <pre style="background:#2c3e50; color:#ecf0f1; padding:12px; border-radius:6px; margin:10px 0;">
-callB4A('sensor_light');   // Activate light sensor
-callB4A('sensor_move');    // Activate movement sensor
-callB4A('sensor_magno');   // Activate magneto sensor</pre>
+window.soifgo.CallSub('sensor_light', true);   // Activate light sensor
+window.soifgo.CallSub('sensor_move', true);    // Activate movement sensor
+window.soifgo.CallSub('sensor_magno', true);   // Activate magneto sensor</pre>
                 <p style="margin-top:8px;">
                     These 3 commands are called inside <code>window.onload</code> to auto-start sensors when the page loads.
                 </p>
@@ -972,14 +909,6 @@ callB4A('sensor_magno');   // Activate magneto sensor</pre>
     &lt;/div&gt;
 
     &lt;script&gt;
-        // ---- Bridge helper ----
-        const bridge = window.soifgo || window.b4a;
-        function callB4A(subName, ...args) {
-            if (!bridge) { console.warn('No bridge'); return false; }
-            try { bridge.CallSub(subName, ...args); return true; }
-            catch (e) { console.error(e); return false; }
-        }
-
         // ---- Receiver functions (called by SoifGo) ----
         function html_sensor_light(data) {
             document.getElementById('light').innerHTML = 'Light: ' + data;
@@ -1002,9 +931,9 @@ callB4A('sensor_magno');   // Activate magneto sensor</pre>
 
         // ---- Auto-start sensors on page load ----
         window.onload = function() {
-            callB4A('sensor_light');
-            callB4A('sensor_move');
-            callB4A('sensor_magno');
+            window.soifgo.CallSub('sensor_light', true);
+            window.soifgo.CallSub('sensor_move', true);
+            window.soifgo.CallSub('sensor_magno', true);
         };
     &lt;/script&gt;
 &lt;/body&gt;
@@ -1016,9 +945,9 @@ callB4A('sensor_magno');   // Activate magneto sensor</pre>
                     <li>
                         <strong>3 activation commands in <code>window.onload</code>:</strong>
                         <ul>
-                            <li><code>callB4A('sensor_light')</code></li>
-                            <li><code>callB4A('sensor_move')</code></li>
-                            <li><code>callB4A('sensor_magno')</code></li>
+                            <li><code>window.soifgo.CallSub('sensor_light', true)</code></li>
+                            <li><code>window.soifgo.CallSub('sensor_move', true)</code></li>
+                            <li><code>window.soifgo.CallSub('sensor_magno', true)</code></li>
                         </ul>
                         These activate all three sensors when the page loads.
                     </li>
@@ -1039,24 +968,336 @@ callB4A('sensor_magno');   // Activate magneto sensor</pre>
             </div>
         </div>
 
-        <!-- ============================================================ -->
-        <!-- PART 4: PERSISTENT STORAGE                                    -->
-        <!-- ============================================================ -->
+        <h3 id="mqtt">🟣 4. MQTT — Connect, Publish &amp; Receive (WebView ↔ Broker)</h3>
 
-        <h3 id="storage">💾 4. Save & Reload Data (Persistent Storage)</h3>
+        <div class="box">
+            <p>
+                SoifGo has a <strong>built-in MQTT client</strong>. Your HTML page can connect
+                to any MQTT broker, publish messages, and receive them — all through simple
+                JavaScript calls. No WebSocket, no CORS, no external library needed.
+            </p>
+
+            <div class="info">
+                <strong>⚠️ IMPORTANT:</strong> MQTT only works inside SoifGo's WebView.
+                If you open the same HTML in a normal browser, the bridge won't exist and
+                nothing will happen (that's by design — the page won't crash either).
+            </div>
+
+            <div class="file-name">📄 MQTT API Reference</div>
+
+            <pre><code>// ============================================================
+// 1. CONNECT — step 1: address + client id
+// ============================================================
+// Native Sub: connecte_mqtt_ai(address, id)
+//
+//  address : "tcp://host:1883"  or  "ssl://host:8883"
+//            Empty → defaults to "tcp://test.mosquitto.org:1883"
+//  id      : any unique string. Empty → auto-generated "soifgo_XXXX"
+//
+window.soifgo.CallSub('connecte_mqtt_ai', true, address, id);
+
+// ============================================================
+// 2. CONNECT — step 2 (optional): username + password
+// ============================================================
+// Native Sub: connecte_mqtt_up(username, password)
+//
+// Only call this if the broker requires authentication.
+// If both are empty, nothing happens.
+//
+window.soifgo.CallSub('connecte_mqtt_up', true, username, password);
+
+// ============================================================
+// 3. PUBLISH a message (also subscribes to the same topic!)
+// ============================================================
+// Native Sub: mqtt_publish(topic, message, qos)
+//
+//  topic   : topic string (e.g. "soifgo/led")
+//  message : text payload
+//  qos     : "0", "1", or "2"  (as a string)
+//
+// 💡 Publishing to a topic also subscribes you to it,
+//    so you receive messages published by other clients.
+//
+window.soifgo.CallSub('mqtt_publish', true, topic, message, qos);
+
+// ============================================================
+// 4. DISCONNECT from the broker
+// ============================================================
+// Native Sub: mqtt_Disconnect  (no arguments)
+//
+window.soifgo.CallSub('mqtt_Disconnect', true);
+
+// ============================================================
+// 5. CHECK connection status
+// ============================================================
+// Native Sub: mqtt_status  (no arguments)
+// SoifGo replies by calling html_mqtt_status('true'/'false')
+//
+window.soifgo.CallSub('mqtt_status', true);
+
+// ============================================================
+// RECEIVERS — functions SoifGo calls on your page
+// ============================================================
+
+// Incoming message on a subscribed topic
+function mqtt_rx(topic, message) {
+    // topic   : string
+    // message : string
+}
+window.mqtt_rx = mqtt_rx;
+
+// Connection status changed
+// ⚠️ The value is sent as a STRING ('true' or 'false'),
+//    NOT as a real boolean. Convert it before using it!
+function html_mqtt_status(connected) {
+    const isConnected = (connected === true || connected === 'true');
+    // use isConnected (true/false)
+}
+window.html_mqtt_status = html_mqtt_status;</code></pre>
+
+            <div class="success">
+                <strong>✅ How it works:</strong>
+                <ol>
+                    <li>Your page calls <code>connecte_mqtt_ai(address, id)</code> to start the connection.</li>
+                    <li>If the broker needs auth, call <code>connecte_mqtt_up(username, password)</code> right after.</li>
+                    <li>When a message arrives on a subscribed topic, SoifGo calls <code>mqtt_rx(topic, message)</code>.</li>
+                    <li>Publishing with <code>mqtt_publish</code> also <strong>auto-subscribes</strong> you to that topic — so you receive messages from other clients on it.</li>
+                    <li>To query connection state, call <code>mqtt_status</code> — SoifGo answers with <code>html_mqtt_status('true')</code> or <code>('false')</code>.</li>
+                    <li>To stop, call <code>mqtt_Disconnect</code>.</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="box">
+            <p>
+                Complete working example — connect, publish, receive, and check status
+                from a single page.
+            </p>
+
+            <div class="file-name">📄 html_mqtt_full.html</div>
+
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;MQTT Control&lt;/title&gt;
+    &lt;style&gt;
+        body { font-family: sans-serif; background:#1e1e1e; color:#e0e0e0; padding:16px; }
+        input, button { padding:10px; border-radius:6px; border:1px solid #444;
+                        background:#2b2b2b; color:#fff; font-size:16px; margin:4px 0; width:100%; }
+        button { background:#9b59b6; border:none; cursor:pointer; font-weight:600; }
+        button:hover { background:#8e44ad; }
+        button.on  { background:#27ae60; }
+        button.off { background:#c0392b; }
+        button.check { background:#f39c12; color:#10131a; }
+        .status { padding:10px; border-radius:6px; margin:10px 0; font-weight:600; }
+        .status.connected    { background:#1a2a1a; color:#4caf50; border:1px solid #4caf50; }
+        .status.disconnected { background:#2a1a1a; color:#e74c3c; border:1px solid #e74c3c; }
+        #log { background:#111; padding:12px; border-radius:8px; height:220px;
+               overflow-y:auto; font-family:monospace; font-size:0.85rem; margin-top:12px; }
+        #log div { margin:2px 0; }
+        .row { display:flex; gap:8px; }
+        .row button { flex:1; }
+        label { font-size:0.8rem; color:#888; display:block; margin-top:6px; }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+    &lt;h3&gt;🟣 MQTT Control Panel&lt;/h3&gt;
+
+    &lt;!-- Connection --&gt;
+    &lt;label&gt;Broker URL&lt;/label&gt;
+    &lt;input type="text" id="broker" value="tcp://test.mosquitto.org:1883"&gt;
+
+    &lt;label&gt;Client ID (empty = auto)&lt;/label&gt;
+    &lt;input type="text" id="clientId" placeholder="myTest_001"&gt;
+
+    &lt;label&gt;Username (optional)&lt;/label&gt;
+    &lt;input type="text" id="username" placeholder=""&gt;
+
+    &lt;label&gt;Password (optional)&lt;/label&gt;
+    &lt;input type="password" id="password" placeholder=""&gt;
+
+    &lt;label&gt;QoS (0, 1, 2)&lt;/label&gt;
+    &lt;input type="text" id="qos" value="0"&gt;
+
+    &lt;div class="row"&gt;
+        &lt;button onclick="connectMQTT()"&gt;Connect&lt;/button&gt;
+        &lt;button class="check" onclick="checkStatus()"&gt;Check&lt;/button&gt;
+        &lt;button onclick="disconnectMQTT()"&gt;Disconnect&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;div id="status" class="status disconnected"&gt;Disconnected&lt;/div&gt;
+
+    &lt;label&gt;Topic&lt;/label&gt;
+    &lt;input type="text" id="pubTopic" value="soifgo/demo/tx"&gt;
+
+    &lt;label&gt;Message&lt;/label&gt;
+    &lt;input type="text" id="pubMsg" value="ON"&gt;
+
+    &lt;div class="row"&gt;
+        &lt;button class="on"  onclick="publishMsg('ON')"&gt;Publish ON&lt;/button&gt;
+        &lt;button class="off" onclick="publishMsg('OFF')"&gt;Publish OFF&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class="row"&gt;
+        &lt;button onclick="publishMsg()"&gt;Send Custom&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;div id="log"&gt;&lt;/div&gt;
+
+    &lt;script&gt;
+        function log(msg) {
+            const el = document.getElementById('log');
+            const t  = new Date().toLocaleTimeString();
+            el.innerHTML += `&lt;div&gt;[${t}] ${msg}&lt;/div&gt;`;
+            el.scrollTop = el.scrollHeight;
+        }
+
+        function setStatus(connected) {
+            const el = document.getElementById('status');
+            el.className = 'status ' + (connected ? 'connected' : 'disconnected');
+            el.textContent = connected ? 'Connected' : 'Disconnected';
+        }
+
+        /* ---- Connect (two calls: address+id, then user+pass) ---- */
+        function connectMQTT() {
+            const broker = document.getElementById('broker').value.trim();
+            const cid    = document.getElementById('clientId').value.trim();
+            const user   = document.getElementById('username').value.trim();
+            const pass   = document.getElementById('password').value;
+            log('Connect → ' + broker + (cid ? ' as ' + cid : ' (auto ID)'));
+            window.soifgo.CallSub('connecte_mqtt_ai', true, broker, cid);
+            if (user || pass) {
+                window.soifgo.CallSub('connecte_mqtt_up', true, user, pass);
+            }
+        }
+
+        function disconnectMQTT() {
+            log('Disconnect');
+            window.soifgo.CallSub('mqtt_Disconnect', true);
+            setStatus(false);
+        }
+
+        function checkStatus() {
+            log('Check status');
+            window.soifgo.CallSub('mqtt_status', true);
+        }
+
+        function publishMsg(preset) {
+            const topic = document.getElementById('pubTopic').value.trim();
+            const qos   = document.getElementById('qos').value.trim() || '0';
+            const text  = (preset !== undefined) ? preset : document.getElementById('pubMsg').value;
+            if (!topic) { alert('Enter a topic'); return; }
+            log('TX → ' + topic + ' : ' + text + ' (QoS ' + qos + ')');
+            window.soifgo.CallSub('mqtt_publish', true, topic, text, qos);
+        }
+
+        /* ---- Receivers (called by SoifGo) ---- */
+        function mqtt_rx(topic, message) {
+            log('RX ← ' + topic + ' : ' + message);
+        }
+        window.mqtt_rx = mqtt_rx;
+
+        function html_mqtt_status(connected) {
+            const isConnected = (connected === true || connected === 'true');
+            setStatus(isConnected);
+            log('Status: ' + (isConnected ? 'CONNECTED' : 'DISCONNECTED'));
+        }
+        window.html_mqtt_status = html_mqtt_status;
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+            <div class="success">
+                <strong>✅ Key points:</strong>
+                <ul>
+                    <li><strong>Built-in MQTT</strong> — no external library, no WebSocket, no CORS.</li>
+                    <li><strong>Two-step connect</strong> — first <code>connecte_mqtt_ai</code>, then <code>connecte_mqtt_up</code> if auth needed.</li>
+                    <li><strong>Publish auto-subscribes</strong> — you receive messages on the topic you publish to.</li>
+                    <li><strong>Client ID auto-generated</strong> if left empty.</li>
+                    <li><strong>Status is a string</strong> — always convert with <code>=== 'true'</code>.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="box">
+            <p>
+                Combine MQTT and Bluetooth on the same page. For example: forward incoming
+                Bluetooth data to MQTT, or the other way around.
+            </p>
+
+            <div class="file-name">📄 html_mqtt_relay.html — Bluetooth ↔ MQTT relay</div>
+
+            <pre><code>&lt;script&gt;
+    /* ---- Bluetooth → MQTT ---- */
+    function html_bluetooth_tx(data) {
+        window.soifgo.CallSub('mqtt_publish', true, 'soifgo/relay/from_bt', data, '0');
+    }
+    window.html_bluetooth_tx = html_bluetooth_tx;
+
+    /* ---- MQTT → Bluetooth ---- */
+    function mqtt_rx(topic, message) {
+        window.soifgo.CallSub('html_bluetooth_rx', true, message);
+    }
+    window.mqtt_rx = mqtt_rx;
+&lt;/script&gt;</code></pre>
+
+            <div class="info">
+                <strong>💡 Use case:</strong> a robot with an HC-05 module can be controlled
+                locally via Bluetooth and simultaneously report status to an MQTT dashboard —
+                all from one HTML page.
+            </div>
+        </div>
+
+        <div class="box">
+            <h3>🔧 MQTT Troubleshooting</h3>
+
+            <div class="note">
+                <strong>Connection fails immediately</strong><br>
+                Check the broker URL. Use <code>tcp://</code> for plain, <code>ssl://</code>
+                for TLS. Default ports: <code>1883</code> (plain), <code>8883</code> (TLS).
+            </div>
+
+            <div class="note">
+                <strong>Messages not arriving</strong><br>
+                Publish at least once to the topic you want to listen to — publishing
+                auto-subscribes you. Also verify the topic name is exactly the same
+                (MQTT is case-sensitive).
+            </div>
+
+            <div class="note">
+                <strong>Status always shows "Connected"</strong><br>
+                The status value arrives as a string (<code>'true'</code> / <code>'false'</code>).
+                In JavaScript the string <code>'false'</code> is truthy — always compare with
+                <code>=== 'true'</code>.
+            </div>
+
+            <div class="note">
+                <strong>Client ID conflict</strong><br>
+                If two clients use the same ID, the broker kicks one off. Leave the ID
+                empty to get a unique auto-generated one.
+            </div>
+
+            <div class="note">
+                <strong>Bridge not found</strong><br>
+                If <code>window.soifgo</code> is undefined, you're running in a normal
+                browser — the bridge only exists inside SoifGo.
+            </div>
+        </div>
+
+        <h3 id="storage">💾 5. Save &amp; Reload Data (Persistent Storage)</h3>
 
         <div class="box">
             <div class="success">
                 <strong>✅ Good news:</strong> <code>alert()</code>, <code>confirm()</code>,
-                and <code>prompt()</code> all <strong>work natively</strong> in SoifGo's WebView
-                when the updated <code>MyChromeClient</code> is installed.
+                and <code>prompt()</code> all <strong>work natively</strong> in SoifGo's WebView.
                 You can use standard browser dialogs in your code.
             </div>
 
             <div class="note">
-                <strong>💡 Tip:</strong> If your app targets older SoifGo versions, or you want a
-                fully themed look that matches your UI, build a custom HTML modal.
-                The example below shows <strong>both</strong> approaches so you can choose.
+                <strong>💡 Tip:</strong> If you want a fully themed look that matches your
+                UI, build a custom HTML modal.
             </div>
 
             <p>
@@ -1102,17 +1343,8 @@ callB4A('sensor_magno');   // Activate magneto sensor</pre>
     &lt;script&gt;
         const KEY = 'my_data';
 
-        /* ---- Bridge helper ---- */
-        const bridge = window.soifgo || window.b4a;
-        function callB4A(subName, ...args) {
-            if (!bridge) return false;
-            try { bridge.CallSub(subName, ...args); return true; }
-            catch (e) { console.error(e); return false; }
-        }
-
         /* ---- Save ---- */
         function saveItem() {
-            // prompt() works in updated SoifGo, but we use the input field
             const name = document.getElementById('nameInput').value.trim();
             if (!name) {
                 alert('Please enter a name.');
@@ -1135,12 +1367,12 @@ callB4A('sensor_magno');   // Activate magneto sensor</pre>
 
         /* ---- Clear all ---- */
         function clearAll() {
-            if (!confirm('Delete all saved items?')) return;   // works now
+            if (!confirm('Delete all saved items?')) return;
             localStorage.removeItem(KEY);
             render([]);
         }
 
-        /* ---- Storage helpers (always wrapped in try/catch) ---- */
+        /* ---- Storage helpers ---- */
         function load() {
             try {
                 return JSON.parse(localStorage.getItem(KEY)) || [];
@@ -1176,7 +1408,7 @@ callB4A('sensor_magno');   // Activate magneto sensor</pre>
                 &lt;/div&gt;`).join('');
         }
 
-        /* ---- Tiny XSS guard (for display only) ---- */
+        /* ---- XSS guard ---- */
         function escapeHtml(s) {
             return String(s)
                 .replace(/&/g, '&amp;amp;')
@@ -1196,7 +1428,7 @@ callB4A('sensor_magno');   // Activate magneto sensor</pre>
             <div class="success">
                 <strong>✅ Key points:</strong>
                 <ul>
-                    <li><strong><code>alert()</code>, <code>confirm()</code>, <code>prompt()</code> work</strong> in updated SoifGo — no custom modal needed.</li>
+                    <li><strong><code>alert()</code>, <code>confirm()</code>, <code>prompt()</code> work</strong> — no custom modal needed.</li>
                     <li>Wrap <code>localStorage</code> calls in <code>try/catch</code> to handle quota errors gracefully.</li>
                     <li>Call <code>render(load())</code> inside <code>window.onload</code> so data reloads every time the page opens.</li>
                     <li>Use a unique key like <code>'my_data'</code> per page to avoid clashes with other pages.</li>
@@ -1205,16 +1437,11 @@ callB4A('sensor_magno');   // Activate magneto sensor</pre>
             </div>
         </div>
 
-        <!-- ============================================================ -->
-        <!-- FOOTER                                                        -->
-        <!-- ============================================================ -->
-
         <div class="footer">
-            <strong>SoifGo Complete Guide</strong> — Bluetooth & Sensors Integration<br>
+            <strong>SoifGo Complete Guide</strong> — Bluetooth, Sensors &amp; MQTT Integration<br>
             Custom UI with WebView
         </div>
 
-        <!-- ===== HOME BUTTON ===== -->
         <hr>
         <div class="btn-wrap">
             <a href="https://soifgo.github.io/soifgo/index.html" class="btn-home">⬅ Back to Home</a>
