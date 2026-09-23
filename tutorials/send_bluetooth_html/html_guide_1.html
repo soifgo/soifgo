@@ -6,12 +6,12 @@
     <meta name="theme-color" content="#2c3e50">
     <meta name="color-scheme" content="light dark">
 
-    <title>SoifGo HTML Guide — Bluetooth, Sensors, MQTT & Storage with WebView</title>
-    <meta name="description" content="Complete guide for building HTML apps inside SoifGo. Learn Bluetooth send/receive, sensor data (Light, Movement, Magneto), MQTT publish/subscribe, persistent storage with localStorage, and custom UI with WebView.">
-    <meta name="keywords" content="SoifGo guide, HTML Bluetooth, WebView integration, sensor data, MQTT, WebView MQTT, publish subscribe, light sensor, movement sensor, magneto sensor, Bluetooth send receive, custom UI, SoifGo tutorial, localStorage, persistent storage">
+    <title>SoifGo HTML Guide — Bluetooth, Sensors, MQTT, API & Storage with WebView</title>
+    <meta name="description" content="Complete guide for building HTML apps inside SoifGo. Learn Bluetooth send/receive, sensor data (Light, Movement, Magneto), MQTT publish/subscribe, API send/receive, persistent storage with localStorage, and custom UI with WebView.">
+    <meta name="keywords" content="SoifGo guide, HTML Bluetooth, WebView integration, sensor data, MQTT, WebView MQTT, publish subscribe, light sensor, movement sensor, magneto sensor, Bluetooth send receive, API send receive, api_send, api_recive, custom UI, SoifGo tutorial, localStorage, persistent storage">
 
-    <meta property="og:title" content="SoifGo HTML Guide — Bluetooth, Sensors, MQTT & Storage">
-    <meta property="og:description" content="Complete guide for building HTML apps inside SoifGo. Bluetooth, sensors, MQTT, persistent storage, and custom UI.">
+    <meta property="og:title" content="SoifGo HTML Guide — Bluetooth, Sensors, MQTT, API & Storage">
+    <meta property="og:description" content="Complete guide for building HTML apps inside SoifGo. Bluetooth, sensors, MQTT, API, persistent storage, and custom UI.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://soifgo.github.io/soifgo/tutorials/html-guide/">
     <meta property="og:image" content="https://soifgo.github.io/soifgo/html-guide-og.jpg">
@@ -21,8 +21,8 @@
     <meta property="og:site_name" content="SoifGo Tutorials">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="SoifGo HTML Guide — Bluetooth, Sensors, MQTT & Storage">
-    <meta name="twitter:description" content="Complete guide for building HTML apps inside SoifGo. Bluetooth, sensors, MQTT, persistent storage, and custom UI.">
+    <meta name="twitter:title" content="SoifGo HTML Guide — Bluetooth, Sensors, MQTT, API & Storage">
+    <meta name="twitter:description" content="Complete guide for building HTML apps inside SoifGo. Bluetooth, sensors, MQTT, API, persistent storage, and custom UI.">
     <meta name="twitter:image" content="https://soifgo.github.io/soifgo/html-guide-og.jpg">
 
     <link rel="canonical" href="https://soifgo.github.io/soifgo/tutorials/html-guide/">
@@ -32,8 +32,8 @@
     {
         "@context": "https://schema.org",
         "@type": "TechArticle",
-        "headline": "SoifGo HTML Guide — Bluetooth, Sensors, MQTT & Storage",
-        "description": "Complete guide for building HTML apps inside SoifGo. Bluetooth, sensors, MQTT, persistent storage, and custom UI with WebView.",
+        "headline": "SoifGo HTML Guide — Bluetooth, Sensors, MQTT, API & Storage",
+        "description": "Complete guide for building HTML apps inside SoifGo. Bluetooth, sensors, MQTT, API, persistent storage, and custom UI with WebView.",
         "author": {
             "@type": "Person",
             "name": "Saeid Moghadam"
@@ -60,6 +60,9 @@
             "Sensor data reception in WebView",
             "MQTT connect, publish, subscribe from WebView",
             "MQTT message reception in WebView",
+            "API send with address, key, value",
+            "API receive and handle api_rx callback",
+            "Handling different API response formats",
             "Persistent storage with localStorage",
             "Custom UI development with HTML/CSS/JS"
         ],
@@ -87,6 +90,7 @@
             --code-text: #d4d4d4;
             --btn-home: #8B4513;
             --purple: #9b59b6;
+            --orange: #e67e22;
             --arduino-teal: #00979C;
         }
 
@@ -624,13 +628,14 @@
             <a href="#bluetooth-receive">BT Receive</a>
             <a href="#sensors">Sensors</a>
             <a href="#mqtt">MQTT</a>
+            <a href="#api">API</a>
             <a href="#storage">Storage</a>
         </div>
     </nav>
 
     <div class="container">
 
-        <h2 id="overview">📱 HTML Bluetooth, Sensors, MQTT & Storage with SoifGo</h2>
+        <h2 id="overview">📱 HTML Bluetooth, Sensors, MQTT, API &amp; Storage with SoifGo</h2>
 
         <div class="ai-box">
             <h3>🤖 Build Your Custom App Without Hard Coding!</h3>
@@ -728,13 +733,14 @@
             <p style="font-size:1.1rem;">
                 <strong>SoifGo</strong> turns your HTML pages into a real Android app.
                 Inside its WebView, your page can talk to Bluetooth, read phone sensors,
-                connect to MQTT brokers, and store data — all with plain HTML, CSS, and JavaScript.
+                connect to MQTT brokers, send/receive API data, and store data — all with plain HTML, CSS, and JavaScript.
             </p>
             <p>This guide shows you how to:</p>
             <ul>
                 <li>✅ Send and receive Bluetooth data</li>
                 <li>✅ Activate and read sensors (Light, Movement, Magneto)</li>
                 <li>✅ Connect, publish, and receive MQTT messages</li>
+                <li>✅ Send and receive data via SoifGo API</li>
                 <li>✅ Save and reload data with localStorage</li>
                 <li>✅ Build a custom UI with full control</li>
             </ul>
@@ -756,7 +762,13 @@ window.soifgo.CallSub('subName', true, arg1, arg2, arg3);
 window.soifgo.CallSub('html_bluetooth_rx', true, txt);
 
 // Real example — connect to MQTT broker (step 1)
-window.soifgo.CallSub('connecte_mqtt_ai', true, address, id);</code></pre>
+window.soifgo.CallSub('connecte_mqtt_ai', true, address, id);
+
+// Real example — send data to API
+window.soifgo.CallSub('api_send', true, address, key, value);
+
+// Real example — receive data from API
+window.soifgo.CallSub('api_recive', true, address, key);</code></pre>
 
             <div class="success">
                 <strong>✅ Golden rules:</strong>
@@ -1286,7 +1298,428 @@ window.html_mqtt_status = html_mqtt_status;</code></pre>
             </div>
         </div>
 
-        <h3 id="storage">💾 5. Save &amp; Reload Data (Persistent Storage)</h3>
+        <h3 id="api">🟠 5. API — Send &amp; Receive (WebView ↔ Server)</h3>
+
+        <div class="box">
+            <p>
+                SoifGo has a <strong>built-in API bridge</strong>. Your HTML page can send
+                key/value data to a server and request data back — no <code>fetch</code>,
+                no CORS, no external library.
+            </p>
+
+            <div class="info">
+                <strong>⚠️ IMPORTANT:</strong> API only works inside SoifGo's WebView.
+                In a normal browser the bridge doesn't exist — nothing will happen
+                (and nothing will crash).
+            </div>
+
+            <div class="file-name">📄 API Reference</div>
+
+            <pre><code>// ============================================================
+// 1. SEND — POST a key/value pair to a server
+// ============================================================
+// Native Sub: api_send(address, key, value)
+//
+//  Sends:   POST &lt;address&gt;
+//  Body:    {"&lt;key&gt;":"&lt;value&gt;"}
+//  Header:  Content-Type: application/json
+//
+window.soifgo.CallSub('api_send', true, address, key, value);
+
+// ============================================================
+// 2. RECEIVE — GET data from a server
+// ============================================================
+// Native Sub: api_recive(address, key)
+//
+//  Sends:   GET &lt;address&gt;
+//  Returns: the "&lt;key&gt;" branch of the JSON response,
+//           passed to api_rx() as a string
+//
+// ⚠️  The second parameter "key" is REQUIRED — it tells
+//     SoifGo which branch of the JSON you want.
+//
+window.soifgo.CallSub('api_recive', true, address, key);
+
+// ============================================================
+// 3. RECEIVER — SoifGo calls this with the response
+// ============================================================
+// SoifGo calls:  api_rx('&lt;value&gt;')
+//
+// ⚠️  The response format depends on the API provider.
+//     See the section below — "Two Response Formats".
+//
+function api_rx(number) {
+    // number : string — either a plain value or a wrapped one
+}
+window.api_rx = api_rx;</code></pre>
+
+            <div class="success">
+                <strong>✅ How it works:</strong>
+                <ol>
+                    <li><strong>Send:</strong> <code>api_send(address, key, value)</code> → POST with JSON body.</li>
+                    <li><strong>Receive:</strong> <code>api_recive(address, key)</code> → GET request. The <code>key</code> tells SoifGo which branch of the JSON to extract.</li>
+                    <li><strong>Response:</strong> passed to <code>api_rx(number)</code> as a string.</li>
+                    <li><strong>Format varies:</strong> see the section below.</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="box">
+            <h3>📥 Two Response Formats — Read This Carefully</h3>
+
+            <p>
+                <strong>Different API providers return their data in different shapes.</strong>
+                When SoifGo extracts the value at the given <code>key</code>, it can arrive
+                at <code>api_rx</code> in <strong>two very different forms</strong>:
+            </p>
+
+            <div class="grid-2">
+                <div>
+                    <h4 style="margin-top:0; color:var(--accent2);">Format A — Plain value</h4>
+                    <p style="font-size:0.9rem;">
+                        The API returns a <strong>flat JSON</strong> where the key points
+                        directly to a primitive value.
+                    </p>
+                    <p style="font-size:0.85rem;">
+                        <strong>Example API:</strong> DIA<br>
+                        <strong>Raw JSON:</strong>
+                    </p>
+                    <pre style="font-size:0.7rem;"><code>{
+  "Symbol": "BTC",
+  "Price": 86846.51694166221
+}</code></pre>
+                    <p style="font-size:0.85rem;">
+                        <strong>What <code>api_rx</code> receives:</strong>
+                    </p>
+                    <pre style="font-size:0.7rem;"><code>86846.51694166221</code></pre>
+                    <p style="font-size:0.8rem; color:#888;">
+                        Just the raw value. No braces, no key name.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 style="margin-top:0; color:var(--accent2);">Format B — Wrapped value</h4>
+                    <p style="font-size:0.9rem;">
+                        The API returns a <strong>nested JSON</strong> where the key points
+                        to another object.
+                    </p>
+                    <p style="font-size:0.85rem;">
+                        <strong>Example API:</strong> CoinGecko<br>
+                        <strong>Raw JSON:</strong>
+                    </p>
+                    <pre style="font-size:0.7rem;"><code>{
+  "bitcoin": {
+    "usd": 86750
+  }
+}</code></pre>
+                    <p style="font-size:0.85rem;">
+                        <strong>What <code>api_rx</code> receives:</strong>
+                    </p>
+                    <pre style="font-size:0.7rem;"><code>{usd=86750}</code></pre>
+                    <p style="font-size:0.8rem; color:#888;">
+                        The inner object, wrapped in B4A Map format.
+                    </p>
+                </div>
+            </div>
+
+            <div class="info">
+                <strong>💡 Why this matters:</strong> Your code must handle <em>both</em> cases.
+                If you only handle Format A, CoinGecko will break your parser.
+                If you only handle Format B, DIA will break your parser.
+                Write a <strong>robust extractor</strong> that detects the format automatically.
+            </div>
+        </div>
+
+        <div class="box">
+            <h3>🧪 Live Example — Bitcoin Price (DIA)</h3>
+
+            <p>
+                DIA is used here because it has <strong>no strict rate limit</strong> and
+                returns a simple, flat JSON. This makes it perfect for testing.
+            </p>
+
+            <div class="info">
+                <strong>⏱ Why does the code use a timer?</strong><br>
+                Price APIs return a new value every few seconds. A timer
+                (<code>setInterval</code>) lets the page refresh the price automatically
+                without the user tapping a button. But polling too fast will trigger rate
+                limits and the API will start rejecting your requests.
+                Choose a <strong>safe interval</strong> for the API you're using
+                (see the Rate Limits section below).
+            </div>
+
+            <div class="file-name">📄 html_api_btc.html</div>
+
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;BTC Price&lt;/title&gt;
+    &lt;style&gt;
+        body { font-family: sans-serif; background:#1e1e1e; color:#e0e0e0;
+               padding:20px; text-align:center; }
+        h2 { color:#f7931a; }
+        .price { font-size:2.5rem; font-weight:bold; color:#f7931a;
+                 margin:20px 0; min-height:3rem; }
+        .status { font-size:0.85rem; color:#888; }
+        button { background:#f7931a; color:#fff; border:none;
+                 padding:14px 30px; border-radius:8px; font-size:16px;
+                 font-weight:600; cursor:pointer; margin:6px; }
+        button.stop { background:#c0392b; }
+        #raw { background:#111; padding:12px; border-radius:8px;
+               font-family:monospace; font-size:0.75rem;
+               text-align:left; margin-top:12px;
+               word-break:break-all; max-height:120px; overflow-y:auto; }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h2&gt;₿ Bitcoin Price&lt;/h2&gt;
+    &lt;div class="price" id="price"&gt;--&lt;/div&gt;
+    &lt;div class="status" id="status"&gt;Stopped&lt;/div&gt;
+
+    &lt;div style="margin-top:14px;"&gt;
+        &lt;button onclick="startBTC()"&gt;▶ Start&lt;/button&gt;
+        &lt;button class="stop" onclick="stopBTC()"&gt;■ Stop&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;div id="raw"&gt;&lt;/div&gt;
+
+    &lt;script&gt;
+        // DIA endpoint — flat JSON, no rate limit issues
+        const URL = 'https://api.diadata.org/v1/assetQuotation/Bitcoin/0x0000000000000000000000000000000000000000';
+        const KEY = 'Price';
+        const INTERVAL = 5000;   // 5 seconds — safe for DIA
+
+        let timer = null;
+
+        function startBTC() {
+            stopBTC();
+            fetchBTC();
+            timer = setInterval(fetchBTC, INTERVAL);
+            document.getElementById('status').textContent = 'Live · every ' + (INTERVAL/1000) + 's';
+        }
+
+        function stopBTC() {
+            if (timer) { clearInterval(timer); timer = null; }
+            document.getElementById('status').textContent = 'Stopped';
+        }
+
+        function fetchBTC() {
+            window.soifgo.CallSub('api_recive', true, URL, KEY);
+        }
+
+        /* ============================================================
+           Robust extractor — handles BOTH response formats
+           ============================================================ */
+        function extractNumber(raw) {
+            const s = String(raw).trim();
+
+            // Format A — plain number: "86846.51694166221"
+            if (/^-?\d+(\.\d+)?$/.test(s)) {
+                return parseFloat(s);
+            }
+
+            // Format B — B4A Map: "{usd=86750}"
+            const mapMatch = s.match(/[a-zA-Z_]\w*[=:]\s*(-?[\d.]+)/);
+            if (mapMatch) {
+                return parseFloat(mapMatch[1]);
+            }
+
+            // Fallback — any number in the string
+            const anyNum = s.match(/-?\d+(\.\d+)?/);
+            return anyNum ? parseFloat(anyNum[0]) : null;
+        }
+
+        function api_rx(number) {
+            document.getElementById('raw').textContent = String(number);
+
+            const price = extractNumber(number);
+            if (price !== null &amp;&amp; !isNaN(price)) {
+                document.getElementById('price').textContent =
+                    '$' + price.toLocaleString('en-US', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    });
+            } else {
+                document.getElementById('price').textContent = '❌ Parse error';
+            }
+        }
+        window.api_rx = api_rx;
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+            <div class="success">
+                <strong>✅ Key points:</strong>
+                <ul>
+                    <li><strong>Timer is optional</strong> — you can call <code>fetchBTC()</code> manually without <code>setInterval</code>.</li>
+                    <li><strong>Interval is 5 s</strong> — safe for DIA. If using CoinGecko, use ≥ 10 s.</li>
+                    <li><strong>Stop button</strong> — always give the user a way to stop polling.</li>
+                    <li><strong>Robust extractor</strong> — handles both plain numbers and Map-wrapped values.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="box">
+            <h3>💡 Parsing the Response — The Robust Helper</h3>
+
+            <p>
+                Different providers return different shapes. Use this single helper to
+                handle <strong>both</strong> cases — plain numbers, Map-wrapped values,
+                and JSON.
+            </p>
+
+            <pre><code>function extractValue(raw, fieldName) {
+    const s = String(raw).trim();
+
+    // 1. Plain number:  "86846.51694166221"
+    if (/^-?\d+(\.\d+)?$/.test(s)) return s;
+
+    // 2. B4A Map format:  {usd=86750}  or  {Price=86846.51}
+    const mapMatch = s.match(
+        new RegExp(fieldName + '[=:]\\s*([^,}\\s]+)', 'i')
+    );
+    if (mapMatch) return mapMatch[1];
+
+    // 3. Valid JSON:  {"usd":86750}
+    try {
+        const obj = JSON.parse(s);
+        if (obj[fieldName] !== undefined) return obj[fieldName];
+    } catch (e) {}
+
+    // 4. Fallback: any number
+    const numMatch = s.match(/-?\d+(\.\d+)?/);
+    return numMatch ? numMatch[0] : null;
+}
+
+// Usage in api_rx:
+function api_rx(number) {
+    const price = extractValue(number, 'Price');   // or 'usd'
+    if (price) {
+        document.getElementById('out').textContent = '$' + price;
+    }
+}
+window.api_rx = api_rx;</code></pre>
+
+            <div class="info">
+                <strong>💡 Tip:</strong> Put this helper in a shared JS file and reuse it
+                in every page that talks to an API. It will save you a lot of debugging.
+            </div>
+        </div>
+
+        <div class="box">
+            <h3>⚠️ Rate Limits</h3>
+
+            <div class="note">
+                <strong>Don't hammer the API.</strong> Every provider has a limit. If
+                your timer is too fast, the API will start returning error 429:
+                <pre style="margin:8px 0; background:#2c3e50; color:#ecf0f1; padding:8px; border-radius:4px; font-size:0.75rem;">
+{"status":{"error_code":429,"error_message":"You've exceeded the Rate Limit"}}</pre>
+            </div>
+
+            <div class="success">
+                <strong>✅ Safe intervals:</strong>
+                <ul>
+                    <li><strong>DIA:</strong> ~ 5 seconds</li>
+                    <li><strong>CoinGecko:</strong> ≥ 10 seconds</li>
+                    <li><strong>Binance:</strong> ≥ 1 second (1200 req/min)</li>
+                    <li><strong>Coinbase:</strong> ≥ 5 seconds</li>
+                    <li><strong>Blockchain.info:</strong> ≥ 10 seconds</li>
+                </ul>
+            </div>
+
+            <div class="info">
+                <strong>💡 Best practice:</strong> Always include a <strong>Stop</strong>
+                button so the user can halt polling. Never leave a timer running in the
+                background without a way to stop it.
+            </div>
+        </div>
+
+        <div class="box">
+            <h3>📌 Classic Method vs WebView Method</h3>
+
+            <p>
+                SoifGo supports <strong>two ways</strong> of talking to an API. The
+                <em>Classic</em> method works entirely inside SoifGo's native UI; the
+                <em>WebView</em> method uses the HTML bridge you've been reading about.
+            </p>
+
+            <div class="grid-2">
+                <div>
+                    <h4 style="margin-top:0; color:var(--accent2);">Classic Method</h4>
+                    <ul style="font-size:0.9rem;">
+                        <li>Configured entirely in SoifGo's button settings.</li>
+                        <li>No HTML, no JavaScript.</li>
+                        <li>You set the <strong>address</strong>, <strong>key</strong>,
+                            <strong>word start</strong>, and <strong>word end</strong> in the UI.</li>
+                        <li>SoifGo extracts the value itself and displays it on the button.</li>
+                        <li>Perfect for simple “show one value” cases.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="margin-top:0; color:var(--accent2);">WebView Method</h4>
+                    <ul style="font-size:0.9rem;">
+                        <li>Configured in HTML/JS inside the page.</li>
+                        <li>Full control over parsing, display, and behaviour.</li>
+                        <li>You call <code>api_recive(address, key)</code> and handle the
+                            response in <code>api_rx</code>.</li>
+                        <li>Can combine API + Bluetooth + MQTT + sensors on one page.</li>
+                        <li>Perfect for dashboards, custom UIs, and complex logic.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="info">
+                <strong>💡 Which one should I use?</strong>
+                Use <strong>Classic</strong> if you just need a single value on a button.
+                Use <strong>WebView</strong> if you want custom layout, multiple values,
+                timers, charts, or any interactivity.
+            </div>
+        </div>
+
+        <div class="box">
+            <h3>🔧 API Troubleshooting</h3>
+
+            <div class="note">
+                <strong>Nothing happens when api_recive is called</strong><br>
+                Make sure you're passing <strong>both</strong> parameters:
+                <code>api_recive(address, key)</code>. Missing the key will silently fail.
+            </div>
+
+            <div class="note">
+                <strong>api_rx never fires</strong><br>
+                Check that <code>api_rx</code> is registered on <code>window</code>:
+                <code>window.api_rx = api_rx;</code>
+            </div>
+
+            <div class="note">
+                <strong>JSON.parse fails on the response</strong><br>
+                SoifGo may send the response as a <strong>B4A Map string</strong>
+                (<code>{usd=86750}</code>) or as a plain value (<code>86846.51</code>) —
+                neither is valid JSON. Use the <code>extractValue()</code> helper above.
+            </div>
+
+            <div class="note">
+                <strong>Response is just a number, not a Map</strong><br>
+                Some APIs return a flat JSON. In that case <code>api_rx</code> receives
+                the raw value (<code>86846.51</code>) with no wrapper. Handle this case
+                with the plain-number branch of the extractor.
+            </div>
+
+            <div class="note">
+                <strong>Rate limit errors (429)</strong><br>
+                Increase the timer interval. See the Rate Limits section above.
+            </div>
+
+            <div class="note">
+                <strong>Bridge not found</strong><br>
+                If <code>window.soifgo</code> is undefined, you're in a normal browser.
+                The bridge only exists inside SoifGo.
+            </div>
+        </div>
+
+        <h3 id="storage">💾 6. Save &amp; Reload Data (Persistent Storage)</h3>
 
         <div class="box">
             <div class="success">
@@ -1438,7 +1871,7 @@ window.html_mqtt_status = html_mqtt_status;</code></pre>
         </div>
 
         <div class="footer">
-            <strong>SoifGo Complete Guide</strong> — Bluetooth, Sensors &amp; MQTT Integration<br>
+            <strong>SoifGo Complete Guide</strong> — Bluetooth, Sensors, MQTT &amp; API Integration<br>
             Custom UI with WebView
         </div>
 
