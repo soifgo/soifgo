@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes" />
@@ -11,7 +11,7 @@
   <meta name="description" content="Complete tutorial for SoifGo button effects: Size, Circle, Move, Rotate, Color, Graph, Formula, and ALARM. Learn how to use visual effects with numeric input, Bluetooth, MQTT, and sensors." />
   <meta name="keywords" content="SoifGo effects, button effects tutorial, visual effects, size effect, circle gauge, move effect, rotate effect, color effect, graph effect, formula math, alarm notification, Bluetooth visualization, MQTT dashboard" />
 
-  <!-- ===== OPEN GRAPH (Social Media) ===== -->
+  <!-- ===== OPEN GRAPH ===== -->
   <meta property="og:title" content="SoifGo Effects Tutorial — Visual Effects for Button Controls" />
   <meta property="og:description" content="Complete tutorial for SoifGo button effects: Size, Circle, Move, Rotate, Color, Graph, Formula, and ALARM. Perfect for dashboards and IoT visualization." />
   <meta property="og:type" content="website" />
@@ -28,38 +28,22 @@
   <meta name="twitter:description" content="Complete tutorial for SoifGo button effects: Size, Circle, Move, Rotate, Color, Graph, Formula, and ALARM." />
   <meta name="twitter:image" content="https://soifgo.github.io/soifgo/effects-og.jpg" />
 
-  <!-- ===== CANONICAL URL ===== -->
+  <!-- ===== CANONICAL ===== -->
   <link rel="canonical" href="https://soifgo.github.io/soifgo/tutorials/effects/" />
 
-  <!-- ===== LANGUAGE ALTERNATES ===== -->
-  <link rel="alternate" hreflang="en" href="https://soifgo.github.io/soifgo/tutorials/effects/" />
-
-  <!-- ===== SCHEMA.ORG (Structured Data) ===== -->
+  <!-- ===== SCHEMA.ORG ===== -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "TechArticle",
     "headline": "SoifGo Effects Tutorial — Visual Effects for Button Controls",
-    "description": "Complete tutorial for SoifGo button effects: Size, Circle, Move, Rotate, Color, Graph, Formula, and ALARM. Learn how to use visual effects with numeric input, Bluetooth, MQTT, and sensors.",
-    "author": {
-      "@type": "Person",
-      "name": "Saeid Moghadam"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "SoifGo",
-      "url": "https://soifgo.github.io/soifgo/"
-    },
+    "description": "Complete tutorial for SoifGo button effects: Size, Circle, Move, Rotate, Color, Graph, Formula, and ALARM.",
+    "author": { "@type": "Person", "name": "Saeid Moghadam" },
+    "publisher": { "@type": "Organization", "name": "SoifGo", "url": "https://soifgo.github.io/soifgo/" },
     "datePublished": "2025-01-01",
     "dateModified": "2025-01-01",
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": "https://soifgo.github.io/soifgo/tutorials/effects/"
-    },
-    "about": {
-      "@type": "Thing",
-      "name": "Visual Effects for IoT Dashboards"
-    },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://soifgo.github.io/soifgo/tutorials/effects/" },
+    "about": { "@type": "Thing", "name": "Visual Effects for IoT Dashboards" },
     "teaches": [
       "Size effect for balancers and level indicators",
       "Circle gauge for power and throttle",
@@ -77,297 +61,528 @@
   </script>
 
   <style>
-    :root {
-      --bg: #ffffff;
+    /* ============================================================
+       THEME VARIABLES — LIGHT
+       ============================================================ */
+    html[data-theme="light"] {
+      --bg: #f4f6fa;
+      --bg-2: #ffffff;
       --fg: #1f2937;
-      --accent: #0b7bbf;
-      --card-bg: #f5f7fb;
-      --border: #d7dce4;
+      --fg-soft: #4b5563;
       --muted: #6b7280;
+
+      --accent: #0b7bbf;
+      --accent-2: #0a94e6;
+      --accent-soft: #e6f3fb;
+
+      --success: #16a34a;
+      --success-bg: #ecfdf3;
+      --success-border: #86efac;
+
+      --warning: #d97706;
+      --warning-bg: #fff8e6;
+      --warning-border: #fcd34d;
+      --warning-text: #7c4a03;
+
+      --danger: #dc2626;
+      --danger-bg: #fef2f2;
+      --danger-border: #fca5a5;
+
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --border-strong: #cbd5e1;
+
       --code-bg: #eef2f7;
-      --link: #0a84ff;
+      --code-dark: #0f172a;
+      --code-text: #e2e8f0;
+
+      --link: #0066cc;
+
+      --btn-home: #7a4a2e;
+      --btn-home-hover: #5f3a22;
+
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
+      --shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+      --shadow-lg: 0 10px 30px rgba(15, 23, 42, 0.08);
+
+      --transition: 0.18s ease;
     }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #0b0e12;
-        --fg: #e5e7eb;
-        --accent: #4dabf7;
-        --card-bg: #12161d;
-        --border: #243041;
-        --muted: #9aa3af;
-        --code-bg: #1b2230;
-        --link: #58a6ff;
-      }
+
+    /* ============================================================
+       THEME VARIABLES — DARK
+       ============================================================ */
+    html[data-theme="dark"] {
+      --bg: #0b0e12;
+      --bg-2: #10151c;
+      --fg: #e5e7eb;
+      --fg-soft: #cbd5e1;
+      --muted: #9aa3af;
+
+      --accent: #4dabf7;
+      --accent-2: #6bc0ff;
+      --accent-soft: #14243a;
+
+      --success: #4ade80;
+      --success-bg: #10241a;
+      --success-border: #166534;
+
+      --warning: #fbbf24;
+      --warning-bg: #241e0a;
+      --warning-border: #b45309;
+      --warning-text: #fcd34d;
+
+      --danger: #f87171;
+      --danger-bg: #2a1010;
+      --danger-border: #7f1d1d;
+
+      --card-bg: #12161d;
+      --border: #243041;
+      --border-strong: #334155;
+
+      --code-bg: #1b2230;
+      --code-dark: #05080f;
+      --code-text: #e2e8f0;
+
+      --link: #58a6ff;
+
+      --btn-home: #8B5A3A;
+      --btn-home-hover: #6d4528;
+
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+      --shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+      --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.45);
+
+      --transition: 0.18s ease;
     }
+
+    /* ============================================================
+       RESET & BASE
+       ============================================================ */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 
     html, body {
       background: var(--bg);
       color: var(--fg);
-      margin: 0;
-      padding: 0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      line-height: 1.6;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.7;
       -webkit-text-size-adjust: 100%;
       min-height: 100vh;
+      text-rendering: optimizeLegibility;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    body {
+      background:
+        radial-gradient(1200px 500px at 50% -200px, var(--accent-soft) 0%, transparent 60%),
+        var(--bg);
+      background-attachment: fixed;
     }
 
     .container {
-      max-width: 860px;
+      max-width: 880px;
       margin: 0 auto;
-      padding: 16px;
+      padding: 20px 16px 60px;
     }
 
-    h1 {
-      font-size: 1.8rem;
-      margin: 0.75rem 0 0.5rem;
-      color: var(--accent);
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      word-break: break-word;
-    }
-    h2 {
-      font-size: 1.35rem;
-      margin: 1.25rem 0 0.5rem;
-      color: var(--accent);
-      font-weight: 600;
-      word-break: break-word;
-    }
-    h3 {
-      font-size: 1.1rem;
-      margin: 1rem 0 0.5rem;
-      color: var(--accent);
-      font-weight: 600;
-      word-break: break-word;
-    }
-    p, li {
-      font-size: 1rem;
-      word-break: break-word;
-    }
-    small {
-      color: var(--muted);
-    }
-
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 1rem 1.2rem;
-      max-width: 100%;
-      overflow-x: auto;
-      margin-bottom: 0.5rem;
-    }
-
-    .card table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 500px;
-    }
-
-    .card th, .card td {
-      padding: 8px 10px;
-      text-align: left;
-      word-break: break-word;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .card th {
-      background: var(--bg);
-      font-weight: 600;
-    }
-
+    /* ============================================================
+       STICKY NAV
+       ============================================================ */
     .nav {
       position: sticky;
       top: 0;
-      z-index: 10;
-      backdrop-filter: saturate(180%) blur(8px);
-      background: color-mix(in oklab, var(--bg) 92%, transparent);
+      z-index: 100;
+      backdrop-filter: saturate(180%) blur(12px);
+      -webkit-backdrop-filter: saturate(180%) blur(12px);
+      background: color-mix(in srgb, var(--bg-2) 88%, transparent);
       border-bottom: 1px solid var(--border);
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
     }
 
     .nav-inner {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 6px;
       justify-content: center;
-      padding: 10px 16px;
+      padding: 10px 12px;
+      max-width: 880px;
+      margin: 0 auto;
     }
 
     .nav a {
-      flex: 1 1 auto;
-      text-align: center;
-      font-size: clamp(0.75rem, 2.5vw, 1rem);
+      font-size: 0.82rem;
       padding: 6px 12px;
       text-decoration: none;
-      color: var(--link);
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      transition: background 0.15s;
+      color: var(--fg-soft);
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      transition: background var(--transition), color var(--transition), border-color var(--transition);
       font-weight: 500;
+      white-space: nowrap;
     }
 
     .nav a:hover,
     .nav a:focus {
-      background: var(--accent);
-      color: #fff;
-      border-color: var(--accent);
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-color: color-mix(in srgb, var(--accent) 30%, transparent);
+      text-decoration: none;
     }
 
+    /* ============================================================
+       HERO HEADER
+       ============================================================ */
+    .hero {
+      text-align: center;
+      padding: 20px 12px 24px;
+    }
+
+    .hero .badge {
+      display: inline-block;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 999px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+    }
+
+    h1 {
+      font-size: clamp(1.5rem, 5vw, 2rem);
+      color: var(--fg);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin-bottom: 8px;
+    }
+
+    h1 .accent { color: var(--accent); }
+
+    /* ============================================================
+       HEADINGS
+       ============================================================ */
+    h2 {
+      font-size: 1.28rem;
+      color: var(--accent);
+      margin: 28px 0 12px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      line-height: 1.35;
+      scroll-margin-top: 80px;
+    }
+
+    h3 {
+      font-size: 1.02rem;
+      color: var(--fg);
+      margin: 18px 0 8px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    p {
+      margin: 0.7em 0;
+      color: var(--fg-soft);
+    }
+
+    a {
+      color: var(--link);
+      text-decoration: none;
+      transition: color var(--transition);
+      word-break: break-word;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    /* ============================================================
+       CARDS
+       ============================================================ */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      margin-bottom: 18px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow var(--transition), border-color var(--transition), background var(--transition);
+      overflow: hidden;
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow);
+      border-color: var(--border-strong);
+    }
+
+    /* ============================================================
+       IMAGES — Constrained size
+       ============================================================ */
     img {
       max-width: 100%;
+      max-height: 380px;
+      width: auto;
       height: auto;
+      object-fit: contain;
+      border-radius: var(--radius-sm);
       display: block;
-      border-radius: 14px;
-      margin: 0.8rem 0;
+      margin: 14px auto;
       background: var(--card-bg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
     }
 
+    /* ============================================================
+       VIDEOS — Constrained size
+       ============================================================ */
     video {
       max-width: 100%;
-      height: auto;
+      width: 100%;
+      max-height: 420px;
       aspect-ratio: 16 / 9;
-      border-radius: 14px;
+      border-radius: var(--radius-sm);
       display: block;
-      margin: 0.8rem 0;
+      margin: 14px auto;
       background: #0a1a2a;
       object-fit: contain;
-      width: 100%;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
     }
 
+    /* ============================================================
+       CODE
+       ============================================================ */
+    code {
+      background: var(--code-bg);
+      padding: 0.15em 0.5em;
+      border-radius: 6px;
+      font-size: 0.88em;
+      font-family: "JetBrains Mono", "Fira Code", ui-monospace, Menlo, monospace;
+      color: var(--fg);
+      word-break: break-word;
+      border: 1px solid var(--border);
+    }
+
+    pre {
+      background: var(--code-dark);
+      color: var(--code-text);
+      padding: 14px 16px;
+      border-radius: var(--radius-sm);
+      overflow-x: auto;
+      margin: 12px 0;
+      font-size: 0.85rem;
+      font-family: "JetBrains Mono", "Fira Code", ui-monospace, Menlo, monospace;
+      line-height: 1.6;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: inherit;
+      font-size: inherit;
+      border: none;
+    }
+
+    /* ============================================================
+       TABLES
+       ============================================================ */
     .table-wrapper {
       overflow-x: auto;
+      margin: 14px 0;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
       -webkit-overflow-scrolling: touch;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 500px;
+      font-size: 0.88rem;
+      background: var(--card-bg);
+      min-width: 480px;
     }
 
-    table th, table td {
-      padding: 6px 10px;
+    th, td {
+      padding: 10px 14px;
       text-align: left;
-      word-break: break-word;
       border-bottom: 1px solid var(--border);
-    }
-
-    table th {
-      background: var(--bg);
-      font-weight: 600;
-    }
-
-    .muted {
-      color: var(--muted);
-    }
-
-    code {
-      background: var(--code-bg);
-      padding: 0.2em 0.6em;
-      border-radius: 8px;
-      font-size: 0.9em;
-      font-family: 'JetBrains Mono', 'Fira Code', monospace;
-      color: var(--fg);
       word-break: break-word;
     }
 
+    th {
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: color-mix(in srgb, var(--accent) 4%, transparent); }
+
+    /* ============================================================
+       LISTS
+       ============================================================ */
+    ul, ol {
+      padding-left: 1.4em;
+      margin: 8px 0;
+      color: var(--fg-soft);
+    }
+
+    li { margin-bottom: 6px; }
+
+    /* ============================================================
+       BUTTONS
+       ============================================================ */
     .btn-home {
-      display: inline-block;
-      background: #7a4a2e;
-      color: white;
-      padding: 14px 34px;
-      border-radius: 60px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--btn-home);
+      color: #fff;
+      padding: 14px 32px;
+      border-radius: 999px;
       text-decoration: none;
-      font-weight: 500;
-      font-size: 1.05rem;
-      text-align: center;
-      transition: background 0.15s, transform 0.1s;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: transform var(--transition), background var(--transition), box-shadow var(--transition);
       touch-action: manipulation;
       border: none;
-      min-width: 140px;
-      box-shadow: 0 4px 10px rgba(80, 45, 20, 0.06);
+      cursor: pointer;
+      box-shadow: var(--shadow);
     }
 
-    .btn-home:active {
-      transform: scale(0.97);
-      background: #5f3a22;
+    .btn-home:hover {
+      background: var(--btn-home-hover);
+      text-decoration: none;
+      transform: translateY(-1px);
     }
+
+    .btn-home:active { transform: scale(0.97); }
 
     .btn-wrap {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: center;
-      gap: 16px;
-      margin: 2rem 0 0.5rem 0;
+      gap: 14px;
+      margin: 28px 0 8px;
     }
 
-    ul, ol {
-      padding-left: 1.4em;
-      margin: 0.5em 0;
+    /* ============================================================
+       THEME TOGGLE BUTTON
+       ============================================================ */
+    .theme-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 200;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      color: var(--fg);
+      font-size: 1.4rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-lg);
+      transition: transform var(--transition), background var(--transition), border-color var(--transition);
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      line-height: 1;
+      padding: 0;
     }
 
-    li {
-      margin-bottom: 0.4em;
+    .theme-toggle:hover {
+      transform: scale(1.08) translateY(-2px);
+      border-color: var(--accent);
     }
 
-    /* responsive */
+    .theme-toggle:active {
+      transform: scale(0.94);
+    }
+
+    /* ============================================================
+       UTILITIES
+       ============================================================ */
+    .muted { color: var(--muted); }
+    .text-center { text-align: center; }
+
+    small { color: var(--muted); }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
     @media (max-width: 600px) {
-      .container {
-        padding: 10px;
-      }
-      h1 {
-        font-size: 1.5rem;
-      }
-      h2 {
-        font-size: 1.15rem;
-      }
-      .card {
-        padding: 0.8rem 0.9rem;
-      }
-      .nav-inner {
-        gap: 4px;
-        padding: 8px 10px;
-      }
-      .nav a {
-        font-size: 0.7rem;
-        padding: 4px 8px;
-      }
-      .btn-home {
-        width: 100%;
-        justify-content: center;
-        padding: 16px 18px;
-        font-size: 1rem;
-      }
-      .btn-wrap {
-        flex-direction: column;
-        gap: 12px;
-      }
-      .card table {
-        min-width: 350px;
+      .container { padding: 14px 12px 40px; }
+      .hero { padding: 14px 6px 16px; }
+      h1 { font-size: 1.4rem; }
+      h2 { font-size: 1.12rem; margin: 22px 0 10px; }
+      h3 { font-size: 0.96rem; }
+      .card { padding: 16px; border-radius: 14px; }
+      body { font-size: 0.97rem; }
+      pre { font-size: 0.78rem; padding: 12px; }
+      img { max-height: 260px; margin: 10px auto; }
+      video { max-height: 240px; }
+      .btn-wrap { flex-direction: column; gap: 10px; }
+      .btn-home { width: 100%; padding: 14px 18px; font-size: 0.95rem; }
+      table { font-size: 0.8rem; min-width: 400px; }
+      th, td { padding: 8px 10px; }
+      .nav-inner { gap: 4px; padding: 8px 8px; }
+      .nav a { font-size: 0.72rem; padding: 5px 9px; }
+      code { font-size: 0.82em; }
+      .theme-toggle {
+        bottom: 16px;
+        right: 16px;
+        width: 46px;
+        height: 46px;
+        font-size: 1.2rem;
       }
     }
 
     @media (max-width: 380px) {
-      h1 {
-        font-size: 1.3rem;
-      }
-      .card {
-        padding: 0.6rem 0.7rem;
-      }
-      .card table {
-        min-width: 280px;
-      }
-      table th, table td {
-        padding: 4px 6px;
-        font-size: 0.85rem;
-      }
+      h1 { font-size: 1.25rem; }
+      h2 { font-size: 1.02rem; }
+      .card { padding: 13px; }
+      pre { font-size: 0.72rem; }
+      body { font-size: 0.94rem; }
+      img { max-height: 200px; }
+      video { max-height: 200px; }
+      table { font-size: 0.75rem; min-width: 320px; }
+      th, td { padding: 6px 8px; }
+      .nav a { font-size: 0.68rem; padding: 4px 8px; }
+    }
+
+    /* ============================================================
+       HIDE THEME TRANSITION ON PAGE LOAD (avoid flash)
+       ============================================================ */
+    html.no-transition,
+    html.no-transition * {
+      transition: none !important;
     }
   </style>
 </head>
 <body>
 
-  <!-- ===== STICKY NAV ===== -->
+  <!-- ============================================================
+       STICKY NAV
+       ============================================================ -->
   <header class="nav" role="navigation" aria-label="Table of Contents">
     <nav class="nav-inner">
       <a href="#overview">Overview</a>
@@ -383,14 +598,29 @@
     </nav>
   </header>
 
-  <!-- ===== MAIN CONTENT ===== -->
+  <!-- ============================================================
+       MAIN CONTENT
+       ============================================================ -->
   <main class="container">
 
-    <h1 id="overview">SoifGo Tutorial: How Effects Work</h1>
+    <!-- ===== HERO ===== -->
+    <header class="hero">
+      <span class="badge">Tutorial</span>
+      <h1 id="overview">✨ <span class="accent">SoifGo Effects</span> Tutorial</h1>
+    </header>
 
-    <!-- ===== SIMULATION SETUP ===== -->
+    <p>
+      Effects turn your buttons into live visual indicators. When a numeric value arrives
+      — from Bluetooth, MQTT, API, sensors, or the built-in simulator — the button reacts
+      in real time. This guide covers all available effects:
+      <strong>Size, Circle, Move, Rotate, Color, Graph, Formula, and ALARM</strong>.
+    </p>
+
+    <!-- ============================================================
+         SIMULATION SETUP
+         ============================================================ -->
+    <h2>🎮 Simulation Setup</h2>
     <div class="card">
-      <h2>Simulation Setup</h2>
       <p>
         If the required hardware for applying values by address to test button actions is unavailable,
         you can enable the simulator. It provides an internal counter ranging from <code>1</code> to
@@ -412,8 +642,10 @@
 
     <img src="effect01.png" alt="Simulation setup in SoifGo" loading="lazy">
 
-    <!-- ===== SETUP ===== -->
-    <h2 id="setup">Setup</h2>
+    <!-- ============================================================
+         SETUP
+         ============================================================ -->
+    <h2 id="setup">⚙️ Setup</h2>
     <div class="card">
       <ul>
         <li><strong>Create the button:</strong> Set behavior to numeric input (Bluetooth, API, or MQTT).</li>
@@ -426,8 +658,10 @@
     <img src="effect02.png" alt="Effect settings in SoifGo" loading="lazy">
     <img src="effect03.png" alt="Effect options menu" loading="lazy">
 
-    <!-- ===== SIZE ===== -->
-    <h2 id="size">Size</h2>
+    <!-- ============================================================
+         SIZE
+         ============================================================ -->
+    <h2 id="size">📏 Size</h2>
     <div class="card">
       <p>
         Two sliders appear: the upper slider sets width to the far right; the next slider sets height to the top. For maximum variation,
@@ -441,8 +675,10 @@
       <p>Suitable for balancing visuals like rising water or fuel level, or any growing variable.</p>
     </div>
 
-    <!-- ===== CIRCLE ===== -->
-    <h2 id="circle">Circle</h2>
+    <!-- ============================================================
+         CIRCLE
+         ============================================================ -->
+    <h2 id="circle">⭕ Circle</h2>
     <div class="card">
       <p>
         Renders a circular chart (full or partial) behind the button. Set start and end degrees for the minimum and maximum input.
@@ -450,8 +686,10 @@
       </p>
     </div>
 
-    <!-- ===== MOVE ===== -->
-    <h2 id="move">Move</h2>
+    <!-- ============================================================
+         MOVE
+         ============================================================ -->
+    <h2 id="move">↔️ Move</h2>
     <div class="card">
       <p>
         Moves the button to the far right and to the top based on input. Two sliders control motion: the first for horizontal (right),
@@ -459,8 +697,10 @@
       </p>
     </div>
 
-    <!-- ===== ROTATE ===== -->
-    <h2 id="rotate">Rotate</h2>
+    <!-- ============================================================
+         ROTATE
+         ============================================================ -->
+    <h2 id="rotate">🔄 Rotate</h2>
     <div class="card">
       <p>
         Rotates the button up to <code>360°</code> for maximum input. The first slider sets the start position for input <code>0</code>;
@@ -470,8 +710,10 @@
       <p>Suitable for clocks, pressure/temperature/current/voltage gauges, speedometers, and more.</p>
     </div>
 
-    <!-- ===== COLOR ===== -->
-    <h2 id="color">Color</h2>
+    <!-- ============================================================
+         COLOR
+         ============================================================ -->
+    <h2 id="color">🎨 Color</h2>
     <div class="card">
       <p>
         Predefined options include battery, cooling, brightness, red, green, blue, and yellow. Each has specific use cases—for example,
@@ -480,14 +722,16 @@
     </div>
 
     <!-- ===== VIDEO: Effects Demo ===== -->
-    <h2>Size · Circle · Move · Rotation · Color · Formula</h2>
+    <h2>🎬 Effects Demo</h2>
     <video controls playsinline preload="metadata">
       <source src="effect1.mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
 
-    <!-- ===== GRAPH ===== -->
-    <h2 id="graph">Graph</h2>
+    <!-- ============================================================
+         GRAPH
+         ============================================================ -->
+    <h2 id="graph">📈 Graph</h2>
     <div class="card">
       <p>
         Draws a line graph for the input on the button. In settings, select graph line color and thickness. In the trigger section you have
@@ -513,14 +757,16 @@
       </p>
     </div>
 
-    <h2>Graph Demo</h2>
+    <h3>Graph Demo</h3>
     <video controls playsinline preload="metadata">
       <source src="graph1.mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
 
-    <!-- ===== FORMULA ===== -->
-    <h2 id="formula">Formula</h2>
+    <!-- ============================================================
+         FORMULA
+         ============================================================ -->
+    <h2 id="formula">🧮 Formula</h2>
     <div class="card">
       <p>
         This feature displays a custom value derived from the input. For example, if input range is <code>0–1024</code> but you want
@@ -573,8 +819,10 @@
       </div>
     </div>
 
-    <!-- ===== ALARM ===== -->
-    <h2 id="alarm">ALARM</h2>
+    <!-- ============================================================
+         ALARM
+         ============================================================ -->
+    <h2 id="alarm">🚨 ALARM</h2>
     <div class="card">
       <p>
         The alarm provides both text and sound notifications. It is triggered when the measured value becomes greater or less than the configured threshold.
@@ -593,12 +841,76 @@
       Your browser does not support the video tag.
     </video>
 
-    <!-- ===== HOME BUTTON ===== -->
+    <!-- ============================================================
+         HOME BUTTON
+         ============================================================ -->
     <div class="btn-wrap">
       <a href="https://soifgo.github.io/soifgo/index.html" class="btn-home">⬅ Back to Home</a>
     </div>
 
   </main>
+
+  <!-- ============================================================
+       THEME TOGGLE BUTTON
+       ============================================================ -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle dark / light mode">
+    🌙
+  </button>
+
+  <!-- ============================================================
+       THEME SCRIPT — runs before paint to avoid flash
+       ============================================================ -->
+  <script>
+    (function() {
+      const html = document.documentElement;
+      const btn  = document.getElementById('themeToggle');
+
+      /* ---- 1. Initial theme ---- */
+      function getInitialTheme() {
+        const saved = localStorage.getItem('soifgo-theme');
+        if (saved === 'light' || saved === 'dark') return saved;
+        return window.matchMedia('(prefers-color-scheme: dark)').matches
+          ? 'dark'
+          : 'light';
+      }
+
+      /* ---- 2. Apply theme ---- */
+      function applyTheme(theme) {
+        // Disable transitions during initial application to avoid flash
+        html.classList.add('no-transition');
+        html.setAttribute('data-theme', theme);
+        btn.textContent = (theme === 'dark') ? '☀️' : '🌙';
+        btn.setAttribute(
+          'aria-label',
+          theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
+        );
+        // Re-enable transitions on next frame
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            html.classList.remove('no-transition');
+          });
+        });
+      }
+
+      /* ---- 3. Initial application (before paint) ---- */
+      applyTheme(getInitialTheme());
+
+      /* ---- 4. Toggle on click ---- */
+      btn.addEventListener('click', () => {
+        const current = html.getAttribute('data-theme');
+        const next    = (current === 'dark') ? 'light' : 'dark';
+        applyTheme(next);
+        localStorage.setItem('soifgo-theme', next);
+      });
+
+      /* ---- 5. React to system theme change (only if user hasn't chosen) ---- */
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (!localStorage.getItem('soifgo-theme')) {
+          applyTheme(e.matches ? 'dark' : 'light');
+        }
+      });
+    })();
+  </script>
 
 </body>
 </html>
