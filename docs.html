@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-  <title>SoifGo Developer Docs — HTML/JS + Bluetooth + Sensors API Reference</title>
+  <title>SoifGo Developer Docs — HTML/JS API Reference (Bluetooth, MQTT, Sensors, API, Storage)</title>
 
-  <meta name="description" content="Technical documentation for SoifGo developers. Learn how to use window.soifgo.CallSub() to send/receive Bluetooth data and read phone sensors from a custom HTML/JS page." />
-  <meta name="keywords" content="SoifGo docs, SoifGo API, window.soifgo.CallSub, HTML Bluetooth Android, WebView Bluetooth sensors, SoifGo developer guide" />
+  <meta name="description" content="Complete API reference for SoifGo developers. window.soifgo.CallSub() for Bluetooth, MQTT, phone sensors, REST APIs, and localStorage. Short, practical, and copy-ready." />
+  <meta name="keywords" content="SoifGo docs, SoifGo API, window.soifgo.CallSub, HTML Bluetooth Android, WebView Bluetooth sensors, MQTT Android, api_send api_recive, SoifGo developer guide, localStorage WebView" />
 
-  <meta property="og:title" content="SoifGo Developer Docs — HTML/JS + Bluetooth + Sensors API" />
-  <meta property="og:description" content="Complete API reference for building custom HTML/JS controllers with SoifGo. Send/receive Bluetooth and read phone sensors." />
+  <meta property="og:title" content="SoifGo Developer Docs — Full API Reference" />
+  <meta property="og:description" content="Bluetooth, MQTT, sensors, REST APIs, and localStorage — all in one page. Copy-ready code for building custom HTML/JS controllers." />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://soifgo.github.io/soifgo/docs.html" />
   <meta property="og:image" content="https://soifgo.github.io/soifgo/soifgo-logo.png" />
@@ -19,8 +19,8 @@
   <meta property="og:locale" content="en_US" />
 
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="SoifGo Developer Docs — HTML/JS + Bluetooth + Sensors API" />
-  <meta name="twitter:description" content="Complete API reference for building custom HTML/JS controllers with SoifGo." />
+  <meta name="twitter:title" content="SoifGo Developer Docs — Full API Reference" />
+  <meta name="twitter:description" content="Bluetooth, MQTT, sensors, REST APIs, and localStorage — all in one page." />
   <meta name="twitter:image" content="https://soifgo.github.io/soifgo/soifgo-logo.png" />
 
   <link rel="canonical" href="https://soifgo.github.io/soifgo/docs.html" />
@@ -30,18 +30,12 @@
     {
       "@context": "https://schema.org",
       "@type": "TechArticle",
-      "headline": "SoifGo Developer Docs — HTML/JS + Bluetooth + Sensors API Reference",
-      "description": "Complete technical documentation for SoifGo developers. Learn how to use window.soifgo.CallSub() to send/receive Bluetooth data and read phone sensors from custom HTML/JS pages.",
+      "headline": "SoifGo Developer Docs — HTML/JS API Reference",
+      "description": "Complete technical documentation for SoifGo developers: Bluetooth, MQTT, sensors, REST API, and localStorage.",
       "url": "https://soifgo.github.io/soifgo/docs.html",
       "inLanguage": "en",
-      "author": {
-        "@type": "Person",
-        "name": "Saeid Moghadam"
-      },
-      "publisher": {
-        "@type": "Person",
-        "name": "Saeid Moghadam"
-      },
+      "author": { "@type": "Person", "name": "Saeid Moghadam" },
+      "publisher": { "@type": "Person", "name": "Saeid Moghadam" },
       "about": {
         "@type": "SoftwareApplication",
         "name": "SoifGo",
@@ -56,6 +50,10 @@
     :root {
       --primary: #4f8cff;
       --primary-light: #6aa0ff;
+      --purple: #9b59b6;
+      --purple-light: #c084fc;
+      --arduino-teal: #1abc9c;
+      --orange: #f39c12;
       --bg: #0f172a;
       --bg-card: #1e293b;
       --text: #e8edf5;
@@ -68,6 +66,14 @@
       --transition: 0.25s ease;
       --code-bg: #0b1020;
       --code-text: #a5b4fc;
+      --info-bg: rgba(79, 140, 255, 0.08);
+      --info-border: var(--primary);
+      --warn-bg: rgba(245, 158, 11, 0.08);
+      --warn-border: #f59e0b;
+      --ok-bg: rgba(45, 212, 191, 0.08);
+      --ok-border: #2dd4bf;
+      --purple-bg: rgba(155, 89, 182, 0.08);
+      --purple-border: var(--purple);
     }
 
     body {
@@ -92,10 +98,7 @@
       border-bottom: 3px solid var(--primary);
     }
 
-    .header-container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
+    .header-container { max-width: 800px; margin: 0 auto; }
 
     .logo-row {
       display: flex;
@@ -105,9 +108,7 @@
       margin-bottom: 16px;
     }
 
-    .logo-row img {
-      height: 50px;
-    }
+    .logo-row img { height: 50px; }
 
     .logo-row span {
       font-size: 1.8rem;
@@ -173,11 +174,7 @@
     }
 
     /* ====== MAIN ====== */
-    main {
-      max-width: 900px;
-      margin: auto;
-      padding: 0 1em;
-    }
+    main { max-width: 900px; margin: auto; padding: 0 1em; }
 
     section {
       padding: 2em;
@@ -203,9 +200,22 @@
       margin-bottom: 0.6em;
     }
 
+    h4 {
+      font-size: 1em;
+      color: var(--text-main);
+      margin-top: 1em;
+      margin-bottom: 0.4em;
+    }
+
     p { margin-bottom: 14px; }
 
-    /* ====== CODE BLOCKS ====== */
+    a { color: var(--primary-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    ul, ol { padding-left: 1.4em; margin: 0.5em 0; }
+    li { margin-bottom: 0.4em; }
+
+    /* ====== CODE ====== */
     pre {
       background: var(--code-bg);
       padding: 16px 20px;
@@ -216,7 +226,7 @@
       border: 1px solid rgba(79, 140, 255, 0.12);
       margin: 12px 0;
       line-height: 1.6;
-      font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
     }
 
     code {
@@ -225,55 +235,35 @@
       border-radius: 4px;
       font-size: 0.85em;
       color: var(--code-text);
-      font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
     }
 
-    pre code {
-      background: transparent;
-      padding: 0;
-      color: inherit;
-    }
+    pre code { background: transparent; padding: 0; color: inherit; }
 
     /* ====== INFO BOXES ====== */
-    .info-box {
-      background: rgba(79, 140, 255, 0.08);
-      border-left: 4px solid var(--primary);
+    .info-box, .warning-box, .success-box, .purple-box {
       border-radius: var(--radius-sm);
-      padding: 16px 20px;
-      margin: 18px 0;
+      padding: 14px 18px;
+      margin: 16px 0;
       font-size: 0.95rem;
+      border-left: 4px solid;
     }
+    .info-box { background: var(--info-bg); border-color: var(--info-border); }
+    .warning-box { background: var(--warn-bg); border-color: var(--warn-border); }
+    .success-box { background: var(--ok-bg); border-color: var(--ok-border); }
+    .purple-box { background: var(--purple-bg); border-color: var(--purple-border); }
 
     .info-box strong { color: var(--primary-light); }
-
-    .warning-box {
-      background: rgba(245, 158, 11, 0.08);
-      border-left: 4px solid #f59e0b;
-      border-radius: var(--radius-sm);
-      padding: 16px 20px;
-      margin: 18px 0;
-      font-size: 0.95rem;
-    }
-
     .warning-box strong { color: #fbbf24; }
-
-    .success-box {
-      background: rgba(45, 212, 191, 0.08);
-      border-left: 4px solid #2dd4bf;
-      border-radius: var(--radius-sm);
-      padding: 16px 20px;
-      margin: 18px 0;
-      font-size: 0.95rem;
-    }
-
     .success-box strong { color: #2dd4bf; }
+    .purple-box strong { color: var(--purple-light); }
 
     /* ====== API TABLE ====== */
     .api-table {
       width: 100%;
       border-collapse: collapse;
       margin: 16px 0;
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       background: rgba(255, 255, 255, 0.02);
       border-radius: var(--radius-sm);
       overflow: hidden;
@@ -281,7 +271,7 @@
 
     .api-table th, .api-table td {
       border: 1px solid var(--border);
-      padding: 10px 14px;
+      padding: 10px 12px;
       text-align: left;
       vertical-align: top;
     }
@@ -290,14 +280,73 @@
       background: rgba(79, 140, 255, 0.1);
       color: var(--text-main);
       font-weight: 700;
+      font-size: 0.85rem;
     }
 
-    .api-table td {
-      color: var(--text-muted);
-    }
+    .api-table td { color: var(--text-muted); }
 
     .api-table td code {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
+      background: rgba(79, 140, 255, 0.1);
+      padding: 1px 6px;
+    }
+
+    .api-table .tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+    .tag.send { background: rgba(79, 140, 255, 0.2); color: var(--primary-light); }
+    .tag.recv { background: rgba(45, 212, 191, 0.2); color: #2dd4bf; }
+    .tag.act  { background: rgba(155, 89, 182, 0.2); color: var(--purple-light); }
+
+    /* ====== QUICK EXAMPLES GRID ====== */
+    .examples-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .example-card {
+      display: flex;
+      flex-direction: column;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      transition: var(--transition);
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .example-card:hover {
+      background: rgba(155, 89, 182, 0.08);
+      border-color: var(--purple);
+      transform: translateY(-3px);
+    }
+
+    .example-card .ex-icon {
+      font-size: 1.8rem;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .example-card .ex-title {
+      color: var(--text-main);
+      display: block;
+      font-weight: 700;
+      font-size: 0.98rem;
+      margin-bottom: 4px;
+    }
+
+    .example-card .ex-desc {
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      line-height: 1.4;
     }
 
     /* ====== TOC ====== */
@@ -305,30 +354,15 @@
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
-      padding: 20px 24px;
+      padding: 18px 22px;
       margin-top: 25px;
     }
 
-    .toc h3 {
-      margin-top: 0;
-      color: var(--text-main);
-    }
+    .toc h3 { margin-top: 0; color: var(--text-main); }
 
-    .toc ol {
-      padding-left: 22px;
-      color: var(--text-muted);
-    }
-
-    .toc ol li {
-      margin-bottom: 6px;
-    }
-
-    .toc a {
-      color: var(--primary-light);
-      text-decoration: none;
-    }
-
-    .toc a:hover { text-decoration: underline; }
+    .toc ol { padding-left: 22px; color: var(--text-muted); }
+    .toc ol li { margin-bottom: 6px; }
+    .toc a { color: var(--primary-light); }
 
     /* ====== FOOTER ====== */
     footer {
@@ -340,11 +374,7 @@
       background: #0f172a;
     }
 
-    footer a {
-      color: var(--text-muted);
-      text-decoration: none;
-      transition: var(--transition);
-    }
+    footer a { color: var(--text-muted); transition: var(--transition); }
     footer a:hover { color: var(--primary-light); text-decoration: underline; }
 
     /* ====== RESPONSIVE ====== */
@@ -359,6 +389,7 @@
       .api-table { font-size: 0.78rem; }
       .api-table th, .api-table td { padding: 8px 10px; }
       nav a { font-size: 0.8rem; padding: 0.4rem 0.9rem; }
+      .examples-grid { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 480px) {
@@ -367,6 +398,7 @@
       .logo-row span { font-size: 1.3rem; }
       section { padding: 1.1rem; margin-top: 15px; }
       pre { font-size: 0.72rem; padding: 12px; }
+      .api-table { font-size: 0.72rem; }
     }
   </style>
 </head>
@@ -381,7 +413,7 @@
         <span>SoifGo</span>
       </div>
       <h1>Developer Documentation</h1>
-      <p>API reference for building custom HTML/JS controllers with Bluetooth and phone sensors.</p>
+      <p>One-page API reference: Bluetooth, MQTT, sensors, REST APIs, and storage — all in <code>window.soifgo.CallSub()</code>.</p>
       <a href="index.html" class="back-link">← Back to main page</a>
     </div>
   </header>
@@ -389,342 +421,459 @@
   <!-- ====== NAV ====== -->
   <nav>
     <a href="#overview">Overview</a>
-    <a href="#bluetooth-send">Send Bluetooth</a>
-    <a href="#bluetooth-receive">Receive Bluetooth</a>
-    <a href="#sensors">Phone Sensors</a>
-    <a href="#full-example">Full Example</a>
-    <a href="#api-table">API Reference</a>
+    <a href="#bluetooth">Bluetooth</a>
+    <a href="#sensors">Sensors</a>
+    <a href="#mqtt">MQTT</a>
+    <a href="#api">API</a>
+    <a href="#storage">Storage</a>
+    <a href="#reference">Reference</a>
+    <a href="#examples">Examples</a>
   </nav>
 
   <main>
 
-    <!-- ====== OVERVIEW ====== -->
+    <!-- ====== 1. OVERVIEW ====== -->
     <section id="overview">
       <h2>1. Overview</h2>
 
       <p>
-        SoifGo's most powerful feature is its <strong>HTML/JavaScript WebView layer</strong>. You can build a custom
-        HTML page and run it inside SoifGo, where JavaScript has direct access to <strong>Bluetooth</strong> and
-        <strong>phone sensors</strong>.
+        SoifGo's WebView layer gives your HTML page direct access to
+        <strong>Bluetooth</strong>, <strong>MQTT</strong>, <strong>phone sensors</strong>,
+        <strong>REST APIs</strong>, and <strong>local storage</strong>.
       </p>
 
-      <p>
-        All communication between your HTML page and SoifGo happens through a single function:
-      </p>
+      <p>Everything goes through one function:</p>
 
-      <pre><code>window.soifgo.CallSub('function_name', arg1, arg2, ...)</code></pre>
+      <pre><code>window.soifgo.CallSub('sub_name', true, arg1, arg2, arg3)</code></pre>
 
       <div class="info-box">
-        <strong>💡 Key Concept:</strong> You call <code>window.soifgo.CallSub()</code> from your HTML to <strong>send</strong> data
-        or <strong>activate</strong> sensors. SoifGo calls <strong>global JavaScript functions</strong> you define to
-        <strong>deliver</strong> data back to your page.
+        <strong>💡 Bridge rules:</strong>
+        <ul style="margin-top:6px;">
+          <li>Second argument is always a boolean (<code>true</code> or <code>false</code>).</li>
+          <li>After that, up to <strong>3 arguments</strong> can be passed.</li>
+          <li>Empty strings must still be passed as <code>''</code> — never omit them.</li>
+          <li>SoifGo calls back through <strong>global functions</strong> you define on <code>window</code>.</li>
+        </ul>
       </div>
 
       <div class="toc">
-        <h3>Quick Navigation</h3>
+        <h3>Quick navigation</h3>
         <ol>
-          <li><a href="#bluetooth-send">Sending data to Bluetooth</a></li>
-          <li><a href="#bluetooth-receive">Receiving data from Bluetooth</a></li>
-          <li><a href="#sensors">Reading phone sensors (Light, Movement, Magneto)</a></li>
-          <li><a href="#full-example">Complete working HTML example</a></li>
-          <li><a href="#api-table">Full API reference table</a></li>
+          <li><a href="#bluetooth">Bluetooth — Send / Receive</a></li>
+          <li><a href="#sensors">Phone sensors — Light / Move X,Y / Magneto</a></li>
+          <li><a href="#mqtt">MQTT — Connect / Publish / Subscribe / Status</a></li>
+          <li><a href="#api">REST API — Send / Receive / Response Formats</a></li>
+          <li><a href="#storage">Storage — localStorage</a></li>
+          <li><a href="#reference">Full API reference table</a></li>
+          <li><a href="#examples">Working examples</a></li>
         </ol>
       </div>
     </section>
 
-    <!-- ====== BLUETOOTH SEND ====== -->
-    <section id="bluetooth-send">
-      <h2>2. Sending Data to Bluetooth</h2>
+    <!-- ====== 2. BLUETOOTH ====== -->
+    <section id="bluetooth">
+      <h2>2. Bluetooth</h2>
 
-      <p>
-        Use <code>window.soifgo.CallSub('html_bluetooth_rx', true, message)</code> to send a string to the
-        connected Bluetooth device.
-      </p>
+      <h3>Send to Bluetooth</h3>
+      <pre><code>window.soifgo.CallSub('html_bluetooth_rx', true, message);</code></pre>
+      <p>Second <code>true</code> = append newline. Use <code>false</code> to send without newline.</p>
 
-      <h3>Example: Send button</h3>
-      <pre><code>function sendCommand() {
-    var msg = document.getElementById('cmdInput').value;
-    if (msg) {
-        window.soifgo.CallSub('html_bluetooth_rx', true, msg);
-    }
-}</code></pre>
-
-      <p>
-        The second argument (<code>true</code>) tells SoifGo to append a newline character. Set it to <code>false</code> to
-        send the string without a newline.
-      </p>
+      <h3>Receive from Bluetooth</h3>
+      <pre><code>function html_bluetooth_tx(data) {
+    // data = string from the device
+}
+window.html_bluetooth_tx = html_bluetooth_tx;   // must be on window</code></pre>
 
       <div class="info-box">
-        <strong>💡 Tip:</strong> You can send any string — text, numbers, JSON, or single-character commands
-        like <code>"F"</code>, <code>"B"</code>, <code>"L"</code>, <code>"R"</code>.
+        <strong>💡 Example:</strong> <code>window.soifgo.CallSub('html_bluetooth_rx', true, 'LED_ON');</code>
       </div>
     </section>
 
-    <!-- ====== BLUETOOTH RECEIVE ====== -->
-    <section id="bluetooth-receive">
-      <h2>3. Receiving Data from Bluetooth</h2>
-
-      <p>
-        Define a global JavaScript function named <code>html_bluetooth_tx(data)</code>. SoifGo will call it
-        automatically whenever data arrives from Bluetooth.
-      </p>
-
-      <h3>Example: Receive handler</h3>
-      <pre><code>// Called by SoifGo when Bluetooth data arrives
-function html_bluetooth_tx(data) {
-    document.getElementById('btOutput').innerHTML = data;
-}
-
-// Register globally
-window.html_bluetooth_tx = html_bluetooth_tx;</code></pre>
-
-      <div class="warning-box">
-        <strong>⚠️ Important:</strong> The function must be registered on the <code>window</code> object
-        (<code>window.html_bluetooth_tx = html_bluetooth_tx</code>) so SoifGo can find it.
-      </div>
-    </section>
-
-    <!-- ====== SENSORS ====== -->
+    <!-- ====== 3. SENSORS ====== -->
     <section id="sensors">
-      <h2>4. Phone Sensors</h2>
+      <h2>3. Phone Sensors</h2>
 
-      <p>
-        SoifGo can stream data from three phone sensors to your HTML page: <strong>Light</strong>,
-        <strong>Movement (X/Y)</strong>, and <strong>Magnetic field</strong>.
-      </p>
+      <p>Three sensors available: <strong>Light</strong>, <strong>Movement (X/Y)</strong>, <strong>Magnetic field</strong>.</p>
 
-      <h3>Step 1: Activate sensors</h3>
-      <p>Call these in <code>window.onload</code>:</p>
-      <pre><code>window.onload = function() {
-    if (window.soifgo) {
-        window.soifgo.CallSub('sensor_light');   // Ambient light
-        window.soifgo.CallSub('sensor_move');    // Accelerometer (X/Y)
-        window.soifgo.CallSub('sensor_magno');   // Magnetic field
-    }
-};</code></pre>
+      <h3>Activate (in <code>window.onload</code>)</h3>
+      <pre><code>window.soifgo.CallSub('sensor_light', true);
+window.soifgo.CallSub('sensor_move',  true);
+window.soifgo.CallSub('sensor_magno', true);</code></pre>
 
-      <h3>Step 2: Define receiver functions</h3>
-      <p>SoifGo calls these functions automatically with sensor values:</p>
-      <pre><code>function html_sensor_light(data)  { /* Light value */ }
-function html_sensor_movex(data)  { /* Movement X */ }
-function html_sensor_movey(data)  { /* Movement Y */ }
-function html_sensor_magno(data)  { /* Magnetic field */ }
+      <h3>Receive (register each on window)</h3>
+      <pre><code>function html_sensor_light(data) { /* light value */ }
+function html_sensor_movex(data) { /* move X */ }
+function html_sensor_movey(data) { /* move Y */ }
+function html_sensor_magno(data) { /* magnetic */ }
 
-// Register all globally
 window.html_sensor_light = html_sensor_light;
 window.html_sensor_movex = html_sensor_movex;
 window.html_sensor_movey = html_sensor_movey;
 window.html_sensor_magno = html_sensor_magno;</code></pre>
 
       <div class="success-box">
-        <strong>✅ Done!</strong> Your HTML page now receives real-time sensor data continuously.
+        <strong>✅ Done.</strong> The page receives continuous real-time sensor data.
       </div>
     </section>
 
-    <!-- ====== FULL EXAMPLE ====== -->
-    <section id="full-example">
-      <h2>5. Complete Working Example</h2>
+    <!-- ====== 4. MQTT ====== -->
+    <section id="mqtt">
+      <h2>4. MQTT</h2>
 
       <p>
-        Below is a minimal but complete HTML page that demonstrates <strong>all features</strong>: sending
-        Bluetooth, receiving Bluetooth, and reading all three phone sensors.
+        Built-in MQTT client — no WebSocket, no CORS, no external library.
+        Only works inside SoifGo.
       </p>
 
-      <pre><code>&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-  &lt;meta charset="utf-8"&gt;
-  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
-  &lt;title&gt;Bluetooth + Sensors Demo&lt;/title&gt;
-&lt;/head&gt;
-&lt;body style="font-family:sans-serif; padding:20px; background:#0F172A; color:#fff;"&gt;
-  &lt;h2&gt;⚡ Bluetooth + Sensors&lt;/h2&gt;
+      <h3>Connect — step 1: broker + client ID</h3>
+      <pre><code>window.soifgo.CallSub('connecte_mqtt_ai', true, address, id);
+//  address : "tcp://host:1883"  or  "ssl://host:8883"
+//            Empty → defaults to test.mosquitto.org:1883
+//  id      : unique string. Empty → auto-generated</code></pre>
 
-  &lt;!-- Send Section --&gt;
-  &lt;div style="background:#1E293B; padding:15px; border-radius:8px; margin:10px 0;"&gt;
-    &lt;h3&gt;📤 Send Command&lt;/h3&gt;
-    &lt;input type="text" id="cmdInput" placeholder="Enter command..."
-           style="padding:10px; width:70%; border-radius:6px; border:none;"&gt;
-    &lt;button onclick="sendCommand()"
-            style="padding:10px 25px; background:#4f8cff; color:white;
-                   border:none; border-radius:6px; cursor:pointer;"&gt;Send&lt;/button&gt;
-  &lt;/div&gt;
+      <h3>Connect — step 2: auth (optional)</h3>
+      <pre><code>window.soifgo.CallSub('connecte_mqtt_up', true, username, password);</code></pre>
 
-  &lt;!-- Receive Section --&gt;
-  &lt;div style="background:#1E293B; padding:15px; border-radius:8px; margin:10px 0;"&gt;
-    &lt;h3&gt;📥 Bluetooth Data&lt;/h3&gt;
-    &lt;div id="btOutput" style="background:#0F172A; padding:15px; border-radius:6px;
-         min-height:60px; font-family:monospace; color:#4caf50;"&gt;
-      Waiting for data...
-    &lt;/div&gt;
-  &lt;/div&gt;
+      <h3>Publish (also auto-subscribes to that topic)</h3>
+      <pre><code>window.soifgo.CallSub('mqtt_publish', true, topic, message, qos);
+//  qos : "0", "1", or "2" as a STRING</code></pre>
 
-  &lt;!-- Sensors Section --&gt;
-  &lt;div style="background:#1E293B; padding:15px; border-radius:8px; margin:10px 0;"&gt;
-    &lt;h3&gt;📱 Phone Sensors&lt;/h3&gt;
-    &lt;div id="sensorLight" style="background:#0F172A; padding:10px; border-radius:6px;
-         margin:5px 0; color:#ffb74d;"&gt;💡 Light: waiting...&lt;/div&gt;
-    &lt;div id="sensorMoveX" style="background:#0F172A; padding:10px; border-radius:6px;
-         margin:5px 0; color:#f06292;"&gt;📳 Move X: waiting...&lt;/div&gt;
-    &lt;div id="sensorMoveY" style="background:#0F172A; padding:10px; border-radius:6px;
-         margin:5px 0; color:#f06292;"&gt;📳 Move Y: waiting...&lt;/div&gt;
-    &lt;div id="sensorMagneto" style="background:#0F172A; padding:10px; border-radius:6px;
-         margin:5px 0; color:#ce93d8;"&gt;🧲 Magneto: waiting...&lt;/div&gt;
-  &lt;/div&gt;
+      <h3>Disconnect / Check status</h3>
+      <pre><code>window.soifgo.CallSub('mqtt_Disconnect', true);
+window.soifgo.CallSub('mqtt_status', true);
+// SoifGo replies by calling html_mqtt_status('true' or 'false')</code></pre>
 
-  &lt;script&gt;
-    // ========== BLUETOOTH SEND ==========
-    function sendCommand() {
-      var msg = document.getElementById('cmdInput').value;
-      if (msg) {
-        window.soifgo.CallSub('html_bluetooth_rx', true, msg);
-        document.getElementById('cmdInput').value = '';
-      }
-    }
+      <h3>Receivers</h3>
+      <pre><code>function mqtt_rx(topic, message) { /* incoming message */ }
+window.mqtt_rx = mqtt_rx;
 
-    // ========== BLUETOOTH RECEIVE ==========
-    function html_bluetooth_tx(data) {
-      document.getElementById('btOutput').innerHTML = data;
-    }
-    window.html_bluetooth_tx = html_bluetooth_tx;
+function html_mqtt_status(connected) {
+    // ⚠️ value arrives as a STRING ('true' / 'false')
+    const isConnected = (connected === true || connected === 'true');
+}
+window.html_mqtt_status = html_mqtt_status;</code></pre>
 
-    // ========== SENSOR RECEIVERS ==========
-    function html_sensor_light(data) {
-      document.getElementById('sensorLight').innerHTML = '💡 Light: ' + data;
-    }
-    function html_sensor_movex(data) {
-      document.getElementById('sensorMoveX').innerHTML = '📳 Move X: ' + data;
-    }
-    function html_sensor_movey(data) {
-      document.getElementById('sensorMoveY').innerHTML = '📳 Move Y: ' + data;
-    }
-    function html_sensor_magno(data) {
-      document.getElementById('sensorMagneto').innerHTML = '🧲 Magneto: ' + data;
-    }
+      <div class="warning-box">
+        <strong>⚠️ Important:</strong> <code>mqtt_publish</code> also <strong>subscribes</strong> you to that topic — so you'll receive messages published to it by other clients.
+      </div>
 
-    window.html_sensor_light = html_sensor_light;
-    window.html_sensor_movex = html_sensor_movex;
-    window.html_sensor_movey = html_sensor_movey;
-    window.html_sensor_magno = html_sensor_magno;
-
-    // ========== ACTIVATE SENSORS ON LOAD ==========
-    window.onload = function() {
-      if (window.soifgo) {
-        window.soifgo.CallSub('sensor_light');
-        window.soifgo.CallSub('sensor_move');
-        window.soifgo.CallSub('sensor_magno');
-      }
-    }
-  &lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;</code></pre>
-
-      <div class="success-box">
-        <strong>🎯 Copy this code, save as <code>demo.html</code>, place it in SoifGo's folder, and run it!</strong>
+      <div class="info-box">
+        <strong>💡 Tips:</strong>
+        <ul style="margin-top:6px;">
+          <li>Leave client ID empty → unique ID auto-generated.</li>
+          <li>Status arrives as a string — always compare with <code>=== 'true'</code>.</li>
+          <li>Topic names are case-sensitive.</li>
+        </ul>
       </div>
     </section>
 
-    <!-- ====== API REFERENCE TABLE ====== -->
-    <section id="api-table">
-      <h2>6. Full API Reference</h2>
+    <!-- ====== 5. API ====== -->
+    <section id="api">
+      <h2>5. REST API</h2>
 
-      <p>All functions and callbacks available in SoifGo's WebView layer:</p>
+      <p>Built-in HTTP bridge — no <code>fetch</code>, no CORS, no library.</p>
+
+      <h3>Send (POST)</h3>
+      <pre><code>window.soifgo.CallSub('api_send', true, address, key, value);
+// POST <address>
+// Body: {"<key>":"<value>"}   Content-Type: application/json</code></pre>
+
+      <h3>Receive (GET)</h3>
+      <pre><code>window.soifgo.CallSub('api_recive', true, address, key);
+// GET <address>
+// SoifGo extracts the value at <key> and calls api_rx()</code></pre>
+
+      <h3>Receiver</h3>
+      <pre><code>function api_rx(value) {
+    // value arrives as a string
+}
+window.api_rx = api_rx;</code></pre>
+
+      <h3>⚠️ Two response formats — handle both</h3>
 
       <table class="api-table">
         <thead>
           <tr>
-            <th>Function / Callback</th>
+            <th>Format</th>
+            <th>Raw JSON</th>
+            <th>api_rx receives</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>A — flat</strong> (e.g. DIA)</td>
+            <td><code>{"Price": 86846.5}</code></td>
+            <td><code>"86846.5"</code></td>
+          </tr>
+          <tr>
+            <td><strong>B — nested</strong> (e.g. CoinGecko)</td>
+            <td><code>{"bitcoin":{"usd":86750}}</code></td>
+            <td><code>"{usd=86750}"</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="warning-box">
+        <strong>⚠️</strong> Always use a <strong>robust extractor</strong> that handles both — plain numbers, B4A Map strings, and JSON.
+      </div>
+
+      <h3>Robust extractor (copy-paste)</h3>
+      <pre><code>function extractValue(raw, fieldName) {
+    const s = String(raw).trim();
+
+    // 1. plain number:  "86846.5"
+    if (/^-?\d+(\.\d+)?$/.test(s)) return s;
+
+    // 2. B4A Map:  "{usd=86750}"  or  "{Price=86846.5}"
+    const m = s.match(new RegExp(fieldName + '[=:]\\s*([^,}\\s]+)', 'i'));
+    if (m) return m[1];
+
+    // 3. JSON:  {"usd":86750}
+    try {
+        const o = JSON.parse(s);
+        if (o[fieldName] !== undefined) return o[fieldName];
+    } catch (e) {}
+
+    // 4. fallback: any number
+    const n = s.match(/-?\d+(\.\d+)?/);
+    return n ? n[0] : null;
+}</code></pre>
+
+      <div class="info-box">
+        <strong>💡 Rate limits</strong> — always add a <strong>Stop</strong> button. Safe polling intervals:
+        DIA 5s · CoinGecko 10s · Binance 1s · Coinbase 5s · Blockchain.info 10s.
+      </div>
+    </section>
+
+    <!-- ====== 6. STORAGE ====== -->
+    <section id="storage">
+      <h2>6. Storage (localStorage)</h2>
+
+      <p>Standard <code>localStorage</code> works inside SoifGo's WebView. Data persists across page reloads and WebView restarts.</p>
+
+      <pre><code>// save
+localStorage.setItem('my_key', JSON.stringify(data));
+
+// load
+const data = JSON.parse(localStorage.getItem('my_key')) || [];
+
+// clear
+localStorage.removeItem('my_key');</code></pre>
+
+      <div class="success-box">
+        <strong>✅</strong> <code>alert()</code>, <code>confirm()</code>, and <code>prompt()</code> all work natively in SoifGo's WebView — no custom modal needed.
+      </div>
+
+      <div class="info-box">
+        <strong>💡 Best practices:</strong>
+        <ul style="margin-top:6px;">
+          <li>Wrap storage calls in <code>try/catch</code> to handle quota errors.</li>
+          <li>Use unique keys per page (e.g. <code>'page1_data'</code>).</li>
+          <li>Always escape user input before injecting into <code>innerHTML</code> (XSS guard).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ====== 7. FULL API REFERENCE ====== -->
+    <section id="reference">
+      <h2>7. Full API Reference</h2>
+
+      <p>Every Sub call and callback available in SoifGo's WebView layer.</p>
+
+      <h3>Subs — send / activate</h3>
+      <table class="api-table">
+        <thead>
+          <tr>
+            <th>Call</th>
             <th>Type</th>
             <th>Description</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><code>window.soifgo.CallSub('html_bluetooth_rx', true, msg)</code></td>
-            <td>Send</td>
-            <td>Send a string to the connected Bluetooth device. Second arg = append newline.</td>
+            <td><code>html_bluetooth_rx(newline, msg)</code></td>
+            <td><span class="tag send">SEND</span></td>
+            <td>Send string to Bluetooth. <code>newline</code> = true/false.</td>
           </tr>
           <tr>
-            <td><code>html_bluetooth_tx(data)</code></td>
-            <td>Callback</td>
-            <td>Called by SoifGo when Bluetooth data arrives. Define and register globally.</td>
+            <td><code>sensor_light</code></td>
+            <td><span class="tag act">ACT</span></td>
+            <td>Activate ambient light sensor stream.</td>
           </tr>
           <tr>
-            <td><code>window.soifgo.CallSub('sensor_light')</code></td>
-            <td>Activate</td>
-            <td>Activate the ambient light sensor stream.</td>
+            <td><code>sensor_move</code></td>
+            <td><span class="tag act">ACT</span></td>
+            <td>Activate accelerometer (X/Y) stream.</td>
           </tr>
           <tr>
-            <td><code>window.soifgo.CallSub('sensor_move')</code></td>
-            <td>Activate</td>
-            <td>Activate the accelerometer (movement X/Y) stream.</td>
+            <td><code>sensor_magno</code></td>
+            <td><span class="tag act">ACT</span></td>
+            <td>Activate magnetic field sensor stream.</td>
           </tr>
           <tr>
-            <td><code>window.soifgo.CallSub('sensor_magno')</code></td>
-            <td>Activate</td>
-            <td>Activate the magnetic field sensor stream.</td>
+            <td><code>connecte_mqtt_ai(address, id)</code></td>
+            <td><span class="tag send">SEND</span></td>
+            <td>MQTT connect step 1 — broker URL + client ID.</td>
           </tr>
           <tr>
-            <td><code>html_sensor_light(data)</code></td>
-            <td>Callback</td>
-            <td>Receives light sensor values.</td>
+            <td><code>connecte_mqtt_up(user, pass)</code></td>
+            <td><span class="tag send">SEND</span></td>
+            <td>MQTT connect step 2 — username + password (optional).</td>
           </tr>
           <tr>
-            <td><code>html_sensor_movex(data)</code></td>
-            <td>Callback</td>
-            <td>Receives movement X values.</td>
+            <td><code>mqtt_publish(topic, msg, qos)</code></td>
+            <td><span class="tag send">SEND</span></td>
+            <td>Publish message. Also subscribes to the same topic.</td>
           </tr>
           <tr>
-            <td><code>html_sensor_movey(data)</code></td>
-            <td>Callback</td>
-            <td>Receives movement Y values.</td>
+            <td><code>mqtt_status</code></td>
+            <td><span class="tag send">SEND</span></td>
+            <td>Query connection status → replies via <code>html_mqtt_status</code>.</td>
           </tr>
           <tr>
-            <td><code>html_sensor_magno(data)</code></td>
-            <td>Callback</td>
-            <td>Receives magnetic field values.</td>
+            <td><code>mqtt_Disconnect</code></td>
+            <td><span class="tag send">SEND</span></td>
+            <td>Disconnect from the broker.</td>
+          </tr>
+          <tr>
+            <td><code>api_send(address, key, value)</code></td>
+            <td><span class="tag send">SEND</span></td>
+            <td>HTTP POST — sends JSON <code>{"key":"value"}</code>.</td>
+          </tr>
+          <tr>
+            <td><code>api_recive(address, key)</code></td>
+            <td><span class="tag send">SEND</span></td>
+            <td>HTTP GET — extracts value at <code>key</code> → calls <code>api_rx</code>.</td>
           </tr>
         </tbody>
       </table>
 
-      <div class="info-box">
-        <strong>💡 Note:</strong> All callback functions must be registered on the <code>window</code> object
-        (e.g., <code>window.html_bluetooth_tx = html_bluetooth_tx;</code>) so SoifGo can find them.
+      <h3>Callbacks — SoifGo calls your page</h3>
+      <table class="api-table">
+        <thead>
+          <tr>
+            <th>Function</th>
+            <th>Type</th>
+            <th>Receives</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>html_bluetooth_tx(data)</code></td>
+            <td><span class="tag recv">RECV</span></td>
+            <td>Incoming Bluetooth string.</td>
+          </tr>
+          <tr>
+            <td><code>html_sensor_light(data)</code></td>
+            <td><span class="tag recv">RECV</span></td>
+            <td>Light sensor value.</td>
+          </tr>
+          <tr>
+            <td><code>html_sensor_movex(data)</code></td>
+            <td><span class="tag recv">RECV</span></td>
+            <td>Movement X value.</td>
+          </tr>
+          <tr>
+            <td><code>html_sensor_movey(data)</code></td>
+            <td><span class="tag recv">RECV</span></td>
+            <td>Movement Y value.</td>
+          </tr>
+          <tr>
+            <td><code>html_sensor_magno(data)</code></td>
+            <td><span class="tag recv">RECV</span></td>
+            <td>Magnetic field value.</td>
+          </tr>
+          <tr>
+            <td><code>mqtt_rx(topic, message)</code></td>
+            <td><span class="tag recv">RECV</span></td>
+            <td>Incoming MQTT message on a subscribed topic.</td>
+          </tr>
+          <tr>
+            <td><code>html_mqtt_status(connected)</code></td>
+            <td><span class="tag recv">RECV</span></td>
+            <td>MQTT status as a <strong>string</strong> (<code>'true'</code> / <code>'false'</code>).</td>
+          </tr>
+          <tr>
+            <td><code>api_rx(value)</code></td>
+            <td><span class="tag recv">RECV</span></td>
+            <td>API response — plain number or B4A Map string.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="warning-box">
+        <strong>⚠️</strong> All callbacks must be registered on the <code>window</code> object: <code>window.api_rx = api_rx;</code>
       </div>
     </section>
 
-    <!-- ====== RELATED TUTORIALS ====== -->
-    <section id="related">
-      <h2>7. Related Tutorials</h2>
+    <!-- ====== 8. QUICK EXAMPLES ====== -->
+    <section id="examples">
+      <h2>8. Working Examples</h2>
 
-      <ul style="padding-left: 22px;">
-        <li style="margin-bottom:10px;">
-          <a href="https://soifgo.github.io/soifgo/tutorials/send_bluetooth_html/html_guide_1.html" style="color:var(--primary-light); font-weight:600;">
-            Full HTML + Bluetooth + Sensors Tutorial
-          </a> — step-by-step walkthrough with screenshots.
-        </li>
-        <li style="margin-bottom:10px;">
-          <a href="https://soifgo.github.io/soifgo/tutorials/WorkingwithHTMLFiles/html01.html" style="color:var(--primary-light); font-weight:600;">
-            Working with HTML Files
-          </a> — how to load and run HTML pages inside SoifGo.
-        </li>
-        <li style="margin-bottom:10px;">
-          <a href="https://soifgo.github.io/soifgo/tutorials/Effect/effects.html" style="color:var(--primary-light); font-weight:600;">
-            Effects &amp; UI Components
-          </a> — rotation, gauges, color shifts, and more.
-        </li>
-        <li style="margin-bottom:10px;">
-          <a href="https://soifgo.github.io/soifgo/tutorials/BluetoothSendReceive/Bluetooth_Send_Receive.html" style="color:var(--primary-light); font-weight:600;">
-            Bluetooth Send/Receive (non-HTML)
-          </a> — the built-in UI builder approach.
-        </li>
-      </ul>
+      <p>Copy-ready pages — open the live demo, view the code, and grab the Arduino sketch where relevant.</p>
 
-      <div class="info-box">
-        <strong>📘 Looking for the user guide instead?</strong>
-        <a href="https://soifgo.github.io/soifgo/tutorials/soifgo_info/soifgo_info.html" style="color:var(--primary-light); font-weight:600;">
-          Open the Complete User Guide →
+      <div class="examples-grid">
+        <a href="tutorials/send_bluetooth_html/01-led-blink/index.html" class="example-card">
+          <span class="ex-icon">💡</span>
+          <span class="ex-title">LED Blink</span>
+          <span class="ex-desc">Toggle an LED on/off via Bluetooth</span>
         </a>
+
+        <a href="tutorials/send_bluetooth_html/02-sensor-readout/index.html" class="example-card">
+          <span class="ex-icon">📊</span>
+          <span class="ex-title">Sensor Readout</span>
+          <span class="ex-desc">Read analog sensor values via Bluetooth</span>
+        </a>
+
+        <a href="tutorials/send_bluetooth_html/03-speed-control/index.html" class="example-card">
+          <span class="ex-icon">⚙️</span>
+          <span class="ex-title">Speed Control</span>
+          <span class="ex-desc">Independent speed control for two motors</span>
+        </a>
+
+        <a href="tutorials/send_bluetooth_html/04-phone-sensors/index.html" class="example-card">
+          <span class="ex-icon">📱</span>
+          <span class="ex-title">Phone Sensors</span>
+          <span class="ex-desc">Stream phone light / motion / magnetic data</span>
+        </a>
+      </div>
+
+      <div class="info-box" style="margin-top:20px;">
+        <strong>📘 More tutorials</strong>
+        <ul style="margin-top:6px;">
+          <li><a href="tutorials/send_bluetooth_html/html_guide_1.html">Full HTML Guide — Bluetooth, MQTT, API, Storage (with live examples)</a></li>
+          <li><a href="https://soifgo.github.io/soifgo/tutorials/WorkingwithHTMLFiles/html01.html">Working with HTML Files</a></li>
+          <li><a href="https://soifgo.github.io/soifgo/tutorials/soifgo_info/soifgo_info.html">Complete User Guide</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ====== 9. TROUBLESHOOTING ====== -->
+    <section id="troubleshooting">
+      <h2>9. Troubleshooting</h2>
+
+      <div class="warning-box">
+        <strong>Bridge not found</strong> — if <code>window.soifgo</code> is <code>undefined</code>, you're in a normal browser. The bridge only exists inside SoifGo.
+      </div>
+
+      <div class="warning-box">
+        <strong>Callback never fires</strong> — make sure it's on <code>window</code>: <code>window.api_rx = api_rx;</code>
+      </div>
+
+      <div class="warning-box">
+        <strong>MQTT status always "connected"</strong> — the value is a string. Compare with <code>=== 'true'</code>, not <code>=== true</code>.
+      </div>
+
+      <div class="warning-box">
+        <strong>MQTT messages not arriving</strong> — publish at least once to the topic (auto-subscribes). Check case sensitivity.
+      </div>
+
+      <div class="warning-box">
+        <strong>API response parse fails</strong> — the value may be a plain number or a B4A Map string. Use the <code>extractValue()</code> helper above.
+      </div>
+
+      <div class="warning-box">
+        <strong>Rate limit (HTTP 429)</strong> — increase the polling interval. See Rate Limits in section 5.
       </div>
     </section>
 
@@ -740,6 +889,8 @@ window.html_sensor_magno = html_sensor_magno;</code></pre>
       <a href="policy_soifgo.html">Privacy Policy</a>
       &nbsp;|&nbsp;
       <a href="https://github.com/soifgo/soifgo" target="_blank" rel="noopener">GitHub</a>
+      &nbsp;|&nbsp;
+      <a href="https://github.com/soifgo/soifgo/discussions" target="_blank" rel="noopener">Forum</a>
     </p>
     <p style="font-size:0.85rem; margin-top:8px;">&copy; 2026 SoifGo — Built by Saeid Moghadam</p>
   </footer>

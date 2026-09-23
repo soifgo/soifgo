@@ -4,23 +4,29 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-  <title>SoifGo — Custom Android Sandbox & Hardware Controller</title>
+  <!-- ====== PRIMARY SEO: Title with real search keywords ====== -->
+  <title>Arduino Bluetooth Controller App for Android — Control ESP32 & HC-05 with HTML/JS | SoifGo</title>
 
-  <meta name="description" content="SoifGo is a free Android sandbox and custom hardware controller app. Build custom HTML/JS apps, control Arduino and ESP32 via Bluetooth, MQTT, or WebView. Works offline." />
-  <meta name="keywords" content="Android hardware controller, Android sandbox, HTML JavaScript mobile app builder, Arduino Bluetooth controller, ESP32 controller, MQTT Android, SoifGo" />
+  <meta name="description" content="Free Android app to control Arduino, ESP32, ESP8266 and HC-05 via Bluetooth, MQTT or WebView. Build custom HTML/JS interfaces without coding. Works offline. No ads, no tracking, open-source." />
+  <meta name="keywords" content="arduino bluetooth controller, android app for arduino, control arduino with phone, esp32 controller app, hc-05 android app, bluetooth robot controller, arduino without coding, mqtt android controller, esp8266 android app, android hardware controller, html javascript android app, soifgo" />
+  <meta name="author" content="Saeid Moghadam" />
+  <meta name="robots" content="index, follow" />
 
-  <meta property="og:title" content="SoifGo — Custom Android Sandbox & Hardware Controller" />
-  <meta property="og:description" content="Control Arduino, ESP32, ESP8266 and HC-05 with your Android phone. Bluetooth, MQTT, HTML/JS WebView, and phone sensors. Free and offline-capable." />
+  <!-- ====== OPEN GRAPH (Facebook, LinkedIn, WhatsApp) ====== -->
+  <meta property="og:title" content="Arduino Bluetooth Controller App for Android — Control ESP32 & HC-05 | SoifGo" />
+  <meta property="og:description" content="Free Android app to control Arduino, ESP32, ESP8266 and HC-05 via Bluetooth, MQTT or WebView. Build custom HTML/JS interfaces without coding. Works offline." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://soifgo.github.io/soifgo/" />
   <meta property="og:image" content="https://soifgo.github.io/soifgo/soifgo-logo.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="SoifGo" />
 
+  <!-- ====== TWITTER CARD ====== -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="SoifGo — Custom Android Sandbox & Hardware Controller" />
-  <meta name="twitter:description" content="Control Arduino, ESP32, ESP8266 and HC-05 with your Android phone. Free, offline-capable, and open-source." />
+  <meta name="twitter:title" content="Arduino Bluetooth Controller App for Android — Control ESP32 & HC-05 | SoifGo" />
+  <meta name="twitter:description" content="Free Android app to control Arduino, ESP32, ESP8266 and HC-05. Build custom HTML/JS interfaces without coding. Works offline." />
   <meta name="twitter:image" content="https://soifgo.github.io/soifgo/soifgo-logo.png" />
 
   <link rel="canonical" href="https://soifgo.github.io/soifgo/" />
@@ -751,7 +757,7 @@
     .faq-item a { color: var(--primary); text-decoration: none; }
     .faq-item a:hover { text-decoration: underline; }
 
-    /* ====== CAROUSEL ====== */
+    /* ====== CAROUSEL (HERO) ====== */
     .carousel-container {
       position: relative;
       max-width: 100%;
@@ -760,6 +766,11 @@
       margin: 1.5em auto;
       box-shadow: 0 4px 20px var(--shadow);
       background: transparent;
+    }
+
+    .hero-carousel {
+      margin: 24px auto 32px;
+      max-width: 480px;
     }
 
     .carousel-slides {
@@ -835,6 +846,7 @@
       header { padding: 60px 20px 40px; }
       .logo-row h1 { font-size: 2.2rem; }
       .logo-row img { height: 55px; }
+      .hero-carousel { max-width: 340px; margin: 18px auto 24px; }
       .hero-tagline { font-size: 1.1rem; }
       .cta-button { padding: 16px 32px; font-size: 1rem; }
       .start-grid { grid-template-columns: 1fr; }
@@ -855,6 +867,7 @@
       body { font-size: 15px; }
       .logo-row h1 { font-size: 1.8rem; }
       .logo-row img { height: 45px; }
+      .hero-carousel { max-width: 280px; margin: 14px auto 20px; }
       .hero-tagline { font-size: 1rem; }
       .cta-button { padding: 14px 26px; font-size: 0.95rem; }
       section { padding: 1.1rem; margin-top: 15px; }
@@ -881,6 +894,27 @@
       <div class="logo-row">
         <img src="soifgo-logo.png" alt="SoifGo Android Hardware Controller Logo" />
         <h1>SoifGo</h1>
+      </div>
+
+      <!-- ✅ کاروسل ۱۴ تصویری — منتقل شده از پایین به اینجا -->
+      <div class="carousel-container hero-carousel">
+        <div class="carousel-slides" id="carouselSlides">
+          <div class="carousel-slide"><img src="tutorials/icon/pic1.jpg" alt="SoifGo screenshot 1" loading="eager" /></div>
+          <div class="carousel-slide"><img src="tutorials/icon/pic2.jpg" alt="SoifGo screenshot 2" loading="lazy" /></div>
+          <div class="carousel-slide"><img src="tutorials/icon/pic3.jpg" alt="SoifGo screenshot 3" loading="lazy" /></div>
+          <div class="carousel-slide"><img src="tutorials/icon/pic4.jpg" alt="SoifGo screenshot 4" loading="lazy" /></div>
+          <div class="carousel-slide"><img src="tutorials/icon/pic5.jpg" alt="SoifGo screenshot 5" loading="lazy" /></div>
+          <div class="carousel-slide"><img src="tutorials/icon/pic6.jpg" alt="SoifGo screenshot 6" loading="lazy" /></div>
+          <div class="carousel-slide"><img src="tutorials/icon/pic7.jpg" alt="SoifGo screenshot 7" loading="lazy" /></div>
+          <div class="carousel-slide"><img src="tutorials/icon/pic8.jpg" alt="SoifGo screenshot 8" loading="lazy" /></div>
+          <div class="carousel-slide"><img src="tutorials/icon/pic9.jpg" alt="SoifGo screenshot 9" loading="lazy" /></div>
+          <div class="carousel-slide"><img src="tutorials/icon/pic10.jpg" alt="SoifGo screenshot 10" loading="lazy" /></div>
+          <div class="carousel-slide"><img src="tutorials/icon/pic11.jpg" alt="SoifGo screenshot 11" loading="lazy" /></div>
+          <div class="carousel-slide"><img src="tutorials/icon/pic12.jpg" alt="SoifGo screenshot 12" loading="lazy" /></div>
+          <div class="carousel-slide"><img src="tutorials/icon/pic13.jpg" alt="SoifGo screenshot 13" loading="lazy" /></div>
+          <div class="carousel-slide"><img src="tutorials/icon/pic14.jpg" alt="SoifGo screenshot 14" loading="lazy" /></div>
+        </div>
+        <div class="carousel-indicators" id="carouselIndicators"></div>
       </div>
 
       <p class="hero-tagline">
@@ -933,7 +967,7 @@
       </div>
     </section>
 
-<!-- ====== STORY ====== -->
+    <!-- ====== STORY ====== -->
     <section id="story" class="story-section">
       <h2>The Story Behind SoifGo</h2>
 
@@ -969,7 +1003,6 @@
     <section id="what">
       <h2>What can you build with SoifGo?</h2>
 
-      <!-- Custom HTML Interface — Full Width Feature -->
       <a href="tutorials/send_bluetooth_html/html_guide_1.html" class="feature-card">
         <span class="feature-icon">🎨</span>
         <h3>Custom HTML Interface</h3>
@@ -982,7 +1015,6 @@
         <span class="feature-cta">Open the complete guide →</span>
       </a>
 
-      <!-- Working Examples — Mini Grid -->
       <div class="examples-mini-title">
         <span>📦</span>
         <span>Working Examples</span>
@@ -1134,8 +1166,8 @@
           <a href="https://soifgo.github.io/soifgo/tutorials/LocalServerSetup/Local-server_api.html">
             <span class="no-icon">🖥️</span>
             <div>
-<strong>Local Server Setup</strong>
-<span>Node.js server for API send &amp; receive with SoifGo</span>
+              <strong>Local Server Setup</strong>
+              <span>Node.js server for API send &amp; receive with SoifGo</span>
             </div>
           </a>
         </li>
@@ -1263,34 +1295,6 @@
       </div>
     </section>
 
-    <!-- ====== DEMO CAROUSEL ====== -->
-    <section id="demo">
-      <div style="text-align:center; background:var(--hover-bg); border-radius:var(--radius-sm); padding:20px; border:1px solid var(--border);">
-        <div class="carousel-container">
-          <div class="carousel-slides" id="carouselSlides">
-            <div class="carousel-slide"><img src="tutorials/icon/pic1.jpg" alt="SoifGo screenshot 1" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="tutorials/icon/pic2.jpg" alt="SoifGo screenshot 2" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="tutorials/icon/pic3.jpg" alt="SoifGo screenshot 3" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="tutorials/icon/pic4.jpg" alt="SoifGo screenshot 4" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="tutorials/icon/pic5.jpg" alt="SoifGo screenshot 5" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="tutorials/icon/pic6.jpg" alt="SoifGo screenshot 6" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="tutorials/icon/pic7.jpg" alt="SoifGo screenshot 7" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="tutorials/icon/pic8.jpg" alt="SoifGo screenshot 8" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="tutorials/icon/pic9.jpg" alt="SoifGo screenshot 9" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="tutorials/icon/pic10.jpg" alt="SoifGo screenshot 10" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="tutorials/icon/pic11.jpg" alt="SoifGo screenshot 11" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="tutorials/icon/pic12.jpg" alt="SoifGo screenshot 12" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="tutorials/icon/pic13.jpg" alt="SoifGo screenshot 13" loading="lazy" /></div>
-            <div class="carousel-slide"><img src="tutorials/icon/pic14.jpg" alt="SoifGo screenshot 14" loading="lazy" /></div>
-          </div>
-          <div class="carousel-indicators" id="carouselIndicators"></div>
-        </div>
-        <p style="margin-top:10px; font-size:0.9rem; color:var(--text-muted);">
-          Connect to HC-05, create a control interface, and send commands to your hardware in seconds
-        </p>
-      </div>
-    </section>
-
   </main>
 
   <!-- ====== FOOTER ====== -->
@@ -1379,7 +1383,7 @@
 
       resetInterval();
 
-      const container = document.querySelector('.carousel-container');
+      const container = document.querySelector('.hero-carousel');
       container.addEventListener('mouseenter', function() {
         if (intervalId) { clearInterval(intervalId); intervalId = null; }
       });

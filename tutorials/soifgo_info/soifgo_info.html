@@ -518,6 +518,7 @@
             <div class="toc" id="toc">
                 <a href="#intro"><i class="fas fa-home"></i> Intro</a>
                 <a href="#install"><i class="fas fa-download"></i> Install</a>
+                <a href="#setup"><i class="fas fa-play-circle"></i> Page Setup</a>
                 <a href="#dashboard"><i class="fas fa-th-large"></i> Dashboard</a>
                 <a href="#bluetooth"><i class="fab fa-bluetooth-b"></i> Bluetooth</a>
                 <a href="#server"><i class="fas fa-cloud"></i> API / MQTT</a>
@@ -589,11 +590,132 @@
             </div>
 
             <!-- ============================================================ -->
-            <!-- ==================== SECTION 3: DASHBOARD =================== -->
+            <!-- ============ SECTION 3: PAGE SETUP (HOW TO START) =========== -->
+            <!-- ============================================================ -->
+
+            <div class="section-card" id="setup">
+                <div class="section-title"><i class="fas fa-play-circle"></i> 3. Page Setup — How to Start</div>
+                <div class="section-sub">
+                    SoifGo has <strong>two main modes</strong>: <strong>Play</strong> (run) and <strong>Pause / Edit</strong> (design).
+                    Every action below happens from the top‑bar icons. Follow these steps in order the first time.
+                </div>
+
+                <ol class="step-list">
+                    <li>
+                        <i class="fas fa-play"></i>
+                        <div>
+                            <strong>Open the app</strong> — tap the <strong>Play (▶️)</strong> icon in the top bar to enter run mode,
+                            then tap the <strong>Pause (⏸️)</strong> icon to switch to <strong>Edit mode</strong>.
+                            <br><em>You are now in the design screen.</em>
+                        </div>
+                    </li>
+
+                    <li>
+                        <i class="fas fa-bars"></i>
+                        <div>
+                            <strong>Open the menu</strong> — tap the <strong>Edit icon</strong> and choose
+                            <strong>Select Design</strong>.
+                        </div>
+                    </li>
+
+                    <li>
+                        <i class="fas fa-folder-plus"></i>
+                        <div>
+                            <strong>Create a Folder</strong> — from the list, choose <strong>Folder</strong> →
+                            then tap <strong>Create</strong>. Optionally edit the folder name, then tap
+                            <strong>Confirm</strong>. Your folder is now created.
+                        </div>
+                    </li>
+
+                    <li>
+                        <i class="fas fa-plus-square"></i>
+                        <div>
+                            <strong>Create a Page</strong> — tap the <strong>Pause</strong> icon again →
+                            <strong>Select Design</strong> → choose <strong>Page</strong> → tap
+                            <strong>New</strong>. Optionally rename it, then <strong>Confirm</strong>.
+                            A new section is added to the menu.
+                        </div>
+                    </li>
+
+                    <li>
+                        <i class="fas fa-square"></i>
+                        <div>
+                            <strong>Add a Button</strong> — tap <strong>Button</strong>, then drag it anywhere on the page
+                            to position it. Tap the <strong>Pause</strong> icon to open the button's properties
+                            (background, size, behaviour, and more).
+                        </div>
+                    </li>
+
+                    <li>
+                        <i class="fas fa-code"></i>
+                        <div>
+                            <strong>Set the behaviour to WebView</strong> (to run your custom HTML idea or app) —
+                            open the <strong>Behaviour</strong> menu and select <strong>Web Load</strong>, then choose
+                            <strong>Offline HTML file</strong>. Next, pick one of these options:
+                            <ul style="margin-top:6px;">
+                                <li><strong>Create New</strong> — start a fresh HTML file.</li>
+                                <li><strong>Explore</strong> — browse storage to reload an existing file.</li>
+                                <li><strong>Samples</strong> — ready‑made examples.</li>
+                                <li><strong>Saved / Existing</strong> — files already inside your project's HTML folder.</li>
+                            </ul>
+                            <br>
+                            <em>💡 Tip:</em> If the built‑in explorer feels limited, install a good file manager on your phone —
+                            it will make editing and moving files much easier.
+                        </div>
+                    </li>
+
+                    <li>
+                        <i class="fas fa-mouse-pointer"></i>
+                        <div>
+                            <strong>Run the WebView</strong> — go back to <strong>Play mode</strong> and tap the button.
+                            Your HTML page loads inside SoifGo.
+                        </div>
+                    </li>
+
+                    <li>
+                        <i class="fas fa-edit"></i>
+                        <div>
+                            <strong>Edit the HTML</strong> — tap the <strong>Play</strong> icon, then choose
+                            <strong>Edit</strong> to see the code. You can edit manually or paste code from an AI assistant.
+                            <br><br>
+                            For convenience, the menu has a <strong>Select All &amp; Paste</strong> option —
+                            it replaces the whole file in one step.
+                            <br><br>
+                            <em>Wait until the syntax highlighting changes from black to colored.</em>
+                            Then tap the <strong>Close (✕)</strong> icon to view the updated page.
+                        </div>
+                    </li>
+                </ol>
+
+                <div class="info-box" style="margin-top:14px;">
+                    <h4><i class="fas fa-lightbulb"></i> Reminders</h4>
+                    <ul>
+                        <li><strong>Save often</strong> — from the slide menu → <strong>Save Page</strong>.</li>
+                        <li><strong>Your project lives here:</strong> <code>/storage/emulated/0/soifgo/&lt;Folder&gt;/</code>.</li>
+                        <li><strong>Reuse everything</strong> — Copy / Paste Properties from any button onto a new one.</li>
+                        <li><strong>No hardware yet?</strong> Activate <strong>Simulation</strong> from the slide menu and test the UI.</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
+                    <span class="cmt">// Typical folder you end up with after following these steps:</span>
+                    /storage/emulated/0/soifgo/MyProject/
+                        ├── Page/Main/          <span class="cmt">// page + button layout</span>
+                        ├── HTML/               <span class="cmt">// your WebView HTML files</span>
+                        ├── Note/               <span class="cmt">// text / G-code</span>
+                        ├── Audio/              <span class="cmt">// sound files</span>
+                        ├── Pictures/           <span class="cmt">// button icons</span>
+                        ├── Pdf/                <span class="cmt">// PDFs</span>
+                        └── graph/              <span class="cmt">// graph logs (.ttx)</span>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- ==================== SECTION 4: DASHBOARD =================== -->
             <!-- ============================================================ -->
 
             <div class="section-card" id="dashboard">
-                <div class="section-title"><i class="fas fa-th-large"></i> 3. Dashboard Overview</div>
+                <div class="section-title"><i class="fas fa-th-large"></i> 4. Dashboard Overview</div>
                 <div class="section-sub">The main screen consists of a configurable panel (Panel1) where you place Buttons and SeekBars.</div>
                 <div class="grid-2">
                     <div class="info-box">
@@ -617,11 +739,11 @@
             </div>
 
             <!-- ============================================================ -->
-            <!-- ==================== SECTION 4: BLUETOOTH =================== -->
+            <!-- ==================== SECTION 5: BLUETOOTH =================== -->
             <!-- ============================================================ -->
 
             <div class="section-card" id="bluetooth">
-                <div class="section-title"><i class="fab fa-bluetooth-b"></i> 4. Bluetooth Serial Communication</div>
+                <div class="section-title"><i class="fab fa-bluetooth-b"></i> 5. Bluetooth Serial Communication</div>
                 <div class="section-sub">Connect to any classic Bluetooth (SPP) device like HC‑05, HC‑06, Arduino, or industrial modules.</div>
                 <ul class="step-list">
                     <li><i class="fas fa-search"></i> <div><strong>Pairing:</strong> First, pair your device in Android Settings &gt; Bluetooth. Return to soifgo.</div></li>
@@ -638,11 +760,11 @@
             </div>
 
             <!-- ============================================================ -->
-            <!-- ==================== SECTION 5: API / MQTT ================== -->
+            <!-- ==================== SECTION 6: API / MQTT ================== -->
             <!-- ============================================================ -->
 
             <div class="section-card" id="server">
-                <div class="section-title"><i class="fas fa-cloud"></i> 5. Server API &amp; MQTT Integration</div>
+                <div class="section-title"><i class="fas fa-cloud"></i> 6. Server API &amp; MQTT Integration</div>
                 <div class="section-sub">Connect to REST APIs or MQTT brokers for cloud‑based control, data logging, and IIoT applications.</div>
                 <div class="grid-2">
                     <div class="info-box">
@@ -670,11 +792,11 @@
             </div>
 
             <!-- ============================================================ -->
-            <!-- ==================== SECTION 6: BUTTONS ===================== -->
+            <!-- ==================== SECTION 7: BUTTONS ===================== -->
             <!-- ============================================================ -->
 
             <div class="section-card" id="buttons">
-                <div class="section-title"><i class="fas fa-square"></i> 6. Buttons – Full Configuration</div>
+                <div class="section-title"><i class="fas fa-square"></i> 7. Buttons – Full Configuration</div>
                 <div class="section-sub">Each button can be customized with behaviours, effects, and media.</div>
                 <div class="grid-2">
                     <div class="info-box">
@@ -713,11 +835,11 @@
             </div>
 
             <!-- ============================================================ -->
-            <!-- ==================== SECTION 7: SEEKBARS ==================== -->
+            <!-- ==================== SECTION 8: SEEKBARS ==================== -->
             <!-- ============================================================ -->
 
             <div class="section-card" id="seekbars">
-                <div class="section-title"><i class="fas fa-sliders-h"></i> 7. SeekBars – Analog Controls</div>
+                <div class="section-title"><i class="fas fa-sliders-h"></i> 8. SeekBars – Analog Controls</div>
                 <div class="section-sub">SeekBars provide variable output (0–Max). Perfect for speed control, PWM, or dimming.</div>
                 <ul class="step-list">
                     <li><i class="fas fa-arrows-alt-h"></i> <div><strong>Range:</strong> Set <code>Min=0</code>, <code>Max</code> (default 100). Customisable via properties.</div></li>
@@ -732,11 +854,11 @@
             </div>
 
             <!-- ============================================================ -->
-            <!-- ==================== SECTION 8: NOTES & HTML ================ -->
+            <!-- ==================== SECTION 9: NOTES & HTML ================ -->
             <!-- ============================================================ -->
 
             <div class="section-card" id="notes">
-                <div class="section-title"><i class="fas fa-pen"></i> 8. Note Editor &amp; HTML Viewer</div>
+                <div class="section-title"><i class="fas fa-pen"></i> 9. Note Editor &amp; HTML Viewer</div>
                 <div class="section-sub">A powerful multi‑purpose editor for text, HTML, G‑Code, and automated data streaming.</div>
                 <div class="grid-2">
                     <div class="info-box">
@@ -771,11 +893,11 @@
             </div>
 
             <!-- ============================================================ -->
-            <!-- ==================== SECTION 9: GRAPHS ====================== -->
+            <!-- ==================== SECTION 10: GRAPHS ===================== -->
             <!-- ============================================================ -->
 
             <div class="section-card" id="graphs">
-                <div class="section-title"><i class="fas fa-chart-line"></i> 9. Real‑Time Graphs</div>
+                <div class="section-title"><i class="fas fa-chart-line"></i> 10. Real‑Time Graphs</div>
                 <div class="section-sub">Visualise incoming numeric data (Bluetooth/API/MQTT/Sensors) with live plotting.</div>
                 <ul class="step-list">
                     <li><i class="fas fa-flag-checkered"></i> <div><strong>Activate:</strong> In button effects, enable <code>Graph ON</code>. The button background turns into a graph canvas.</div></li>
@@ -792,11 +914,11 @@
             </div>
 
             <!-- ============================================================ -->
-            <!-- ==================== SECTION 10: EFFECTS ==================== -->
+            <!-- ==================== SECTION 11: EFFECTS ==================== -->
             <!-- ============================================================ -->
 
             <div class="section-card" id="effects">
-                <div class="section-title"><i class="fas fa-magic"></i> 10. Dynamic Effects (Visual Feedback)</div>
+                <div class="section-title"><i class="fas fa-magic"></i> 11. Dynamic Effects (Visual Feedback)</div>
                 <div class="section-sub">Buttons can react to incoming values with visual changes, making the dashboard come alive.</div>
                 <div class="grid-3">
                     <div class="info-box">
@@ -827,11 +949,11 @@
             </div>
 
             <!-- ============================================================ -->
-            <!-- ==================== SECTION 11: SENSORS ==================== -->
+            <!-- ==================== SECTION 12: SENSORS ==================== -->
             <!-- ============================================================ -->
 
             <div class="section-card" id="sensors">
-                <div class="section-title"><i class="fas fa-microchip"></i> 11. Phone Sensors</div>
+                <div class="section-title"><i class="fas fa-microchip"></i> 12. Phone Sensors</div>
                 <div class="section-sub">Use your phone's hardware sensors as input sources.</div>
                 <ul class="step-list">
                     <li><i class="fas fa-sun"></i> <div><strong>Light Sensor:</strong> Measures ambient light (lux). Assign to a button with <code>Receive Sensor</code> behaviour.</div></li>
@@ -846,11 +968,11 @@
             </div>
 
             <!-- ============================================================ -->
-            <!-- ==================== SECTION 12: SIMULATION ================= -->
+            <!-- ==================== SECTION 13: SIMULATION ================= -->
             <!-- ============================================================ -->
 
             <div class="section-card" id="simulation">
-                <div class="section-title"><i class="fas fa-play"></i> 12. Simulation Mode</div>
+                <div class="section-title"><i class="fas fa-play"></i> 13. Simulation Mode</div>
                 <div class="section-sub">Test your dashboard without any hardware connected.</div>
                 <ul class="step-list">
                     <li><i class="fas fa-wave-square"></i> <div><strong>Signal Types:</strong> Ramp (0→1024), Bipolar Ramp (-1024→1024), Sine (0→1024), Bipolar Sine (-1024→1024).</div></li>
