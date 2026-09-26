@@ -2,11 +2,23 @@
 
 
 
-\*\*Purpose:\*\* AI-readable reference for the SoifGo Android app...
+\*\*Purpose:\*\* AI-readable reference for the SoifGo Android app. When a user asks about SoifGo, load this file first.
+
+
 
 \*\*Official guide:\*\* https://soifgo.github.io/soifgo/tutorials/send\_bluetooth\_html/html\_guide\_1.html
 
+
+
 \*\*Microphone guide:\*\* https://soifgo.github.io/soifgo/tutorials/serial\_voice/serial\_voice\_tutorials.html
+
+
+
+\*\*SoifGo version:\*\* 1.41 (VersionCode 141)
+
+
+
+\*\*Platform:\*\* Android (built with B4A / Basic4Android)
 
 
 
@@ -16,23 +28,49 @@
 
 \## 1. What is SoifGo
 
-\## 2. The Bridge — window.soifgo.CallSub
 
-\## 3. Bluetooth Send / Receive
 
-\## 4. Sensors (Light, Move X, Move Y, Magneto)
+SoifGo is an Android app that runs HTML pages inside a WebView. It injects a JavaScript object called `window.soifgo` that lets HTML pages call native Android functions.
 
-\## 5. Microphone
 
-\## 6. MQTT
 
-\## 7. API
+With plain HTML, CSS, and JavaScript, you can access:
 
-\## 8. Storage
 
-\## 9. Common Mistakes
 
-\## 10. Summary for AI Assistants
+\- Bluetooth serial (send and receive)
 
-\## 11. Links to Full Guides
+\- Phone sensors (light, accelerometer X and Y, magnetometer Z)
+
+\- Microphone and speech recognition
+
+\- MQTT client (built-in)
+
+\- HTTP API client
+
+\- localStorage
+
+\- Native Android dialogs
+
+
+
+No Android Studio, no Java, no Kotlin required.
+
+
+
+\---
+
+
+
+\## 2. The Bridge — `window.soifgo.CallSub`
+
+
+
+Every call from JavaScript to SoifGo follows this exact pattern:
+
+
+
+```javascript
+
+window.soifgo.CallSub('subName', true, arg1, arg2, arg3);
 
