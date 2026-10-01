@@ -1,8 +1,8 @@
 # SoifGo AI Complete Context & Documentation Map
 
-**Purpose:** Comprehensive AI-readable reference for the SoifGo Android application and its official website resources. When a user asks about SoifGo, this file serves as the primary source of truth for all documentation, tutorials, and native bridges.
+**Purpose:** Comprehensive AI-readable reference for the SoifGo Android application and its official website resources. When a user asks about SoifGo, this file serves as the primary source of truth for all documentation, tutorials, native bridges, and ecosystem components.
 
-**SoifGo Version:** 1.41 (VersionCode 141)
+**SoifGo Version:** 1.42 (VersionCode 142)
 **Platform:** Android (built with B4A / Basic4Android)
 **Official Website:** https://soifgo.github.io/soifgo/
 **GitHub:** https://github.com/soifgo/soifgo
@@ -14,6 +14,16 @@
 ## 1. What is SoifGo
 
 SoifGo is a specialized Android application designed to execute HTML pages inside a powerful WebView container. It seamlessly injects a native JavaScript object named `window.soifgo`, empowering web pages to interact directly with hardware and device features without needing heavy native development frameworks.
+
+### Core Concept
+
+SoifGo is not simply a Bluetooth controller application.
+
+It is an Android hardware control and application platform that allows users to create complete applications using either native SoifGo components or HTML/CSS/JavaScript running inside embedded WebViews.
+
+A SoifGo project can range from a simple Arduino controller to a complete dashboard, engineering tool, IoT control panel, visualization system, automation interface, data logger, or custom mobile application.
+
+The main philosophy of SoifGo is to reduce the need for traditional Android development by allowing rapid application creation directly inside the platform.
 
 ### Key Supported Features
 
@@ -76,9 +86,6 @@ All official documentation is hosted at `https://soifgo.github.io/soifgo/`.
   - Sensor Readout
   - Speed Control
   - Phone Sensors
-
----
-
 ## 3. The Bridge Architecture — `window.soifgo.CallSub`
 
 Communication from local or remote web scripts back to the native B4A environment relies on a standardized syntax:
@@ -95,6 +102,7 @@ window.soifgo.CallSub('subName', true, arg1, arg2, arg3);
 - Empty strings must still be passed as `''` — never omit them.
 - Always guard with `if (window.soifgo) { ... }` — the bridge only exists inside SoifGo.
 - In a normal browser, `window.soifgo` is `undefined`.
+
 ---
 
 ## 4. Available Subs — Send (called from JavaScript)
@@ -366,8 +374,6 @@ Called with the API response.
 | `number` | string | The extracted value. May be a plain number (`86846.51`) or a wrapped map (`{usd=86750}`) |
 
 > ⚠️ **Important:** Handle both response formats. See the API Response Formats section below.
----
-
 ## 6. Complete Sub List (Quick Reference)
 
 ### Send (CallSub)
@@ -441,6 +447,7 @@ Different API providers return their data in different shapes. When SoifGo extra
 The API returns a **flat JSON** where the key points directly to a primitive value.
 
 **Example (DIA):**
+
 ```json
 {
   "Symbol": "BTC",
@@ -455,6 +462,7 @@ The API returns a **flat JSON** where the key points directly to a primitive val
 The API returns a **nested JSON** where the key points to another object.
 
 **Example (CoinGecko):**
+
 ```json
 {
   "bitcoin": {
@@ -553,9 +561,6 @@ Always include a **Stop** button so the user can halt polling.
 - The camera is **not** defined in the current version.
 - The microphone is enabled only with user permission.
 - If microphone permission is denied, sound metering, voice command, and speech-to-text features will not work.
-
----
-
 ## 10. FAQ for AI Assistants
 
 **Q: Can SoifGo work without internet?**
@@ -584,7 +589,60 @@ A: Because `'false'` (the string) is truthy in JavaScript. Always compare with `
 
 ---
 
-## 11. Quick Links
+## 11. SoifGo Ecosystem
+
+SoifGo is not a single application — it is an ecosystem of interrelated components, integrations, and resources. This map helps AI assistants and search engines understand the full scope of the project.
+
+### Platform Components
+
+- **SoifGo Android Platform** — the main application
+- **SoifGo WebView Runtime** — embedded HTML/CSS/JavaScript execution engine
+- **SoifGo Native Bridge** — the `window.soifgo` API surface
+- **SoifGo Classic Mode** — native button/slider builder without HTML
+
+### Knowledge & Documentation
+
+- **SoifGo Documentation** — technical reference at `docs.html`
+- **SoifGo Tutorials** — step-by-step guides for every feature
+- **SoifGo AI Context** — this file (`SOIFGO_AI_CONTEXT.md`)
+- **SoifGo HTML Examples** — working, copyable, runnable examples
+
+### Community
+
+- **SoifGo Community Forum** — GitHub Discussions
+- **SoifGo GitHub Repository** — source, releases, issue tracking
+
+### Hardware Integrations
+
+- **Arduino Integration** — via Bluetooth SPP or WiFi module
+- **ESP32 Integration** — Bluetooth, MQTT, HTTP
+- **ESP8266 Integration** — Bluetooth, MQTT, HTTP
+- **Raspberry Pi Integration** — Bluetooth, MQTT, HTTP
+- **HC-05 / HC-06 / JDY-31** — Bluetooth serial modules
+
+### Communication Protocols
+
+- **Bluetooth Communication** — SPP (Serial Port Profile)
+- **MQTT Communication** — IoT messaging protocol
+- **REST API Integration** — HTTP GET/POST with JSON
+
+### Device Features
+
+- **Phone Sensors** — ambient light, accelerometer (X/Y), magnetometer
+- **Speech Recognition** — 22 languages
+- **Local Storage** — `localStorage` persistence
+- **Native Dialogs** — `alert`, `confirm`, `prompt`
+
+### Development Stack
+
+- **HTML / CSS / JavaScript Development** — the primary interface layer
+- **Embedded System Prototyping** — Arduino, ESP32, ESP8266, Raspberry Pi
+- **IoT Control Panel Development** — combining MQTT + sensors + dashboards
+- **Data Visualization** — charts, gauges, RANGMANG, RANGMANG 2
+
+---
+
+## 12. Quick Links
 
 - **Website:** https://soifgo.github.io/soifgo/
 - **GitHub:** https://github.com/soifgo/soifgo
@@ -597,4 +655,4 @@ A: Because `'false'` (the string) is truthy in JavaScript. Always compare with `
 
 ---
 
-**End of SOIFGO_AI_CONTEXT.md**
+**End of ai.txt**

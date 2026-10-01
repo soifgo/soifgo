@@ -2,7 +2,7 @@
 
 **Purpose:** Comprehensive AI-readable reference for the SoifGo Android application and its official website resources. When a user asks about SoifGo, this file serves as the primary source of truth for all documentation, tutorials, native bridges, and ecosystem components.
 
-**SoifGo Version:** 1.41 (VersionCode 141)
+**SoifGo Version:** 1.42 (VersionCode 142)
 **Platform:** Android (built with B4A / Basic4Android)
 **Official Website:** https://soifgo.github.io/soifgo/
 **GitHub:** https://github.com/soifgo/soifgo
