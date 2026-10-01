@@ -908,6 +908,111 @@
     }
     footer a:hover { color: var(--primary); text-decoration: underline; }
 
+    /* ===== Capability Map Styles ===== */
+    .cap-table {
+      margin-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .cap-row {
+      display: grid;
+      grid-template-columns: 44px 1fr minmax(180px, auto);
+      gap: 14px;
+      align-items: center;
+      padding: 12px 14px;
+      background: var(--hover-bg);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-sm);
+      transition: var(--transition);
+      font-size: 0.94rem;
+    }
+
+    .cap-row:hover {
+      background: var(--hover-bg-card);
+      border-color: var(--primary);
+    }
+
+    .cap-row.cap-head {
+      background: transparent;
+      border: none;
+      font-weight: 700;
+      color: var(--text-main);
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      letter-spacing: 0.6px;
+      padding: 4px 14px 0;
+    }
+
+    .cap-icon { font-size: 1.5rem; text-align: center; }
+
+    .cap-row strong {
+      color: var(--text-main);
+      display: block;
+      margin-bottom: 2px;
+      font-size: 0.98rem;
+    }
+
+    .cap-row em {
+      color: var(--text-muted);
+      font-style: normal;
+      font-size: 0.85rem;
+      line-height: 1.45;
+      display: block;
+    }
+
+    .cap-row code {
+      font-family: "SF Mono", Consolas, monospace;
+      font-size: 0.78rem;
+      color: var(--primary-light);
+      background: rgba(79, 140, 255, 0.08);
+      padding: 4px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+      justify-self: end;
+      display: inline-block;
+      margin: 2px 0;
+      line-height: 1.6;
+    }
+
+    [data-theme="light"] .cap-row code {
+      color: var(--primary);
+      background: rgba(37, 99, 235, 0.08);
+    }
+
+    .cap-code-stack code { display: block; }
+
+    .cap-note {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 10px;
+      line-height: 1.6;
+    }
+
+    .cap-note code {
+      font-family: "SF Mono", Consolas, monospace;
+      font-size: 0.8rem;
+      background: var(--hover-bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--primary-light);
+    }
+
+    .cap-row .cap-code-stack code {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+    }
+
+    #capabilities h3:nth-of-type(5) {
+      color: var(--arduino-teal);
+      border-left: 4px solid var(--arduino-teal);
+      padding-left: 12px;
+      margin-top: 2.5em;
+    }
+
     @media (max-width: 700px) {
       header { padding: 60px 20px 40px; }
       .logo-row .brand-name { font-size: 2.2rem; }
@@ -928,6 +1033,19 @@
       .story-highlight p { font-size: 1.05rem; }
       .feature-card { padding: 20px 18px; }
       .feature-card h3 { font-size: 1.2rem; }
+
+      .cap-row {
+        grid-template-columns: 36px 1fr;
+        gap: 10px;
+      }
+      .cap-row code {
+        grid-column: 1 / -1;
+        justify-self: start;
+        white-space: normal;
+        margin-top: 4px;
+      }
+      .cap-row.cap-head { display: none; }
+      .cap-row .cap-code-stack code { white-space: normal; }
     }
 
     @media (max-width: 480px) {
@@ -1013,6 +1131,7 @@
     <a href="#download">Download</a>
     <a href="#story">Story</a>
     <a href="#what">What it does</a>
+    <a href="#capabilities">Capabilities</a>
     <a href="#ai-context" class="ai-link">AI</a>
     <a href="#start">Get Started</a>
     <a href="#tutorials">Tutorials</a>
@@ -1189,6 +1308,506 @@
       </div>
     </section>
 
+    <!-- ============================================= -->
+    <!-- CAPABILITY MAP SECTION                        -->
+    <!-- ============================================= -->
+    <section id="capabilities">
+      <h2>What's inside the WebView? (Full Capability Map)</h2>
+
+      <p>
+        Every SoifGo project runs inside a WebView that exposes a native bridge
+        called <code>window.soifgo</code>. Through this bridge, your HTML page
+        can talk directly to hardware — no native Android code required.
+        Here is the complete list of what your HTML/JavaScript can access.
+      </p>
+
+      <div class="security-box" style="margin-top:18px;">
+        <strong>⚠️ Reminder:</strong>
+        The bridge only exists inside SoifGo. In a normal browser,
+        <code>window.soifgo</code> is <code>undefined</code>.
+        Always guard with <code>if (window.soifgo) { ... }</code>.
+      </div>
+
+      <!-- ---------- 1. Capabilities ---------- -->
+      <h3>1. Capabilities you can call from HTML</h3>
+
+      <div class="cap-table">
+
+        <div class="cap-row cap-head">
+          <span></span>
+          <span>Capability</span>
+          <span>Bridge call</span>
+        </div>
+
+        <div class="cap-row">
+          <span class="cap-icon">🔵</span>
+          <span>
+            <strong>Bluetooth Serial</strong>
+            <em>Send / receive text with HC-05, HC-06, JDY-31, Arduino, ESP32, ESP8266, Raspberry Pi.</em>
+          </span>
+          <span class="cap-code-stack"><code>html_bluetooth_rx</code></span>
+        </div>
+
+        <div class="cap-row">
+          <span class="cap-icon">🟢</span>
+          <span>
+            <strong>Light Sensor</strong>
+            <em>Real-time ambient light value streamed from the phone.</em>
+          </span>
+          <span class="cap-code-stack"><code>sensor_light</code></span>
+        </div>
+
+        <div class="cap-row">
+          <span class="cap-icon">🟢</span>
+          <span>
+            <strong>Motion Sensor</strong>
+            <em>X and Y accelerometer axes, streamed continuously.</em>
+          </span>
+          <span class="cap-code-stack"><code>sensor_move</code></span>
+        </div>
+
+        <div class="cap-row">
+          <span class="cap-icon">🟢</span>
+          <span>
+            <strong>Magnetometer</strong>
+            <em>Magnetic field value from the phone's compass sensor.</em>
+          </span>
+          <span class="cap-code-stack"><code>sensor_magno</code></span>
+        </div>
+
+        <div class="cap-row">
+          <span class="cap-icon">🎤</span>
+          <span>
+            <strong>Microphone + Speech</strong>
+            <em>Request mic permission, then use sound metering and speech-to-text in more languages.</em>
+          </span>
+          <span class="cap-code-stack"><code>request_mic_perm</code></span>
+        </div>
+
+        <div class="cap-row">
+          <span class="cap-icon">🟣</span>
+          <span>
+            <strong>MQTT Client</strong>
+            <em>Connect to any broker (tcp:// or ssl://), publish, subscribe, disconnect, check status.</em>
+          </span>
+          <span class="cap-code-stack">
+            <code>connecte_mqtt_ai</code>
+            <code>connecte_mqtt_up</code>
+            <code>mqtt_publish</code>
+            <code>mqtt_Disconnect</code>
+            <code>mqtt_status</code>
+          </span>
+        </div>
+
+        <div class="cap-row">
+          <span class="cap-icon">🟠</span>
+          <span>
+            <strong>HTTP API</strong>
+            <em>POST JSON to any endpoint, GET and extract a key from a JSON response.</em>
+          </span>
+          <span class="cap-code-stack">
+            <code>api_send</code>
+            <code>api_recive</code>
+          </span>
+        </div>
+
+        <div class="cap-row">
+          <span class="cap-icon">💾</span>
+          <span>
+            <strong>Local Storage</strong>
+            <em>Persistent <code>localStorage</code> across reloads and WebView restarts.</em>
+          </span>
+          <span class="cap-code-stack"><code>localStorage</code></span>
+        </div>
+
+        <div class="cap-row">
+          <span class="cap-icon">🪟</span>
+          <span>
+            <strong>Native Dialogs</strong>
+            <em><code>alert()</code>, <code>confirm()</code>, <code>prompt()</code> render as native Android dialogs.</em>
+          </span>
+          <span class="cap-code-stack"><code>alert / confirm / prompt</code></span>
+        </div>
+
+      </div>
+
+      <p class="cap-note">
+        Bridge rule: <code>window.soifgo.CallSub('subName', true, arg1, arg2, arg3)</code> —
+        the second argument is always a boolean, and you can pass up to 3 arguments after it.
+        Empty strings must still be passed as <code>''</code>.
+      </p>
+
+      <!-- ---------- 2. Receivers ---------- -->
+      <h3>2. Data you can receive from hardware</h3>
+
+      <p>
+        SoifGo calls these functions on your page when data arrives.
+        You must register them on <code>window</code>.
+      </p>
+
+      <div class="cap-table">
+
+        <div class="cap-row cap-head">
+          <span></span>
+          <span>Receiver</span>
+          <span>Register as</span>
+        </div>
+
+        <div class="cap-row">
+          <span class="cap-icon">🔵</span>
+          <span><strong>html_bluetooth_tx(data)</strong><em>Bluetooth data arrives.</em></span>
+          <span class="cap-code-stack"><code>window.html_bluetooth_tx = fn;</code></span>
+        </div>
+
+        <div class="cap-row">
+          <span class="cap-icon">🟢</span>
+          <span><strong>html_sensor_light(data)</strong><em>Light value arrives.</em></span>
+          <span class="cap-code-stack"><code>window.html_sensor_light = fn;</code></span>
+        </div>
+
+        <div class="cap-row">
+          <span class="cap-icon">🟢</span>
+          <span><strong>html_sensor_movex(data)</strong><em>X-axis value arrives.</em></span>
+          <span class="cap-code-stack"><code>window.html_sensor_movex = fn;</code></span>
+        </div>
+
+        <div class="cap-row">
+          <span class="cap-icon">🟢</span>
+          <span><strong>html_sensor_movey(data)</strong><em>Y-axis value arrives.</em></span>
+          <span class="cap-code-stack"><code>window.html_sensor_movey = fn;</code></span>
+        </div>
+
+        <div class="cap-row">
+          <span class="cap-icon">🟢</span>
+          <span><strong>html_sensor_magno(data)</strong><em>Magnetic value arrives.</em></span>
+          <span class="cap-code-stack"><code>window.html_sensor_magno = fn;</code></span>
+        </div>
+
+        <div class="cap-row">
+          <span class="cap-icon">🟣</span>
+          <span><strong>mqtt_rx(topic, message)</strong><em>MQTT message arrives on a subscribed topic.</em></span>
+          <span class="cap-code-stack"><code>window.mqtt_rx = fn;</code></span>
+        </div>
+
+        <div class="cap-row">
+          <span class="cap-icon">🟣</span>
+          <span><strong>html_mqtt_status(connected)</strong><em>Status reply arrives (<code>'true'</code>/<code>'false'</code> as string).</em></span>
+          <span class="cap-code-stack"><code>window.html_mqtt_status = fn;</code></span>
+        </div>
+
+        <div class="cap-row">
+          <span class="cap-icon">🟠</span>
+          <span><strong>api_rx(number)</strong><em>API response arrives (plain value or wrapped map).</em></span>
+          <span class="cap-code-stack"><code>window.api_rx = fn;</code></span>
+        </div>
+
+      </div>
+
+      <p class="cap-note">
+        ⚠️ <strong>Important:</strong> <code>html_mqtt_status</code> receives
+        <code>'true'</code>/<code>'false'</code> as a <strong>string</strong>, not a boolean.
+        <code>'false'</code> (the string) is truthy in JavaScript — always compare with
+        <code>=== 'true'</code>.
+      </p>
+
+      <!-- ---------- 3. Real-world combos ---------- -->
+      <h3>3. Real-world combinations you can build on one page</h3>
+
+      <div class="examples-mini-grid" style="grid-template-columns: 1fr 1fr; margin-top:14px;">
+
+        <div class="mini-card">
+          <span class="mini-icon">🔗</span>
+          <span class="mini-title">Bluetooth + MQTT bridge</span>
+          <span class="mini-desc">
+            Read data from an Arduino over Bluetooth, publish it to an MQTT broker,
+            and display the topic feed on the same HTML page.
+          </span>
+        </div>
+
+        <div class="mini-card">
+          <span class="mini-icon">📈</span>
+          <span class="mini-title">Sensor dashboard</span>
+          <span class="mini-desc">
+            Stream light + motion + magnetometer, draw live charts with
+            <code>&lt;canvas&gt;</code> or SVG, and log to <code>localStorage</code>.
+          </span>
+        </div>
+
+        <div class="mini-card">
+          <span class="mini-icon">🌐</span>
+          <span class="mini-title">Crypto / API ticker</span>
+          <span class="mini-desc">
+            Poll a REST API with <code>api_recive</code>, parse the JSON,
+            and update a price display with a Stop button.
+          </span>
+        </div>
+
+        <div class="mini-card">
+          <span class="mini-icon">🤖</span>
+          <span class="mini-title">Robot control panel</span>
+          <span class="mini-desc">
+            Send motor commands via Bluetooth, receive telemetry via MQTT,
+            and show a live status with animated gauges.
+          </span>
+        </div>
+
+        <div class="mini-card">
+          <span class="mini-icon">🎙️</span>
+          <span class="mini-title">Voice-controlled device</span>
+          <span class="mini-desc">
+            Capture speech in more languages, convert to text, send it
+            over Bluetooth or MQTT to a microcontroller.
+          </span>
+        </div>
+
+        <div class="mini-card">
+          <span class="mini-icon">🏭</span>
+          <span class="mini-title">Industrial HMI</span>
+          <span class="mini-desc">
+            Combine API, MQTT, sensors, and local storage into a single
+            offline-capable control panel that runs on any Android phone.
+          </span>
+        </div>
+
+      </div>
+
+      <!-- ---------- 4. Classic vs WebView ---------- -->
+      <h3>4. Two ways to build — Classic Mode vs WebView Mode</h3>
+
+      <div class="start-grid" style="margin-top:16px;">
+
+        <div class="start-btn user" style="cursor:default;">
+          <span class="start-icon">🧩</span>
+          <strong>Classic Mode</strong>
+          <span>
+            Native buttons and sliders. Each button has a behavior
+            (Send, Receive, Note, PDF, Image, Open X, Reload, WebView,
+            Sound, Click, Vibration). No HTML needed.
+          </span>
+        </div>
+
+        <div class="start-btn dev" style="cursor:default;">
+          <span class="start-icon">🌐</span>
+          <strong>WebView Mode</strong>
+          <span>
+            Each button hosts its own HTML page. Full HTML/CSS/JS control,
+            access to <code>window.soifgo</code>, Bluetooth, MQTT, sensors,
+            APIs and storage. Best for complex dashboards.
+          </span>
+        </div>
+
+      </div>
+
+      <!-- ---------- 5. WebView Built-in Capabilities ---------- -->
+      <h3>5. Beyond SoifGo — What the WebView itself already gives you</h3>
+
+      <p>
+        SoifGo's bridge is only half the story. The WebView that hosts your page is
+        <strong>a full modern browser engine</strong> (Chromium-based on Android). Everything that works
+        in Chrome on a desktop also works inside SoifGo — no bridge required, no plugins, no native code.
+        This is what makes the "mobile sandbox" idea so powerful.
+      </p>
+
+      <div class="cap-table">
+
+        <div class="cap-row cap-head">
+          <span></span>
+          <span>Built-in Web Platform Capability</span>
+          <span>What it unlocks</span>
+        </div>
+
+        <div class="cap-row">
+          <span class="cap-icon">🎨</span>
+          <span>
+            <strong>HTML5 + CSS3 (Flexbox, Grid, Animations)</strong>
+            <em>Full layout engine, transitions, keyframes, transforms, filters, gradients, custom properties.</em>
+          </span>
+          <span class="cap-code-stack"><code>CSS Grid / Flexbox</code></span>
+        </div>
+
+        <div class="cap-row">
+          <span class="cap-icon">⚡</span>
+          <span>
+            <strong>JavaScript ES2024+</strong>
+            <em>Async/await, modules, classes, generators, destructuring, optional chaining, all modern syntax.</em>
+          </span>
+          <span class="cap-code-stack"><code>ES2024+</code></span>
+        </div>
+
+        <div class="cap-row">
+          <span class="cap-icon">📊</span>
+          <span>
+            <strong>Canvas 2D</strong>
+            <em>Draw charts, gauges, graphs, animations, image manipulation, pixel-perfect rendering.</em>
+          </span>
+          <span class="cap-code-stack"><code>&lt;canvas&gt;.getContext('2d')</code></span>
+        </div>
+
+        <div class="cap-row">
+          <span class="cap-icon">🧊</span>
+          <span>
+            <strong>WebGL / WebGL2</strong>
+            <em>Hardware-accelerated 3D graphics. Games, 3D dashboards, CAD viewers, data visualization.</em>
+          </span>
+          <span class="cap-code-stack"><code>canvas.getContext('webgl2')</code></span>
+        </div>
+
+        <div class="cap-row">
+          <span class="cap-icon">📐</span>
+          <span>
+            <strong>SVG</strong>
+            <em>Scalable vector graphics — perfect for gauges, meters, icons, and resolution-independent UI.</em>
+          </span>
+          <span class="cap-code-stack"><code>&lt;svg&gt;</code></span>
+        </div>
+
+        <div class="cap-row">
+          <span class="cap-icon">🖼️</span>
+          <span>
+            <strong>Web Fonts</strong>
+            <em>Any Google Font or custom font. Full typographic control.</em>
+          </span>
+          <span class="cap-code-stack"><code>@font-face</code></span>
+        </div>
+
+        <div class="cap-row">
+          <span class="cap-icon">🎬</span>
+          <span>
+            <strong>Video + Audio (HTML5)</strong>
+            <em>Play MP4, WebM, MP3, OGG. Custom players, sound effects, media dashboards.</em>
+          </span>
+          <span class="cap-code-stack"><code>&lt;video&gt; / &lt;audio&gt;</code></span>
+        </div>
+
+        <div class="cap-row">
+          <span class="cap-icon">📦</span>
+          <span>
+            <strong>Any JavaScript Library</strong>
+            <em>Chart.js, D3.js, Three.js, Babylon.js, TensorFlow.js, Anime.js, and thousands more — just import and use.</em>
+          </span>
+          <span class="cap-code-stack"><code>&lt;script src="cdn..."&gt;</code></span>
+        </div>
+
+        <div class="cap-row">
+          <span class="cap-icon">🧩</span>
+          <span>
+            <strong>Web Workers</strong>
+            <em>Run heavy computation in background threads without freezing the UI.</em>
+          </span>
+          <span class="cap-code-stack"><code>new Worker('...')</code></span>
+        </div>
+
+        <div class="cap-row">
+          <span class="cap-icon">💾</span>
+          <span>
+            <strong>IndexedDB / Cache API</strong>
+            <em>Large-scale offline storage, caching assets for fast reload, PWA-style experiences.</em>
+          </span>
+          <span class="cap-code-stack"><code>indexedDB / caches</code></span>
+        </div>
+
+        <div class="cap-row">
+          <span class="cap-icon">📡</span>
+          <span>
+            <strong>Fetch API / XMLHttpRequest</strong>
+            <em>Direct HTTP requests from JavaScript (in addition to SoifGo's native <code>api_send</code>).</em>
+          </span>
+          <span class="cap-code-stack"><code>fetch()</code></span>
+        </div>
+
+        <div class="cap-row">
+          <span class="cap-icon">🔊</span>
+          <span>
+            <strong>Web Audio API</strong>
+            <em>Generate tones, process sound, build synthesizers, analyze audio streams.</em>
+          </span>
+          <span class="cap-code-stack"><code>AudioContext</code></span>
+        </div>
+
+        <div class="cap-row">
+          <span class="cap-icon">🎮</span>
+          <span>
+            <strong>Gamepad API</strong>
+            <em>Connect Bluetooth/USB game controllers for games and robot control.</em>
+          </span>
+          <span class="cap-code-stack"><code>navigator.getGamepads()</code></span>
+        </div>
+
+        <div class="cap-row">
+          <span class="cap-icon">📱</span>
+          <span>
+            <strong>Touch + Pointer Events</strong>
+            <em>Multi-touch gestures, pinch, swipe, drag — perfect for control panels.</em>
+          </span>
+          <span class="cap-code-stack"><code>touchstart / pointermove</code></span>
+        </div>
+
+        <div class="cap-row">
+          <span class="cap-icon">🌐</span>
+          <span>
+            <strong>CSS 3D Transforms</strong>
+            <em>Perspective, rotateX/Y/Z, translateZ — 3D effects without WebGL.</em>
+          </span>
+          <span class="cap-code-stack"><code>transform: rotate3d()</code></span>
+        </div>
+
+      </div>
+
+      <div class="security-box" style="margin-top: 20px;">
+        <strong>💡 The Big Idea:</strong>
+        SoifGo's bridge gives you <strong>hardware access</strong> (Bluetooth, MQTT, sensors).
+        The WebView gives you the <strong>entire modern web platform</strong> (3D, games, charts, media, offline storage).
+        <strong>Combine both</strong> and you can build a fully custom dashboard, a 3D robot controller,
+        an IoT game, or a data visualization tool — all inside one HTML page, running on Android.
+      </div>
+
+      <div class="examples-mini-title">
+        <span>🚀</span>
+        <span>What this means in practice</span>
+      </div>
+
+      <div class="examples-mini-grid" style="grid-template-columns: 1fr 1fr; margin-top:12px;">
+
+        <div class="mini-card">
+          <span class="mini-icon">🎮</span>
+          <span class="mini-title">2D / 3D Games</span>
+          <span class="mini-desc">
+            Build games with Canvas 2D, Three.js, or Babylon.js. Connect a Bluetooth
+            gamepad, send scores over MQTT, display a leaderboard.
+          </span>
+        </div>
+
+        <div class="mini-card">
+          <span class="mini-icon">📈</span>
+          <span class="mini-title">Real-time Dashboards</span>
+          <span class="mini-desc">
+            Use Chart.js or D3.js to visualize Bluetooth sensor data, MQTT streams,
+            and API responses — all in one live view.
+          </span>
+        </div>
+
+        <div class="mini-card">
+          <span class="mini-icon">🏭</span>
+          <span class="mini-title">3D Digital Twin</span>
+          <span class="mini-desc">
+            Render a 3D model of your machine with Three.js, color it based on live
+            sensor values, and control it via MQTT.
+          </span>
+        </div>
+
+        <div class="mini-card">
+          <span class="mini-icon">🔬</span>
+          <span class="mini-title">Scientific Tools</span>
+          <span class="mini-desc">
+            FFT audio analysis, image processing, matrix math, TensorFlow.js ML —
+            all running locally on the phone.
+          </span>
+        </div>
+
+      </div>
+
+    </section>
+
     <section id="ai-context">
       <h2>Developer and AI Resources</h2>
 
@@ -1227,7 +1846,7 @@
           <a href="tutorials/serial_voice/serial_voice_tutorials.html" class="mini-main-link">
             <span class="mini-icon">🎙️</span>
             <span class="mini-title">Voice Tutorial</span>
-            <span class="mini-desc">Speech recognition with 22 languages</span>
+            <span class="mini-desc">Speech recognition with more languages</span>
           </a>
         </div>
       </div>
@@ -1457,6 +2076,11 @@
       <div class="faq-item">
         <strong>Which hardware does SoifGo support?</strong>
         <p>Any device using Bluetooth SPP (HC-05, HC-06), MQTT, or HTTP REST APIs. This includes Arduino, ESP32, ESP8266, Raspberry Pi, and more.</p>
+      </div>
+
+      <div class="faq-item">
+        <strong>What can I actually do inside the WebView?</strong>
+        <p>You can send and receive Bluetooth data, read phone sensors (light, motion, magnetometer), use the microphone and speech recognition in more languages, connect to MQTT brokers, call HTTP APIs, store data with <code>localStorage</code>, and use native <code>alert/confirm/prompt</code> dialogs. On top of that, the WebView itself is a full modern browser engine — so Canvas 2D, WebGL 3D, SVG, Web Audio, Gamepad, Web Workers, and any JavaScript library (Chart.js, Three.js, D3.js, TensorFlow.js…) all work out of the box. See the <a href="#capabilities">Full Capability Map</a> above.</p>
       </div>
 
       <div class="faq-item">
