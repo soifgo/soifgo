@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+    <title>Privacy Policy - SoifGo Android Hardware Controller</title>
+
+    <meta name="description" content="Privacy Policy for SoifGo - a free, open-source Android app for Bluetooth, MQTT, and HTML/JS hardware control. No tracking, no ads, no data collection." />
+    <meta name="keywords" content="SoifGo privacy, SoifGo privacy policy, Android hardware controller privacy, Bluetooth app privacy, MQTT app privacy, HTML WebView privacy" />
+    <meta name="robots" content="index, follow" />
+
+    <meta property="og:title" content="Privacy Policy - SoifGo" />
+    <meta property="og:description" content="SoifGo does not collect, store, or transmit personal data. Read the full privacy policy." />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://soifgo.github.io/soifgo/policy_soifgo.html" />
+    <meta property="og:image" content="https://soifgo.github.io/soifgo/soifgo-logo.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="SoifGo" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Privacy Policy - SoifGo" />
+    <meta name="twitter:description" content="SoifGo does not collect, store, or transmit personal data." />
+    <meta name="twitter:image" content="https://soifgo.github.io/soifgo/soifgo-logo.png" />
+
+    <link rel="canonical" href="https://soifgo.github.io/soifgo/policy_soifgo.html" />
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Privacy Policy - SoifGo",
+      "description": "Privacy Policy for SoifGo Android app.",
+      "url": "https://soifgo.github.io/soifgo/policy_soifgo.html",
+      "inLanguage": "en",
+      "author": { "@type": "Person", "name": "Saeid Moghadam" },
+      "publisher": { "@type": "Person", "name": "Saeid Moghadam" }
+    }
+    </script>
+
+    <script>
+      (function() {
+        var savedTheme = localStorage.getItem('soifgo-theme');
+        if (savedTheme === 'light' || savedTheme === 'dark') {
+          document.documentElement.setAttribute('data-theme', savedTheme);
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
+
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root,
+        [data-theme="dark"] {
+            --primary: #4f8cff;
+            --primary-light: #6aa0ff;
+            --purple: #9b59b6;
+            --purple-light: #c084fc;
+            --bg: #0f172a;
+            --bg-card: #1e293b;
+            --bg-nav: rgba(15, 23, 42, 0.92);
+            --bg-header-from: #0f172a;
+            --bg-header-to: #1a2a4a;
+            --text: #e8edf5;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --text-header: #cbd5e1;
+            --border: rgba(255, 255, 255, 0.07);
+            --border-nav: rgba(255, 255, 255, 0.08);
+            --shadow: rgba(0, 0, 0, 0.35);
+            --info-bg: rgba(79, 140, 255, 0.08);
+            --info-border: var(--primary);
+            --ok-bg: rgba(45, 212, 191, 0.08);
+            --ok-border: #2dd4bf;
+            --radius: 14px;
+            --radius-sm: 10px;
+            --transition: 0.25s ease;
+            --scrollbar-track: #0f172a;
+        }
+
+        [data-theme="light"] {
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --purple: #9333ea;
+            --purple-light: #a855f7;
+            --bg: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-nav: rgba(255, 255, 255, 0.92);
+            --bg-header-from: #f1f5f9;
+            --bg-header-to: #dbeafe;
+            --text: #1e293b;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --text-header: #475569;
+            --border: rgba(15, 23, 42, 0.08);
+            --border-nav: rgba(15, 23, 42, 0.08);
+            --shadow: rgba(15, 23, 42, 0.08);
+            --info-bg: rgba(37, 99, 235, 0.08);
+            --info-border: var(--primary);
+            --ok-bg: rgba(20, 184, 166, 0.08);
+            --ok-border: #14b8a6;
+            --scrollbar-track: #e2e8f0;
+        }
+
+        body {
+            font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            font-size: 17px;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: var(--scrollbar-track); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+
+        header {
+            background: linear-gradient(135deg, var(--bg-header-from), var(--bg-header-to));
+            color: var(--text-main);
+            padding: 50px 20px 40px;
+            text-align: center;
+            border-bottom: 3px solid var(--primary);
+            position: relative;
+            transition: background 0.3s ease;
+        }
+
+        .header-container { max-width: 800px; margin: 0 auto; }
+
+        .logo-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .logo-row img { height: 50px; }
+
+        .logo-row span {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .header-container h1 {
+            font-size: 1.9rem;
+            color: var(--text-main);
+            margin-bottom: 10px;
+        }
+
+        .header-container p {
+            color: var(--text-header);
+            font-size: 1rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 18px;
+            color: var(--primary-light);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .back-link:hover { text-decoration: underline; }
+
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--info-bg);
+            border: 1px solid var(--border-nav);
+            color: var(--text);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            z-index: 1001;
+        }
+
+        .theme-toggle:hover {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+            transform: scale(1.1);
+        }
+
+        main { max-width: 800px; margin: auto; padding: 0 1em; }
+
+        section {
+            padding: 2em;
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 20px var(--shadow);
+            margin-top: 25px;
+            transition: background 0.3s ease, border 0.3s ease;
+        }
+
+        section:first-of-type { margin-top: 30px; }
+
+        h2 {
+            font-size: 1.35em;
+            margin-bottom: 0.7em;
+            color: var(--text-main);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.3em;
+        }
+
+        p { margin-bottom: 14px; }
+
+        a { color: var(--primary-light); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        ul { padding-left: 1.4em; margin: 0.6em 0; }
+        li { margin-bottom: 0.5em; }
+
+        .info-box {
+            background: var(--info-bg);
+            border-left: 4px solid var(--info-border);
+            border-radius: var(--radius-sm);
+            padding: 14px 18px;
+            margin: 16px 0;
+            font-size: 0.95rem;
+        }
+
+        .info-box strong { color: var(--primary-light); }
+
+        .success-box {
+            background: var(--ok-bg);
+            border-left: 4px solid var(--ok-border);
+            border-radius: var(--radius-sm);
+            padding: 14px 18px;
+            margin: 16px 0;
+            font-size: 0.95rem;
+        }
+
+        .success-box strong { color: var(--ok-border); }
+
+        .last-updated {
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 20px;
+        }
+
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            color: var(--text-muted);
+            padding: 24px 20px;
+            border-top: 1px solid var(--border);
+            background: var(--bg);
+            transition: background 0.3s ease;
+        }
+
+        footer a { color: var(--text-muted); transition: var(--transition); }
+        footer a:hover { color: var(--primary-light); text-decoration: underline; }
+
+        @media (max-width: 700px) {
+            header { padding: 40px 20px 30px; }
+            .header-container h1 { font-size: 1.5rem; }
+            .logo-row span { font-size: 1.5rem; }
+            .logo-row img { height: 42px; }
+            section { padding: 1.4rem; }
+            h2 { font-size: 1.15em; }
+            .theme-toggle { top: 12px; right: 12px; width: 40px; height: 40px; font-size: 1.1rem; }
+        }
+
+        @media (max-width: 480px) {
+            body { font-size: 15px; }
+            .header-container h1 { font-size: 1.3rem; }
+            section { padding: 1.1rem; margin-top: 15px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Switch theme">
+            <span id="themeIcon">☀️</span>
+        </button>
+
+        <div class="header-container">
+            <div class="logo-row">
+                <img src="soifgo-logo.png" alt="SoifGo Logo" />
+                <span>SoifGo</span>
+            </div>
+            <h1>🔒 Privacy Policy</h1>
+            <p>How SoifGo handles your data — short version: it doesn't.</p>
+            <a href="index.html" class="back-link">← Back to main page</a>
+        </div>
+    </header>
+
+    <main>
+
+        <section>
+            <p>
+                <strong>Saeid Moghadam</strong> built the <strong>SoifGo</strong> application as a
+                customizable Android tool designed for Bluetooth serial communication, MQTT IoT
+                interaction, seekbar controls, programmable note command playback, and direct
+                hardware command tools.
+            </p>
+
+            <div class="success-box">
+                <strong>✅ The short version:</strong>
+                SoifGo operates primarily locally on your device. It does not use any third-party
+                analytics, tracking, or advertising services. No personal data is collected,
+                stored, or transmitted to external servers.
+            </div>
+
+            <p class="last-updated">
+                <strong>Last Updated:</strong> September 27, 2026
+            </p>
+        </section>
+
+        <section>
+            <h2>1. Information Collection and Use</h2>
+            <p>
+                SoifGo does not collect any personal information. The app is designed to run
+                entirely on your device, with no telemetry, no crash reporting, and no
+                third-party SDKs that send data outside your phone.
+            </p>
+            <p>
+                You can use every feature of SoifGo — Bluetooth, sensors, MQTT, HTML/JS WebView —
+                without ever creating an account or sharing any data with us.
+            </p>
+        </section>
+
+        <section>
+            <h2>2. Data Usage and Local Storage</h2>
+            <p>
+                SoifGo processes and saves user-created project files, custom button layouts,
+                and configurations <strong>locally on your device</strong>. This includes:
+            </p>
+            <ul>
+                <li>Page and folder configurations</li>
+                <li>Button layouts and colors</li>
+                <li>Notes, HTML files, and images you create or import</li>
+                <li>App preferences (theme, language, sensor settings)</li>
+            </ul>
+            <p>
+                No personal identification information (such as your name, email, or address)
+                is ever collected, stored, or transmitted to external servers.
+            </p>
+        </section>
+
+        <section>
+            <h2>3. Required Permissions and Features</h2>
+
+            <h3 style="color: var(--primary-light); margin-top: 1.2em; margin-bottom: 0.5em; font-size: 1.1em;">📁 Storage</h3>
+            <p>
+                Used solely for saving and loading user-defined workspace configurations, themes,
+                exported data files, and logs locally on the device.
+            </p>
+
+            <h3 style="color: var(--primary-light); margin-top: 1.2em; margin-bottom: 0.5em; font-size: 1.1em;">📡 Bluetooth and Location</h3>
+            <p>
+                Used strictly to discover, pair, and communicate with nearby hardware modules and
+                microcontrollers. On newer Android versions, Bluetooth Low Energy requires the
+                Location permission to work — this is an Android system requirement, not a SoifGo
+                choice. Location data is never read or stored by SoifGo.
+            </p>
+
+            <h3 style="color: var(--primary-light); margin-top: 1.2em; margin-bottom: 0.5em; font-size: 1.1em;">🎤 Microphone</h3>
+            <p>
+                Used exclusively <strong>on-device and in real-time</strong> when you activate the
+                <strong>Voice-to-Serial</strong> feature. Audio input is processed locally to
+                convert spoken words into serial commands sent directly to your connected hardware.
+            </p>
+            <div class="info-box">
+                <strong>🔒 No audio recordings are ever stored, recorded, or transmitted</strong>
+                to any external server or third party. Speech recognition may be handled by your
+                device's built-in speech service (for example, Google's Speech Recognition),
+                which is subject to its own privacy policy.
+            </div>
+
+            <h3 style="color: var(--primary-light); margin-top: 1.2em; margin-bottom: 0.5em; font-size: 1.1em;">💬 SMS (Short Message Service)</h3>
+            <p>
+                Used solely to allow <strong>you</strong> (the user) to send text commands directly
+                from the app to external hardware devices such as SMS Controllers (or optionally
+                to communicate with peers).
+            </p>
+            <div class="info-box">
+                <strong>🔒 The app initiates SMS sending strictly under your direct control</strong>
+                and explicit action. It cannot and does not read, receive, or harvest incoming
+                text messages. WebView interactions are isolated to prevent any unintended
+                background actions.
+            </div>
+
+            <h3 style="color: var(--primary-light); margin-top: 1.2em; margin-bottom: 0.5em; font-size: 1.1em;">🌐 Internet (optional)</h3>
+            <p>
+                Used only if you choose to interact with custom user-configured external MQTT
+                brokers or REST APIs. All network destinations are set by you.
+            </p>
+        </section>
+
+        <section>
+            <h2>4. Data Security</h2>
+            <p>
+                Since no personal data, audio recordings, or private messages are harvested or
+                transmitted externally, there is no risk of personal data exposure.
+            </p>
+            <p>
+                All configurations and temporary processes remain entirely under your control
+                on your device. Uninstalling SoifGo removes all app-related files.
+            </p>
+        </section>
+
+        <section>
+            <h2>5. Third-Party Links</h2>
+            <p>
+                The app and website may contain links to external sites or custom hardware
+                documentation. These sites have their own privacy policies, and we are not
+                responsible for their practices. We encourage you to read the privacy policy
+                of any third-party service you visit.
+            </p>
+        </section>
+
+        <section>
+            <h2>6. Children's Privacy</h2>
+            <p>
+                SoifGo does not knowingly collect any information from anyone, including children
+                under the age of 13. Since the app does not collect personal data at all, it is
+                safe for users of any age.
+            </p>
+        </section>
+
+        <section>
+            <h2>7. Changes to This Privacy Policy</h2>
+            <p>
+                This Privacy Policy may be updated from time to time. You are advised to review
+                this page periodically for any changes, which become effective immediately after
+                being posted.
+            </p>
+            <p>
+                The <strong>Last Updated</strong> date at the top of this page reflects the most
+                recent revision.
+            </p>
+        </section>
+
+        <section>
+            <h2>8. Contact</h2>
+            <p>For any privacy concerns or questions, please contact:</p>
+            <ul>
+                <li><strong>Developer:</strong> Saeid Moghadam</li>
+                <li><strong>Email:</strong> <a href="mailto:ssm20985@gmail.com">ssm20985@gmail.com</a></li>
+                <li><strong>Website:</strong> <a href="https://soifgo.github.io/soifgo/">https://soifgo.github.io/soifgo/</a></li>
+                <li><strong>Forum:</strong> <a href="https://github.com/soifgo/soifgo/discussions" target="_blank" rel="noopener">GitHub Discussions</a></li>
+            </ul>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>
+            <a href="index.html">Home</a>
+            &nbsp;|&nbsp;
+            <a href="docs.html">Documentation</a>
+            &nbsp;|&nbsp;
+            <a href="SOIFGO_AI_CONTEXT.md">🤖 AI Context</a>
+            &nbsp;|&nbsp;
+            <a href="https://github.com/soifgo/soifgo" target="_blank" rel="noopener">GitHub</a>
+            &nbsp;|&nbsp;
+            <a href="https://github.com/soifgo/soifgo/discussions" target="_blank" rel="noopener">Forum</a>
+        </p>
+        <p style="font-size: 0.85rem; margin-top: 8px;">&copy; 2026 SoifGo — Built by Saeid Moghadam</p>
+    </footer>
+
+    <script>
+        (function() {
+            var themeToggle = document.getElementById('themeToggle');
+            var themeIcon = document.getElementById('themeIcon');
+
+            function updateIcon(theme) {
+                if (theme === 'light') {
+                    themeIcon.textContent = '🌙';
+                    themeToggle.title = 'Switch to dark mode';
+                } else {
+                    themeIcon.textContent = '☀️';
+                    themeToggle.title = 'Switch to light mode';
+                }
+            }
+
+            var currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+            updateIcon(currentTheme);
+
+            themeToggle.addEventListener('click', function() {
+                var current = document.documentElement.getAttribute('data-theme');
+                var next = current === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', next);
+                localStorage.setItem('soifgo-theme', next);
+                updateIcon(next);
+            });
+        })();
+    </script>
+
+</body>
+</html>

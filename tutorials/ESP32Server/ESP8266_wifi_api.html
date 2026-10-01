@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes" />
+  <meta name="theme-color" content="#0055aa" />
+  <meta name="color-scheme" content="light dark" />
+
+  <!-- ===== PRIMARY SEO ===== -->
+  <title>ESP8266 WiFi API Setup with SoifGo — Complete Tutorial | Arduino, JSON, Web Server</title>
+  <meta name="description" content="Complete tutorial for ESP8266 WiFi module setup with SoifGo. Learn how to configure ESP8266 as a web server with JSON API, connect to WiFi, and integrate with SoifGo for IoT projects." />
+  <meta name="keywords" content="ESP8266, WiFi module, SoifGo, API setup, Arduino IDE, JSON, web server, IoT, ESP8266 tutorial, ESP8266 web server, wireless control, WiFi configuration" />
+
+  <!-- ===== OPEN GRAPH (Social Media) ===== -->
+  <meta property="og:title" content="ESP8266 WiFi API Setup with SoifGo — Complete Tutorial" />
+  <meta property="og:description" content="Complete tutorial for ESP8266 WiFi module setup with SoifGo. Learn ESP8266 web server, JSON API, and IoT integration." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://soifgo.github.io/soifgo/tutorials/esp8266-wifi-api/" />
+  <meta property="og:image" content="https://soifgo.github.io/soifgo/esp8266-og.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="SoifGo Tutorials" />
+
+  <!-- ===== TWITTER CARD ===== -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ESP8266 WiFi API Setup with SoifGo — Complete Tutorial" />
+  <meta name="twitter:description" content="Complete tutorial for ESP8266 WiFi module setup with SoifGo. Web server, JSON API, and IoT integration." />
+  <meta name="twitter:image" content="https://soifgo.github.io/soifgo/esp8266-og.jpg" />
+
+  <!-- ===== CANONICAL URL ===== -->
+  <link rel="canonical" href="https://soifgo.github.io/soifgo/tutorials/esp8266-wifi-api/" />
+  <link rel="alternate" hreflang="en" href="https://soifgo.github.io/soifgo/tutorials/esp8266-wifi-api/" />
+
+  <!-- ===== SCHEMA.ORG (Structured Data) ===== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "ESP8266 WiFi API Setup with SoifGo — Complete Tutorial",
+    "description": "Complete tutorial for ESP8266 WiFi module setup with SoifGo. Learn ESP8266 web server, JSON API, and IoT integration with Arduino IDE.",
+    "author": { "@type": "Person", "name": "Saeid Moghadam" },
+    "publisher": { "@type": "Organization", "name": "SoifGo", "url": "https://soifgo.github.io/soifgo/" },
+    "datePublished": "2025-01-01",
+    "dateModified": "2025-01-01",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://soifgo.github.io/soifgo/tutorials/esp8266-wifi-api/" },
+    "about": { "@type": "Thing", "name": "ESP8266 WiFi Setup and API Configuration" },
+    "teaches": [
+      "ESP8266 web server setup",
+      "JSON API implementation",
+      "WiFi configuration via serial",
+      "SoifGo integration",
+      "Arduino IDE programming"
+    ],
+    "inLanguage": "en",
+    "isAccessibleForFree": true,
+    "learningResourceType": "Tutorial"
+  }
+  </script>
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #1f2937;
+      --accent: #0055aa;
+      --card-bg: #f5f7fb;
+      --border: #d7dce4;
+      --muted: #6b7280;
+      --code-bg: #1e293b;
+      --link: #0066cc;
+      --btn-home: #7a4a2e;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0b0e12;
+        --fg: #e5e7eb;
+        --accent: #4dabf7;
+        --card-bg: #12161d;
+        --border: #243041;
+        --muted: #9aa3af;
+        --link: #58a6ff;
+        --btn-home: #8B5A3A;
+      }
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.7;
+      -webkit-text-size-adjust: 100%;
+      min-height: 100vh;
+    }
+
+    .container { max-width: 860px; margin: 0 auto; padding: 16px; }
+
+    h1 {
+      font-size: 1.8rem;
+      color: var(--accent);
+      text-align: center;
+      margin: 0.75rem 0 0.5rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      word-break: break-word;
+    }
+
+    h2 {
+      font-size: 1.35rem;
+      color: var(--accent);
+      margin: 1.5rem 0 0.75rem;
+      font-weight: 600;
+      word-break: break-word;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 6px;
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      color: var(--accent);
+      margin: 1rem 0 0.5rem;
+      font-weight: 600;
+      word-break: break-word;
+    }
+
+    p { margin: 0.75em 0; word-break: break-word; }
+
+    a { color: var(--link); text-decoration: none; word-break: break-word; }
+    a:hover { text-decoration: underline; }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1rem;
+      max-width: 100%;
+      overflow: hidden;
+    }
+
+    .card img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      display: block;
+      margin: 0.8rem 0;
+      background: var(--card-bg);
+    }
+
+    /* ===== VIDEO WRAPPER (MEGA IFRAME) ===== */
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #0a1a2a;
+      margin: 0.8rem 0;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    pre {
+      border-radius: 12px;
+      max-height: 400px;
+      overflow: auto;
+      margin: 0.8rem 0;
+      background: #0f172a;
+      padding: 1rem;
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-size: 0.85rem;
+    }
+
+    code {
+      padding: 0.2em 0.6em;
+      border-radius: 8px;
+      font-size: 0.9em;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      color: var(--fg);
+      word-break: break-word;
+      background: var(--card-bg);
+    }
+
+    .card code {
+      background: var(--code-bg);
+      color: #e2e8f0;
+    }
+
+    ul, ol { padding-left: 1.4em; margin: 0.5em 0; }
+    li { margin-bottom: 0.4em; word-break: break-word; }
+
+    .btn-home {
+      display: inline-block;
+      background: var(--btn-home);
+      color: white;
+      padding: 14px 34px;
+      border-radius: 60px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.05rem;
+      text-align: center;
+      transition: background 0.15s, transform 0.1s;
+      touch-action: manipulation;
+      border: none;
+      min-width: 140px;
+      box-shadow: 0 4px 10px rgba(80, 45, 20, 0.06);
+    }
+
+    .btn-home:active { transform: scale(0.97); background: #5f3a22; }
+
+    .btn-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin: 2rem 0 0.5rem 0;
+    }
+
+    .download-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--accent);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 60px;
+      font-weight: 500;
+      font-size: 1rem;
+      text-decoration: none;
+      margin: 0.5em 0.5em 0.5em 0;
+      transition: background 0.15s, transform 0.1s;
+      touch-action: manipulation;
+      border: none;
+      box-shadow: 0 4px 12px rgba(0, 50, 80, 0.08);
+    }
+
+    .download-link:active { transform: scale(0.97); background: #004488; }
+
+    .download-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 0.5rem 0;
+    }
+
+    @media (max-width: 600px) {
+      .container { padding: 10px; }
+      h1 { font-size: 1.5rem; }
+      h2 { font-size: 1.15rem; }
+      .card { padding: 0.8rem 0.9rem; border-radius: 14px; }
+      body { font-size: 1rem; line-height: 1.7; }
+      pre { font-size: 0.8rem; padding: 0.8rem; max-height: 300px; }
+      pre code { font-size: 0.78rem; }
+      .btn-home { width: 100%; justify-content: center; padding: 16px 18px; font-size: 1rem; }
+      .btn-wrap { flex-direction: column; gap: 12px; }
+      .download-link { width: 100%; justify-content: center; padding: 14px 18px; font-size: 0.95rem; }
+      .download-wrap { flex-direction: column; gap: 8px; }
+    }
+
+    @media (max-width: 380px) {
+      h1 { font-size: 1.3rem; }
+      .card { padding: 0.6rem 0.7rem; }
+      pre { font-size: 0.7rem; padding: 0.6rem; }
+      pre code { font-size: 0.7rem; }
+    }
+
+    .muted { color: var(--muted); }
+    .text-center { text-align: center; }
+    .mt-1 { margin-top: 1rem; }
+    .mb-1 { margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <h1>🚀 ESP8266 API Setup with SoifGo</h1>
+
+    <!-- ===== STEP 1 ===== -->
+    <div class="card">
+      <h2>Step 1: Introduction</h2>
+      <p>This tutorial helps you set up the ESP8266 Wi-Fi module and connect it to SoifGo.</p>
+    </div>
+
+    <!-- ===== STEP 2 ===== -->
+    <div class="card">
+      <h2>Step 2: Preparing the Module</h2>
+      <p>Use a USB to TTL converter. It can be a single USB-to-TTL board or a combination of USB-to-UART and UART-to-TTL.</p>
+      <p>You'll need both 5V and 3.3V power sources. Recommended converter:</p>
+      <img src="converter.png" alt="Recommended Converter" loading="lazy">
+    </div>
+
+    <!-- ===== STEP 3 ===== -->
+    <div class="card">
+      <h2>Step 3: Arduino IDE Setup</h2>
+      <p>Install the required libraries and check the port and board settings:</p>
+      <img src="arduino1.png" alt="Library Install" loading="lazy">
+      <img src="arduino2.png" alt="Port Check" loading="lazy">
+      <img src="arduino3.png" alt="Board Selection" loading="lazy">
+      <img src="arduino4.png" alt="Board Selection" loading="lazy">
+    </div>
+
+    <!-- ===== STEP 4 ===== -->
+    <div class="card">
+      <h2>Step 4: Uploading the Program</h2>
+
+      <pre class="line-numbers"><code class="language-cpp">#include &lt;ESP8266WiFi.h&gt;
+#include &lt;ESP8266WebServer.h&gt;
+#include &lt;ArduinoJson.h&gt;
+#include &lt;EEPROM.h&gt;
+
+#define EEPROM_SIZE 128
+
+String wifiName;
+String wifiPass;
+int portLastByte;
+String userPath;
+
+IPAddress gateway(192, 168, 1, 1);
+IPAddress subnet(255, 255, 255, 0);
+IPAddress ip;
+
+ESP8266WebServer server(80);
+StaticJsonDocument&lt;2048&gt; dataStore;
+
+unsigned long lastCheckTime = 0;
+
+void saveStringToEEPROM(int start, const String&amp; str) {
+  for (int i = 0; i &lt; str.length(); i++) {
+    EEPROM.write(start + i, str[i]);
+    yield();
+  }
+  EEPROM.write(start + str.length(), '\0');
+}
+
+String readStringFromEEPROM(int start) {
+  char data[32];
+  int i = 0;
+  while (i &lt; 31) {
+    char c = EEPROM.read(start + i);
+    if (c == '\0') break;
+    data[i++] = c;
+    yield();
+  }
+  data[i] = '\0';
+  return String(data);
+}
+
+void saveSettings() {
+  saveStringToEEPROM(0, wifiName);
+  saveStringToEEPROM(32, wifiPass);
+  EEPROM.write(64, portLastByte);
+  saveStringToEEPROM(65, userPath);
+  EEPROM.write(127, 1);
+  EEPROM.commit();
+}
+
+void loadSettings() {
+  bool isInitialized = EEPROM.read(127) == 1;
+
+  if (isInitialized) {
+    wifiName = readStringFromEEPROM(0);
+    wifiPass = readStringFromEEPROM(32);
+    portLastByte = EEPROM.read(64);
+    userPath = readStringFromEEPROM(65);
+  } else {
+    wifiName = "TPLINK";
+    wifiPass = "abcd1234";
+    portLastByte = 104;
+    userPath = "report";
+    saveSettings();
+  }
+
+  if (wifiName.length() == 0) wifiName = "TPLINK";
+  if (wifiPass.length() == 0) wifiPass = "abcd1234";
+  if (portLastByte == 0 || portLastByte &gt; 254) portLastByte = 104;
+  if (userPath.length() == 0) userPath = "report";
+}
+
+void setup() {
+  Serial.begin(115200);
+  EEPROM.begin(EEPROM_SIZE);
+  loadSettings();
+
+  ip = IPAddress(192, 168, 1, portLastByte);
+  WiFi.config(ip, gateway, subnet);
+  WiFi.begin(wifiName.c_str(), wifiPass.c_str());
+
+  Serial.println("Connecting to WiFi...");
+  unsigned long startAttemptTime = millis();
+  while (WiFi.status() != WL_CONNECTED &amp;&amp; millis() - startAttemptTime &lt; 10000) {
+    delay(500);
+    Serial.print(".");
+    yield();
+  }
+
+  if (WiFi.status() == WL_CONNECTED) {
+    Serial.println("\nConnected to WiFi");
+    Serial.print("IP Address: ");
+    Serial.println(WiFi.localIP());
+    Serial.print("MAC Address: ");
+    Serial.println(WiFi.macAddress());
+  } else {
+    Serial.println("\nFailed to connect to WiFi.");
+  }
+
+  server.on("/", HTTP_GET, []() {
+    server.send(200, "application/json", "{\"message\":\"ESP8266 dynamic key server active\"}");
+  });
+
+  server.on("/keys", HTTP_GET, []() {
+    JsonArray keys = dataStore.createNestedArray("_keys");
+    for (JsonPair kv : dataStore.as&lt;JsonObject&gt;()) {
+      if (String(kv.key().c_str()) != "_keys") {
+        keys.add(kv.key());
+      }
+    }
+    String response;
+    serializeJson(keys, response);
+    server.send(200, "application/json", response);
+  });
+
+  server.on("/" + userPath, HTTP_GET, []() {
+    if (dataStore.containsKey("/" + userPath)) {
+      String response;
+      serializeJson(dataStore["/" + userPath], response);
+      server.send(200, "application/json", response);
+    } else {
+      server.send(404, "application/json", "{\"status\":\"error\", \"message\":\"No data yet\"}");
+    }
+  });
+
+  server.on("/" + userPath, HTTP_POST, []() {
+    if (server.hasArg("plain")) {
+      String body = server.arg("plain");
+      StaticJsonDocument&lt;512&gt; incoming;
+      DeserializationError error = deserializeJson(incoming, body);
+      if (error) {
+        server.send(400, "application/json", "{\"status\":\"error\", \"message\":\"Invalid JSON\"}");
+        return;
+      }
+
+      JsonObject stored;
+      if (dataStore["/" + userPath].is&lt;JsonObject&gt;()) {
+        stored = dataStore["/" + userPath].as&lt;JsonObject&gt;();
+      } else {
+        stored = dataStore.createNestedObject("/" + userPath);
+      }
+
+      for (JsonPair kv : incoming.as&lt;JsonObject&gt;()) {
+        stored[kv.key()] = kv.value();
+        if (WiFi.status() == WL_CONNECTED) {
+          Serial.println(" " + String(kv.key().c_str()) + ":" + String(kv.value().as&lt;String&gt;()));
+        }
+        yield();
+      }
+
+      String response;
+      serializeJson(stored, response);
+      server.send(200, "application/json", response);
+    } else {
+      server.send(400, "application/json", "{\"status\":\"error\", \"message\":\"No data received\"}");
+    }
+  });
+
+  server.begin();
+}
+
+void loop() {
+  server.handleClient();
+  checkWiFiConnection();
+  handleSerialFromMicro();
+  yield();
+}
+
+void checkWiFiConnection() {
+  unsigned long currentTime = millis();
+  if (currentTime - lastCheckTime &gt;= 10000) {
+    lastCheckTime = currentTime;
+    if (WiFi.status() != WL_CONNECTED) {
+      WiFi.begin(wifiName.c_str(), wifiPass.c_str());
+    }
+  }
+}
+
+void handleSerialFromMicro() {
+  static String serialBuffer = "";
+  while (Serial.available()) {
+    char c = Serial.read();
+    serialBuffer += c;
+    yield();
+
+    if (c == '\n') {
+      serialBuffer.trim();
+
+      if (serialBuffer.startsWith("#") &amp;&amp; serialBuffer.endsWith("*")) {
+        String input = serialBuffer.substring(1, serialBuffer.length() - 1);
+
+        if (input.startsWith("wifi=")) {
+          wifiName = input.substring(5);
+          saveSettings();
+          Serial.println("WiFi name changed to: " + wifiName);
+        } else if (input.startsWith("pass=")) {
+          wifiPass = input.substring(5);
+          saveSettings();
+          Serial.println("WiFi password changed to: " + wifiPass);
+        } else if (input.startsWith("port=")) {
+          portLastByte = input.substring(5).toInt();
+          saveSettings();
+          Serial.println("IP updated: http://192.168.1." + String(portLastByte) + "/" + userPath);
+        } else if (input.startsWith("user=")) {
+          userPath = input.substring(5);
+          saveSettings();
+          Serial.println("User path updated: http://192.168.1." + String(portLastByte) + "/" + userPath);
+        } else if (input == "reset") {
+          wifiName = "TPLINK";
+          wifiPass = "abcd1234";
+          portLastByte = 104;
+          userPath = "report";
+          saveSettings();
+          Serial.println("Settings reset to default.");
+        } else if (input.startsWith("GET:")) {
+          String key = input.substring(4);
+          if (dataStore.containsKey("/" + userPath)) {
+            JsonObject obj = dataStore["/" + userPath];
+            if (obj.containsKey(key)) {
+              String value = obj[key].as&lt;String&gt;();
+              Serial.println(key + ":" + value);
+            } else {
+              Serial.println(key + ":?");
+            }
+          } else {
+            Serial.println(key + ":?");
+          }
+        } else {
+          int sepIndex = input.indexOf(":");
+          if (sepIndex &gt; 0) {
+            String key = input.substring(0, sepIndex);
+            String value = input.substring(sepIndex + 1);
+
+            JsonObject obj;
+            if (dataStore["/" + userPath].is&lt;JsonObject&gt;()) {
+              obj = dataStore["/" + userPath].as&lt;JsonObject&gt;();
+            } else {
+              obj = dataStore.createNestedObject("/" + userPath);
+            }
+
+            obj[key] = value;
+          }
+        }
+      }
+
+      serialBuffer = "";
+    }
+
+    if (serialBuffer.length() &gt; 256) {
+      serialBuffer = "";
+    }
+  }
+}</code></pre>
+
+      <p>Download the program file:</p>
+      <a href="esp8266.zip" class="download-link" download>📦 Download esp8266.zip</a>
+
+      <p>Paste the code into Arduino IDE. You can configure Wi-Fi settings before upload:</p>
+      <pre><code>wifiName = "TPLINK";
+wifiPass = "abcd1234";
+portLastByte = 104;
+userPath = "report";</code></pre>
+
+      <p>Or send commands via serial after upload:</p>
+      <pre><code>#wifi=TPLINK*
+#pass=abcd1234*
+#port=104*
+#user=report*</code></pre>
+    </div>
+
+    <!-- ===== STEP 5 ===== -->
+    <div class="card">
+      <h2>Step 5: Wiring and Upload</h2>
+      <img src="wiring1.png" alt="Wiring 1" loading="lazy">
+      <img src="wiring2.png" alt="Wiring 2" loading="lazy">
+      <img src="wiring3.png" alt="Wiring 3" loading="lazy">
+      <img src="wiring4.png" alt="Wiring 4" loading="lazy">
+      <p>Click <strong>Verify</strong> and then <strong>Upload</strong> in Arduino:</p>
+      <img src="upload1.png" alt="Verify and Upload" loading="lazy">
+      <img src="upload2.png" alt="Upload Complete" loading="lazy">
+    </div>
+
+    <!-- ===== STEP 6 ===== -->
+    <div class="card">
+      <h2>Step 6: Serial Monitor</h2>
+      <img src="serial1.png" alt="Open Serial Monitor" loading="lazy">
+      <img src="serial2.png" alt="Open Serial Monitor" loading="lazy">
+      <img src="wiring5.png" alt="Open Serial Monitor" loading="lazy">
+      <p>Restart the module. You should see output like:</p>
+      <img src="output1.png" alt="Serial Output" loading="lazy">
+    </div>
+
+    <!-- ===== STEP 7 ===== -->
+    <div class="card">
+      <h2>Step 7: Microcontroller Connection</h2>
+      <img src="micro1.png" alt="Microcontroller Wiring" loading="lazy">
+      <p>Program your ATmega16 using a compatible programmer:</p>
+
+      <pre class="line-numbers"><code class="language-cpp">$regfile = "m16adef.dat"
+$crystal = 11059200
+
+Config Adc = Single , Prescaler = Auto , Reference = Avcc
+Config Timer1 = Pwm , Pwm = 10 , Compare_a_pwm = Clear_up , Compare_b_pwm = Clear_up , Prescale = 1
+Declare Sub Red
+
+CONFIG PORTB=OUTPUT
+   Portb = 0
+Config Portc.0 = Input                                      'in key 1
+Ddrc.0 = 0 : Portc.0 = 1
+
+ Config Portc.1 = Input                                     'in key 2
+Ddrc.1 = 0 : Portc.1 = 1
+
+$baud = 115200
+
+Enable Interrupts
+
+ Config Serialin = Buffered , Size = 41 , Bytematch = 13
+
+Dim Text As String * 40
+Dim Text2 As String * 4
+Dim Text3 As String * 5
+DIM TEMP1,LastTemp1 AS WORD
+Dim Temp2,LastTemp2 As Word
+Dim Volt,pwm1aa As Word
+Dim Volt2,LastVolt2 As Single
+Dim Step1 As Byte
+dim p,t1,i as byte
+dim t2 as bit
+dim pc,lastpc,pb,lastpb as byte
+config watchdog=2048
+start watchdog
+ Readeeprom portb , 1
+  Waitms 1
+  Readeeprom pwm1aa , 3
+  Waitms 1
+  Open "comd.6:9600,8,n,1" For Output As #1
+
+  Print #1 , "soifgo"
+pwm1a=pwm1aa
+Main:
+waitms 30
+  Incr Step1
+
+reset watchdog
+
+    If Step1 &gt;8 Then Step1 = 1
+
+
+    Select Case Step1
+
+        Case 1
+
+            Volt = Getadc(0)
+            Volt2 = Volt / 204.8
+               If Volt2 &lt;&gt; Lastvolt2 Then
+                   Print "#volt:" ; Fusing(volt2 , "#.##") ; "*"
+                   Lastvolt2 = Volt2
+               End If
+        Case 2
+              Temp1 = Getadc(1)
+               If Temp1 &lt;&gt; Lasttemp1 Then
+                   Print "#temp1" ; ":" ; Temp1 ; "*"
+                   Lasttemp1 = Temp1
+               End If
+        Case 3
+            Temp2 = Getadc(2)
+               If Temp2 &lt;&gt; Lasttemp2 Then
+                   Print "#temp2" ; ":" ; Temp2 ; "*"
+                   Lasttemp2 = Temp2
+               End If
+        Case 4
+           Pb = Portb
+               If Pb &lt;&gt; Lastpb Then
+                  Print "#portb" ; ":" ; Bin(portb) ; "*"
+                  Lastpb = Pb
+               End If
+        Case 5
+                 Pc = Portc
+               If Pc &lt;&gt; Lastpc Then
+                  Print "#pinc" ; ":" ; Pinc.0 ; Pinc.1 ; "*"
+                  Lastpc = Pc
+               End If
+
+               case 6
+               incr p
+               if p&gt;7 then p=0
+                Print "#GET:port";p;"*"
+    End Select
+
+
+
+
+Goto Main
+
+Serial0charmatch:
+ waitms 20
+Input Text
+
+if text &lt;&gt; "" then call Red
+Return
+
+
+Sub Red
+  Reset Watchdog
+
+  Text = Trim(text)
+  Text = Ltrim(text)
+
+  'Print #1 , "&gt;";Text;"&lt;"
+      If Instr(text , "rang") &gt; 0 Then
+      Disable Interrupts
+       Print #1 , Mid(text , 6 , 36)
+        Enable Interrupts
+       End If
+
+   If Instr(text , "pwm1a") &gt; 0 Then
+      Text3 = Mid(text , 7 , 4)
+      Pwm1a = Val(text3)
+      Writeeeprom pwm1a , 3
+   End If
+
+  If Instr(text , "port") &gt; 0 Then
+     Text2 = Mid(Text , 7 , 1)
+     Text = Mid(text , 5 , 1)
+
+
+      if text2="0" then t2=0
+      if text2="1" then t2=1
+
+      t1=val(text)
+
+      If T1 &lt; 8 Then Portb.t1 = T2
+
+   If T1 = 9 Then
+
+          if t2=1 then
+            Portb = 255
+             For I = 0 To 7
+              Print "#port" ; I ; ":1*"
+              Waitms 50
+             Next
+          End If
+
+        if t2=0 then
+          portb=0
+          for i=0 to 7
+           Print  "#port";i ; ":0*"
+           waitms 50
+          next
+        end if
+
+
+   end if
+    Writeeeprom Portb , 1
+
+  End If
+
+   Text = ""
+   Text2 = ""
+   Text3 = ""
+   T1 = 222
+   T2 = 0
+   Clear Serialin
+
+
+End Sub</code></pre>
+
+      <div class="download-wrap">
+        <a href="hexfile_esp8266.zip" class="download-link" download>📦 Download HEX File</a>
+        <a href="bascom_esp8266.zip" class="download-link" download>📦 Download BASCOM Setup</a>
+      </div>
+      <img src="fusebits.png" alt="Fuse Bit Settings" loading="lazy">
+    </div>
+
+    <!-- ===== STEP 8 ===== -->
+    <div class="card">
+      <h2>Step 8: Testing in Browser</h2>
+      <p>Visit:</p>
+      <p><code>http://192.168.1.104/report</code></p>
+      <p>You should see:</p>
+      <pre><code>{"volt":"3.16","temp1":"3","temp2":"513","portb":"00000000"}</code></pre>
+    </div>
+
+    <!-- ===== STEP 9 ===== -->
+    <div class="card">
+      <h2>Step 9: SoifGo Integration</h2>
+      <img src="soifgo-receive.png" alt="Receive Setup" loading="lazy">
+      <img src="soifgo-send.png" alt="Send Setup" loading="lazy">
+    </div>
+
+    <!-- ===== STEP 10: ESP8266 SETUP VIDEO ===== -->
+    <div class="card">
+      <h2>Step 10: ESP8266 Setup Video</h2>
+      <div class="video-wrapper">
+        <iframe src="https://mega.nz/embed/naZQiY4Z#J6s0N-HoAYBNzDmoRplKZZjcb6FFcS6PrAvRTluCjTI"
+                allowfullscreen
+                loading="lazy"></iframe>
+      </div>
+    </div>
+
+    <!-- ===== STEP 11: DESIGN PART 1 VIDEO ===== -->
+    <div class="card">
+      <h2>Step 11: SoifGo Design – Part 1</h2>
+      <div class="video-wrapper">
+        <iframe src="https://mega.nz/embed/zTZjUL6Z#K091FMLfOQ-Hqeb60gXrONRRsifuW7LmqZ2wnFDdYPI"
+                allowfullscreen
+                loading="lazy"></iframe>
+      </div>
+    </div>
+
+    <!-- ===== STEP 12: DESIGN PART 2 VIDEO ===== -->
+    <div class="card">
+      <h2>Step 12: SoifGo Design – Part 2</h2>
+      <div class="video-wrapper">
+        <iframe src="https://mega.nz/embed/LCJi3bTS#8jPZoe9hH66fAXf3aVeQKmEgIh5-jVxAv8XlLvynhAo"
+                allowfullscreen
+                loading="lazy"></iframe>
+      </div>
+    </div>
+
+    <!-- ===== BONUS ===== -->
+    <div class="card">
+      <h2>Bonus</h2>
+
+      <h3>RANGMANG Module</h3>
+      <li><a href="https://soifgo.github.io/soifgo/tutorials/server/rangmang/Rangmang.html">🌈 RANGMANG Module</a></li>
+
+      <h3>Proteus</h3>
+      <a href="Proteuse_esp8266.zip" class="download-link" download>📦 Download Proteus</a>
+
+      <h3>Sample SoifGo</h3>
+      <a href="soifgo_design_esp8266.zip" class="download-link" download>📦 Download SoifGo File</a>
+    </div>
+
+    <!-- ===== HOME BUTTON ===== -->
+    <div class="btn-wrap">
+      <a href="https://soifgo.github.io/soifgo/index.html" class="btn-home">⬅ Back to Home</a>
+    </div>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-clike.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-c.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-cpp.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/toolbar/prism-toolbar.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+
+</body>
+</html>

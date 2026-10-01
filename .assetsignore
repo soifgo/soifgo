@@ -1,0 +1,13 @@
+.git
+.git/**
+**/*.pack
+**/*.idx
+node_modules
+node_modules/**
+.vscode
+.vscode/**
+.wrangler
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log

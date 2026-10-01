@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Speed Control — SoifGo</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #111827;
+      color: #f3f4f6;
+      text-align: center;
+      padding: 20px;
+      margin: 0;
+      touch-action: manipulation;
+    }
+    h1 { color: #60a5fa; font-size: 1.5rem; }
+    .pad {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr;
+      gap: 10px;
+      max-width: 340px;
+      margin: 20px auto;
+    }
+    .pad button {
+      padding: 24px 0;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: white;
+      background: #2563eb;
+      cursor: pointer;
+    }
+    .pad .stop { background: #dc2626; }
+    .pad button:active { transform: scale(0.95); }
+    .empty { visibility: hidden; }
+
+    .speed-box {
+      background: #1f2937;
+      padding: 18px;
+      border-radius: 12px;
+      max-width: 320px;
+      margin: 20px auto;
+      text-align: left;
+    }
+    .speed-box h3 {
+      font-size: 1rem;
+      color: #9ca3af;
+      margin-bottom: 12px;
+      text-align: center;
+      font-weight: 600;
+    }
+    .speed-row {
+      margin-bottom: 16px;
+    }
+    .speed-row:last-child {
+      margin-bottom: 0;
+    }
+    .speed-row label {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 6px;
+      color: #d1d5db;
+    }
+    .speed-row input[type="range"] {
+      width: 100%;
+      accent-color: #60a5fa;
+    }
+    .speed-row .val {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #60a5fa;
+      float: right;
+    }
+
+    .status {
+      background: #1f2937;
+      padding: 14px;
+      border-radius: 10px;
+      max-width: 320px;
+      margin: 16px auto;
+      font-size: 0.95rem;
+      color: #facc15;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>⚙️ Speed Control</h1>
+
+  <div class="pad">
+    <button class="empty"></button>
+    <button onclick="send('FWD')">↑</button>
+    <button class="empty"></button>
+
+    <button onclick="send('LEFT')">←</button>
+    <button class="stop" onclick="send('STOP')">■</button>
+    <button onclick="send('RIGHT')">→</button>
+
+    <button class="empty"></button>
+    <button onclick="send('BACK')">↓</button>
+    <button class="empty"></button>
+  </div>
+
+  <div class="speed-box">
+    <h3>Motor Speed</h3>
+
+    <div class="speed-row">
+      <label for="speedA">Motor A (Left) <span class="val" id="speedAVal">180</span></label>
+      <input type="range" id="speedA" min="0" max="255" value="180">
+    </div>
+
+    <div class="speed-row">
+      <label for="speedB">Motor B (Right) <span class="val" id="speedBVal">180</span></label>
+      <input type="range" id="speedB" min="0" max="255" value="180">
+    </div>
+  </div>
+
+  <div class="status" id="status">Ready.</div>
+
+  <script>
+    // Send command to Arduino via SoifGo
+    function send(cmd) {
+      if (window.soifgo) {
+        window.soifgo.CallSub('html_bluetooth_rx', true, cmd);
+        document.getElementById('status').innerText = 'Sent: ' + cmd;
+      }
+    }
+
+    // Motor A slider
+    const sliderA = document.getElementById('speedA');
+    const speedAVal = document.getElementById('speedAVal');
+
+    sliderA.addEventListener('input', function () {
+      speedAVal.textContent = this.value;
+    });
+
+    sliderA.addEventListener('change', function () {
+      send('SPD_A:' + this.value);
+    });
+
+    // Motor B slider
+    const sliderB = document.getElementById('speedB');
+    const speedBVal = document.getElementById('speedBVal');
+
+    sliderB.addEventListener('input', function () {
+      speedBVal.textContent = this.value;
+    });
+
+    sliderB.addEventListener('change', function () {
+      send('SPD_B:' + this.value);
+    });
+  </script>
+
+</body>
+</html>

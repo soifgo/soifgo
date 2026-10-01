@@ -1,0 +1,1966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes">
+    <meta name="theme-color" content="#2c3e50">
+    <meta name="color-scheme" content="light dark">
+
+    <title>SoifGo HTML Guide — Bluetooth, Sensors, Microphone, MQTT, API & Storage with WebView</title>
+    <meta name="description" content="Complete guide for building HTML apps inside SoifGo. Learn Bluetooth send/receive, sensor data (Light, Movement, Magneto), microphone permission, MQTT publish/subscribe, API send/receive, persistent storage with localStorage, and custom UI with WebView.">
+    <meta name="keywords" content="SoifGo guide, HTML Bluetooth, WebView integration, sensor data, MQTT, WebView MQTT, publish subscribe, light sensor, movement sensor, magneto sensor, Bluetooth send receive, API send receive, api_send, api_recive, custom UI, SoifGo tutorial, localStorage, persistent storage, microphone, request_mic_perm">
+
+    <meta property="og:title" content="SoifGo HTML Guide — Bluetooth, Sensors, Microphone, MQTT, API & Storage">
+    <meta property="og:description" content="Complete guide for building HTML apps inside SoifGo. Bluetooth, sensors, microphone, MQTT, API, persistent storage, and custom UI.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://soifgo.github.io/soifgo/tutorials/html-guide/">
+    <meta property="og:image" content="https://soifgo.github.io/soifgo/html-guide-og.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:site_name" content="SoifGo Tutorials">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SoifGo HTML Guide — Bluetooth, Sensors, Microphone, MQTT, API & Storage">
+    <meta name="twitter:description" content="Complete guide for building HTML apps inside SoifGo. Bluetooth, sensors, microphone, MQTT, API, persistent storage, and custom UI.">
+    <meta name="twitter:image" content="https://soifgo.github.io/soifgo/html-guide-og.jpg">
+
+    <link rel="canonical" href="https://soifgo.github.io/soifgo/tutorials/html-guide/">
+    <link rel="alternate" hreflang="en" href="https://soifgo.github.io/soifgo/tutorials/html-guide/">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "SoifGo HTML Guide — Bluetooth, Sensors, Microphone, MQTT, API & Storage",
+        "description": "Complete guide for building HTML apps inside SoifGo. Bluetooth, sensors, microphone, MQTT, API, persistent storage, and custom UI with WebView.",
+        "author": {
+            "@type": "Person",
+            "name": "Saeid Moghadam"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "SoifGo",
+            "url": "https://soifgo.github.io/soifgo/"
+        },
+        "datePublished": "2025-01-01",
+        "dateModified": "2025-01-15",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://soifgo.github.io/soifgo/tutorials/html-guide/"
+        },
+        "about": {
+            "@type": "Thing",
+            "name": "HTML WebView Integration with SoifGo"
+        },
+        "teaches": [
+            "Bluetooth send from WebView to SoifGo",
+            "Bluetooth receive from SoifGo to WebView",
+            "Sensor activation (Light, Movement, Magneto)",
+            "Sensor data reception in WebView",
+            "Microphone permission request",
+            "MQTT connect, publish, subscribe from WebView",
+            "MQTT message reception in WebView",
+            "API send with address, key, value",
+            "API receive and handle api_rx callback",
+            "Handling different API response formats",
+            "Persistent storage with localStorage",
+            "Custom UI development with HTML/CSS/JS"
+        ],
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "learningResourceType": "Tutorial"
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg: #f5f5f5;
+            --fg: #333;
+            --card-bg: #ffffff;
+            --border: #ddd;
+            --accent: #2c3e50;
+            --accent2: #3498db;
+            --success: #e8f5e9;
+            --success-border: #4caf50;
+            --info: #e3f2fd;
+            --info-border: #2196f3;
+            --note: #fff8e1;
+            --note-border: #ff9800;
+            --code-bg: #1e1e1e;
+            --code-text: #d4d4d4;
+            --btn-home: #8B4513;
+            --purple: #9b59b6;
+            --orange: #e67e22;
+            --arduino-teal: #00979C;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #121212;
+                --fg: #e0e0e0;
+                --card-bg: #1e1e1e;
+                --border: #333;
+                --accent: #4dabf7;
+                --success: #1a2a1a;
+                --success-border: #4caf50;
+                --info: #1a2a3a;
+                --info-border: #2196f3;
+                --note: #2a1a0a;
+                --note-border: #ff9800;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            color: var(--fg);
+            line-height: 1.7;
+            -webkit-text-size-adjust: 100%;
+            min-height: 100vh;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: saturate(180%) blur(8px);
+            background: color-mix(in oklab, var(--bg) 92%, transparent);
+            border-bottom: 1px solid var(--border);
+            padding: 8px 0;
+        }
+
+        .nav-inner {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 10px;
+        }
+
+        .nav a {
+            flex: 1 1 auto;
+            text-align: center;
+            font-size: clamp(0.6rem, 1.6vw, 0.8rem);
+            padding: 5px 10px;
+            text-decoration: none;
+            color: var(--accent2);
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            transition: background 0.15s, color 0.15s;
+            font-weight: 500;
+        }
+
+        .nav a:hover,
+        .nav a:focus {
+            background: var(--accent2);
+            color: #fff;
+            border-color: var(--accent2);
+        }
+
+        h2 {
+            color: var(--accent);
+            border-bottom: 3px solid var(--accent2);
+            padding-bottom: 10px;
+            margin: 1.5rem 0 0.5rem;
+            font-size: clamp(1.3rem, 4vw, 1.8rem);
+            word-break: break-word;
+        }
+
+        h3 {
+            color: var(--accent);
+            margin-top: 1.5rem;
+            font-size: clamp(1.1rem, 3vw, 1.4rem);
+            word-break: break-word;
+        }
+
+        p {
+            margin: 0.75em 0;
+            word-break: break-word;
+        }
+
+        a {
+            color: var(--accent2);
+            text-decoration: none;
+            word-break: break-word;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .box {
+            background: var(--card-bg);
+            padding: 1.2rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .note {
+            background: var(--note);
+            border-left: 5px solid var(--note-border);
+            padding: 0.8rem 1.2rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .success {
+            background: var(--success);
+            border-left: 5px solid var(--success-border);
+            padding: 0.8rem 1.2rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .info {
+            background: var(--info);
+            border-left: 5px solid var(--info-border);
+            padding: 0.8rem 1.2rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        code {
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-family: "Consolas", "Courier New", monospace;
+            word-break: break-word;
+        }
+
+        pre {
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            font-family: "Consolas", "Courier New", monospace;
+            margin: 0.8rem 0;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: var(--code-text);
+        }
+
+        .file-name {
+            background: var(--accent);
+            color: white;
+            padding: 4px 14px;
+            border-radius: 6px;
+            display: inline-block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 8px 0;
+        }
+
+        ul, ol {
+            padding-left: 1.4em;
+            margin: 0.5em 0;
+        }
+
+        li {
+            margin-bottom: 0.4em;
+            word-break: break-word;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 1rem 0;
+        }
+
+        @media (max-width: 600px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .btn-home {
+            display: inline-block;
+            background: var(--btn-home);
+            color: white;
+            padding: 14px 34px;
+            border-radius: 60px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.05rem;
+            text-align: center;
+            transition: background 0.15s, transform 0.1s;
+            touch-action: manipulation;
+            border: none;
+            min-width: 140px;
+            box-shadow: 0 4px 10px rgba(80, 45, 20, 0.15);
+        }
+
+        .btn-home:active {
+            transform: scale(0.97);
+            background: #5f3a22;
+        }
+
+        .btn-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin: 2rem 0 0.5rem 0;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+
+            .box {
+                padding: 0.8rem;
+            }
+
+            .nav a {
+                font-size: 0.55rem;
+                padding: 4px 6px;
+            }
+
+            pre {
+                font-size: 0.75rem;
+                padding: 0.8rem;
+            }
+
+            .btn-home {
+                width: 100%;
+                justify-content: center;
+                padding: 16px 18px;
+                font-size: 1rem;
+            }
+
+            .btn-wrap {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            h2 {
+                font-size: 1.1rem;
+            }
+
+            h3 {
+                font-size: 1rem;
+            }
+
+            .box {
+                padding: 0.6rem;
+            }
+
+            pre {
+                font-size: 0.65rem;
+                padding: 0.6rem;
+            }
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .arrow {
+            font-size: 1.5rem;
+            color: var(--accent2);
+        }
+
+        hr {
+            border: none;
+            border-top: 2px solid var(--border);
+            margin: 1.5rem 0;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 1.5rem 0 0.5rem 0;
+            color: #999;
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+            margin-top: 1.5rem;
+        }
+
+        .ai-box {
+            border-left: 6px solid var(--purple);
+            background: var(--card-bg);
+            border: 1px solid var(--purple);
+            background: color-mix(in oklab, var(--card-bg) 90%, var(--purple));
+            padding: 1.2rem 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0 1.5rem 0;
+            box-shadow: 0 2px 10px rgba(155, 89, 182, 0.1);
+        }
+        .ai-box h3 {
+            margin-top: 0;
+            color: var(--purple);
+            font-size: clamp(1.1rem, 3vw, 1.4rem);
+        }
+        .ai-box strong {
+            color: var(--fg);
+        }
+        .ai-box ol {
+            margin: 0.5rem 0 0.2rem 0;
+        }
+        @media (prefers-color-scheme: dark) {
+            .ai-box {
+                background: color-mix(in oklab, var(--card-bg) 90%, var(--purple));
+                border-color: var(--purple);
+            }
+        }
+
+        .examples-box {
+            border: 2px solid var(--purple);
+        }
+
+        .examples-box h3 {
+            margin-top: 0;
+            color: var(--purple);
+        }
+
+        .download-zip-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--purple);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin: 8px 0 4px 0;
+            transition: transform 0.15s, background 0.15s;
+            box-shadow: 0 4px 12px rgba(155, 89, 182, 0.3);
+            cursor: pointer;
+            border: none;
+        }
+
+        .download-zip-btn:hover {
+            background: #8e44ad;
+            transform: translateY(-2px);
+            text-decoration: none;
+            color: white;
+        }
+
+        .download-zip-btn:active {
+            transform: scale(0.98);
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .example-card {
+            display: flex;
+            flex-direction: column;
+            padding: 16px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            transition: transform 0.2s, border-color 0.2s, background 0.2s;
+        }
+
+        .example-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--purple);
+            background: color-mix(in oklab, var(--card-bg) 92%, var(--purple));
+        }
+
+        .ex-main-link {
+            display: block;
+            text-decoration: none;
+            color: var(--fg);
+        }
+
+        .ex-main-link:hover {
+            text-decoration: none;
+            color: var(--fg);
+        }
+
+        .example-card .ex-icon {
+            font-size: 1.8rem;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .example-card .ex-title {
+            color: var(--accent2);
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .example-card .ex-desc {
+            font-size: 0.85rem;
+            color: #888;
+            display: block;
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+
+        .ex-badges {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-top: auto;
+            padding-top: 8px;
+        }
+
+        .ex-badge {
+            font-size: 0.72rem;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            text-decoration: none;
+            transition: transform 0.15s, filter 0.15s;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .ex-badge:hover {
+            text-decoration: none;
+            transform: translateY(-1px);
+            filter: brightness(1.1);
+        }
+
+        .ex-badge-html {
+            background: rgba(52, 152, 219, 0.15);
+            color: #3498db;
+            border: 1px solid rgba(52, 152, 219, 0.3);
+        }
+
+        .ex-badge-html:hover {
+            background: rgba(52, 152, 219, 0.25);
+            color: #3498db;
+        }
+
+        .ex-badge-code {
+            background: rgba(155, 89, 182, 0.15);
+            color: var(--purple);
+            border: 1px solid rgba(155, 89, 182, 0.3);
+        }
+
+        .ex-badge-code:hover {
+            background: rgba(155, 89, 182, 0.25);
+            color: var(--purple);
+        }
+
+        .ex-badge-arduino {
+            background: rgba(0, 151, 156, 0.15);
+            color: var(--arduino-teal);
+            border: 1px solid rgba(0, 151, 156, 0.3);
+        }
+
+        .ex-badge-arduino:hover {
+            background: rgba(0, 151, 156, 0.25);
+            color: var(--arduino-teal);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .ex-badge-html {
+                background: rgba(52, 152, 219, 0.2);
+                color: #5dade2;
+            }
+            .ex-badge-html:hover {
+                background: rgba(52, 152, 219, 0.3);
+            }
+            .ex-badge-code {
+                background: rgba(155, 89, 182, 0.2);
+                color: #c084fc;
+            }
+            .ex-badge-code:hover {
+                background: rgba(155, 89, 182, 0.3);
+            }
+            .ex-badge-arduino {
+                background: rgba(0, 151, 156, 0.2);
+                color: #1abc9c;
+            }
+            .ex-badge-arduino:hover {
+                background: rgba(0, 151, 156, 0.3);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .examples-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="nav" aria-label="Table of Contents">
+        <div class="nav-inner">
+            <a href="#overview">Overview</a>
+            <a href="#examples">Examples</a>
+            <a href="#bluetooth-send">BT Send</a>
+            <a href="#bluetooth-receive">BT Receive</a>
+            <a href="#sensors">Sensors</a>
+            <a href="#microphone">Microphone</a>
+            <a href="#mqtt">MQTT</a>
+            <a href="#api">API</a>
+            <a href="#storage">Storage</a>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <h2 id="overview">📱 HTML Bluetooth, Sensors, Microphone, MQTT, API &amp; Storage with SoifGo</h2>
+
+        <div class="ai-box">
+            <h3>🤖 Build Your Custom App Without Hard Coding!</h3>
+            <p>
+                <strong>Don't stress!</strong> You don't need to be an HTML or JavaScript expert to use this golden feature.
+                Just <strong>copy this entire guide page</strong> (the text you're reading right now) and paste it into an AI assistant like <strong>DeepSeek</strong> or any other AI.
+                Then, simply describe what you want in plain English, for example:
+                <em>"Create an HTML page with 4 directional buttons to control a robot, and display ultrasonic sensor data received via Bluetooth."</em>
+                The AI will generate the complete code for you!
+            </p>
+            <p>
+                <strong>📋 How to use it in SoifGo:</strong>
+            </p>
+            <ol>
+                <li>In SoifGo, <strong>create a new button</strong>, set its Behavior to <strong>Web</strong>, select <strong>Web Offline HTML</strong>, and tap <strong>Create</strong>.</li>
+                <li>Tap the <strong>Edit</strong> button, then choose <strong>Play</strong>.</li>
+                <li>In the Play screen, <strong>tap</strong> the button you just created, then open the left‑hand menu (top‑left) and select <strong>Edit</strong>.</li>
+                <li>You are now in the edit screen. You can manually <strong>Select All</strong>, delete everything, and <strong>Paste</strong> your code, or simply use the <strong>"Select All and Paste"</strong> option from the menu to do it all in one step. Wait a moment for the syntax highlighting to appear.</li>
+                <li>Wait until the code changes from solid black to colored (syntax highlighting has finished loading). Once it's ready, tap the <strong>Close (×)</strong> icon to exit the editor and see your custom app in action!</li>
+            </ol>
+            <p style="margin-top:10px; font-weight:bold; color: var(--purple);">
+                🎯 That's it! Ask the AI to build any app you want and run it inside SoifGo instantly.
+            </p>
+        </div>
+
+        <div class="box examples-box" id="examples">
+            <h3>📦 Working Examples</h3>
+            <p>
+                Ready-to-use controllers. Each example includes:
+                <span class="ex-badge ex-badge-html">HTML</span> live demo,
+                <span class="ex-badge ex-badge-code">HTML Code</span> copyable code,
+                and where available
+                <span class="ex-badge ex-badge-arduino">Arduino ↓</span> sketch.
+            </p>
+
+            <a href="html_sample.zip" class="download-zip-btn" download>
+                📥 Download all examples as ZIP
+            </a>
+
+            <div class="examples-grid">
+                <div class="example-card">
+                    <a href="01-led-blink/index.html" class="ex-main-link">
+                        <span class="ex-icon">💡</span>
+                        <span class="ex-title">LED Blink</span>
+                        <span class="ex-desc">Toggle an LED on/off via Bluetooth</span>
+                    </a>
+                    <div class="ex-badges">
+                        <a href="01-led-blink/index.html" class="ex-badge ex-badge-html" title="Live demo">HTML</a>
+                        <a href="01-led-blink/code.html" class="ex-badge ex-badge-code" title="View & copy code">HTML Code</a>
+                        <a href="01-led-blink/01-led-blink.ino" class="ex-badge ex-badge-arduino" download title="Download Arduino sketch">Arduino ↓</a>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <a href="02-sensor-readout/index.html" class="ex-main-link">
+                        <span class="ex-icon">📊</span>
+                        <span class="ex-title">Sensor Readout</span>
+                        <span class="ex-desc">Read analog sensor values on your phone</span>
+                    </a>
+                    <div class="ex-badges">
+                        <a href="02-sensor-readout/index.html" class="ex-badge ex-badge-html" title="Live demo">HTML</a>
+                        <a href="02-sensor-readout/code.html" class="ex-badge ex-badge-code" title="View & copy code">HTML Code</a>
+                        <a href="02-sensor-readout/02-sensor-readout.ino" class="ex-badge ex-badge-arduino" download title="Download Arduino sketch">Arduino ↓</a>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <a href="speed-control.html" class="ex-main-link">
+                        <span class="ex-icon">⚙️</span>
+                        <span class="ex-title">Speed Control</span>
+                        <span class="ex-desc">Independent speed control for two motors</span>
+                    </a>
+                    <div class="ex-badges">
+                        <a href="03-speed-control/index.html" class="ex-badge ex-badge-html" title="Live demo">HTML</a>
+                        <a href="03-speed-control/code.html" class="ex-badge ex-badge-code" title="View & copy code">HTML Code</a>
+                        <a href="03-speed-control/03-speed-control.ino" class="ex-badge ex-badge-arduino" download title="Download Arduino sketch">Arduino ↓</a>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <a href="04-phone-sensors/index.html" class="ex-main-link">
+                        <span class="ex-icon">📱</span>
+                        <span class="ex-title">Phone Sensors</span>
+                        <span class="ex-desc">Stream phone light / motion / magnetic data</span>
+                    </a>
+                    <div class="ex-badges">
+                        <a href="04-phone-sensors/index.html" class="ex-badge ex-badge-html" title="Live demo">HTML</a>
+                        <a href="04-phone-sensors/code.html" class="ex-badge ex-badge-code" title="View & copy code">HTML Code</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="box">
+            <p style="font-size:1.1rem;">
+                <strong>SoifGo</strong> turns your HTML pages into a real Android app.
+                Inside its WebView, your page can talk to Bluetooth, read phone sensors,
+                request microphone access, connect to MQTT brokers, send/receive API data,
+                and store data — all with plain HTML, CSS, and JavaScript.
+            </p>
+            <p>This guide shows you how to:</p>
+            <ul>
+                <li>✅ Send and receive Bluetooth data</li>
+                <li>✅ Activate and read sensors (Light, Movement, Magneto)</li>
+                <li>✅ Request microphone permission for audio or voice-to-Bluetooth projects</li>
+                <li>✅ Connect, publish, and receive MQTT messages</li>
+                <li>✅ Send and receive data via SoifGo API</li>
+                <li>✅ Save and reload data with localStorage</li>
+                <li>✅ Build a custom UI with full control</li>
+            </ul>
+        </div>
+
+        <div class="box">
+            <h3>🔌 The Bridge — How HTML Talks to SoifGo</h3>
+            <p>
+                Inside SoifGo's WebView, a JavaScript object called <code>window.soifgo</code>
+                is automatically injected. Use it to call native functions from JavaScript.
+            </p>
+
+            <div class="file-name">📄 Bridge call pattern</div>
+
+            <pre><code>// Basic call pattern
+window.soifgo.CallSub('subName', true, arg1, arg2, arg3);
+
+// Real example — send text to Bluetooth
+window.soifgo.CallSub('html_bluetooth_rx', true, txt);
+
+// Real example — connect to MQTT broker (step 1)
+window.soifgo.CallSub('connecte_mqtt_ai', true, address, id);
+
+// Real example — send data to API
+window.soifgo.CallSub('api_send', true, address, key, value);
+
+// Real example — receive data from API
+window.soifgo.CallSub('api_recive', true, address, key);</code></pre>
+
+            <div class="success">
+                <strong>✅ Golden rules:</strong>
+                <ul>
+                    <li>Always call <code>window.soifgo.CallSub(...)</code> directly.</li>
+                    <li>The second argument is a boolean flag — pass <code>true</code> or <code>false</code>.</li>
+                    <li>After the flag, you can pass <strong>up to 3 arguments</strong>.</li>
+                    <li>Empty strings must still be passed as <code>''</code> — never omit them.</li>
+                </ul>
+            </div>
+        </div>
+
+        <h3 id="bluetooth-send">🔵 1. Bluetooth - Send Data (WebView → SoifGo → Bluetooth)</h3>
+
+        <div class="box">
+            <p>
+                This page allows the user to enter text and send it via Bluetooth.
+                The data goes from the WebView to SoifGo, then to the connected Bluetooth device.
+            </p>
+
+            <div class="file-name">📄 html_bluetooth_send.html</div>
+
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
+  &lt;title&gt;Send Command&lt;/title&gt;
+&lt;/head&gt;
+&lt;body style="text-align:center; margin-top:50px; font-family:sans-serif;"&gt;
+
+  &lt;h3&gt;📤 Send Command to Bluetooth&lt;/h3&gt;
+  &lt;input type="text" id="txt" placeholder="Enter text..."&gt;
+  &lt;br&gt;&lt;br&gt;
+  &lt;button onclick="sendBluetooth()"
+          style="padding:10px 30px; font-size:16px; background:#2196f3;
+                 color:white; border:none; border-radius:6px; cursor:pointer;"&gt;
+    Send
+  &lt;/button&gt;
+
+  &lt;script&gt;
+    function sendBluetooth() {
+      const txt = document.getElementById('txt').value;
+      window.soifgo.CallSub('html_bluetooth_rx', true, txt);
+    }
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+            <div class="success">
+                <strong>✅ How it works:</strong>
+                <ol>
+                    <li>User types text in the input box.</li>
+                    <li>Clicks the <strong>Send</strong> button.</li>
+                    <li>JavaScript calls <code>window.soifgo.CallSub('html_bluetooth_rx', true, txt)</code>.</li>
+                    <li>SoifGo sends the text to the connected Bluetooth device.</li>
+                </ol>
+            </div>
+        </div>
+
+        <h3 id="bluetooth-receive">🔵 2. Bluetooth - Receive Data (Bluetooth → SoifGo → WebView)</h3>
+
+        <div class="box">
+            <p>
+                This page displays data received from Bluetooth.
+                SoifGo forwards incoming data to the WebView using JavaScript functions.
+            </p>
+
+            <div class="file-name">📄 html_bluetooth_recive.html</div>
+
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;BT Receive&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id="output"
+         style="font-size:20px;color:white;background:black;
+                padding:20px;min-height:100vh;"&gt;
+        waiting for data...
+    &lt;/div&gt;
+
+    &lt;script&gt;
+        // This function is called by SoifGo when Bluetooth data arrives
+        function html_bluetooth_tx(data) {
+            document.getElementById('output').innerHTML = data;
+        }
+        // Expose to window so SoifGo can find it
+        window.html_bluetooth_tx = html_bluetooth_tx;
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+            <div class="success">
+                <strong>✅ How it works:</strong>
+                <ol>
+                    <li>Bluetooth device sends data to SoifGo.</li>
+                    <li>SoifGo calls <code>html_bluetooth_tx(data)</code> in the WebView.</li>
+                    <li>JavaScript updates the page with the received data.</li>
+                </ol>
+            </div>
+        </div>
+
+        <h3 id="sensors">🟢 3. Sensor Data - Receive (Sensors → SoifGo → WebView)</h3>
+
+        <div class="box">
+            <p>
+                This page displays data from 3 sensors:
+            </p>
+            <ul>
+                <li><strong>Light</strong> - Light intensity sensor</li>
+                <li><strong>Move X/Y</strong> - Movement/acceleration sensor (X and Y axis)</li>
+                <li><strong>Magneto</strong> - Magnetic field sensor</li>
+            </ul>
+
+            <div class="info">
+                <strong>⚠️ IMPORTANT:</strong> To activate sensors, you must call ALL THREE commands:
+                <pre style="background:#2c3e50; color:#ecf0f1; padding:12px; border-radius:6px; margin:10px 0;">
+window.soifgo.CallSub('sensor_light', true);   // Activate light sensor
+window.soifgo.CallSub('sensor_move', true);    // Activate movement sensor
+window.soifgo.CallSub('sensor_magno', true);   // Activate magneto sensor</pre>
+                <p style="margin-top:8px;">
+                    These 3 commands are called inside <code>window.onload</code> to auto-start sensors when the page loads.
+                </p>
+            </div>
+
+            <div class="file-name">📄 html_sensor_recive.html</div>
+
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Sensor Receive&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id="light"  style="font-size:20px;color:white;background:#333;padding:15px;margin:5px;border-radius:8px;"&gt;
+        Light: waiting...
+    &lt;/div&gt;
+    &lt;div id="movex"  style="font-size:20px;color:white;background:#444;padding:15px;margin:5px;border-radius:8px;"&gt;
+        Move X: waiting...
+    &lt;/div&gt;
+    &lt;div id="movey"  style="font-size:20px;color:white;background:#555;padding:15px;margin:5px;border-radius:8px;"&gt;
+        Move Y: waiting...
+    &lt;/div&gt;
+    &lt;div id="magno"  style="font-size:20px;color:white;background:#666;padding:15px;margin:5px;border-radius:8px;"&gt;
+        Magneto: waiting...
+    &lt;/div&gt;
+
+    &lt;script&gt;
+        // ---- Receiver functions (called by SoifGo) ----
+        function html_sensor_light(data) {
+            document.getElementById('light').innerHTML = 'Light: ' + data;
+        }
+        function html_sensor_movex(data) {
+            document.getElementById('movex').innerHTML = 'Move X: ' + data;
+        }
+        function html_sensor_movey(data) {
+            document.getElementById('movey').innerHTML = 'Move Y: ' + data;
+        }
+        function html_sensor_magno(data) {
+            document.getElementById('magno').innerHTML = 'Magneto: ' + data;
+        }
+
+        // Expose them
+        window.html_sensor_light = html_sensor_light;
+        window.html_sensor_movex = html_sensor_movex;
+        window.html_sensor_movey = html_sensor_movey;
+        window.html_sensor_magno = html_sensor_magno;
+
+        // ---- Auto-start sensors on page load ----
+        window.onload = function() {
+            window.soifgo.CallSub('sensor_light', true);
+            window.soifgo.CallSub('sensor_move', true);
+            window.soifgo.CallSub('sensor_magno', true);
+        };
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+            <div class="success">
+                <strong>✅ How it works:</strong>
+                <ol>
+                    <li>
+                        <strong>3 activation commands in <code>window.onload</code>:</strong>
+                        <ul>
+                            <li><code>window.soifgo.CallSub('sensor_light', true)</code></li>
+                            <li><code>window.soifgo.CallSub('sensor_move', true)</code></li>
+                            <li><code>window.soifgo.CallSub('sensor_magno', true)</code></li>
+                        </ul>
+                        These activate all three sensors when the page loads.
+                    </li>
+                    <li>
+                        <strong>4 receiver functions registered in <code>window</code>:</strong>
+                        <ul>
+                            <li><code>html_sensor_light(data)</code> — receives light data</li>
+                            <li><code>html_sensor_movex(data)</code> — receives move X data</li>
+                            <li><code>html_sensor_movey(data)</code> — receives move Y data</li>
+                            <li><code>html_sensor_magno(data)</code> — receives magneto data</li>
+                        </ul>
+                        SoifGo calls these functions when new sensor data arrives.
+                    </li>
+                    <li>
+                        <strong>UI updates automatically</strong> — each function updates its corresponding div.
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <h3 id="microphone">🎤 4. Microphone — Permission Request</h3>
+
+        <div class="box">
+            <p>
+                If your project needs microphone access — for example, to record audio,
+                do speech-to-text conversion, or build a voice → Bluetooth pipeline —
+                you must request permission the first time. After the user allows it once,
+                Android remembers the choice and no dialog appears again.
+            </p>
+
+            <div class="success">
+                <strong>✅ Golden rule:</strong> Call <code>request_mic_perm</code> once,
+                before you start using the microphone. That is all you need.
+            </div>
+
+            <div class="file-name">📄 Request microphone permission</div>
+
+            <pre><code>// Call this once, before starting speech recognition or audio recording
+window.soifgo.CallSub('request_mic_perm', true, null);</code></pre>
+
+            <div class="info">
+                <strong>⚠️ Notes:</strong>
+                <ul>
+                    <li>SoifGo shows the native Android permission dialog the first time.</li>
+                    <li>After the user taps <strong>Allow</strong>, the permission stays granted.</li>
+                    <li>On later runs, SoifGo silently ignores the call — no dialog appears.</li>
+                    <li>If you prefer not to call <code>request_mic_perm</code> in your code,
+                        the user can grant microphone permission manually in
+                        <strong>Android Settings → Apps → SoifGo → Permissions → Microphone</strong>.</li>
+                </ul>
+            </div>
+
+            <div class="success">
+                <strong>✅ Where to call it:</strong>
+                <ul>
+                    <li>Before starting <code>SpeechRecognition</code></li>
+                    <li>Before calling <code>navigator.mediaDevices.getUserMedia({ audio: true })</code></li>
+                    <li>Before any audio recording or voice → Bluetooth pipeline</li>
+                </ul>
+            </div>
+
+            <div class="file-name">📄 Example — voice command → Bluetooth</div>
+
+            <pre><code>&lt;button id="micBtn"&gt;🎤 Start&lt;/button&gt;
+
+&lt;script&gt;
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+const recognition = new SpeechRecognition();
+recognition.lang = 'en-US';
+
+document.getElementById('micBtn').addEventListener('click', () =&gt; {
+    // 1. Ask for microphone permission (first time only)
+    window.soifgo.CallSub('request_mic_perm', true, null);
+
+    // 2. Start speech recognition
+    recognition.start();
+});
+
+recognition.onresult = (event) =&gt; {
+    const text = event.results[0][0].transcript;
+    if (text.trim()) {
+        // 3. Send recognized text to Bluetooth
+        window.soifgo.CallSub('html_bluetooth_rx', true, text);
+    }
+};
+&lt;/script&gt;</code></pre>
+
+            <div class="info">
+                <strong>💡 Tip:</strong> For the full multilingual voice tutorial (22 languages,
+                continuous listening, language switcher), see the official page:
+                <a href="https://soifgo.github.io/soifgo/tutorials/serial_voice/serial_voice_tutorials.html">
+                    Voice → Serial Bluetooth Tutorial
+                </a>.
+            </div>
+        </div>
+
+        <h3 id="mqtt">🟣 5. MQTT — Connect, Publish &amp; Receive (WebView ↔ Broker)</h3>
+
+        <div class="box">
+            <p>
+                SoifGo has a <strong>built-in MQTT client</strong>. Your HTML page can connect
+                to any MQTT broker, publish messages, and receive them — all through simple
+                JavaScript calls. No WebSocket, no CORS, no external library needed.
+            </p>
+
+            <div class="info">
+                <strong>⚠️ IMPORTANT:</strong> MQTT only works inside SoifGo's WebView.
+                If you open the same HTML in a normal browser, the bridge won't exist and
+                nothing will happen (that's by design — the page won't crash either).
+            </div>
+
+            <div class="file-name">📄 MQTT API Reference</div>
+
+            <pre><code>// ============================================================
+// 1. CONNECT — step 1: address + client id
+// ============================================================
+// Native Sub: connecte_mqtt_ai(address, id)
+//
+//  address : "tcp://host:1883"  or  "ssl://host:8883"
+//            Empty → defaults to "tcp://test.mosquitto.org:1883"
+//  id      : any unique string. Empty → auto-generated "soifgo_XXXX"
+//
+window.soifgo.CallSub('connecte_mqtt_ai', true, address, id);
+
+// ============================================================
+// 2. CONNECT — step 2 (optional): username + password
+// ============================================================
+// Native Sub: connecte_mqtt_up(username, password)
+//
+// Only call this if the broker requires authentication.
+// If both are empty, nothing happens.
+//
+window.soifgo.CallSub('connecte_mqtt_up', true, username, password);
+
+// ============================================================
+// 3. PUBLISH a message (also subscribes to the same topic!)
+// ============================================================
+// Native Sub: mqtt_publish(topic, message, qos)
+//
+//  topic   : topic string (e.g. "soifgo/led")
+//  message : text payload
+//  qos     : "0", "1", or "2"  (as a string)
+//
+// 💡 Publishing to a topic also subscribes you to it,
+//    so you receive messages published by other clients.
+//
+window.soifgo.CallSub('mqtt_publish', true, topic, message, qos);
+
+// ============================================================
+// 4. DISCONNECT from the broker
+// ============================================================
+// Native Sub: mqtt_Disconnect  (no arguments)
+//
+window.soifgo.CallSub('mqtt_Disconnect', true);
+
+// ============================================================
+// 5. CHECK connection status
+// ============================================================
+// Native Sub: mqtt_status  (no arguments)
+// SoifGo replies by calling html_mqtt_status('true'/'false')
+//
+window.soifgo.CallSub('mqtt_status', true);
+
+// ============================================================
+// RECEIVERS — functions SoifGo calls on your page
+// ============================================================
+
+// Incoming message on a subscribed topic
+function mqtt_rx(topic, message) {
+    // topic   : string
+    // message : string
+}
+window.mqtt_rx = mqtt_rx;
+
+// Connection status changed
+// ⚠️ The value is sent as a STRING ('true' or 'false'),
+//    NOT as a real boolean. Convert it before using it!
+function html_mqtt_status(connected) {
+    const isConnected = (connected === true || connected === 'true');
+    // use isConnected (true/false)
+}
+window.html_mqtt_status = html_mqtt_status;</code></pre>
+
+            <div class="success">
+                <strong>✅ How it works:</strong>
+                <ol>
+                    <li>Your page calls <code>connecte_mqtt_ai(address, id)</code> to start the connection.</li>
+                    <li>If the broker needs auth, call <code>connecte_mqtt_up(username, password)</code> right after.</li>
+                    <li>When a message arrives on a subscribed topic, SoifGo calls <code>mqtt_rx(topic, message)</code>.</li>
+                    <li>Publishing with <code>mqtt_publish</code> also <strong>auto-subscribes</strong> you to that topic — so you receive messages from other clients on it.</li>
+                    <li>To query connection state, call <code>mqtt_status</code> — SoifGo answers with <code>html_mqtt_status('true')</code> or <code>('false')</code>.</li>
+                    <li>To stop, call <code>mqtt_Disconnect</code>.</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="box">
+            <p>
+                Complete working example — connect, publish, receive, and check status
+                from a single page.
+            </p>
+
+            <div class="file-name">📄 html_mqtt_full.html</div>
+
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;MQTT Control&lt;/title&gt;
+    &lt;style&gt;
+        body { font-family: sans-serif; background:#1e1e1e; color:#e0e0e0; padding:16px; }
+        input, button { padding:10px; border-radius:6px; border:1px solid #444;
+                        background:#2b2b2b; color:#fff; font-size:16px; margin:4px 0; width:100%; }
+        button { background:#9b59b6; border:none; cursor:pointer; font-weight:600; }
+        button:hover { background:#8e44ad; }
+        button.on  { background:#27ae60; }
+        button.off { background:#c0392b; }
+        button.check { background:#f39c12; color:#10131a; }
+        .status { padding:10px; border-radius:6px; margin:10px 0; font-weight:600; }
+        .status.connected    { background:#1a2a1a; color:#4caf50; border:1px solid #4caf50; }
+        .status.disconnected { background:#2a1a1a; color:#e74c3c; border:1px solid #e74c3c; }
+        #log { background:#111; padding:12px; border-radius:8px; height:220px;
+               overflow-y:auto; font-family:monospace; font-size:0.85rem; margin-top:12px; }
+        #log div { margin:2px 0; }
+        .row { display:flex; gap:8px; }
+        .row button { flex:1; }
+        label { font-size:0.8rem; color:#888; display:block; margin-top:6px; }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+    &lt;h3&gt;🟣 MQTT Control Panel&lt;/h3&gt;
+
+    &lt;!-- Connection --&gt;
+    &lt;label&gt;Broker URL&lt;/label&gt;
+    &lt;input type="text" id="broker" value="tcp://test.mosquitto.org:1883"&gt;
+
+    &lt;label&gt;Client ID (empty = auto)&lt;/label&gt;
+    &lt;input type="text" id="clientId" placeholder="myTest_001"&gt;
+
+    &lt;label&gt;Username (optional)&lt;/label&gt;
+    &lt;input type="text" id="username" placeholder=""&gt;
+
+    &lt;label&gt;Password (optional)&lt;/label&gt;
+    &lt;input type="password" id="password" placeholder=""&gt;
+
+    &lt;label&gt;QoS (0, 1, 2)&lt;/label&gt;
+    &lt;input type="text" id="qos" value="0"&gt;
+
+    &lt;div class="row"&gt;
+        &lt;button onclick="connectMQTT()"&gt;Connect&lt;/button&gt;
+        &lt;button class="check" onclick="checkStatus()"&gt;Check&lt;/button&gt;
+        &lt;button onclick="disconnectMQTT()"&gt;Disconnect&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;div id="status" class="status disconnected"&gt;Disconnected&lt;/div&gt;
+
+    &lt;label&gt;Topic&lt;/label&gt;
+    &lt;input type="text" id="pubTopic" value="soifgo/demo/tx"&gt;
+
+    &lt;label&gt;Message&lt;/label&gt;
+    &lt;input type="text" id="pubMsg" value="ON"&gt;
+
+    &lt;div class="row"&gt;
+        &lt;button class="on"  onclick="publishMsg('ON')"&gt;Publish ON&lt;/button&gt;
+        &lt;button class="off" onclick="publishMsg('OFF')"&gt;Publish OFF&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class="row"&gt;
+        &lt;button onclick="publishMsg()"&gt;Send Custom&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;div id="log"&gt;&lt;/div&gt;
+
+    &lt;script&gt;
+        function log(msg) {
+            const el = document.getElementById('log');
+            const t  = new Date().toLocaleTimeString();
+            el.innerHTML += `&lt;div&gt;[${t}] ${msg}&lt;/div&gt;`;
+            el.scrollTop = el.scrollHeight;
+        }
+
+        function setStatus(connected) {
+            const el = document.getElementById('status');
+            el.className = 'status ' + (connected ? 'connected' : 'disconnected');
+            el.textContent = connected ? 'Connected' : 'Disconnected';
+        }
+
+        /* ---- Connect (two calls: address+id, then user+pass) ---- */
+        function connectMQTT() {
+            const broker = document.getElementById('broker').value.trim();
+            const cid    = document.getElementById('clientId').value.trim();
+            const user   = document.getElementById('username').value.trim();
+            const pass   = document.getElementById('password').value;
+            log('Connect → ' + broker + (cid ? ' as ' + cid : ' (auto ID)'));
+            window.soifgo.CallSub('connecte_mqtt_ai', true, broker, cid);
+            if (user || pass) {
+                window.soifgo.CallSub('connecte_mqtt_up', true, user, pass);
+            }
+        }
+
+        function disconnectMQTT() {
+            log('Disconnect');
+            window.soifgo.CallSub('mqtt_Disconnect', true);
+            setStatus(false);
+        }
+
+        function checkStatus() {
+            log('Check status');
+            window.soifgo.CallSub('mqtt_status', true);
+        }
+
+        function publishMsg(preset) {
+            const topic = document.getElementById('pubTopic').value.trim();
+            const qos   = document.getElementById('qos').value.trim() || '0';
+            const text  = (preset !== undefined) ? preset : document.getElementById('pubMsg').value;
+            if (!topic) { alert('Enter a topic'); return; }
+            log('TX → ' + topic + ' : ' + text + ' (QoS ' + qos + ')');
+            window.soifgo.CallSub('mqtt_publish', true, topic, text, qos);
+        }
+
+        /* ---- Receivers (called by SoifGo) ---- */
+        function mqtt_rx(topic, message) {
+            log('RX ← ' + topic + ' : ' + message);
+        }
+        window.mqtt_rx = mqtt_rx;
+
+        function html_mqtt_status(connected) {
+            const isConnected = (connected === true || connected === 'true');
+            setStatus(isConnected);
+            log('Status: ' + (isConnected ? 'CONNECTED' : 'DISCONNECTED'));
+        }
+        window.html_mqtt_status = html_mqtt_status;
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+            <div class="success">
+                <strong>✅ Key points:</strong>
+                <ul>
+                    <li><strong>Built-in MQTT</strong> — no external library, no WebSocket, no CORS.</li>
+                    <li><strong>Two-step connect</strong> — first <code>connecte_mqtt_ai</code>, then <code>connecte_mqtt_up</code> if auth needed.</li>
+                    <li><strong>Publish auto-subscribes</strong> — you receive messages on the topic you publish to.</li>
+                    <li><strong>Client ID auto-generated</strong> if left empty.</li>
+                    <li><strong>Status is a string</strong> — always convert with <code>=== 'true'</code>.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="box">
+            <p>
+                Combine MQTT and Bluetooth on the same page. For example: forward incoming
+                Bluetooth data to MQTT, or the other way around.
+            </p>
+
+            <div class="file-name">📄 html_mqtt_relay.html — Bluetooth ↔ MQTT relay</div>
+
+            <pre><code>&lt;script&gt;
+    /* ---- Bluetooth → MQTT ---- */
+    function html_bluetooth_tx(data) {
+        window.soifgo.CallSub('mqtt_publish', true, 'soifgo/relay/from_bt', data, '0');
+    }
+    window.html_bluetooth_tx = html_bluetooth_tx;
+
+    /* ---- MQTT → Bluetooth ---- */
+    function mqtt_rx(topic, message) {
+        window.soifgo.CallSub('html_bluetooth_rx', true, message);
+    }
+    window.mqtt_rx = mqtt_rx;
+&lt;/script&gt;</code></pre>
+
+            <div class="info">
+                <strong>💡 Use case:</strong> a robot with an HC-05 module can be controlled
+                locally via Bluetooth and simultaneously report status to an MQTT dashboard —
+                all from one HTML page.
+            </div>
+        </div>
+
+        <div class="box">
+            <h3>🔧 MQTT Troubleshooting</h3>
+
+            <div class="note">
+                <strong>Connection fails immediately</strong><br>
+                Check the broker URL. Use <code>tcp://</code> for plain, <code>ssl://</code>
+                for TLS. Default ports: <code>1883</code> (plain), <code>8883</code> (TLS).
+            </div>
+
+            <div class="note">
+                <strong>Messages not arriving</strong><br>
+                Publish at least once to the topic you want to listen to — publishing
+                auto-subscribes you. Also verify the topic name is exactly the same
+                (MQTT is case-sensitive).
+            </div>
+
+            <div class="note">
+                <strong>Status always shows "Connected"</strong><br>
+                The status value arrives as a string (<code>'true'</code> / <code>'false'</code>).
+                In JavaScript the string <code>'false'</code> is truthy — always compare with
+                <code>=== 'true'</code>.
+            </div>
+
+            <div class="note">
+                <strong>Client ID conflict</strong><br>
+                If two clients use the same ID, the broker kicks one off. Leave the ID
+                empty to get a unique auto-generated one.
+            </div>
+
+            <div class="note">
+                <strong>Bridge not found</strong><br>
+                If <code>window.soifgo</code> is undefined, you're running in a normal
+                browser — the bridge only exists inside SoifGo.
+            </div>
+        </div>
+
+        <h3 id="api">🟠 6. API — Send &amp; Receive (WebView ↔ Server)</h3>
+
+        <div class="box">
+            <p>
+                SoifGo has a <strong>built-in API bridge</strong>. Your HTML page can send
+                key/value data to a server and request data back — no <code>fetch</code>,
+                no CORS, no external library.
+            </p>
+
+            <div class="info">
+                <strong>⚠️ IMPORTANT:</strong> API only works inside SoifGo's WebView.
+                In a normal browser the bridge doesn't exist — nothing will happen
+                (and nothing will crash).
+            </div>
+
+            <div class="file-name">📄 API Reference</div>
+
+            <pre><code>// ============================================================
+// 1. SEND — POST a key/value pair to a server
+// ============================================================
+// Native Sub: api_send(address, key, value)
+//
+//  Sends:   POST &lt;address&gt;
+//  Body:    {"&lt;key&gt;":"&lt;value&gt;"}
+//  Header:  Content-Type: application/json
+//
+window.soifgo.CallSub('api_send', true, address, key, value);
+
+// ============================================================
+// 2. RECEIVE — GET data from a server
+// ============================================================
+// Native Sub: api_recive(address, key)
+//
+//  Sends:   GET &lt;address&gt;
+//  Returns: the "&lt;key&gt;" branch of the JSON response,
+//           passed to api_rx() as a string
+//
+// ⚠️  The second parameter "key" is REQUIRED — it tells
+//     SoifGo which branch of the JSON you want.
+//
+window.soifgo.CallSub('api_recive', true, address, key);
+
+// ============================================================
+// 3. RECEIVER — SoifGo calls this with the response
+// ============================================================
+// SoifGo calls:  api_rx('&lt;value&gt;')
+//
+// ⚠️  The response format depends on the API provider.
+//     See the section below — "Two Response Formats".
+//
+function api_rx(number) {
+    // number : string — either a plain value or a wrapped one
+}
+window.api_rx = api_rx;</code></pre>
+
+            <div class="success">
+                <strong>✅ How it works:</strong>
+                <ol>
+                    <li><strong>Send:</strong> <code>api_send(address, key, value)</code> → POST with JSON body.</li>
+                    <li><strong>Receive:</strong> <code>api_recive(address, key)</code> → GET request. The <code>key</code> tells SoifGo which branch of the JSON to extract.</li>
+                    <li><strong>Response:</strong> passed to <code>api_rx(number)</code> as a string.</li>
+                    <li><strong>Format varies:</strong> see the section below.</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="box">
+            <h3>📥 Two Response Formats — Read This Carefully</h3>
+
+            <p>
+                <strong>Different API providers return their data in different shapes.</strong>
+                When SoifGo extracts the value at the given <code>key</code>, it can arrive
+                at <code>api_rx</code> in <strong>two very different forms</strong>:
+            </p>
+
+            <div class="grid-2">
+                <div>
+                    <h4 style="margin-top:0; color:var(--accent2);">Format A — Plain value</h4>
+                    <p style="font-size:0.9rem;">
+                        The API returns a <strong>flat JSON</strong> where the key points
+                        directly to a primitive value.
+                    </p>
+                    <p style="font-size:0.85rem;">
+                        <strong>Example API:</strong> DIA<br>
+                        <strong>Raw JSON:</strong>
+                    </p>
+                    <pre style="font-size:0.7rem;"><code>{
+  "Symbol": "BTC",
+  "Price": 86846.51694166221
+}</code></pre>
+                    <p style="font-size:0.85rem;">
+                        <strong>What <code>api_rx</code> receives:</strong>
+                    </p>
+                    <pre style="font-size:0.7rem;"><code>86846.51694166221</code></pre>
+                    <p style="font-size:0.8rem; color:#888;">
+                        Just the raw value. No braces, no key name.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 style="margin-top:0; color:var(--accent2);">Format B — Wrapped value</h4>
+                    <p style="font-size:0.9rem;">
+                        The API returns a <strong>nested JSON</strong> where the key points
+                        to another object.
+                    </p>
+                    <p style="font-size:0.85rem;">
+                        <strong>Example API:</strong> CoinGecko<br>
+                        <strong>Raw JSON:</strong>
+                    </p>
+                    <pre style="font-size:0.7rem;"><code>{
+  "bitcoin": {
+    "usd": 86750
+  }
+}</code></pre>
+                    <p style="font-size:0.85rem;">
+                        <strong>What <code>api_rx</code> receives:</strong>
+                    </p>
+                    <pre style="font-size:0.7rem;"><code>{usd=86750}</code></pre>
+                    <p style="font-size:0.8rem; color:#888;">
+                        The inner object, wrapped in B4A Map format.
+                    </p>
+                </div>
+            </div>
+
+            <div class="info">
+                <strong>💡 Why this matters:</strong> Your code must handle <em>both</em> cases.
+                If you only handle Format A, CoinGecko will break your parser.
+                If you only handle Format B, DIA will break your parser.
+                Write a <strong>robust extractor</strong> that detects the format automatically.
+            </div>
+        </div>
+
+        <div class="box">
+            <h3>🧪 Live Example — Bitcoin Price (DIA)</h3>
+
+            <p>
+                DIA is used here because it has <strong>no strict rate limit</strong> and
+                returns a simple, flat JSON. This makes it perfect for testing.
+            </p>
+
+            <div class="info">
+                <strong>⏱ Why does the code use a timer?</strong><br>
+                Price APIs return a new value every few seconds. A timer
+                (<code>setInterval</code>) lets the page refresh the price automatically
+                without the user tapping a button. But polling too fast will trigger rate
+                limits and the API will start rejecting your requests.
+                Choose a <strong>safe interval</strong> for the API you're using
+                (see the Rate Limits section below).
+            </div>
+
+            <div class="file-name">📄 html_api_btc.html</div>
+
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;BTC Price&lt;/title&gt;
+    &lt;style&gt;
+        body { font-family: sans-serif; background:#1e1e1e; color:#e0e0e0;
+               padding:20px; text-align:center; }
+        h2 { color:#f7931a; }
+        .price { font-size:2.5rem; font-weight:bold; color:#f7931a;
+                 margin:20px 0; min-height:3rem; }
+        .status { font-size:0.85rem; color:#888; }
+        button { background:#f7931a; color:#fff; border:none;
+                 padding:14px 30px; border-radius:8px; font-size:16px;
+                 font-weight:600; cursor:pointer; margin:6px; }
+        button.stop { background:#c0392b; }
+        #raw { background:#111; padding:12px; border-radius:8px;
+               font-family:monospace; font-size:0.75rem;
+               text-align:left; margin-top:12px;
+               word-break:break-all; max-height:120px; overflow-y:auto; }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h2&gt;₿ Bitcoin Price&lt;/h2&gt;
+    &lt;div class="price" id="price"&gt;--&lt;/div&gt;
+    &lt;div class="status" id="status"&gt;Stopped&lt;/div&gt;
+
+    &lt;div style="margin-top:14px;"&gt;
+        &lt;button onclick="startBTC()"&gt;▶ Start&lt;/button&gt;
+        &lt;button class="stop" onclick="stopBTC()"&gt;■ Stop&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;div id="raw"&gt;&lt;/div&gt;
+
+    &lt;script&gt;
+        // DIA endpoint — flat JSON, no rate limit issues
+        const URL = 'https://api.diadata.org/v1/assetQuotation/Bitcoin/0x0000000000000000000000000000000000000000';
+        const KEY = 'Price';
+        const INTERVAL = 5000;   // 5 seconds — safe for DIA
+
+        let timer = null;
+
+        function startBTC() {
+            stopBTC();
+            fetchBTC();
+            timer = setInterval(fetchBTC, INTERVAL);
+            document.getElementById('status').textContent = 'Live · every ' + (INTERVAL/1000) + 's';
+        }
+
+        function stopBTC() {
+            if (timer) { clearInterval(timer); timer = null; }
+            document.getElementById('status').textContent = 'Stopped';
+        }
+
+        function fetchBTC() {
+            window.soifgo.CallSub('api_recive', true, URL, KEY);
+        }
+
+        /* ============================================================
+           Robust extractor — handles BOTH response formats
+           ============================================================ */
+        function extractNumber(raw) {
+            const s = String(raw).trim();
+
+            // Format A — plain number: "86846.51694166221"
+            if (/^-?\d+(\.\d+)?$/.test(s)) {
+                return parseFloat(s);
+            }
+
+            // Format B — B4A Map: "{usd=86750}"
+            const mapMatch = s.match(/[a-zA-Z_]\w*[=:]\s*(-?[\d.]+)/);
+            if (mapMatch) {
+                return parseFloat(mapMatch[1]);
+            }
+
+            // Fallback — any number in the string
+            const anyNum = s.match(/-?\d+(\.\d+)?/);
+            return anyNum ? parseFloat(anyNum[0]) : null;
+        }
+
+        function api_rx(number) {
+            document.getElementById('raw').textContent = String(number);
+
+            const price = extractNumber(number);
+            if (price !== null &amp;&amp; !isNaN(price)) {
+                document.getElementById('price').textContent =
+                    '$' + price.toLocaleString('en-US', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    });
+            } else {
+                document.getElementById('price').textContent = '❌ Parse error';
+            }
+        }
+        window.api_rx = api_rx;
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+            <div class="success">
+                <strong>✅ Key points:</strong>
+                <ul>
+                    <li><strong>Timer is optional</strong> — you can call <code>fetchBTC()</code> manually without <code>setInterval</code>.</li>
+                    <li><strong>Interval is 5 s</strong> — safe for DIA. If using CoinGecko, use ≥ 10 s.</li>
+                    <li><strong>Stop button</strong> — always give the user a way to stop polling.</li>
+                    <li><strong>Robust extractor</strong> — handles both plain numbers and Map-wrapped values.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="box">
+            <h3>💡 Parsing the Response — The Robust Helper</h3>
+
+            <p>
+                Different providers return different shapes. Use this single helper to
+                handle <strong>both</strong> cases — plain numbers, Map-wrapped values,
+                and JSON.
+            </p>
+
+            <pre><code>function extractValue(raw, fieldName) {
+    const s = String(raw).trim();
+
+    // 1. Plain number:  "86846.51694166221"
+    if (/^-?\d+(\.\d+)?$/.test(s)) return s;
+
+    // 2. B4A Map format:  {usd=86750}  or  {Price=86846.51}
+    const mapMatch = s.match(
+        new RegExp(fieldName + '[=:]\\s*([^,}\\s]+)', 'i')
+    );
+    if (mapMatch) return mapMatch[1];
+
+    // 3. Valid JSON:  {"usd":86750}
+    try {
+        const obj = JSON.parse(s);
+        if (obj[fieldName] !== undefined) return obj[fieldName];
+    } catch (e) {}
+
+    // 4. Fallback: any number
+    const numMatch = s.match(/-?\d+(\.\d+)?/);
+    return numMatch ? numMatch[0] : null;
+}
+
+// Usage in api_rx:
+function api_rx(number) {
+    const price = extractValue(number, 'Price');   // or 'usd'
+    if (price) {
+        document.getElementById('out').textContent = '$' + price;
+    }
+}
+window.api_rx = api_rx;</code></pre>
+
+            <div class="info">
+                <strong>💡 Tip:</strong> Put this helper in a shared JS file and reuse it
+                in every page that talks to an API. It will save you a lot of debugging.
+            </div>
+        </div>
+
+        <div class="box">
+            <h3>⚠️ Rate Limits</h3>
+
+            <div class="note">
+                <strong>Don't hammer the API.</strong> Every provider has a limit. If
+                your timer is too fast, the API will start returning error 429:
+                <pre style="margin:8px 0; background:#2c3e50; color:#ecf0f1; padding:8px; border-radius:4px; font-size:0.75rem;">
+{"status":{"error_code":429,"error_message":"You've exceeded the Rate Limit"}}</pre>
+            </div>
+
+            <div class="success">
+                <strong>✅ Safe intervals:</strong>
+                <ul>
+                    <li><strong>DIA:</strong> ~ 5 seconds</li>
+                    <li><strong>CoinGecko:</strong> ≥ 10 seconds</li>
+                    <li><strong>Binance:</strong> ≥ 1 second (1200 req/min)</li>
+                    <li><strong>Coinbase:</strong> ≥ 5 seconds</li>
+                    <li><strong>Blockchain.info:</strong> ≥ 10 seconds</li>
+                </ul>
+            </div>
+
+            <div class="info">
+                <strong>💡 Best practice:</strong> Always include a <strong>Stop</strong>
+                button so the user can halt polling. Never leave a timer running in the
+                background without a way to stop it.
+            </div>
+        </div>
+
+        <div class="box">
+            <h3>📌 Classic Method vs WebView Method</h3>
+
+            <p>
+                SoifGo supports <strong>two ways</strong> of talking to an API. The
+                <em>Classic</em> method works entirely inside SoifGo's native UI; the
+                <em>WebView</em> method uses the HTML bridge you've been reading about.
+            </p>
+
+            <div class="grid-2">
+                <div>
+                    <h4 style="margin-top:0; color:var(--accent2);">Classic Method</h4>
+                    <ul style="font-size:0.9rem;">
+                        <li>Configured entirely in SoifGo's button settings.</li>
+                        <li>No HTML, no JavaScript.</li>
+                        <li>You set the <strong>address</strong>, <strong>key</strong>,
+                            <strong>word start</strong>, and <strong>word end</strong> in the UI.</li>
+                        <li>SoifGo extracts the value itself and displays it on the button.</li>
+                        <li>Perfect for simple “show one value” cases.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="margin-top:0; color:var(--accent2);">WebView Method</h4>
+                    <ul style="font-size:0.9rem;">
+                        <li>Configured in HTML/JS inside the page.</li>
+                        <li>Full control over parsing, display, and behaviour.</li>
+                        <li>You call <code>api_recive(address, key)</code> and handle the
+                            response in <code>api_rx</code>.</li>
+                        <li>Can combine API + Bluetooth + MQTT + sensors on one page.</li>
+                        <li>Perfect for dashboards, custom UIs, and complex logic.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="info">
+                <strong>💡 Which one should I use?</strong>
+                Use <strong>Classic</strong> if you just need a single value on a button.
+                Use <strong>WebView</strong> if you want custom layout, multiple values,
+                timers, charts, or any interactivity.
+            </div>
+        </div>
+
+        <div class="box">
+            <h3>🔧 API Troubleshooting</h3>
+
+            <div class="note">
+                <strong>Nothing happens when api_recive is called</strong><br>
+                Make sure you're passing <strong>both</strong> parameters:
+                <code>api_recive(address, key)</code>. Missing the key will silently fail.
+            </div>
+
+            <div class="note">
+                <strong>api_rx never fires</strong><br>
+                Check that <code>api_rx</code> is registered on <code>window</code>:
+                <code>window.api_rx = api_rx;</code>
+            </div>
+
+            <div class="note">
+                <strong>JSON.parse fails on the response</strong><br>
+                SoifGo may send the response as a <strong>B4A Map string</strong>
+                (<code>{usd=86750}</code>) or as a plain value (<code>86846.51</code>) —
+                neither is valid JSON. Use the <code>extractValue()</code> helper above.
+            </div>
+
+            <div class="note">
+                <strong>Response is just a number, not a Map</strong><br>
+                Some APIs return a flat JSON. In that case <code>api_rx</code> receives
+                the raw value (<code>86846.51</code>) with no wrapper. Handle this case
+                with the plain-number branch of the extractor.
+            </div>
+
+            <div class="note">
+                <strong>Rate limit errors (429)</strong><br>
+                Increase the timer interval. See the Rate Limits section above.
+            </div>
+
+            <div class="note">
+                <strong>Bridge not found</strong><br>
+                If <code>window.soifgo</code> is undefined, you're in a normal browser.
+                The bridge only exists inside SoifGo.
+            </div>
+        </div>
+
+        <h3 id="storage">💾 7. Save &amp; Reload Data (Persistent Storage)</h3>
+
+        <div class="box">
+            <div class="success">
+                <strong>✅ Good news:</strong> <code>alert()</code>, <code>confirm()</code>,
+                and <code>prompt()</code> all <strong>work natively</strong> in SoifGo's WebView.
+                You can use standard browser dialogs in your code.
+            </div>
+
+            <div class="note">
+                <strong>💡 Tip:</strong> If you want a fully themed look that matches your
+                UI, build a custom HTML modal.
+            </div>
+
+            <p>
+                Use <code>localStorage</code> to save and reload data. It persists across page
+                reloads and WebView restarts, so your users never lose their settings.
+            </p>
+
+            <div class="file-name">📄 html_storage.html</div>
+
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Save &amp; Reload&lt;/title&gt;
+    &lt;style&gt;
+        body { font-family: sans-serif; background:#1e1e1e; color:#e0e0e0; padding:16px; }
+        input, button { padding:10px; border-radius:6px; border:1px solid #444;
+                        background:#2b2b2b; color:#fff; font-size:16px; margin:4px 0; }
+        button { background:#3498db; border:none; cursor:pointer; }
+        button.danger { background:#c0392b; }
+        .row { display:flex; gap:8px; align-items:center; margin:4px 0; }
+        .row button { flex:0 0 auto; }
+        #output { margin-top:16px; }
+        .item { padding:8px 12px; background:#2b2b2b; border-radius:6px;
+                margin:4px 0; display:flex; justify-content:space-between; }
+        .item .time { color:#888; font-size:0.85rem; }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+    &lt;h3&gt;💾 Save &amp; Reload Demo&lt;/h3&gt;
+
+    &lt;div class="row"&gt;
+        &lt;input type="text" id="nameInput" placeholder="Enter name..."&gt;
+        &lt;button onclick="saveItem()"&gt;Save&lt;/button&gt;
+        &lt;button onclick="loadItems()"&gt;Reload&lt;/button&gt;
+        &lt;button class="danger" onclick="clearAll()"&gt;Clear&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;div id="output"&gt;&lt;/div&gt;
+
+    &lt;script&gt;
+        const KEY = 'my_data';
+
+        /* ---- Save ---- */
+        function saveItem() {
+            const name = document.getElementById('nameInput').value.trim();
+            if (!name) {
+                alert('Please enter a name.');
+                return;
+            }
+            let list = load();
+            list.push({ name: name, time: Date.now() });
+            persist(list);
+            render(list);
+            document.getElementById('nameInput').value = '';
+        }
+
+        /* ---- Delete one item ---- */
+        function removeItem(index) {
+            const list = load();
+            list.splice(index, 1);
+            persist(list);
+            render(list);
+        }
+
+        /* ---- Clear all ---- */
+        function clearAll() {
+            if (!confirm('Delete all saved items?')) return;
+            localStorage.removeItem(KEY);
+            render([]);
+        }
+
+        /* ---- Storage helpers ---- */
+        function load() {
+            try {
+                return JSON.parse(localStorage.getItem(KEY)) || [];
+            } catch (e) {
+                console.error('Load failed:', e);
+                return [];
+            }
+        }
+
+        function persist(list) {
+            try {
+                localStorage.setItem(KEY, JSON.stringify(list));
+            } catch (e) {
+                console.error('Save failed (quota?):', e);
+                alert('Could not save. Storage may be full.');
+            }
+        }
+
+        /* ---- Render ---- */
+        function render(list) {
+            const out = document.getElementById('output');
+            if (!list.length) {
+                out.innerHTML = '&lt;p style="color:#888;"&gt;No items saved yet.&lt;/p&gt;';
+                return;
+            }
+            out.innerHTML = list.map((x, i) =&gt; `
+                &lt;div class="item"&gt;
+                    &lt;span&gt;${i + 1}. ${escapeHtml(x.name)}&lt;/span&gt;
+                    &lt;span&gt;
+                        &lt;span class="time"&gt;${new Date(x.time).toLocaleTimeString()}&lt;/span&gt;
+                        &lt;button class="danger" onclick="removeItem(${i})"&gt;×&lt;/button&gt;
+                    &lt;/span&gt;
+                &lt;/div&gt;`).join('');
+        }
+
+        /* ---- XSS guard ---- */
+        function escapeHtml(s) {
+            return String(s)
+                .replace(/&/g, '&amp;amp;')
+                .replace(/&lt;/g, '&amp;lt;')
+                .replace(/&gt;/g, '&amp;gt;')
+                .replace(/"/g, '&amp;quot;');
+        }
+
+        /* ---- Auto-load on page open ---- */
+        window.onload = function() {
+            render(load());
+        };
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+            <div class="success">
+                <strong>✅ Key points:</strong>
+                <ul>
+                    <li><strong><code>alert()</code>, <code>confirm()</code>, <code>prompt()</code> work</strong> — no custom modal needed.</li>
+                    <li>Wrap <code>localStorage</code> calls in <code>try/catch</code> to handle quota errors gracefully.</li>
+                    <li>Call <code>render(load())</code> inside <code>window.onload</code> so data reloads every time the page opens.</li>
+                    <li>Use a unique key like <code>'my_data'</code> per page to avoid clashes with other pages.</li>
+                    <li>Always escape user input before injecting it into <code>innerHTML</code> (XSS guard).</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            <strong>SoifGo Complete Guide</strong> — Bluetooth, Sensors, Microphone, MQTT &amp; API Integration<br>
+            Custom UI with WebView
+        </div>
+
+        <hr>
+        <div class="btn-wrap">
+            <a href="https://soifgo.github.io/soifgo/index.html" class="btn-home">⬅ Back to Home</a>
+        </div>
+
+    </div>
+
+</body>
+</html>

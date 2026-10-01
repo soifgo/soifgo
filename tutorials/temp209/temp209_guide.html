@@ -1,0 +1,1596 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+<meta name="theme-color" content="#0f172a">
+<title>TEMP209 — Open-Source Temperature Controller</title>
+<meta name="description" content="TEMP209 — Open-source ATmega temperature controller with DS18B20 sensor, RC5 IR remote, and EEPROM data logging.">
+<meta name="keywords" content="TEMP209, temperature controller, ATmega8, DS18B20, BASCOM-AVR, open source hardware, thermostat, RC5">
+
+<style>
+:root {
+  --bg: #0f172a;
+  --card: #1e293b;
+  --text: #e8edf5;
+  --text-2: #cbd5e1;
+  --text-3: #64748b;
+  --blue: #6aa0ff;
+  --green: #34d399;
+  --yellow: #fbbf24;
+  --red: #f472b6;
+  --purple: #a78bfa;
+  --orange: #fb923c;
+  --border: rgba(255,255,255,0.06);
+  --code-bg: #0a0a18;
+  --code-text: #e2e8f0;
+  --header-grad: linear-gradient(145deg, #1a2a4a, #1e3a6a);
+}
+[data-theme="light"] {
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --text: #0f172a;
+  --text-2: #334155;
+  --text-3: #64748b;
+  --blue: #2563eb;
+  --green: #059669;
+  --yellow: #d97706;
+  --red: #db2777;
+  --purple: #7c3aed;
+  --orange: #ea580c;
+  --border: rgba(0,0,0,0.08);
+  --code-bg: #f1f5f9;
+  --code-text: #0f172a;
+  --header-grad: linear-gradient(145deg, #dbeafe, #bfdbfe);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--bg); color: var(--text);
+  line-height: 1.8; padding: 16px; min-height: 100vh;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+}
+.container { max-width: 960px; margin: 0 auto; }
+
+.theme-toggle {
+  position: fixed; top: 16px; right: 16px; z-index: 100;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--card); border: 1px solid var(--border);
+  color: var(--text); font-size: 1.3rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: all 0.2s;
+}
+.theme-toggle:hover { transform: scale(1.1); }
+
+.header {
+  background: var(--header-grad); padding: 32px 24px;
+  border-radius: 20px; margin-bottom: 20px;
+  border: 1px solid var(--border); box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+  text-align: center;
+}
+.header h1 { font-size: 2.4rem; color: var(--text); margin-bottom: 8px; }
+.header .sub { color: var(--text-2); font-size: 1.1rem; margin-bottom: 16px; }
+.badges { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.badge {
+  display: inline-block; background: rgba(79,140,255,0.15); color: var(--blue);
+  padding: 4px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 600;
+}
+.badge-green { background: rgba(52,211,153,0.15); color: var(--green); }
+.badge-yellow { background: rgba(251,191,36,0.15); color: var(--yellow); }
+
+.toc {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 16px; padding: 20px 24px; margin-bottom: 20px;
+}
+.toc h2 { color: var(--blue); font-size: 1.2rem; margin-bottom: 12px; border: none; padding: 0; }
+.toc ol { padding-left: 1.6em; }
+.toc li { margin-bottom: 4px; }
+.toc a { color: var(--text-2); text-decoration: none; }
+.toc a:hover { color: var(--blue); }
+
+.card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 16px; padding: 22px 24px; margin-bottom: 16px;
+  scroll-margin-top: 16px;
+}
+.card-blue { border-color: rgba(79,140,255,0.15); }
+.card-green { border-color: rgba(52,211,153,0.15); }
+.card-purple { border-color: rgba(139,92,246,0.15); }
+.card-orange { border-color: rgba(251,146,60,0.15); }
+.card-red { border-color: rgba(244,114,182,0.15); }
+.card-yellow { border-color: rgba(251,191,36,0.15); }
+
+h2 { font-size: 1.3rem; color: var(--text); border-bottom: 2px solid rgba(79,140,255,0.15); padding-bottom: 8px; margin-bottom: 16px; }
+h3 { font-size: 1.05rem; color: var(--blue); margin: 18px 0 10px; }
+h4 { font-size: 0.95rem; color: var(--purple); margin: 14px 0 8px; }
+p { margin: 8px 0; color: var(--text-2); }
+ul, ol { padding-left: 1.6em; margin: 8px 0 14px; color: var(--text-2); }
+li { margin-bottom: 6px; }
+
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.9rem; }
+th { text-align: left; padding: 10px 12px; background: rgba(79,140,255,0.08); color: var(--blue); border-bottom: 1px solid rgba(79,140,255,0.15); }
+td { padding: 10px 12px; border-bottom: 1px solid var(--border); color: var(--text-2); }
+tr:hover td { background: rgba(79,140,255,0.04); }
+code {
+  background: rgba(79,140,255,0.1); color: var(--blue);
+  padding: 2px 8px; border-radius: 5px;
+  font-family: ui-monospace, Consolas, monospace; font-size: 0.88em;
+  word-break: break-word;
+}
+
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 12px 0;
+  border-radius: 8px;
+}
+.table-wrap::-webkit-scrollbar { height: 5px; }
+.table-wrap::-webkit-scrollbar-thumb { background: rgba(79,140,255,0.3); border-radius: 3px; }
+.table-wrap table { margin: 0; }
+
+.note {
+  background: rgba(79,140,255,0.05); border: 1px solid rgba(79,140,255,0.12);
+  border-radius: 12px; padding: 14px 18px; margin: 12px 0; color: var(--text-2);
+}
+.note strong { color: var(--blue); }
+.note-green { background: rgba(52,211,153,0.05); border-color: rgba(52,211,153,0.15); }
+.note-green strong { color: var(--green); }
+.note-yellow { background: rgba(251,191,36,0.05); border-color: rgba(251,191,36,0.15); }
+.note-yellow strong { color: var(--yellow); }
+.note-orange { background: rgba(251,146,60,0.05); border-color: rgba(251,146,60,0.15); }
+.note-orange strong { color: var(--orange); }
+.note-red { background: rgba(244,114,182,0.05); border-color: rgba(244,114,182,0.15); }
+.note-red strong { color: var(--red); }
+
+.image-box { margin: 16px 0; text-align: center; }
+.image-box img { max-width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--border); }
+.image-box video { max-width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--border); background: #000; }
+.image-box .caption { margin-top: 8px; font-size: 0.85rem; color: var(--text-3); font-style: italic; }
+
+.code-box { background: var(--code-bg); border: 1px solid rgba(79,140,255,0.15); border-radius: 12px; margin: 12px 0; overflow: hidden; }
+.code-box .code-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 8px 14px; background: rgba(79,140,255,0.08);
+  border-bottom: 1px solid rgba(79,140,255,0.1); gap: 8px;
+  flex-wrap: wrap;
+}
+.code-box .code-title { color: var(--blue); font-size: 0.85rem; font-weight: 600; }
+.code-box .code-actions { display: flex; gap: 6px; }
+.code-box .code-toggle, .code-box .code-copy {
+  background: rgba(79,140,255,0.15); border: 1px solid rgba(79,140,255,0.2);
+  color: var(--blue); padding: 4px 12px; border-radius: 8px;
+  font-size: 0.75rem; cursor: pointer; transition: all 0.15s; font-family: inherit;
+}
+.code-box .code-toggle:hover, .code-box .code-copy:hover { background: rgba(79,140,255,0.25); }
+.code-box pre {
+  max-height: 0; overflow: hidden; transition: max-height 0.4s ease;
+  padding: 0 14px; margin: 0;
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 0.85rem; line-height: 1.7; color: var(--code-text);
+  white-space: pre; overflow-x: auto;
+}
+.code-box.open pre { max-height: 500px; overflow-y: auto; padding: 14px; }
+.code-box pre::-webkit-scrollbar { width: 6px; height: 6px; }
+.code-box pre::-webkit-scrollbar-thumb { background: rgba(79,140,255,0.3); border-radius: 3px; }
+.code-box .kw { color: #c084fc; }
+.code-box .cm { color: #64748b; font-style: italic; }
+.code-box .nm { color: #fbbf24; }
+.code-box .st { color: #34d399; }
+
+.param {
+  background: rgba(79,140,255,0.03); border: 1px solid var(--border);
+  border-radius: 12px; padding: 16px 20px; margin: 12px 0;
+}
+.param-header { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.param-icon {
+  width: 42px; height: 42px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; font-weight: bold; font-family: monospace; flex-shrink: 0;
+}
+.param-title { font-size: 1.05rem; font-weight: 600; color: var(--text); }
+.param-sub { font-size: 0.85rem; color: var(--text-3); }
+.pi-p { background: rgba(79,140,255,0.15); color: var(--blue); }
+.pi-l { background: rgba(52,211,153,0.15); color: var(--green); }
+.pi-d { background: rgba(251,191,36,0.15); color: var(--yellow); }
+.pi-f { background: rgba(244,114,182,0.15); color: var(--red); }
+.pi-h { background: rgba(167,139,250,0.15); color: var(--purple); }
+.pi-b { background: rgba(251,146,60,0.15); color: var(--orange); }
+.pi-o { background: rgba(203,213,225,0.15); color: #cbd5e1; }
+
+.download-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 16px 0; }
+.download-item {
+  background: rgba(79,140,255,0.03); border: 1px solid rgba(79,140,255,0.15);
+  border-radius: 12px; padding: 16px; text-align: center;
+  text-decoration: none; color: var(--text); transition: all 0.2s; display: block;
+}
+.download-item:hover { background: rgba(79,140,255,0.08); border-color: rgba(79,140,255,0.4); transform: translateY(-2px); }
+.download-item .di-icon { font-size: 2rem; margin-bottom: 8px; }
+.download-item .di-name { font-weight: 600; color: var(--blue); font-size: 0.95rem; }
+.download-item .di-desc { font-size: 0.8rem; color: var(--text-3); margin-top: 4px; }
+
+.footer { text-align: center; color: var(--text-3); font-size: 0.85rem; padding: 24px 0; border-top: 1px solid var(--border); margin-top: 32px; }
+.footer .dev { color: var(--blue); }
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 600px) {
+  body { padding: 8px; padding-top: 60px; font-size: 0.95rem; line-height: 1.6; }
+  p, li { font-size: 0.95rem; }
+  .header { padding: 20px 16px; }
+  .header h1 { font-size: 1.6rem; }
+  .header .sub { font-size: 0.95rem; }
+  .card { padding: 16px 16px; margin-bottom: 12px; }
+  h2 { font-size: 1.1rem; }
+  h3 { font-size: 0.98rem; }
+  h4 { font-size: 0.9rem; }
+
+  .table-wrap { margin: 10px 0; }
+  .table-wrap table { font-size: 0.78rem; min-width: 480px; }
+  th, td { padding: 8px 10px; white-space: nowrap; }
+
+  .code-box pre { font-size: 0.72rem; line-height: 1.55; }
+  .code-box.open pre { max-height: 320px; }
+  .code-box .code-title { font-size: 0.75rem; }
+  .code-box .code-toggle, .code-box .code-copy { font-size: 0.7rem; padding: 3px 10px; }
+
+  .image-box img,
+  .image-box video { max-width: 95%; }
+  .image-box .caption { font-size: 0.78rem; }
+
+  .param { padding: 12px 14px; }
+  .param-icon { width: 34px; height: 34px; font-size: 1.1rem; }
+  .param-title { font-size: 0.95rem; }
+  .param-sub { font-size: 0.78rem; }
+
+  .toc { padding: 14px 18px; }
+  .toc h2 { font-size: 1.05rem; }
+  .toc li { font-size: 0.9rem; margin-bottom: 8px; }
+
+  .theme-toggle { width: 38px; height: 38px; font-size: 1.1rem; top: 10px; right: 10px; }
+
+  .download-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .download-item { padding: 12px 8px; }
+  .download-item .di-icon { font-size: 1.5rem; }
+  .download-item .di-name { font-size: 0.82rem; }
+  .download-item .di-desc { font-size: 0.72rem; }
+
+  .note { padding: 12px 14px; font-size: 0.9rem; }
+  .badges { gap: 6px; }
+  .badge { font-size: 0.7rem; padding: 3px 10px; }
+}
+
+@media (max-width: 380px) {
+  body { padding: 6px; padding-top: 56px; }
+  .header h1 { font-size: 1.35rem; }
+  .header { padding: 16px 12px; }
+  .card { padding: 12px 12px; }
+  .download-grid { grid-template-columns: 1fr; }
+  .table-wrap table { font-size: 0.72rem; }
+}
+</style>
+</head>
+<body>
+
+<button class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+
+<div class="container">
+
+<!-- ===== HEADER ===== -->
+<div class="header">
+  <h1>TEMP209</h1>
+  <div class="sub">Open-Source Microcontroller Temperature Controller</div>
+  <div class="badges">
+    <span class="badge">Version 1.0</span>
+    <span class="badge badge-green">Open Source Hardware</span>
+    <span class="badge badge-yellow">ATmega8 / 88 / 328</span>
+  </div>
+</div>
+
+<!-- ===== TOC ===== -->
+<div class="toc">
+  <h2>📑 Table of Contents</h2>
+  <ol>
+    <li><a href="#s1">Project Overview</a></li>
+    <li><a href="#s2">Design Philosophy</a></li>
+    <li><a href="#s3">Key Features</a></li>
+    <li><a href="#s4">MCU Compatibility</a></li>
+    <li><a href="#s5">Pin Mapping</a></li>
+    <li><a href="#s6">7-Segment Display</a></li>
+    <li><a href="#s7">IR Remote Control (RC5)</a></li>
+    <li><a href="#s8">Serial Commands</a></li>
+    <li><a href="#s9">Configuration Menu</a></li>
+    <li><a href="#s10">Thermal Control Logic</a></li>
+    <li><a href="#s11">SoifGo Mobile Interface</a></li>
+    <li><a href="#s12">Fault &amp; Safety</a></li>
+    <li><a href="#s13">Hardware</a></li>
+    <li><a href="#s14">Current Sensing with Hall Sensor</a></li>
+    <li><a href="#s15">8-Hour Temperature Logger</a></li>
+    <li><a href="#s16">Timing Parameters</a></li>
+    <li><a href="#s17">Debugging</a></li>
+    <li><a href="#s18">Building &amp; Programming</a></li>
+    <li><a href="#s19">Downloads &amp; Links</a></li>
+    <li><a href="#s20">Test Videos</a></li>
+    <li><a href="#s21">Changelog</a></li>
+    <li><a href="#s22">About &amp; License</a></li>
+  </ol>
+</div>
+
+<!-- ============================================================
+     1. PROJECT OVERVIEW
+     ============================================================ -->
+<div class="card card-blue" id="s1">
+  <h2>1. Project Overview</h2>
+  <p>
+    <strong>TEMP209</strong> is a compact, open-source digital temperature controller designed for the <strong>ATmega</strong> microcontroller family (ATmega8 / 88 / 328). It reads temperature from a <strong>DS18B20</strong> sensor, displays it on a multiplexed <strong>2-digit 7-segment display</strong>, and manages thermal and user-defined outputs.
+  </p>
+  <p>
+    The project is written in <strong>BASCOM-AVR</strong> and released for <strong>educational and open-source</strong> purposes. While its core nature is educational, TEMP209 is designed with the potential for <strong>industrial optimization and mass production</strong>.
+  </p>
+
+  <div class="image-box">
+    <img src="temp209_hero.jpg" alt="TEMP209 overview">
+    <div class="caption">Figure 1: TEMP209 overview</div>
+  </div>
+
+  <div class="note note-green">
+    <strong>Key Specifications:</strong>
+    <ul style="margin-top:8px;">
+      <li>Temperature Range: <strong>0°C to 99°C</strong></li>
+      <li>Sensor: <strong>DS18B20</strong> (1-Wire protocol)</li>
+      <li>Display: Multiplexed 2-digit 7-segment</li>
+      <li>Remote Control: <strong>RC5 infrared protocol</strong></li>
+      <li>Outputs: <code>Out1</code> (reserved), <code>Temp_out</code> (thermal control)</li>
+      <li>Safety: Dedicated <strong>Fault input</strong> (PORTC.3) with adjustable delay</li>
+      <li>Storage: <strong>EEPROM</strong> for settings and data logging</li>
+      <li>MCU Support: <strong>ATmega8, ATmega88, ATmega328</strong></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================================================
+     2. DESIGN PHILOSOPHY
+     ============================================================ -->
+<div class="card card-purple" id="s2">
+  <h2>2. Design Philosophy</h2>
+
+  <div class="note note-yellow">
+    <strong>Core question:</strong> There are countless temperature controllers on the market. What makes TEMP209 different?
+  </div>
+
+  <p>
+    The answer is that TEMP209 <strong>uses thermal control as a pretext to challenge other design logics.</strong>
+  </p>
+
+  <h3>❓ Why no physical buttons?</h3>
+  <p>
+    Implementing physical buttons cleanly has always been a significant challenge and often introduces complexity:
+  </p>
+  <ul>
+    <li>Consumes a portion of the program for button management (matrix, analog input, etc.)</li>
+    <li>Clean implementation and execution are difficult and costly</li>
+    <li>Raises the overall cost of the device</li>
+  </ul>
+
+  <h3>✅ Why remote control?</h3>
+  <ul>
+    <li>The user can apply settings <strong>without approaching the controller</strong> — comfortably from anywhere</li>
+    <li>Example: adjusting AC temperature from the couch</li>
+    <li>Removing physical buttons → cleaner, cheaper, more robust design</li>
+  </ul>
+
+  <h3>🎁 Educational Bonus</h3>
+  <p>
+    TEMP209 teaches you <strong>how to define any RC5 remote in your project</strong> — a valuable skill in itself.
+  </p>
+</div>
+
+<!-- ============================================================
+     3. KEY FEATURES
+     ============================================================ -->
+<div class="card card-green" id="s3">
+  <h2>3. Key Features</h2>
+
+  <h3>🌡️ Temperature Measurement</h3>
+  <ul>
+    <li>DS18B20 sensor with 1-Wire protocol</li>
+    <li>Range: <strong>0°C to 99°C</strong></li>
+    <li>1°C resolution</li>
+    <li>Updated every 1 second</li>
+  </ul>
+
+  <h3>🖥️ Display</h3>
+  <ul>
+    <li>Multiplexed 2-digit 7-segment display</li>
+    <li>10-level brightness control</li>
+    <li>Special characters: P, b, d, F, H, L</li>
+  </ul>
+
+  <h3>🎛️ IR Remote Control</h3>
+  <ul>
+    <li><strong>RC5 protocol</strong></li>
+    <li>Full control without touching the device</li>
+    <li>Supports multi-command remotes</li>
+    <li>Any RC5 remote can be defined</li>
+  </ul>
+
+  <h3>🔌 Outputs</h3>
+  <ul>
+    <li><strong>Temp_out</strong> (PORTC.4): thermal control relay output</li>
+    <li><strong>Out1</strong> (PORTC.5): user relay — reserved</li>
+    <li><strong>Buzzer</strong> (PORTC.0): alert buzzer</li>
+  </ul>
+
+  <h3>🌡️ Control Modes</h3>
+  <ul>
+    <li><strong>Heating (Heat):</strong> relay ON when temp &lt; Setpoint</li>
+    <li><strong>Cooling (Cool):</strong> relay ON when temp &gt; Setpoint + Delta</li>
+    <li><strong>Hysteresis (Delta):</strong> prevents relay chatter</li>
+    <li><strong>Protection Delay:</strong> protects compressor</li>
+  </ul>
+
+  <h3>🛡️ Safety &amp; Fault</h3>
+  <ul>
+    <li><strong>Fault input</strong> (PORTC.3) — always active</li>
+    <li>Adjustable fault reaction delay (0–9 seconds)</li>
+    <li>Displays blinking "FF" on fault</li>
+    <li>Sends <code>Fault</code> on serial</li>
+    <li>Sensor disconnection detection</li>
+  </ul>
+
+  <h3>💾 Memory &amp; Logging</h3>
+  <ul>
+    <li>Settings stored in <strong>EEPROM</strong></li>
+    <li>Temperature logged every 1 minute</li>
+    <li>Capacity: <strong>480 samples (8 hours)</strong></li>
+    <li>Retrieve with <code>report</code> or IR command</li>
+  </ul>
+
+  <h3>📡 Serial Communication</h3>
+  <ul>
+    <li>UART at <strong>9600 baud</strong></li>
+    <li>Simple text commands</li>
+    <li>Live debug output</li>
+    <li>Mobile app integration (SoifGo)</li>
+  </ul>
+
+  <h3>🔋 Stability</h3>
+  <ul>
+    <li>Built-in Watchdog (2048 ms)</li>
+    <li>Auto-save setpoint</li>
+    <li>Restores state after power loss</li>
+    <li>Compatible with 3 MCU models</li>
+  </ul>
+</div>
+
+<!-- ============================================================
+     4. MCU COMPATIBILITY
+     ============================================================ -->
+<div class="card" id="s4">
+  <h2>4. MCU Compatibility</h2>
+
+  <div class="table-wrap">
+    <table>
+      <tr><th>MCU</th><th>Flash</th><th>SRAM</th><th>EEPROM</th><th>Status</th></tr>
+      <tr><td><strong>ATmega8</strong></td><td>8 KB</td><td>1 KB</td><td>512 B</td><td>Primary target</td></tr>
+      <tr><td><strong>ATmega88</strong></td><td>8 KB</td><td>1 KB</td><td>512 B</td><td>Drop-in alternative</td></tr>
+      <tr><td><strong>ATmega328</strong></td><td>32 KB</td><td>2 KB</td><td>1 KB</td><td><strong>Recommended</strong></td></tr>
+    </table>
+  </div>
+
+  <div class="note">
+    <strong>Migration Notes:</strong>
+    <ul>
+      <li>Update <code>$regfile</code> to match your MCU</li>
+      <li>Remove <code>$prog</code> directive and configure fuses manually</li>
+      <li>Disable <code>CKDIV8</code> fuse for ATmega88/328</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================================================
+     5. PIN MAPPING
+     ============================================================ -->
+<div class="card card-blue" id="s5">
+  <h2>5. Pin Mapping</h2>
+
+  <div class="table-wrap">
+    <table>
+      <tr><th>Function</th><th>Pin</th><th>Description</th></tr>
+      <tr><td>Seg1</td><td>PORTB.3</td><td>Tens digit enable</td></tr>
+      <tr><td>Seg2</td><td>PORTB.4</td><td>Units digit enable</td></tr>
+      <tr><td>A</td><td>PORTB.1</td><td>7-segment A</td></tr>
+      <tr><td>B</td><td>PORTB.2</td><td>7-segment B</td></tr>
+      <tr><td>C</td><td>PORTD.7</td><td>7-segment C</td></tr>
+      <tr><td>D</td><td>PORTB.7</td><td>7-segment D</td></tr>
+      <tr><td>E</td><td>PORTD.5</td><td>7-segment E</td></tr>
+      <tr><td>F</td><td>PORTB.5</td><td>7-segment F</td></tr>
+      <tr><td>G</td><td>PORTB.6</td><td>7-segment G</td></tr>
+      <tr><td>Dp</td><td>PORTD.6</td><td>Decimal point</td></tr>
+      <tr><td><strong>Out1</strong></td><td><strong>PORTC.5</strong></td><td>User relay — reserved</td></tr>
+      <tr><td><strong>Temp_out</strong></td><td><strong>PORTC.4</strong></td><td>Thermal control relay</td></tr>
+      <tr><td><strong>Buzzer</strong></td><td><strong>PORTC.0</strong></td><td>Buzzer</td></tr>
+      <tr><td><strong>Fault</strong></td><td><strong>PORTC.3</strong></td><td>Fault input</td></tr>
+      <tr><td>RC5 IR</td><td>PINB.0</td><td>IR receiver</td></tr>
+      <tr><td>1-Wire</td><td>PORTD.4</td><td>DS18B20 data</td></tr>
+      <tr><td>TX</td><td>Serial</td><td>Debug output (9600 baud)</td></tr>
+    </table>
+  </div>
+
+  <div class="note note-yellow">
+    <strong>Note:</strong> <code>Out1</code> is a <strong>reserved, unused output</strong>. Wire it up and use it if needed.
+  </div>
+
+  <div class="image-box">
+    <img src="temp209_pinout.jpg" alt="ATmega8 pinout">
+    <div class="caption">Figure 2: ATmega8 pinout</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     6. 7-SEGMENT DISPLAY
+     ============================================================ -->
+<div class="card card-yellow" id="s6">
+  <h2>6. 7-Segment Display</h2>
+
+  <h3>Display Type</h3>
+  <p>
+    TEMP209 uses a <strong>2-digit 7-segment display</strong> as listed in the BOM. But don't worry if you don't have this exact part — <strong>any type works</strong>:
+  </p>
+  <ul>
+    <li><strong>Common Cathode</strong></li>
+    <li><strong>Common Anode</strong></li>
+    <li>Even with <strong>pin rearrangement</strong></li>
+  </ul>
+
+  <h3>Why So Flexible?</h3>
+  <div class="note note-green">
+    <strong>There are no current-limiting resistors in the connections.</strong>
+    Current is controlled purely by <strong>switching timing</strong> (multiplexing). So you can configure the pins any way you need.
+  </div>
+
+  <h3>Common Display Driving Methods</h3>
+  <p>Displays are typically driven by:</p>
+  <ul>
+    <li><strong>Multiplexers</strong></li>
+    <li><strong>Interface ICs</strong> (e.g., 74HC595, MAX7219)</li>
+  </ul>
+
+  <h3>Why TEMP209 Connects Directly</h3>
+  <p>Instead of using external driver ICs, TEMP209 connects the display <strong>directly to the MCU</strong>. This provides:</p>
+  <ul>
+    <li>📏 <strong>Brevity</strong> — simpler circuit</li>
+    <li>💰 <strong>Lower cost</strong></li>
+    <li>🎛️ <strong>More control</strong></li>
+    <li>💡 <strong>Brightness adjustment</strong> (PWM-based)</li>
+    <li>🔀 <strong>Pin flexibility</strong> — works with different display types</li>
+    <li>🔋 <strong>Component savings</strong></li>
+    <li>🎓 <strong>Educational value</strong> — most important of all</li>
+  </ul>
+
+  <h3>Pin Connections</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Segment</th><th>MCU Pin</th><th>Digit Select</th><th>MCU Pin</th></tr>
+      <tr><td>A</td><td>PORTB.1</td><td>Seg1 (tens)</td><td>PORTB.3</td></tr>
+      <tr><td>B</td><td>PORTB.2</td><td>Seg2 (units)</td><td>PORTB.4</td></tr>
+      <tr><td>C</td><td>PORTD.7</td><td rowspan="7" colspan="2" style="vertical-align:middle; text-align:center;">Multiplexed<br>switching</td></tr>
+      <tr><td>D</td><td>PORTB.7</td></tr>
+      <tr><td>E</td><td>PORTD.5</td></tr>
+      <tr><td>F</td><td>PORTB.5</td></tr>
+      <tr><td>G</td><td>PORTB.6</td></tr>
+      <tr><td>Dp</td><td>PORTD.6</td></tr>
+    </table>
+  </div>
+
+  <h3>Character Map</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Value</th><th>Display</th><th>Meaning</th></tr>
+      <tr><td>0–9</td><td>0–9</td><td>Numeric digits</td></tr>
+      <tr><td>10</td><td>P</td><td>Protection Delay menu</td></tr>
+      <tr><td>11</td><td>b</td><td>Beep menu</td></tr>
+      <tr><td>12</td><td>d</td><td>Delta menu</td></tr>
+      <tr><td>13</td><td>F</td><td>Fault Delay menu</td></tr>
+      <tr><td>14</td><td>H</td><td>Heat/Cool menu</td></tr>
+      <tr><td>15</td><td>L</td><td>Light/Brightness menu</td></tr>
+    </table>
+  </div>
+
+  <div class="image-box">
+    <img src="temp209_display.jpg" alt="2-digit 7-segment display">
+    <div class="caption">Figure 3: 2-digit 7-segment display</div>
+  </div>
+
+  <h3>📄 Source: Showdigit()</h3>
+  <div class="code-box">
+    <div class="code-header">
+      <span class="code-title">temp209_m8.bas — Sub Showdigit()</span>
+      <div class="code-actions">
+        <button class="code-toggle">▼ Show</button>
+        <button class="code-copy">📋 Copy</button>
+      </div>
+    </div>
+    <pre><span class="kw">Sub</span> Showdigit(digit <span class="kw">As Byte</span>)
+    <span class="kw">Select Case</span> Digit
+        <span class="kw">Case</span> <span class="nm">0</span>: A=<span class="nm">0</span>:B=<span class="nm">0</span>:C=<span class="nm">0</span>:D=<span class="nm">0</span>:E=<span class="nm">0</span>:F=<span class="nm">0</span>:G=<span class="nm">1</span>
+        <span class="kw">Case</span> <span class="nm">1</span>: A=<span class="nm">1</span>:B=<span class="nm">0</span>:C=<span class="nm">0</span>:D=<span class="nm">1</span>:E=<span class="nm">1</span>:F=<span class="nm">1</span>:G=<span class="nm">1</span>
+        <span class="kw">Case</span> <span class="nm">2</span>: A=<span class="nm">0</span>:B=<span class="nm">0</span>:C=<span class="nm">1</span>:D=<span class="nm">0</span>:E=<span class="nm">0</span>:F=<span class="nm">1</span>:G=<span class="nm">0</span>
+        <span class="kw">Case</span> <span class="nm">3</span>: A=<span class="nm">0</span>:B=<span class="nm">0</span>:C=<span class="nm">0</span>:D=<span class="nm">0</span>:E=<span class="nm">1</span>:F=<span class="nm">1</span>:G=<span class="nm">0</span>
+        <span class="kw">Case</span> <span class="nm">4</span>: A=<span class="nm">1</span>:B=<span class="nm">0</span>:C=<span class="nm">0</span>:D=<span class="nm">1</span>:E=<span class="nm">1</span>:F=<span class="nm">0</span>:G=<span class="nm">0</span>
+        <span class="kw">Case</span> <span class="nm">5</span>: A=<span class="nm">0</span>:B=<span class="nm">1</span>:C=<span class="nm">0</span>:D=<span class="nm">0</span>:E=<span class="nm">1</span>:F=<span class="nm">0</span>:G=<span class="nm">0</span>
+        <span class="kw">Case</span> <span class="nm">6</span>: A=<span class="nm">0</span>:B=<span class="nm">1</span>:C=<span class="nm">0</span>:D=<span class="nm">0</span>:E=<span class="nm">0</span>:F=<span class="nm">0</span>:G=<span class="nm">0</span>
+        <span class="kw">Case</span> <span class="nm">7</span>: A=<span class="nm">0</span>:B=<span class="nm">0</span>:C=<span class="nm">0</span>:D=<span class="nm">1</span>:E=<span class="nm">1</span>:F=<span class="nm">1</span>:G=<span class="nm">1</span>
+        <span class="kw">Case</span> <span class="nm">8</span>: A=<span class="nm">0</span>:B=<span class="nm">0</span>:C=<span class="nm">0</span>:D=<span class="nm">0</span>:E=<span class="nm">0</span>:F=<span class="nm">0</span>:G=<span class="nm">0</span>
+        <span class="kw">Case</span> <span class="nm">9</span>: A=<span class="nm">0</span>:B=<span class="nm">0</span>:C=<span class="nm">0</span>:D=<span class="nm">0</span>:E=<span class="nm">1</span>:F=<span class="nm">0</span>:G=<span class="nm">0</span>
+        <span class="kw">Case</span> <span class="nm">10</span>: A=<span class="nm">0</span>:B=<span class="nm">0</span>:C=<span class="nm">1</span>:D=<span class="nm">1</span>:E=<span class="nm">0</span>:F=<span class="nm">0</span>:G=<span class="nm">0</span>  <span class="cm">' P</span>
+        <span class="kw">Case</span> <span class="nm">11</span>: A=<span class="nm">1</span>:B=<span class="nm">1</span>:C=<span class="nm">0</span>:D=<span class="nm">0</span>:E=<span class="nm">0</span>:F=<span class="nm">0</span>:G=<span class="nm">0</span>  <span class="cm">' b</span>
+        <span class="kw">Case</span> <span class="nm">12</span>: A=<span class="nm">1</span>:B=<span class="nm">0</span>:C=<span class="nm">0</span>:D=<span class="nm">0</span>:E=<span class="nm">0</span>:F=<span class="nm">1</span>:G=<span class="nm">0</span>  <span class="cm">' d</span>
+        <span class="kw">Case</span> <span class="nm">13</span>: A=<span class="nm">0</span>:B=<span class="nm">1</span>:C=<span class="nm">1</span>:D=<span class="nm">1</span>:E=<span class="nm">0</span>:F=<span class="nm">0</span>:G=<span class="nm">0</span>  <span class="cm">' F</span>
+        <span class="kw">Case</span> <span class="nm">14</span>: A=<span class="nm">1</span>:B=<span class="nm">0</span>:C=<span class="nm">0</span>:D=<span class="nm">1</span>:E=<span class="nm">0</span>:F=<span class="nm">0</span>:G=<span class="nm">0</span>  <span class="cm">' H</span>
+        <span class="kw">Case</span> <span class="nm">15</span>: A=<span class="nm">1</span>:B=<span class="nm">1</span>:C=<span class="nm">1</span>:D=<span class="nm">0</span>:E=<span class="nm">0</span>:F=<span class="nm">0</span>:G=<span class="nm">1</span>  <span class="cm">' L</span>
+    <span class="kw">End Select</span>
+<span class="kw">End Sub</span></pre>
+  </div>
+</div>
+
+<!-- ============================================================
+     7. IR REMOTE CONTROL (RC5)
+     ============================================================ -->
+<div class="card card-green" id="s7">
+  <h2>7. IR Remote Control (RC5)</h2>
+  <p>TEMP209 uses the <strong>RC5 protocol</strong> with a 3-slot array structure.</p>
+
+  <div class="note note-yellow">
+    <strong>RC5 Array Structure (from firmware):</strong>
+    <ul style="margin-top:8px;">
+      <li><code>Irtxt(1)</code> = <strong>Remote Address</strong> — used for filtering (default: 3142)</li>
+      <li><code>Irtxt(2)</code> = <strong>Command 1</strong> — primary command</li>
+      <li><code>Irtxt(3)</code> = <strong>Command 2</strong> — secondary command (optional)</li>
+    </ul>
+  </div>
+
+  <h3>Why Two Commands?</h3>
+  <p>
+    Some RC5 remotes (especially HVAC/AC controls) transmit <strong>multiple parameters</strong> in a single keypress (e.g., temperature <strong>and</strong> fan speed). The 3-slot array captures and processes all transmitted data.
+  </p>
+
+  <div class="note note-orange">
+    <strong>⚠️ Important:</strong> Not all remotes use this multi-command format. Verify your remote via serial monitoring.
+  </div>
+
+  <h3>Default Command Codes (from firmware):</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Address</th><th>Command 1</th><th>Action</th></tr>
+      <tr><td>3142</td><td>735</td><td>Toggle Power</td></tr>
+      <tr><td>3142</td><td>2759</td><td>Toggle Out1</td></tr>
+      <tr><td>3142</td><td>3137</td><td>Report Temperature Log</td></tr>
+      <tr><td>3142</td><td>264</td><td>Toggle Menu</td></tr>
+      <tr><td>3142</td><td>22</td><td>Setpoint +1°C</td></tr>
+      <tr><td>3142</td><td>227</td><td>Setpoint −1°C</td></tr>
+    </table>
+  </div>
+
+  <p><em>Menu navigation (when Menu = 1):</em></p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Command 1</th><th>Action</th></tr>
+      <tr><td>2958</td><td>Menu Up</td></tr>
+      <tr><td>1738</td><td>Menu Down</td></tr>
+      <tr><td>1825</td><td>Increment parameter</td></tr>
+      <tr><td>285</td><td>Decrement parameter</td></tr>
+    </table>
+  </div>
+
+  <h3>Any RC5 Remote Works</h3>
+  <p>
+    Worried you can't find the example remote? Don't be. <strong>Most remotes are RC5</strong>, and any remote can be defined. Simply:
+  </p>
+  <ol>
+    <li>Note the address and command in the Bluetooth terminal</li>
+    <li>Replace the values in the code</li>
+    <li>Compile and program</li>
+  </ol>
+  <p>
+    You likely have a few spare remotes lying around at home. In the market, especially <strong>cheap Bluetooth audio module remotes</strong> (like the one used in this project) cost almost nothing.
+  </p>
+
+  <h3>Pairing Procedure</h3>
+  <div class="note">
+    <strong>Step 1: Capture Codes</strong>
+    <p>Connect TX to serial terminal at <strong>9600 baud</strong> and press a button. You'll see:</p>
+    <pre style="background:var(--code-bg); padding:10px; border-radius:8px; color:var(--code-text); font-family:monospace; direction:ltr; text-align:left; overflow-x:auto;">Address=3142
+command1=735
+command2=22</pre>
+  </div>
+  <div class="note">
+    <strong>Step 2: Update Firmware</strong>
+    <p>Replace values in the <code>Ir_down</code> subroutine:</p>
+    <pre style="background:var(--code-bg); padding:10px; border-radius:8px; color:var(--code-text); font-family:monospace; direction:ltr; text-align:left; overflow-x:auto;">If Irtxt(1) = "your_address" Then
+    If Irtxt(2) = "your_command1" Then Call YourFunction()
+    If Irtxt(3) = "your_command2" Then Call YourSecondaryFunction()</pre>
+  </div>
+
+  <div class="image-box">
+    <img src="temp209_remote.jpg" alt="Sample RC5 remote">
+    <div class="caption">Sample RC5 remote</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     8. SERIAL COMMANDS
+     ============================================================ -->
+<div class="card card-blue" id="s8">
+  <h2>8. Serial Commands</h2>
+  <p>9600 baud, 8N1.</p>
+
+  <div class="table-wrap">
+    <table>
+      <tr><th>Command</th><th>Function</th></tr>
+      <tr><td><code>set_temp+</code></td><td>Increase setpoint by 1°C</td></tr>
+      <tr><td><code>set_temp-</code></td><td>Decrease setpoint by 1°C</td></tr>
+      <tr><td><code>power</code></td><td>Toggle power state</td></tr>
+      <tr><td><code>report</code></td><td>Stream temperature log from EEPROM</td></tr>
+      <tr><td><code>out1</code></td><td>Toggle Out1 relay</td></tr>
+      <tr><td><code>menu</code></td><td>Toggle menu mode</td></tr>
+      <tr><td><code>up</code></td><td>Menu up</td></tr>
+      <tr><td><code>down</code></td><td>Menu down</td></tr>
+      <tr><td><code>incr</code></td><td>Increment menu parameter</td></tr>
+      <tr><td><code>decr</code></td><td>Decrement menu parameter</td></tr>
+    </table>
+  </div>
+
+  <div class="note">
+    <strong>Serial Output Example:</strong>
+    <pre style="background:var(--code-bg); padding:10px; border-radius:8px; color:var(--code-text); font-family:monospace; direction:ltr; text-align:left; margin-top:8px; overflow-x:auto;">Temp209
+temp=25
+Address=3142
+command1=735
+command2=22
+setpoint=26
+Fault</pre>
+  </div>
+</div>
+
+<!-- ============================================================
+     9. CONFIGURATION MENU
+     ============================================================ -->
+<div class="card card-purple" id="s9">
+  <h2>9. Configuration Menu</h2>
+  <p>Navigate using IR or serial commands. Parameters are stored in EEPROM.</p>
+
+  <h3>🎮 Access &amp; Navigation</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Action</th><th>IR / SoifGo</th><th>Serial</th></tr>
+      <tr><td>Enter menu</td><td>Center button / ◉</td><td><code>menu</code></td></tr>
+      <tr><td>Up</td><td>▲</td><td><code>up</code></td></tr>
+      <tr><td>Down</td><td>▼</td><td><code>down</code></td></tr>
+      <tr><td>Increase value</td><td>▶</td><td><code>incr</code></td></tr>
+      <tr><td>Decrease value</td><td>◀</td><td><code>decr</code></td></tr>
+      <tr><td>Exit</td><td>◉ again</td><td>—</td></tr>
+      <tr><td>Auto-exit</td><td>After 8 seconds</td><td>—</td></tr>
+    </table>
+  </div>
+
+  <h3>⚙️ Parameters</h3>
+
+  <div class="param">
+    <div class="param-header">
+      <div class="param-icon pi-p">P</div>
+      <div>
+        <div class="param-title">Protection Delay</div>
+        <div class="param-sub">Protects compressor from rapid cycling</div>
+      </div>
+    </div>
+    <p><strong>What:</strong> Mandatory delay between turning the relay off and back on.</p>
+    <p><strong>Why:</strong> Prevents shock from fast power cycling. Compressors in ACs and fridges (especially low-back-pressure types) may be under pressure and fail to start if switched rapidly — leading to motor stall and damage without protection.</p>
+    <p><strong>Range:</strong> <code>0</code> = disabled · <code>1-9</code> = minutes</p>
+    <div class="note note-green">
+      <strong>Smart behavior:</strong> If power doesn't drop and the compressor stops due to temperature control, TEMP209 still counts the delay so the next start isn't delayed unnecessarily. Protection is <strong>always active</strong>.
+    </div>
+  </div>
+
+  <div class="param">
+    <div class="param-header">
+      <div class="param-icon pi-l">L</div>
+      <div>
+        <div class="param-title">Display Light</div>
+        <div class="param-sub">Brightness control</div>
+      </div>
+    </div>
+    <p><strong>What:</strong> Adjusts brightness of the 2-digit display.</p>
+    <p><strong>Why:</strong> Optimize power consumption, or increase brightness in well-lit environments for better visibility.</p>
+    <p><strong>Range:</strong> <code>0</code> = lowest · <code>9</code> = highest</p>
+  </div>
+
+  <div class="param">
+    <div class="param-header">
+      <div class="param-icon pi-d">d</div>
+      <div>
+        <div class="param-title">Delta Temperature</div>
+        <div class="param-sub">Hysteresis / temperature gap</div>
+      </div>
+    </div>
+    <p><strong>What:</strong> Temperature gap between relay ON and OFF.</p>
+    <p><strong>Why:</strong> Sometimes you need to store a bit of heat or cold, or avoid constant switching from rapid temperature changes. Delta lets the controller run a bit warmer or cooler than the setpoint.</p>
+    <p><strong>Example:</strong> Setpoint = 25, Delta = 2</p>
+    <ul>
+      <li>Heating: relay ON below 25, OFF above 27</li>
+      <li>Cooling: relay ON above 27, OFF below 25</li>
+    </ul>
+    <p><strong>Range:</strong> 0-9°C</p>
+  </div>
+
+  <div class="param">
+    <div class="param-header">
+      <div class="param-icon pi-f">F</div>
+      <div>
+        <div class="param-title">Fault Delay</div>
+        <div class="param-sub">Reaction delay to fault — always active</div>
+      </div>
+    </div>
+    <p><strong>What:</strong> Delays the controller's reaction to a fault signal.</p>
+    <p><strong>Why:</strong> Motors with high inrush current may briefly trigger the fault input on startup. This delay prevents false trips while still providing protection.</p>
+    <p><strong>Range:</strong></p>
+    <ul>
+      <li><code>0</code> = fastest reaction (immediate fault detection)</li>
+      <li><code>1-9</code> = delay in seconds before reacting to fault</li>
+    </ul>
+    <div class="note note-red">
+      <strong>Always active:</strong> The fault delay is always enabled and cannot be turned off. <code>0</code> gives the fastest reaction, <code>1-9</code> adds seconds of delay for motors with high startup current.
+    </div>
+    <p><strong>Visual indication:</strong> When a fault occurs, the display shows <strong>"FF" blinking</strong> (eyes-catching alert).</p>
+  </div>
+
+  <div class="param">
+    <div class="param-header">
+      <div class="param-icon pi-h">H</div>
+      <div>
+        <div class="param-title">Heat / Cool Mode</div>
+        <div class="param-sub">Heater or cooler behavior</div>
+      </div>
+    </div>
+    <p><strong>Range:</strong> <code>1</code> = Heating (behaves like a heater) · <code>0</code> = Cooling (fridge, AC, ventilation fan)</p>
+  </div>
+
+  <div class="param">
+    <div class="param-header">
+      <div class="param-icon pi-b">b</div>
+      <div>
+        <div class="param-title">Beep / Buzzer</div>
+        <div class="param-sub">Alert volume</div>
+      </div>
+    </div>
+    <p><strong>What:</strong> Buzzer volume for key feedback and sensor-failure alarm.</p>
+    <p><strong>Range:</strong> <code>0</code> = off · <code>1-9</code> = increasing volume</p>
+  </div>
+
+  <h3>📄 Source: Menu Display</h3>
+  <div class="code-box">
+    <div class="code-header">
+      <span class="code-title">temp209_m8.bas — Sub Menudisplay()</span>
+      <div class="code-actions">
+        <button class="code-toggle">▼ Show</button>
+        <button class="code-copy">📋 Copy</button>
+      </div>
+    </div>
+    <pre><span class="kw">Sub</span> Menudisplay()
+    Menutimer = <span class="nm">1</span>
+    <span class="kw">Reset</span> Watchdog
+    <span class="kw">Select Case</span> Menunumber
+        <span class="kw">Case</span> <span class="nm">0</span>      <span class="cm">' Protection Delay (P)</span>
+            Tens = <span class="nm">10</span>
+            <span class="kw">If</span> Menu_adder = <span class="nm">1</span> <span class="kw">And</span> Protectdelay &lt; <span class="nm">9</span> <span class="kw">Then Incr</span> Protectdelay
+            <span class="kw">If</span> Menu_adder = <span class="nm">2</span> <span class="kw">And</span> Protectdelay &gt; <span class="nm">0</span> <span class="kw">Then Decr</span> Protectdelay
+            Units = Protectdelay
+            <span class="kw">If</span> Menu_adder &lt;&gt; <span class="nm">0</span> <span class="kw">Then Writeeeprom</span> Protectdelay , <span class="nm">3</span>
+
+        <span class="kw">Case</span> <span class="nm">1</span>       <span class="cm">' Light (L)</span>
+            Tens = <span class="nm">15</span>
+            <span class="kw">If</span> Menu_adder = <span class="nm">1</span> <span class="kw">And</span> Brightness &lt; <span class="nm">9</span> <span class="kw">Then Incr</span> Brightness
+            <span class="kw">If</span> Menu_adder = <span class="nm">2</span> <span class="kw">And</span> Brightness &gt; <span class="nm">0</span> <span class="kw">Then Decr</span> Brightness
+            Units = Brightness
+            <span class="kw">If</span> Menu_adder &lt;&gt; <span class="nm">0</span> <span class="kw">Then Writeeeprom</span> Brightness , <span class="nm">4</span>
+
+        <span class="kw">Case</span> <span class="nm">2</span>      <span class="cm">' Deltatemp (d)</span>
+            Tens = <span class="nm">12</span>
+            <span class="kw">If</span> Menu_adder = <span class="nm">1</span> <span class="kw">And</span> Deltatemp &lt; <span class="nm">9</span> <span class="kw">Then Incr</span> Deltatemp
+            <span class="kw">If</span> Menu_adder = <span class="nm">2</span> <span class="kw">And</span> Deltatemp &gt; <span class="nm">0</span> <span class="kw">Then Decr</span> Deltatemp
+            Units = Deltatemp
+            <span class="kw">If</span> Menu_adder &lt;&gt; <span class="nm">0</span> <span class="kw">Then Writeeeprom</span> Deltatemp , <span class="nm">5</span>
+
+        <span class="kw">Case</span> <span class="nm">3</span>      <span class="cm">' Fault Delay (F)</span>
+            Tens = <span class="nm">13</span>
+            <span class="kw">If</span> Menu_adder = <span class="nm">1</span> <span class="kw">And</span> Faultdelay &lt; <span class="nm">9</span> <span class="kw">Then Incr</span> Faultdelay
+            <span class="kw">If</span> Menu_adder = <span class="nm">2</span> <span class="kw">And</span> Faultdelay &gt; <span class="nm">0</span> <span class="kw">Then Decr</span> Faultdelay
+            Units = Faultdelay
+            <span class="kw">If</span> Menu_adder &lt;&gt; <span class="nm">0</span> <span class="kw">Then Writeeeprom</span> Faultdelay , <span class="nm">6</span>
+
+        <span class="kw">Case</span> <span class="nm">4</span>      <span class="cm">' Heatcoolmode (H)</span>
+            Tens = <span class="nm">14</span>
+            <span class="kw">If</span> Menu_adder = <span class="nm">1</span> <span class="kw">Then</span> Heatcoolmode = <span class="nm">1</span>
+            <span class="kw">If</span> Menu_adder = <span class="nm">2</span> <span class="kw">Then</span> Heatcoolmode = <span class="nm">0</span>
+            Units = Heatcoolmode
+            <span class="kw">If</span> Menu_adder &lt;&gt; <span class="nm">0</span> <span class="kw">Then Writeeeprom</span> Heatcoolmode , <span class="nm">7</span>
+
+        <span class="kw">Case</span> <span class="nm">5</span>       <span class="cm">' beep(b)</span>
+            Tens = <span class="nm">11</span>
+            <span class="kw">If</span> Menu_adder = <span class="nm">1</span> <span class="kw">And</span> Beep &lt; <span class="nm">9</span> <span class="kw">Then Incr</span> Beep
+            <span class="kw">If</span> Menu_adder = <span class="nm">2</span> <span class="kw">And</span> Beep &gt; <span class="nm">0</span> <span class="kw">Then Decr</span> Beep
+            Units = Beep
+            <span class="kw">If</span> Menu_adder &lt;&gt; <span class="nm">0</span> <span class="kw">Then Writeeeprom</span> Beep , <span class="nm">8</span>
+            <span class="kw">Call</span> Beepvolume()
+    <span class="kw">End Select</span>
+
+    <span class="kw">If</span> Menu_adder &gt; <span class="nm">0</span> <span class="kw">Then</span> Menu_adder = <span class="nm">0</span>
+<span class="kw">End Sub</span></pre>
+  </div>
+</div>
+
+<!-- ============================================================
+     10. THERMAL CONTROL LOGIC
+     ============================================================ -->
+<div class="card card-orange" id="s10">
+  <h2>10. Thermal Control Logic</h2>
+  <p>The <code>Heat_cool()</code> subroutine manages automatic temperature regulation:</p>
+  <ul>
+    <li><strong>Heating Mode (H=1):</strong> <code>Temp_out = 1</code> when <code>Currenttemp &lt; Settemp</code></li>
+    <li><strong>Cooling Mode (H=0):</strong> <code>Temp_out = 1</code> when <code>Currenttemp &gt; Settemp + Deltatemp</code></li>
+    <li><strong>Protection Delay (P):</strong> Enforces a delay between cycles to protect compressors</li>
+    <li><strong>Fault Override:</strong> If fault input is active (after the configured Fault Delay), <code>Temp_out = 0</code> and display shows blinking <strong>"FF"</strong></li>
+  </ul>
+
+  <h3>📄 Source: Heat/Cool Control</h3>
+  <div class="code-box">
+    <div class="code-header">
+      <span class="code-title">temp209_m8.bas — Sub Heat_cool()</span>
+      <div class="code-actions">
+        <button class="code-toggle">▼ Show</button>
+        <button class="code-copy">📋 Copy</button>
+      </div>
+    </div>
+    <pre><span class="kw">Sub</span> Heat_cool()
+    <span class="kw">Disable</span> Interrupts
+
+    Tempthreshold = Settemp + Deltatemp
+
+    <span class="kw">If</span> Protectdelay = <span class="nm">0</span> <span class="kw">Then</span> Protect_delay_flag = <span class="nm">1</span>
+
+    <span class="kw">If</span> Heatcoolmode = <span class="nm">1</span> <span class="kw">Then</span>
+        <span class="cm">' Heating Mode</span>
+        <span class="kw">If</span> Currenttemp &lt; Settemp <span class="kw">Then</span>
+            <span class="kw">If</span> Protect_delay_flag = <span class="nm">1</span> <span class="kw">And</span> Faultstatus = <span class="nm">0</span> <span class="kw">Then</span> Temp_out = <span class="nm">1</span>
+            Blink_show = <span class="nm">1</span>
+        <span class="kw">Elseif</span> Currenttemp &gt; Tempthreshold <span class="kw">Then</span>
+            Temp_out = <span class="nm">0</span>
+            Blink_show = <span class="nm">0</span>
+        <span class="kw">End If</span>
+    <span class="kw">End If</span>
+
+    <span class="kw">If</span> Heatcoolmode = <span class="nm">0</span> <span class="kw">Then</span>
+        <span class="cm">' Cooling Mode</span>
+        <span class="kw">If</span> Currenttemp &gt; Tempthreshold <span class="kw">Then</span>
+            <span class="kw">If</span> Protect_delay_flag = <span class="nm">1</span> <span class="kw">And</span> Faultstatus = <span class="nm">0</span> <span class="kw">Then</span> Temp_out = <span class="nm">1</span>
+            Blink_show = <span class="nm">1</span>
+        <span class="kw">Elseif</span> Currenttemp &lt; Settemp <span class="kw">Then</span>
+            Temp_out = <span class="nm">0</span>
+            Blink_show = <span class="nm">0</span>
+        <span class="kw">End If</span>
+    <span class="kw">End If</span>
+
+    <span class="kw">If</span> Temp_out = <span class="nm">1</span> <span class="kw">Then</span>
+        Temp_out_step = <span class="nm">0</span>
+    <span class="kw">Else</span>
+        <span class="kw">If</span> Temp_out_step = <span class="nm">0</span> <span class="kw">Then</span> Temp_out_step = <span class="nm">1</span>
+    <span class="kw">End If</span>
+
+    <span class="kw">If</span> Protectdelay &gt; <span class="nm">0</span> <span class="kw">And</span> Temp_out_step = <span class="nm">1</span> <span class="kw">Then</span>
+        Protect_delay_tick = <span class="nm">1</span>
+        Temp_out_step = <span class="nm">2</span>
+        Protect_delay_flag = <span class="nm">0</span>
+    <span class="kw">End If</span>
+
+    <span class="kw">Enable</span> Interrupts
+    Heatcoolstate = <span class="nm">0</span>
+<span class="kw">End Sub</span></pre>
+  </div>
+</div>
+
+<!-- ============================================================
+     11. SOIFGO MOBILE INTERFACE
+     ============================================================ -->
+<div class="card card-blue" id="s11">
+  <h2>11. SoifGo Mobile Interface</h2>
+
+  <p>
+    <strong>SoifGo</strong> is a mobile app that connects to TEMP209 via <strong>Bluetooth</strong>, giving you full control from your phone. The UI is <strong>customizable</strong> — you can modify or extend it as you wish.
+  </p>
+
+  <div class="image-box">
+    <img src="soifgo_main.jpg" alt="SoifGo main screen">
+    <div class="caption">Figure 5: SoifGo main screen</div>
+  </div>
+
+  <h3>🔌 Bluetooth Connection</h3>
+  <p>Pair your phone with the controller's Bluetooth module and connect.</p>
+
+  <h3>📺 Live Display (Top)</h3>
+  <ul>
+    <li><strong>Live temperature</strong> — updated every second</li>
+    <li><strong>Setpoint</strong> — current target temperature</li>
+  </ul>
+
+  <h3>🖥️ Terminal Panel</h3>
+  <p>The most educational feature! When connected, pressing any remote button shows its address and command in the terminal:</p>
+  <pre style="background:var(--code-bg); padding:10px; border-radius:8px; color:var(--code-text); font-family:monospace; direction:ltr; text-align:left; overflow-x:auto;">Address=3142
+command1=735
+command2=22</pre>
+  <p>Use this to <strong>discover codes for any remote</strong>, then replace them in your source, compile, and program.</p>
+
+  <div class="image-box">
+    <img src="soifgo_terminal.jpg" alt="Terminal showing remote codes">
+    <div class="caption">Figure 6: Terminal showing remote codes</div>
+  </div>
+
+  <h3>📊 Report Button &amp; Temperature Graph</h3>
+  <ol>
+    <li>Press the <strong>Report</strong> button</li>
+    <li>The command is sent to the controller</li>
+    <li>The controller streams the latest log</li>
+    <li><strong>Wait ~4 seconds</strong></li>
+    <li>The <strong>8-hour temperature graph</strong> appears</li>
+  </ol>
+
+  <p><strong>Graph features:</strong></p>
+  <ul>
+    <li>🔍 <strong>Zoom</strong> in the upper half</li>
+    <li>📍 <strong>Pan</strong> by dragging</li>
+    <li>📏 <strong>Cursor bars</strong> show time and temperature (lower half)</li>
+  </ul>
+
+  <div class="image-box">
+    <img src="soifgo_graph.jpg" alt="8-hour temperature graph">
+    <div class="caption">Figure 7: 8-hour temperature graph</div>
+  </div>
+
+  <h3>🎮 Bottom Buttons (Mimic Remote)</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Button</th><th>Function</th></tr>
+      <tr><td><strong>Out1</strong></td><td>Toggle reserved output</td></tr>
+      <tr><td><strong>Power</strong></td><td>Toggle device power</td></tr>
+      <tr><td><strong>+1</strong></td><td>Increase setpoint</td></tr>
+      <tr><td><strong>-1</strong></td><td>Decrease setpoint</td></tr>
+      <tr><td><strong>Report</strong></td><td>Request temperature log</td></tr>
+    </table>
+  </div>
+
+  <h3>◉ Center D-Pad (5 Buttons)</h3>
+  <ul>
+    <li>▲ Up</li>
+    <li>▼ Down</li>
+    <li>◀ Left (decrease)</li>
+    <li>▶ Right (increase)</li>
+    <li>◉ Center (enter / exit menu)</li>
+  </ul>
+
+  <div class="image-box">
+    <img src="soifgo_dpad.jpg" alt="Menu D-Pad">
+    <div class="caption">Figure 8: Menu D-Pad</div>
+  </div>
+
+  <div class="note note-green">
+    <strong>SoifGo = virtual remote + code-discovery tool + graph viewer.</strong>
+  </div>
+</div>
+
+<!-- ============================================================
+     12. FAULT & SAFETY
+     ============================================================ -->
+<div class="card card-red" id="s12">
+  <h2>12. Fault &amp; Safety</h2>
+
+  <p>When the fault input on <strong>PORTC.3</strong> receives a <strong>HIGH signal (2.7V–5V)</strong>, and after the configured <strong>Fault Delay</strong> has passed:</p>
+  <ul>
+    <li>Immediately sets <code>Temp_out = 0</code></li>
+    <li>Sets <code>Faultstatus = 1</code></li>
+    <li>Displays blinking <strong>"FF"</strong> on the 7-segment display</li>
+    <li>Sends <code>Fault</code> on serial</li>
+  </ul>
+  <p>Fault clears when the signal returns LOW or the device is reset.</p>
+
+  <h3>Fault Delay (F Parameter)</h3>
+  <p>The fault reaction delay is always active:</p>
+  <ul>
+    <li><code>0</code> = fastest possible reaction (immediate fault detection)</li>
+    <li><code>1-9</code> = delay in seconds before reacting to fault</li>
+  </ul>
+  <p>This is useful for motors with high inrush current that may briefly trigger the fault input on startup, preventing false trips.</p>
+
+  <h3>Hall Sensor Interface</h3>
+  <p>The Fault input is typically driven by the Hall-sensor current comparator (see Section 14). Any over-current triggers a fault, cutting the relay for protection.</p>
+
+  <div class="note note-red">
+    <strong>⚠️ Critical Safety Warning:</strong>
+    <ul style="margin-top:8px;">
+      <li><strong>Do NOT rely solely on the F (Fault) protection</strong></li>
+      <li>Always add a proper <strong>miniature circuit breaker (MCB)</strong> to the load side</li>
+      <li>Add an <strong>inline glass fuse</strong> for the MCU power supply</li>
+      <li>These are your primary protection; the Fault input is a secondary safety net</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================================================
+     13. HARDWARE
+     ============================================================ -->
+<div class="card card-purple" id="s13">
+  <h2>13. Hardware</h2>
+
+  <h3>Two-Board Design</h3>
+  <p>TEMP209 is designed as <strong>two separate boards</strong>:</p>
+  <ul>
+    <li><strong>Board 1:</strong> Motor / relay / power</li>
+    <li><strong>Board 2:</strong> Display / control / sensor</li>
+  </ul>
+
+  <h3>Mounting Options</h3>
+  <ul>
+    <li><strong>Integrated:</strong> Place both boards side by side in one enclosure</li>
+    <li><strong>Split:</strong> One near the motor, one in the room or control panel</li>
+  </ul>
+
+  <h3>🛡️ Safety Clearance</h3>
+  <p>
+    On the relay board, sufficient <strong>physical spacing</strong> is provided between the <strong>mains AC section</strong> and the <strong>low-voltage MCU power section</strong>. Be careful when handling the board, and always observe electrical safety practices.
+  </p>
+
+  <div class="note note-red">
+    <strong>⚠️ Fusing Recommendation:</strong>
+    <ul style="margin-top:8px;">
+      <li><strong>Load side:</strong> Miniature circuit breaker (MCB) matched to your load</li>
+      <li><strong>MCU supply:</strong> Inline glass fuse (e.g., 500 mA)</li>
+      <li>Never operate without fuses</li>
+    </ul>
+  </div>
+
+  <div class="image-box">
+    <img src="temp209_board1.jpg" alt="Board 1 — power/relay">
+    <div class="caption">Figure 9: Board 1 — power/relay</div>
+  </div>
+
+  <div class="image-box">
+    <img src="temp209_board2.jpg" alt="Board 2 — display/control">
+    <div class="caption">Figure 10: Board 2 — display/control</div>
+  </div>
+
+  <div class="image-box">
+    <img src="temp209_pcb.png" alt="PCB layout">
+    <div class="caption">Figure 11: PCB layout</div>
+  </div>
+
+  <div class="image-box">
+    <img src="temp209_schematic.png" alt="Schematic diagram">
+    <div class="caption">Figure 12: Schematic diagram</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     14. CURRENT SENSING WITH HALL SENSOR
+     ============================================================ -->
+<div class="card card-orange" id="s14">
+  <h2>14. Current Sensing with Hall Sensor</h2>
+
+  <h3>The Challenge</h3>
+  <p>Reading AC/DC current to detect over-current and trigger emergency shutdown.</p>
+
+  <h3>Candidate Methods</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Method</th><th>Pros</th><th>Cons</th></tr>
+      <tr><td>Rectification + capacitor</td><td>Simple</td><td>Loses useful signal, complex circuit</td></tr>
+      <tr><td>ADC sampling</td><td>Accurate</td><td>Heavy MCU load, large code</td></tr>
+      <tr><td><strong>Comparator op-amp</strong> ⭐</td><td>Cheap, reliable, compact</td><td>Needs initial calibration</td></tr>
+    </table>
+  </div>
+
+  <h3>🏆 Selected Method: Comparator Op-Amp</h3>
+
+  <h4>Hardware Setup</h4>
+  <ul>
+    <li>Hall sensor sandwiched between two metal washers</li>
+    <li>5 turns of wire wound around it</li>
+    <li>Hall output with <strong>2.56V offset</strong></li>
+  </ul>
+
+  <h4>How It Works</h4>
+  <ul>
+    <li><strong>AC current:</strong> Output oscillates sinusoidally at mains frequency</li>
+    <li><strong>DC current:</strong> Level shifts above/below the 2.56V offset (depending on direction)</li>
+  </ul>
+
+  <div class="image-box">
+    <img src="temp209_hall.jpg" alt="Hall sensor with wound wire">
+    <div class="caption">Figure 13: Hall sensor with wound wire</div>
+  </div>
+
+  <h4>Calculations</h4>
+  <ul>
+    <li>Each 1 A of current → <strong>60 mV</strong> at the op-amp output</li>
+    <li>4 A → 240 mV + 2.56 V = <strong>2.8 V</strong></li>
+    <li>5 A → 300 mV + 2.56 V = <strong>2.86 V</strong></li>
+  </ul>
+
+  <div class="note note-yellow">
+    <strong>Calibration Procedure:</strong>
+    <ol style="margin-top:8px;">
+      <li>Apply the expected maximum normal current (e.g., 4 A)</li>
+      <li>Besides voltage calculations, turn the potentiometer until the fault LED turns off.</li>
+      <li>At 4 A, the Hall output reaches 2.8 V, the op-amp begins oscillation, and the MCU Fault input is triggered.</li>
+      <li>The fault LED indicator should be off under normal current; adjust the potentiometer accordingly.</li>
+      <li>When fault occurs, the 7-segment display shows blinking <strong>"FF"</strong> — an eye-catching alert.</li>
+      <li>Relay cuts off + Fault announced on serial.</li>
+    </ol>
+    <p style="margin-top:8px;">Depending on the op-amp and circuit, fine-tuning may be needed — but <strong>one-time calibration is enough</strong>. When adjusting the potentiometer, aim to turn it until the fault LED turns off; this is the correct threshold.</p>
+  </div>
+
+  <div class="image-box">
+    <img src="temp209_opamp.jpg" alt="Comparator op-amp circuit">
+    <div class="caption">Figure 14: Comparator op-amp circuit</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     15. 8-HOUR TEMPERATURE LOGGER
+     ============================================================ -->
+<div class="card card-blue" id="s15">
+  <h2>15. 8-Hour Temperature Logger</h2>
+
+  <p>
+    TEMP209 automatically logs <strong>one temperature sample every minute</strong> to EEPROM. This gives you the <strong>last 8 hours</strong> (480 samples) — always available, even after power loss.
+  </p>
+
+  <h3>How It Works</h3>
+  <ul>
+    <li><strong>Every 1 minute:</strong> a temperature sample is stored in EEPROM</li>
+    <li><strong>Capacity:</strong> 480 samples = <strong>last 8 hours</strong></li>
+    <li><strong>Circular buffer:</strong> when full, the oldest sample is overwritten</li>
+    <li><strong>Persistent:</strong> samples survive power loss</li>
+  </ul>
+
+  <h3>Viewing the Report</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Method</th><th>How</th></tr>
+      <tr><td><strong>Serial command</strong></td><td>Send <code>report</code> via Bluetooth or cable</td></tr>
+      <tr><td><strong>IR remote</strong></td><td>Press the button coded <code>3137</code></td></tr>
+    </table>
+  </div>
+  <p>The full report is sent to the <strong>SoifGo</strong> app, where you can see the temperature graph on your phone. 📊</p>
+
+  <h3>Report Format</h3>
+  <pre style="background:var(--code-bg); padding:10px; border-radius:8px; color:var(--code-text); font-family:monospace; direction:ltr; text-align:left; overflow-x:auto;">start
+25
+26
+24
+...
+23
+end</pre>
+</div>
+
+<!-- ============================================================
+     16. TIMING PARAMETERS
+     ============================================================ -->
+<div class="card card-purple" id="s16">
+  <h2>16. Timing Parameters</h2>
+  <ul>
+    <li><strong>Timer2:</strong> 8-bit, prescaler 8 → 1 µs per tick</li>
+    <li><strong>Overflow:</strong> 256 ticks = 256 µs</li>
+    <li><strong>1 second:</strong> 3906 overflows</li>
+    <li><strong>1 minute:</strong> 234,360 overflows</li>
+    <li><strong>Temperature print:</strong> every ~1 second (3906 overflows)</li>
+    <li><strong>Data logging:</strong> every 1 minute (234,360 overflows)</li>
+    <li><strong>Setpoint save:</strong> after 2000 ticks (~512 ms)</li>
+    <li><strong>Menu timeout:</strong> 8000 ticks (~2 s)</li>
+    <li><strong>IR wait timeout:</strong> 222 ticks (~56 ms)</li>
+  </ul>
+</div>
+
+<!-- ============================================================
+     17. DEBUGGING
+     ============================================================ -->
+<div class="card card-green" id="s17">
+  <h2>17. Debugging</h2>
+  <p>Monitor serial output at <strong>9600 baud, 8N1</strong>:</p>
+  <pre style="background:var(--code-bg); padding:14px; border-radius:8px; color:var(--code-text); font-family:monospace; direction:ltr; text-align:left; border:1px solid rgba(79,140,255,0.15); overflow-x:auto;">Temp209                    - Startup message
+temp=25                   - Current temperature
+Address=3142              - Remote address
+command1=735              - Primary command
+command2=22               - Secondary command
+setpoint=26               - Setpoint changed
+Fault                     - Fault condition detected
+start                     - Log report start
+25                        - Temperature sample
+26                        - Temperature sample
+end                       - Log report end</pre>
+
+  <h3>Common Issues</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Symptom</th><th>Possible Cause</th></tr>
+      <tr><td>Display shows "--"</td><td>Sensor disconnected or faulty</td></tr>
+      <tr><td>Display shows blinking "FF"</td><td>Fault input triggered (after Fault Delay)</td></tr>
+      <tr><td>No serial output</td><td>Wrong baud rate, TX not connected</td></tr>
+      <tr><td>IR not responding</td><td>Wrong remote codes — verify via terminal</td></tr>
+      <tr><td>Relay chatters</td><td>Delta too small — increase it</td></tr>
+      <tr><td>False fault trips on motor start</td><td>Increase Fault Delay (F parameter) to 1-9 seconds</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ============================================================
+     18. BUILDING & PROGRAMMING
+     ============================================================ -->
+<div class="card card-green" id="s18">
+  <h2>18. Building &amp; Programming</h2>
+
+  <h3>🔌 On-Board Programmer Socket</h3>
+  <p>
+    The board includes a <strong>programmer socket</strong> for easy development and in-circuit programming. You can use any standard AVR programmer, such as <strong>USBasp</strong>.
+  </p>
+
+  <h3>🔧 Not Familiar with BASCOM?</h3>
+  <div class="note note-green">
+    Don't worry. If you don't know <strong>BASCOM-AVR</strong>, simply paste the source code into an <strong>AI assistant</strong> and ask it to translate the code into a language you're familiar with (C, Arduino, MicroPython, etc.).
+  </div>
+
+  <h3>Recommended Workflow</h3>
+  <ol>
+    <li>Install BASCOM-AVR (or use an AI assistant to port)</li>
+    <li>Open <code>temp209_m8.bas</code></li>
+    <li>Adjust remote codes if needed</li>
+    <li>Compile</li>
+    <li>Connect USBasp to the programmer socket</li>
+    <li>Flash the MCU</li>
+    <li>Verify via serial terminal at 9600 baud</li>
+  </ol>
+
+  <div class="image-box">
+    <img src="temp209_programmer.jpg" alt="On-board programmer socket">
+    <div class="caption">Figure 15: On-board programmer socket</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     19. DOWNLOADS & LINKS
+     ============================================================ -->
+<div class="card card-blue" id="s19">
+  <h2>19. Downloads &amp; Links</h2>
+
+  <h3>📦 Release Package</h3>
+  <div class="download-grid">
+    <a class="download-item" href="../releases/latest" download>
+      <div class="di-icon">📦</div>
+      <div class="di-name">Latest Release</div>
+      <div class="di-desc">Full package (ZIP)</div>
+    </a>
+    <a class="download-item" href="../releases">
+      <div class="di-icon">📚</div>
+      <div class="di-name">All Releases</div>
+      <div class="di-desc">Version history</div>
+    </a>
+    <a class="download-item" href="../issues">
+      <div class="di-icon">🐛</div>
+      <div class="di-name">Report a Bug</div>
+      <div class="di-desc">GitHub Issues</div>
+    </a>
+    <a class="download-item" href="../blob/main/README.md">
+      <div class="di-icon">📖</div>
+      <div class="di-name">README</div>
+      <div class="di-desc">Quick start</div>
+    </a>
+  </div>
+
+  <h3>📄 Individual Files</h3>
+  <div class="download-grid">
+    <a class="download-item" href="../raw/main/src/temp209_m8.bas" download>
+      <div class="di-icon">📄</div>
+      <div class="di-name">temp209_m8.bas</div>
+      <div class="di-desc">BASCOM source</div>
+    </a>
+    <a class="download-item" href="../raw/main/firmware/temp209_m8.hex" download>
+      <div class="di-icon">⚙️</div>
+      <div class="di-name">temp209_m8.hex</div>
+      <div class="di-desc">Firmware</div>
+    </a>
+    <a class="download-item" href="../raw/main/hardware/pcb.zip" download>
+      <div class="di-icon">🛠️</div>
+      <div class="di-name">PCB Gerbers</div>
+      <div class="di-desc">Manufacturing files</div>
+    </a>
+    <a class="download-item" href="../raw/main/hardware/schematic.pdf" download>
+      <div class="di-icon">📐</div>
+      <div class="di-name">Schematic</div>
+      <div class="di-desc">PDF diagram</div>
+    </a>
+  </div>
+
+  <h3>🔗 External Links</h3>
+  <div class="download-grid">
+    <a class="download-item" href="https://soifgo.example.com" target="_blank" rel="noopener">
+      <div class="di-icon">📱</div>
+      <div class="di-name">SoifGo App</div>
+      <div class="di-desc">Download the mobile app</div>
+    </a>
+  </div>
+
+  <div class="note">
+    <strong>Note:</strong> Some links use relative paths (<code>../</code>) since this documentation is hosted inside the GitHub repository.
+  </div>
+</div>
+
+<!-- ============================================================
+     20. TEST VIDEOS
+     ============================================================ -->
+<div class="card card-green" id="s20">
+  <h2>20. Test Videos</h2>
+  <p>Watch TEMP209 in action. These videos demonstrate real-world testing, menu navigation, remote control, and the fault protection system.</p>
+
+  <h3>🎬 Video 1: Overview &amp; Basic Operation</h3>
+  <div class="image-box">
+    <video controls preload="metadata">
+      <source src="temp209_test1.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div class="caption">Video 1: TEMP209 Overview &amp; Basic Operation</div>
+  </div>
+
+  <h3>🎬 Video 2: Menu Navigation &amp; Remote Control</h3>
+  <div class="image-box">
+    <video controls preload="metadata">
+      <source src="temp209_test2.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div class="caption">Video 2: Menu Navigation &amp; Remote Control</div>
+  </div>
+
+  <h3>🎬 Video 3: Fault Protection &amp; Hall Sensor Test</h3>
+  <div class="image-box">
+    <video controls preload="metadata">
+      <source src="temp209_test3.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div class="caption">Video 3: Fault Protection &amp; Hall Sensor Test</div>
+  </div>
+
+  <div class="note note-green">
+    <strong>📁 Local videos:</strong> Make sure the video files (<code>temp209_test1.mp4</code>, <code>temp209_test2.mp4</code>, <code>temp209_test3.mp4</code>) are placed in the same folder as this HTML file.
+  </div>
+</div>
+
+<!-- ============================================================
+     21. CHANGELOG
+     ============================================================ -->
+<div class="card card-yellow" id="s21">
+  <h2>21. Changelog</h2>
+
+  <h3>v1.0 — Initial Release</h3>
+  <ul>
+    <li>ATmega8 @ 8 MHz (compatible with ATmega88 / ATmega328)</li>
+    <li>DS18B20 1-Wire temperature sensor</li>
+    <li>Multiplexed 2-digit 7-segment display (direct drive)</li>
+    <li>RC5 infrared remote control with learnable codes</li>
+    <li>7-parameter configuration menu</li>
+    <li>EEPROM settings storage</li>
+    <li>8-hour circular temperature logger (480 samples)</li>
+    <li>Fault input for over-current protection with adjustable delay (always active)</li>
+    <li>Serial commands for automation</li>
+    <li>SoifGo mobile interface with live graph</li>
+    <li>Two-board split hardware design</li>
+    <li>On-board programmer socket</li>
+  </ul>
+
+  <div class="note note-yellow">
+    <strong>Note:</strong> This is the first public release. Future versions will be listed here.
+  </div>
+</div>
+
+<!-- ============================================================
+     22. ABOUT & LICENSE
+     ============================================================ -->
+<div class="card" id="s22">
+  <h2>22. About &amp; License</h2>
+
+  <p><strong>TEMP209</strong> is an open-source educational project by <strong>Saeid Moghadam</strong>.</p>
+
+  <h3>License</h3>
+  <p>Open Source — Educational Purpose.</p>
+
+  <h3>Contact</h3>
+  <ul>
+    <li>Email: <a href="mailto:YOUR_EMAIL" style="color:var(--blue);">YOUR_EMAIL</a></li>
+    <li>GitHub: <a href="https://github.com/USERNAME" style="color:var(--blue);" target="_blank" rel="noopener">github.com/USERNAME</a></li>
+  </ul>
+
+  <h3>Credits</h3>
+  <ul>
+    <li>Design &amp; firmware: Saeid Moghadam</li>
+    <li>Mobile interface: SoifGo</li>
+    <li>Developed with assistance from DeepSeek</li>
+  </ul>
+
+  <div class="note note-green">
+    <strong>Contributions welcome!</strong> Fork, improve, and share back.
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div class="footer">
+  <p><strong>TEMP209</strong> — Open-Source Temperature Controller</p>
+  <p>Developed by <span class="dev">Saeid Moghadam</span> · Open Source Hardware Initiative</p>
+  <p style="font-size: 0.8rem; color: var(--text-3); margin-top: 6px;">
+    BASCOM-AVR · ATmega8 @ 8MHz · RC5 Infrared · DS18B20 · EEPROM Data Logging
+  </p>
+</div>
+
+</div>
+
+<script>
+// ===== THEME TOGGLE =====
+const themeToggle = document.getElementById('themeToggle');
+const savedTheme = localStorage.getItem('temp209-theme') || 'dark';
+if (savedTheme === 'light') {
+  document.documentElement.setAttribute('data-theme', 'light');
+  themeToggle.textContent = '☀️';
+}
+themeToggle.addEventListener('click', () => {
+  const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+  if (isLight) {
+    document.documentElement.removeAttribute('data-theme');
+    themeToggle.textContent = '🌙';
+    localStorage.setItem('temp209-theme', 'dark');
+  } else {
+    document.documentElement.setAttribute('data-theme', 'light');
+    themeToggle.textContent = '☀️';
+    localStorage.setItem('temp209-theme', 'light');
+  }
+});
+
+// ===== CODE BOX TOGGLE & COPY =====
+document.querySelectorAll('.code-box').forEach(box => {
+  const toggleBtn = box.querySelector('.code-toggle');
+  const copyBtn = box.querySelector('.code-copy');
+  const pre = box.querySelector('pre');
+
+  toggleBtn.addEventListener('click', () => {
+    box.classList.toggle('open');
+    toggleBtn.textContent = box.classList.contains('open') ? '▲ Hide' : '▼ Show';
+  });
+
+  copyBtn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(pre.innerText);
+      copyBtn.textContent = '✓ Copied';
+      setTimeout(() => copyBtn.textContent = '📋 Copy', 1500);
+    } catch (e) {
+      copyBtn.textContent = '✗ Error';
+      setTimeout(() => copyBtn.textContent = '📋 Copy', 1500);
+    }
+  });
+});
+
+// ===== SMOOTH SCROLL =====
+document.querySelectorAll('.toc a').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+
+</body>
+</html>

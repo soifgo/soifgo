@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>Serial Port Manager + Robot Simulator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            justify-content: flex-start;
+            align-items: stretch;
+            gap: 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+        .panel {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+        }
+        .left-panel {
+            width: 350px;
+        }
+        .right-panel {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            height: auto;
+        }
+        h2 {
+            color: #333;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        select, input, button {
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #connectBtn {
+            background-color: red;
+        }
+        #connectBtn.connected {
+            background-color: green;
+        }
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        textarea {
+            width: 100%;
+            flex-grow: 1;
+            resize: none;
+            height: 400px;
+        }
+        .options {
+            margin-top: 10px;
+        }
+        .options label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+        }
+
+        /* Simulator */
+        #simBox {
+            width: 400px;
+            height: 300px;
+            background: #eee;
+            border: 2px solid #999;
+            position: relative;
+            margin: 20px auto;
+            border-radius: 10px;
+        }
+        #dot {
+            width: 15px;
+            height: 15px;
+            background: red;
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="panel left-panel">
+        <h2>Serial Port Manager</h2>
+        <button id="connectBtn" onclick="toggleConnection()">Connect</button>
+
+        <label for="baudRate">Baud Rate:</label>
+        <select id="baudRate">
+            <option value="9600">9600</option>
+            <option value="115200">115200</option>
+            <option value="4800">4800</option>
+        </select>
+
+        <label for="parity">Parity:</label>
+        <select id="parity">
+            <option value="none">None</option>
+            <option value="even">Even</option>
+            <option value="odd">Odd</option>
+        </select>
+
+        <label for="dataBits">Data Bits:</label>
+        <select id="dataBits">
+            <option value="8">8</option>
+            <option value="7">7</option>
+            <option value="6">6</option>
+        </select>
+
+        <label for="stopBits">Stop Bits:</label>
+        <select id="stopBits">
+            <option value="1">1</option>
+            <option value="2">2</option>
+        </select>
+
+        <label for="sendBox">Send Data:</label>
+        <input type="text" id="sendBox">
+
+        <div class="btn-group">
+            <button onclick="sendData()">Send</button>
+            <button onclick="clearReceiveBox()">Clear</button>
+        </div>
+
+        <div class="options">
+            <label><input type="checkbox" id="autoClear"> Auto Clear</label>
+        </div>
+    </div>
+
+    <div class="panel right-panel">
+        <label>Received Data:</label>
+        <textarea id="receiveBox" readonly></textarea>
+    </div>
+</div>
+
+<!-- SIMULATOR -->
+<div class="panel" style="margin-top:20px;">
+    <h2>Robot Simulator</h2>
+
+    <button id="modeBtn" style="margin-bottom:10px;">Mode: SEND</button>
+
+    <p>Drag the point in SEND mode.  
+    In RECEIVE mode, the point moves only by incoming X/Y.</p>
+
+    <div id="simBox">
+        <div id="dot"></div>
+    </div>
+
+    <p id="coords" style="text-align:center; margin-top:10px;">X: 0 , Y: 0</p>
+</div>
+
+<script>
+    let port, reader, writer, isConnected = false;
+    const MAX_LENGTH = 10000;
+
+    async function connectSerial() {
+        try {
+            port = await navigator.serial.requestPort();
+            await port.open({
+                baudRate: parseInt(document.getElementById("baudRate").value),
+                parity: document.getElementById("parity").value,
+                dataBits: parseInt(document.getElementById("dataBits").value),
+                stopBits: parseInt(document.getElementById("stopBits").value),
+            });
+
+            writer = port.writable.getWriter();
+            reader = port.readable.getReader();
+
+            document.getElementById("connectBtn").innerText = "Connected";
+            document.getElementById("connectBtn").classList.add("connected");
+            isConnected = true;
+
+            readData();
+        } catch (error) {
+            alert("Error connecting: " + error);
+        }
+    }
+
+    async function disconnectSerial() {
+        try {
+            reader.releaseLock();
+            writer.releaseLock();
+            await port.close();
+
+            document.getElementById("connectBtn").innerText = "Connect";
+            document.getElementById("connectBtn").classList.remove("connected");
+            isConnected = false;
+
+        } catch (error) {
+            alert("Error disconnecting: " + error);
+        }
+    }
+
+    async function toggleConnection() {
+        if (!isConnected) {
+            await connectSerial();
+        } else {
+            await disconnectSerial();
+        }
+    }
+
+    async function sendData() {
+        try {
+            const data = document.getElementById("sendBox").value;
+            await writer.write(new TextEncoder().encode(data + "\n"));
+        } catch (error) {
+            alert("Error sending data: " + error);
+        }
+    }
+
+    async function readData() {
+        try {
+            while (true) {
+                const { value, done } = await reader.read();
+                if (done) break;
+                appendToReceiveBox(new TextDecoder().decode(value));
+            }
+        } catch (error) {
+            alert("Error receiving data: " + error);
+        }
+    }
+
+    function appendToReceiveBox(text) {
+        const receiveBox = document.getElementById("receiveBox");
+        const autoClear = document.getElementById("autoClear").checked;
+
+        receiveBox.value += text;
+
+        if (autoClear && receiveBox.value.length > MAX_LENGTH) {
+            receiveBox.value = receiveBox.value.slice(-MAX_LENGTH);
+        }
+
+        receiveBox.scrollTop = receiveBox.scrollHeight;
+
+        moveDotFromReceived(text);
+    }
+
+    function clearReceiveBox() {
+        document.getElementById("receiveBox").value = "";
+    }
+
+    // ----------------------
+    // SIMULATOR SECTION
+    // ----------------------
+
+    const simBox = document.getElementById("simBox");
+    const dot = document.getElementById("dot");
+    const coords = document.getElementById("coords");
+    const modeBtn = document.getElementById("modeBtn");
+
+    let isDragging = false;
+    let mode = "SEND"; // SEND or RECEIVE
+
+    modeBtn.onclick = () => {
+        mode = (mode === "SEND") ? "RECEIVE" : "SEND";
+        modeBtn.innerText = "Mode: " + mode;
+    };
+
+    function getRelativePos(e) {
+        const rect = simBox.getBoundingClientRect();
+        let x = e.clientX - rect.left;
+        let y = e.clientY - rect.top;
+
+        x = Math.max(0, Math.min(rect.width, x));
+        y = Math.max(0, Math.min(rect.height, y));
+
+        return { x, y };
+    }
+
+    simBox.addEventListener("mousedown", () => {
+        if (mode === "SEND") isDragging = true;
+    });
+    simBox.addEventListener("mouseup", () => isDragging = false);
+
+    simBox.addEventListener("mousemove", (e) => {
+        if (!isDragging || mode !== "SEND") return;
+
+        const pos = getRelativePos(e);
+
+        dot.style.left = pos.x + "px";
+        dot.style.top = pos.y + "px";
+
+        coords.innerText = `X: ${pos.x} , Y: ${pos.y}`;
+
+        if (isConnected) {
+            const msg = `X:${pos.x},Y:${pos.y}`;
+            writer.write(new TextEncoder().encode(msg + "\n"));
+        }
+    });
+
+function moveDotFromReceived(text) {
+    if (mode !== "RECEIVE") return;
+
+    // Regex هوشمند با پشتیبانی از اعشار
+    const match = text.match(/x[:=\s]*([0-9.]+)[,\s]+y[:=\s]*([0-9.]+)/i);
+    if (!match) return;
+
+    const x = parseFloat(match[1]);
+    const y = parseFloat(match[2]);
+
+    dot.style.left = x + "px";
+    dot.style.top = y + "px";
+
+    coords.innerText = `X: ${x.toFixed(1)} , Y: ${y.toFixed(1)}`;
+}
+
+</script>
+
+</body>
+</html>

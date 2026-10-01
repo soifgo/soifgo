@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LED Blink — SoifGo</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #111827;
+      color: #f3f4f6;
+      text-align: center;
+      padding: 24px;
+      margin: 0;
+    }
+    h1 { color: #60a5fa; font-size: 1.6rem; }
+    button {
+      width: 90%;
+      max-width: 320px;
+      padding: 18px;
+      margin: 8px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: white;
+      cursor: pointer;
+    }
+    .on  { background: #16a34a; }
+    .off { background: #dc2626; }
+    .status {
+      background: #1f2937;
+      padding: 16px;
+      border-radius: 10px;
+      margin: 20px auto;
+      max-width: 320px;
+      font-size: 1rem;
+      color: #facc15;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>💡 LED Blink Controller</h1>
+
+  <button class="on"  onclick="sendBluetooth('LED_ON')">Turn LED ON</button>
+  <button class="off" onclick="sendBluetooth('LED_OFF')">Turn LED OFF</button>
+
+  <div class="status" id="status">Ready. Waiting for Bluetooth data…</div>
+
+  <script>
+    function sendBluetooth(text) {
+      if (window.soifgo) {
+        window.soifgo.CallSub('html_bluetooth_rx', true, text);
+        document.getElementById('status').innerText = 'Sent: ' + text;
+      } else {
+        document.getElementById('status').innerText = 'SoifGo bridge not available.';
+      }
+    }
+
+    function html_bluetooth_tx(data) {
+      document.getElementById('status').innerText = 'Arduino: ' + data;
+    }
+    window.html_bluetooth_tx = html_bluetooth_tx;
+  </script>
+
+</body>
+</html>

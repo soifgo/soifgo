@@ -1,0 +1,254 @@
+#include <ESP8266WiFi.h>
+#include <ESP8266WebServer.h>
+#include <ArduinoJson.h>
+#include <EEPROM.h>
+
+#define EEPROM_SIZE 128
+
+String wifiName;
+String wifiPass;
+int portLastByte;
+String userPath;
+
+IPAddress gateway(192, 168, 1, 1);
+IPAddress subnet(255, 255, 255, 0);
+IPAddress ip;
+
+ESP8266WebServer server(80);
+StaticJsonDocument<2048> dataStore;
+
+unsigned long lastCheckTime = 0;
+
+void saveStringToEEPROM(int start, const String& str) {
+  for (int i = 0; i < str.length(); i++) {
+    EEPROM.write(start + i, str[i]);
+    yield();
+  }
+  EEPROM.write(start + str.length(), '\0');
+}
+
+String readStringFromEEPROM(int start) {
+  char data[32];
+  int i = 0;
+  while (i < 31) {
+    char c = EEPROM.read(start + i);
+    if (c == '\0') break;
+    data[i++] = c;
+    yield();
+  }
+  data[i] = '\0';
+  return String(data);
+}
+
+void saveSettings() {
+  saveStringToEEPROM(0, wifiName);
+  saveStringToEEPROM(32, wifiPass);
+  EEPROM.write(64, portLastByte);
+  saveStringToEEPROM(65, userPath);
+  EEPROM.write(127, 1);
+  EEPROM.commit();
+}
+
+void loadSettings() {
+  bool isInitialized = EEPROM.read(127) == 1;
+
+  if (isInitialized) {
+    wifiName = readStringFromEEPROM(0);
+    wifiPass = readStringFromEEPROM(32);
+    portLastByte = EEPROM.read(64);
+    userPath = readStringFromEEPROM(65);
+  } else {
+    wifiName = "TPLINK";
+    wifiPass = "abcd1234";
+    portLastByte = 104;
+    userPath = "report";
+    saveSettings();
+  }
+
+  if (wifiName.length() == 0) wifiName = "TPLINK";
+  if (wifiPass.length() == 0) wifiPass = "abcd1234";
+  if (portLastByte == 0 || portLastByte > 254) portLastByte = 104;
+  if (userPath.length() == 0) userPath = "report";
+}
+
+void setup() {
+  Serial.begin(115200);
+  EEPROM.begin(EEPROM_SIZE);
+  loadSettings();
+
+  ip = IPAddress(192, 168, 1, portLastByte);
+  WiFi.config(ip, gateway, subnet);
+  WiFi.begin(wifiName.c_str(), wifiPass.c_str());
+
+  Serial.println("Connecting to WiFi...");
+  unsigned long startAttemptTime = millis();
+  while (WiFi.status() != WL_CONNECTED && millis() - startAttemptTime < 10000) {
+    delay(500);
+    Serial.print(".");
+    yield();
+  }
+
+  if (WiFi.status() == WL_CONNECTED) {
+    Serial.println("\nConnected to WiFi");
+    Serial.print("IP Address: ");
+    Serial.println(WiFi.localIP());
+    Serial.print("MAC Address: ");
+    Serial.println(WiFi.macAddress());
+  } else {
+    Serial.println("\nFailed to connect to WiFi.");
+  }
+
+  server.on("/", HTTP_GET, []() {
+    server.send(200, "application/json", "{\"message\":\"ESP8266 dynamic key server active\"}");
+  });
+
+  server.on("/keys", HTTP_GET, []() {
+    JsonArray keys = dataStore.createNestedArray("_keys");
+    for (JsonPair kv : dataStore.as<JsonObject>()) {
+      if (String(kv.key().c_str()) != "_keys") {
+        keys.add(kv.key());
+      }
+    }
+    String response;
+    serializeJson(keys, response);
+    server.send(200, "application/json", response);
+  });
+
+  server.on("/" + userPath, HTTP_GET, []() {
+    if (dataStore.containsKey("/" + userPath)) {
+      String response;
+      serializeJson(dataStore["/" + userPath], response);
+      server.send(200, "application/json", response);
+    } else {
+      server.send(404, "application/json", "{\"status\":\"error\", \"message\":\"No data yet\"}");
+    }
+  });
+
+  server.on("/" + userPath, HTTP_POST, []() {
+    if (server.hasArg("plain")) {
+      String body = server.arg("plain");
+      StaticJsonDocument<512> incoming;
+      DeserializationError error = deserializeJson(incoming, body);
+      if (error) {
+        server.send(400, "application/json", "{\"status\":\"error\", \"message\":\"Invalid JSON\"}");
+        return;
+      }
+
+      JsonObject stored;
+      if (dataStore["/" + userPath].is<JsonObject>()) {
+        stored = dataStore["/" + userPath].as<JsonObject>();
+      } else {
+        stored = dataStore.createNestedObject("/" + userPath);
+      }
+
+      for (JsonPair kv : incoming.as<JsonObject>()) {
+        stored[kv.key()] = kv.value();
+        if (WiFi.status() == WL_CONNECTED) {
+          Serial.println(" " + String(kv.key().c_str()) + ":" + String(kv.value().as<String>()));
+        }
+        yield();
+      }
+
+      String response;
+      serializeJson(stored, response);
+      server.send(200, "application/json", response);
+    } else {
+      server.send(400, "application/json", "{\"status\":\"error\", \"message\":\"No data received\"}");
+    }
+  });
+
+  server.begin();
+}
+
+void loop() {
+  server.handleClient();
+  checkWiFiConnection();
+  handleSerialFromMicro();
+  yield();
+}
+
+void checkWiFiConnection() {
+  unsigned long currentTime = millis();
+  if (currentTime - lastCheckTime >= 10000) {
+    lastCheckTime = currentTime;
+    if (WiFi.status() != WL_CONNECTED) {
+      WiFi.begin(wifiName.c_str(), wifiPass.c_str());
+    }
+  }
+}
+
+void handleSerialFromMicro() {
+  static String serialBuffer = "";
+  while (Serial.available()) {
+    char c = Serial.read();
+    serialBuffer += c;
+    yield();
+
+    if (c == '\n') {
+      serialBuffer.trim();
+
+      if (serialBuffer.startsWith("#") && serialBuffer.endsWith("*")) {
+        String input = serialBuffer.substring(1, serialBuffer.length() - 1);
+
+        if (input.startsWith("wifi=")) {
+          wifiName = input.substring(5);
+          saveSettings();
+          Serial.println("WiFi name changed to: " + wifiName);
+        } else if (input.startsWith("pass=")) {
+          wifiPass = input.substring(5);
+          saveSettings();
+          Serial.println("WiFi password changed to: " + wifiPass);
+        } else if (input.startsWith("port=")) {
+          portLastByte = input.substring(5).toInt();
+          saveSettings();
+          Serial.println("IP updated: http://192.168.1." + String(portLastByte) + "/" + userPath);
+        } else if (input.startsWith("user=")) {
+          userPath = input.substring(5);
+          saveSettings();
+          Serial.println("User path updated: http://192.168.1." + String(portLastByte) + "/" + userPath);
+        } else if (input == "reset") {
+          wifiName = "TPLINK";
+          wifiPass = "abcd1234";
+          portLastByte = 104;
+          userPath = "report";
+          saveSettings();
+          Serial.println("Settings reset to default.");
+        } else if (input.startsWith("GET:")) {
+          String key = input.substring(4);
+          if (dataStore.containsKey("/" + userPath)) {
+            JsonObject obj = dataStore["/" + userPath];
+            if (obj.containsKey(key)) {
+              String value = obj[key].as<String>();
+              Serial.println(key + ":" + value);
+            } else {
+              Serial.println(key + ":?");
+            }
+          } else {
+            Serial.println(key + ":?");
+          }
+        } else {
+          int sepIndex = input.indexOf(":");
+          if (sepIndex > 0) {
+            String key = input.substring(0, sepIndex);
+            String value = input.substring(sepIndex + 1);
+
+            JsonObject obj;
+            if (dataStore["/" + userPath].is<JsonObject>()) {
+              obj = dataStore["/" + userPath].as<JsonObject>();
+            } else {
+              obj = dataStore.createNestedObject("/" + userPath);
+            }
+
+            obj[key] = value;
+          }
+        }
+      }
+
+      serialBuffer = "";
+    }
+
+    if (serialBuffer.length() > 256) {
+      serialBuffer = "";
+    }
+  }
+}

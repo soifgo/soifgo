@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoifGo — Speed Control (TDA7073A / Software PWM)</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.7;
+            color: #e8edf5;
+            background: #0f172a;
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h2, h3 {
+            color: #f1f5f9;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            padding-bottom: 8px;
+        }
+        h2 { font-size: 1.6em; margin-top: 30px; }
+        h3 { font-size: 1.2em; border-bottom: none; color: #6aa0ff; margin-top: 25px; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: #1e293b;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        th {
+            background: #1a2a4a;
+            color: #cbd5e1;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85em;
+            letter-spacing: 0.5px;
+        }
+        tr:last-child td { border-bottom: none; }
+        tr:hover { background: rgba(79, 140, 255, 0.08); }
+        code {
+            background: rgba(255,255,255,0.06);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: "Consolas", "Monaco", monospace;
+            font-size: 0.9em;
+            color: #c084fc;
+        }
+        pre {
+            background: #1e293b;
+            padding: 18px;
+            border-radius: 10px;
+            overflow-x: auto;
+            border: 1px solid rgba(255,255,255,0.06);
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+        pre code {
+            background: none;
+            padding: 0;
+            color: #e8edf5;
+        }
+        .schematic-placeholder {
+            margin: 25px 0;
+            padding: 20px;
+            background: #1e293b;
+            border: 1px dashed rgba(255,255,255,0.15);
+            border-radius: 10px;
+            text-align: center;
+            color: #94a3b8;
+        }
+        .schematic-placeholder img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-top: 10px;
+            background: #000;
+        }
+        .note {
+            background: rgba(79, 140, 255, 0.08);
+            border-left: 4px solid #4f8cff;
+            padding: 15px 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+            font-size: 0.95em;
+        }
+        .note strong { color: #6aa0ff; }
+        .warn {
+            background: rgba(255, 193, 7, 0.08);
+            border-left: 4px solid #ffc107;
+            padding: 15px 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+            font-size: 0.95em;
+        }
+        .warn strong { color: #ffc107; }
+
+        /* ===== VIDEO WRAPPER (MEGA IFRAME) ===== */
+        .video-wrapper {
+            position: relative;
+            width: 50%;
+            max-width: 720px;
+            aspect-ratio: 720 / 1024;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #000;
+            margin: 10px auto;
+            display: block;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        @media (max-width: 600px) {
+            .video-wrapper {
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h2>?? Compatible Motor Driver Chips (Dual DC Motor)</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Chip</th>
+                <th>Max Current per Channel</th>
+                <th>Voltage Range</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>TDA7073A</strong></td><td>600 mA</td><td>3V – 18V</td><td>The one used here; great for small motors</td></tr>
+            <tr><td><strong>L293D</strong></td><td>600 mA</td><td>4.5V – 36V</td><td>Very common but old; high voltage drop</td></tr>
+            <tr><td><strong>SN754410</strong></td><td>1A</td><td>4.5V – 36V</td><td>Improved L293 with thermal protection</td></tr>
+            <tr><td><strong>TA7291P</strong></td><td>1A (2A peak)</td><td>4.5V – 20V</td><td>Designed for DC motors; built-in flyback diodes</td></tr>
+            <tr><td><strong>TB6612FNG</strong></td><td>1.2A (3.2A peak)</td><td>15V max</td><td>Very efficient, low drop; modern L293D replacement</td></tr>
+            <tr><td><strong>DRV8833</strong></td><td>1.5A (2A peak)</td><td>2.7V – 10.8V</td><td>Battery-friendly; full protection features</td></tr>
+            <tr><td><strong>MX1508</strong></td><td>1.5A (2.5A peak)</td><td>1.8V – 10V</td><td>Very cheap; ideal for toys and small robots</td></tr>
+        </tbody>
+    </table>
+
+    <h2>?? About the Speed Control Example</h2>
+
+    <p>This Arduino sketch lets you control the <strong>speed of two DC motors independently</strong> over Bluetooth using a <strong>TDA7073A</strong> motor driver. It uses <strong>software PWM</strong> (no hardware PWM pins required) and communicates via the Arduino Uno's built-in hardware serial (pins 0 and 1).</p>
+
+    <div class="warn">
+        <strong>?? Important — Software PWM:</strong><br>
+        Unlike the typical <code>analogWrite()</code> approach, this sketch generates PWM in software inside <code>loop()</code>. This means:
+        <ul>
+            <li>Any output pin can be used (here: <code>A2, A3, A4, A5</code>).</li>
+            <li>The PWM frequency is low (~a few hundred Hz) and depends on loop speed.</li>
+            <li>Serial parsing is done in the same loop, so keep commands short.</li>
+        </ul>
+    </div>
+
+    <h3>How it works:</h3>
+    <ul>
+        <li><code>setup()</code> – Configures the four motor driver pins (<code>M11, M12, M21, M22</code>) as outputs, sets them LOW (motors stopped), and starts serial communication at 9600 baud.</li>
+        <li><code>loop()</code> – Runs the software PWM for both motors and checks for incoming serial data.</li>
+        <li><strong>Motor 1 (A):</strong> If <code>stopm1</code> is false, <code>spd1</code> increments each loop. While <code>spd1 &lt; pw1</code>, the motor is driven in the direction set by <code>dir1</code>. When <code>spd1</code> exceeds <code>pw1</code>, the motor is turned off for the rest of the cycle.</li>
+        <li><strong>Motor 2 (B):</strong> Same logic using <code>spd2</code>, <code>pw2</code>, and <code>dir2</code>.</li>
+        <li><code>parseSerial()</code> – Called when a newline is received. Parses the accumulated <code>text</code> string for commands.</li>
+    </ul>
+
+    <h3>Commands accepted:</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Command</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><code>FWD</code></td><td>Motor 1 forward (<code>dir1 = true</code>)</td></tr>
+            <tr><td><code>BACK</code></td><td>Motor 1 backward (<code>dir1 = false</code>)</td></tr>
+            <tr><td><code>LEFT</code></td><td>Motor 2 left (<code>dir2 = true</code>)</td></tr>
+            <tr><td><code>RIGHT</code></td><td>Motor 2 right (<code>dir2 = false</code>)</td></tr>
+            <tr><td><code>STOP</code></td><td>Stop both motors (<code>stopm1 = true; stopm2 = true</code>)</td></tr>
+            <tr><td><code>SPD_A:200</code></td><td>Set Motor A speed (0–255) ? <code>pw1</code></td></tr>
+            <tr><td><code>SPD_B:150</code></td><td>Set Motor B speed (0–255) ? <code>pw2</code></td></tr>
+        </tbody>
+    </table>
+
+    <div class="note">
+        <strong>?? Note:</strong> After each valid command, the sketch prints the current speed values:
+        <code>pw1   pw2</code> (e.g. <code>55   55</code>). This is useful for debugging but is not a formal acknowledgment.
+    </div>
+
+    <h3>?? Full Arduino Sketch</h3>
+    <pre><code>/*
+  SoifGo — Speed Control  for TDA7073A (Software PWM)
+ 
+  Target: Arduino Uno R3 (ATmega328P)
+*/
+
+// ============================================
+// PIN CONFIGURATIONS (same as Bascom)
+// ============================================
+const byte M11 = A2;  // PORTC.2
+const byte M12 = A3;  // PORTC.3
+const byte M21 = A4;  // PORTC.4
+const byte M22 = A5;  // PORTC.5
+
+// ============================================
+// VARIABLES
+// ============================================
+bool dir1 = false;
+bool dir2 = false;
+bool stopm1 = true;
+bool stopm2 = true;
+
+byte spd1 = 0;
+byte spd2 = 0;
+byte pw1 = 55;
+byte pw2 = 55;
+
+String text = "";
+String text2 = "";
+
+// ============================================
+// SETUP
+// ============================================
+void setup() {
+  pinMode(M11, OUTPUT);
+  pinMode(M12, OUTPUT);
+  pinMode(M21, OUTPUT);
+  pinMode(M22, OUTPUT);
+
+  // All motors stopped initially
+  digitalWrite(M11, LOW);
+  digitalWrite(M12, LOW);
+  digitalWrite(M21, LOW);
+  digitalWrite(M22, LOW);
+
+  Serial.begin(9600);
+}
+
+// ============================================
+// SOFTWARE PWM LOOP
+// ============================================
+void loop() {
+  // ---- Motor 1 (A) ----
+  if (!stopm1) {
+    spd1++;
+    if (pw1 > spd1) {
+      if (!dir1) {
+        digitalWrite(M11, HIGH);
+        digitalWrite(M12, LOW);
+      } else {
+        digitalWrite(M11, LOW);
+        digitalWrite(M12, HIGH);
+      }
+    } else {
+      digitalWrite(M11, LOW);
+      digitalWrite(M12, LOW);
+    }
+  } else {
+    digitalWrite(M11, LOW);
+    digitalWrite(M12, LOW);
+  }
+
+  // ---- Motor 2 (B) ----
+  if (!stopm2) {
+    spd2++;
+    if (pw2 > spd2) {
+      if (!dir2) {
+        digitalWrite(M21, HIGH);
+        digitalWrite(M22, LOW);
+      } else {
+        digitalWrite(M21, LOW);
+        digitalWrite(M22, HIGH);
+      }
+    } else {
+      digitalWrite(M21, LOW);
+      digitalWrite(M22, LOW);
+    }
+  } else {
+    digitalWrite(M21, LOW);
+    digitalWrite(M22, LOW);
+  }
+
+  // ---- Serial parse ----
+  if (Serial.available()) {
+    char c = Serial.read();
+    if (c == '\r' || c == '\n') {
+      if (text.length() > 1) {
+        parseSerial();
+      }
+      text = "";
+    } else {
+      text += c;
+    }
+  }
+}
+
+// ============================================
+// PARSE SERIAL
+// ============================================
+void parseSerial() {
+  if (text.indexOf("FWD") >= 0) {
+    dir1 = true;
+    stopm1 = false;
+  }
+  if (text.indexOf("BACK") >= 0) {
+    dir1 = false;
+    stopm1 = false;
+  }
+  if (text.indexOf("LEFT") >= 0) {
+    dir2 = true;
+    stopm2 = false;
+  }
+  if (text.indexOf("RIGHT") >= 0) {
+    dir2 = false;
+    stopm2 = false;
+  }
+  if (text.indexOf("STOP") >= 0) {
+    stopm1 = true;
+    stopm2 = true;
+  }
+  if (text.indexOf("SPD_A:") >= 0) {
+    text2 = text.substring(6, 9);
+    pw1 = text2.toInt();
+  }
+  if (text.indexOf("SPD_B:") >= 0) {
+    text2 = text.substring(6, 9);
+    pw2 = text2.toInt();
+  }
+
+  Serial.print(pw1);
+  Serial.print("   ");
+  Serial.println(pw2);
+
+  text = "";
+  text2 = "";
+}</code></pre>
+
+    <div class="note">
+        <strong>?? Wiring notes for Arduino Uno R3:</strong><br>
+        • <strong>Bluetooth module</strong> (HC-05 / JDY-31): connects to the Arduino's <strong>hardware serial</strong> — module TX ? Arduino <strong>RX (pin 0)</strong>, module RX ? Arduino <strong>TX (pin 1)</strong> (use a voltage divider if the module is 3.3V).<br>
+        • <strong>Motor driver pins:</strong> M11=A2, M12=A3 (Motor 1), M21=A4, M22=A5 (Motor 2).<br>
+        • For <strong>TDA7073A</strong>, each motor is driven by a pair of inputs (IN+ / IN-). Connect <code>M11</code> ? IN1+, <code>M12</code> ? IN1-, <code>M21</code> ? IN2+, <code>M22</code> ? IN2-.<br>
+        • Because the sketch uses <strong>hardware serial</strong>, disconnect the Bluetooth module while uploading the sketch to avoid conflicts.
+    </div>
+
+    <h3>?? Schematic (Arduino Uno R3 Target)</h3>
+
+    <div class="schematic-placeholder">
+        <img src="speed_control.png" alt="Arduino Uno R3 + Bluetooth + TDA7073A Schematic">
+    </div>
+
+    <div class="schematic-placeholder">
+        <img src="speed_control2.jpg" alt="Arduino Uno R3 + Bluetooth + TDA7073A Wiring">
+    </div>
+
+    <h3>?? Test Video</h3>
+
+    <div class="video-wrapper">
+        <iframe src="https://mega.nz/embed/7P4WyYID#ZqnjDbl6rr5ZFxwQ4qteN6b9WKY9UBCBsE2edwkUUHg"
+                allowfullscreen
+                loading="lazy"></iframe>
+    </div>
+    <p style="font-size:0.85em; margin-top:10px; text-align:center;">Speed Control test — two motors with independent speed (TDA7073A, software PWM)</p>
+
+</body>
+</html>

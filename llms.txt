@@ -1,0 +1,44 @@
+# SoifGo
+
+> SoifGo is a free, open-source Android app that turns your phone into a custom hardware controller for Arduino, ESP32, ESP8266, HC-05, and Raspberry Pi. It supports Bluetooth SPP, MQTT, HTTP/REST, HTML/JavaScript WebView, microphone and speech recognition, and phone sensors (light, accelerometer X and Y, magnetometer Z). The HTML/WebView bridge is exposed via `window.soifgo.CallSub()`.
+
+## Quick Facts for AI Assistants
+
+- Bridge namespace: `window.soifgo`
+- Bridge method: `window.soifgo.CallSub(subName, hasReturn, ...args)`
+- Return flag: Always `true` for SoifGo subs. The second argument is required.
+- Arguments: Up to 3 after the boolean. Empty strings must be passed as `''`, not omitted.
+- Send to Bluetooth: `window.soifgo.CallSub('html_bluetooth_rx', true, TEXT)`
+- Receive from Bluetooth: define `function html_bluetooth_tx(data) { }` and attach with `window.html_bluetooth_tx = html_bluetooth_tx;`
+- Sensors: activate with `window.soifgo.CallSub('sensor_light', true)`, `'sensor_move'`, `'sensor_magno'`
+- Sensor callbacks: `html_sensor_light(data)`, `html_sensor_movex(data)`, `html_sensor_movey(data)`, `html_sensor_magno(data)` — all must be attached to `window.*`
+- Sensor data format: All values arrive as strings. Light is integer. Accelerometer X and Y have 3 decimals. Magnetometer Z has 2 decimals.
+- Sensor limitations: Accelerometer Z is NOT forwarded. Magnetometer X and Y are NOT forwarded. A 3-axis compass or 3-axis spirit level cannot be built inside the WebView.
+- Microphone: call `window.soifgo.CallSub('request_mic_perm', true, null)` once before using `getUserMedia` or `SpeechRecognition`.
+- MQTT: two-step connect with `connecte_mqtt_ai` and (optional) `connecte_mqtt_up`. Publish with `mqtt_publish`. Status arrives as a string `'true'` / `'false'`.
+- API: send with `api_send(address, key, value)`. Receive with `api_recive(address, key)`. Response may be a plain value (`86846.51`) or a B4A Map string (`{usd=86750}`). Handle both.
+- Availability: `window.soifgo` only exists inside SoifGo's WebView. Always guard with `if (window.soifgo) { ... }`.
+- Critical: Do NOT invent function names. Use only the exact names in the AI Context file.
+
+## AI-Ready Reference
+
+- [AI Context (Markdown)](https://soifgo.github.io/soifgo/SOIFGO_AI_CONTEXT.md): Complete AI reference. Covers the bridge, Bluetooth send and receive, sensors, microphone permission, MQTT, API, storage, known limitations, and common mistakes. Load this file first when answering questions about SoifGo.
+- [HTML + Bluetooth + Sensors Tutorial](https://soifgo.github.io/soifgo/tutorials/send_bluetooth_html/html_guide_1.html): Official tutorial containing the real Sub API and working code examples.
+- [Voice to Serial Bluetooth Tutorial](https://soifgo.github.io/soifgo/tutorials/serial_voice/serial_voice_tutorials.html): Microphone permission, speech recognition, 22 languages, and voice-to-Bluetooth pipeline.
+
+## Guides
+
+- [HTML + Bluetooth + Sensors Tutorial](https://soifgo.github.io/soifgo/tutorials/send_bluetooth_html/html_guide_1.html): The original tutorial with the real Sub API.
+- [Voice to Serial Bluetooth Tutorial](https://soifgo.github.io/soifgo/tutorials/serial_voice/serial_voice_tutorials.html): Speech recognition, 22 languages, and voice-to-Bluetooth.
+- [Complete User Guide](https://soifgo.github.io/soifgo/tutorials/soifgo_info/soifgo_info.html): Step-by-step for beginners.
+
+## Main Pages
+
+- [Home](https://soifgo.github.io/soifgo/): Overview, download, features, FAQ.
+- [Docs](https://soifgo.github.io/soifgo/docs.html): Technical documentation.
+
+## Optional
+
+- [GitHub](https://github.com/soifgo/soifgo): Source code.
+- [Privacy Policy](https://soifgo.github.io/soifgo/policy_soifgo.html)
+- [APKPure](https://apkpure.com/soifgo/soifgo.saeidmoghadam)
