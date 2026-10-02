@@ -1,210 +1,764 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SoifGo � Speed Control (TDA7073A / Software PWM)</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.7;
-            color: #e8edf5;
-            background: #0f172a;
-            max-width: 860px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        h2, h3 {
-            color: #f1f5f9;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-            padding-bottom: 8px;
-        }
-        h2 { font-size: 1.6em; margin-top: 30px; }
-        h3 { font-size: 1.2em; border-bottom: none; color: #6aa0ff; margin-top: 25px; }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            background: #1e293b;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-        }
-        th {
-            background: #1a2a4a;
-            color: #cbd5e1;
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 0.85em;
-            letter-spacing: 0.5px;
-        }
-        tr:last-child td { border-bottom: none; }
-        tr:hover { background: rgba(79, 140, 255, 0.08); }
-        code {
-            background: rgba(255,255,255,0.06);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-family: "Consolas", "Monaco", monospace;
-            font-size: 0.9em;
-            color: #c084fc;
-        }
-        pre {
-            background: #1e293b;
-            padding: 18px;
-            border-radius: 10px;
-            overflow-x: auto;
-            border: 1px solid rgba(255,255,255,0.06);
-            font-size: 0.9em;
-            line-height: 1.5;
-        }
-        pre code {
-            background: none;
-            padding: 0;
-            color: #e8edf5;
-        }
-        .schematic-placeholder {
-            margin: 25px 0;
-            padding: 20px;
-            background: #1e293b;
-            border: 1px dashed rgba(255,255,255,0.15);
-            border-radius: 10px;
-            text-align: center;
-            color: #94a3b8;
-        }
-        .schematic-placeholder img {
-            max-width: 100%;
-            border-radius: 10px;
-            margin-top: 10px;
-            background: #000;
-        }
-        .note {
-            background: rgba(79, 140, 255, 0.08);
-            border-left: 4px solid #4f8cff;
-            padding: 15px 20px;
-            border-radius: 6px;
-            margin: 20px 0;
-            font-size: 0.95em;
-        }
-        .note strong { color: #6aa0ff; }
-        .warn {
-            background: rgba(255, 193, 7, 0.08);
-            border-left: 4px solid #ffc107;
-            padding: 15px 20px;
-            border-radius: 6px;
-            margin: 20px 0;
-            font-size: 0.95em;
-        }
-        .warn strong { color: #ffc107; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes" />
+  <meta name="theme-color" content="#0f172a" />
+  <meta name="color-scheme" content="light dark" />
 
-        /* ===== VIDEO WRAPPER (MEGA IFRAME) ===== */
-        .video-wrapper {
-            position: relative;
-            width: 50%;
-            max-width: 720px;
-            aspect-ratio: 720 / 1024;
-            border-radius: 10px;
-            overflow: hidden;
-            background: #000;
-            margin: 10px auto;
-            display: block;
-        }
+  <title>SoifGo — Speed Control (TDA7073A / Software PWM) | Arduino Uno Tutorial</title>
+  <meta name="description" content="Control two DC motors independently over Bluetooth using a TDA7073A motor driver and software PWM on Arduino Uno. Includes full sketch, command reference, wiring notes, and schematics." />
+  <meta name="keywords" content="SoifGo, speed control, TDA7073A, software PWM, Arduino Uno, DC motor, Bluetooth, HC-05, JDY-31, motor driver, L293D, TB6612FNG, DRV8833, dual motor, independent speed" />
 
-        .video-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
+  <meta property="og:title" content="SoifGo — Speed Control (TDA7073A / Software PWM)" />
+  <meta property="og:description" content="Control two DC motors independently over Bluetooth using a TDA7073A motor driver and software PWM on Arduino Uno." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://soifgo.github.io/soifgo/tutorials/speed-control/" />
+  <meta property="og:image" content="https://soifgo.github.io/soifgo/speed-control-og.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="SoifGo Tutorials" />
 
-        @media (max-width: 600px) {
-            .video-wrapper {
-                width: 100%;
-                max-width: 100%;
-            }
-        }
-    </style>
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="SoifGo — Speed Control (TDA7073A / Software PWM)" />
+  <meta name="twitter:description" content="Control two DC motors independently over Bluetooth using a TDA7073A motor driver and software PWM on Arduino Uno." />
+  <meta name="twitter:image" content="https://soifgo.github.io/soifgo/speed-control-og.jpg" />
+
+  <link rel="canonical" href="https://soifgo.github.io/soifgo/tutorials/speed-control/" />
+  <link rel="alternate" hreflang="en" href="https://soifgo.github.io/soifgo/tutorials/speed-control/" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "SoifGo — Speed Control (TDA7073A / Software PWM)",
+    "description": "Control two DC motors independently over Bluetooth using a TDA7073A motor driver and software PWM on Arduino Uno.",
+    "author": { "@type": "Person", "name": "Saeid Moghadam" },
+    "publisher": { "@type": "Organization", "name": "SoifGo", "url": "https://soifgo.github.io/soifgo/" },
+    "datePublished": "2025-01-01",
+    "dateModified": "2025-01-01",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://soifgo.github.io/soifgo/tutorials/speed-control/" },
+    "about": { "@type": "Thing", "name": "Arduino Speed Control with Software PWM" },
+    "teaches": [
+      "Software PWM on Arduino Uno",
+      "TDA7073A motor driver wiring",
+      "Bluetooth command parsing",
+      "Independent dual motor speed control",
+      "Motor driver chip comparison"
+    ],
+    "inLanguage": "en",
+    "isAccessibleForFree": true,
+    "learningResourceType": "Tutorial"
+  }
+  </script>
+
+  <script>
+    (function() {
+      var savedTheme = localStorage.getItem('soifgo-theme');
+      if (savedTheme === 'light' || savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet" />
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root,
+    [data-theme="dark"] {
+      --primary: #4f8cff;
+      --primary-light: #6aa0ff;
+      --purple: #9b59b6;
+      --purple-light: #c084fc;
+      --arduino-teal: #1abc9c;
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --text: #e8edf5;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --border: rgba(255, 255, 255, 0.07);
+      --shadow: rgba(0, 0, 0, 0.35);
+      --hover-bg: rgba(255, 255, 255, 0.04);
+      --code-bg: rgba(79, 140, 255, 0.12);
+      --code-text: #a5b4fc;
+      --pre-bg: #0f172a;
+      --pre-text: #e2e8f0;
+      --warning-bg: rgba(245, 158, 11, 0.1);
+      --warning-border: #f59e0b;
+      --warning-text: #fbbf24;
+      --success-bg: rgba(34, 197, 94, 0.1);
+      --success-border: #22c55e;
+      --success-text: #4ade80;
+      --danger-bg: rgba(239, 68, 68, 0.1);
+      --danger-border: #ef4444;
+      --danger-text: #f87171;
+      --radius: 14px;
+      --radius-sm: 10px;
+      --transition: 0.25s ease;
+    }
+
+    [data-theme="light"] {
+      --primary: #2563eb;
+      --primary-light: #3b82f6;
+      --purple: #9333ea;
+      --purple-light: #a855f7;
+      --arduino-teal: #0d9488;
+      --bg: #f8fafc;
+      --bg-card: #ffffff;
+      --text: #1e293b;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: rgba(15, 23, 42, 0.08);
+      --shadow: rgba(15, 23, 42, 0.08);
+      --hover-bg: rgba(37, 99, 235, 0.06);
+      --code-bg: rgba(37, 99, 235, 0.1);
+      --code-text: #1e40af;
+      --pre-bg: #0f172a;
+      --pre-text: #e2e8f0;
+      --warning-bg: rgba(245, 158, 11, 0.1);
+      --warning-border: #d97706;
+      --warning-text: #92400e;
+      --success-bg: rgba(34, 197, 94, 0.1);
+      --success-border: #16a34a;
+      --success-text: #15803d;
+      --danger-bg: rgba(239, 68, 68, 0.1);
+      --danger-border: #dc2626;
+      --danger-text: #b91c1c;
+    }
+
+    .ignore { }
+
+    body {
+      font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      min-height: 100vh;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .container { max-width: 880px; margin: 0 auto; padding: 20px 16px 60px; }
+
+    h1 {
+      font-size: 1.8rem;
+      color: var(--primary-light);
+      text-align: center;
+      margin: 1rem 0 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      word-break: break-word;
+    }
+
+    h2 {
+      font-size: 1.35rem;
+      color: var(--text-main);
+      margin: 0 0 0.75rem;
+      font-weight: 600;
+      word-break: break-word;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    h3 {
+      font-size: 1.15rem;
+      color: var(--primary-light);
+      margin: 1.2rem 0 0.5rem;
+      font-weight: 600;
+      word-break: break-word;
+    }
+
+    h4 {
+      font-size: 1rem;
+      color: var(--text);
+      margin: 0.75rem 0 0.25rem;
+      font-weight: 600;
+      word-break: break-word;
+    }
+
+    p { margin: 0.75em 0; word-break: break-word; color: var(--text); }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      word-break: break-word;
+      transition: color var(--transition);
+    }
+
+    a:hover { text-decoration: underline; }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.2rem 1.4rem;
+      margin-bottom: 1rem;
+      max-width: 100%;
+      overflow: hidden;
+      box-shadow: 0 4px 20px var(--shadow);
+      transition: background 0.3s ease, border 0.3s ease;
+    }
+
+    .note-warning {
+      background: var(--warning-bg);
+      border: 1px solid var(--warning-border);
+      color: var(--warning-text);
+      padding: 1rem 1.2rem;
+      border-radius: var(--radius-sm);
+      margin: 1rem 0;
+    }
+
+    .note-warning ul, .note-warning ol { padding-left: 1.4em; margin: 0.5em 0; color: inherit; }
+    .note-warning li { margin-bottom: 0.3em; color: inherit; }
+    .note-warning strong { color: inherit; }
+
+    .note-success {
+      background: var(--success-bg);
+      border: 1px solid var(--success-border);
+      color: var(--success-text);
+      padding: 1rem 1.2rem;
+      border-radius: var(--radius-sm);
+      margin: 1rem 0;
+    }
+
+    .note-success ul, .note-success ol { padding-left: 1.4em; margin: 0.5em 0; color: inherit; }
+    .note-success li { margin-bottom: 0.3em; color: inherit; }
+    .note-success strong { color: inherit; }
+
+    .note-danger {
+      background: var(--danger-bg);
+      border: 1px solid var(--danger-border);
+      color: var(--danger-text);
+      padding: 1rem 1.2rem;
+      border-radius: var(--radius-sm);
+      margin: 1rem 0;
+    }
+
+    .note-danger ul, .note-danger ol { padding-left: 1.4em; margin: 0.5em 0; color: inherit; }
+    .note-danger li { margin-bottom: 0.3em; color: inherit; }
+    .note-danger strong { color: inherit; }
+
+    .note-info {
+      background: var(--code-bg);
+      border: 1px solid var(--primary);
+      color: var(--text);
+      padding: 1rem 1.2rem;
+      border-radius: var(--radius-sm);
+      margin: 1rem 0;
+    }
+
+    .note-info strong { color: var(--primary-light); }
+    .note-info ul, .note-info ol { padding-left: 1.4em; margin: 0.5em 0; }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--radius-sm);
+      display: block;
+      margin: 0.8rem auto;
+      background: var(--bg);
+      border: 1px solid var(--border);
+    }
+
+    .schematic-placeholder {
+      margin: 1rem 0;
+      padding: 1rem;
+      background: var(--bg);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius-sm);
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    .schematic-placeholder img {
+      max-width: 100%;
+      border-radius: var(--radius-sm);
+      margin: 0.5rem auto 0;
+      background: #000;
+    }
+
+    .video-wrapper {
+      position: relative;
+      width: 50%;
+      max-width: 720px;
+      aspect-ratio: 720 / 1024;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      background: #000;
+      margin: 1rem auto;
+      display: block;
+      box-shadow: 0 4px 15px var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    pre {
+      border-radius: var(--radius-sm);
+      max-height: 500px;
+      overflow: auto;
+      margin: 0.8rem 0;
+      background: var(--pre-bg) !important;
+      padding: 1rem;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      border: 1px solid var(--border);
+    }
+
+    pre code {
+      background: transparent !important;
+      padding: 0;
+      color: var(--pre-text) !important;
+      font-size: 0.85rem;
+      font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+    }
+
+    code {
+      padding: 0.2em 0.6em;
+      border-radius: 6px;
+      font-size: 0.88em;
+      font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+      color: var(--code-text);
+      word-break: break-word;
+      background: var(--code-bg);
+    }
+
+    ul, ol { padding-left: 1.4em; margin: 0.5em 0; color: var(--text); }
+    li { margin-bottom: 0.4em; word-break: break-word; }
+
+    .table-wrap {
+      overflow-x: auto;
+      margin: 1rem 0;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      background: var(--bg-card);
+      min-width: 520px;
+    }
+
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    th {
+      background: var(--code-bg);
+      color: var(--primary-light);
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--hover-bg); }
+
+    .btn-home {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      padding: 14px 34px;
+      border-radius: 60px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.05rem;
+      text-align: center;
+      transition: background 0.15s ease, transform 0.1s ease;
+      touch-action: manipulation;
+      border: none;
+      min-width: 140px;
+      box-shadow: 0 4px 14px rgba(79, 140, 255, 0.3);
+    }
+
+    .btn-home:hover {
+      background: var(--primary-light);
+      text-decoration: none;
+      transform: scale(1.02);
+    }
+
+    .btn-home:active { transform: scale(0.97); }
+
+    .btn-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin: 2rem 0 0.5rem 0;
+    }
+
+    .download-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--primary);
+      color: #ffffff;
+      padding: 12px 24px;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      margin: 0.5em 0.5em 0.5em 0;
+      transition: background 0.15s ease, transform 0.1s ease;
+      touch-action: manipulation;
+      border: none;
+      box-shadow: 0 4px 14px rgba(79, 140, 255, 0.25);
+    }
+
+    .download-link:hover {
+      background: var(--primary-light);
+      text-decoration: none;
+      transform: scale(1.02);
+    }
+
+    .download-link:active { transform: scale(0.97); }
+
+    .download-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 0.5rem 0;
+    }
+
+    .btn-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--primary);
+      color: #ffffff;
+      padding: 12px 24px;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      margin: 0.5em 0;
+      transition: background 0.15s ease, transform 0.1s ease;
+      touch-action: manipulation;
+      border: none;
+      box-shadow: 0 4px 14px rgba(79, 140, 255, 0.25);
+    }
+
+    .btn-link:hover {
+      background: var(--primary-light);
+      text-decoration: none;
+      transform: scale(1.02);
+    }
+
+    .btn-link:active { transform: scale(0.97); }
+
+    .quick-tip {
+      background: var(--code-bg);
+      border: 1px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      margin: 0 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.92rem;
+      color: var(--text);
+    }
+
+    .quick-tip .icon { font-size: 1.3rem; flex-shrink: 0; }
+    .quick-tip a { color: var(--primary); font-weight: 600; text-decoration: none; }
+    .quick-tip a:hover { text-decoration: underline; }
+
+    .language-switcher {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      right: auto;
+      z-index: 1001;
+      direction: ltr;
+    }
+
+    .lang-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 16px;
+      border-radius: 24px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+      transition: background 0.2s, border-color 0.2s, transform 0.15s;
+    }
+
+    .lang-btn:hover {
+      background: var(--hover-bg);
+      border-color: var(--primary);
+      transform: scale(1.03);
+    }
+
+    .lang-dropdown {
+      display: none;
+      position: absolute;
+      top: 48px;
+      left: 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      min-width: 220px;
+      max-height: 400px;
+      overflow-y: auto;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      padding: 8px 0;
+      direction: ltr;
+    }
+
+    .lang-dropdown.show { display: block; }
+
+    .lang-item {
+      display: block;
+      padding: 10px 18px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.92rem;
+      transition: background 0.15s;
+      white-space: nowrap;
+      direction: ltr;
+      text-align: left;
+    }
+
+    .lang-item:hover {
+      background: var(--hover-bg);
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      left: auto;
+      z-index: 1000;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 1.3rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+      transition: background 0.25s ease, transform 0.2s ease, border-color 0.25s ease;
+      padding: 0;
+      line-height: 1;
+      direction: ltr;
+    }
+
+    .theme-toggle:hover {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      transform: scale(1.08);
+    }
+
+    .muted { color: var(--text-muted); }
+    .text-center { text-align: center; }
+    .mt-1 { margin-top: 1rem; }
+    .mb-1 { margin-bottom: 1rem; }
+
+    hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+
+    @media (max-width: 600px) {
+      .container { padding: 14px 12px 40px; }
+      h1 { font-size: 1.5rem; }
+      h2 { font-size: 1.15rem; gap: 8px; }
+      h3 { font-size: 1rem; }
+      .card { padding: 1rem 1.1rem; border-radius: 12px; }
+      body { font-size: 0.98rem; }
+      pre { font-size: 0.75rem; padding: 0.8rem; max-height: 320px; }
+      pre code { font-size: 0.75rem; }
+      .btn-home { width: 100%; justify-content: center; padding: 16px 18px; font-size: 1rem; }
+      .btn-wrap { flex-direction: column; gap: 12px; }
+      .btn-link { width: 100%; justify-content: center; padding: 14px 18px; font-size: 0.95rem; }
+      .download-link { width: 100%; justify-content: center; padding: 14px 18px; font-size: 0.95rem; }
+      .download-wrap { flex-direction: column; gap: 8px; }
+      .quick-tip { font-size: 0.86rem; padding: 12px 14px; }
+      table { font-size: 0.82rem; min-width: 480px; }
+      th, td { padding: 8px 10px; }
+
+      .video-wrapper {
+        width: 100%;
+        max-width: 100%;
+        aspect-ratio: 9 / 16;
+      }
+
+      .theme-toggle { width: 40px; height: 40px; font-size: 1.1rem; top: 12px; right: 12px; }
+      .language-switcher { top: 12px; left: 12px; }
+      .lang-btn { font-size: 0.8rem; padding: 6px 12px; }
+      .lang-dropdown { min-width: 180px; max-height: 300px; }
+      .lang-item { padding: 8px 14px; font-size: 0.85rem; }
+    }
+
+    @media (max-width: 380px) {
+      h1 { font-size: 1.3rem; }
+      h2 { font-size: 1.05rem; }
+      h3 { font-size: 0.95rem; }
+      .card { padding: 0.8rem 0.9rem; }
+      pre { font-size: 0.7rem; padding: 0.6rem; }
+      pre code { font-size: 0.7rem; }
+    }
+
+    pre[class*="language-"] {
+      background: var(--pre-bg) !important;
+      border: 1px solid var(--border) !important;
+      border-radius: var(--radius-sm) !important;
+      margin: 0.8rem 0 !important;
+    }
+
+    :not(pre) > code[class*="language-"] {
+      background: var(--code-bg) !important;
+      color: var(--code-text) !important;
+    }
+  </style>
 </head>
 <body>
 
-    <h2>?? Compatible Motor Driver Chips (Dual DC Motor)</h2>
+<div class="language-switcher ignore" id="languageSwitcher">
+  <button class="lang-btn" id="langBtn" type="button" aria-label="Change language">
+    🌐 <span id="currentLangLabel">English</span>
+  </button>
+  <div class="lang-dropdown" id="langDropdown"></div>
+</div>
 
-    <table>
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle theme" title="Switch theme">
+  <span id="themeIcon">☀️</span>
+</button>
+
+<div class="container">
+
+  <h1>⚙️ Speed Control with <span class="ignore">SoifGo</span></h1>
+
+  <div class="quick-tip">
+    <span class="icon">💡</span>
+    <span>
+      Control two DC motors independently over Bluetooth using a TDA7073A motor driver and software PWM on Arduino Uno.
+    </span>
+  </div>
+
+  <div class="card">
+    <h2>🔌 Compatible Motor Driver Chips (Dual DC Motor)</h2>
+
+    <div class="table-wrap">
+      <table>
         <thead>
-            <tr>
-                <th>Chip</th>
-                <th>Max Current per Channel</th>
-                <th>Voltage Range</th>
-                <th>Notes</th>
-            </tr>
+          <tr>
+            <th>Chip</th>
+            <th>Max Current per Channel</th>
+            <th>Voltage Range</th>
+            <th>Notes</th>
+          </tr>
         </thead>
         <tbody>
-            <tr><td><strong>TDA7073A</strong></td><td>600 mA</td><td>3V � 18V</td><td>The one used here; great for small motors</td></tr>
-            <tr><td><strong>L293D</strong></td><td>600 mA</td><td>4.5V � 36V</td><td>Very common but old; high voltage drop</td></tr>
-            <tr><td><strong>SN754410</strong></td><td>1A</td><td>4.5V � 36V</td><td>Improved L293 with thermal protection</td></tr>
-            <tr><td><strong>TA7291P</strong></td><td>1A (2A peak)</td><td>4.5V � 20V</td><td>Designed for DC motors; built-in flyback diodes</td></tr>
-            <tr><td><strong>TB6612FNG</strong></td><td>1.2A (3.2A peak)</td><td>15V max</td><td>Very efficient, low drop; modern L293D replacement</td></tr>
-            <tr><td><strong>DRV8833</strong></td><td>1.5A (2A peak)</td><td>2.7V � 10.8V</td><td>Battery-friendly; full protection features</td></tr>
-            <tr><td><strong>MX1508</strong></td><td>1.5A (2.5A peak)</td><td>1.8V � 10V</td><td>Very cheap; ideal for toys and small robots</td></tr>
+          <tr><td><strong>TDA7073A</strong></td><td>600 mA</td><td>3V – 18V</td><td>The one used here; great for small motors</td></tr>
+          <tr><td><strong>L293D</strong></td><td>600 mA</td><td>4.5V – 36V</td><td>Very common but old; high voltage drop</td></tr>
+          <tr><td><strong>SN754410</strong></td><td>1A</td><td>4.5V – 36V</td><td>Improved L293 with thermal protection</td></tr>
+          <tr><td><strong>TA7291P</strong></td><td>1A (2A peak)</td><td>4.5V – 20V</td><td>Designed for DC motors; built-in flyback diodes</td></tr>
+          <tr><td><strong>TB6612FNG</strong></td><td>1.2A (3.2A peak)</td><td>15V max</td><td>Very efficient, low drop; modern L293D replacement</td></tr>
+          <tr><td><strong>DRV8833</strong></td><td>1.5A (2A peak)</td><td>2.7V – 10.8V</td><td>Battery-friendly; full protection features</td></tr>
+          <tr><td><strong>MX1508</strong></td><td>1.5A (2.5A peak)</td><td>1.8V – 10V</td><td>Very cheap; ideal for toys and small robots</td></tr>
         </tbody>
-    </table>
+      </table>
+    </div>
+  </div>
 
-    <h2>?? About the Speed Control Example</h2>
+  <div class="card">
+    <h2>📖 About the Speed Control Example</h2>
 
-    <p>This Arduino sketch lets you control the <strong>speed of two DC motors independently</strong> over Bluetooth using a <strong>TDA7073A</strong> motor driver. It uses <strong>software PWM</strong> (no hardware PWM pins required) and communicates via the Arduino Uno's built-in hardware serial (pins 0 and 1).</p>
+    <p>
+      This Arduino sketch lets you control the <strong>speed of two DC motors independently</strong>
+      over Bluetooth using a <strong>TDA7073A</strong> motor driver. It uses
+      <strong>software PWM</strong> (no hardware PWM pins required) and communicates via the
+      Arduino Uno's built-in hardware serial (pins 0 and 1).
+    </p>
 
-    <div class="warn">
-        <strong>?? Important � Software PWM:</strong><br>
-        Unlike the typical <code>analogWrite()</code> approach, this sketch generates PWM in software inside <code>loop()</code>. This means:
-        <ul>
-            <li>Any output pin can be used (here: <code>A2, A3, A4, A5</code>).</li>
-            <li>The PWM frequency is low (~a few hundred Hz) and depends on loop speed.</li>
-            <li>Serial parsing is done in the same loop, so keep commands short.</li>
-        </ul>
+    <div class="note-warning">
+      <strong>⚠️ Important — Software PWM:</strong><br>
+      Unlike the typical <code>analogWrite()</code> approach, this sketch generates PWM in software inside <code>loop()</code>. This means:
+      <ul>
+        <li>Any output pin can be used (here: <code>A2, A3, A4, A5</code>).</li>
+        <li>The PWM frequency is low (~a few hundred Hz) and depends on loop speed.</li>
+        <li>Serial parsing is done in the same loop, so keep commands short.</li>
+      </ul>
     </div>
 
-    <h3>How it works:</h3>
+    <h3>How it works</h3>
     <ul>
-        <li><code>setup()</code> � Configures the four motor driver pins (<code>M11, M12, M21, M22</code>) as outputs, sets them LOW (motors stopped), and starts serial communication at 9600 baud.</li>
-        <li><code>loop()</code> � Runs the software PWM for both motors and checks for incoming serial data.</li>
-        <li><strong>Motor 1 (A):</strong> If <code>stopm1</code> is false, <code>spd1</code> increments each loop. While <code>spd1 &lt; pw1</code>, the motor is driven in the direction set by <code>dir1</code>. When <code>spd1</code> exceeds <code>pw1</code>, the motor is turned off for the rest of the cycle.</li>
-        <li><strong>Motor 2 (B):</strong> Same logic using <code>spd2</code>, <code>pw2</code>, and <code>dir2</code>.</li>
-        <li><code>parseSerial()</code> � Called when a newline is received. Parses the accumulated <code>text</code> string for commands.</li>
+      <li><code>setup()</code> — Configures the four motor driver pins (<code>M11, M12, M21, M22</code>) as outputs, sets them LOW (motors stopped), and starts serial communication at 9600 baud.</li>
+      <li><code>loop()</code> — Runs the software PWM for both motors and checks for incoming serial data.</li>
+      <li><strong>Motor 1 (A):</strong> If <code>stopm1</code> is false, <code>spd1</code> increments each loop. While <code>spd1 &lt; pw1</code>, the motor is driven in the direction set by <code>dir1</code>. When <code>spd1</code> exceeds <code>pw1</code>, the motor is turned off for the rest of the cycle.</li>
+      <li><strong>Motor 2 (B):</strong> Same logic using <code>spd2</code>, <code>pw2</code>, and <code>dir2</code>.</li>
+      <li><code>parseSerial()</code> — Called when a newline is received. Parses the accumulated <code>text</code> string for commands.</li>
     </ul>
 
-    <h3>Commands accepted:</h3>
-    <table>
+    <h3>Commands accepted</h3>
+
+    <div class="table-wrap">
+      <table>
         <thead>
-            <tr>
-                <th>Command</th>
-                <th>Action</th>
-            </tr>
+          <tr>
+            <th>Command</th>
+            <th>Action</th>
+          </tr>
         </thead>
         <tbody>
-            <tr><td><code>FWD</code></td><td>Motor 1 forward (<code>dir1 = true</code>)</td></tr>
-            <tr><td><code>BACK</code></td><td>Motor 1 backward (<code>dir1 = false</code>)</td></tr>
-            <tr><td><code>LEFT</code></td><td>Motor 2 left (<code>dir2 = true</code>)</td></tr>
-            <tr><td><code>RIGHT</code></td><td>Motor 2 right (<code>dir2 = false</code>)</td></tr>
-            <tr><td><code>STOP</code></td><td>Stop both motors (<code>stopm1 = true; stopm2 = true</code>)</td></tr>
-            <tr><td><code>SPD_A:200</code></td><td>Set Motor A speed (0�255) ? <code>pw1</code></td></tr>
-            <tr><td><code>SPD_B:150</code></td><td>Set Motor B speed (0�255) ? <code>pw2</code></td></tr>
+          <tr><td><code>FWD</code></td><td>Motor 1 forward (<code>dir1 = true</code>)</td></tr>
+          <tr><td><code>BACK</code></td><td>Motor 1 backward (<code>dir1 = false</code>)</td></tr>
+          <tr><td><code>LEFT</code></td><td>Motor 2 left (<code>dir2 = true</code>)</td></tr>
+          <tr><td><code>RIGHT</code></td><td>Motor 2 right (<code>dir2 = false</code>)</td></tr>
+          <tr><td><code>STOP</code></td><td>Stop both motors (<code>stopm1 = true; stopm2 = true</code>)</td></tr>
+          <tr><td><code>SPD_A:200</code></td><td>Set Motor A speed (0–255) → <code>pw1</code></td></tr>
+          <tr><td><code>SPD_B:150</code></td><td>Set Motor B speed (0–255) → <code>pw2</code></td></tr>
         </tbody>
-    </table>
-
-    <div class="note">
-        <strong>?? Note:</strong> After each valid command, the sketch prints the current speed values:
-        <code>pw1   pw2</code> (e.g. <code>55   55</code>). This is useful for debugging but is not a formal acknowledgment.
+      </table>
     </div>
 
-    <h3>?? Full Arduino Sketch</h3>
-    <pre><code>/*
-  SoifGo � Speed Control  for TDA7073A (Software PWM)
+    <div class="note-info">
+      <strong>📌 Note:</strong> After each valid command, the sketch prints the current speed values:
+      <code>pw1   pw2</code> (e.g. <code>55   55</code>). This is useful for debugging but is not a formal acknowledgment.
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📜 Full Arduino Sketch</h3>
+
+    <pre class="line-numbers"><code class="language-cpp">/*
+  SoifGo — Speed Control  for TDA7073A (Software PWM)
  
   Target: Arduino Uno R3 (ATmega328P)
 */
@@ -350,32 +904,308 @@ void parseSerial() {
   text2 = "";
 }</code></pre>
 
-    <div class="note">
-        <strong>?? Wiring notes for Arduino Uno R3:</strong><br>
-        � <strong>Bluetooth module</strong> (HC-05 / JDY-31): connects to the Arduino's <strong>hardware serial</strong> � module TX ? Arduino <strong>RX (pin 0)</strong>, module RX ? Arduino <strong>TX (pin 1)</strong> (use a voltage divider if the module is 3.3V).<br>
-        � <strong>Motor driver pins:</strong> M11=A2, M12=A3 (Motor 1), M21=A4, M22=A5 (Motor 2).<br>
-        � For <strong>TDA7073A</strong>, each motor is driven by a pair of inputs (IN+ / IN-). Connect <code>M11</code> ? IN1+, <code>M12</code> ? IN1-, <code>M21</code> ? IN2+, <code>M22</code> ? IN2-.<br>
-        � Because the sketch uses <strong>hardware serial</strong>, disconnect the Bluetooth module while uploading the sketch to avoid conflicts.
+    <div class="download-wrap">
+      <a href="speed-control.ino" class="download-link" download>📦 Download speed-control.ino</a>
     </div>
+  </div>
 
-    <h3>?? Schematic (Arduino Uno R3 Target)</h3>
+  <div class="card">
+    <h3>📝 Wiring notes for Arduino Uno R3</h3>
+
+    <div class="note-info">
+      <ul>
+        <li>
+          <strong>Bluetooth module</strong> (HC-05 / JDY-31): connects to the Arduino's
+          <strong>hardware serial</strong> — module TX → Arduino <strong>RX (pin 0)</strong>,
+          module RX → Arduino <strong>TX (pin 1)</strong>
+          (use a voltage divider if the module is 3.3V).
+        </li>
+        <li><strong>Motor driver pins:</strong> M11 = A2, M12 = A3 (Motor 1), M21 = A4, M22 = A5 (Motor 2).</li>
+        <li>
+          For <strong>TDA7073A</strong>, each motor is driven by a pair of inputs (IN+ / IN-).
+          Connect <code>M11</code> → IN1+, <code>M12</code> → IN1-,
+          <code>M21</code> → IN2+, <code>M22</code> → IN2-.
+        </li>
+        <li>
+          Because the sketch uses <strong>hardware serial</strong>, disconnect the Bluetooth module
+          while uploading the sketch to avoid conflicts.
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🖼️ Schematic (Arduino Uno R3 Target)</h3>
 
     <div class="schematic-placeholder">
-        <img src="speed_control.png" alt="Arduino Uno R3 + Bluetooth + TDA7073A Schematic">
+      <img src="speed_control.png" alt="Arduino Uno R3 + Bluetooth + TDA7073A Schematic" loading="lazy">
     </div>
 
     <div class="schematic-placeholder">
-        <img src="speed_control2.jpg" alt="Arduino Uno R3 + Bluetooth + TDA7073A Wiring">
+      <img src="speed_control2.jpg" alt="Arduino Uno R3 + Bluetooth + TDA7073A Wiring" loading="lazy">
     </div>
+  </div>
 
-    <h3>?? Test Video</h3>
+  <div class="card">
+    <h3>🎬 Test Video</h3>
 
     <div class="video-wrapper">
-        <iframe src="https://mega.nz/embed/7P4WyYID#ZqnjDbl6rr5ZFxwQ4qteN6b9WKY9UBCBsE2edwkUUHg"
-                allowfullscreen
-                loading="lazy"></iframe>
+      <iframe src="https://mega.nz/embed/7P4WyYID#ZqnjDbl6rr5ZFxwQ4qteN6b9WKY9UBCBsE2edwkUUHg"
+              allowfullscreen
+              loading="lazy"></iframe>
     </div>
-    <p style="font-size:0.85em; margin-top:10px; text-align:center;">Speed Control test � two motors with independent speed (TDA7073A, software PWM)</p>
+    <p style="font-size:0.85em; margin-top:10px; text-align:center;" class="muted">
+      Speed Control test — two motors with independent speed (TDA7073A, software PWM)
+    </p>
+  </div>
+
+  <hr>
+
+  <div class="btn-wrap">
+    <a href="https://soifgo.github.io/soifgo/index.html" class="btn-home">⬅ Back to Home</a>
+  </div>
+
+</div>
+
+<script>
+  (function() {
+    var themeToggle = document.getElementById('themeToggle');
+    var themeIcon = document.getElementById('themeIcon');
+
+    function updateIcon(theme) {
+      if (theme === 'light') {
+        themeIcon.textContent = '🌙';
+        themeToggle.title = 'Switch to dark mode';
+      } else {
+        themeIcon.textContent = '☀️';
+        themeToggle.title = 'Switch to light mode';
+      }
+    }
+
+    var currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+    updateIcon(currentTheme);
+
+    themeToggle.addEventListener('click', function() {
+      var current = document.documentElement.getAttribute('data-theme');
+      var next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('soifgo-theme', next);
+      updateIcon(next);
+    });
+  })();
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-clike.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-c.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-cpp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-json.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-bash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/toolbar/prism-toolbar.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+
+<script src="https://cdn.staticfile.net/translate.js/3.18.66/translate.js"></script>
+
+<script>
+(function() {
+  'use strict';
+
+  var LANGUAGES = {
+    'english': { label: 'English', dir: 'ltr' },
+    'spanish': { label: 'Español', dir: 'ltr' },
+    'chinese_simplified': { label: '简体中文', dir: 'ltr' },
+    'french': { label: 'Français', dir: 'ltr' },
+    'deutsch': { label: 'Deutsch', dir: 'ltr' },
+    'japanese': { label: '日本語', dir: 'ltr' },
+    'russian': { label: 'Русский', dir: 'ltr' },
+    'arabic': { label: 'العربية', dir: 'rtl' },
+    'persian': { label: 'فارسی', dir: 'rtl' },
+    'italian': { label: 'Italiano', dir: 'ltr' },
+    'hindi': { label: 'हिन्दी', dir: 'ltr' },
+    'turkish': { label: 'Türkçe', dir: 'ltr' },
+    'korean': { label: '한국어', dir: 'ltr' },
+    'portuguese': { label: 'Português', dir: 'ltr' },
+    'hebrew': { label: 'עברית', dir: 'rtl' },
+    'kurdish_sorani': { label: 'کوردی', dir: 'rtl' },
+    'urdu': { label: 'اردو', dir: 'rtl' },
+    'bengali': { label: 'বাংলা', dir: 'ltr' },
+    'indonesian': { label: 'Bahasa Indonesia', dir: 'ltr' },
+    'tamil': { label: 'தமிழ்', dir: 'ltr' },
+    'thai': { label: 'ไทย', dir: 'ltr' },
+    'swahili': { label: 'Swahili', dir: 'ltr' }
+  };
+
+  var DEFAULT_LANG = 'english';
+  var FALLBACK_CHANNELS = ['giteeAI', 'client.edge', 'siliconflow'];
+
+  var langBtn = document.getElementById('langBtn');
+  var langDropdown = document.getElementById('langDropdown');
+  var currentLangLabel = document.getElementById('currentLangLabel');
+
+  function buildLanguageList() {
+    var html = '';
+    for (var code in LANGUAGES) {
+      if (LANGUAGES.hasOwnProperty(code)) {
+        var lang = LANGUAGES[code];
+        html += '<a href="javascript:void(0)" class="lang-item ignore" data-lang="' + code + '" data-dir="' + lang.dir + '">' + lang.label + '</a>';
+      }
+    }
+    langDropdown.innerHTML = html;
+    var items = langDropdown.querySelectorAll('.lang-item');
+    for (var i = 0; i < items.length; i++) {
+      items[i].addEventListener('click', function(e) {
+        e.preventDefault();
+        changeLanguage(this.getAttribute('data-lang'), this.getAttribute('data-dir'));
+      });
+    }
+  }
+
+  function waitForTranslation(element, originalText, timeoutMs) {
+    return new Promise(function(resolve) {
+      var start = Date.now();
+      var timer = setInterval(function() {
+        if (element.textContent !== originalText) {
+          clearInterval(timer);
+          resolve(true);
+        } else if (Date.now() - start > timeoutMs) {
+          clearInterval(timer);
+          resolve(false);
+        }
+      }, 200);
+    });
+  }
+
+  function applyChannel(channel) {
+    try {
+      translate.service.use(channel);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function resetToEnglish() {
+    try { localStorage.removeItem('soifgo-lang'); } catch (e) {}
+    document.documentElement.setAttribute('dir', 'ltr');
+    document.documentElement.setAttribute('lang', 'en');
+    currentLangLabel.textContent = LANGUAGES.english.label;
+    langDropdown.classList.remove('show');
+    setTimeout(function() {
+      location.reload();
+    }, 100);
+  }
+
+  function changeLanguage(langCode, langDir) {
+    if (langCode === 'english') {
+      resetToEnglish();
+      return;
+    }
+
+    var testElement = document.querySelector('h1');
+    var originalText = testElement ? testElement.textContent : '';
+
+    function tryChannel(index) {
+      if (index >= FALLBACK_CHANNELS.length) {
+        console.warn('All fallback channels failed.');
+        return;
+      }
+
+      var channel = FALLBACK_CHANNELS[index];
+      applyChannel(channel);
+
+      translate.changeLanguage(langCode);
+      if (typeof translate.execute === 'function') {
+        translate.execute();
+      }
+
+      waitForTranslation(testElement, originalText, 3000).then(function(success) {
+        if (!success) {
+          console.warn('Channel ' + channel + ' failed, trying next...');
+          tryChannel(index + 1);
+        } else {
+          try { localStorage.setItem('soifgo-lang', langCode); } catch (e) {}
+          document.documentElement.setAttribute('dir', langDir);
+          document.documentElement.setAttribute('lang', langCode === 'persian' ? 'fa' : langCode);
+          currentLangLabel.textContent = LANGUAGES[langCode].label;
+          langDropdown.classList.remove('show');
+        }
+      });
+    }
+
+    tryChannel(0);
+  }
+
+  langBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    langDropdown.classList.toggle('show');
+  });
+
+  document.addEventListener('click', function() {
+    langDropdown.classList.remove('show');
+  });
+
+  function getSavedLang() {
+    try {
+      var saved = localStorage.getItem('soifgo-lang');
+      if (saved && LANGUAGES[saved] && saved !== 'english') {
+        return saved;
+      }
+    } catch (e) {}
+    return null;
+  }
+
+  function initTranslate() {
+    var savedLang = getSavedLang();
+    if (!savedLang) {
+      document.documentElement.setAttribute('dir', 'ltr');
+      document.documentElement.setAttribute('lang', 'en');
+      currentLangLabel.textContent = LANGUAGES.english.label;
+      return;
+    }
+
+    translate.language.setLocal('english');
+    translate.service.use(FALLBACK_CHANNELS[0]);
+    translate.selectLanguageTag.show = false;
+    translate.execute();
+    if (translate.listener && translate.listener.start) {
+      translate.listener.start();
+    }
+  }
+
+  function restoreLanguageUI() {
+    var savedLang = getSavedLang();
+    if (savedLang) {
+      var lang = LANGUAGES[savedLang];
+      document.documentElement.setAttribute('dir', lang.dir);
+      document.documentElement.setAttribute('lang', savedLang === 'persian' ? 'fa' : savedLang);
+      currentLangLabel.textContent = lang.label;
+      return savedLang;
+    }
+    currentLangLabel.textContent = LANGUAGES[DEFAULT_LANG].label;
+    return null;
+  }
+
+  buildLanguageList();
+  var restored = restoreLanguageUI();
+
+  function bootTranslate() {
+    initTranslate();
+    if (restored) {
+      setTimeout(function() {
+        changeLanguage(restored, LANGUAGES[restored].dir);
+      }, 500);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bootTranslate);
+  } else {
+    bootTranslate();
+  }
+})();
+</script>
 
 </body>
 </html>

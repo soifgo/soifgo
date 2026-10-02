@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes" />
-  <meta name="theme-color" content="#004466" />
+  <meta name="theme-color" content="#0f172a" />
   <meta name="color-scheme" content="light dark" />
 
   <title>Page and Folder Navigation in SoifGo — Complete Tutorial</title>
@@ -54,51 +54,104 @@
   }
   </script>
 
-  <style>
-    :root {
-      --bg: #ffffff;
-      --fg: #1f2937;
-      --accent: #004466;
-      --card-bg: #f5f7fb;
-      --border: #d7dce4;
-      --muted: #6b7280;
-      --code-bg: #eef2f7;
-      --link: #0066cc;
-      --btn-home: #8B4513;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #0b0e12;
-        --fg: #e5e7eb;
-        --accent: #4dabf7;
-        --card-bg: #12161d;
-        --border: #243041;
-        --muted: #9aa3af;
-        --link: #58a6ff;
-        --btn-home: #8B5A3A;
-        --code-bg: #1b2230;
+  <script>
+    (function() {
+      var savedTheme = localStorage.getItem('soifgo-theme');
+      if (savedTheme === 'light' || savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
       }
-    }
+    })();
+  </script>
 
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet" />
+
+  <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    html, body {
-      background: var(--bg);
-      color: var(--fg);
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      line-height: 1.7;
-      -webkit-text-size-adjust: 100%;
-      min-height: 100vh;
+    :root,
+    [data-theme="dark"] {
+      --primary: #4f8cff;
+      --primary-light: #6aa0ff;
+      --purple: #9b59b6;
+      --purple-light: #c084fc;
+      --arduino-teal: #1abc9c;
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --text: #e8edf5;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --border: rgba(255, 255, 255, 0.07);
+      --shadow: rgba(0, 0, 0, 0.35);
+      --hover-bg: rgba(255, 255, 255, 0.04);
+      --code-bg: rgba(79, 140, 255, 0.12);
+      --code-text: #a5b4fc;
+      --pre-bg: #0f172a;
+      --pre-text: #e2e8f0;
+      --warning-bg: rgba(245, 158, 11, 0.1);
+      --warning-border: #f59e0b;
+      --warning-text: #fbbf24;
+      --success-bg: rgba(34, 197, 94, 0.1);
+      --success-border: #22c55e;
+      --success-text: #4ade80;
+      --danger-bg: rgba(239, 68, 68, 0.1);
+      --danger-border: #ef4444;
+      --danger-text: #f87171;
+      --radius: 14px;
+      --radius-sm: 10px;
+      --transition: 0.25s ease;
     }
 
-    .container { max-width: 860px; margin: 0 auto; padding: 16px; }
+    [data-theme="light"] {
+      --primary: #2563eb;
+      --primary-light: #3b82f6;
+      --purple: #9333ea;
+      --purple-light: #a855f7;
+      --arduino-teal: #0d9488;
+      --bg: #f8fafc;
+      --bg-card: #ffffff;
+      --text: #1e293b;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: rgba(15, 23, 42, 0.08);
+      --shadow: rgba(15, 23, 42, 0.08);
+      --hover-bg: rgba(37, 99, 235, 0.06);
+      --code-bg: rgba(37, 99, 235, 0.1);
+      --code-text: #1e40af;
+      --pre-bg: #0f172a;
+      --pre-text: #e2e8f0;
+      --warning-bg: rgba(245, 158, 11, 0.1);
+      --warning-border: #d97706;
+      --warning-text: #92400e;
+      --success-bg: rgba(34, 197, 94, 0.1);
+      --success-border: #16a34a;
+      --success-text: #15803d;
+      --danger-bg: rgba(239, 68, 68, 0.1);
+      --danger-border: #dc2626;
+      --danger-text: #b91c1c;
+    }
+
+    .ignore { }
+
+    body {
+      font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      min-height: 100vh;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .container { max-width: 860px; margin: 0 auto; padding: 20px 16px 60px; }
 
     h1 {
       font-size: 1.8rem;
-      color: var(--accent);
+      color: var(--primary-light);
       text-align: center;
-      margin: 0.75rem 0 0.5rem;
+      margin: 1rem 0 1.5rem;
       font-weight: 700;
       letter-spacing: -0.01em;
       word-break: break-word;
@@ -106,47 +159,140 @@
 
     h2 {
       font-size: 1.35rem;
-      color: var(--fg);
-      margin: 1.5rem 0 0.75rem;
+      color: var(--text-main);
+      margin: 0 0 0.75rem;
       font-weight: 600;
       word-break: break-word;
-      border-bottom: 2px solid var(--border);
-      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    h2 .step-num {
+      background: var(--primary);
+      color: #fff;
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: 700;
+      flex-shrink: 0;
     }
 
     h3 {
       font-size: 1.1rem;
-      color: var(--accent);
+      color: var(--primary-light);
       margin: 1rem 0 0.5rem;
       font-weight: 600;
       word-break: break-word;
     }
 
-    p { margin: 0.75em 0; word-break: break-word; }
+    h4 {
+      font-size: 1rem;
+      color: var(--text);
+      margin: 0.75rem 0 0.25rem;
+      font-weight: 600;
+      word-break: break-word;
+    }
 
-    a { color: var(--link); text-decoration: none; word-break: break-word; }
+    p { margin: 0.75em 0; word-break: break-word; color: var(--text); }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      word-break: break-word;
+      transition: color var(--transition);
+    }
+
     a:hover { text-decoration: underline; }
 
     .card {
-      background: var(--card-bg);
+      background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 1rem 1.2rem;
+      border-radius: var(--radius);
+      padding: 1.2rem 1.4rem;
       margin-bottom: 1rem;
       max-width: 100%;
       overflow: hidden;
+      box-shadow: 0 4px 20px var(--shadow);
+      transition: background 0.3s ease, border 0.3s ease;
     }
 
-    /* ===== VIDEO WRAPPER (MEGA IFRAME) ===== */
+    .note-warning {
+      background: var(--warning-bg);
+      border: 1px solid var(--warning-border);
+      color: var(--warning-text);
+      padding: 1rem 1.2rem;
+      border-radius: var(--radius-sm);
+      margin: 1rem 0;
+    }
+
+    .note-warning ul { padding-left: 1.4em; margin: 0.5em 0; color: inherit; }
+    .note-warning li { margin-bottom: 0.3em; color: inherit; }
+    .note-warning strong { color: inherit; }
+
+    .note-success {
+      background: var(--success-bg);
+      border: 1px solid var(--success-border);
+      color: var(--success-text);
+      padding: 1rem 1.2rem;
+      border-radius: var(--radius-sm);
+      margin: 1rem 0;
+    }
+
+    .note-success ul { padding-left: 1.4em; margin: 0.5em 0; color: inherit; }
+    .note-success li { margin-bottom: 0.3em; color: inherit; }
+    .note-success strong { color: inherit; }
+
+    .note-danger {
+      background: var(--danger-bg);
+      border: 1px solid var(--danger-border);
+      color: var(--danger-text);
+      padding: 1rem 1.2rem;
+      border-radius: var(--radius-sm);
+      margin: 1rem 0;
+    }
+
+    .note-danger ul { padding-left: 1.4em; margin: 0.5em 0; color: inherit; }
+    .note-danger li { margin-bottom: 0.3em; color: inherit; }
+    .note-danger strong { color: inherit; }
+
+    .note-info {
+      background: var(--code-bg);
+      border: 1px solid var(--primary);
+      color: var(--text);
+      padding: 1rem 1.2rem;
+      border-radius: var(--radius-sm);
+      margin: 1rem 0;
+    }
+
+    .note-info strong { color: var(--primary-light); }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--radius-sm);
+      display: block;
+      margin: 0.8rem 0;
+      background: var(--bg);
+      border: 1px solid var(--border);
+    }
+
     .video-wrapper {
       position: relative;
       width: 100%;
       aspect-ratio: 16 / 9;
-      border-radius: 12px;
+      border-radius: var(--radius-sm);
       overflow: hidden;
       background: #0a1a2a;
       margin: 0.8rem 0;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 4px 15px var(--shadow);
+      border: 1px solid var(--border);
     }
 
     .video-wrapper iframe {
@@ -158,37 +304,63 @@
       border: 0;
     }
 
-    code {
-      background: var(--code-bg);
-      padding: 0.2em 0.6em;
-      border-radius: 8px;
-      font-size: 0.9em;
-      font-family: 'JetBrains Mono', 'Fira Code', monospace;
-      color: var(--fg);
-      word-break: break-word;
+    pre {
+      border-radius: var(--radius-sm);
+      max-height: 400px;
+      overflow: auto;
+      margin: 0.8rem 0;
+      background: var(--pre-bg) !important;
+      padding: 1rem;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      border: 1px solid var(--border);
     }
 
-    ul, ol { padding-left: 1.4em; margin: 0.5em 0; }
+    pre code {
+      background: transparent !important;
+      padding: 0;
+      color: var(--pre-text) !important;
+      font-size: 0.85rem;
+      font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+    }
+
+    code {
+      padding: 0.2em 0.6em;
+      border-radius: 6px;
+      font-size: 0.88em;
+      font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+      color: var(--code-text);
+      word-break: break-word;
+      background: var(--code-bg);
+    }
+
+    ul, ol { padding-left: 1.4em; margin: 0.5em 0; color: var(--text); }
     li { margin-bottom: 0.4em; word-break: break-word; }
 
     .btn-home {
       display: inline-block;
-      background: var(--btn-home);
-      color: white;
+      background: var(--primary);
+      color: #ffffff;
       padding: 14px 34px;
       border-radius: 60px;
       text-decoration: none;
-      font-weight: 500;
+      font-weight: 600;
       font-size: 1.05rem;
       text-align: center;
-      transition: background 0.15s, transform 0.1s;
+      transition: background 0.15s ease, transform 0.1s ease;
       touch-action: manipulation;
       border: none;
       min-width: 140px;
-      box-shadow: 0 4px 10px rgba(80, 45, 20, 0.06);
+      box-shadow: 0 4px 14px rgba(79, 140, 255, 0.3);
     }
 
-    .btn-home:active { transform: scale(0.97); background: #5f3a22; }
+    .btn-home:hover {
+      background: var(--primary-light);
+      text-decoration: none;
+      transform: scale(1.02);
+    }
+
+    .btn-home:active { transform: scale(0.97); }
 
     .btn-wrap {
       display: flex;
@@ -199,23 +371,96 @@
       margin: 2rem 0 0.5rem 0;
     }
 
-    @media (max-width: 600px) {
-      .container { padding: 10px; }
-      h1 { font-size: 1.5rem; }
-      h2 { font-size: 1.15rem; }
-      .card { padding: 0.8rem 0.9rem; border-radius: 14px; }
-      body { font-size: 1rem; line-height: 1.7; }
-      .btn-home { width: 100%; justify-content: center; padding: 16px 18px; font-size: 1rem; }
-      .btn-wrap { flex-direction: column; gap: 12px; }
+    .download-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--primary);
+      color: #ffffff;
+      padding: 12px 24px;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      margin: 0.5em 0.5em 0.5em 0;
+      transition: background 0.15s ease, transform 0.1s ease;
+      touch-action: manipulation;
+      border: none;
+      box-shadow: 0 4px 14px rgba(79, 140, 255, 0.25);
     }
 
-    @media (max-width: 380px) {
-      h1 { font-size: 1.3rem; }
-      .card { padding: 0.6rem 0.7rem; }
+    .download-link:hover {
+      background: var(--primary-light);
+      text-decoration: none;
+      transform: scale(1.02);
     }
 
-    .muted { color: var(--muted); }
-    hr { border: none; border-top: 2px solid var(--border); margin: 1.5rem 0; }
+    .download-link:active { transform: scale(0.97); }
+
+    .download-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 0.5rem 0;
+    }
+
+    .btn-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--primary);
+      color: #ffffff;
+      padding: 12px 24px;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      margin: 0.5em 0;
+      transition: background 0.15s ease, transform 0.1s ease;
+      touch-action: manipulation;
+      border: none;
+      box-shadow: 0 4px 14px rgba(79, 140, 255, 0.25);
+    }
+
+    .btn-link:hover {
+      background: var(--primary-light);
+      text-decoration: none;
+      transform: scale(1.02);
+    }
+
+    .btn-link:active { transform: scale(0.97); }
+
+    .mqtt-note {
+      background: var(--bg-card);
+      border: 2px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 1rem 1.2rem;
+      margin: 1rem 0;
+    }
+
+    .mqtt-note h3 {
+      color: var(--primary-light);
+      margin-top: 0;
+    }
+
+    .quick-tip {
+      background: var(--code-bg);
+      border: 1px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      margin: 0 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.92rem;
+      color: var(--text);
+    }
+
+    .quick-tip .icon { font-size: 1.3rem; flex-shrink: 0; }
+    .quick-tip a { color: var(--primary); font-weight: 600; text-decoration: none; }
+    .quick-tip a:hover { text-decoration: underline; }
 
     .feature-grid {
       display: grid;
@@ -232,87 +477,508 @@
     }
 
     .feature-item strong {
-      color: var(--accent);
+      color: var(--primary-light);
       display: block;
+      margin-bottom: 4px;
     }
 
     @media (max-width: 500px) {
       .feature-grid { grid-template-columns: 1fr; }
     }
+
+    .language-switcher {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      right: auto;
+      z-index: 1001;
+      direction: ltr;
+    }
+
+    .lang-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 16px;
+      border-radius: 24px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+      transition: background 0.2s, border-color 0.2s, transform 0.15s;
+    }
+
+    .lang-btn:hover {
+      background: var(--hover-bg);
+      border-color: var(--primary);
+      transform: scale(1.03);
+    }
+
+    .lang-dropdown {
+      display: none;
+      position: absolute;
+      top: 48px;
+      left: 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      min-width: 220px;
+      max-height: 400px;
+      overflow-y: auto;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      padding: 8px 0;
+      direction: ltr;
+    }
+
+    .lang-dropdown.show { display: block; }
+
+    .lang-item {
+      display: block;
+      padding: 10px 18px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.92rem;
+      transition: background 0.15s;
+      white-space: nowrap;
+      direction: ltr;
+      text-align: left;
+    }
+
+    .lang-item:hover {
+      background: var(--hover-bg);
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      left: auto;
+      z-index: 1000;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 1.3rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+      transition: background 0.25s ease, transform 0.2s ease, border-color 0.25s ease;
+      padding: 0;
+      line-height: 1;
+      direction: ltr;
+    }
+
+    .theme-toggle:hover {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      transform: scale(1.08);
+    }
+
+    .muted { color: var(--text-muted); }
+    .text-center { text-align: center; }
+    .mt-1 { margin-top: 1rem; }
+    .mb-1 { margin-bottom: 1rem; }
+
+    hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+
+    @media (max-width: 600px) {
+      .container { padding: 14px 12px 40px; }
+      h1 { font-size: 1.5rem; }
+      h2 { font-size: 1.15rem; gap: 8px; }
+      h2 .step-num { width: 26px; height: 26px; font-size: 0.8rem; }
+      h3 { font-size: 0.98rem; }
+      .card { padding: 1rem 1.1rem; border-radius: 12px; }
+      body { font-size: 0.98rem; }
+      pre { font-size: 0.75rem; padding: 0.8rem; max-height: 300px; }
+      pre code { font-size: 0.75rem; }
+      .btn-home { width: 100%; justify-content: center; padding: 16px 18px; font-size: 1rem; }
+      .btn-wrap { flex-direction: column; gap: 12px; }
+      .btn-link { width: 100%; justify-content: center; padding: 14px 18px; font-size: 0.95rem; }
+      .download-link { width: 100%; justify-content: center; padding: 14px 18px; font-size: 0.95rem; }
+      .download-wrap { flex-direction: column; gap: 8px; }
+      .mqtt-note { padding: 0.8rem 0.9rem; }
+      .quick-tip { font-size: 0.86rem; padding: 12px 14px; }
+
+      .theme-toggle { width: 40px; height: 40px; font-size: 1.1rem; top: 12px; right: 12px; }
+      .language-switcher { top: 12px; left: 12px; }
+      .lang-btn { font-size: 0.8rem; padding: 6px 12px; }
+      .lang-dropdown { min-width: 180px; max-height: 300px; }
+      .lang-item { padding: 8px 14px; font-size: 0.85rem; }
+    }
+
+    @media (max-width: 380px) {
+      h1 { font-size: 1.3rem; }
+      .card { padding: 0.8rem 0.9rem; }
+      pre { font-size: 0.7rem; padding: 0.6rem; }
+      pre code { font-size: 0.7rem; }
+    }
+
+    pre[class*="language-"] {
+      background: var(--pre-bg) !important;
+      border: 1px solid var(--border) !important;
+      border-radius: var(--radius-sm) !important;
+      margin: 0.8rem 0 !important;
+    }
+
+    :not(pre) > code[class*="language-"] {
+      background: var(--code-bg) !important;
+      color: var(--code-text) !important;
+    }
   </style>
 </head>
 <body>
 
-  <div class="container">
+<div class="language-switcher ignore" id="languageSwitcher">
+  <button class="lang-btn" id="langBtn" type="button" aria-label="Change language">
+    🌐 <span id="currentLangLabel">English</span>
+  </button>
+  <div class="lang-dropdown" id="langDropdown"></div>
+</div>
 
-    <h1>Navigation in SoifGo</h1>
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle theme" title="Switch theme">
+  <span id="themeIcon">☀️</span>
+</button>
 
-    <div class="card">
-      <p>
-        In SoifGo you can create multiple branches such as folders and subfolders.
-        Each folder may contain separate pages, and these pages remain independent.
-      </p>
-    </div>
+<div class="container">
 
-    <div class="card">
-      <h1 style="font-size: 1.5rem; text-align: left; margin-top: 0;">Page Opening Behavior</h1>
-      <p>
-        With the page-opening behavior, you can assign a button to load another page you have designed.
-        From that page, you can also navigate back to the previous one.
-      </p>
-    </div>
+  <h1>🧭 Navigation in <span class="ignore">SoifGo</span></h1>
 
-    <div class="card">
-      <h1 style="font-size: 1.5rem; text-align: left; margin-top: 0;">Folder Opening Behavior</h1>
-      <p>
-        Sometimes you need to access pages located in another folder.
-        In this case, simply choose the folder-opening behavior and select the desired folder.
-      </p>
-    </div>
-
-    <div class="card">
-      <h2>Navigation Features</h2>
-
-      <div class="feature-grid">
-        <div class="feature-item">
-          <strong>📁 Folders</strong>
-          Create multiple folders and subfolders to organize your designs
-        </div>
-        <div class="feature-item">
-          <strong>📄 Pages</strong>
-          Each folder can contain separate, independent pages
-        </div>
-        <div class="feature-item">
-          <strong>🔗 Page Opening</strong>
-          Assign a button to load another page with back navigation
-        </div>
-        <div class="feature-item">
-          <strong>🗂️ Folder Opening</strong>
-          Access pages in other folders directly
-        </div>
-      </div>
-    </div>
-
-    <!-- ===== VIDEO (MEGA IFRAME) ===== -->
-    <div class="card">
-      <h2>Demo Video</h2>
-      <p>
-        The video below shows how to travel between pages and folders in SoifGo.
-      </p>
-
-      <div class="video-wrapper">
-        <iframe src="https://mega.nz/embed/DHwCkYJY#TPalzSv52vBE2FmKWnY9n0h-92ApF1oh0sit4KNODFk"
-                allowfullscreen
-                loading="lazy"></iframe>
-      </div>
-    </div>
-
-    <hr>
-    <div class="btn-wrap">
-      <a href="https://soifgo.github.io/soifgo/index.html" class="btn-home">⬅ Back to Home</a>
-    </div>
-
+  <div class="quick-tip">
+    <span class="icon">💡</span>
+    <span>
+      Use folders and subfolders to organize your designs and navigate between pages easily.
+    </span>
   </div>
+
+  <div class="card">
+    <p>
+      In <span class="ignore">SoifGo</span> you can create multiple branches such as folders and subfolders.
+      Each folder may contain separate pages, and these pages remain independent.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>📄 Page Opening Behavior</h2>
+    <p>
+      With the page-opening behavior, you can assign a button to load another page you have designed.
+      From that page, you can also navigate back to the previous one.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>🗂️ Folder Opening Behavior</h2>
+    <p>
+      Sometimes you need to access pages located in another folder.
+      In this case, simply choose the folder-opening behavior and select the desired folder.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>Navigation Features</h2>
+
+    <div class="feature-grid">
+      <div class="feature-item">
+        <strong>📁 Folders</strong>
+        Create multiple folders and subfolders to organize your designs
+      </div>
+      <div class="feature-item">
+        <strong>📄 Pages</strong>
+        Each folder can contain separate, independent pages
+      </div>
+      <div class="feature-item">
+        <strong>🔗 Page Opening</strong>
+        Assign a button to load another page with back navigation
+      </div>
+      <div class="feature-item">
+        <strong>🗂️ Folder Opening</strong>
+        Access pages in other folders directly
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Demo Video</h2>
+    <p>
+      The video below shows how to travel between pages and folders in <span class="ignore">SoifGo</span>.
+    </p>
+
+    <div class="video-wrapper">
+      <iframe src="https://mega.nz/embed/DHwCkYJY#TPalzSv52vBE2FmKWnY9n0h-92ApF1oh0sit4KNODFk"
+              allowfullscreen
+              loading="lazy"></iframe>
+    </div>
+  </div>
+
+  <div class="mqtt-note">
+    <h3>Important Note</h3>
+    <p>
+      Make sure each page has a clear purpose and avoid creating too many nested folders.
+      A simple structure is easier to maintain and faster to navigate.
+    </p>
+    <ul>
+      <li>Use meaningful names for folders and pages.</li>
+      <li>Keep the navigation flow consistent across all pages.</li>
+      <li>Test the back navigation behavior after each change.</li>
+    </ul>
+  </div>
+
+  <hr>
+
+  <div class="btn-wrap">
+    <a href="https://soifgo.github.io/soifgo/index.html" class="btn-home">⬅ Back to Home</a>
+  </div>
+
+</div>
+
+<script>
+  (function() {
+    var themeToggle = document.getElementById('themeToggle');
+    var themeIcon = document.getElementById('themeIcon');
+
+    function updateIcon(theme) {
+      if (theme === 'light') {
+        themeIcon.textContent = '🌙';
+        themeToggle.title = 'Switch to dark mode';
+      } else {
+        themeIcon.textContent = '☀️';
+        themeToggle.title = 'Switch to light mode';
+      }
+    }
+
+    var currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+    updateIcon(currentTheme);
+
+    themeToggle.addEventListener('click', function() {
+      var current = document.documentElement.getAttribute('data-theme');
+      var next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('soifgo-theme', next);
+      updateIcon(next);
+    });
+  })();
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-clike.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-c.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-cpp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-json.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-bash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/toolbar/prism-toolbar.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+
+<script src="https://cdn.staticfile.net/translate.js/3.18.66/translate.js"></script>
+
+<script>
+(function() {
+  'use strict';
+
+  var LANGUAGES = {
+    'english': { label: 'English', dir: 'ltr' },
+    'spanish': { label: 'Español', dir: 'ltr' },
+    'chinese_simplified': { label: '简体中文', dir: 'ltr' },
+    'french': { label: 'Français', dir: 'ltr' },
+    'deutsch': { label: 'Deutsch', dir: 'ltr' },
+    'japanese': { label: '日本語', dir: 'ltr' },
+    'russian': { label: 'Русский', dir: 'ltr' },
+    'arabic': { label: 'العربية', dir: 'rtl' },
+    'persian': { label: 'فارسی', dir: 'rtl' },
+    'italian': { label: 'Italiano', dir: 'ltr' },
+    'hindi': { label: 'हिन्दी', dir: 'ltr' },
+    'turkish': { label: 'Türkçe', dir: 'ltr' },
+    'korean': { label: '한국어', dir: 'ltr' },
+    'portuguese': { label: 'Português', dir: 'ltr' },
+    'hebrew': { label: 'עברית', dir: 'rtl' },
+    'kurdish_sorani': { label: 'کوردی', dir: 'rtl' },
+    'urdu': { label: 'اردو', dir: 'rtl' },
+    'bengali': { label: 'বাংলা', dir: 'ltr' },
+    'indonesian': { label: 'Bahasa Indonesia', dir: 'ltr' },
+    'tamil': { label: 'தமிழ்', dir: 'ltr' },
+    'thai': { label: 'ไทย', dir: 'ltr' },
+    'swahili': { label: 'Swahili', dir: 'ltr' }
+  };
+
+  var DEFAULT_LANG = 'english';
+  var FALLBACK_CHANNELS = ['giteeAI', 'client.edge', 'siliconflow'];
+
+  var langBtn = document.getElementById('langBtn');
+  var langDropdown = document.getElementById('langDropdown');
+  var currentLangLabel = document.getElementById('currentLangLabel');
+
+  function buildLanguageList() {
+    var html = '';
+    for (var code in LANGUAGES) {
+      if (LANGUAGES.hasOwnProperty(code)) {
+        var lang = LANGUAGES[code];
+        html += '<a href="javascript:void(0)" class="lang-item ignore" data-lang="' + code + '" data-dir="' + lang.dir + '">' + lang.label + '</a>';
+      }
+    }
+    langDropdown.innerHTML = html;
+    var items = langDropdown.querySelectorAll('.lang-item');
+    for (var i = 0; i < items.length; i++) {
+      items[i].addEventListener('click', function(e) {
+        e.preventDefault();
+        changeLanguage(this.getAttribute('data-lang'), this.getAttribute('data-dir'));
+      });
+    }
+  }
+
+  function waitForTranslation(element, originalText, timeoutMs) {
+    return new Promise(function(resolve) {
+      var start = Date.now();
+      var timer = setInterval(function() {
+        if (element.textContent !== originalText) {
+          clearInterval(timer);
+          resolve(true);
+        } else if (Date.now() - start > timeoutMs) {
+          clearInterval(timer);
+          resolve(false);
+        }
+      }, 200);
+    });
+  }
+
+  function applyChannel(channel) {
+    try {
+      translate.service.use(channel);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function resetToEnglish() {
+    try { localStorage.removeItem('soifgo-lang'); } catch (e) {}
+    document.documentElement.setAttribute('dir', 'ltr');
+    document.documentElement.setAttribute('lang', 'en');
+    currentLangLabel.textContent = LANGUAGES.english.label;
+    langDropdown.classList.remove('show');
+    setTimeout(function() {
+      location.reload();
+    }, 100);
+  }
+
+  function changeLanguage(langCode, langDir) {
+    if (langCode === 'english') {
+      resetToEnglish();
+      return;
+    }
+
+    var testElement = document.querySelector('h1');
+    var originalText = testElement ? testElement.textContent : '';
+
+    function tryChannel(index) {
+      if (index >= FALLBACK_CHANNELS.length) {
+        console.warn('All fallback channels failed.');
+        return;
+      }
+
+      var channel = FALLBACK_CHANNELS[index];
+      applyChannel(channel);
+
+      translate.changeLanguage(langCode);
+      if (typeof translate.execute === 'function') {
+        translate.execute();
+      }
+
+      waitForTranslation(testElement, originalText, 3000).then(function(success) {
+        if (!success) {
+          console.warn('Channel ' + channel + ' failed, trying next...');
+          tryChannel(index + 1);
+        } else {
+          try { localStorage.setItem('soifgo-lang', langCode); } catch (e) {}
+          document.documentElement.setAttribute('dir', langDir);
+          document.documentElement.setAttribute('lang', langCode === 'persian' ? 'fa' : langCode);
+          currentLangLabel.textContent = LANGUAGES[langCode].label;
+          langDropdown.classList.remove('show');
+        }
+      });
+    }
+
+    tryChannel(0);
+  }
+
+  langBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    langDropdown.classList.toggle('show');
+  });
+
+  document.addEventListener('click', function() {
+    langDropdown.classList.remove('show');
+  });
+
+  function getSavedLang() {
+    try {
+      var saved = localStorage.getItem('soifgo-lang');
+      if (saved && LANGUAGES[saved] && saved !== 'english') {
+        return saved;
+      }
+    } catch (e) {}
+    return null;
+  }
+
+  function initTranslate() {
+    var savedLang = getSavedLang();
+    if (!savedLang) {
+      document.documentElement.setAttribute('dir', 'ltr');
+      document.documentElement.setAttribute('lang', 'en');
+      currentLangLabel.textContent = LANGUAGES.english.label;
+      return;
+    }
+
+    translate.language.setLocal('english');
+    translate.service.use(FALLBACK_CHANNELS[0]);
+    translate.selectLanguageTag.show = false;
+    translate.execute();
+    if (translate.listener && translate.listener.start) {
+      translate.listener.start();
+    }
+  }
+
+  function restoreLanguageUI() {
+    var savedLang = getSavedLang();
+    if (savedLang) {
+      var lang = LANGUAGES[savedLang];
+      document.documentElement.setAttribute('dir', lang.dir);
+      document.documentElement.setAttribute('lang', savedLang === 'persian' ? 'fa' : savedLang);
+      currentLangLabel.textContent = lang.label;
+      return savedLang;
+    }
+    currentLangLabel.textContent = LANGUAGES[DEFAULT_LANG].label;
+    return null;
+  }
+
+  buildLanguageList();
+  var restored = restoreLanguageUI();
+
+  function bootTranslate() {
+    initTranslate();
+    if (restored) {
+      setTimeout(function() {
+        changeLanguage(restored, LANGUAGES[restored].dir);
+      }, 500);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bootTranslate);
+  } else {
+    bootTranslate();
+  }
+})();
+</script>
 
 </body>
 </html>
