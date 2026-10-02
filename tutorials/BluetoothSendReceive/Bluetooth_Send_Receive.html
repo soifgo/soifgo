@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes" />
+  <meta name="theme-color" content="#0f172a" />
+  <meta name="color-scheme" content="light dark" />
 
   <title>Bluetooth Send &amp; Receive — Complete SoifGo Tutorial | Arduino, ESP32, HC-05</title>
   <meta name="description" content="Complete tutorial for Bluetooth send and receive with SoifGo. Learn how to format data with addresses and keys for Arduino, ESP32, HC-05, and other microcontrollers." />
@@ -51,25 +53,91 @@
   }
   </script>
 
+  <script>
+    (function() {
+      var savedTheme = localStorage.getItem('soifgo-theme');
+      if (savedTheme === 'light' || savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    :root,
+    [data-theme="dark"] {
+      --primary: #4f8cff;
+      --primary-light: #6aa0ff;
+      --purple: #9b59b6;
+      --purple-light: #c084fc;
+      --arduino-teal: #1abc9c;
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --bg-section: #1e293b;
+      --text: #e8edf5;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --border: rgba(255, 255, 255, 0.07);
+      --border-strong: rgba(255, 255, 255, 0.04);
+      --shadow: rgba(0, 0, 0, 0.35);
+      --hover-bg: rgba(255, 255, 255, 0.04);
+      --code-bg: rgba(79, 140, 255, 0.1);
+      --code-text: #a5b4fc;
+      --code-inline-text: #a5b4fc;
+      --highlight-bg: rgba(79, 140, 255, 0.12);
+      --pre-bg: #0f172a;
+      --pre-text: #e2e8f0;
+      --radius: 20px;
+      --radius-sm: 10px;
+      --transition: 0.25s ease;
+    }
+
+    [data-theme="light"] {
+      --primary: #2563eb;
+      --primary-light: #3b82f6;
+      --purple: #9333ea;
+      --purple-light: #a855f7;
+      --arduino-teal: #0d9488;
+      --bg: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-section: #ffffff;
+      --text: #1e293b;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: rgba(15, 23, 42, 0.08);
+      --border-strong: rgba(15, 23, 42, 0.06);
+      --shadow: rgba(15, 23, 42, 0.08);
+      --hover-bg: rgba(37, 99, 235, 0.06);
+      --code-bg: rgba(37, 99, 235, 0.1);
+      --code-text: #1e40af;
+      --code-inline-text: #1e40af;
+      --highlight-bg: rgba(37, 99, 235, 0.1);
+      --pre-bg: #0f172a;
+      --pre-text: #e2e8f0;
+    }
+
+    .ignore { /* translation skip marker */ }
+
     body {
-      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      background: #0f172a;
-      color: #cbd5e1;
+      font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
       padding: 16px;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       line-height: 1.7;
+      transition: background 0.3s ease, color 0.3s ease;
     }
 
     .container {
       max-width: 780px;
       margin: 0 auto;
       width: 100%;
-      background: #0f172a;
+      background: var(--bg);
       border-radius: 32px;
       padding: 28px 22px 34px;
       transition: padding 0.2s;
@@ -79,7 +147,7 @@
       font-size: 2rem;
       font-weight: 700;
       letter-spacing: -0.01em;
-      color: #f1f5f9;
+      color: var(--text-main);
       margin: 0.2em 0 0.3em 0;
       word-break: break-word;
       line-height: 1.2;
@@ -88,53 +156,60 @@
     h2 {
       font-size: 1.5rem;
       font-weight: 600;
-      color: #f1f5f9;
+      color: var(--text-main);
       margin: 1.6em 0 0.5em 0;
       word-break: break-word;
-      border-bottom: 2px solid rgba(79, 140, 255, 0.12);
+      border-bottom: 2px solid var(--highlight-bg);
       padding-bottom: 8px;
     }
 
     h3 {
       font-size: 1.2rem;
       font-weight: 600;
-      color: #6aa0ff;
+      color: var(--primary-light);
       margin: 1.4em 0 0.4em 0;
     }
 
-    p { margin: 0.75em 0; word-break: break-word; color: #cbd5e1; }
+    p { margin: 0.75em 0; word-break: break-word; color: var(--text); }
 
     .highlight {
-      color: #6aa0ff;
+      color: var(--primary-light);
       font-weight: 700;
-      background: rgba(79, 140, 255, 0.12);
+      background: var(--highlight-bg);
       padding: 0.2em 0.6em;
       border-radius: 20px;
       display: inline-block;
     }
 
-    ul, ol { padding-left: 1.4em; margin: 0.8em 0 1.2em 0; color: #cbd5e1; }
-    li { margin-bottom: 0.6em; word-break: break-word; color: #cbd5e1; }
+    ul, ol { padding-left: 1.4em; margin: 0.8em 0 1.2em 0; color: var(--text); }
+    li { margin-bottom: 0.6em; word-break: break-word; }
     li:last-child { margin-bottom: 0; }
 
-    a { color: #4f8cff; text-decoration: none; font-weight: 500; word-break: break-word; transition: color 0.2s; }
-    a:hover { color: #6aa0ff; text-decoration: underline; }
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+      word-break: break-word;
+      transition: color 0.2s;
+    }
+
+    a:hover { color: var(--primary-light); text-decoration: underline; }
 
     code {
-      background: rgba(79, 140, 255, 0.1);
+      background: var(--code-bg);
       padding: 0.2em 0.6em;
-      border-radius: 10px;
-      font-size: 0.9em;
+      border-radius: 6px;
+      font-size: 0.88em;
       font-family: 'JetBrains Mono', 'Fira Code', monospace;
-      color: #a5b4fc;
+      color: var(--code-text);
       word-break: break-word;
     }
 
     pre {
-      background: #0f172a;
-      color: #e2e8f0;
+      background: var(--pre-bg);
+      color: var(--pre-text);
       padding: 1.2rem 1rem;
-      border-radius: 18px;
+      border-radius: var(--radius-sm);
       overflow-x: auto;
       font-size: 0.95rem;
       font-family: 'JetBrains Mono', 'Fira Code', monospace;
@@ -142,35 +217,38 @@
       margin: 1.2em 0;
       white-space: pre-wrap;
       word-wrap: break-word;
-      border: 1px solid rgba(79, 140, 255, 0.08);
+      border: 1px solid rgba(79, 140, 255, 0.12);
     }
 
-    pre code { background: transparent; padding: 0; color: #e2e8f0; }
+    pre code { background: transparent; padding: 0; color: var(--pre-text); }
 
-    hr { border: none; border-top: 2px solid rgba(79, 140, 255, 0.08); margin: 1.8em 0 1.4em 0; }
+    hr {
+      border: none;
+      border-top: 2px solid var(--border);
+      margin: 1.8em 0 1.4em 0;
+    }
 
     img {
       max-width: 100%;
       height: auto;
-      border-radius: 20px;
+      border-radius: var(--radius);
       display: block;
       margin: 1.2em 0;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.3);
-      background: #0f172a;
-      border: 1px solid rgba(255,255,255,0.04);
+      box-shadow: 0 2px 12px var(--shadow);
+      background: var(--bg);
+      border: 1px solid var(--border);
     }
 
-    /* ===== VIDEO WRAPPER (MEGA IFRAME) ===== */
     .video-wrapper {
       position: relative;
       width: 100%;
       aspect-ratio: 16 / 9;
-      border-radius: 20px;
+      border-radius: var(--radius);
       overflow: hidden;
       background: #0a1520;
       margin: 1.2em 0;
-      border: 1px solid rgba(255,255,255,0.04);
-      box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 12px var(--shadow);
     }
 
     .video-wrapper iframe {
@@ -187,11 +265,11 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
-      background: #4f8cff;
-      color: white;
+      background: var(--primary);
+      color: #ffffff;
       padding: 14px 24px;
       border-radius: 60px;
-      font-weight: 500;
+      font-weight: 600;
       font-size: 1.05rem;
       text-decoration: none;
       margin: 0.5em 0 0.8em 0;
@@ -204,28 +282,39 @@
       letter-spacing: 0.3px;
     }
 
-    .download-link:hover { background: #6aa0ff; text-decoration: none; }
-    .download-link:active { transform: scale(0.97); background: #3a7bd5; }
+    .download-link:hover {
+      background: var(--primary-light);
+      text-decoration: none;
+      transform: scale(1.02);
+    }
+
+    .download-link:active { transform: scale(0.97); }
 
     .btn-home {
       display: inline-block;
-      background: #1e293b;
-      color: #e8edf5;
+      background: var(--primary);
+      color: #ffffff;
       padding: 14px 34px;
       border-radius: 60px;
       text-decoration: none;
-      font-weight: 500;
+      font-weight: 600;
       font-size: 1.05rem;
       text-align: center;
       transition: background 0.2s, transform 0.1s;
       touch-action: manipulation;
-      border: 1px solid rgba(79, 140, 255, 0.15);
+      border: none;
       min-width: 140px;
       letter-spacing: 0.3px;
+      box-shadow: 0 4px 14px rgba(79, 140, 255, 0.3);
     }
 
-    .btn-home:hover { background: #263348; border-color: rgba(79, 140, 255, 0.25); text-decoration: none; }
-    .btn-home:active { transform: scale(0.97); background: #1a2a3a; }
+    .btn-home:hover {
+      background: var(--primary-light);
+      text-decoration: none;
+      transform: scale(1.02);
+    }
+
+    .btn-home:active { transform: scale(0.97); }
 
     .btn-wrap {
       display: flex;
@@ -236,6 +325,121 @@
       margin: 2.4rem 0 0.4rem 0;
     }
 
+    section {
+      background: var(--bg-section);
+      border-radius: var(--radius);
+      padding: 20px 22px;
+      margin: 20px 0;
+      border: 1px solid var(--border);
+      transition: border-color 0.2s;
+    }
+
+    section:hover { border-color: rgba(79, 140, 255, 0.2); }
+
+    section h2:first-child {
+      margin-top: 0;
+      border-bottom: 2px solid var(--highlight-bg);
+      padding-bottom: 8px;
+    }
+
+    .language-switcher {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      right: auto;
+      z-index: 1001;
+      direction: ltr;
+    }
+
+    .lang-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 16px;
+      border-radius: 24px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+      transition: background 0.2s, border-color 0.2s, transform 0.15s;
+    }
+
+    .lang-btn:hover {
+      background: var(--hover-bg);
+      border-color: var(--primary);
+      transform: scale(1.03);
+    }
+
+    .lang-dropdown {
+      display: none;
+      position: absolute;
+      top: 48px;
+      left: 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      min-width: 220px;
+      max-height: 400px;
+      overflow-y: auto;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      padding: 8px 0;
+      direction: ltr;
+    }
+
+    .lang-dropdown.show { display: block; }
+
+    .lang-item {
+      display: block;
+      padding: 10px 18px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.92rem;
+      transition: background 0.15s;
+      white-space: nowrap;
+      direction: ltr;
+      text-align: left;
+    }
+
+    .lang-item:hover {
+      background: var(--hover-bg);
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      left: auto;
+      z-index: 1000;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 1.3rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+      transition: background 0.25s ease, transform 0.2s ease, border-color 0.25s ease;
+      padding: 0;
+      line-height: 1;
+      direction: ltr;
+    }
+
+    .theme-toggle:hover {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      transform: scale(1.08);
+    }
+
     @media (max-width: 520px) {
       body { padding: 10px; }
       .container { padding: 20px 14px 24px; border-radius: 24px; }
@@ -243,7 +447,14 @@
       h2 { font-size: 1.3rem; }
       .download-link, .btn-home { width: 100%; justify-content: center; padding: 16px 18px; font-size: 1rem; }
       .btn-wrap { flex-direction: column; gap: 12px; }
-      pre { font-size: 0.9rem; padding: 0.9rem 0.8rem; }
+      pre { font-size: 0.85rem; padding: 0.9rem 0.8rem; }
+      section { padding: 16px 18px; border-radius: 16px; }
+
+      .theme-toggle { width: 40px; height: 40px; font-size: 1.1rem; top: 12px; right: 12px; }
+      .language-switcher { top: 12px; left: 12px; }
+      .lang-btn { font-size: 0.8rem; padding: 6px 12px; }
+      .lang-dropdown { min-width: 180px; max-height: 300px; }
+      .lang-item { padding: 8px 14px; font-size: 0.85rem; }
     }
 
     @media (max-width: 380px) {
@@ -251,42 +462,27 @@
       h1 { font-size: 1.4rem; }
       li, p { font-size: 0.96rem; }
     }
-
-    .section-spacer { margin-top: 2.2rem; }
-
-    .badge-code {
-      background: rgba(79, 140, 255, 0.1);
-      border-radius: 30px;
-      padding: 0.1em 0.8em;
-      font-weight: 500;
-      color: #6aa0ff;
-    }
-
-    section {
-      background: #1e293b;
-      border-radius: 20px;
-      padding: 20px 22px;
-      margin: 20px 0;
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      transition: border-color 0.2s;
-    }
-
-    section:hover { border-color: rgba(79, 140, 255, 0.1); }
-
-    section h2:first-child {
-      margin-top: 0;
-      border-bottom: 2px solid rgba(79, 140, 255, 0.1);
-      padding-bottom: 8px;
-    }
   </style>
 </head>
 <body>
+
+<div class="language-switcher ignore" id="languageSwitcher">
+  <button class="lang-btn" id="langBtn" type="button" aria-label="Change language">
+    🌐 <span id="currentLangLabel">English</span>
+  </button>
+  <div class="lang-dropdown" id="langDropdown"></div>
+</div>
+
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle theme" title="Switch theme">
+  <span id="themeIcon">☀️</span>
+</button>
+
 <div class="container">
 
-  <h1>🚀 Bluetooth Send Receive SoifGo</h1>
+  <h1>🚀 Bluetooth Send Receive <span class="ignore">SoifGo</span></h1>
   <p><span class="highlight">This tutorial helps you Bluetooth Send Receive</span></p>
 
-  <p><strong>Soifgo</strong> has the capability to send and receive serial Bluetooth data in a controlled manner. Therefore, each transmission and reception must include a <strong>key or address</strong>—either a number or a text string.</p>
+  <p><strong><span class="ignore">SoifGo</span></strong> has the capability to send and receive serial Bluetooth data in a controlled manner. Therefore, each transmission and reception must include a <strong>key or address</strong>—either a number or a text string.</p>
 
   <ul>
     <li><strong>Sending:</strong> The format should include something like <code>port:1</code></li>
@@ -311,7 +507,7 @@
   <ul>
     <li><strong>reception</strong><br>
       Mainly used to display the received value.<br>
-      In the SoifGo submission, if you leave the start or end blank, any input with any address or keyword will appear. For example, SoifGo receives something like x12y34z15, but we need it to display the value y, with the start being y and the end being z. The value between y and z should be shown. The same applies when receiving a number.
+      In the <span class="ignore">SoifGo</span> submission, if you leave the start or end blank, any input with any address or keyword will appear. For example, <span class="ignore">SoifGo</span> receives something like x12y34z15, but we need it to display the value y, with the start being y and the end being z. The value between y and z should be shown. The same applies when receiving a number.
     </li>
   </ul>
 
@@ -331,10 +527,10 @@
   <img src="blue04.png" alt="Numeric reception" loading="lazy">
 
   <section>
-    <h2>Bluetooth Serial Data Format in SoiftGo</h2>
-    <p>When sending serial Bluetooth data to <strong>SoiftGo</strong>—whether from a microcontroller or any other device—you must use a structured format like:</p>
+    <h2>Bluetooth Serial Data Format in SoifGo</h2>
+    <p>When sending serial Bluetooth data to <strong><span class="ignore">SoifGo</span></strong>—whether from a microcontroller or any other device—you must use a structured format like:</p>
     <pre><code>temp1:128</code></pre>
-    <p>SoiftGo interprets <code>temp1:</code> as the <strong>address</strong> of the configured button, and <code>128</code> as the <strong>value</strong> to be displayed.</p>
+    <p><span class="ignore">SoifGo</span> interprets <code>temp1:</code> as the <strong>address</strong> of the configured button, and <code>128</code> as the <strong>value</strong> to be displayed.</p>
 
     <h3>Expected data format:</h3>
     <pre><code>temp1:128</code></pre>
@@ -358,7 +554,7 @@ UART_SendString(buffer);</code></pre>
 
     <h3>3. C++</h3>
     <pre><code>int value = 128;
-std::cout << "temp1:" << value;</code></pre>
+std::cout &lt;&lt; "temp1:" &lt;&lt; value;</code></pre>
     <pre><code>int value = 128;
 std::string msg = "temp1:" + std::to_string(value);
 Serial.write(msg.c_str());</code></pre>
@@ -414,7 +610,7 @@ port.write("temp1:" + value);</code></pre>
 
   <section>
     <h2>Sensor Data Transmission via Bluetooth in SoifGo</h2>
-    <p>Another method of Bluetooth transmission in <strong>SoifGo</strong> allows sending <strong>smartphone sensor values</strong> to a microcontroller. Currently, three types of sensors are supported:</p>
+    <p>Another method of Bluetooth transmission in <strong><span class="ignore">SoifGo</span></strong> allows sending <strong>smartphone sensor values</strong> to a microcontroller. Currently, three types of sensors are supported:</p>
     <ul>
       <li><strong>Light sensor</strong></li>
       <li><strong>Motion sensor</strong></li>
@@ -456,14 +652,13 @@ port.write("temp1:" + value);</code></pre>
   <img src="blue08.png" alt="Sensor scaling 3" loading="lazy">
   <img src="blue09.png" alt="Sensor scaling 4" loading="lazy">
 
-  <!-- ===== VIDEO 1: Pwm1a ===== -->
   <div class="video-wrapper">
     <iframe src="https://mega.nz/embed/7O40zJYC#Oc_PdOGsywDXhwfR8sHsS67cKYjTgYCuqudPw7gebuM"
             allowfullscreen
             loading="lazy"></iframe>
   </div>
 
-  <h3>Practical Example: Bluetooth Send & Receive</h3>
+  <h3>Practical Example: Bluetooth Send &amp; Receive</h3>
   <p>This file provides a working example of Bluetooth communication. After extracting the ZIP archive:</p>
   <ul>
     <li>If you do <strong>not</strong> already have a project, you can simply replace the entire <code>soifgo</code> folder in your phone's storage.</li>
@@ -474,7 +669,7 @@ port.write("temp1:" + value);</code></pre>
   <p>Download the soifgo file:</p>
   <a href="soifgo_design_Bluetooth.zip" download class="download-link">📦 Download soifgo_design_Bluetooth.zip</a>
 
-  <h3>Microcontroller BASCOM & HEX Files</h3>
+  <h3>Microcontroller BASCOM &amp; HEX Files</h3>
   <p>The following file contains both the <strong>BASCOM source</strong> and the compiled <strong>HEX file</strong> for the microcontroller. Remember to use the HEX file when programming the device.</p>
   <ul>
     <li>Do not forget to configure the <strong>fuse bits</strong> for an external crystal oscillator.</li>
@@ -486,7 +681,7 @@ port.write("temp1:" + value);</code></pre>
   <p>Download the Bascom and hex file:</p>
   <a href="Bascom_Bluetooth.zip" download class="download-link">📦 Download the Bascom and hex file.zip</a>
 
-  <h3>Microcontroller & Bluetooth Module Schematic</h3>
+  <h3>Microcontroller &amp; Bluetooth Module Schematic</h3>
   <p>The following file contains the <strong>schematic diagram</strong> of the microcontroller and the Bluetooth module. This schematic illustrates the wiring and connections required for proper communication between the two components.</p>
   <ul>
     <li>Use the schematic as a reference when assembling your hardware.</li>
@@ -520,9 +715,8 @@ port.write("temp1:" + value);</code></pre>
   <a href="Proteuse_Bluetooth.zip" download class="download-link">📦 Download the Proteuse_Bluetooth file.zip</a>
 
   <h2>Practical Video: SoifGo Communication with Microcontroller</h2>
-  <p>The video below demonstrates the <strong>real-world operation</strong> and <strong>interaction</strong> between the SoifGo system and the microcontroller. It provides a hands-on example of how data is exchanged and processed in practice.</p>
+  <p>The video below demonstrates the <strong>real-world operation</strong> and <strong>interaction</strong> between the <span class="ignore">SoifGo</span> system and the microcontroller. It provides a hands-on example of how data is exchanged and processed in practice.</p>
 
-  <!-- ===== VIDEO 2: sample_bluetooth_01 ===== -->
   <div class="video-wrapper">
     <iframe src="https://mega.nz/embed/CTIA3RaY#w-AyNGGThlbaYPN4X4euvD27OgxYjO3PABLey4D7KGI"
             allowfullscreen
@@ -534,5 +728,235 @@ port.write("temp1:" + value);</code></pre>
   </div>
 
 </div>
+
+<script>
+  (function() {
+    var themeToggle = document.getElementById('themeToggle');
+    var themeIcon = document.getElementById('themeIcon');
+
+    function updateIcon(theme) {
+      if (theme === 'light') {
+        themeIcon.textContent = '🌙';
+        themeToggle.title = 'Switch to dark mode';
+      } else {
+        themeIcon.textContent = '☀️';
+        themeToggle.title = 'Switch to light mode';
+      }
+    }
+
+    var currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+    updateIcon(currentTheme);
+
+    themeToggle.addEventListener('click', function() {
+      var current = document.documentElement.getAttribute('data-theme');
+      var next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('soifgo-theme', next);
+      updateIcon(next);
+    });
+  })();
+</script>
+
+<script src="https://cdn.staticfile.net/translate.js/3.18.66/translate.js"></script>
+
+<script>
+(function() {
+  'use strict';
+
+  var LANGUAGES = {
+    'english': { label: 'English', dir: 'ltr' },
+    'spanish': { label: 'Español', dir: 'ltr' },
+    'chinese_simplified': { label: '简体中文', dir: 'ltr' },
+    'french': { label: 'Français', dir: 'ltr' },
+    'deutsch': { label: 'Deutsch', dir: 'ltr' },
+    'japanese': { label: '日本語', dir: 'ltr' },
+    'russian': { label: 'Русский', dir: 'ltr' },
+    'arabic': { label: 'العربية', dir: 'rtl' },
+    'persian': { label: 'فارسی', dir: 'rtl' },
+    'italian': { label: 'Italiano', dir: 'ltr' },
+    'hindi': { label: 'हिन्दी', dir: 'ltr' },
+    'turkish': { label: 'Türkçe', dir: 'ltr' },
+    'korean': { label: '한국어', dir: 'ltr' },
+    'portuguese': { label: 'Português', dir: 'ltr' },
+    'hebrew': { label: 'עברית', dir: 'rtl' },
+    'kurdish_sorani': { label: 'کوردی', dir: 'rtl' },
+    'urdu': { label: 'اردو', dir: 'rtl' },
+    'bengali': { label: 'বাংলা', dir: 'ltr' },
+    'indonesian': { label: 'Bahasa Indonesia', dir: 'ltr' },
+    'tamil': { label: 'தமிழ்', dir: 'ltr' },
+    'thai': { label: 'ไทย', dir: 'ltr' },
+    'swahili': { label: 'Swahili', dir: 'ltr' }
+  };
+
+  var DEFAULT_LANG = 'english';
+  var FALLBACK_CHANNELS = ['giteeAI', 'client.edge', 'siliconflow'];
+
+  var langBtn = document.getElementById('langBtn');
+  var langDropdown = document.getElementById('langDropdown');
+  var currentLangLabel = document.getElementById('currentLangLabel');
+
+  function buildLanguageList() {
+    var html = '';
+    for (var code in LANGUAGES) {
+      if (LANGUAGES.hasOwnProperty(code)) {
+        var lang = LANGUAGES[code];
+        html += '<a href="javascript:void(0)" class="lang-item ignore" data-lang="' + code + '" data-dir="' + lang.dir + '">' + lang.label + '</a>';
+      }
+    }
+    langDropdown.innerHTML = html;
+    var items = langDropdown.querySelectorAll('.lang-item');
+    for (var i = 0; i < items.length; i++) {
+      items[i].addEventListener('click', function(e) {
+        e.preventDefault();
+        changeLanguage(this.getAttribute('data-lang'), this.getAttribute('data-dir'));
+      });
+    }
+  }
+
+  function waitForTranslation(element, originalText, timeoutMs) {
+    return new Promise(function(resolve) {
+      var start = Date.now();
+      var timer = setInterval(function() {
+        if (element.textContent !== originalText) {
+          clearInterval(timer);
+          resolve(true);
+        } else if (Date.now() - start > timeoutMs) {
+          clearInterval(timer);
+          resolve(false);
+        }
+      }, 200);
+    });
+  }
+
+  function applyChannel(channel) {
+    try {
+      translate.service.use(channel);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function resetToEnglish() {
+    try { localStorage.removeItem('soifgo-lang'); } catch (e) {}
+    document.documentElement.setAttribute('dir', 'ltr');
+    document.documentElement.setAttribute('lang', 'en');
+    currentLangLabel.textContent = LANGUAGES.english.label;
+    langDropdown.classList.remove('show');
+    setTimeout(function() {
+      location.reload();
+    }, 100);
+  }
+
+  function changeLanguage(langCode, langDir) {
+    if (langCode === 'english') {
+      resetToEnglish();
+      return;
+    }
+
+    var testElement = document.querySelector('h1');
+    var originalText = testElement ? testElement.textContent : '';
+
+    function tryChannel(index) {
+      if (index >= FALLBACK_CHANNELS.length) {
+        console.warn('All fallback channels failed.');
+        return;
+      }
+
+      var channel = FALLBACK_CHANNELS[index];
+      applyChannel(channel);
+
+      translate.changeLanguage(langCode);
+      if (typeof translate.execute === 'function') {
+        translate.execute();
+      }
+
+      waitForTranslation(testElement, originalText, 3000).then(function(success) {
+        if (!success) {
+          console.warn('Channel ' + channel + ' failed, trying next...');
+          tryChannel(index + 1);
+        } else {
+          try { localStorage.setItem('soifgo-lang', langCode); } catch (e) {}
+          document.documentElement.setAttribute('dir', langDir);
+          document.documentElement.setAttribute('lang', langCode === 'persian' ? 'fa' : langCode);
+          currentLangLabel.textContent = LANGUAGES[langCode].label;
+          langDropdown.classList.remove('show');
+        }
+      });
+    }
+
+    tryChannel(0);
+  }
+
+  langBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    langDropdown.classList.toggle('show');
+  });
+
+  document.addEventListener('click', function() {
+    langDropdown.classList.remove('show');
+  });
+
+  function getSavedLang() {
+    try {
+      var saved = localStorage.getItem('soifgo-lang');
+      if (saved && LANGUAGES[saved] && saved !== 'english') {
+        return saved;
+      }
+    } catch (e) {}
+    return null;
+  }
+
+  function initTranslate() {
+    var savedLang = getSavedLang();
+    if (!savedLang) {
+      document.documentElement.setAttribute('dir', 'ltr');
+      document.documentElement.setAttribute('lang', 'en');
+      currentLangLabel.textContent = LANGUAGES.english.label;
+      return;
+    }
+
+    translate.language.setLocal('english');
+    translate.service.use(FALLBACK_CHANNELS[0]);
+    translate.selectLanguageTag.show = false;
+    translate.execute();
+    if (translate.listener && translate.listener.start) {
+      translate.listener.start();
+    }
+  }
+
+  function restoreLanguageUI() {
+    var savedLang = getSavedLang();
+    if (savedLang) {
+      var lang = LANGUAGES[savedLang];
+      document.documentElement.setAttribute('dir', lang.dir);
+      document.documentElement.setAttribute('lang', savedLang === 'persian' ? 'fa' : savedLang);
+      currentLangLabel.textContent = lang.label;
+      return savedLang;
+    }
+    currentLangLabel.textContent = LANGUAGES[DEFAULT_LANG].label;
+    return null;
+  }
+
+  buildLanguageList();
+  var restored = restoreLanguageUI();
+
+  function bootTranslate() {
+    initTranslate();
+    if (restored) {
+      setTimeout(function() {
+        changeLanguage(restored, LANGUAGES[restored].dir);
+      }, 500);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bootTranslate);
+  } else {
+    bootTranslate();
+  }
+})();
+</script>
+
 </body>
 </html>

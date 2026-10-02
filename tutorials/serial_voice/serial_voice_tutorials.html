@@ -1,186 +1,438 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en" data-theme="dark" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SoifGo Voice → Serial Bluetooth Tutorial</title>
+
+<meta name="description" content="Complete SoifGo tutorial: build a multilingual voice command page that converts speech to text and sends it to a Bluetooth serial device (HC-05, HC-06, ESP32).">
+<meta name="robots" content="index, follow">
+
+<meta property="og:title" content="SoifGo Voice → Serial Bluetooth Tutorial">
+<meta property="og:description" content="Build a multilingual voice command page inside SoifGo WebView that sends recognized speech directly to a Bluetooth serial device.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://soifgo.github.io/soifgo/tutorials/serial_voice/serial_voice_tutorials.html">
+<meta property="og:image" content="https://soifgo.github.io/soifgo/serial_voice_og.jpg">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="SoifGo Tutorials">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SoifGo Voice → Serial Bluetooth Tutorial">
+<meta name="twitter:description" content="Multilingual voice command page that sends speech to Bluetooth serial devices.">
+<meta name="twitter:image" content="https://soifgo.github.io/soifgo/serial_voice_og.jpg">
+
+<link rel="canonical" href="https://soifgo.github.io/soifgo/tutorials/serial_voice/serial_voice_tutorials.html">
+
+<script>
+  (function() {
+    var savedTheme = localStorage.getItem('soifgo-theme');
+    if (savedTheme === 'light' || savedTheme === 'dark') {
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    } else {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  })();
+</script>
+
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root,
+  [data-theme="dark"] {
+    --primary: #4f8cff;
+    --primary-light: #6aa0ff;
+    --purple: #9b59b6;
+    --purple-light: #c084fc;
+    --teal: #2dd4bf;
+    --teal-light: #5eead4;
+    --warning: #f59e0b;
+    --warning-light: #fbbf24;
+    --danger: #ef4444;
+    --danger-light: #f87171;
+    --success: #22c55e;
+    --success-light: #4ade80;
+    --pink: #f472b6;
+    --pink-light: #f9a8d4;
+    --bg: #0f172a;
+    --bg-card: #1e293b;
+    --bg-step: #1e293b;
+    --text: #e2e8f0;
+    --text-main: #f1f5f9;
+    --text-muted: #94a3b8;
+    --border: rgba(255, 255, 255, 0.07);
+    --border-strong: #263348;
+    --shadow: rgba(0, 0, 0, 0.35);
+    --hover-bg: rgba(255, 255, 255, 0.04);
+    --code-bg: #0b1220;
+    --code-text: #a5b4fc;
+    --code-inline-bg: #1e293b;
+    --code-inline-text: #a5b4fc;
+    --radius: 14px;
+    --radius-sm: 10px;
+    --transition: 0.25s ease;
+  }
+
+  [data-theme="light"] {
+    --primary: #2563eb;
+    --primary-light: #3b82f6;
+    --purple: #9333ea;
+    --purple-light: #a855f7;
+    --teal: #0d9488;
+    --teal-light: #14b8a6;
+    --warning: #d97706;
+    --warning-light: #f59e0b;
+    --danger: #dc2626;
+    --danger-light: #ef4444;
+    --success: #16a34a;
+    --success-light: #22c55e;
+    --pink: #db2777;
+    --pink-light: #ec4899;
+    --bg: #f8fafc;
+    --bg-card: #ffffff;
+    --bg-step: #f1f5f9;
+    --text: #1e293b;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --border: rgba(15, 23, 42, 0.08);
+    --border-strong: #cbd5e1;
+    --shadow: rgba(15, 23, 42, 0.08);
+    --hover-bg: rgba(37, 99, 235, 0.06);
+    --code-bg: #0f172a;
+    --code-text: #a5b4fc;
+    --code-inline-bg: #eef2f7;
+    --code-inline-text: #1e40af;
+  }
+
+  .ignore { /* translation skip marker */ }
+
   body {
-    font-family: "Segoe UI", Tahoma, sans-serif;
-    background: #0f172a;
-    color: #e2e8f0;
+    font-family: "Segoe UI", Tahoma, -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
     line-height: 1.7;
     padding: 20px;
     max-width: 900px;
     margin: 0 auto;
+    transition: background 0.3s ease, color 0.3s ease;
   }
+
   h1 {
     font-size: 1.8rem;
-    color: #4f8cff;
+    color: var(--primary);
     margin-bottom: 10px;
     text-align: center;
-    border-bottom: 2px solid #1e293b;
+    border-bottom: 2px solid var(--border);
     padding-bottom: 14px;
   }
+
   h2 {
     font-size: 1.25rem;
-    color: #2dd4bf;
+    color: var(--teal);
     margin: 32px 0 12px;
-    border-left: 4px solid #2dd4bf;
+    border-left: 4px solid var(--teal);
     padding-left: 12px;
   }
+
   h3 {
     font-size: 1.08rem;
-    color: #90caf9;
+    color: var(--primary-light);
     margin: 20px 0 10px;
   }
-  p { margin-bottom: 12px; color: #cbd5e1; }
-  ul, ol { margin: 8px 0 16px 22px; color: #cbd5e1; }
+
+  p { margin-bottom: 12px; color: var(--text); }
+  ul, ol { margin: 8px 0 16px 22px; color: var(--text); }
   li { margin-bottom: 6px; }
+
   code {
-    background: #1e293b;
-    color: #a5b4fc;
+    background: var(--code-inline-bg);
+    color: var(--code-inline-text);
     padding: 2px 8px;
     border-radius: 5px;
     font-size: 0.88em;
     font-family: "Consolas", monospace;
+    word-break: break-word;
   }
+
   pre {
-    background: #0b1220;
-    border: 1px solid #1e293b;
-    border-radius: 10px;
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
     padding: 16px;
     overflow-x: auto;
-    color: #a5b4fc;
+    color: var(--code-text);
     font-size: 0.82rem;
     font-family: "Consolas", monospace;
     margin: 12px 0 18px;
     line-height: 1.6;
     white-space: pre;
+    -webkit-overflow-scrolling: touch;
   }
+
   .screenshot {
     width: 100%;
     max-width: 420px;
     display: block;
     margin: 16px auto;
     border-radius: 16px;
-    border: 1px solid #1e293b;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border: 1px solid var(--border);
+    box-shadow: 0 10px 30px var(--shadow);
   }
+
   .golden {
-    background: rgba(79, 140, 255, 0.08);
-    border: 1px solid rgba(79, 140, 255, 0.3);
-    border-left: 5px solid #4f8cff;
+    background: color-mix(in srgb, var(--primary) 8%, transparent);
+    border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
+    border-left: 5px solid var(--primary);
     border-radius: 12px;
     padding: 18px 22px;
     margin: 20px 0;
+    color: var(--text);
   }
-  .golden strong { color: #90caf9; }
+
+  .golden strong { color: var(--primary-light); }
+
   .step {
-    background: #1e293b;
+    background: var(--bg-step);
     border-radius: 12px;
     padding: 18px 22px;
     margin: 16px 0;
-    border: 1px solid #263348;
+    border: 1px solid var(--border-strong);
+    transition: background 0.3s ease, border 0.3s ease;
   }
+
   .step-number {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     width: 30px;
     height: 30px;
-    background: #4f8cff;
+    background: var(--primary);
     color: white;
     border-radius: 50%;
     font-weight: bold;
     font-size: 0.95rem;
     margin-right: 8px;
   }
+
   .note {
-    background: rgba(245, 158, 11, 0.08);
-    border-left: 4px solid #f59e0b;
+    background: color-mix(in srgb, var(--warning) 8%, transparent);
+    border-left: 4px solid var(--warning);
     border-radius: 8px;
     padding: 14px 18px;
     margin: 16px 0;
     font-size: 0.93rem;
-    color: #fcd34d;
+    color: var(--warning-light);
   }
-  .note strong { color: #fbbf24; }
+
+  .note strong { color: var(--warning); }
+
   .note.danger {
-    border-left-color: #ef4444;
-    background: rgba(239,68,68,0.08);
-    color: #fca5a5;
+    border-left-color: var(--danger);
+    background: color-mix(in srgb, var(--danger) 8%, transparent);
+    color: var(--danger-light);
   }
-  .note.danger strong { color: #f87171; }
+
+  .note.danger strong { color: var(--danger); }
+
   .note.success {
-    border-left-color: #22c55e;
-    background: rgba(34,197,94,0.08);
-    color: #86efac;
+    border-left-color: var(--success);
+    background: color-mix(in srgb, var(--success) 8%, transparent);
+    color: var(--success-light);
   }
-  .note.success strong { color: #4ade80; }
+
+  .note.success strong { color: var(--success); }
+
   .note.pink {
-    border-left-color: #f472b6;
-    background: rgba(244,114,182,0.08);
-    color: #f9a8d4;
+    border-left-color: var(--pink);
+    background: color-mix(in srgb, var(--pink) 8%, transparent);
+    color: var(--pink-light);
   }
-  .note.pink strong { color: #f472b6; }
+
+  .note.pink strong { color: var(--pink); }
+
   .highlight {
-    background: rgba(79,140,255,0.10);
-    border-radius: 10px;
+    background: color-mix(in srgb, var(--primary) 10%, transparent);
+    border-radius: var(--radius-sm);
     padding: 16px 20px;
-    border-left: 4px solid #4f8cff;
+    border-left: 4px solid var(--primary);
     margin: 16px 0;
-    color: #dbeafe;
+    color: var(--text);
   }
+
   .highlight pre {
     margin-top: 12px;
     margin-bottom: 6px;
     max-height: 500px;
     overflow-y: auto;
   }
+
   .footer-note {
     margin-top: 40px;
     padding-top: 20px;
-    border-top: 1px solid #1e293b;
+    border-top: 1px solid var(--border);
     font-size: 0.85rem;
-    color: #64748b;
+    color: var(--text-muted);
     text-align: center;
+  }
+
+  .language-switcher {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    right: auto;
+    z-index: 1001;
+    direction: ltr;
+  }
+
+  .lang-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px 16px;
+    border-radius: 24px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    transition: background 0.2s, border-color 0.2s, transform 0.15s;
+  }
+
+  .lang-btn:hover {
+    background: var(--hover-bg);
+    border-color: var(--primary);
+    transform: scale(1.03);
+  }
+
+  .lang-dropdown {
+    display: none;
+    position: absolute;
+    top: 48px;
+    left: 0;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    min-width: 220px;
+    max-height: 400px;
+    overflow-y: auto;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    padding: 8px 0;
+    direction: ltr;
+  }
+
+  .lang-dropdown.show { display: block; }
+
+  .lang-item {
+    display: block;
+    padding: 10px 18px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 0.92rem;
+    transition: background 0.15s;
+    white-space: nowrap;
+    direction: ltr;
+    text-align: left;
+  }
+
+  .lang-item:hover {
+    background: var(--hover-bg);
+    color: var(--primary);
+    text-decoration: none;
+  }
+
+  .theme-toggle {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    left: auto;
+    z-index: 1000;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 1.3rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+    transition: background 0.25s ease, transform 0.2s ease, border-color 0.25s ease;
+    padding: 0;
+    line-height: 1;
+    direction: ltr;
+  }
+
+  .theme-toggle:hover {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+    transform: scale(1.08);
+  }
+
+  @media (max-width: 600px) {
+    body { padding: 14px 12px 40px; font-size: 0.98rem; }
+    h1 { font-size: 1.5rem; }
+    h2 { font-size: 1.15rem; }
+    pre { font-size: 0.75rem; padding: 12px; }
+    .step { padding: 14px 16px; }
+    .golden { padding: 14px 16px; }
+
+    .theme-toggle { width: 40px; height: 40px; font-size: 1.1rem; top: 12px; right: 12px; }
+    .language-switcher { top: 12px; left: 12px; }
+    .lang-btn { font-size: 0.8rem; padding: 6px 12px; }
+    .lang-dropdown { min-width: 180px; max-height: 300px; }
+    .lang-item { padding: 8px 14px; font-size: 0.85rem; }
+  }
+
+  @media (max-width: 380px) {
+    h1 { font-size: 1.3rem; }
+    pre { font-size: 0.7rem; padding: 10px; }
   }
 </style>
 </head>
 <body>
 
+<div class="language-switcher ignore" id="languageSwitcher">
+  <button class="lang-btn" id="langBtn" type="button" aria-label="Change language">
+    🌐 <span id="currentLangLabel">English</span>
+  </button>
+  <div class="lang-dropdown" id="langDropdown"></div>
+</div>
+
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle theme" title="Switch theme">
+  <span id="themeIcon">☀️</span>
+</button>
+
 <h1>🎙️ Voice → Serial Bluetooth Tutorial</h1>
 
 <p style="text-align:center;">
   This tutorial shows how to build a <strong>multilingual voice command</strong> page inside
-  <strong>SoifGo WebView</strong> that converts your speech to text and sends it
+  <strong><span class="ignore">SoifGo</span> WebView</strong> that converts your speech to text and sends it
   directly to a connected <strong>Bluetooth serial device</strong> (HC-05, HC-06, ESP32…).
 </p>
 
-<!-- ================= SCREENSHOT ================= -->
 <h2>📸 Preview</h2>
 
 <img src="serial_voice_screenshot.jpg" alt="SoifGo Voice Control page screenshot" class="screenshot" />
 
-<p style="text-align:center; font-size:0.85rem; color:#64748b;">
+<p style="text-align:center; font-size:0.85rem; color:var(--text-muted);">
   Language selector + Start button + live recognized text
 </p>
 
-<!-- ================= HOW IT WORKS ================= -->
 <h2>✅ How It Works — Three Golden Principles</h2>
 
 <div class="golden">
   <strong>Memorize these three principles</strong> — with them you can build any
-  voice-controlled Bluetooth project in SoifGo.
+  voice-controlled Bluetooth project in <span class="ignore">SoifGo</span>.
 </div>
 
-<!-- ===== GOLDEN RULE 1 ===== -->
 <h3>1️⃣ Request Microphone Permission (First Time Only)</h3>
 
 <p>
-  On the first run, SoifGo must ask the user for microphone permission.
+  On the first run, <span class="ignore">SoifGo</span> must ask the user for microphone permission.
   Call this Sub once — the app will show a native permission dialog.
   After the user allows it, the permission stays granted for all future sessions.
 </p>
@@ -195,7 +447,7 @@ End Sub</pre>
 
 <div class="highlight">
   <strong>🔹 The full HTML file that calls this Sub (serial_voice.html):</strong>
-  <p style="font-size:0.92rem; color:#cbd5e1; margin-top:8px;">
+  <p style="font-size:0.92rem; color:var(--text); margin-top:8px;">
     This is the complete page. When the user taps the microphone button, the script first
     calls <code>request_mic_perm</code> and only then starts speech recognition.
   </p>
@@ -206,9 +458,7 @@ End Sub</pre>
     &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
     &lt;title&gt;SoifGo Voice · Multilingual&lt;/title&gt;
     &lt;style&gt;
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
         body {
             font-family: Tahoma, sans-serif;
             text-align: center;
@@ -262,10 +512,6 @@ End Sub</pre>
             align-items: center;
             gap: 6px;
         }
-        .lang-selector label i {
-            font-style: normal;
-            font-size: 1.2rem;
-        }
         select {
             background: #2e2e2e;
             color: #f0f0f0;
@@ -277,19 +523,9 @@ End Sub</pre>
             font-weight: 500;
             cursor: pointer;
             outline: none;
-            transition: border 0.2s, box-shadow 0.2s;
             flex: 1;
             min-width: 180px;
             max-width: 320px;
-            appearance: none;
-            background-image: url("data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23aaaaaa' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'&gt;&lt;polyline points='6 9 12 15 18 9'/&gt;&lt;/svg&gt;");
-            background-repeat: no-repeat;
-            background-position: right 18px center;
-            background-size: 16px;
-        }
-        select:hover, select:focus {
-            border-color: #2196f3;
-            box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.2);
         }
         button {
             padding: 16px 36px;
@@ -300,24 +536,13 @@ End Sub</pre>
             border: none;
             border-radius: 50px;
             font-weight: bold;
-            box-shadow: 0 8px 18px rgba(33, 150, 243, 0.3);
-            transition: all 0.2s ease;
             margin-bottom: 18px;
             width: 100%;
             max-width: 320px;
-            letter-spacing: 0.5px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
         }
         button.listening {
             background: #dc3545;
-            box-shadow: 0 8px 18px rgba(220, 53, 69, 0.4);
             animation: pulse 1.5s infinite;
-        }
-        button:active {
-            transform: scale(0.97);
         }
         @keyframes pulse {
             0% { opacity: 1; }
@@ -335,11 +560,6 @@ End Sub</pre>
             border-radius: 18px;
             min-height: 70px;
             word-break: break-word;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.2s;
-            line-height: 1.5;
         }
         #status {
             font-size: 0.9rem;
@@ -347,36 +567,6 @@ End Sub</pre>
             font-style: italic;
             margin: 12px 0 5px;
             min-height: 1.8rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-        .info {
-            font-size: 0.78rem;
-            color: #666;
-            margin-top: 22px;
-            border-top: 1px solid #2c2c2c;
-            padding-top: 16px;
-            letter-spacing: 0.3px;
-        }
-        .badge {
-            background: #2a2a2a;
-            padding: 4px 10px;
-            border-radius: 30px;
-            font-size: 0.75rem;
-            color: #bbb;
-            display: inline-block;
-            margin-left: 6px;
-        }
-        .rtl-text {
-            direction: rtl;
-            unicode-bidi: embed;
-        }
-        .flag-icon {
-            font-size: 1.3rem;
-            line-height: 1;
-            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.5));
         }
     &lt;/style&gt;
 &lt;/head&gt;
@@ -384,10 +574,9 @@ End Sub</pre>
     &lt;div class="container"&gt;
         &lt;h2&gt;🎙️ SoifGo Voice Control&lt;/h2&gt;
 
-        &lt;!-- Language selection menu --&gt;
         &lt;div class="lang-selector"&gt;
-            &lt;label for="lang-select"&gt;&lt;i&gt;🌐&lt;/i&gt; Language:&lt;/label&gt;
-            &lt;select id="lang-select" aria-label="Select speech recognition language"&gt;
+            &lt;label for="lang-select"&gt;🌐 Language:&lt;/label&gt;
+            &lt;select id="lang-select"&gt;
                 &lt;option value="en-US" selected&gt;English&lt;/option&gt;
                 &lt;option value="es-ES"&gt;Español&lt;/option&gt;
                 &lt;option value="zh-CN"&gt;简体中文&lt;/option&gt;
@@ -417,193 +606,95 @@ End Sub</pre>
         &lt;button id="start-btn"&gt;🎤 Start Speaking&lt;/button&gt;
 
         &lt;div id="output"&gt;Your voice command will appear here...&lt;/div&gt;
-
-        &lt;p class="info"&gt;⚡ Recognized text is sent instantly to the Bluetooth module.&lt;/p&gt;
-        &lt;p class="info" style="color:#3a6ea5; margin-top:5px;"&gt;SoifGo · multilingual pipeline&lt;/p&gt;
     &lt;/div&gt;
 
     &lt;script&gt;
         (function() {
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
-            // ---------- DOM elements ----------
             const startBtn = document.getElementById('start-btn');
             const output = document.getElementById('output');
             const status = document.getElementById('status');
             const langSelect = document.getElementById('lang-select');
 
-            // ---------- state ----------
             let isListening = false;
             let recognition = null;
 
-            // Helper: stop and restart if needed, applying new language
-            function applyLanguage(langCode) {
-                if (!recognition) return;
-                const wasListening = isListening;
-
-                // If currently listening, stop (we'll restart later if needed)
-                if (wasListening) {
-                    recognition.stop(); // onend will handle restart if still listening
-                }
-
-                recognition.lang = langCode;
-
-                // Update status with selected language name (optional)
-                const selectedOption = langSelect.options[langSelect.selectedIndex];
-                const langName = selectedOption ? selectedOption.text : langCode;
-
-                if (wasListening) {
-                    // restart after small delay (onend will trigger restart because isListening is still true)
-                    // but ensure recognition is not in "started" state. onend will call recognition.start()
-                    status.innerText = `Switching to ${langName}...`;
-                } else {
-                    status.innerText = `Language set to ${langName} — ready`;
-                }
-            }
-
-            // Initialize recognition object if supported
             if (!SpeechRecognition) {
-                output.innerText = "⚠️ Error: Your browser does not support speech recognition.";
+                output.innerText = "⚠️ Speech recognition not supported.";
                 startBtn.disabled = true;
-                startBtn.style.opacity = '0.5';
-                startBtn.style.cursor = 'not-allowed';
-                status.innerText = 'Speech recognition unavailable';
-            } else {
-                recognition = new SpeechRecognition();
-                // Default language (English)
-                recognition.lang = 'en-US';
-                recognition.continuous = true;
-                recognition.interimResults = false;
-                recognition.maxAlternatives = 1;
-
-                // ---------- Event handlers ----------
-
-                // Result: send to SoifGo and display
-                recognition.onresult = (event) =&gt; {
-                    const currentResultIndex = event.resultIndex;
-                    const speechToText = event.results[currentResultIndex][0].transcript;
-
-                    if (speechToText.trim() !== "") {
-                        output.innerText = speechToText;
-                        console.log("Command processed: " + speechToText);
-
-                        // Send to SoifGo pipeline
-                        if (window.soifgo &amp;&amp; typeof window.soifgo.CallSub === 'function') {
-                            window.soifgo.CallSub('html_bluetooth_rx', true, speechToText);
-                            status.innerText = "✅ Sent: " + speechToText;
-                        } else {
-                            // fallback if SoifGo is not available
-                            status.innerText = "📤 (simulated) " + speechToText;
-                        }
-                    }
-                };
-
-                // Error handling
-                recognition.onerror = (event) =&gt; {
-                    console.log("JS Error: " + event.error);
-                    if (event.error === 'no-speech') {
-                        status.innerText = "🎤 No speech detected, still waiting...";
-                    } else if (event.error === 'network') {
-                        status.innerText = "🌐 Network error! Please check your Wi-Fi connection.";
-                    } else if (event.error === 'aborted') {
-                        // ignore abort errors, usually from manual stop
-                    } else if (event.error === 'not-allowed') {
-                        status.innerText = "🚫 Microphone access denied. Please allow microphone.";
-                        // we can stop listening because it's blocked
-                        if (isListening) {
-                            isListening = false;
-                            startBtn.innerText = "🎤 Start Speaking";
-                            startBtn.classList.remove('listening');
-                        }
-                    } else {
-                        status.innerText = `⚠️ Error: ${event.error}`;
-                    }
-                };
-
-                // When recognition ends, restart if we are still in listening mode
-                recognition.onend = () =&gt; {
-                    if (isListening) {
-                        // auto-restart to keep mic alive
-                        try {
-                            recognition.start();
-                        } catch (e) {
-                            console.warn("Restart failed, retrying in 100ms", e);
-                            setTimeout(() =&gt; {
-                                if (isListening) {
-                                    try { recognition.start(); } catch (err) { console.error(err); }
-                                }
-                            }, 100);
-                        }
-                    } else {
-                        status.innerText = "Status: Stopped.";
-                    }
-                };
-
-                // ---------- Start / Stop button ----------
-                startBtn.addEventListener('click', () =&gt; {
-                    if (!isListening) {
-                        // start listening
-                        isListening = true;
-                        startBtn.innerText = "🛑 Stop Listening";
-                        startBtn.classList.add('listening');
-                        status.innerText = "🎧 Listening for your command...";
-                        output.innerText = "";
-
-                        // Apply current selected language (just to be safe)
-                        const currentLang = langSelect.value;
-                        recognition.lang = currentLang;
-
-                        try {
-                            recognition.start();
-                        } catch (e) {
-                            console.error("Start error:", e);
-                            status.innerText = "⚠️ Could not start microphone. Try again.";
-                            // reset state
-                            isListening = false;
-                            startBtn.innerText = "🎤 Start Speaking";
-                            startBtn.classList.remove('listening');
-                        }
-                    } else {
-                        // stop listening
-                        isListening = false;
-                        startBtn.innerText = "🎤 Start Speaking";
-                        startBtn.classList.remove('listening');
-                        recognition.stop();
-                        status.innerText = "Status: Stopped.";
-                    }
-                });
-
-                // ---------- Language selector change ----------
-                langSelect.addEventListener('change', (e) =&gt; {
-                    const newLang = e.target.value;
-                    const selectedOption = langSelect.options[langSelect.selectedIndex];
-                    const langName = selectedOption ? selectedOption.text : newLang;
-
-                    if (recognition) {
-                        // If listening, we need to restart with new language
-                        if (isListening) {
-                            // stop will trigger onend which restarts with new lang (because isListening true)
-                            // but we must set recognition.lang BEFORE restart
-                            recognition.stop();
-                            recognition.lang = newLang;
-                            // onend will auto restart using the new language
-                            status.innerText = `🔄 Switching to ${langName}...`;
-                        } else {
-                            // just update language
-                            recognition.lang = newLang;
-                            status.innerText = `Language set to ${langName} — ready`;
-                        }
-                    }
-                });
-
-                // Additional: update status when language changes via script (not needed)
-                // but fine.
-                // Set default status
-                status.innerText = "Status: Ready for voice command";
+                return;
             }
 
-            // Make sure if SpeechRecognition is not available, we still show the select
-            // but no interactions with recognition.
+            recognition = new SpeechRecognition();
+            recognition.lang = 'en-US';
+            recognition.continuous = true;
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            recognition.onresult = (event) =&gt; {
+                const speechToText = event.results[event.resultIndex][0].transcript;
+                if (speechToText.trim() !== "") {
+                    output.innerText = speechToText;
+                    if (window.soifgo &amp;&amp; typeof window.soifgo.CallSub === 'function') {
+                        window.soifgo.CallSub('html_bluetooth_rx', true, speechToText);
+                        status.innerText = "✅ Sent: " + speechToText;
+                    } else {
+                        status.innerText = "📤 (simulated) " + speechToText;
+                    }
+                }
+            };
+
+            recognition.onerror = (event) =&gt; {
+                if (event.error === 'no-speech') {
+                    status.innerText = "🎤 No speech detected, still waiting...";
+                } else if (event.error === 'not-allowed') {
+                    status.innerText = "🚫 Microphone denied.";
+                } else {
+                    status.innerText = "⚠️ Error: " + event.error;
+                }
+            };
+
+            recognition.onend = () =&gt; {
+                if (isListening) {
+                    try { recognition.start(); } catch (e) {}
+                } else {
+                    status.innerText = "Status: Stopped.";
+                }
+            };
+
+            startBtn.addEventListener('click', () =&gt; {
+                if (!isListening) {
+                    // Request mic permission first
+                    if (window.soifgo &amp;&amp; typeof window.soifgo.CallSub === 'function') {
+                        window.soifgo.CallSub('request_mic_perm', true, null);
+                    }
+                    isListening = true;
+                    startBtn.innerText = "🛑 Stop Listening";
+                    startBtn.classList.add('listening');
+                    status.innerText = "🎧 Listening...";
+                    output.innerText = "";
+                    recognition.lang = langSelect.value;
+                    try { recognition.start(); } catch (e) {}
+                } else {
+                    isListening = false;
+                    startBtn.innerText = "🎤 Start Speaking";
+                    startBtn.classList.remove('listening');
+                    recognition.stop();
+                    status.innerText = "Status: Stopped.";
+                }
+            });
+
+            langSelect.addEventListener('change', (e) =&gt; {
+                const newLang = e.target.value;
+                if (recognition) {
+                    if (isListening) {
+                        recognition.stop();
+                        recognition.lang = newLang;
+                    } else {
+                        recognition.lang = newLang;
+                    }
+                }
+            });
         })();
     &lt;/script&gt;
 &lt;/body&gt;
@@ -617,22 +708,21 @@ End Sub</pre>
   will not appear again.
 </div>
 
-<div class="note" style="border-left-color:#ef4444; background:rgba(239,68,68,0.08); color:#fca5a5;">
+<div class="note danger">
   <strong>⚠️ Important — where is request_mic_perm called?</strong>
   In this HTML file, <code>request_mic_perm</code> is called inside the
-  <code>startBtn.addEventListener('click', …)</code> handler. If you want SoifGo to
+  <code>startBtn.addEventListener('click', …)</code> handler. If you want <span class="ignore">SoifGo</span> to
   actually show the permission dialog, you must add this single line at the beginning
   of that handler:
-<pre style="background:#0b1220; color:#fca5a5;">window.soifgo.CallSub('request_mic_perm', true, null);</pre>
+<pre style="background:var(--code-bg); color:var(--danger-light);">window.soifgo.CallSub('request_mic_perm', true, null);</pre>
   The current example already works, but adding this call makes the permission request
   explicit and prevents the "not-allowed" error on the first run.
 </div>
 
-<!-- ===== GOLDEN RULE 2 ===== -->
 <h3>2️⃣ Send Recognized Text to Bluetooth</h3>
 
 <p>
-  After speech recognition returns a transcript, JavaScript calls SoifGo's
+  After speech recognition returns a transcript, JavaScript calls <span class="ignore">SoifGo</span>'s
   Bluetooth-send Sub with one line:
 </p>
 
@@ -644,8 +734,8 @@ End Sub</pre>
   <li>User taps the microphone button → <code>request_mic_perm</code> is triggered.</li>
   <li>User speaks → the browser's <code>SpeechRecognition</code> converts voice to text.</li>
   <li>JavaScript calls <code>window.soifgo.CallSub('html_bluetooth_rx', true, txt)</code>.</li>
-  <li>SoifGo receives the text in its <code>html_bluetooth_rx()</code> Sub.</li>
-  <li>SoifGo forwards the text to the connected Bluetooth device.</li>
+  <li><span class="ignore">SoifGo</span> receives the text in its <code>html_bluetooth_rx()</code> Sub.</li>
+  <li><span class="ignore">SoifGo</span> forwards the text to the connected Bluetooth device.</li>
 </ol>
 
 <div class="step">
@@ -667,12 +757,11 @@ End Sub</pre>
 End Sub</pre>
 </div>
 
-<!-- ===== GOLDEN RULE 3 ===== -->
 <h3>3️⃣ Receive Bluetooth Data (Optional)</h3>
 
 <p>
   If your hardware sends data back (e.g. sensor values, ACK messages), define a global
-  JavaScript function named <code>html_bluetooth_tx</code>. SoifGo calls it automatically
+  JavaScript function named <code>html_bluetooth_tx</code>. <span class="ignore">SoifGo</span> calls it automatically
   whenever Bluetooth data arrives:
 </p>
 
@@ -681,20 +770,19 @@ End Sub</pre>
 }
 window.html_bluetooth_tx = html_bluetooth_tx;  // register globally</pre>
 
-<!-- ================= STEP BY STEP ================= -->
 <h2>🚀 Step-by-Step Setup in SoifGo</h2>
 
 <div class="step">
   <span class="step-number">1</span>
   <strong>Create a button with HTML behavior</strong><br>
-  In SoifGo's visual editor, add a button and set its behavior to <em>HTML (offline)</em>.
+  In <span class="ignore">SoifGo</span>'s visual editor, add a button and set its behavior to <em>HTML (offline)</em>.
 </div>
 
 <div class="step">
   <span class="step-number">2</span>
   <strong>Pick the example file</strong><br>
   From the built-in sample list, choose <code>serial_voice.html</code>.
-  It is already available inside the SoifGo library — no download needed.
+  It is already available inside the <span class="ignore">SoifGo</span> library — no download needed.
 </div>
 
 <div class="step">
@@ -719,11 +807,10 @@ window.html_bluetooth_tx = html_bluetooth_tx;  // register globally</pre>
 </div>
 
 <div class="note">
-  <strong>Tip:</strong> Use any serial terminal on your PC or phone (or the SoifGo
+  <strong>Tip:</strong> Use any serial terminal on your PC or phone (or the <span class="ignore">SoifGo</span>
   Bluetooth terminal) to see the incoming voice commands in real time.
 </div>
 
-<!-- ================= LANGUAGES ================= -->
 <h2>🌐 Supported Languages</h2>
 
 <p>
@@ -731,13 +818,12 @@ window.html_bluetooth_tx = html_bluetooth_tx;  // register globally</pre>
   restarts speech recognition with the new locale automatically:
 </p>
 
-<p style="font-size:0.9rem; color:#94a3b8; text-align:center;">
+<p style="font-size:0.9rem; color:var(--text-muted); text-align:center;">
   English · Español · 简体中文 · Français · Deutsch · 日本語 · Русский · العربية · فارسی ·
   Italiano · हिन्दी · Türkçe · 한국어 · Português · עברית · کوردی · اردو · বাংলা ·
   Bahasa Indonesia · தமிழ் · ไทย · Swahili
 </p>
 
-<!-- ================= NOTES ================= -->
 <h2>📌 Important Notes</h2>
 
 <ul>
@@ -745,15 +831,14 @@ window.html_bluetooth_tx = html_bluetooth_tx;  // register globally</pre>
       SpeechRecognition usually needs an internet connection for most languages.
       Plan your project accordingly.</li>
   <li><strong>HTTPS:</strong> SpeechRecognition requires a secure context.
-      Inside SoifGo's WebView this is already handled — you don't need to worry.</li>
+      Inside <span class="ignore">SoifGo</span>'s WebView this is already handled — you don't need to worry.</li>
   <li><strong>Continuous mode:</strong> The page keeps the microphone alive by
       auto-restarting recognition in <code>onend</code>, so you can speak multiple
       commands without pressing the button again.</li>
-  <li><strong>Library example:</strong> The full source is available in the SoifGo
+  <li><strong>Library example:</strong> The full source is available in the <span class="ignore">SoifGo</span>
       library as <code>serial_voice.html</code> — feel free to copy and modify it.</li>
 </ul>
 
-<!-- ================= ARDUINO EXAMPLE ================= -->
 <h2>💡 Arduino Example — Voice-Controlled LED</h2>
 
 <p>
@@ -776,30 +861,26 @@ window.html_bluetooth_tx = html_bluetooth_tx;  // register globally</pre>
  *   HC-05 / HC-06 TX  -&gt;  Arduino RX (pin 0)
  *   HC-05 VCC -&gt; 5V, GND -&gt; GND
  *
- * Baud rate: 9600 (must match the Bluetooth module and SoifGo setting)
+ * Baud rate: 9600
  */
 
-const int LED_PIN = 13;          // built-in LED on most Arduino boards
-String incoming = "";            // buffer for the received line
+const int LED_PIN = 13;
+String incoming = "";
 
 void setup() {
   pinMode(LED_PIN, OUTPUT);
-  digitalWrite(LED_PIN, LOW);    // start with LED off
-
-  Serial.begin(9600);            // same baud rate as HC-05 / HC-06
+  digitalWrite(LED_PIN, LOW);
+  Serial.begin(9600);
   Serial.println("Ready. Waiting for voice commands...");
 }
 
 void loop() {
-  // Read one character at a time from Bluetooth serial
   while (Serial.available() &gt; 0) {
     char c = Serial.read();
-
-    // End of line? Then process the command
     if (c == '\n' || c == '\r') {
       if (incoming.length() &gt; 0) {
         handleCommand(incoming);
-        incoming = "";           // clear buffer for the next command
+        incoming = "";
       }
     } else {
       incoming += c;
@@ -807,14 +888,11 @@ void loop() {
   }
 }
 
-// Process the received command (case-insensitive)
 void handleCommand(String cmd) {
-  cmd.trim();                    // remove leading/trailing spaces
-  cmd.toUpperCase();             // make comparison case-insensitive
-
+  cmd.trim();
+  cmd.toUpperCase();
   Serial.print("Received: ");
   Serial.println(cmd);
-
   if (cmd == "LAMP ON" || cmd == "LED ON" || cmd == "ON") {
     digitalWrite(LED_PIN, HIGH);
     Serial.println("-&gt; LED is now ON");
@@ -824,7 +902,7 @@ void handleCommand(String cmd) {
     Serial.println("-&gt; LED is now OFF");
   }
   else {
-    Serial.println("-&gt; Unknown command. Say 'LAMP ON' or 'LAMP OFF'.");
+    Serial.println("-&gt; Unknown command.");
   }
 }</pre>
 </div>
@@ -834,7 +912,7 @@ void handleCommand(String cmd) {
   <ol>
     <li>Upload the sketch to your Arduino.</li>
     <li>Open the Serial Monitor at <strong>9600 baud</strong> — you should see <em>"Ready..."</em>.</li>
-    <li>Connect your HC-05 / HC-06 to the SoifGo app.</li>
+    <li>Connect your HC-05 / HC-06 to the <span class="ignore">SoifGo</span> app.</li>
     <li>Open the <code>serial_voice.html</code> page and tap the microphone.</li>
     <li>Say clearly: <strong>"LAMP ON"</strong> — the LED on pin 13 lights up.</li>
     <li>Say: <strong>"LAMP OFF"</strong> — the LED turns off.</li>
@@ -865,7 +943,6 @@ void handleCommand(String cmd) {
   or to <code>LED_BUILTIN</code>. The rest of the sketch works unchanged.
 </div>
 
-<!-- ================= SUMMARY ================= -->
 <h2>🎯 Summary — The Three Golden Rules</h2>
 
 <div class="golden">
@@ -877,9 +954,238 @@ void handleCommand(String cmd) {
 </div>
 
 <p class="footer-note">
-  SoifGo · Voice → Serial Bluetooth · Multilingual Pipeline<br>
-  © 2026 Saeid Moghadam
+  <span class="ignore">SoifGo</span> · Voice → Serial Bluetooth · Multilingual Pipeline<br>
+  © 2026 <span class="ignore">Saeid Moghadam</span>
 </p>
+
+<script>
+  (function() {
+    var themeToggle = document.getElementById('themeToggle');
+    var themeIcon = document.getElementById('themeIcon');
+
+    function updateIcon(theme) {
+      if (theme === 'light') {
+        themeIcon.textContent = '🌙';
+        themeToggle.title = 'Switch to dark mode';
+      } else {
+        themeIcon.textContent = '☀️';
+        themeToggle.title = 'Switch to light mode';
+      }
+    }
+
+    var currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+    updateIcon(currentTheme);
+
+    themeToggle.addEventListener('click', function() {
+      var current = document.documentElement.getAttribute('data-theme');
+      var next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('soifgo-theme', next);
+      updateIcon(next);
+    });
+  })();
+</script>
+
+<script src="https://cdn.staticfile.net/translate.js/3.18.66/translate.js"></script>
+
+<script>
+(function() {
+  'use strict';
+
+  var LANGUAGES = {
+    'english': { label: 'English', dir: 'ltr' },
+    'spanish': { label: 'Español', dir: 'ltr' },
+    'chinese_simplified': { label: '简体中文', dir: 'ltr' },
+    'french': { label: 'Français', dir: 'ltr' },
+    'deutsch': { label: 'Deutsch', dir: 'ltr' },
+    'japanese': { label: '日本語', dir: 'ltr' },
+    'russian': { label: 'Русский', dir: 'ltr' },
+    'arabic': { label: 'العربية', dir: 'rtl' },
+    'persian': { label: 'فارسی', dir: 'rtl' },
+    'italian': { label: 'Italiano', dir: 'ltr' },
+    'hindi': { label: 'हिन्दी', dir: 'ltr' },
+    'turkish': { label: 'Türkçe', dir: 'ltr' },
+    'korean': { label: '한국어', dir: 'ltr' },
+    'portuguese': { label: 'Português', dir: 'ltr' },
+    'hebrew': { label: 'עברית', dir: 'rtl' },
+    'kurdish_sorani': { label: 'کوردی', dir: 'rtl' },
+    'urdu': { label: 'اردو', dir: 'rtl' },
+    'bengali': { label: 'বাংলা', dir: 'ltr' },
+    'indonesian': { label: 'Bahasa Indonesia', dir: 'ltr' },
+    'tamil': { label: 'தமிழ்', dir: 'ltr' },
+    'thai': { label: 'ไทย', dir: 'ltr' },
+    'swahili': { label: 'Swahili', dir: 'ltr' }
+  };
+
+  var DEFAULT_LANG = 'english';
+  var FALLBACK_CHANNELS = ['giteeAI', 'client.edge', 'siliconflow'];
+
+  var langBtn = document.getElementById('langBtn');
+  var langDropdown = document.getElementById('langDropdown');
+  var currentLangLabel = document.getElementById('currentLangLabel');
+
+  function buildLanguageList() {
+    var html = '';
+    for (var code in LANGUAGES) {
+      if (LANGUAGES.hasOwnProperty(code)) {
+        var lang = LANGUAGES[code];
+        html += '<a href="javascript:void(0)" class="lang-item ignore" data-lang="' + code + '" data-dir="' + lang.dir + '">' + lang.label + '</a>';
+      }
+    }
+    langDropdown.innerHTML = html;
+    var items = langDropdown.querySelectorAll('.lang-item');
+    for (var i = 0; i < items.length; i++) {
+      items[i].addEventListener('click', function(e) {
+        e.preventDefault();
+        changeLanguage(this.getAttribute('data-lang'), this.getAttribute('data-dir'));
+      });
+    }
+  }
+
+  function waitForTranslation(element, originalText, timeoutMs) {
+    return new Promise(function(resolve) {
+      var start = Date.now();
+      var timer = setInterval(function() {
+        if (element.textContent !== originalText) {
+          clearInterval(timer);
+          resolve(true);
+        } else if (Date.now() - start > timeoutMs) {
+          clearInterval(timer);
+          resolve(false);
+        }
+      }, 200);
+    });
+  }
+
+  function applyChannel(channel) {
+    try {
+      translate.service.use(channel);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function resetToEnglish() {
+    try { localStorage.removeItem('soifgo-lang'); } catch (e) {}
+    document.documentElement.setAttribute('dir', 'ltr');
+    document.documentElement.setAttribute('lang', 'en');
+    currentLangLabel.textContent = LANGUAGES.english.label;
+    langDropdown.classList.remove('show');
+    setTimeout(function() {
+      location.reload();
+    }, 100);
+  }
+
+  function changeLanguage(langCode, langDir) {
+    if (langCode === 'english') {
+      resetToEnglish();
+      return;
+    }
+
+    var testElement = document.querySelector('h1');
+    var originalText = testElement ? testElement.textContent : '';
+
+    function tryChannel(index) {
+      if (index >= FALLBACK_CHANNELS.length) {
+        console.warn('All fallback channels failed.');
+        return;
+      }
+
+      var channel = FALLBACK_CHANNELS[index];
+      applyChannel(channel);
+
+      translate.changeLanguage(langCode);
+      if (typeof translate.execute === 'function') {
+        translate.execute();
+      }
+
+      waitForTranslation(testElement, originalText, 3000).then(function(success) {
+        if (!success) {
+          console.warn('Channel ' + channel + ' failed, trying next...');
+          tryChannel(index + 1);
+        } else {
+          try { localStorage.setItem('soifgo-lang', langCode); } catch (e) {}
+          document.documentElement.setAttribute('dir', langDir);
+          document.documentElement.setAttribute('lang', langCode === 'persian' ? 'fa' : langCode);
+          currentLangLabel.textContent = LANGUAGES[langCode].label;
+          langDropdown.classList.remove('show');
+        }
+      });
+    }
+
+    tryChannel(0);
+  }
+
+  langBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    langDropdown.classList.toggle('show');
+  });
+
+  document.addEventListener('click', function() {
+    langDropdown.classList.remove('show');
+  });
+
+  function getSavedLang() {
+    try {
+      var saved = localStorage.getItem('soifgo-lang');
+      if (saved && LANGUAGES[saved] && saved !== 'english') {
+        return saved;
+      }
+    } catch (e) {}
+    return null;
+  }
+
+  function initTranslate() {
+    var savedLang = getSavedLang();
+    if (!savedLang) {
+      document.documentElement.setAttribute('dir', 'ltr');
+      document.documentElement.setAttribute('lang', 'en');
+      currentLangLabel.textContent = LANGUAGES.english.label;
+      return;
+    }
+
+    translate.language.setLocal('english');
+    translate.service.use(FALLBACK_CHANNELS[0]);
+    translate.selectLanguageTag.show = false;
+    translate.execute();
+    if (translate.listener && translate.listener.start) {
+      translate.listener.start();
+    }
+  }
+
+  function restoreLanguageUI() {
+    var savedLang = getSavedLang();
+    if (savedLang) {
+      var lang = LANGUAGES[savedLang];
+      document.documentElement.setAttribute('dir', lang.dir);
+      document.documentElement.setAttribute('lang', savedLang === 'persian' ? 'fa' : savedLang);
+      currentLangLabel.textContent = lang.label;
+      return savedLang;
+    }
+    currentLangLabel.textContent = LANGUAGES[DEFAULT_LANG].label;
+    return null;
+  }
+
+  buildLanguageList();
+  var restored = restoreLanguageUI();
+
+  function bootTranslate() {
+    initTranslate();
+    if (restored) {
+      setTimeout(function() {
+        changeLanguage(restored, LANGUAGES[restored].dir);
+      }, 500);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bootTranslate);
+  } else {
+    bootTranslate();
+  }
+})();
+</script>
 
 </body>
 </html>

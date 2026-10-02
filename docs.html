@@ -75,6 +75,8 @@
       --purple-border: var(--purple);
     }
 
+    .ignore { /* translation skip marker */ }
+
     body {
       font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--bg);
@@ -94,6 +96,7 @@
       padding: 50px 20px 40px;
       text-align: center;
       border-bottom: 3px solid var(--primary);
+      position: relative;
     }
 
     .header-container { max-width: 800px; margin: 0 auto; }
@@ -135,6 +138,73 @@
     }
 
     .back-link:hover { text-decoration: underline; }
+
+    .language-switcher {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      right: auto;
+      z-index: 1001;
+      direction: ltr;
+    }
+
+    .lang-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 16px;
+      border-radius: 24px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+      transition: background 0.2s, border-color 0.2s, transform 0.15s;
+    }
+
+    .lang-btn:hover {
+      background: var(--info-bg);
+      border-color: var(--primary);
+      transform: scale(1.03);
+    }
+
+    .lang-dropdown {
+      display: none;
+      position: absolute;
+      top: 48px;
+      left: 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      min-width: 220px;
+      max-height: 400px;
+      overflow-y: auto;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      padding: 8px 0;
+      direction: ltr;
+    }
+
+    .lang-dropdown.show { display: block; }
+
+    .lang-item {
+      display: block;
+      padding: 10px 18px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.92rem;
+      transition: background 0.15s;
+      white-space: nowrap;
+      direction: ltr;
+      text-align: left;
+    }
+
+    .lang-item:hover {
+      background: var(--info-bg);
+      color: var(--primary);
+      text-decoration: none;
+    }
 
     nav {
       display: flex;
@@ -389,6 +459,10 @@
       .api-table th, .api-table td { padding: 8px 10px; }
       nav a { font-size: 0.8rem; padding: 0.4rem 0.9rem; }
       .examples-grid { grid-template-columns: 1fr; }
+      .language-switcher { top: 12px; left: 12px; }
+      .lang-btn { font-size: 0.8rem; padding: 6px 12px; }
+      .lang-dropdown { min-width: 180px; max-height: 300px; }
+      .lang-item { padding: 8px 14px; font-size: 0.85rem; }
     }
 
     @media (max-width: 480px) {
@@ -404,11 +478,18 @@
 
 <body>
 
+  <div class="language-switcher ignore" id="languageSwitcher">
+    <button class="lang-btn" id="langBtn" type="button" aria-label="Change language">
+      🌐 <span id="currentLangLabel">English</span>
+    </button>
+    <div class="lang-dropdown" id="langDropdown"></div>
+  </div>
+
   <header>
     <div class="header-container">
       <div class="logo-row">
         <img src="soifgo-logo.png" alt="SoifGo Logo" />
-        <span>SoifGo</span>
+        <span class="ignore">SoifGo</span>
       </div>
       <h1>Developer Documentation</h1>
       <p>One-page API reference: Bluetooth, MQTT, sensors, REST APIs, and storage — all in <code>window.soifgo.CallSub()</code>.</p>
@@ -468,7 +549,6 @@
       </div>
     </section>
 
-    <!-- ====== AI CONTEXT ====== -->
     <section id="ai-context">
       <h2>🤖 For AI Assistants</h2>
 
@@ -510,9 +590,9 @@
     <section id="bluetooth">
       <h2>2. Bluetooth</h2>
 
-<h3>Send to Bluetooth</h3>
-<pre><code>window.soifgo.CallSub('html_bluetooth_rx', true, message);</code></pre>
-<p>The second argument is the return flag — always <code>true</code>. The third argument is the data (text/message) to send.</p>
+      <h3>Send to Bluetooth</h3>
+      <pre><code>window.soifgo.CallSub('html_bluetooth_rx', true, message);</code></pre>
+      <p>The second argument is the return flag — always <code>true</code>. The third argument is the data (text/message) to send.</p>
 
       <h3>Receive from Bluetooth</h3>
       <pre><code>function html_bluetooth_tx(data) {
@@ -931,8 +1011,206 @@ localStorage.removeItem('my_key');</code></pre>
       &nbsp;|&nbsp;
       <a href="https://github.com/soifgo/soifgo/discussions" target="_blank" rel="noopener">Forum</a>
     </p>
-    <p style="font-size:0.85rem; margin-top:8px;">&copy; 2026 SoifGo — Built by Saeid Moghadam</p>
+    <p style="font-size:0.85rem; margin-top:8px;">&copy; 2026 SoifGo — Built by <span class="ignore">Saeid Moghadam</span></p>
   </footer>
+
+  <script src="https://cdn.staticfile.net/translate.js/3.18.66/translate.js"></script>
+
+  <script>
+  (function() {
+    'use strict';
+
+    var LANGUAGES = {
+      'english': { label: 'English', dir: 'ltr' },
+      'spanish': { label: 'Español', dir: 'ltr' },
+      'chinese_simplified': { label: '简体中文', dir: 'ltr' },
+      'french': { label: 'Français', dir: 'ltr' },
+      'deutsch': { label: 'Deutsch', dir: 'ltr' },
+      'japanese': { label: '日本語', dir: 'ltr' },
+      'russian': { label: 'Русский', dir: 'ltr' },
+      'arabic': { label: 'العربية', dir: 'rtl' },
+      'persian': { label: 'فارسی', dir: 'rtl' },
+      'italian': { label: 'Italiano', dir: 'ltr' },
+      'hindi': { label: 'हिन्दी', dir: 'ltr' },
+      'turkish': { label: 'Türkçe', dir: 'ltr' },
+      'korean': { label: '한국어', dir: 'ltr' },
+      'portuguese': { label: 'Português', dir: 'ltr' },
+      'hebrew': { label: 'עברית', dir: 'rtl' },
+      'kurdish_sorani': { label: 'کوردی', dir: 'rtl' },
+      'urdu': { label: 'اردو', dir: 'rtl' },
+      'bengali': { label: 'বাংলা', dir: 'ltr' },
+      'indonesian': { label: 'Bahasa Indonesia', dir: 'ltr' },
+      'tamil': { label: 'தமிழ்', dir: 'ltr' },
+      'thai': { label: 'ไทย', dir: 'ltr' },
+      'swahili': { label: 'Swahili', dir: 'ltr' }
+    };
+
+    var DEFAULT_LANG = 'english';
+    var FALLBACK_CHANNELS = ['giteeAI', 'client.edge', 'siliconflow'];
+
+    var langBtn = document.getElementById('langBtn');
+    var langDropdown = document.getElementById('langDropdown');
+    var currentLangLabel = document.getElementById('currentLangLabel');
+
+    function buildLanguageList() {
+      var html = '';
+      for (var code in LANGUAGES) {
+        if (LANGUAGES.hasOwnProperty(code)) {
+          var lang = LANGUAGES[code];
+          html += '<a href="javascript:void(0)" class="lang-item ignore" data-lang="' + code + '" data-dir="' + lang.dir + '">' + lang.label + '</a>';
+        }
+      }
+      langDropdown.innerHTML = html;
+      var items = langDropdown.querySelectorAll('.lang-item');
+      for (var i = 0; i < items.length; i++) {
+        items[i].addEventListener('click', function(e) {
+          e.preventDefault();
+          changeLanguage(this.getAttribute('data-lang'), this.getAttribute('data-dir'));
+        });
+      }
+    }
+
+    function waitForTranslation(element, originalText, timeoutMs) {
+      return new Promise(function(resolve) {
+        var start = Date.now();
+        var timer = setInterval(function() {
+          if (element.textContent !== originalText) {
+            clearInterval(timer);
+            resolve(true);
+          } else if (Date.now() - start > timeoutMs) {
+            clearInterval(timer);
+            resolve(false);
+          }
+        }, 200);
+      });
+    }
+
+    function applyChannel(channel) {
+      try {
+        translate.service.use(channel);
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function resetToEnglish() {
+      try { localStorage.removeItem('soifgo-lang'); } catch (e) {}
+      document.documentElement.setAttribute('dir', 'ltr');
+      document.documentElement.setAttribute('lang', 'en');
+      currentLangLabel.textContent = LANGUAGES.english.label;
+      langDropdown.classList.remove('show');
+      setTimeout(function() {
+        location.reload();
+      }, 100);
+    }
+
+    function changeLanguage(langCode, langDir) {
+      if (langCode === 'english') {
+        resetToEnglish();
+        return;
+      }
+
+      var testElement = document.querySelector('h1');
+      var originalText = testElement ? testElement.textContent : '';
+
+      function tryChannel(index) {
+        if (index >= FALLBACK_CHANNELS.length) {
+          console.warn('All fallback channels failed.');
+          return;
+        }
+
+        var channel = FALLBACK_CHANNELS[index];
+        applyChannel(channel);
+
+        translate.changeLanguage(langCode);
+        if (typeof translate.execute === 'function') {
+          translate.execute();
+        }
+
+        waitForTranslation(testElement, originalText, 3000).then(function(success) {
+          if (!success) {
+            console.warn('Channel ' + channel + ' failed, trying next...');
+            tryChannel(index + 1);
+          } else {
+            try { localStorage.setItem('soifgo-lang', langCode); } catch (e) {}
+            document.documentElement.setAttribute('dir', langDir);
+            document.documentElement.setAttribute('lang', langCode === 'persian' ? 'fa' : langCode);
+            currentLangLabel.textContent = LANGUAGES[langCode].label;
+            langDropdown.classList.remove('show');
+          }
+        });
+      }
+
+      tryChannel(0);
+    }
+
+    langBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      langDropdown.classList.toggle('show');
+    });
+
+    document.addEventListener('click', function() {
+      langDropdown.classList.remove('show');
+    });
+
+    function getSavedLang() {
+      try {
+        var saved = localStorage.getItem('soifgo-lang');
+        if (saved && LANGUAGES[saved] && saved !== 'english') {
+          return saved;
+        }
+      } catch (e) {}
+      return null;
+    }
+
+    function initTranslate() {
+      var savedLang = getSavedLang();
+      if (!savedLang) {
+        return;
+      }
+
+      translate.language.setLocal('english');
+      translate.service.use(FALLBACK_CHANNELS[0]);
+      translate.selectLanguageTag.show = false;
+      translate.execute();
+      if (translate.listener && translate.listener.start) {
+        translate.listener.start();
+      }
+    }
+
+    function restoreLanguageUI() {
+      var savedLang = getSavedLang();
+      if (savedLang) {
+        var lang = LANGUAGES[savedLang];
+        document.documentElement.setAttribute('dir', lang.dir);
+        document.documentElement.setAttribute('lang', savedLang === 'persian' ? 'fa' : savedLang);
+        currentLangLabel.textContent = lang.label;
+        return savedLang;
+      }
+      currentLangLabel.textContent = LANGUAGES[DEFAULT_LANG].label;
+      return null;
+    }
+
+    buildLanguageList();
+    var restored = restoreLanguageUI();
+
+    function bootTranslate() {
+      initTranslate();
+      if (restored) {
+        setTimeout(function() {
+          changeLanguage(restored, LANGUAGES[restored].dir);
+        }, 500);
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', bootTranslate);
+    } else {
+      bootTranslate();
+    }
+  })();
+  </script>
 
 </body>
 </html>

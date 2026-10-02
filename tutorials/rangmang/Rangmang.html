@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes">
   <meta name="theme-color" content="#1e1e24">
+  <meta name="color-scheme" content="light dark">
 
   <title>RANGMANG — ATmega128/328 Serial RGB Controller for Addressable LEDs</title>
   <meta name="description" content="RANGMANG is a professional serial RGB controller based on ATmega128 and ATmega328, supporting addressable LEDs such as WS2811, WS2812B, WS2813, WS2815, SK6812, and TM1814. Features include Dance Mode, Solid Color Mode, Pixel Addressing, and support for up to 999 pixels.">
@@ -54,8 +55,20 @@
   }
   </script>
 
+  <script>
+    (function() {
+      var savedTheme = localStorage.getItem('soifgo-theme');
+      if (savedTheme === 'light' || savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+
   <style>
-    :root {
+    :root,
+    [data-theme="dark"] {
       --bg: #1e1e24;
       --fg: #e0e0e0;
       --accent: #00ffcc;
@@ -65,11 +78,39 @@
       --border: #3a3a47;
       --muted: #b8b8c4;
       --btn-home: #8B4513;
+      --code-bg: #22222d;
+      --code-text: #a9ffb4;
+      --pre-bg: #111116;
+      --table-th-bg: #333344;
+      --table-even-bg: #24242d;
       --img-max-height: 416px;
       --img-max-height-mobile: 312px;
+      --shadow: rgba(0, 0, 0, 0.5);
+    }
+
+    [data-theme="light"] {
+      --bg: #f4f6fa;
+      --fg: #1f2937;
+      --accent: #007a5e;
+      --accent2: #c2005f;
+      --accent3: #007aa6;
+      --card-bg: #ffffff;
+      --border: #d7dce4;
+      --muted: #4b5563;
+      --btn-home: #7a4a2e;
+      --code-bg: #eef2f7;
+      --code-text: #1e40af;
+      --pre-bg: #0f172a;
+      --table-th-bg: #e6f3fb;
+      --table-even-bg: #f8fafc;
+      --img-max-height: 416px;
+      --img-max-height-mobile: 312px;
+      --shadow: rgba(15, 23, 42, 0.1);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    .ignore { /* translation skip marker */ }
 
     html, body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -78,6 +119,7 @@
       line-height: 1.7;
       -webkit-text-size-adjust: 100%;
       min-height: 100vh;
+      transition: background 0.3s ease, color 0.3s ease;
     }
 
     .container { max-width: 900px; margin: 0 auto; padding: 16px; }
@@ -87,7 +129,8 @@
       top: 0;
       z-index: 10;
       backdrop-filter: saturate(180%) blur(8px);
-      background: color-mix(in oklab, var(--bg) 92%, transparent);
+      -webkit-backdrop-filter: saturate(180%) blur(8px);
+      background: color-mix(in srgb, var(--bg) 92%, transparent);
       border-bottom: 1px solid var(--border);
       padding: 8px 0;
     }
@@ -156,7 +199,7 @@
     }
 
     p { margin: 0.75em 0; color: var(--muted); word-break: break-word; }
-    strong { color: #ffffff; }
+    strong { color: var(--fg); }
 
     a { color: var(--accent); text-decoration: none; word-break: break-word; transition: color 0.2s; }
     a:hover { color: var(--accent2); text-decoration: underline; }
@@ -169,6 +212,7 @@
       margin-bottom: 1rem;
       max-width: 100%;
       overflow: hidden;
+      transition: background 0.3s ease, border 0.3s ease;
     }
 
     .card img, .container > img {
@@ -180,8 +224,8 @@
       border-radius: 8px;
       display: block;
       margin: 1rem auto;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-      background: #15151c;
+      box-shadow: 0 4px 15px var(--shadow);
+      background: var(--bg);
       padding: 4px;
     }
 
@@ -199,7 +243,7 @@
       aspect-ratio: 16 / 9;
       border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 4px 15px var(--shadow);
       background: #0a0a0f;
       margin: 1rem auto;
     }
@@ -221,7 +265,7 @@
       background: var(--card-bg);
       border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      box-shadow: 0 4px 10px var(--shadow);
       min-width: 500px;
     }
 
@@ -232,12 +276,13 @@
       word-break: break-word;
     }
 
-    th { background: #333344; color: var(--accent); font-weight: 600; }
-    tr:nth-child(even) { background: #24242d; }
+    th { background: var(--table-th-bg); color: var(--accent); font-weight: 600; }
+    tr:nth-child(even) { background: var(--table-even-bg); }
+    td { color: var(--muted); }
 
     pre {
-      background: #111116;
-      color: #a9ffb4;
+      background: var(--pre-bg);
+      color: var(--code-text);
       padding: 1rem;
       border-radius: 8px;
       overflow-x: auto;
@@ -249,12 +294,12 @@
     }
 
     code {
-      background: #22222d;
+      background: var(--code-bg);
       padding: 0.2em 0.6em;
       border-radius: 6px;
       font-family: "Consolas", "Courier New", Courier, monospace;
       font-size: 0.9em;
-      color: #a9ffb4;
+      color: var(--code-text);
       word-break: break-word;
     }
 
@@ -264,7 +309,7 @@
     li { margin-bottom: 0.4em; color: var(--muted); word-break: break-word; }
 
     .note-box {
-      background: #1a1a2e;
+      background: color-mix(in srgb, var(--accent2) 8%, var(--card-bg));
       border-left: 4px solid var(--accent2);
       padding: 1rem 1.2rem;
       border-radius: 8px;
@@ -274,7 +319,7 @@
     .note-box h3 { color: var(--accent2); border-left: none; padding-left: 0; margin-top: 0; }
 
     .color-fix-box {
-      background: #1a1a2e;
+      background: color-mix(in srgb, var(--accent) 8%, var(--card-bg));
       border: 1px solid var(--accent);
       border-radius: 8px;
       padding: 1.2rem 1.5rem;
@@ -310,7 +355,12 @@
       box-shadow: 0 4px 10px rgba(80, 45, 20, 0.2);
     }
 
-    .btn-home:active { transform: scale(0.97); background: #5f3a22; }
+    .btn-home:hover {
+      background: #5f3a22;
+      text-decoration: none;
+    }
+
+    .btn-home:active { transform: scale(0.97); }
 
     .btn-wrap {
       display: flex;
@@ -321,23 +371,103 @@
       margin: 2rem 0 0.5rem 0;
     }
 
-    .btn-simulator {
-      display: inline-block;
-      background: #555;
-      color: #ffff00;
-      padding: 12px 28px;
-      border-radius: 60px;
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 1rem;
-      text-align: center;
-      transition: background 0.15s, transform 0.1s;
-      touch-action: manipulation;
-      border: none;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    .language-switcher {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      right: auto;
+      z-index: 1001;
+      direction: ltr;
     }
 
-    .btn-simulator:active { transform: scale(0.97); background: #444; }
+    .lang-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--fg);
+      padding: 8px 16px;
+      border-radius: 24px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 8px var(--shadow);
+      transition: background 0.2s, border-color 0.2s, transform 0.15s;
+    }
+
+    .lang-btn:hover {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      border-color: var(--accent);
+      transform: scale(1.03);
+    }
+
+    .lang-dropdown {
+      display: none;
+      position: absolute;
+      top: 48px;
+      left: 0;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      min-width: 220px;
+      max-height: 400px;
+      overflow-y: auto;
+      box-shadow: 0 8px 24px var(--shadow);
+      padding: 8px 0;
+      direction: ltr;
+    }
+
+    .lang-dropdown.show { display: block; }
+
+    .lang-item {
+      display: block;
+      padding: 10px 18px;
+      color: var(--fg);
+      text-decoration: none;
+      font-size: 0.92rem;
+      transition: background 0.15s;
+      white-space: nowrap;
+      direction: ltr;
+      text-align: left;
+    }
+
+    .lang-item:hover {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      left: auto;
+      z-index: 1000;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--fg);
+      font-size: 1.3rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 14px var(--shadow);
+      transition: background 0.25s ease, transform 0.2s ease, border-color 0.25s ease;
+      padding: 0;
+      line-height: 1;
+      direction: ltr;
+    }
+
+    .theme-toggle:hover {
+      background: var(--accent);
+      color: var(--bg);
+      border-color: var(--accent);
+      transform: scale(1.08);
+    }
 
     @media (max-width: 600px) {
       .container { padding: 10px; }
@@ -350,7 +480,12 @@
       th, td { padding: 6px 8px; }
       .btn-home { width: 100%; justify-content: center; padding: 16px 18px; font-size: 1rem; }
       .btn-wrap { flex-direction: column; gap: 12px; }
-      .btn-simulator { width: 100%; text-align: center; }
+
+      .theme-toggle { width: 40px; height: 40px; font-size: 1.1rem; top: 12px; right: 12px; }
+      .language-switcher { top: 12px; left: 12px; }
+      .lang-btn { font-size: 0.8rem; padding: 6px 12px; }
+      .lang-dropdown { min-width: 180px; max-height: 300px; }
+      .lang-item { padding: 8px 14px; font-size: 0.85rem; }
     }
 
     @media (max-width: 380px) {
@@ -366,6 +501,17 @@
   </style>
 </head>
 <body>
+
+  <div class="language-switcher ignore" id="languageSwitcher">
+    <button class="lang-btn" id="langBtn" type="button" aria-label="Change language">
+      🌐 <span id="currentLangLabel">English</span>
+    </button>
+    <div class="lang-dropdown" id="langDropdown"></div>
+  </div>
+
+  <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle theme" title="Switch theme">
+    <span id="themeIcon">☀️</span>
+  </button>
 
   <nav class="nav" aria-label="Table of Contents">
     <div class="nav-inner">
@@ -737,14 +883,239 @@ Actual Code to Write for WS2811: R: 10, G: 44, B: 123</pre>
     <hr>
 
     <div class="btn-wrap">
-      <a href="simulator.html" class="btn-simulator">🔮 Rangmang Web Simulator</a>
-    </div>
-
-    <div class="btn-wrap">
       <a href="https://soifgo.github.io/soifgo/index.html" class="btn-home">⬅ Back to Home</a>
     </div>
 
   </div>
+
+  <script>
+    (function() {
+      var themeToggle = document.getElementById('themeToggle');
+      var themeIcon = document.getElementById('themeIcon');
+
+      function updateIcon(theme) {
+        if (theme === 'light') {
+          themeIcon.textContent = '🌙';
+          themeToggle.title = 'Switch to dark mode';
+        } else {
+          themeIcon.textContent = '☀️';
+          themeToggle.title = 'Switch to light mode';
+        }
+      }
+
+      var currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+      updateIcon(currentTheme);
+
+      themeToggle.addEventListener('click', function() {
+        var current = document.documentElement.getAttribute('data-theme');
+        var next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('soifgo-theme', next);
+        updateIcon(next);
+      });
+    })();
+  </script>
+
+  <script src="https://cdn.staticfile.net/translate.js/3.18.66/translate.js"></script>
+
+  <script>
+  (function() {
+    'use strict';
+
+    var LANGUAGES = {
+      'english': { label: 'English', dir: 'ltr' },
+      'spanish': { label: 'Español', dir: 'ltr' },
+      'chinese_simplified': { label: '简体中文', dir: 'ltr' },
+      'french': { label: 'Français', dir: 'ltr' },
+      'deutsch': { label: 'Deutsch', dir: 'ltr' },
+      'japanese': { label: '日本語', dir: 'ltr' },
+      'russian': { label: 'Русский', dir: 'ltr' },
+      'arabic': { label: 'العربية', dir: 'rtl' },
+      'persian': { label: 'فارسی', dir: 'rtl' },
+      'italian': { label: 'Italiano', dir: 'ltr' },
+      'hindi': { label: 'हिन्दी', dir: 'ltr' },
+      'turkish': { label: 'Türkçe', dir: 'ltr' },
+      'korean': { label: '한국어', dir: 'ltr' },
+      'portuguese': { label: 'Português', dir: 'ltr' },
+      'hebrew': { label: 'עברית', dir: 'rtl' },
+      'kurdish_sorani': { label: 'کوردی', dir: 'rtl' },
+      'urdu': { label: 'اردو', dir: 'rtl' },
+      'bengali': { label: 'বাংলা', dir: 'ltr' },
+      'indonesian': { label: 'Bahasa Indonesia', dir: 'ltr' },
+      'tamil': { label: 'தமிழ்', dir: 'ltr' },
+      'thai': { label: 'ไทย', dir: 'ltr' },
+      'swahili': { label: 'Swahili', dir: 'ltr' }
+    };
+
+    var DEFAULT_LANG = 'english';
+    var FALLBACK_CHANNELS = ['giteeAI', 'client.edge', 'siliconflow'];
+
+    var langBtn = document.getElementById('langBtn');
+    var langDropdown = document.getElementById('langDropdown');
+    var currentLangLabel = document.getElementById('currentLangLabel');
+
+    function buildLanguageList() {
+      var html = '';
+      for (var code in LANGUAGES) {
+        if (LANGUAGES.hasOwnProperty(code)) {
+          var lang = LANGUAGES[code];
+          html += '<a href="javascript:void(0)" class="lang-item ignore" data-lang="' + code + '" data-dir="' + lang.dir + '">' + lang.label + '</a>';
+        }
+      }
+      langDropdown.innerHTML = html;
+      var items = langDropdown.querySelectorAll('.lang-item');
+      for (var i = 0; i < items.length; i++) {
+        items[i].addEventListener('click', function(e) {
+          e.preventDefault();
+          changeLanguage(this.getAttribute('data-lang'), this.getAttribute('data-dir'));
+        });
+      }
+    }
+
+    function waitForTranslation(element, originalText, timeoutMs) {
+      return new Promise(function(resolve) {
+        var start = Date.now();
+        var timer = setInterval(function() {
+          if (element.textContent !== originalText) {
+            clearInterval(timer);
+            resolve(true);
+          } else if (Date.now() - start > timeoutMs) {
+            clearInterval(timer);
+            resolve(false);
+          }
+        }, 200);
+      });
+    }
+
+    function applyChannel(channel) {
+      try {
+        translate.service.use(channel);
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function resetToEnglish() {
+      try { localStorage.removeItem('soifgo-lang'); } catch (e) {}
+      document.documentElement.setAttribute('dir', 'ltr');
+      document.documentElement.setAttribute('lang', 'en');
+      currentLangLabel.textContent = LANGUAGES.english.label;
+      langDropdown.classList.remove('show');
+      setTimeout(function() {
+        location.reload();
+      }, 100);
+    }
+
+    function changeLanguage(langCode, langDir) {
+      if (langCode === 'english') {
+        resetToEnglish();
+        return;
+      }
+
+      var testElement = document.querySelector('h1');
+      var originalText = testElement ? testElement.textContent : '';
+
+      function tryChannel(index) {
+        if (index >= FALLBACK_CHANNELS.length) {
+          console.warn('All fallback channels failed.');
+          return;
+        }
+
+        var channel = FALLBACK_CHANNELS[index];
+        applyChannel(channel);
+
+        translate.changeLanguage(langCode);
+        if (typeof translate.execute === 'function') {
+          translate.execute();
+        }
+
+        waitForTranslation(testElement, originalText, 3000).then(function(success) {
+          if (!success) {
+            console.warn('Channel ' + channel + ' failed, trying next...');
+            tryChannel(index + 1);
+          } else {
+            try { localStorage.setItem('soifgo-lang', langCode); } catch (e) {}
+            document.documentElement.setAttribute('dir', langDir);
+            document.documentElement.setAttribute('lang', langCode === 'persian' ? 'fa' : langCode);
+            currentLangLabel.textContent = LANGUAGES[langCode].label;
+            langDropdown.classList.remove('show');
+          }
+        });
+      }
+
+      tryChannel(0);
+    }
+
+    langBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      langDropdown.classList.toggle('show');
+    });
+
+    document.addEventListener('click', function() {
+      langDropdown.classList.remove('show');
+    });
+
+    function getSavedLang() {
+      try {
+        var saved = localStorage.getItem('soifgo-lang');
+        if (saved && LANGUAGES[saved] && saved !== 'english') {
+          return saved;
+        }
+      } catch (e) {}
+      return null;
+    }
+
+    function initTranslate() {
+      var savedLang = getSavedLang();
+      if (!savedLang) {
+        document.documentElement.setAttribute('dir', 'ltr');
+        document.documentElement.setAttribute('lang', 'en');
+        currentLangLabel.textContent = LANGUAGES.english.label;
+        return;
+      }
+
+      translate.language.setLocal('english');
+      translate.service.use(FALLBACK_CHANNELS[0]);
+      translate.selectLanguageTag.show = false;
+      translate.execute();
+      if (translate.listener && translate.listener.start) {
+        translate.listener.start();
+      }
+    }
+
+    function restoreLanguageUI() {
+      var savedLang = getSavedLang();
+      if (savedLang) {
+        var lang = LANGUAGES[savedLang];
+        document.documentElement.setAttribute('dir', lang.dir);
+        document.documentElement.setAttribute('lang', savedLang === 'persian' ? 'fa' : savedLang);
+        currentLangLabel.textContent = lang.label;
+        return savedLang;
+      }
+      currentLangLabel.textContent = LANGUAGES[DEFAULT_LANG].label;
+      return null;
+    }
+
+    buildLanguageList();
+    var restored = restoreLanguageUI();
+
+    function bootTranslate() {
+      initTranslate();
+      if (restored) {
+        setTimeout(function() {
+          changeLanguage(restored, LANGUAGES[restored].dir);
+        }, 500);
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', bootTranslate);
+    } else {
+      bootTranslate();
+    }
+  })();
+  </script>
 
 </body>
 </html>

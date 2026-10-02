@@ -1,17 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes">
     <meta name="theme-color" content="#0d1117">
-    <meta name="color-scheme" content="dark">
+    <meta name="color-scheme" content="light dark">
 
-    <!-- ===== PRIMARY SEO ===== -->
     <title>SoifGo — Professional Help & User Guide | Bluetooth, API, MQTT Controller</title>
     <meta name="description" content="Complete user guide for SoifGo — the professional Bluetooth, API, and MQTT controller app for Android. Learn about installation, buttons, seekbars, sensors, graphs, effects, and automation.">
     <meta name="keywords" content="SoifGo guide, SoifGo help, Bluetooth controller, API controller, MQTT controller, Android automation, HMI, IoT, sensor data, graphs, effects, seekbar, note editor">
 
-    <!-- ===== OPEN GRAPH (Social Media) ===== -->
     <meta property="og:title" content="SoifGo — Professional Help & User Guide">
     <meta property="og:description" content="Complete user guide for SoifGo — the professional Bluetooth, API, and MQTT controller app for Android. Installation, buttons, sensors, graphs, and more.">
     <meta property="og:type" content="website">
@@ -22,40 +20,25 @@
     <meta property="og:locale" content="en_US">
     <meta property="og:site_name" content="SoifGo Help Guide">
 
-    <!-- ===== TWITTER CARD ===== -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="SoifGo — Professional Help & User Guide">
     <meta name="twitter:description" content="Complete user guide for SoifGo — Bluetooth, API, MQTT controller. Installation, buttons, sensors, graphs, and automation.">
     <meta name="twitter:image" content="https://soifgo.github.io/soifgo/soifgo-og.jpg">
 
-    <!-- ===== CANONICAL URL ===== -->
     <link rel="canonical" href="https://soifgo.github.io/soifgo/help/">
-
-    <!-- ===== LANGUAGE ALTERNATES ===== -->
     <link rel="alternate" hreflang="en" href="https://soifgo.github.io/soifgo/help/">
 
-    <!-- ===== SCHEMA.ORG (Structured Data) ===== -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "TechArticle",
         "headline": "SoifGo — Professional Help & User Guide",
         "description": "Complete user guide for SoifGo — the professional Bluetooth, API, and MQTT controller app for Android. Learn about installation, buttons, seekbars, sensors, graphs, effects, and automation.",
-        "author": {
-            "@type": "Person",
-            "name": "Saeid Moghadam"
-        },
-        "publisher": {
-            "@type": "Organization",
-            "name": "SoifGo",
-            "url": "https://soifgo.github.io/soifgo/"
-        },
+        "author": { "@type": "Person", "name": "Saeid Moghadam" },
+        "publisher": { "@type": "Organization", "name": "SoifGo", "url": "https://soifgo.github.io/soifgo/" },
         "datePublished": "2025-01-01",
         "dateModified": "2025-01-01",
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "https://soifgo.github.io/soifgo/help/"
-        },
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://soifgo.github.io/soifgo/help/" },
         "about": {
             "@type": "SoftwareApplication",
             "name": "SoifGo",
@@ -66,25 +49,20 @@
     }
     </script>
 
-    <!-- Font Awesome 6 Free (CDN) -->
+    <script>
+      (function() {
+        var savedTheme = localStorage.getItem('soifgo-theme');
+        if (savedTheme === 'light' || savedTheme === 'dark') {
+          document.documentElement.setAttribute('data-theme', savedTheme);
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
-        /* ===== ROOT VARIABLES ===== */
-        :root {
-            --bg: #0d1117;
-            --bg2: #161b22;
-            --fg: #c9d1d9;
-            --border: #30363d;
-            --border2: #21262d;
-            --accent: #58a6ff;
-            --accent2: #bc8cff;
-            --muted: #8b949e;
-            --success: #2ea043;
-            --btn-home: #8B4513;
-        }
-
-        /* ===== RESET & BASE ===== */
         * {
             margin: 0;
             padding: 0;
@@ -92,14 +70,48 @@
             scroll-behavior: smooth;
         }
 
+        :root,
+        [data-theme="dark"] {
+            --bg: #0d1117;
+            --bg2: #161b22;
+            --fg: #c9d1d9;
+            --fg-strong: #f0f6fc;
+            --border: #30363d;
+            --border2: #21262d;
+            --accent: #58a6ff;
+            --accent2: #bc8cff;
+            --muted: #8b949e;
+            --success: #2ea043;
+            --btn-home: #8B4513;
+            --shadow: rgba(0, 0, 0, 0.7);
+        }
+
+        [data-theme="light"] {
+            --bg: #f8fafc;
+            --bg2: #ffffff;
+            --fg: #1e293b;
+            --fg-strong: #0f172a;
+            --border: #e2e8f0;
+            --border2: #e2e8f0;
+            --accent: #2563eb;
+            --accent2: #9333ea;
+            --muted: #64748b;
+            --success: #16a34a;
+            --btn-home: #7a4a2e;
+            --shadow: rgba(15, 23, 42, 0.08);
+        }
+
+        .ignore { }
+
         html, body {
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
             background: var(--bg);
             color: var(--fg);
             line-height: 1.7;
             -webkit-text-size-adjust: 100%;
             min-height: 100vh;
             padding: 0;
+            transition: background 0.3s ease, color 0.3s ease;
         }
 
         .container {
@@ -112,9 +124,10 @@
             background: var(--bg2);
             border-radius: 28px;
             padding: 30px 35px;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+            box-shadow: 0 25px 60px var(--shadow);
             border: 1px solid var(--border);
             overflow: hidden;
+            transition: background 0.3s ease, border 0.3s ease;
         }
 
         a {
@@ -127,7 +140,6 @@
             text-decoration: underline;
         }
 
-        /* ===== TOP BAR ===== */
         .top-bar {
             display: flex;
             flex-wrap: wrap;
@@ -151,7 +163,6 @@
         .logo span {
             font-size: 14px;
             color: var(--muted);
-            -webkit-text-fill-color: var(--muted);
         }
 
         .search-box {
@@ -173,17 +184,16 @@
             background: transparent;
             border: none;
             outline: none;
-            color: #f0f6fc;
+            color: var(--fg-strong);
             padding: 10px 0;
             width: 200px;
             font-size: 14px;
         }
 
         .search-box input::placeholder {
-            color: #484f58;
+            color: var(--muted);
         }
 
-        /* ===== TOC ===== */
         .toc {
             background: var(--bg);
             border-radius: 16px;
@@ -212,14 +222,13 @@
             text-decoration: none;
         }
 
-        /* ===== SECTIONS ===== */
         .section-card {
             background: var(--bg);
             border-radius: 20px;
             padding: 24px 28px;
             margin-bottom: 28px;
             border: 1px solid var(--border2);
-            transition: 0.2s;
+            transition: background 0.3s ease, border 0.3s ease;
         }
 
         .section-card:hover {
@@ -233,7 +242,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            color: #f0f6fc;
+            color: var(--fg-strong);
             word-break: break-word;
         }
 
@@ -251,7 +260,6 @@
             padding-left: 16px;
         }
 
-        /* ===== LISTS ===== */
         .step-list {
             list-style: none;
             padding: 0;
@@ -268,6 +276,7 @@
             align-items: flex-start;
             font-size: 15px;
             word-break: break-word;
+            transition: background 0.3s ease;
         }
 
         .step-list li i {
@@ -278,10 +287,9 @@
         }
 
         .step-list li strong {
-            color: #f0f6fc;
+            color: var(--fg-strong);
         }
 
-        /* ===== GRID ===== */
         .grid-2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -296,16 +304,16 @@
             margin: 10px 0;
         }
 
-        /* ===== INFO BOX ===== */
         .info-box {
             background: var(--bg2);
             border-radius: 16px;
             padding: 18px 20px;
             border: 1px solid var(--border2);
+            transition: background 0.3s ease, border 0.3s ease;
         }
 
         .info-box h4 {
-            color: #f0f6fc;
+            color: var(--fg-strong);
             margin-bottom: 6px;
             display: flex;
             gap: 8px;
@@ -319,7 +327,7 @@
 
         .info-box p,
         .info-box li {
-            color: #b1bac4;
+            color: var(--fg);
             font-size: 14px;
             word-break: break-word;
         }
@@ -328,7 +336,6 @@
             padding-left: 20px;
         }
 
-        /* ===== CODE BLOCK ===== */
         .code-block {
             background: var(--bg);
             border: 1px solid var(--border);
@@ -336,7 +343,7 @@
             padding: 14px 20px;
             font-family: 'JetBrains Mono', 'Courier New', monospace;
             font-size: 13px;
-            color: #e3e9f0;
+            color: var(--fg-strong);
             overflow-x: auto;
             margin: 12px 0;
             white-space: pre-wrap;
@@ -354,12 +361,10 @@
             font-style: italic;
         }
 
-        /* ===== HIDDEN SECTION ===== */
         .hidden-section {
             display: none !important;
         }
 
-        /* ===== BUTTONS ===== */
         .btn-home {
             display: inline-block;
             background: var(--btn-home);
@@ -377,9 +382,13 @@
             box-shadow: 0 4px 10px rgba(80, 45, 20, 0.15);
         }
 
+        .btn-home:hover {
+            background: #5f3a22;
+            text-decoration: none;
+        }
+
         .btn-home:active {
             transform: scale(0.97);
-            background: #5f3a22;
         }
 
         .btn-wrap {
@@ -391,7 +400,104 @@
             margin: 2rem 0 0.5rem 0;
         }
 
-        /* ===== RESPONSIVE ===== */
+        .language-switcher {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            right: auto;
+            z-index: 1001;
+            direction: ltr;
+        }
+
+        .lang-btn {
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            color: var(--fg);
+            padding: 8px 16px;
+            border-radius: 24px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+            transition: background 0.2s, border-color 0.2s, transform 0.15s;
+        }
+
+        .lang-btn:hover {
+            background: var(--bg);
+            border-color: var(--accent);
+            transform: scale(1.03);
+        }
+
+        .lang-dropdown {
+            display: none;
+            position: absolute;
+            top: 48px;
+            left: 0;
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            min-width: 220px;
+            max-height: 400px;
+            overflow-y: auto;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+            padding: 8px 0;
+            direction: ltr;
+        }
+
+        .lang-dropdown.show { display: block; }
+
+        .lang-item {
+            display: block;
+            padding: 10px 18px;
+            color: var(--fg);
+            text-decoration: none;
+            font-size: 0.92rem;
+            transition: background 0.15s;
+            white-space: nowrap;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .lang-item:hover {
+            background: var(--bg);
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            left: auto;
+            z-index: 1000;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            color: var(--fg);
+            font-size: 1.3rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+            transition: background 0.25s ease, transform 0.2s ease, border-color 0.25s ease;
+            padding: 0;
+            line-height: 1;
+            direction: ltr;
+        }
+
+        .theme-toggle:hover {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            transform: scale(1.08);
+        }
+
         @media (max-width: 768px) {
             .main-card {
                 padding: 16px;
@@ -450,6 +556,12 @@
                 flex-direction: column;
                 gap: 12px;
             }
+
+            .theme-toggle { width: 40px; height: 40px; font-size: 1.1rem; top: 12px; right: 12px; }
+            .language-switcher { top: 12px; left: 12px; }
+            .lang-btn { font-size: 0.8rem; padding: 6px 12px; }
+            .lang-dropdown { min-width: 180px; max-height: 300px; }
+            .lang-item { padding: 8px 14px; font-size: 0.85rem; }
         }
 
         @media (max-width: 480px) {
@@ -475,7 +587,6 @@
             }
         }
 
-        /* ===== UTILITY ===== */
         .footer {
             text-align: center;
             color: var(--muted);
@@ -498,14 +609,24 @@
 </head>
 <body>
 
+<div class="language-switcher ignore" id="languageSwitcher">
+  <button class="lang-btn" id="langBtn" type="button" aria-label="Change language">
+    🌐 <span id="currentLangLabel">English</span>
+  </button>
+  <div class="lang-dropdown" id="langDropdown"></div>
+</div>
+
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle theme" title="Switch theme">
+  <span id="themeIcon">☀️</span>
+</button>
+
     <div class="container">
 
         <div class="main-card">
 
-            <!-- ==================== HEADER + SEARCH ==================== -->
             <div class="top-bar">
                 <div class="logo">
-                    <h1><i class="fas fa-bolt" style="background: none; -webkit-text-fill-color: #58a6ff;"></i> soifgo</h1>
+                    <h1><i class="fas fa-bolt" style="background: none; -webkit-text-fill-color: var(--accent);"></i> <span class="ignore">soifgo</span></h1>
                     <span>Universal Bluetooth / API / MQTT Controller</span>
                 </div>
                 <div class="search-box">
@@ -514,7 +635,6 @@
                 </div>
             </div>
 
-            <!-- ==================== TABLE OF CONTENTS ==================== -->
             <div class="toc" id="toc">
                 <a href="#intro"><i class="fas fa-home"></i> Intro</a>
                 <a href="#install"><i class="fas fa-download"></i> Install</a>
@@ -531,19 +651,15 @@
                 <a href="#simulation"><i class="fas fa-play"></i> Simulation</a>
             </div>
 
-            <!-- ============================================================ -->
-            <!-- ==================== SECTION 1: INTRO ======================= -->
-            <!-- ============================================================ -->
-
             <div class="section-card" id="intro">
                 <div class="section-title"><i class="fas fa-rocket"></i> 1. Introduction</div>
                 <div class="section-sub">
-                    <strong>soifgo</strong> is a professional, open‑source Android application designed for industrial automation, IoT prototyping, and Bluetooth device control.
+                    <strong><span class="ignore">soifgo</span></strong> is a professional, open‑source Android application designed for industrial automation, IoT prototyping, and Bluetooth device control.
                     It transforms your phone into a powerful HMI (Human-Machine Interface) with zero coding required.
                 </div>
                 <div class="grid-2">
                     <div class="info-box">
-                        <h4><i class="fas fa-check-circle"></i> Why soifgo?</h4>
+                        <h4><i class="fas fa-check-circle"></i> Why <span class="ignore">soifgo</span>?</h4>
                         <ul>
                             <li><strong>Free &amp; Open Source:</strong> No ads, no tracking. Full transparency.</li>
                             <li><strong>21 Languages:</strong> Built-in custom translation engine (English, Persian, Arabic, Chinese, Russian, etc.).</li>
@@ -563,10 +679,6 @@
                 </div>
                 <p style="color:var(--muted); margin-top:10px;"><i class="fas fa-code"></i> Developed with B4A (Basic4Android) · Architecture: B4XPages · Version 1.41</p>
             </div>
-
-            <!-- ============================================================ -->
-            <!-- ==================== SECTION 2: INSTALL ===================== -->
-            <!-- ============================================================ -->
 
             <div class="section-card" id="install">
                 <div class="section-title"><i class="fas fa-download"></i> 2. Installation &amp; Permissions</div>
@@ -589,14 +701,10 @@
                 </div>
             </div>
 
-            <!-- ============================================================ -->
-            <!-- ============ SECTION 3: PAGE SETUP (HOW TO START) =========== -->
-            <!-- ============================================================ -->
-
             <div class="section-card" id="setup">
                 <div class="section-title"><i class="fas fa-play-circle"></i> 3. Page Setup — How to Start</div>
                 <div class="section-sub">
-                    SoifGo has <strong>two main modes</strong>: <strong>Play</strong> (run) and <strong>Pause / Edit</strong> (design).
+                    <span class="ignore">SoifGo</span> has <strong>two main modes</strong>: <strong>Play</strong> (run) and <strong>Pause / Edit</strong> (design).
                     Every action below happens from the top‑bar icons. Follow these steps in order the first time.
                 </div>
 
@@ -668,7 +776,7 @@
                         <i class="fas fa-mouse-pointer"></i>
                         <div>
                             <strong>Run the WebView</strong> — go back to <strong>Play mode</strong> and tap the button.
-                            Your HTML page loads inside SoifGo.
+                            Your HTML page loads inside <span class="ignore">SoifGo</span>.
                         </div>
                     </li>
 
@@ -710,10 +818,6 @@
                 </div>
             </div>
 
-            <!-- ============================================================ -->
-            <!-- ==================== SECTION 4: DASHBOARD =================== -->
-            <!-- ============================================================ -->
-
             <div class="section-card" id="dashboard">
                 <div class="section-title"><i class="fas fa-th-large"></i> 4. Dashboard Overview</div>
                 <div class="section-sub">The main screen consists of a configurable panel (Panel1) where you place Buttons and SeekBars.</div>
@@ -738,15 +842,11 @@
                 <p style="color:var(--muted); margin-top:6px;"><i class="fas fa-lightbulb"></i> <strong>Tip:</strong> Long‑press on any button or SeekBar to access quick‑edit options (audio, vibra, effects).</p>
             </div>
 
-            <!-- ============================================================ -->
-            <!-- ==================== SECTION 5: BLUETOOTH =================== -->
-            <!-- ============================================================ -->
-
             <div class="section-card" id="bluetooth">
                 <div class="section-title"><i class="fab fa-bluetooth-b"></i> 5. Bluetooth Serial Communication</div>
                 <div class="section-sub">Connect to any classic Bluetooth (SPP) device like HC‑05, HC‑06, Arduino, or industrial modules.</div>
                 <ul class="step-list">
-                    <li><i class="fas fa-search"></i> <div><strong>Pairing:</strong> First, pair your device in Android Settings &gt; Bluetooth. Return to soifgo.</div></li>
+                    <li><i class="fas fa-search"></i> <div><strong>Pairing:</strong> First, pair your device in Android Settings &gt; Bluetooth. Return to <span class="ignore">soifgo</span>.</div></li>
                     <li><i class="fas fa-plug"></i> <div><strong>Connect:</strong> Tap the Bluetooth icon (top‑left). Select your paired device from the list. The icon turns blue on success.</div></li>
                     <li><i class="fas fa-exchange-alt"></i> <div><strong>Send / Receive:</strong> Buttons with <code>Send Bluetooth</code> behaviour transmit data. Buttons with <code>Receive Bluetooth Text/Value</code> display incoming data.</div></li>
                     <li><i class="fas fa-font"></i> <div><strong>Format (CR/LF/STX):</strong> Configure per‑button or globally. Options: <code>CR+LF</code>, <code>CR</code>, <code>LF</code>, <code>STX/ETX</code>, <code>NULL</code>, <code>NON</code> (raw).</div></li>
@@ -758,10 +858,6 @@
                     <span class="cmd">Format:</span> CR+LF  <span class="cmt">// Appends \r\n</span>
                 </div>
             </div>
-
-            <!-- ============================================================ -->
-            <!-- ==================== SECTION 6: API / MQTT ================== -->
-            <!-- ============================================================ -->
 
             <div class="section-card" id="server">
                 <div class="section-title"><i class="fas fa-cloud"></i> 6. Server API &amp; MQTT Integration</div>
@@ -790,10 +886,6 @@
                 </div>
                 <p style="color:var(--muted);"><i class="fas fa-check-circle" style="color:var(--success);"></i> Both API and MQTT support <strong>Note Jobs</strong> – send entire text files line‑by‑line with delays!</p>
             </div>
-
-            <!-- ============================================================ -->
-            <!-- ==================== SECTION 7: BUTTONS ===================== -->
-            <!-- ============================================================ -->
 
             <div class="section-card" id="buttons">
                 <div class="section-title"><i class="fas fa-square"></i> 7. Buttons – Full Configuration</div>
@@ -834,10 +926,6 @@
                 </div>
             </div>
 
-            <!-- ============================================================ -->
-            <!-- ==================== SECTION 8: SEEKBARS ==================== -->
-            <!-- ============================================================ -->
-
             <div class="section-card" id="seekbars">
                 <div class="section-title"><i class="fas fa-sliders-h"></i> 8. SeekBars – Analog Controls</div>
                 <div class="section-sub">SeekBars provide variable output (0–Max). Perfect for speed control, PWM, or dimming.</div>
@@ -852,10 +940,6 @@
                     <span class="cmd">Prefix:</span> R  <span class="cmd">Suffix:</span> G  <span class="cmd">RGB Mode:</span> Color Picker
                 </div>
             </div>
-
-            <!-- ============================================================ -->
-            <!-- ==================== SECTION 9: NOTES & HTML ================ -->
-            <!-- ============================================================ -->
 
             <div class="section-card" id="notes">
                 <div class="section-title"><i class="fas fa-pen"></i> 9. Note Editor &amp; HTML Viewer</div>
@@ -892,10 +976,6 @@
                 </div>
             </div>
 
-            <!-- ============================================================ -->
-            <!-- ==================== SECTION 10: GRAPHS ===================== -->
-            <!-- ============================================================ -->
-
             <div class="section-card" id="graphs">
                 <div class="section-title"><i class="fas fa-chart-line"></i> 10. Real‑Time Graphs</div>
                 <div class="section-sub">Visualise incoming numeric data (Bluetooth/API/MQTT/Sensors) with live plotting.</div>
@@ -912,10 +992,6 @@
                     <span class="cmt">// Each file contains: Width, then pairs of (Year, Month, Day, Hour, Minute, Second, Value).</span>
                 </div>
             </div>
-
-            <!-- ============================================================ -->
-            <!-- ==================== SECTION 11: EFFECTS ==================== -->
-            <!-- ============================================================ -->
 
             <div class="section-card" id="effects">
                 <div class="section-title"><i class="fas fa-magic"></i> 11. Dynamic Effects (Visual Feedback)</div>
@@ -948,10 +1024,6 @@
                 </div>
             </div>
 
-            <!-- ============================================================ -->
-            <!-- ==================== SECTION 12: SENSORS ==================== -->
-            <!-- ============================================================ -->
-
             <div class="section-card" id="sensors">
                 <div class="section-title"><i class="fas fa-microchip"></i> 12. Phone Sensors</div>
                 <div class="section-sub">Use your phone's hardware sensors as input sources.</div>
@@ -967,10 +1039,6 @@
                 </div>
             </div>
 
-            <!-- ============================================================ -->
-            <!-- ==================== SECTION 13: SIMULATION ================= -->
-            <!-- ============================================================ -->
-
             <div class="section-card" id="simulation">
                 <div class="section-title"><i class="fas fa-play"></i> 13. Simulation Mode</div>
                 <div class="section-sub">Test your dashboard without any hardware connected.</div>
@@ -981,30 +1049,24 @@
                 </ul>
             </div>
 
-            <!-- ============================================================ -->
-            <!-- ==================== FOOTER ================================= -->
-            <!-- ============================================================ -->
-
-            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border2); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; color: #484f58; font-size: 13px;">
-                <div><i class="fas fa-code"></i> soifgo · Built for engineers, makers, and educators</div>
+            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border2); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; color: var(--muted); font-size: 13px;">
+                <div><i class="fas fa-code"></i> <span class="ignore">soifgo</span> · Built for engineers, makers, and educators</div>
                 <div><i class="fas fa-heart" style="color:#da3633;"></i> Free forever · No ads · No tracking</div>
             </div>
 
-            <!-- ===== HOME BUTTON ===== -->
             <hr>
             <div class="btn-wrap">
                 <a href="https://soifgo.github.io/soifgo/index.html" class="btn-home">⬅ Back to Home</a>
             </div>
 
             <div class="footer">
-                Saeid Moghadam — SoifGo
+                <span class="ignore">Saeid Moghadam</span> — <span class="ignore">SoifGo</span>
             </div>
 
         </div>
 
     </div>
 
-    <!-- ==================== SEARCH JAVASCRIPT ==================== -->
     <script>
         function filterSections() {
             const input = document.getElementById('searchInput');
@@ -1026,13 +1088,241 @@
             });
         }
 
-        // Optional: Clear search on ESC
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 document.getElementById('searchInput').value = '';
                 filterSections();
             }
         });
+    </script>
+
+    <script>
+      (function() {
+        var themeToggle = document.getElementById('themeToggle');
+        var themeIcon = document.getElementById('themeIcon');
+
+        function updateIcon(theme) {
+          if (theme === 'light') {
+            themeIcon.textContent = '🌙';
+            themeToggle.title = 'Switch to dark mode';
+          } else {
+            themeIcon.textContent = '☀️';
+            themeToggle.title = 'Switch to light mode';
+          }
+        }
+
+        var currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+        updateIcon(currentTheme);
+
+        themeToggle.addEventListener('click', function() {
+          var current = document.documentElement.getAttribute('data-theme');
+          var next = current === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          localStorage.setItem('soifgo-theme', next);
+          updateIcon(next);
+        });
+      })();
+    </script>
+
+    <script src="https://cdn.staticfile.net/translate.js/3.18.66/translate.js"></script>
+
+    <script>
+    (function() {
+      'use strict';
+
+      var LANGUAGES = {
+        'english': { label: 'English', dir: 'ltr' },
+        'spanish': { label: 'Español', dir: 'ltr' },
+        'chinese_simplified': { label: '简体中文', dir: 'ltr' },
+        'french': { label: 'Français', dir: 'ltr' },
+        'deutsch': { label: 'Deutsch', dir: 'ltr' },
+        'japanese': { label: '日本語', dir: 'ltr' },
+        'russian': { label: 'Русский', dir: 'ltr' },
+        'arabic': { label: 'العربية', dir: 'rtl' },
+        'persian': { label: 'فارسی', dir: 'rtl' },
+        'italian': { label: 'Italiano', dir: 'ltr' },
+        'hindi': { label: 'हिन्दी', dir: 'ltr' },
+        'turkish': { label: 'Türkçe', dir: 'ltr' },
+        'korean': { label: '한국어', dir: 'ltr' },
+        'portuguese': { label: 'Português', dir: 'ltr' },
+        'hebrew': { label: 'עברית', dir: 'rtl' },
+        'kurdish_sorani': { label: 'کوردی', dir: 'rtl' },
+        'urdu': { label: 'اردو', dir: 'rtl' },
+        'bengali': { label: 'বাংলা', dir: 'ltr' },
+        'indonesian': { label: 'Bahasa Indonesia', dir: 'ltr' },
+        'tamil': { label: 'தமிழ்', dir: 'ltr' },
+        'thai': { label: 'ไทย', dir: 'ltr' },
+        'swahili': { label: 'Swahili', dir: 'ltr' }
+      };
+
+      var DEFAULT_LANG = 'english';
+      var FALLBACK_CHANNELS = ['giteeAI', 'client.edge', 'siliconflow'];
+
+      var langBtn = document.getElementById('langBtn');
+      var langDropdown = document.getElementById('langDropdown');
+      var currentLangLabel = document.getElementById('currentLangLabel');
+
+      function buildLanguageList() {
+        var html = '';
+        for (var code in LANGUAGES) {
+          if (LANGUAGES.hasOwnProperty(code)) {
+            var lang = LANGUAGES[code];
+            html += '<a href="javascript:void(0)" class="lang-item ignore" data-lang="' + code + '" data-dir="' + lang.dir + '">' + lang.label + '</a>';
+          }
+        }
+        langDropdown.innerHTML = html;
+        var items = langDropdown.querySelectorAll('.lang-item');
+        for (var i = 0; i < items.length; i++) {
+          items[i].addEventListener('click', function(e) {
+            e.preventDefault();
+            changeLanguage(this.getAttribute('data-lang'), this.getAttribute('data-dir'));
+          });
+        }
+      }
+
+      function waitForTranslation(element, originalText, timeoutMs) {
+        return new Promise(function(resolve) {
+          var start = Date.now();
+          var timer = setInterval(function() {
+            if (element.textContent !== originalText) {
+              clearInterval(timer);
+              resolve(true);
+            } else if (Date.now() - start > timeoutMs) {
+              clearInterval(timer);
+              resolve(false);
+            }
+          }, 200);
+        });
+      }
+
+      function applyChannel(channel) {
+        try {
+          translate.service.use(channel);
+          return true;
+        } catch (e) {
+          return false;
+        }
+      }
+
+      function resetToEnglish() {
+        try { localStorage.removeItem('soifgo-lang'); } catch (e) {}
+        document.documentElement.setAttribute('dir', 'ltr');
+        document.documentElement.setAttribute('lang', 'en');
+        currentLangLabel.textContent = LANGUAGES.english.label;
+        langDropdown.classList.remove('show');
+        setTimeout(function() {
+          location.reload();
+        }, 100);
+      }
+
+      function changeLanguage(langCode, langDir) {
+        if (langCode === 'english') {
+          resetToEnglish();
+          return;
+        }
+
+        var testElement = document.querySelector('h1');
+        var originalText = testElement ? testElement.textContent : '';
+
+        function tryChannel(index) {
+          if (index >= FALLBACK_CHANNELS.length) {
+            console.warn('All fallback channels failed.');
+            return;
+          }
+
+          var channel = FALLBACK_CHANNELS[index];
+          applyChannel(channel);
+
+          translate.changeLanguage(langCode);
+          if (typeof translate.execute === 'function') {
+            translate.execute();
+          }
+
+          waitForTranslation(testElement, originalText, 3000).then(function(success) {
+            if (!success) {
+              console.warn('Channel ' + channel + ' failed, trying next...');
+              tryChannel(index + 1);
+            } else {
+              try { localStorage.setItem('soifgo-lang', langCode); } catch (e) {}
+              document.documentElement.setAttribute('dir', langDir);
+              document.documentElement.setAttribute('lang', langCode === 'persian' ? 'fa' : langCode);
+              currentLangLabel.textContent = LANGUAGES[langCode].label;
+              langDropdown.classList.remove('show');
+            }
+          });
+        }
+
+        tryChannel(0);
+      }
+
+      langBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        langDropdown.classList.toggle('show');
+      });
+
+      document.addEventListener('click', function() {
+        langDropdown.classList.remove('show');
+      });
+
+      function getSavedLang() {
+        try {
+          var saved = localStorage.getItem('soifgo-lang');
+          if (saved && LANGUAGES[saved] && saved !== 'english') {
+            return saved;
+          }
+        } catch (e) {}
+        return null;
+      }
+
+      function initTranslate() {
+        var savedLang = getSavedLang();
+        if (!savedLang) {
+          document.documentElement.setAttribute('dir', 'ltr');
+          document.documentElement.setAttribute('lang', 'en');
+          currentLangLabel.textContent = LANGUAGES.english.label;
+          return;
+        }
+
+        translate.language.setLocal('english');
+        translate.service.use(FALLBACK_CHANNELS[0]);
+        translate.selectLanguageTag.show = false;
+        translate.execute();
+        if (translate.listener && translate.listener.start) {
+          translate.listener.start();
+        }
+      }
+
+      function restoreLanguageUI() {
+        var savedLang = getSavedLang();
+        if (savedLang) {
+          var lang = LANGUAGES[savedLang];
+          document.documentElement.setAttribute('dir', lang.dir);
+          document.documentElement.setAttribute('lang', savedLang === 'persian' ? 'fa' : savedLang);
+          currentLangLabel.textContent = lang.label;
+          return savedLang;
+        }
+        currentLangLabel.textContent = LANGUAGES[DEFAULT_LANG].label;
+        return null;
+      }
+
+      buildLanguageList();
+      var restored = restoreLanguageUI();
+
+      function bootTranslate() {
+        initTranslate();
+        if (restored) {
+          setTimeout(function() {
+            changeLanguage(restored, LANGUAGES[restored].dir);
+          }, 500);
+        }
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', bootTranslate);
+      } else {
+        bootTranslate();
+      }
+    })();
     </script>
 
 </body>

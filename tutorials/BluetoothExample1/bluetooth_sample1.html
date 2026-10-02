@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes" />
@@ -42,35 +42,108 @@
   }
   </script>
 
+  <script>
+    (function() {
+      var savedTheme = localStorage.getItem('soifgo-theme');
+      if (savedTheme === 'light' || savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    :root,
+    [data-theme="dark"] {
+      --primary: #4f8cff;
+      --primary-light: #6aa0ff;
+      --purple: #9b59b6;
+      --purple-light: #c084fc;
+      --arduino-teal: #1abc9c;
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --bg-nav: rgba(15, 23, 42, 0.92);
+      --bg-header-from: #0f172a;
+      --bg-header-to: #1a2a4a;
+      --text: #e8edf5;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-header: #cbd5e1;
+      --border: rgba(255, 255, 255, 0.07);
+      --border-card: rgba(255, 255, 255, 0.06);
+      --shadow: rgba(0, 0, 0, 0.35);
+      --hover-bg: rgba(255, 255, 255, 0.04);
+      --hover-bg-card: rgba(79, 140, 255, 0.08);
+      --code-bg: #0b1020;
+      --code-text: #a5b4fc;
+      --code-inline-bg: rgba(79, 140, 255, 0.12);
+      --note-bg: rgba(79, 140, 255, 0.08);
+      --note-border: var(--primary);
+      --radius: 14px;
+      --radius-sm: 10px;
+      --transition: 0.25s ease;
+    }
+
+    [data-theme="light"] {
+      --primary: #2563eb;
+      --primary-light: #3b82f6;
+      --purple: #9333ea;
+      --purple-light: #a855f7;
+      --arduino-teal: #0d9488;
+      --bg: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-nav: rgba(255, 255, 255, 0.92);
+      --bg-header-from: #f1f5f9;
+      --bg-header-to: #dbeafe;
+      --text: #1e293b;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --text-header: #475569;
+      --border: rgba(15, 23, 42, 0.08);
+      --border-card: rgba(15, 23, 42, 0.06);
+      --shadow: rgba(15, 23, 42, 0.08);
+      --hover-bg: rgba(37, 99, 235, 0.06);
+      --hover-bg-card: rgba(37, 99, 235, 0.06);
+      --code-bg: #f1f5f9;
+      --code-text: #1e40af;
+      --code-inline-bg: rgba(37, 99, 235, 0.1);
+      --note-bg: rgba(37, 99, 235, 0.08);
+      --note-border: var(--primary);
+    }
+
+    .ignore { /* translation skip marker */ }
+
     body {
-      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
       line-height: 1.7;
       padding: 16px;
-      background: #fafcfd;
-      color: #1a2634;
+      background: var(--bg);
+      color: var(--text);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      transition: background 0.3s ease, color 0.3s ease;
     }
 
     .app {
       max-width: 720px;
       margin: 0 auto;
       width: 100%;
-      background: #ffffff;
+      background: var(--bg-card);
       border-radius: 28px;
       padding: 24px 20px 32px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+      box-shadow: 0 4px 20px var(--shadow);
+      border: 1px solid var(--border);
     }
 
     h1 {
       font-size: 1.8rem;
       font-weight: 700;
       letter-spacing: -0.01em;
-      color: #0b3b5c;
+      color: var(--text-main);
       margin: 0.2em 0 0.3em 0;
       word-break: break-word;
     }
@@ -78,7 +151,7 @@
     h2 {
       font-size: 1.3rem;
       font-weight: 600;
-      color: #13507a;
+      color: var(--primary-light);
       margin: 1.2em 0 0.5em 0;
       word-break: break-word;
     }
@@ -90,26 +163,25 @@
     li:last-child { margin-bottom: 0; }
 
     code {
-      background: #eef3f8;
+      background: var(--code-inline-bg);
       padding: 0.2em 0.6em;
-      border-radius: 10px;
+      border-radius: 6px;
       font-size: 0.9em;
       font-family: 'JetBrains Mono', 'Fira Code', monospace;
-      color: #103b52;
+      color: var(--code-text);
       word-break: break-word;
     }
 
     .note {
-      background: #eaf7ff;
-      border-left: 5px solid #2a7faa;
+      background: var(--note-bg);
+      border-left: 5px solid var(--note-border);
       padding: 14px 16px;
-      border-radius: 14px;
+      border-radius: var(--radius-sm);
       margin: 1.2em 0;
       font-size: 0.98rem;
-      color: #12364b;
+      color: var(--text);
     }
 
-    /* ===== VIDEO WRAPPER (MEGA IFRAME) ===== */
     .video-wrapper {
       position: relative;
       width: 100%;
@@ -118,7 +190,8 @@
       overflow: hidden;
       background: #0c1a26;
       margin: 1.2em 0 1em 0;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 4px 12px var(--shadow);
+      border: 2px solid var(--border);
     }
 
     .video-wrapper iframe {
@@ -135,40 +208,52 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
-      background: #1d5a7a;
-      color: white;
+      background: var(--primary);
+      color: #ffffff;
       padding: 14px 24px;
       border-radius: 60px;
-      font-weight: 500;
+      font-weight: 600;
       font-size: 1.05rem;
       text-decoration: none;
       margin: 0.8em 0 1.2em 0;
       width: auto;
       max-width: 100%;
-      transition: background 0.15s, transform 0.1s;
+      transition: background 0.15s ease, transform 0.1s ease;
       touch-action: manipulation;
-      box-shadow: 0 4px 12px rgba(0, 50, 80, 0.08);
+      box-shadow: 0 4px 12px rgba(79, 140, 255, 0.25);
     }
 
-    .download-link:active { transform: scale(0.97); background: #12425b; }
+    .download-link:hover {
+      background: var(--primary-light);
+      text-decoration: none;
+      transform: scale(1.02);
+    }
+
+    .download-link:active { transform: scale(0.97); }
 
     .btn-home {
       display: inline-block;
-      background: #7a4a2e;
-      color: white;
+      background: var(--primary);
+      color: #ffffff;
       padding: 14px 34px;
       border-radius: 60px;
       text-decoration: none;
-      font-weight: 500;
+      font-weight: 600;
       font-size: 1.05rem;
       text-align: center;
-      transition: background 0.15s, transform 0.1s;
+      transition: background 0.15s ease, transform 0.1s ease;
       touch-action: manipulation;
       min-width: 140px;
-      box-shadow: 0 4px 10px rgba(80, 45, 20, 0.06);
+      box-shadow: 0 4px 10px rgba(79, 140, 255, 0.25);
     }
 
-    .btn-home:active { transform: scale(0.97); background: #5f3a22; }
+    .btn-home:hover {
+      background: var(--primary-light);
+      text-decoration: none;
+      transform: scale(1.02);
+    }
+
+    .btn-home:active { transform: scale(0.97); }
 
     .btn-wrap {
       display: flex;
@@ -179,12 +264,115 @@
       margin: 2.4rem 0 0.4rem 0;
     }
 
+    .language-switcher {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      right: auto;
+      z-index: 1001;
+      direction: ltr;
+    }
+
+    .lang-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 16px;
+      border-radius: 24px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+      transition: background 0.2s, border-color 0.2s, transform 0.15s;
+    }
+
+    .lang-btn:hover {
+      background: var(--hover-bg);
+      border-color: var(--primary);
+      transform: scale(1.03);
+    }
+
+    .lang-dropdown {
+      display: none;
+      position: absolute;
+      top: 48px;
+      left: 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      min-width: 220px;
+      max-height: 400px;
+      overflow-y: auto;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      padding: 8px 0;
+      direction: ltr;
+    }
+
+    .lang-dropdown.show { display: block; }
+
+    .lang-item {
+      display: block;
+      padding: 10px 18px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.92rem;
+      transition: background 0.15s;
+      white-space: nowrap;
+      direction: ltr;
+      text-align: left;
+    }
+
+    .lang-item:hover {
+      background: var(--hover-bg);
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      left: auto;
+      z-index: 1000;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 1.3rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+      transition: background 0.25s ease, transform 0.2s ease, border-color 0.25s ease;
+      padding: 0;
+      line-height: 1;
+      direction: ltr;
+    }
+
+    .theme-toggle:hover {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      transform: scale(1.08);
+    }
+
     @media (max-width: 520px) {
       body { padding: 10px; }
       .app { padding: 18px 14px 24px; border-radius: 24px; }
       h1 { font-size: 1.5rem; }
       .download-link, .btn-home { width: 100%; justify-content: center; padding: 16px 18px; font-size: 1rem; }
       .btn-wrap { flex-direction: column; gap: 12px; }
+      .theme-toggle { width: 40px; height: 40px; font-size: 1.1rem; top: 12px; right: 12px; }
+      .language-switcher { top: 12px; left: 12px; }
+      .lang-btn { font-size: 0.8rem; padding: 6px 12px; }
+      .lang-dropdown { min-width: 180px; max-height: 300px; }
+      .lang-item { padding: 8px 14px; font-size: 0.85rem; }
     }
 
     @media (max-width: 380px) {
@@ -196,13 +384,24 @@
 </head>
 <body>
 
+  <div class="language-switcher ignore" id="languageSwitcher">
+    <button class="lang-btn" id="langBtn" type="button" aria-label="Change language">
+      🌐 <span id="currentLangLabel">English</span>
+    </button>
+    <div class="lang-dropdown" id="langDropdown"></div>
+  </div>
+
+  <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle theme" title="Switch theme">
+    <span id="themeIcon">☀️</span>
+  </button>
+
   <div class="app">
     <h1>Bluetooth example 1</h1>
 
     <ul style="list-style: none; padding-left: 0;">
       <li>
         <strong>Sample Exercise: Bluetooth Communication</strong><br>
-        In this example, you can see how <em>SoifGo</em> sends and receives data between SoifGo and the computer, demonstrating the addressing method.
+        In this example, you can see how <em class="ignore">SoifGo</em> sends and receives data between <span class="ignore">SoifGo</span> and the computer, demonstrating the addressing method.
         The file below is the HTML file on the computer side.
         Alternatively, you can perform this exercise using any serial terminal or with a microcontroller equipped with a Bluetooth module.
       </li>
@@ -213,7 +412,6 @@
 
     <p><strong>Bluetooth example 1</strong></p>
 
-    <!-- ===== VIDEO (MEGA IFRAME) ===== -->
     <div class="video-wrapper">
       <iframe src="https://mega.nz/embed/3Cgk3YSJ#-OZ0IINknqRIZz_vlK_8IVfoSg4CvqF-lSqBxClMiuM"
               allowfullscreen
@@ -224,6 +422,235 @@
       <a href="https://soifgo.github.io/soifgo/index.html" class="btn-home">⬅ Back to Home</a>
     </div>
   </div>
+
+  <script>
+    (function() {
+      var themeToggle = document.getElementById('themeToggle');
+      var themeIcon = document.getElementById('themeIcon');
+
+      function updateIcon(theme) {
+        if (theme === 'light') {
+          themeIcon.textContent = '🌙';
+          themeToggle.title = 'Switch to dark mode';
+        } else {
+          themeIcon.textContent = '☀️';
+          themeToggle.title = 'Switch to light mode';
+        }
+      }
+
+      var currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+      updateIcon(currentTheme);
+
+      themeToggle.addEventListener('click', function() {
+        var current = document.documentElement.getAttribute('data-theme');
+        var next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('soifgo-theme', next);
+        updateIcon(next);
+      });
+    })();
+  </script>
+
+  <script src="https://cdn.staticfile.net/translate.js/3.18.66/translate.js"></script>
+
+  <script>
+  (function() {
+    'use strict';
+
+    var LANGUAGES = {
+      'english': { label: 'English', dir: 'ltr' },
+      'spanish': { label: 'Español', dir: 'ltr' },
+      'chinese_simplified': { label: '简体中文', dir: 'ltr' },
+      'french': { label: 'Français', dir: 'ltr' },
+      'deutsch': { label: 'Deutsch', dir: 'ltr' },
+      'japanese': { label: '日本語', dir: 'ltr' },
+      'russian': { label: 'Русский', dir: 'ltr' },
+      'arabic': { label: 'العربية', dir: 'rtl' },
+      'persian': { label: 'فارسی', dir: 'rtl' },
+      'italian': { label: 'Italiano', dir: 'ltr' },
+      'hindi': { label: 'हिन्दी', dir: 'ltr' },
+      'turkish': { label: 'Türkçe', dir: 'ltr' },
+      'korean': { label: '한국어', dir: 'ltr' },
+      'portuguese': { label: 'Português', dir: 'ltr' },
+      'hebrew': { label: 'עברית', dir: 'rtl' },
+      'kurdish_sorani': { label: 'کوردی', dir: 'rtl' },
+      'urdu': { label: 'اردو', dir: 'rtl' },
+      'bengali': { label: 'বাংলা', dir: 'ltr' },
+      'indonesian': { label: 'Bahasa Indonesia', dir: 'ltr' },
+      'tamil': { label: 'தமிழ்', dir: 'ltr' },
+      'thai': { label: 'ไทย', dir: 'ltr' },
+      'swahili': { label: 'Swahili', dir: 'ltr' }
+    };
+
+    var DEFAULT_LANG = 'english';
+    var FALLBACK_CHANNELS = ['giteeAI', 'client.edge', 'siliconflow'];
+
+    var langBtn = document.getElementById('langBtn');
+    var langDropdown = document.getElementById('langDropdown');
+    var currentLangLabel = document.getElementById('currentLangLabel');
+
+    function buildLanguageList() {
+      var html = '';
+      for (var code in LANGUAGES) {
+        if (LANGUAGES.hasOwnProperty(code)) {
+          var lang = LANGUAGES[code];
+          html += '<a href="javascript:void(0)" class="lang-item ignore" data-lang="' + code + '" data-dir="' + lang.dir + '">' + lang.label + '</a>';
+        }
+      }
+      langDropdown.innerHTML = html;
+      var items = langDropdown.querySelectorAll('.lang-item');
+      for (var i = 0; i < items.length; i++) {
+        items[i].addEventListener('click', function(e) {
+          e.preventDefault();
+          changeLanguage(this.getAttribute('data-lang'), this.getAttribute('data-dir'));
+        });
+      }
+    }
+
+    function waitForTranslation(element, originalText, timeoutMs) {
+      return new Promise(function(resolve) {
+        var start = Date.now();
+        var timer = setInterval(function() {
+          if (element.textContent !== originalText) {
+            clearInterval(timer);
+            resolve(true);
+          } else if (Date.now() - start > timeoutMs) {
+            clearInterval(timer);
+            resolve(false);
+          }
+        }, 200);
+      });
+    }
+
+    function applyChannel(channel) {
+      try {
+        translate.service.use(channel);
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function resetToEnglish() {
+      try { localStorage.removeItem('soifgo-lang'); } catch (e) {}
+      document.documentElement.setAttribute('dir', 'ltr');
+      document.documentElement.setAttribute('lang', 'en');
+      currentLangLabel.textContent = LANGUAGES.english.label;
+      langDropdown.classList.remove('show');
+      setTimeout(function() {
+        location.reload();
+      }, 100);
+    }
+
+    function changeLanguage(langCode, langDir) {
+      if (langCode === 'english') {
+        resetToEnglish();
+        return;
+      }
+
+      var testElement = document.querySelector('h1');
+      var originalText = testElement ? testElement.textContent : '';
+
+      function tryChannel(index) {
+        if (index >= FALLBACK_CHANNELS.length) {
+          console.warn('All fallback channels failed.');
+          return;
+        }
+
+        var channel = FALLBACK_CHANNELS[index];
+        applyChannel(channel);
+
+        translate.changeLanguage(langCode);
+        if (typeof translate.execute === 'function') {
+          translate.execute();
+        }
+
+        waitForTranslation(testElement, originalText, 3000).then(function(success) {
+          if (!success) {
+            console.warn('Channel ' + channel + ' failed, trying next...');
+            tryChannel(index + 1);
+          } else {
+            try { localStorage.setItem('soifgo-lang', langCode); } catch (e) {}
+            document.documentElement.setAttribute('dir', langDir);
+            document.documentElement.setAttribute('lang', langCode === 'persian' ? 'fa' : langCode);
+            currentLangLabel.textContent = LANGUAGES[langCode].label;
+            langDropdown.classList.remove('show');
+          }
+        });
+      }
+
+      tryChannel(0);
+    }
+
+    langBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      langDropdown.classList.toggle('show');
+    });
+
+    document.addEventListener('click', function() {
+      langDropdown.classList.remove('show');
+    });
+
+    function getSavedLang() {
+      try {
+        var saved = localStorage.getItem('soifgo-lang');
+        if (saved && LANGUAGES[saved] && saved !== 'english') {
+          return saved;
+        }
+      } catch (e) {}
+      return null;
+    }
+
+    function initTranslate() {
+      var savedLang = getSavedLang();
+      if (!savedLang) {
+        document.documentElement.setAttribute('dir', 'ltr');
+        document.documentElement.setAttribute('lang', 'en');
+        currentLangLabel.textContent = LANGUAGES.english.label;
+        return;
+      }
+
+      translate.language.setLocal('english');
+      translate.service.use(FALLBACK_CHANNELS[0]);
+      translate.selectLanguageTag.show = false;
+      translate.execute();
+      if (translate.listener && translate.listener.start) {
+        translate.listener.start();
+      }
+    }
+
+    function restoreLanguageUI() {
+      var savedLang = getSavedLang();
+      if (savedLang) {
+        var lang = LANGUAGES[savedLang];
+        document.documentElement.setAttribute('dir', lang.dir);
+        document.documentElement.setAttribute('lang', savedLang === 'persian' ? 'fa' : savedLang);
+        currentLangLabel.textContent = lang.label;
+        return savedLang;
+      }
+      currentLangLabel.textContent = LANGUAGES[DEFAULT_LANG].label;
+      return null;
+    }
+
+    buildLanguageList();
+    var restored = restoreLanguageUI();
+
+    function bootTranslate() {
+      initTranslate();
+      if (restored) {
+        setTimeout(function() {
+          changeLanguage(restored, LANGUAGES[restored].dir);
+        }, 500);
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', bootTranslate);
+    } else {
+      bootTranslate();
+    }
+  })();
+  </script>
 
 </body>
 </html>

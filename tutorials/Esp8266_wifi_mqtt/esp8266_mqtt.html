@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes" />
-  <meta name="theme-color" content="#0055aa" />
+  <meta name="theme-color" content="#0f172a" />
   <meta name="color-scheme" content="light dark" />
 
   <title>ESP8266 MQTT Setup with SoifGo — Complete Tutorial | Mosquitto, PubSubClient, IoT</title>
@@ -55,60 +55,92 @@
   }
   </script>
 
+  <script>
+    (function() {
+      var savedTheme = localStorage.getItem('soifgo-theme');
+      if (savedTheme === 'light' || savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+
   <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet" />
 
   <style>
-    :root {
-      --bg: #ffffff;
-      --fg: #1f2937;
-      --accent: #0055aa;
-      --card-bg: #f5f7fb;
-      --border: #d7dce4;
-      --muted: #6b7280;
-      --code-bg: #1e293b;
-      --link: #0066cc;
-      --btn-home: #7a4a2e;
-      --warning-bg: #fff3cd;
-      --warning-border: #ffc107;
-      --warning-text: #856404;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #0b0e12;
-        --fg: #e5e7eb;
-        --accent: #4dabf7;
-        --card-bg: #12161d;
-        --border: #243041;
-        --muted: #9aa3af;
-        --link: #58a6ff;
-        --btn-home: #8B5A3A;
-        --warning-bg: #1e2a1e;
-        --warning-border: #f0ad4e;
-        --warning-text: #f5c842;
-      }
-    }
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    html, body {
-      background: var(--bg);
-      color: var(--fg);
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      line-height: 1.7;
-      -webkit-text-size-adjust: 100%;
-      min-height: 100vh;
+    :root,
+    [data-theme="dark"] {
+      --primary: #4f8cff;
+      --primary-light: #6aa0ff;
+      --purple: #9b59b6;
+      --purple-light: #c084fc;
+      --arduino-teal: #1abc9c;
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --text: #e8edf5;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --border: rgba(255, 255, 255, 0.07);
+      --shadow: rgba(0, 0, 0, 0.35);
+      --hover-bg: rgba(255, 255, 255, 0.04);
+      --code-bg: rgba(79, 140, 255, 0.12);
+      --code-text: #a5b4fc;
+      --pre-bg: #0f172a;
+      --pre-text: #e2e8f0;
+      --warning-bg: rgba(245, 158, 11, 0.1);
+      --warning-border: #f59e0b;
+      --warning-text: #fbbf24;
+      --radius: 14px;
+      --radius-sm: 10px;
+      --transition: 0.25s ease;
     }
 
-    .container { max-width: 860px; margin: 0 auto; padding: 16px; }
+    [data-theme="light"] {
+      --primary: #2563eb;
+      --primary-light: #3b82f6;
+      --purple: #9333ea;
+      --purple-light: #a855f7;
+      --arduino-teal: #0d9488;
+      --bg: #f8fafc;
+      --bg-card: #ffffff;
+      --text: #1e293b;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: rgba(15, 23, 42, 0.08);
+      --shadow: rgba(15, 23, 42, 0.08);
+      --hover-bg: rgba(37, 99, 235, 0.06);
+      --code-bg: rgba(37, 99, 235, 0.1);
+      --code-text: #1e40af;
+      --pre-bg: #0f172a;
+      --pre-text: #e2e8f0;
+      --warning-bg: rgba(245, 158, 11, 0.1);
+      --warning-border: #d97706;
+      --warning-text: #92400e;
+    }
+
+    .ignore { }
+
+    body {
+      font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      min-height: 100vh;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .container { max-width: 860px; margin: 0 auto; padding: 20px 16px 60px; }
 
     h1 {
       font-size: 1.8rem;
-      color: var(--accent);
+      color: var(--primary-light);
       text-align: center;
-      margin: 0.75rem 0 0.5rem;
+      margin: 1rem 0 1.5rem;
       font-weight: 700;
       letter-spacing: -0.01em;
       word-break: break-word;
@@ -116,17 +148,17 @@
 
     h2 {
       font-size: 1.35rem;
-      color: var(--accent);
-      margin: 1.5rem 0 0.75rem;
+      color: var(--text-main);
+      margin: 0 0 0.75rem;
       font-weight: 600;
       word-break: break-word;
-      border-bottom: 2px solid var(--border);
-      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
     }
 
     h3 {
       font-size: 1.1rem;
-      color: var(--accent);
+      color: var(--primary-light);
       margin: 1rem 0 0.5rem;
       font-weight: 600;
       word-break: break-word;
@@ -134,25 +166,33 @@
 
     h4 {
       font-size: 1rem;
-      color: var(--fg);
+      color: var(--text);
       margin: 0.75rem 0 0.25rem;
       font-weight: 600;
       word-break: break-word;
     }
 
-    p { margin: 0.75em 0; word-break: break-word; }
+    p { margin: 0.75em 0; word-break: break-word; color: var(--text); }
 
-    a { color: var(--link); text-decoration: none; word-break: break-word; }
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      word-break: break-word;
+      transition: color var(--transition);
+    }
+
     a:hover { text-decoration: underline; }
 
     .card {
-      background: var(--card-bg);
+      background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 1rem 1.2rem;
+      border-radius: var(--radius);
+      padding: 1.2rem 1.4rem;
       margin-bottom: 1rem;
       max-width: 100%;
       overflow: hidden;
+      box-shadow: 0 4px 20px var(--shadow);
+      transition: background 0.3s ease, border 0.3s ease;
     }
 
     .note-warning {
@@ -160,32 +200,35 @@
       border: 1px solid var(--warning-border);
       color: var(--warning-text);
       padding: 1rem 1.2rem;
-      border-radius: 12px;
+      border-radius: var(--radius-sm);
       margin: 1rem 0;
     }
 
-    .note-warning ul { padding-left: 1.4em; margin: 0.5em 0; }
-    .note-warning li { margin-bottom: 0.3em; }
+    .note-warning ul { padding-left: 1.4em; margin: 0.5em 0; color: inherit; }
+    .note-warning li { margin-bottom: 0.3em; color: inherit; }
 
-    .card img {
+    .note-warning strong { color: inherit; }
+
+    img {
       max-width: 100%;
       height: auto;
-      border-radius: 12px;
+      border-radius: var(--radius-sm);
       display: block;
       margin: 0.8rem 0;
-      background: var(--card-bg);
+      background: var(--bg);
+      border: 1px solid var(--border);
     }
 
-    /* ===== VIDEO WRAPPER (MEGA IFRAME) ===== */
     .video-wrapper {
       position: relative;
       width: 100%;
       aspect-ratio: 16 / 9;
-      border-radius: 12px;
+      border-radius: var(--radius-sm);
       overflow: hidden;
       background: #0a1a2a;
       margin: 0.8rem 0;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 4px 15px var(--shadow);
+      border: 1px solid var(--border);
     }
 
     .video-wrapper iframe {
@@ -198,59 +241,62 @@
     }
 
     pre {
-      border-radius: 12px;
+      border-radius: var(--radius-sm);
       max-height: 400px;
       overflow: auto;
       margin: 0.8rem 0;
-      background: #0f172a;
+      background: var(--pre-bg) !important;
       padding: 1rem;
       font-size: 0.9rem;
       line-height: 1.7;
+      border: 1px solid var(--border);
     }
 
     pre code {
-      background: transparent;
+      background: transparent !important;
       padding: 0;
-      color: #e2e8f0;
+      color: var(--pre-text) !important;
       font-size: 0.85rem;
+      font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
     }
 
     code {
-      background: var(--code-bg);
       padding: 0.2em 0.6em;
-      border-radius: 8px;
-      font-size: 0.9em;
-      font-family: 'JetBrains Mono', 'Fira Code', monospace;
-      color: var(--fg);
+      border-radius: 6px;
+      font-size: 0.88em;
+      font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+      color: var(--code-text);
       word-break: break-word;
-    }
-
-    .card code {
       background: var(--code-bg);
-      color: #e2e8f0;
     }
 
-    ul, ol { padding-left: 1.4em; margin: 0.5em 0; }
+    ul, ol { padding-left: 1.4em; margin: 0.5em 0; color: var(--text); }
     li { margin-bottom: 0.4em; word-break: break-word; }
 
     .btn-home {
       display: inline-block;
-      background: var(--btn-home);
-      color: white;
+      background: var(--primary);
+      color: #ffffff;
       padding: 14px 34px;
       border-radius: 60px;
       text-decoration: none;
-      font-weight: 500;
+      font-weight: 600;
       font-size: 1.05rem;
       text-align: center;
-      transition: background 0.15s, transform 0.1s;
+      transition: background 0.15s ease, transform 0.1s ease;
       touch-action: manipulation;
       border: none;
       min-width: 140px;
-      box-shadow: 0 4px 10px rgba(80, 45, 20, 0.06);
+      box-shadow: 0 4px 14px rgba(79, 140, 255, 0.3);
     }
 
-    .btn-home:active { transform: scale(0.97); background: #5f3a22; }
+    .btn-home:hover {
+      background: var(--primary-light);
+      text-decoration: none;
+      transform: scale(1.02);
+    }
+
+    .btn-home:active { transform: scale(0.97); }
 
     .btn-wrap {
       display: flex;
@@ -266,21 +312,27 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      background: var(--accent);
-      color: white;
+      background: var(--primary);
+      color: #ffffff;
       padding: 12px 24px;
       border-radius: 60px;
-      font-weight: 500;
+      font-weight: 600;
       font-size: 1rem;
       text-decoration: none;
       margin: 0.5em 0.5em 0.5em 0;
-      transition: background 0.15s, transform 0.1s;
+      transition: background 0.15s ease, transform 0.1s ease;
       touch-action: manipulation;
       border: none;
-      box-shadow: 0 4px 12px rgba(0, 50, 80, 0.08);
+      box-shadow: 0 4px 14px rgba(79, 140, 255, 0.25);
     }
 
-    .download-link:active { transform: scale(0.97); background: #004488; }
+    .download-link:hover {
+      background: var(--primary-light);
+      text-decoration: none;
+      transform: scale(1.02);
+    }
+
+    .download-link:active { transform: scale(0.97); }
 
     .download-wrap {
       display: flex;
@@ -290,87 +342,211 @@
     }
 
     .mqtt-note {
-      background: var(--card-bg);
-      border: 2px solid var(--accent);
-      border-radius: 16px;
+      background: var(--bg-card);
+      border: 2px solid var(--primary);
+      border-radius: var(--radius);
       padding: 1rem 1.2rem;
       margin: 1rem 0;
     }
 
     .mqtt-note h3 {
-      color: var(--accent);
+      color: var(--primary-light);
       margin-top: 0;
     }
 
+    .language-switcher {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      right: auto;
+      z-index: 1001;
+      direction: ltr;
+    }
+
+    .lang-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 16px;
+      border-radius: 24px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+      transition: background 0.2s, border-color 0.2s, transform 0.15s;
+    }
+
+    .lang-btn:hover {
+      background: var(--hover-bg);
+      border-color: var(--primary);
+      transform: scale(1.03);
+    }
+
+    .lang-dropdown {
+      display: none;
+      position: absolute;
+      top: 48px;
+      left: 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      min-width: 220px;
+      max-height: 400px;
+      overflow-y: auto;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      padding: 8px 0;
+      direction: ltr;
+    }
+
+    .lang-dropdown.show { display: block; }
+
+    .lang-item {
+      display: block;
+      padding: 10px 18px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.92rem;
+      transition: background 0.15s;
+      white-space: nowrap;
+      direction: ltr;
+      text-align: left;
+    }
+
+    .lang-item:hover {
+      background: var(--hover-bg);
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      left: auto;
+      z-index: 1000;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 1.3rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+      transition: background 0.25s ease, transform 0.2s ease, border-color 0.25s ease;
+      padding: 0;
+      line-height: 1;
+      direction: ltr;
+    }
+
+    .theme-toggle:hover {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      transform: scale(1.08);
+    }
+
+    .muted { color: var(--text-muted); }
+    .text-center { text-align: center; }
+    .mt-1 { margin-top: 1rem; }
+    .mb-1 { margin-bottom: 1rem; }
+
+    hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+
     @media (max-width: 600px) {
-      .container { padding: 10px; }
+      .container { padding: 14px 12px 40px; }
       h1 { font-size: 1.5rem; }
       h2 { font-size: 1.15rem; }
-      .card { padding: 0.8rem 0.9rem; border-radius: 14px; }
-      body { font-size: 1rem; line-height: 1.7; }
-      pre { font-size: 0.8rem; padding: 0.8rem; max-height: 300px; }
-      pre code { font-size: 0.78rem; }
+      .card { padding: 1rem 1.1rem; border-radius: 12px; }
+      body { font-size: 0.98rem; }
+      pre { font-size: 0.75rem; padding: 0.8rem; max-height: 300px; }
+      pre code { font-size: 0.75rem; }
       .btn-home { width: 100%; justify-content: center; padding: 16px 18px; font-size: 1rem; }
       .btn-wrap { flex-direction: column; gap: 12px; }
       .download-link { width: 100%; justify-content: center; padding: 14px 18px; font-size: 0.95rem; }
       .download-wrap { flex-direction: column; gap: 8px; }
       .mqtt-note { padding: 0.8rem 0.9rem; }
+
+      .theme-toggle { width: 40px; height: 40px; font-size: 1.1rem; top: 12px; right: 12px; }
+      .language-switcher { top: 12px; left: 12px; }
+      .lang-btn { font-size: 0.8rem; padding: 6px 12px; }
+      .lang-dropdown { min-width: 180px; max-height: 300px; }
+      .lang-item { padding: 8px 14px; font-size: 0.85rem; }
     }
 
     @media (max-width: 380px) {
       h1 { font-size: 1.3rem; }
-      .card { padding: 0.6rem 0.7rem; }
+      .card { padding: 0.8rem 0.9rem; }
       pre { font-size: 0.7rem; padding: 0.6rem; }
       pre code { font-size: 0.7rem; }
     }
 
-    .muted { color: var(--muted); }
-    .text-center { text-align: center; }
-    .mt-1 { margin-top: 1rem; }
-    .mb-1 { margin-bottom: 1rem; }
-    hr { border: none; border-top: 2px solid var(--border); margin: 1.5rem 0; }
+    pre[class*="language-"] {
+      background: var(--pre-bg) !important;
+      border: 1px solid var(--border) !important;
+      border-radius: var(--radius-sm) !important;
+      margin: 0.8rem 0 !important;
+    }
+
+    :not(pre) > code[class*="language-"] {
+      background: var(--code-bg) !important;
+      color: var(--code-text) !important;
+    }
   </style>
 </head>
 <body>
 
-  <div class="container">
+<div class="language-switcher ignore" id="languageSwitcher">
+  <button class="lang-btn" id="langBtn" type="button" aria-label="Change language">
+    🌐 <span id="currentLangLabel">English</span>
+  </button>
+  <div class="lang-dropdown" id="langDropdown"></div>
+</div>
 
-    <h1>🚀 ESP8266 MQTT Setup with SoifGo</h1>
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle theme" title="Switch theme">
+  <span id="themeIcon">☀️</span>
+</button>
 
-    <!-- ===== STEP 1: INTRODUCTION ===== -->
-    <div class="card">
-      <h2>Step 1: Introduction</h2>
-      <p>
-        In this tutorial, you will learn how to configure the ESP8266 Wi-Fi module
-        and establish a reliable connection with the SoifGo MQTT broker.
-        We'll cover the basics of MQTT, explain how publish/subscribe works,
-        and guide you step by step to get your device online.
-      </p>
-    </div>
+<div class="container">
 
-    <!-- ===== STEP 2: PREPARING ===== -->
-    <div class="card">
-      <h2>Step 2: Preparing the Module</h2>
-      <p>Use a USB to TTL converter. It can be a single USB-to-TTL board or a combination of USB-to-UART and UART-to-TTL.</p>
-      <p>You'll need both 5V and 3.3V power sources. Recommended converter:</p>
-      <img src="converter.png" alt="Recommended Converter" loading="lazy">
-    </div>
+  <h1>🚀 ESP8266 MQTT Setup with <span class="ignore">SoifGo</span></h1>
 
-    <!-- ===== STEP 3: ARDUINO IDE ===== -->
-    <div class="card">
-      <h2>Step 3: Arduino IDE Setup</h2>
-      <p>Install the required libraries and check the port and board settings:</p>
-      <img src="arduino1.png" alt="Library Install" loading="lazy">
-      <img src="arduino2.png" alt="Port Check" loading="lazy">
-      <img src="arduino3.png" alt="Board Selection" loading="lazy">
-      <img src="arduino4.png" alt="Board Selection" loading="lazy">
-    </div>
+  <div class="card">
+    <h2>Step 1: Introduction</h2>
+    <p>
+      In this tutorial, you will learn how to configure the ESP8266 Wi-Fi module
+      and establish a reliable connection with the <span class="ignore">SoifGo</span> MQTT broker.
+      We'll cover the basics of MQTT, explain how publish/subscribe works,
+      and guide you step by step to get your device online.
+    </p>
+  </div>
 
-    <!-- ===== STEP 4: UPLOADING ===== -->
-    <div class="card">
-      <h2>Step 4: Uploading the Program</h2>
+  <div class="card">
+    <h2>Step 2: Preparing the Module</h2>
+    <p>Use a USB to TTL converter. It can be a single USB-to-TTL board or a combination of USB-to-UART and UART-to-TTL.</p>
+    <p>You'll need both 5V and 3.3V power sources. Recommended converter:</p>
+    <img src="converter.png" alt="Recommended Converter" loading="lazy">
+  </div>
 
-      <pre class="line-numbers"><code class="language-cpp">#include &lt;ESP8266WiFi.h&gt;
+  <div class="card">
+    <h2>Step 3: Arduino IDE Setup</h2>
+    <p>Install the required libraries and check the port and board settings:</p>
+    <img src="arduino1.png" alt="Library Install" loading="lazy">
+    <img src="arduino2.png" alt="Port Check" loading="lazy">
+    <img src="arduino3.png" alt="Board Selection" loading="lazy">
+    <img src="arduino4.png" alt="Board Selection" loading="lazy">
+  </div>
+
+  <div class="card">
+    <h2>Step 4: Uploading the Program</h2>
+
+    <pre class="line-numbers"><code class="language-cpp">#include &lt;ESP8266WiFi.h&gt;
 #include &lt;ESP8266WebServer.h&gt;
 #include &lt;EEPROM.h&gt;
 #include &lt;PubSubClient.h&gt;
@@ -600,94 +776,90 @@ void loop() {
   }
 }</code></pre>
 
-      <p>Download the program file:</p>
-      <a href="ESP8266_mqtt_Arduino.zip" class="download-link" download>📦 Download ESP8266_mqtt_Arduino.zip</a>
+    <p>Download the program file:</p>
+    <a href="ESP8266_mqtt_Arduino.zip" class="download-link" download>📦 Download ESP8266_mqtt_Arduino.zip</a>
 
-      <p>Paste the code into Arduino IDE. You can configure Wi-Fi settings before upload:</p>
-      <pre><code>wifiName = "TPLINK";
+    <p>Paste the code into Arduino IDE. You can configure Wi-Fi settings before upload:</p>
+    <pre><code>wifiName = "TPLINK";
 wifiPass = "abcd1234";</code></pre>
+  </div>
+
+  <div class="card">
+    <h2>Step 5: Wiring and Upload</h2>
+    <img src="wiring1.png" alt="Wiring 1" loading="lazy">
+    <img src="wiring2.png" alt="Wiring 2" loading="lazy">
+    <img src="wiring3.png" alt="Wiring 3" loading="lazy">
+    <img src="wiring4.png" alt="Wiring 4" loading="lazy">
+    <p>Click <strong>Verify</strong> and then <strong>Upload</strong> in Arduino:</p>
+    <img src="upload1.png" alt="Verify and Upload" loading="lazy">
+
+    <div class="video-wrapper">
+      <iframe src="https://mega.nz/embed/iaRX3LJS#c8VA2qPORF8LmC8MeVQfusf63-JzEwP-WsiuOHDBDK0"
+              allowfullscreen
+              loading="lazy"></iframe>
     </div>
 
-    <!-- ===== STEP 5: WIRING ===== -->
-    <div class="card">
-      <h2>Step 5: Wiring and Upload</h2>
-      <img src="wiring1.png" alt="Wiring 1" loading="lazy">
-      <img src="wiring2.png" alt="Wiring 2" loading="lazy">
-      <img src="wiring3.png" alt="Wiring 3" loading="lazy">
-      <img src="wiring4.png" alt="Wiring 4" loading="lazy">
-      <p>Click <strong>Verify</strong> and then <strong>Upload</strong> in Arduino:</p>
-      <img src="upload1.png" alt="Verify and Upload" loading="lazy">
+    <img src="upload2.png" alt="Upload Complete" loading="lazy">
 
-      <div class="video-wrapper">
-        <iframe src="https://mega.nz/embed/iaRX3LJS#c8VA2qPORF8LmC8MeVQfusf63-JzEwP-WsiuOHDBDK0"
-                allowfullscreen
-                loading="lazy"></iframe>
-      </div>
+    <div class="video-wrapper">
+      <iframe src="https://mega.nz/embed/HW4zzSgB#wF3c3R9e-QMruiK9VRAjvE05WFojcF3PQcfhoK29y1Y"
+              allowfullscreen
+              loading="lazy"></iframe>
+    </div>
+  </div>
 
-      <img src="upload2.png" alt="Upload Complete" loading="lazy">
+  <div class="card">
+    <h2>Step 6: Serial Monitor</h2>
+    <img src="serial1.png" alt="Open Serial Monitor" loading="lazy">
+    <img src="serial2.png" alt="Open Serial Monitor" loading="lazy">
+    <img src="wiring5.png" alt="Open Serial Monitor" loading="lazy">
+    <p>Restart the module. You should see output like:</p>
+    <img src="output1.png" alt="Serial Output" loading="lazy">
+  </div>
 
-      <div class="video-wrapper">
-        <iframe src="https://mega.nz/embed/HW4zzSgB#wF3c3R9e-QMruiK9VRAjvE05WFojcF3PQcfhoK29y1Y"
-                allowfullscreen
-                loading="lazy"></iframe>
-      </div>
+  <div class="card">
+    <h2>Step 7: Microcontroller Connection</h2>
+    <p>
+      In this step, you need to program your microcontroller.
+      You have several options:
+    </p>
+    <ul>
+      <li>Use the <strong>Bascom software</strong> to upload the program directly.</li>
+      <li>Apply your own <strong>custom edits</strong> before programming.</li>
+      <li>Download the provided <strong>HEX or binary file</strong> and flash it using any compatible programmer.</li>
+    </ul>
+    <p>
+      If you are not familiar with the Bascom language, don't worry.
+      Simply copy the provided Bascom Basic code and use an AI assistant to translate it into Arduino C++ or any other programming language you are comfortable with.
+      This way, you can adapt the project to your preferred development environment.
+    </p>
+    <div class="note-warning">
+      <strong>⚠️ Important:</strong> Don't forget to configure the <em>oscillator fuse bits</em> to use an external crystal.
+      Without this setting, the microcontroller will not operate correctly.
     </div>
 
-    <!-- ===== STEP 6: SERIAL ===== -->
-    <div class="card">
-      <h2>Step 6: Serial Monitor</h2>
-      <img src="serial1.png" alt="Open Serial Monitor" loading="lazy">
-      <img src="serial2.png" alt="Open Serial Monitor" loading="lazy">
-      <img src="wiring5.png" alt="Open Serial Monitor" loading="lazy">
-      <p>Restart the module. You should see output like:</p>
-      <img src="output1.png" alt="Serial Output" loading="lazy">
-    </div>
+    <img src="micro1.png" alt="Microcontroller Wiring" loading="lazy">
+    <p>Program your ATmega16 using a compatible programmer:</p>
 
-    <!-- ===== STEP 7: MICROCONTROLLER ===== -->
-    <div class="card">
-      <h2>Step 7: Microcontroller Connection</h2>
-      <p>
-        In this step, you need to program your microcontroller.
-        You have several options:
-      </p>
-      <ul>
-        <li>Use the <strong>Bascom software</strong> to upload the program directly.</li>
-        <li>Apply your own <strong>custom edits</strong> before programming.</li>
-        <li>Download the provided <strong>HEX or binary file</strong> and flash it using any compatible programmer.</li>
-      </ul>
-      <p>
-        If you are not familiar with the Bascom language, don't worry.
-        Simply copy the provided Bascom Basic code and use an AI assistant to translate it into Arduino C++ or any other programming language you are comfortable with.
-        This way, you can adapt the project to your preferred development environment.
-      </p>
-      <div class="note-warning">
-        <strong>⚠️ Important:</strong> Don't forget to configure the <em>oscillator fuse bits</em> to use an external crystal.
-        Without this setting, the microcontroller will not operate correctly.
-      </div>
-
-      <img src="micro1.png" alt="Microcontroller Wiring" loading="lazy">
-      <p>Program your ATmega16 using a compatible programmer:</p>
-
-      <pre class="line-numbers"><code class="language-cpp">$regfile = "m16adef.dat"
+    <pre class="line-numbers"><code class="language-cpp">$regfile = "m16adef.dat"
 $crystal = 11059200
 
 Config Adc = Single , Prescaler = Auto , Reference = Avcc
 Config Timer1 = Pwm , Pwm = 10 , Compare_a_pwm = Clear_up , Compare_b_pwm = Clear_up , Prescale = 1
 
-
 Config Portb = Output
    Portb = 0
-Config Portc.0 = Input                                      'in key 1
+Config Portc.0 = Input
 Ddrc.0 = 0 : Portc.0 = 1
 
- Config Portc.1 = Input                                     'in key 2
+Config Portc.1 = Input
 Ddrc.1 = 0 : Portc.1 = 1
 
 $baud = 115200
 
 Enable Interrupts
 
- Config Serialin = Buffered , Size = 52 , Bytematch = 13
+Config Serialin = Buffered , Size = 52 , Bytematch = 13
 
 Dim Text , Feedback As String * 51
 Dim Text2 As String * 4
@@ -703,377 +875,574 @@ Dim Ina As Bit
 Dim Pb As Byte
 config watchdog=2048
 start watchdog
- Readeeprom portb , 1
-  Waitms 1
-  Readeeprom pwm1aa , 3
-  Waitms 1
-  Open "comd.6:9600,8,n,1" For Output As #1
+Readeeprom portb , 1
+Waitms 1
+Readeeprom pwm1aa , 3
+Waitms 1
+Open "comd.6:9600,8,n,1" For Output As #1
 
-  Print #1 , "soifgo"
+Print #1 , "soifgo"
 pwm1a=pwm1aa
 Main:
 If Ina = 1 Then Goto Red
 Waitms 100
 If Ina = 1 Then Goto Red
-  Incr Step1
+Incr Step1
 
 Reset Watchdog
 
-    If Step1 &gt; 6 Then Step1 = 1
+If Step1 &gt; 6 Then Step1 = 1
 
+Select Case Step1
 
-    Select Case Step1
+Case 1
 
-        Case 1
+Volt = Getadc(0)
+Volt2 = Volt / 204.8
 
-            Volt = Getadc(0)
-            Volt2 = Volt / 204.8
+Print "volt:" ; Fusing(volt2 , "#.##")
 
-                   Print "volt:" ; Fusing(volt2 , "#.##")
+Case 2
+Temp1 = Getadc(1)
 
-        Case 2
-              Temp1 = Getadc(1)
+Print "temp1:" ; Temp1
 
-                   Print "temp1:" ; Temp1
+Case 3
+Temp2 = Getadc(2)
 
-        Case 3
-            Temp2 = Getadc(2)
+Print "temp2:" ; Temp2
 
-                   Print "temp2:" ; Temp2
+Case 4
+Pb.0 = Portb.7
+Pb.1 = Portb.6
+Pb.2 = Portb.5
+Pb.3 = Portb.4
+Pb.4 = Portb.3
+Pb.5 = Portb.2
+Pb.6 = Portb.1
+Pb.7 = Portb.0
+Print "portb:" ; Bin(pb)
 
-        Case 4
-              Pb.0 = Portb.7
-              Pb.1 = Portb.6
-              Pb.2 = Portb.5
-              Pb.3 = Portb.4
-              Pb.4 = Portb.3
-              Pb.5 = Portb.2
-              Pb.6 = Portb.1
-              Pb.7 = Portb.0
-                  Print "portb:" ; Bin(pb)
+Case 5
+Print "pinc:" ; Pinc.0 ; Pinc.1
+Case 6
+Print "feedback:" ; Feedback
 
-        Case 5
-                  Print "pinc:" ; Pinc.0 ; Pinc.1
-        Case 6
-                 Print "feedback:" ; Feedback
-
-
-
-    End Select
-
-
-
+End Select
 
 Goto Main
 
 Serial0charmatch:
 Input Text
 Clear Serialin
- Ina = 1
+Ina = 1
 Return
 
-
 Red:
-  Reset Watchdog
+Reset Watchdog
 
-  Text = Trim(text)
-  Text = Ltrim(text)
+Text = Trim(text)
+Text = Ltrim(text)
 
+Dim Z As Byte
 
-         Dim Z As Byte
+For Z = 1 To Len(text)
+If Mid(text , Z , 1) = ":" Then
+Mid(text , Z , 1) = "="
+End If
+Next
 
+Feedback = Text
 
+If Instr(text , "rang") &gt; 0 Then
+Disable Interrupts
+Print #1 , Mid(text , 6 , 36)
+Enable Interrupts
+End If
 
-     For Z = 1 To Len(text)
-        If Mid(text , Z , 1) = ":" Then
-           Mid(text , Z , 1) = "="
-        End If
-     Next
+If Instr(text , "pwm1a") &gt; 0 Then
+Text3 = Mid(text , 7 , 4)
+Pwm1a = Val(text3)
+Writeeeprom pwm1a , 3
+End If
 
-      Feedback = Text
+If Instr(text , "port") &gt; 0 Then
+Text2 = Mid(Text , 7 , 1)
+Text = Mid(text , 5 , 1)
 
+if text2="0" then t2=0
+if text2="1" then t2=1
 
+t1=val(text)
 
+If T1 &lt; 8 Then Portb.t1 = T2
 
-      If Instr(text , "rang") &gt; 0 Then
-        Disable Interrupts
-       Print #1 , Mid(text , 6 , 36)
-        Enable Interrupts
-       End If
+If T1 = 9 Then
 
-   If Instr(text , "pwm1a") &gt; 0 Then
-      Text3 = Mid(text , 7 , 4)
-      Pwm1a = Val(text3)
-      Writeeeprom pwm1a , 3
-   End If
+if t2=1 then
+Portb = 255
+End If
 
-  If Instr(text , "port") &gt; 0 Then
-     Text2 = Mid(Text , 7 , 1)
-     Text = Mid(text , 5 , 1)
+if t2=0 then
+Portb = 0
+end if
 
+end if
+Writeeeprom Portb , 1
 
-      if text2="0" then t2=0
-      if text2="1" then t2=1
+End If
 
-      t1=val(text)
-
-      If T1 &lt; 8 Then Portb.t1 = T2
-
-   If T1 = 9 Then
-
-          if t2=1 then
-            Portb = 255
-          End If
-
-        if t2=0 then
-          Portb = 0
-        end if
-
-
-   end if
-    Writeeeprom Portb , 1
-
-  End If
-
-   Text = ""
-   Text2 = ""
-   Text3 = ""
-   T1 = 222
-   T2 = 0
+Text = ""
+Text2 = ""
+Text3 = ""
+T1 = 222
+T2 = 0
 Ina = 0
-
 
 Goto Main</code></pre>
 
-      <div class="download-wrap">
-        <a href="Bascom_hex_bin_Atmega16_mqtt.zip" class="download-link" download>📦 Download Bascom_hex_bin_Atmega16_mqtt</a>
-      </div>
-
-      <img src="fusebits.png" alt="Fuse Bit Settings" loading="lazy">
-
-      <div class="video-wrapper">
-        <iframe src="https://mega.nz/embed/2G4x3QQZ#1_sTLKwPlNyNCMpxdOZpoOCNbJY3_6-haGVeFQmbC9E"
-                allowfullscreen
-                loading="lazy"></iframe>
-      </div>
+    <div class="download-wrap">
+      <a href="Bascom_hex_bin_Atmega16_mqtt.zip" class="download-link" download>📦 Download Bascom_hex_bin_Atmega16_mqtt</a>
     </div>
 
-    <!-- ===== STEP 8: SOIFGO ===== -->
-    <div class="card">
-      <h2>Step 8: SoifGo Integration</h2>
-      <p>
-        If you need advanced configuration, don't worry.
-        Simply click on the <strong>Topic Options</strong> label to access additional settings.
-        Here you can adjust your <em>username</em>, <em>password</em>, <em>client ID</em>, and the <em>connection quality (QoS)</em>.
-        This ensures that your ESP8266 communicates reliably with the SoifGo MQTT broker.
-      </p>
+    <img src="fusebits.png" alt="Fuse Bit Settings" loading="lazy">
 
-      <h3>Understanding QoS Levels</h3>
-      <ul>
-        <li><strong>QoS 0 – At most once:</strong> Fastest, but no delivery guarantee. Suitable for non-critical sensor data.</li>
-        <li><strong>QoS 1 – At least once:</strong> Guaranteed delivery, but messages may be duplicated. Good for control commands.</li>
-        <li><strong>QoS 2 – Exactly once:</strong> Highest reliability, ensures no loss or duplication. Best for critical operations.</li>
-      </ul>
-      <p>
-        Choose the QoS level based on how important message delivery is for your project.
-        Higher QoS means more reliability, but also more overhead and slower performance.
-      </p>
-
-      <img src="soifgo-receive.png" alt="Receive Setup" loading="lazy">
-      <img src="soifgo-send.png" alt="Send Setup" loading="lazy">
+    <div class="video-wrapper">
+      <iframe src="https://mega.nz/embed/2G4x3QQZ#1_sTLKwPlNyNCMpxdOZpoOCNbJY3_6-haGVeFQmbC9E"
+              allowfullscreen
+              loading="lazy"></iframe>
     </div>
+  </div>
 
-    <!-- ===== STEP 9: VIDEO ===== -->
-    <div class="card">
-      <h2>Step 9: ESP8266 Setup Video</h2>
-      <p>
-        This video demonstrates how to install and set up the ESP8266 Wi-Fi module.
-        The process is the same across different setups, but make sure to use the provided MQTT Arduino sketch file.
-        Click the link below to download the sample project:
-      </p>
-      <a href="ESP8266_mqtt_Arduino.zip" class="download-link" download>📦 Download ESP8266_mqtt_Arduino.zip</a>
-    </div>
+  <div class="card">
+    <h2>Step 8: SoifGo Integration</h2>
+    <p>
+      If you need advanced configuration, don't worry.
+      Simply click on the <strong>Topic Options</strong> label to access additional settings.
+      Here you can adjust your <em>username</em>, <em>password</em>, <em>client ID</em>, and the <em>connection quality (QoS)</em>.
+      This ensures that your ESP8266 communicates reliably with the <span class="ignore">SoifGo</span> MQTT broker.
+    </p>
 
-    <!-- ===== BONUS ===== -->
-    <div class="card">
-      <h2>Bonus: RANGMANG Module</h2>
+    <h3>Understanding QoS Levels</h3>
+    <ul>
+      <li><strong>QoS 0 – At most once:</strong> Fastest, but no delivery guarantee. Suitable for non-critical sensor data.</li>
+      <li><strong>QoS 1 – At least once:</strong> Guaranteed delivery, but messages may be duplicated. Good for control commands.</li>
+      <li><strong>QoS 2 – Exactly once:</strong> Highest reliability, ensures no loss or duplication. Best for critical operations.</li>
+    </ul>
+    <p>
+      Choose the QoS level based on how important message delivery is for your project.
+      Higher QoS means more reliability, but also more overhead and slower performance.
+    </p>
+
+    <img src="soifgo-receive.png" alt="Receive Setup" loading="lazy">
+    <img src="soifgo-send.png" alt="Send Setup" loading="lazy">
+  </div>
+
+  <div class="card">
+    <h2>Step 9: ESP8266 Setup Video</h2>
+    <p>
+      This video demonstrates how to install and set up the ESP8266 Wi-Fi module.
+      The process is the same across different setups, but make sure to use the provided MQTT Arduino sketch file.
+      Click the link below to download the sample project:
+    </p>
+    <a href="ESP8266_mqtt_Arduino.zip" class="download-link" download>📦 Download ESP8266_mqtt_Arduino.zip</a>
+  </div>
+
+  <div class="card">
+    <h2>Bonus: RANGMANG Module</h2>
+    <ul>
       <li><a href="https://soifgo.github.io/soifgo/tutorials/server/rangmang/Rangmang.html">🌈 RANGMANG Module</a></li>
+    </ul>
 
-      <h2>Bonus: Proteus</h2>
-      <a href="Proteuse_esp8266.zip" class="download-link" download>📦 Download Proteus</a>
+    <h2>Bonus: Proteus</h2>
+    <a href="Proteuse_esp8266.zip" class="download-link" download>📦 Download Proteus</a>
 
-      <h2>Bonus: Sample SoifGo File</h2>
-      <p>
-        If you don't already have your own project, you can start with the prepared SoifGo sample file.
-      </p>
-      <p>
-        1. Extract the file and copy it into the device memory.
-      </p>
-      <p>
-        2. (Optional) Rename the <code>p1</code> folder before placing it inside the SoifGo directory.
-      </p>
-      <p>
-        3. You can also move the file directly into the desired page folder within the SoifGo memory.
-      </p>
-      <p>
-        This way, you'll have a ready-to-use setup without needing to create a project from scratch.
-      </p>
-      <a href="soifgo_design_esp8266_mqtt.zip" class="download-link" download>📦 Download SoifGo File</a>
+    <h2>Bonus: Sample <span class="ignore">SoifGo</span> File</h2>
+    <p>
+      If you don't already have your own project, you can start with the prepared <span class="ignore">SoifGo</span> sample file.
+    </p>
+    <p>1. Extract the file and copy it into the device memory.</p>
+    <p>2. (Optional) Rename the <code>p1</code> folder before placing it inside the <span class="ignore">SoifGo</span> directory.</p>
+    <p>3. You can also move the file directly into the desired page folder within the <span class="ignore">SoifGo</span> memory.</p>
+    <p>
+      This way, you'll have a ready-to-use setup without needing to create a project from scratch.
+    </p>
+    <a href="soifgo_design_esp8266_mqtt.zip" class="download-link" download>📦 Download SoifGo File</a>
+  </div>
+
+  <div class="card">
+    <h2>Wi‑Fi Connection Instructions</h2>
+
+    <h3>Normal mode</h3>
+    <p>
+      The module will attempt to connect to your router using the SSID and password you have provided.
+      If the connection is successful, the device will remain stable and ready to use.
+    </p>
+
+    <h3>Access point (AP) mode</h3>
+    <p>
+      If the connection to the router fails (for example, due to an incorrect SSID or password),
+      the module will automatically switch to <strong>Access Point mode</strong>.
+      In this mode, a network named <code>ESP_Config</code> will be created.
+    </p>
+    <ul>
+      <li><strong>Connect</strong> to this network.</li>
+      <li><strong>Open</strong> your browser and enter the following address:</li>
+    </ul>
+    <pre><code>192.168.4.1</code></pre>
+    <p>
+      On this page, you can enter a new SSID and password, and also view the
+      <strong>MAC Address</strong> of the module. After saving the information,
+      the module will attempt to reconnect to your router and <strong>restart automatically</strong>.
+    </p>
+
+    <h3>Reset EEPROM and restart</h3>
+    <p>
+      If you need to clear all saved settings (SSID, password, AP password), use the
+      <strong>Reset EEPROM &amp; Restart</strong> button on the same page. This will:
+    </p>
+    <ul>
+      <li><strong>Erase</strong> all stored credentials from EEPROM.</li>
+      <li><strong>Restart</strong> the module automatically.</li>
+      <li>After restart, the device will enter <strong>AP mode</strong> again if no valid Wi‑Fi is configured.</li>
+    </ul>
+
+    <img src="option01.png" alt="option" loading="lazy">
+
+    <div class="video-wrapper">
+      <iframe src="https://mega.nz/embed/OeRlyQJJ#WNu-Dt4n-eCSKmw37wv9iMB_cBHxITJY-wI45lhVxms"
+              allowfullscreen
+              loading="lazy"></iframe>
     </div>
 
-    <!-- ===== WI-FI INSTRUCTIONS ===== -->
-    <div class="card">
-      <h2>Wi‑Fi Connection Instructions</h2>
+    <h3>Input requirements</h3>
+    <ul>
+      <li><strong>Wi‑Fi SSID</strong>: Plain text, avoid leading/trailing spaces.</li>
+      <li><strong>Wi‑Fi password</strong>: If your router uses a password, enter it exactly (case‑sensitive).</li>
+      <li><strong>AP password</strong>: Must be <strong>at least 8 characters</strong>. Shorter values will be rejected.</li>
+    </ul>
+    <p>
+      If the AP password is not set or is shorter than 8 characters, a fallback password
+      may be used to allow access, but it is <strong>not recommended</strong> for production.
+    </p>
 
-      <h3>Normal mode</h3>
-      <p>
-        The module will attempt to connect to your router using the SSID and password you have provided.
-        If the connection is successful, the device will remain stable and ready to use.
-      </p>
+    <h3>⚠️ Security note</h3>
+    <p>If you plan to commercialize or sell this module:</p>
+    <ul>
+      <li>Always set a <strong>custom</strong> password for AP mode (minimum 8 characters).</li>
+      <li>Include this password on the product packaging or a setup card.</li>
+      <li>Inform customers that the AP password is unique to their device and <strong>not</strong> a public default.</li>
+    </ul>
+    <p>This prevents unauthorized access and protects your users.</p>
+  </div>
 
-      <h3>Access point (AP) mode</h3>
-      <p>
-        If the connection to the router fails (for example, due to an incorrect SSID or password),
-        the module will automatically switch to <strong>Access Point mode</strong>.
-        In this mode, a network named <code>ESP_Config</code> will be created.
-      </p>
-      <ul>
-        <li><strong>Connect</strong> to this network.</li>
-        <li><strong>Open</strong> your browser and enter the following address:</li>
-      </ul>
-      <pre><code class="language-none">192.168.4.1</code></pre>
-      <p>
-        On this page, you can enter a new SSID and password, and also view the
-        <strong>MAC Address</strong> of the module. After saving the information,
-        the module will attempt to reconnect to your router and <strong>restart automatically</strong>.
-      </p>
+  <hr>
 
-      <h3>Reset EEPROM and restart</h3>
-      <p>
-        If you need to clear all saved settings (SSID, password, AP password), use the
-        <strong>Reset EEPROM &amp; Restart</strong> button on the same page. This will:
-      </p>
-      <ul>
-        <li><strong>Erase</strong> all stored credentials from EEPROM.</li>
-        <li><strong>Restart</strong> the module automatically.</li>
-        <li>After restart, the device will enter <strong>AP mode</strong> again if no valid Wi‑Fi is configured.</li>
-      </ul>
+  <div class="mqtt-note">
+    <h3>Important Note</h3>
+    <p>
+      This example is configured using Mosquitto MQTT in public and free mode.
+      For better security, it is recommended that you create your own private path
+      with a username and password in Mosquitto, and then apply those credentials
+      in <strong><span class="ignore">Soifgo</span></strong> as well.
+    </p>
+    <ul>
+      <li>If two or more phones are supposed to control the same device, each must have a unique ID. Otherwise, you will encounter problems.</li>
+      <li>If you still insist on using this free/public method, you must change the topic names.</li>
+      <li>Don't forget that the topic names on the microcontroller must also be updated and kept in sync.</li>
+    </ul>
+  </div>
 
-      <img src="option01.png" alt="option" loading="lazy">
+  <div class="card">
+    <h3>🔄 Changing Topics &amp; Syncing Microcontroller</h3>
 
-      <div class="video-wrapper">
-        <iframe src="https://mega.nz/embed/OeRlyQJJ#WNu-Dt4n-eCSKmw37wv9iMB_cBHxITJY-wI45lhVxms"
-                allowfullscreen
-                loading="lazy"></iframe>
-      </div>
+    <div style="font-family: monospace; background: var(--bg); padding: 15px; border: 1px solid var(--border); border-radius: 12px; margin-top: 20px;">
+      <h4>Microcontroller String Parsing Examples</h4>
 
-      <h3>Input requirements</h3>
-      <ul>
-        <li><strong>Wi‑Fi SSID</strong>: Plain text, avoid leading/trailing spaces.</li>
-        <li><strong>Wi‑Fi password</strong>: If your router uses a password, enter it exactly (case‑sensitive).</li>
-        <li><strong>AP password</strong>: Must be <strong>at least 8 characters</strong>. Shorter values will be rejected.</li>
-      </ul>
-      <p>
-        If the AP password is not set or is shorter than 8 characters, a fallback password
-        may be used to allow access, but it is <strong>not recommended</strong> for production.
-      </p>
-
-      <h3>⚠️ Security note</h3>
-      <p>
-        If you plan to commercialize or sell this module:
-      </p>
-      <ul>
-        <li>Always set a <strong>custom</strong> password for AP mode (minimum 8 characters).</li>
-        <li>Include this password on the product packaging or a setup card.</li>
-        <li>Inform customers that the AP password is unique to their device and <strong>not</strong> a public default.</li>
-      </ul>
-      <p>
-        This prevents unauthorized access and protects your users.
-      </p>
-    </div>
-
-    <hr>
-
-    <!-- ===== MQTT IMPORTANT NOTE ===== -->
-    <div class="mqtt-note">
-      <h3>Important Note</h3>
-      <p>
-        This example is configured using Mosquitto MQTT in public and free mode.
-        For better security, it is recommended that you create your own private path
-        with a username and password in Mosquitto, and then apply those credentials
-        in <strong>Soifgo</strong> as well.
-      </p>
-      <ul>
-        <li>If two or more phones are supposed to control the same device, each must have a unique ID. Otherwise, you will encounter problems.</li>
-        <li>If you still insist on using this free/public method, you must change the topic names.</li>
-        <li>Don't forget that the topic names on the microcontroller must also be updated and kept in sync.</li>
-      </ul>
-    </div>
-
-    <!-- ===== TOPIC EXAMPLES ===== -->
-    <div class="card">
-      <h3>🔄 Changing Topics &amp; Syncing Microcontroller</h3>
-
-      <div style="font-family: monospace; background: var(--card-bg); padding: 15px; border: 1px solid var(--border); border-radius: 12px; margin-top: 20px;">
-        <h4>Microcontroller String Parsing Examples</h4>
-
-        <h4>Example 1: Receiving <code>port3:1</code></h4>
-        <pre style="background: var(--code-bg); color: #e2e8f0;">If Instr(text , "port") &gt; 0 Then
+      <h4>Example 1: Receiving <code>port3:1</code></h4>
+      <pre style="background: var(--pre-bg); color: var(--pre-text);">If Instr(text , "port") &gt; 0 Then
     Text2 = Mid(text , 7 , 1)   ' Operand: ON=1, OFF=0
     Text  = Mid(text , 5 , 1)   ' Port number → "3"
 End If</pre>
-        <p><strong>Result:</strong> Port 3 ON</p>
+      <p><strong>Result:</strong> Port 3 ON</p>
 
-        <h4>Example 2: Sending <code>outmotor3:1</code></h4>
-        <pre style="background: var(--code-bg); color: #e2e8f0;">If Instr(text , "outmotor") &gt; 0 Then
+      <h4>Example 2: Sending <code>outmotor3:1</code></h4>
+      <pre style="background: var(--pre-bg); color: var(--pre-text);">If Instr(text , "outmotor") &gt; 0 Then
     Text2 = Mid(text , 11 , 1)  ' Operand: ON=1, OFF=0
     Text  = Mid(text , 9 , 1)   ' Port number → "3"
 End If</pre>
-        <p><strong>Result:</strong> Motor output 3 ON</p>
+      <p><strong>Result:</strong> Motor output 3 ON</p>
 
-        <h4>Example 3: Feedback Topic</h4>
-        <pre style="background: var(--code-bg); color: #e2e8f0;">' Original:
+      <h4>Example 3: Feedback Topic</h4>
+      <pre style="background: var(--pre-bg); color: var(--pre-text);">' Original:
 Print "feedback:" ; Feedback
 ' → Topic in Soifgo: soifgo_feedback
 
 ' Changed:
 Print "myfeedback123:" ; Feedback
 ' → Topic in Soifgo: soifgo_myfeedback123</pre>
-      </div>
-
-      <div class="video-wrapper" style="margin-top: 1rem;">
-        <iframe src="https://mega.nz/embed/jP4AkIyL#PZnIVvbv8rV8d3zs01EoR8RbTuaDoABoCsdnkq4mVyc"
-                allowfullscreen
-                loading="lazy"></iframe>
-      </div>
     </div>
 
-    <!-- ===== DOWNLOAD ALL FILES ===== -->
-    <div class="card">
-      <h2>📦 Download the Required Files</h2>
-
-      <div class="download-wrap">
-        <a href="Bascom_hex_bin_Atmega16_mqtt.zip" class="download-link" download>📦 Download Bascom_hex_bin_Atmega16_mqtt</a>
-        <a href="ESP8266_mqtt_Arduino.zip" class="download-link" download>📦 Download ESP8266_mqtt_Arduino.zip</a>
-        <a href="Proteuse_esp8266.zip" class="download-link" download>📦 Download Proteus</a>
-        <a href="soifgo_design_esp8266_mqtt.zip" class="download-link" download>📦 Download SoifGo File</a>
-      </div>
+    <div class="video-wrapper" style="margin-top: 1rem;">
+      <iframe src="https://mega.nz/embed/jP4AkIyL#PZnIVvbv8rV8d3zs01EoR8RbTuaDoABoCsdnkq4mVyc"
+              allowfullscreen
+              loading="lazy"></iframe>
     </div>
-
-    <!-- ===== HOME BUTTON ===== -->
-    <div class="btn-wrap">
-      <a href="https://soifgo.github.io/soifgo/index.html" class="btn-home">⬅ Back to Home</a>
-    </div>
-
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-clike.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-c.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-cpp.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/toolbar/prism-toolbar.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+  <div class="card">
+    <h2>📦 Download the Required Files</h2>
+
+    <div class="download-wrap">
+      <a href="Bascom_hex_bin_Atmega16_mqtt.zip" class="download-link" download>📦 Bascom_hex_bin_Atmega16_mqtt</a>
+      <a href="ESP8266_mqtt_Arduino.zip" class="download-link" download>📦 ESP8266_mqtt_Arduino.zip</a>
+      <a href="Proteuse_esp8266.zip" class="download-link" download>📦 Proteus</a>
+      <a href="soifgo_design_esp8266_mqtt.zip" class="download-link" download>📦 SoifGo File</a>
+    </div>
+  </div>
+
+  <div class="btn-wrap">
+    <a href="https://soifgo.github.io/soifgo/index.html" class="btn-home">⬅ Back to Home</a>
+  </div>
+
+</div>
+
+<script>
+  (function() {
+    var themeToggle = document.getElementById('themeToggle');
+    var themeIcon = document.getElementById('themeIcon');
+
+    function updateIcon(theme) {
+      if (theme === 'light') {
+        themeIcon.textContent = '🌙';
+        themeToggle.title = 'Switch to dark mode';
+      } else {
+        themeIcon.textContent = '☀️';
+        themeToggle.title = 'Switch to light mode';
+      }
+    }
+
+    var currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+    updateIcon(currentTheme);
+
+    themeToggle.addEventListener('click', function() {
+      var current = document.documentElement.getAttribute('data-theme');
+      var next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('soifgo-theme', next);
+      updateIcon(next);
+    });
+  })();
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-clike.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-c.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-cpp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/toolbar/prism-toolbar.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+
+<script src="https://cdn.staticfile.net/translate.js/3.18.66/translate.js"></script>
+
+<script>
+(function() {
+  'use strict';
+
+  var LANGUAGES = {
+    'english': { label: 'English', dir: 'ltr' },
+    'spanish': { label: 'Español', dir: 'ltr' },
+    'chinese_simplified': { label: '简体中文', dir: 'ltr' },
+    'french': { label: 'Français', dir: 'ltr' },
+    'deutsch': { label: 'Deutsch', dir: 'ltr' },
+    'japanese': { label: '日本語', dir: 'ltr' },
+    'russian': { label: 'Русский', dir: 'ltr' },
+    'arabic': { label: 'العربية', dir: 'rtl' },
+    'persian': { label: 'فارسی', dir: 'rtl' },
+    'italian': { label: 'Italiano', dir: 'ltr' },
+    'hindi': { label: 'हिन्दी', dir: 'ltr' },
+    'turkish': { label: 'Türkçe', dir: 'ltr' },
+    'korean': { label: '한국어', dir: 'ltr' },
+    'portuguese': { label: 'Português', dir: 'ltr' },
+    'hebrew': { label: 'עברית', dir: 'rtl' },
+    'kurdish_sorani': { label: 'کوردی', dir: 'rtl' },
+    'urdu': { label: 'اردو', dir: 'rtl' },
+    'bengali': { label: 'বাংলা', dir: 'ltr' },
+    'indonesian': { label: 'Bahasa Indonesia', dir: 'ltr' },
+    'tamil': { label: 'தமிழ்', dir: 'ltr' },
+    'thai': { label: 'ไทย', dir: 'ltr' },
+    'swahili': { label: 'Swahili', dir: 'ltr' }
+  };
+
+  var DEFAULT_LANG = 'english';
+  var FALLBACK_CHANNELS = ['giteeAI', 'client.edge', 'siliconflow'];
+
+  var langBtn = document.getElementById('langBtn');
+  var langDropdown = document.getElementById('langDropdown');
+  var currentLangLabel = document.getElementById('currentLangLabel');
+
+  function buildLanguageList() {
+    var html = '';
+    for (var code in LANGUAGES) {
+      if (LANGUAGES.hasOwnProperty(code)) {
+        var lang = LANGUAGES[code];
+        html += '<a href="javascript:void(0)" class="lang-item ignore" data-lang="' + code + '" data-dir="' + lang.dir + '">' + lang.label + '</a>';
+      }
+    }
+    langDropdown.innerHTML = html;
+    var items = langDropdown.querySelectorAll('.lang-item');
+    for (var i = 0; i < items.length; i++) {
+      items[i].addEventListener('click', function(e) {
+        e.preventDefault();
+        changeLanguage(this.getAttribute('data-lang'), this.getAttribute('data-dir'));
+      });
+    }
+  }
+
+  function waitForTranslation(element, originalText, timeoutMs) {
+    return new Promise(function(resolve) {
+      var start = Date.now();
+      var timer = setInterval(function() {
+        if (element.textContent !== originalText) {
+          clearInterval(timer);
+          resolve(true);
+        } else if (Date.now() - start > timeoutMs) {
+          clearInterval(timer);
+          resolve(false);
+        }
+      }, 200);
+    });
+  }
+
+  function applyChannel(channel) {
+    try {
+      translate.service.use(channel);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function resetToEnglish() {
+    try { localStorage.removeItem('soifgo-lang'); } catch (e) {}
+    document.documentElement.setAttribute('dir', 'ltr');
+    document.documentElement.setAttribute('lang', 'en');
+    currentLangLabel.textContent = LANGUAGES.english.label;
+    langDropdown.classList.remove('show');
+    setTimeout(function() {
+      location.reload();
+    }, 100);
+  }
+
+  function changeLanguage(langCode, langDir) {
+    if (langCode === 'english') {
+      resetToEnglish();
+      return;
+    }
+
+    var testElement = document.querySelector('h1');
+    var originalText = testElement ? testElement.textContent : '';
+
+    function tryChannel(index) {
+      if (index >= FALLBACK_CHANNELS.length) {
+        console.warn('All fallback channels failed.');
+        return;
+      }
+
+      var channel = FALLBACK_CHANNELS[index];
+      applyChannel(channel);
+
+      translate.changeLanguage(langCode);
+      if (typeof translate.execute === 'function') {
+        translate.execute();
+      }
+
+      waitForTranslation(testElement, originalText, 3000).then(function(success) {
+        if (!success) {
+          console.warn('Channel ' + channel + ' failed, trying next...');
+          tryChannel(index + 1);
+        } else {
+          try { localStorage.setItem('soifgo-lang', langCode); } catch (e) {}
+          document.documentElement.setAttribute('dir', langDir);
+          document.documentElement.setAttribute('lang', langCode === 'persian' ? 'fa' : langCode);
+          currentLangLabel.textContent = LANGUAGES[langCode].label;
+          langDropdown.classList.remove('show');
+        }
+      });
+    }
+
+    tryChannel(0);
+  }
+
+  langBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    langDropdown.classList.toggle('show');
+  });
+
+  document.addEventListener('click', function() {
+    langDropdown.classList.remove('show');
+  });
+
+  function getSavedLang() {
+    try {
+      var saved = localStorage.getItem('soifgo-lang');
+      if (saved && LANGUAGES[saved] && saved !== 'english') {
+        return saved;
+      }
+    } catch (e) {}
+    return null;
+  }
+
+  function initTranslate() {
+    var savedLang = getSavedLang();
+    if (!savedLang) {
+      document.documentElement.setAttribute('dir', 'ltr');
+      document.documentElement.setAttribute('lang', 'en');
+      currentLangLabel.textContent = LANGUAGES.english.label;
+      return;
+    }
+
+    translate.language.setLocal('english');
+    translate.service.use(FALLBACK_CHANNELS[0]);
+    translate.selectLanguageTag.show = false;
+    translate.execute();
+    if (translate.listener && translate.listener.start) {
+      translate.listener.start();
+    }
+  }
+
+  function restoreLanguageUI() {
+    var savedLang = getSavedLang();
+    if (savedLang) {
+      var lang = LANGUAGES[savedLang];
+      document.documentElement.setAttribute('dir', lang.dir);
+      document.documentElement.setAttribute('lang', savedLang === 'persian' ? 'fa' : savedLang);
+      currentLangLabel.textContent = lang.label;
+      return savedLang;
+    }
+    currentLangLabel.textContent = LANGUAGES[DEFAULT_LANG].label;
+    return null;
+  }
+
+  buildLanguageList();
+  var restored = restoreLanguageUI();
+
+  function bootTranslate() {
+    initTranslate();
+    if (restored) {
+      setTimeout(function() {
+        changeLanguage(restored, LANGUAGES[restored].dir);
+      }, 500);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bootTranslate);
+  } else {
+    bootTranslate();
+  }
+})();
+</script>
 
 </body>
 </html>

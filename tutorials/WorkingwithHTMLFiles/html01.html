@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes" />
-  <meta name="theme-color" content="#2c3e50" />
+  <meta name="theme-color" content="#0f172a" />
   <meta name="color-scheme" content="light dark" />
 
-  <title>How to Create a Design HTML in SoifGo — Web Browser & Offline HTML Tutorial</title>
+  <title>How to Create a Design HTML in SoifGo — Web Browser &amp; Offline HTML Tutorial</title>
   <meta name="description" content="Learn how to create a design HTML in SoifGo. Tutorial on web browser behavior, offline HTML files, and creating custom applications in HTML language within SoifGo." />
   <meta name="keywords" content="SoifGo HTML, design HTML, web browser behavior, offline HTML, custom application, HTML tutorial, SoifGo tutorial, HTML viewer" />
 
-  <meta property="og:title" content="How to Create a Design HTML in SoifGo — Web Browser & Offline HTML Tutorial" />
+  <meta property="og:title" content="How to Create a Design HTML in SoifGo — Web Browser &amp; Offline HTML Tutorial" />
   <meta property="og:description" content="Learn how to create a design HTML in SoifGo. Tutorial on web browser behavior, offline HTML files, and creating custom applications in HTML." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://soifgo.github.io/soifgo/tutorials/html01/" />
@@ -52,85 +52,129 @@
   }
   </script>
 
-  <style>
-    :root {
-      --bg: #fdfdfd;
-      --fg: #333;
-      --card-bg: #f8f9fa;
-      --border: #e9ecef;
-      --accent: #2c3e50;
-      --accent2: #3498db;
-      --code-bg: #eef;
-      --btn-home: #8B4513;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #121212;
-        --fg: #e0e0e0;
-        --card-bg: #1e1e1e;
-        --border: #333;
-        --accent: #4dabf7;
-        --code-bg: #1e1e2e;
+  <script>
+    (function() {
+      var savedTheme = localStorage.getItem('soifgo-theme');
+      if (savedTheme === 'light' || savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
       }
-    }
+    })();
+  </script>
 
+  <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    html, body {
-      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--fg);
-      line-height: 1.7;
-      -webkit-text-size-adjust: 100%;
-      min-height: 100vh;
+    :root,
+    [data-theme="dark"] {
+      --primary: #4f8cff;
+      --primary-light: #6aa0ff;
+      --purple: #9b59b6;
+      --purple-light: #c084fc;
+      --arduino-teal: #1abc9c;
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --text: #e8edf5;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --border: rgba(255, 255, 255, 0.07);
+      --shadow: rgba(0, 0, 0, 0.35);
+      --hover-bg: rgba(255, 255, 255, 0.04);
+      --code-bg: rgba(79, 140, 255, 0.12);
+      --code-text: #a5b4fc;
+      --note-bg: rgba(79, 140, 255, 0.08);
+      --note-border: var(--primary);
+      --radius: 14px;
+      --radius-sm: 10px;
+      --transition: 0.25s ease;
     }
 
-    .container { max-width: 820px; margin: 0 auto; padding: 16px; }
+    [data-theme="light"] {
+      --primary: #2563eb;
+      --primary-light: #3b82f6;
+      --purple: #9333ea;
+      --purple-light: #a855f7;
+      --arduino-teal: #0d9488;
+      --bg: #f8fafc;
+      --bg-card: #ffffff;
+      --text: #1e293b;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: rgba(15, 23, 42, 0.08);
+      --shadow: rgba(15, 23, 42, 0.08);
+      --hover-bg: rgba(37, 99, 235, 0.06);
+      --code-bg: rgba(37, 99, 235, 0.1);
+      --code-text: #1e40af;
+      --note-bg: rgba(37, 99, 235, 0.08);
+      --note-border: var(--primary);
+    }
+
+    .ignore { /* translation skip marker */ }
+
+    body {
+      font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      line-height: 1.7;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .container { max-width: 820px; margin: 0 auto; padding: 20px 16px 60px; }
 
     h1 {
       font-size: 1.8rem;
-      color: var(--accent);
-      margin: 0.5rem 0 0.3rem;
+      color: var(--primary-light);
+      margin: 1rem 0 0.5rem;
       font-weight: 700;
       letter-spacing: -0.01em;
       word-break: break-word;
+      text-align: center;
     }
 
     h2 {
-      font-size: 1.2rem;
-      color: var(--accent);
-      margin: 1.2rem 0 0.5rem;
-      font-weight: 600;
+      font-size: 1.15rem;
+      color: var(--text);
+      margin: 0;
+      font-weight: 400;
       word-break: break-word;
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
-    p { margin: 0.75em 0; word-break: break-word; }
+    p { margin: 0.75em 0; word-break: break-word; color: var(--text); }
 
-    a { color: var(--accent2); text-decoration: none; word-break: break-word; }
+    a {
+      color: var(--primary-light);
+      text-decoration: none;
+      word-break: break-word;
+      transition: color var(--transition);
+    }
+
     a:hover { text-decoration: underline; }
 
     .card {
-      background: var(--card-bg);
+      background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: var(--radius);
       padding: 1.2rem 1.5rem;
       margin-bottom: 1rem;
       max-width: 100%;
       overflow: hidden;
+      box-shadow: 0 4px 20px var(--shadow);
+      transition: background 0.3s ease, border 0.3s ease;
     }
 
-    /* ===== VIDEO WRAPPER (MEGA IFRAME) ===== */
     .video-wrapper {
       position: relative;
       width: 100%;
       aspect-ratio: 16 / 9;
-      border-radius: 14px;
+      border-radius: var(--radius-sm);
       overflow: hidden;
       background: #0a1a2a;
-      margin: 0.8rem 0;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      margin: 0;
+      box-shadow: 0 4px 15px var(--shadow);
+      border: 1px solid var(--border);
     }
 
     .video-wrapper iframe {
@@ -145,46 +189,49 @@
     code {
       background: var(--code-bg);
       padding: 0.2em 0.6em;
-      border-radius: 8px;
-      font-size: 0.9em;
+      border-radius: 6px;
+      font-size: 0.88em;
       font-family: 'JetBrains Mono', 'Fira Code', monospace;
-      color: var(--fg);
+      color: var(--code-text);
       word-break: break-word;
     }
 
-    ul, ol { padding-left: 1.4em; margin: 0.5em 0; }
+    ul, ol { padding-left: 1.4em; margin: 0.5em 0; color: var(--text); }
     li { margin-bottom: 0.4em; word-break: break-word; }
 
     .note {
-      background: #eaf7ff;
-      border-left: 4px solid var(--accent2);
+      background: var(--note-bg);
+      border-left: 4px solid var(--note-border);
       padding: 0.8rem 1.2rem;
-      border-radius: 8px;
+      border-radius: var(--radius-sm);
       margin: 0.8rem 0;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      .note { background: #1a2a3a; border-left-color: #4dabf7; }
+      color: var(--text);
     }
 
     .btn-home {
       display: inline-block;
-      background: var(--btn-home);
-      color: white;
+      background: var(--primary);
+      color: #ffffff;
       padding: 14px 34px;
       border-radius: 60px;
       text-decoration: none;
-      font-weight: 500;
+      font-weight: 600;
       font-size: 1.05rem;
       text-align: center;
-      transition: background 0.15s, transform 0.1s;
+      transition: background 0.15s ease, transform 0.1s ease;
       touch-action: manipulation;
       border: none;
       min-width: 140px;
-      box-shadow: 0 4px 10px rgba(80, 45, 20, 0.15);
+      box-shadow: 0 4px 14px rgba(79, 140, 255, 0.3);
     }
 
-    .btn-home:active { transform: scale(0.97); background: #5f3a22; }
+    .btn-home:hover {
+      background: var(--primary-light);
+      text-decoration: none;
+      transform: scale(1.02);
+    }
+
+    .btn-home:active { transform: scale(0.97); }
 
     .btn-wrap {
       display: flex;
@@ -195,39 +242,157 @@
       margin: 2rem 0 0.5rem 0;
     }
 
+    .language-switcher {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      right: auto;
+      z-index: 1001;
+      direction: ltr;
+    }
+
+    .lang-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 16px;
+      border-radius: 24px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+      transition: background 0.2s, border-color 0.2s, transform 0.15s;
+    }
+
+    .lang-btn:hover {
+      background: var(--hover-bg);
+      border-color: var(--primary);
+      transform: scale(1.03);
+    }
+
+    .lang-dropdown {
+      display: none;
+      position: absolute;
+      top: 48px;
+      left: 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      min-width: 220px;
+      max-height: 400px;
+      overflow-y: auto;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      padding: 8px 0;
+      direction: ltr;
+    }
+
+    .lang-dropdown.show { display: block; }
+
+    .lang-item {
+      display: block;
+      padding: 10px 18px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.92rem;
+      transition: background 0.15s;
+      white-space: nowrap;
+      direction: ltr;
+      text-align: left;
+    }
+
+    .lang-item:hover {
+      background: var(--hover-bg);
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      left: auto;
+      z-index: 1000;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 1.3rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+      transition: background 0.25s ease, transform 0.2s ease, border-color 0.25s ease;
+      padding: 0;
+      line-height: 1;
+      direction: ltr;
+    }
+
+    .theme-toggle:hover {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      transform: scale(1.08);
+    }
+
     @media (max-width: 600px) {
-      .container { padding: 10px; }
+      .container { padding: 14px 12px 40px; }
       h1 { font-size: 1.5rem; }
-      h2 { font-size: 1.05rem; }
-      .card { padding: 0.8rem 0.9rem; border-radius: 14px; }
-      body { font-size: 1rem; line-height: 1.7; }
+      h2 { font-size: 1.02rem; }
+      .card { padding: 1rem 1.1rem; border-radius: 12px; }
+      body { font-size: 0.98rem; line-height: 1.7; }
       .btn-home { width: 100%; justify-content: center; padding: 16px 18px; font-size: 1rem; }
       .btn-wrap { flex-direction: column; gap: 12px; }
+
+      .theme-toggle { width: 40px; height: 40px; font-size: 1.1rem; top: 12px; right: 12px; }
+      .language-switcher { top: 12px; left: 12px; }
+      .lang-btn { font-size: 0.8rem; padding: 6px 12px; }
+      .lang-dropdown { min-width: 180px; max-height: 300px; }
+      .lang-item { padding: 8px 14px; font-size: 0.85rem; }
     }
 
     @media (max-width: 380px) {
       h1 { font-size: 1.3rem; }
-      .card { padding: 0.6rem 0.7rem; }
+      .card { padding: 0.8rem 0.9rem; }
     }
 
-    hr { border: none; border-top: 2px solid var(--border); margin: 1.5rem 0; }
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 1.5rem 0;
+    }
+
     .text-center { text-align: center; }
-    .subtitle { color: var(--fg); opacity: 0.8; font-weight: 400; }
   </style>
 </head>
 <body>
+
+  <div class="language-switcher ignore" id="languageSwitcher">
+    <button class="lang-btn" id="langBtn" type="button" aria-label="Change language">
+      🌐 <span id="currentLangLabel">English</span>
+    </button>
+    <div class="lang-dropdown" id="langDropdown"></div>
+  </div>
+
+  <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle theme" title="Switch theme">
+    <span id="themeIcon">☀️</span>
+  </button>
 
   <div class="container">
 
     <h1>How to Create a Design HTML</h1>
 
     <div class="card">
-      <h2 style="margin-top: 0; font-weight: 400; border-bottom: 1px solid var(--border); padding-bottom: 10px;">
-        In the behavior of a web browser and offline HTML files, you can see in the video below how to define the behavior of a simple browser shortcut and how to open an offline HTML file in SoifGo. Default files are already available in the program, but you can also create your own application in the HTML language.
+      <h2>
+        In the behavior of a web browser and offline HTML files, you can see in the video below how to define the behavior of a simple browser shortcut and how to open an offline HTML file in <span class="ignore">SoifGo</span>. Default files are already available in the program, but you can also create your own application in the HTML language.
       </h2>
     </div>
 
-    <!-- ===== VIDEO (MEGA IFRAME) ===== -->
     <div class="card">
       <div class="video-wrapper">
         <iframe src="https://mega.nz/embed/HagmiDpa#AbwOOoj9JxFkeHxeETvudKrrOut9w8fKm0FXXGtZuCI"
@@ -242,6 +407,235 @@
     </div>
 
   </div>
+
+  <script>
+    (function() {
+      var themeToggle = document.getElementById('themeToggle');
+      var themeIcon = document.getElementById('themeIcon');
+
+      function updateIcon(theme) {
+        if (theme === 'light') {
+          themeIcon.textContent = '🌙';
+          themeToggle.title = 'Switch to dark mode';
+        } else {
+          themeIcon.textContent = '☀️';
+          themeToggle.title = 'Switch to light mode';
+        }
+      }
+
+      var currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+      updateIcon(currentTheme);
+
+      themeToggle.addEventListener('click', function() {
+        var current = document.documentElement.getAttribute('data-theme');
+        var next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('soifgo-theme', next);
+        updateIcon(next);
+      });
+    })();
+  </script>
+
+  <script src="https://cdn.staticfile.net/translate.js/3.18.66/translate.js"></script>
+
+  <script>
+  (function() {
+    'use strict';
+
+    var LANGUAGES = {
+      'english': { label: 'English', dir: 'ltr' },
+      'spanish': { label: 'Español', dir: 'ltr' },
+      'chinese_simplified': { label: '简体中文', dir: 'ltr' },
+      'french': { label: 'Français', dir: 'ltr' },
+      'deutsch': { label: 'Deutsch', dir: 'ltr' },
+      'japanese': { label: '日本語', dir: 'ltr' },
+      'russian': { label: 'Русский', dir: 'ltr' },
+      'arabic': { label: 'العربية', dir: 'rtl' },
+      'persian': { label: 'فارسی', dir: 'rtl' },
+      'italian': { label: 'Italiano', dir: 'ltr' },
+      'hindi': { label: 'हिन्दी', dir: 'ltr' },
+      'turkish': { label: 'Türkçe', dir: 'ltr' },
+      'korean': { label: '한국어', dir: 'ltr' },
+      'portuguese': { label: 'Português', dir: 'ltr' },
+      'hebrew': { label: 'עברית', dir: 'rtl' },
+      'kurdish_sorani': { label: 'کوردی', dir: 'rtl' },
+      'urdu': { label: 'اردو', dir: 'rtl' },
+      'bengali': { label: 'বাংলা', dir: 'ltr' },
+      'indonesian': { label: 'Bahasa Indonesia', dir: 'ltr' },
+      'tamil': { label: 'தமிழ்', dir: 'ltr' },
+      'thai': { label: 'ไทย', dir: 'ltr' },
+      'swahili': { label: 'Swahili', dir: 'ltr' }
+    };
+
+    var DEFAULT_LANG = 'english';
+    var FALLBACK_CHANNELS = ['giteeAI', 'client.edge', 'siliconflow'];
+
+    var langBtn = document.getElementById('langBtn');
+    var langDropdown = document.getElementById('langDropdown');
+    var currentLangLabel = document.getElementById('currentLangLabel');
+
+    function buildLanguageList() {
+      var html = '';
+      for (var code in LANGUAGES) {
+        if (LANGUAGES.hasOwnProperty(code)) {
+          var lang = LANGUAGES[code];
+          html += '<a href="javascript:void(0)" class="lang-item ignore" data-lang="' + code + '" data-dir="' + lang.dir + '">' + lang.label + '</a>';
+        }
+      }
+      langDropdown.innerHTML = html;
+      var items = langDropdown.querySelectorAll('.lang-item');
+      for (var i = 0; i < items.length; i++) {
+        items[i].addEventListener('click', function(e) {
+          e.preventDefault();
+          changeLanguage(this.getAttribute('data-lang'), this.getAttribute('data-dir'));
+        });
+      }
+    }
+
+    function waitForTranslation(element, originalText, timeoutMs) {
+      return new Promise(function(resolve) {
+        var start = Date.now();
+        var timer = setInterval(function() {
+          if (element.textContent !== originalText) {
+            clearInterval(timer);
+            resolve(true);
+          } else if (Date.now() - start > timeoutMs) {
+            clearInterval(timer);
+            resolve(false);
+          }
+        }, 200);
+      });
+    }
+
+    function applyChannel(channel) {
+      try {
+        translate.service.use(channel);
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function resetToEnglish() {
+      try { localStorage.removeItem('soifgo-lang'); } catch (e) {}
+      document.documentElement.setAttribute('dir', 'ltr');
+      document.documentElement.setAttribute('lang', 'en');
+      currentLangLabel.textContent = LANGUAGES.english.label;
+      langDropdown.classList.remove('show');
+      setTimeout(function() {
+        location.reload();
+      }, 100);
+    }
+
+    function changeLanguage(langCode, langDir) {
+      if (langCode === 'english') {
+        resetToEnglish();
+        return;
+      }
+
+      var testElement = document.querySelector('h1');
+      var originalText = testElement ? testElement.textContent : '';
+
+      function tryChannel(index) {
+        if (index >= FALLBACK_CHANNELS.length) {
+          console.warn('All fallback channels failed.');
+          return;
+        }
+
+        var channel = FALLBACK_CHANNELS[index];
+        applyChannel(channel);
+
+        translate.changeLanguage(langCode);
+        if (typeof translate.execute === 'function') {
+          translate.execute();
+        }
+
+        waitForTranslation(testElement, originalText, 3000).then(function(success) {
+          if (!success) {
+            console.warn('Channel ' + channel + ' failed, trying next...');
+            tryChannel(index + 1);
+          } else {
+            try { localStorage.setItem('soifgo-lang', langCode); } catch (e) {}
+            document.documentElement.setAttribute('dir', langDir);
+            document.documentElement.setAttribute('lang', langCode === 'persian' ? 'fa' : langCode);
+            currentLangLabel.textContent = LANGUAGES[langCode].label;
+            langDropdown.classList.remove('show');
+          }
+        });
+      }
+
+      tryChannel(0);
+    }
+
+    langBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      langDropdown.classList.toggle('show');
+    });
+
+    document.addEventListener('click', function() {
+      langDropdown.classList.remove('show');
+    });
+
+    function getSavedLang() {
+      try {
+        var saved = localStorage.getItem('soifgo-lang');
+        if (saved && LANGUAGES[saved] && saved !== 'english') {
+          return saved;
+        }
+      } catch (e) {}
+      return null;
+    }
+
+    function initTranslate() {
+      var savedLang = getSavedLang();
+      if (!savedLang) {
+        document.documentElement.setAttribute('dir', 'ltr');
+        document.documentElement.setAttribute('lang', 'en');
+        currentLangLabel.textContent = LANGUAGES.english.label;
+        return;
+      }
+
+      translate.language.setLocal('english');
+      translate.service.use(FALLBACK_CHANNELS[0]);
+      translate.selectLanguageTag.show = false;
+      translate.execute();
+      if (translate.listener && translate.listener.start) {
+        translate.listener.start();
+      }
+    }
+
+    function restoreLanguageUI() {
+      var savedLang = getSavedLang();
+      if (savedLang) {
+        var lang = LANGUAGES[savedLang];
+        document.documentElement.setAttribute('dir', lang.dir);
+        document.documentElement.setAttribute('lang', savedLang === 'persian' ? 'fa' : savedLang);
+        currentLangLabel.textContent = lang.label;
+        return savedLang;
+      }
+      currentLangLabel.textContent = LANGUAGES[DEFAULT_LANG].label;
+      return null;
+    }
+
+    buildLanguageList();
+    var restored = restoreLanguageUI();
+
+    function bootTranslate() {
+      initTranslate();
+      if (restored) {
+        setTimeout(function() {
+          changeLanguage(restored, LANGUAGES[restored].dir);
+        }, 500);
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', bootTranslate);
+    } else {
+      bootTranslate();
+    }
+  })();
+  </script>
 
 </body>
 </html>
