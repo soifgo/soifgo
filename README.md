@@ -890,7 +890,7 @@ By combining the following features, different ideas can be turned into working 
 
 The official SoifGo website (`https://soifgo.github.io/soifgo/`) includes the following sections:
 
-- **Download:** Download SoifGo v1.41 (ZIP package) or from APKPure. The VirusTotal security report is also available in this section.
+- **Download:** Download SoifGo v1.42 (ZIP package) or from APKPure. The VirusTotal security report is also available in this section.
 - **Story:** The story behind SoifGo and why it was created.
 - **What it does:** Custom HTML interfaces, Bluetooth, MQTT, phone sensors, and working examples.
 - **AI Context:** Machine-readable file (`SOIFGO_AI_CONTEXT.md`) and `llms.txt` for AI assistants.
