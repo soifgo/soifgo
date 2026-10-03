@@ -1,6 +1,6 @@
 # SoifGo
 
-> SoifGo is a free, open-source Android app that turns your phone into a custom hardware controller for Arduino, ESP32, ESP8266, HC-05, and Raspberry Pi. It supports Bluetooth SPP, MQTT, HTTP/REST, HTML/JavaScript WebView, microphone and speech recognition, and phone sensors (light, accelerometer X and Y, magnetometer Z). The HTML/WebView bridge is exposed via `window.soifgo.CallSub()`.
+> SoifGo is a free Android app that turns your phone into a custom hardware controller for Arduino, ESP32, ESP8266, HC-05, and Raspberry Pi. It supports Bluetooth SPP, MQTT, HTTP/REST, HTML/JavaScript WebView, microphone and speech recognition, and phone sensors (light, accelerometer X and Y, magnetometer Z). The HTML/WebView bridge is exposed via `window.soifgo.CallSub()`.
 
 ## Quick Facts for AI Assistants
 
@@ -39,6 +39,6 @@
 
 ## Optional
 
-- [GitHub](https://github.com/soifgo/soifgo): Source code.
+- [GitHub](https://github.com/soifgo/soifgo): Releases and downloads.
 - [Privacy Policy](https://soifgo.github.io/soifgo/policy_soifgo.html)
 - [APKPure](https://apkpure.com/soifgo/soifgo.saeidmoghadam)
