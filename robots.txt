@@ -3,8 +3,6 @@
 
 User-agent: *
 Allow: /
-Disallow: /soifgo.zip
-Disallow: /*.apk
 
 # Explicitly welcome AI crawlers — they help users generate correct code
 User-agent: GPTBot

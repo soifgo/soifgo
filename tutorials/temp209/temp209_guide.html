@@ -1066,7 +1066,8 @@
           <tr><td><strong>Fault</strong></td><td><strong>PORTC.3</strong></td><td>Fault input</td></tr>
           <tr><td>RC5 IR</td><td>PINB.0</td><td>IR receiver</td></tr>
           <tr><td>1-Wire</td><td>PORTD.4</td><td>DS18B20 data</td></tr>
-          <tr><td>TX</td><td>Serial</td><td>Debug output (9600 baud)</td></tr>
+          <tr><td><strong>TX</strong></td><td><strong>PORTD.1</strong></td><td>Serial debug output (9600 baud)</td></tr>
+          <tr><td><strong>RX</strong></td><td><strong>PORTD.0</strong></td><td>Serial command input (9600 baud)</td></tr>
         </tbody>
       </table>
     </div>
@@ -1307,6 +1308,25 @@ command2=22
 setpoint=26
 Fault</code></pre>
     </div>
+
+    <div class="note-info">
+      <strong>Temperature Log Output (from <code>report</code> command):</strong>
+      <p>
+        The log starts with <code>live=N</code> — a reference index that points to the position of the newest sample — followed by raw temperature values (0–255), and ends with <code>end</code>.
+      </p>
+      <pre class="line-numbers"><code class="language-bash">live=240
+25
+26
+253
+24
+27
+25
+...
+end</code></pre>
+      <p>
+        The value <code>253</code> is a <strong>position marker</strong> (not the end of the log). There can be more than one <code>253</code> in the stream — the one closest to <code>live</code> is the valid marker. <code>255</code> means an empty/erased EEPROM cell and is shown like any other value.
+      </p>
+    </div>
   </div>
 
   <div class="card card-purple" id="s9">
@@ -1484,6 +1504,7 @@ End Sub</code></pre>
       <li><strong>Heating Mode (H=1):</strong> <code>Temp_out = 1</code> when <code>Currenttemp &lt; Settemp</code></li>
       <li><strong>Cooling Mode (H=0):</strong> <code>Temp_out = 1</code> when <code>Currenttemp &gt; Settemp + Deltatemp</code></li>
       <li><strong>Protection Delay (P):</strong> Enforces a delay between cycles to protect compressors</li>
+      <li><strong>Sensor Error Override:</strong> If <code>Sensorerr = 1</code>, the relay is forced OFF for safety</li>
       <li><strong>Fault Override:</strong> If fault input is active (after the configured Fault Delay), <code>Temp_out = 0</code> and display shows blinking <strong>"FF"</strong></li>
     </ul>
 
@@ -1498,7 +1519,7 @@ End Sub</code></pre>
     If Heatcoolmode = 1 Then
         ' Heating Mode
         If Currenttemp &lt; Settemp Then
-            If Protect_delay_flag = 1 And Faultstatus = 0 Then Temp_out = 1
+            If Protect_delay_flag = 1 And Faultstatus = 0 And Sensorerr = 0 Then Temp_out = 1
             Blink_show = 1
         Elseif Currenttemp &gt; Tempthreshold Then
             Temp_out = 0
@@ -1509,7 +1530,7 @@ End Sub</code></pre>
     If Heatcoolmode = 0 Then
         ' Cooling Mode
         If Currenttemp &gt; Tempthreshold Then
-            If Protect_delay_flag = 1 And Faultstatus = 0 Then Temp_out = 1
+            If Protect_delay_flag = 1 And Faultstatus = 0 And Sensorerr = 0 Then Temp_out = 1
             Blink_show = 1
         Elseif Currenttemp &lt; Settemp Then
             Temp_out = 0
@@ -1751,21 +1772,20 @@ command2=22</code></pre>
     <h4>Calculations</h4>
     <ul>
       <li>Each 1 A of current → <strong>60 mV</strong> at the op-amp output</li>
-      <li>4 A → 240 mV + 2.56 V = <strong>2.8 V</strong></li>
-      <li>5 A → 300 mV + 2.56 V = <strong>2.86 V</strong></li>
+      <li>4 A → 4 × 60 mV = 240 mV + 2.56 V = <strong>2.80 V</strong></li>
+      <li>5 A → 5 × 60 mV = 300 mV + 2.56 V = <strong>2.86 V</strong></li>
     </ul>
 
     <div class="note-warning">
       <strong>Calibration Procedure:</strong>
       <ol style="margin-top:8px;">
-        <li>Apply the expected maximum normal current (e.g., 4 A)</li>
-        <li>Besides voltage calculations, turn the potentiometer until the fault LED turns off.</li>
-        <li>At 4 A, the Hall output reaches 2.8 V, the op-amp begins oscillation, and the MCU Fault input is triggered.</li>
-        <li>The fault LED indicator should be off under normal current; adjust the potentiometer accordingly.</li>
-        <li>When fault occurs, the 7-segment display shows blinking <strong>"FF"</strong> — an eye-catching alert.</li>
-        <li>Relay cuts off + Fault announced on serial.</li>
+        <li>Apply the expected maximum normal current (e.g., 4 A).</li>
+        <li>At 4 A, the Hall output reaches <strong>2.80 V</strong>; the op-amp begins oscillation and the MCU Fault input is triggered.</li>
+        <li>The fault LED indicator should be <strong>OFF</strong> under normal current (e.g., 4 A) — turn the potentiometer until the LED turns off.</li>
+        <li>When an over-current occurs (e.g., above 4 A), the fault LED turns <strong>ON</strong>, the 7-segment display shows blinking <strong>"FF"</strong>, and the relay cuts off.</li>
+        <li>The <code>Fault</code> message is also announced on the serial output.</li>
       </ol>
-      <p style="margin-top:8px;">Depending on the op-amp and circuit, fine-tuning may be needed — but <strong>one-time calibration is enough</strong>. When adjusting the potentiometer, aim to turn it until the fault LED turns off; this is the correct threshold.</p>
+      <p style="margin-top:8px;">Depending on the op-amp and circuit, fine-tuning may be needed — but <strong>one-time calibration is enough</strong>.</p>
     </div>
 
     <div class="image-box">
@@ -1778,16 +1798,29 @@ command2=22</code></pre>
     <h2>15. 8-Hour Temperature Logger</h2>
 
     <p>
-      TEMP209 automatically logs <strong>one temperature sample every minute</strong> to EEPROM. This gives you the <strong>last 8 hours</strong> (480 samples) — always available, even after power loss.
+      TEMP209 automatically logs <strong>one temperature sample every minute</strong> to EEPROM.
+      The buffer works like a <strong>CCTV recorder</strong> — a <strong>480-sample circular buffer</strong> that always
+      holds the last 8 hours. The newest sample is always available, even after power loss.
     </p>
 
     <h3>How It Works</h3>
     <ul>
-      <li><strong>Every 1 minute:</strong> a temperature sample is stored in EEPROM</li>
+      <li><strong>Every 1 minute:</strong> a temperature sample is written to EEPROM</li>
       <li><strong>Capacity:</strong> 480 samples = <strong>last 8 hours</strong></li>
       <li><strong>Circular buffer:</strong> when full, the oldest sample is overwritten</li>
+      <li><strong>Position marker:</strong> the value <code>253</code> is written right after the newest sample and travels with it</li>
       <li><strong>Persistent:</strong> samples survive power loss</li>
     </ul>
+
+    <div class="note-success">
+      <strong>Circular buffer + position marker (CCTV-style):</strong>
+      <ul style="margin-top:8px;">
+        <li>Each minute, the current temperature is written to the next slot, and <code>253</code> is written right after it.</li>
+        <li>The previous <code>253</code> is overwritten by the new temperature sample — so <strong>the marker always sits right after the newest temperature</strong>.</li>
+        <li><code>253</code> is a <strong>position marker</strong> (not the end of the log). It tells the reader where the newest sample is located in the circular buffer.</li>
+        <li><code>255</code> = empty / erased EEPROM cell (all bits = 1). It is displayed in the graph like any other value, so blank areas remain visible.</li>
+      </ul>
+    </div>
 
     <h3>Viewing the Report</h3>
     <div class="table-wrap">
@@ -1804,13 +1837,21 @@ command2=22</code></pre>
     <p>The full report is sent to the <strong><span class="ignore">SoifGo</span></strong> app, where you can see the temperature graph on your phone. 📊</p>
 
     <h3>Report Format</h3>
-    <pre class="line-numbers"><code class="language-bash">start
+    <p>
+      The stream starts with <code>live=N</code> — the reference index of the newest sample — followed by raw temperature values (0–255), and ends with <code>end</code>.
+    </p>
+    <pre class="line-numbers"><code class="language-bash">live=240
 25
 26
+253
 24
+27
+25
 ...
-23
 end</code></pre>
+    <p>
+      <strong>253</strong> is a position marker, not the end of the log. If more than one <code>253</code> appears in the stream, the reader uses <code>live</code> to pick the correct one (closest to <code>live</code>).
+    </p>
   </div>
 
   <div class="card card-purple" id="s16">
@@ -1838,10 +1879,12 @@ command1=735              - Primary command
 command2=22               - Secondary command
 setpoint=26               - Setpoint changed
 Fault                     - Fault condition detected
-start                     - Log report start
+live=240                  - Report start (reference index of newest sample)
 25                        - Temperature sample
 26                        - Temperature sample
-end                       - Log report end</code></pre>
+253                       - Position marker
+24                        - Temperature sample
+end                       - End of report stream</code></pre>
 
     <h3>Common Issues</h3>
     <div class="table-wrap">
@@ -1891,68 +1934,29 @@ end                       - Log report end</code></pre>
     </div>
   </div>
 
-  <div class="card card-blue" id="s19">
+<div class="card card-blue" id="s19">
     <h2>19. Downloads &amp; Links</h2>
 
-    <h3>📦 Release Package</h3>
-    <div class="download-grid">
+    <h3>📦 Full Release Package</h3>
+    <div class="download-grid" style="grid-template-columns: 1fr;">
       <a class="download-item" href="../releases/latest" download>
         <div class="di-icon">📦</div>
-        <div class="di-name">Latest Release</div>
-        <div class="di-desc">Full package (ZIP)</div>
-      </a>
-      <a class="download-item" href="../releases">
-        <div class="di-icon">📚</div>
-        <div class="di-name">All Releases</div>
-        <div class="di-desc">Version history</div>
-      </a>
-      <a class="download-item" href="../issues">
-        <div class="di-icon">🐛</div>
-        <div class="di-name">Report a Bug</div>
-        <div class="di-desc">GitHub Issues</div>
-      </a>
-      <a class="download-item" href="../blob/main/README.md">
-        <div class="di-icon">📖</div>
-        <div class="di-name">README</div>
-        <div class="di-desc">Quick start</div>
-      </a>
-    </div>
-
-    <h3>📄 Individual Files</h3>
-    <div class="download-grid">
-      <a class="download-item" href="../raw/main/src/temp209_m8.bas" download>
-        <div class="di-icon">📄</div>
-        <div class="di-name">temp209_m8.bas</div>
-        <div class="di-desc">BASCOM source</div>
-      </a>
-      <a class="download-item" href="../raw/main/firmware/temp209_m8.hex" download>
-        <div class="di-icon">⚙️</div>
-        <div class="di-name">temp209_m8.hex</div>
-        <div class="di-desc">Firmware</div>
-      </a>
-      <a class="download-item" href="../raw/main/hardware/pcb.zip" download>
-        <div class="di-icon">🛠️</div>
-        <div class="di-name">PCB Gerbers</div>
-        <div class="di-desc">Manufacturing files</div>
-      </a>
-      <a class="download-item" href="../raw/main/hardware/schematic.pdf" download>
-        <div class="di-icon">📐</div>
-        <div class="di-name">Schematic</div>
-        <div class="di-desc">PDF diagram</div>
+        <div class="di-name">Download Latest Release</div>
+        <div class="di-desc">Full package (ZIP) — source, firmware, PCB, schematic</div>
       </a>
     </div>
 
     <h3>🔗 External Links</h3>
-    <div class="download-grid">
-      <a class="download-item" href="https://soifgo.example.com" target="_blank" rel="noopener">
+    <div class="download-grid" style="grid-template-columns: 1fr;">
+      <a class="download-item" href="https://soifgo.github.io/soifgo/" target="_blank" rel="noopener">
         <div class="di-icon">📱</div>
         <div class="di-name"><span class="ignore">SoifGo</span> App</div>
-        <div class="di-desc">Download the mobile app</div>
+        <div class="di-desc">Mobile interface for TEMP209</div>
       </a>
     </div>
 
     <div class="note-info">
-      <strong>Note:</strong> Some links use relative paths (<code>../</code>) since this documentation is hosted inside the GitHub repository.
+      <strong>Note:</strong> The ZIP package includes BASCOM source, firmware HEX, PCB Gerbers, and schematic PDF.
     </div>
   </div>
 
@@ -2004,7 +2008,12 @@ end                       - Log report end</code></pre>
       <li>7-parameter configuration menu</li>
       <li>EEPROM settings storage</li>
       <li>8-hour circular temperature logger (480 samples)</li>
-      <li>Fault input for over-current protection with adjustable delay (always active)</li>
+      <li>480-sample circular buffer (CCTV-style) with position marker</li>
+      <li>Marker (<code>253</code>) sits right after the newest temperature sample</li>
+      <li>Report stream framed by <code>live=N</code> (start) and <code>end</code> (terminator)</li>
+      <li>All values 0–255 streamed without filtering — <code>255</code> = empty EEPROM cell</li>
+      <li>Fault input for over-current protection with adjustable reaction delay (always active; <code>0</code> = fastest reaction, <code>1-9</code> = delay in seconds)</li>
+      <li>Sensor error detection — forces relay OFF for safety</li>
       <li>Serial commands for automation</li>
       <li><span class="ignore">SoifGo</span> mobile interface with live graph</li>
       <li>Two-board split hardware design</li>

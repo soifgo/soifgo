@@ -144,7 +144,7 @@
     <priority>0.7</priority>
   </url>
 
-  <url>
+  <url>code
     <loc>https://soifgo.github.io/soifgo/tutorials/send_bluetooth_html/02-sensor-readout/index.html</loc>
     <lastmod>2026-09-27</lastmod>
     <changefreq>monthly</changefreq>
@@ -160,14 +160,6 @@
 
   <url>
     <loc>https://soifgo.github.io/soifgo/tutorials/send_bluetooth_html/04-phone-sensors/index.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <!-- ============ AI CONTEXT (HTML version preferred) ============ -->
-  <url>
-    <loc>https://soifgo.github.io/soifgo/SOIFGO_AI_CONTEXT.md</loc>
     <lastmod>2026-09-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
