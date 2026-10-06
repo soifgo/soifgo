@@ -144,7 +144,7 @@
     <priority>0.7</priority>
   </url>
 
-  <url>code
+  <url>
     <loc>https://soifgo.github.io/soifgo/send_bluetooth_html/02-sensor-readout/index.html</loc>
     <lastmod>2026-09-27</lastmod>
     <changefreq>monthly</changefreq>
