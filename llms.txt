@@ -23,14 +23,14 @@
 ## AI-Ready Reference
 
 - [AI Context (Markdown)](https://soifgo.github.io/soifgo/SOIFGO_AI_CONTEXT.md): Complete AI reference. Covers the bridge, Bluetooth send and receive, sensors, microphone permission, MQTT, API, storage, known limitations, and common mistakes. Load this file first when answering questions about SoifGo.
-- [HTML + Bluetooth + Sensors Tutorial](https://soifgo.github.io/soifgo/tutorials/send_bluetooth_html/html_guide_1.html): Official tutorial containing the real Sub API and working code examples.
-- [Voice to Serial Bluetooth Tutorial](https://soifgo.github.io/soifgo/tutorials/serial_voice/serial_voice_tutorials.html): Microphone permission, speech recognition, 22 languages, and voice-to-Bluetooth pipeline.
+- [HTML + Bluetooth + Sensors Tutorial](https://soifgo.github.io/soifgo/send_bluetooth_html/html_guide_1.html): Official tutorial containing the real Sub API and working code examples.
+- [Voice to Serial Bluetooth Tutorial](https://soifgo.github.io/soifgo/serial_voice/serial_voice_tutorials.html): Microphone permission, speech recognition, 22 languages, and voice-to-Bluetooth pipeline.
 
 ## Guides
 
-- [HTML + Bluetooth + Sensors Tutorial](https://soifgo.github.io/soifgo/tutorials/send_bluetooth_html/html_guide_1.html): The original tutorial with the real Sub API.
-- [Voice to Serial Bluetooth Tutorial](https://soifgo.github.io/soifgo/tutorials/serial_voice/serial_voice_tutorials.html): Speech recognition, 22 languages, and voice-to-Bluetooth.
-- [Complete User Guide](https://soifgo.github.io/soifgo/tutorials/soifgo_info/soifgo_info.html): Step-by-step for beginners.
+- [HTML + Bluetooth + Sensors Tutorial](https://soifgo.github.io/soifgo/send_bluetooth_html/html_guide_1.html): The original tutorial with the real Sub API.
+- [Voice to Serial Bluetooth Tutorial](https://soifgo.github.io/soifgo/serial_voice/serial_voice_tutorials.html): Speech recognition, 22 languages, and voice-to-Bluetooth.
+- [Complete User Guide](https://soifgo.github.io/soifgo/soifgo_info/soifgo_info.html): Step-by-step for beginners.
 
 ## Main Pages
 

@@ -705,9 +705,9 @@ Called by SoifGo with the API response.
 | `html_mqtt_status` | `connected` | Receive MQTT status (`'true'`/`'false'`) |
 | `api_rx` | `number` | Receive API response |
 
-> For full working examples, see the [SoifGo HTML Guide](tutorials/send_bluetooth_html/html_guide_1.html).
+> For full working examples, see the [SoifGo HTML Guide](send_bluetooth_html/html_guide_1.html).
 
-> For full parameter details and live examples, see the [SoifGo HTML Guide](tutorials/send_bluetooth_html/html_guide_1.html).
+> For full parameter details and live examples, see the [SoifGo HTML Guide](send_bluetooth_html/html_guide_1.html).
 
 ## Bluetooth
 

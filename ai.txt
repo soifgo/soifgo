@@ -56,32 +56,32 @@ All official documentation is hosted at `https://soifgo.github.io/soifgo/`.
 
 ### Core Documentation
 
-- **Complete User Guide:** https://soifgo.github.io/soifgo/tutorials/soifgo_info/soifgo_info.html
+- **Complete User Guide:** https://soifgo.github.io/soifgo/soifgo_info/soifgo_info.html
 - **Developer Documentation & API Reference:** https://soifgo.github.io/soifgo/docs.html
-- **HTML Guide (Bluetooth, Sensors, Microphone, MQTT, API, Storage):** https://soifgo.github.io/soifgo/tutorials/send_bluetooth_html/html_guide_1.html
-- **Microphone & Speech Recognition Guide (22 languages):** https://soifgo.github.io/soifgo/tutorials/serial_voice/serial_voice_tutorials.html
+- **HTML Guide (Bluetooth, Sensors, Microphone, MQTT, API, Storage):** https://soifgo.github.io/soifgo/send_bluetooth_html/html_guide_1.html
+- **Microphone & Speech Recognition Guide (22 languages):** https://soifgo.github.io/soifgo/serial_voice/serial_voice_tutorials.html
 
 ### Tutorials
 
-- **Bluetooth Example (HC-05/06):** https://soifgo.github.io/soifgo/tutorials/BluetoothExample1/bluetooth_sample1.html
-- **Bluetooth Send Receive:** https://soifgo.github.io/soifgo/tutorials/BluetoothSendReceive/Bluetooth_Send_Receive.html
-- **Create Page:** https://soifgo.github.io/soifgo/tutorials/page/Create_Page.html
-- **Page & Folder Navigation:** https://soifgo.github.io/soifgo/tutorials/pagefolder/page_folder.html
-- **ESP8266 MQTT:** https://soifgo.github.io/soifgo/tutorials/Esp8266_wifi_mqtt/esp8266_mqtt.html
-- **Local Server Setup (Node.js):** https://soifgo.github.io/soifgo/tutorials/LocalServerSetup/Local-server_api.html
-- **ESP32 Server (WiFiServer/WebServer API):** https://soifgo.github.io/soifgo/tutorials/ESP32Server/ESP8266_wifi_api.html
-- **Fetching APIs (REST + JSON):** https://soifgo.github.io/soifgo/tutorials/FetchingAPIs/Api-fetching_api.html
-- **Working with HTML Files:** https://soifgo.github.io/soifgo/tutorials/WorkingwithHTMLFiles/html01.html
-- **Effects (Rotation, Gauge, Color Shift):** https://soifgo.github.io/soifgo/tutorials/Effect/effects.html
-- **Voice to Serial Bluetooth:** https://soifgo.github.io/soifgo/tutorials/serial_voice/serial_voice_tutorials.html
-- **Note Send and Receive:** https://soifgo.github.io/soifgo/tutorials/note_out/note_out.html
-- **RANGMANG:** https://soifgo.github.io/soifgo/tutorials/rangmang/Rangmang.html
-- **RANGMANG 2 (2D plotting):** https://soifgo.github.io/soifgo/tutorials/rangmang2/rangmang2.html
-- **CMI209 (IoT project example):** https://soifgo.github.io/soifgo/tutorials/cmi209/cmi209.html
+- **Bluetooth Example (HC-05/06):** https://soifgo.github.io/soifgo/BluetoothExample1/bluetooth_sample1.html
+- **Bluetooth Send Receive:** https://soifgo.github.io/soifgo/BluetoothSendReceive/Bluetooth_Send_Receive.html
+- **Create Page:** https://soifgo.github.io/soifgo/page/Create_Page.html
+- **Page & Folder Navigation:** https://soifgo.github.io/soifgo/pagefolder/page_folder.html
+- **ESP8266 MQTT:** https://soifgo.github.io/soifgo/Esp8266_wifi_mqtt/esp8266_mqtt.html
+- **Local Server Setup (Node.js):** https://soifgo.github.io/soifgo/LocalServerSetup/Local-server_api.html
+- **ESP32 Server (WiFiServer/WebServer API):** https://soifgo.github.io/soifgo/ESP32Server/ESP8266_wifi_api.html
+- **Fetching APIs (REST + JSON):** https://soifgo.github.io/soifgo/FetchingAPIs/Api-fetching_api.html
+- **Working with HTML Files:** https://soifgo.github.io/soifgo/WorkingwithHTMLFiles/html01.html
+- **Effects (Rotation, Gauge, Color Shift):** https://soifgo.github.io/soifgo/Effect/effects.html
+- **Voice to Serial Bluetooth:** https://soifgo.github.io/soifgo/serial_voice/serial_voice_tutorials.html
+- **Note Send and Receive:** https://soifgo.github.io/soifgo/note_out/note_out.html
+- **RANGMANG:** https://soifgo.github.io/soifgo/rangmang/Rangmang.html
+- **RANGMANG 2 (2D plotting):** https://soifgo.github.io/soifgo/rangmang2/rangmang2.html
+- **CMI209 (IoT project example):** https://soifgo.github.io/soifgo/cmi209/cmi209.html
 
 ### Working Examples (HTML + Bluetooth + Arduino)
 
-- **HTML Guide + 4 Examples:** https://soifgo.github.io/soifgo/tutorials/send_bluetooth_html/html_guide_1.html
+- **HTML Guide + 4 Examples:** https://soifgo.github.io/soifgo/send_bluetooth_html/html_guide_1.html
   - LED Blink
   - Sensor Readout
   - Speed Control
@@ -648,9 +648,9 @@ SoifGo is not a single application — it is an ecosystem of interrelated compon
 - **GitHub:** https://github.com/soifgo/soifgo
 - **Forum:** https://github.com/soifgo/soifgo/discussions
 - **Support:** ssmqqmss@gmail.com
-- **Complete User Guide:** https://soifgo.github.io/soifgo/tutorials/soifgo_info/soifgo_info.html
-- **HTML Guide:** https://soifgo.github.io/soifgo/tutorials/send_bluetooth_html/html_guide_1.html
-- **Voice Tutorial:** https://soifgo.github.io/soifgo/tutorials/serial_voice/serial_voice_tutorials.html
+- **Complete User Guide:** https://soifgo.github.io/soifgo/soifgo_info/soifgo_info.html
+- **HTML Guide:** https://soifgo.github.io/soifgo/send_bluetooth_html/html_guide_1.html
+- **Voice Tutorial:** https://soifgo.github.io/soifgo/serial_voice/serial_voice_tutorials.html
 - **Docs:** https://soifgo.github.io/soifgo/docs.html
 
 ---
