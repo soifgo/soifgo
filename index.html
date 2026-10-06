@@ -202,18 +202,22 @@
   }
   </script>
 
-  <!-- ============ THEME BOOT (before render) ============ -->
-  <script>
-    (function() {
+<!-- ============ THEME BOOT (before render) - FIXED ============ -->
+<script>
+  (function() {
+    try {
       var savedTheme = localStorage.getItem('soifgo-theme');
       if (savedTheme === 'light' || savedTheme === 'dark') {
         document.documentElement.setAttribute('data-theme', savedTheme);
       } else {
         document.documentElement.setAttribute('data-theme', 'dark');
       }
-    })();
-  </script>
-
+    } catch (e) {
+      // Fallback for Private Browsing mode
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  })();
+</script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
