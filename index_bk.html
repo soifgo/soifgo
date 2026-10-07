@@ -9,7 +9,7 @@
 
   <meta
     name="description"
-    content="Build Android controllers for Arduino, ESP32 &amp; IoT with HTML/CSS/JS. Bluetooth, MQTT, sensors. Free &amp; offline. Available in 22 languages."
+    content="SoifGo lets you build Android hardware controllers for Arduino, ESP32, ESP8266 and IoT using HTML, CSS and JavaScript. Bluetooth, MQTT, sensors, WebView. Free, offline, no native Android code."
   />
 
   <meta name="author" content="Saeid Moghadam" />
@@ -34,26 +34,6 @@
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="SoifGo Android Hardware Control Platform" />
   <meta property="og:locale" content="en_US" />
-  <meta property="og:locale:alternate" content="es_ES" />
-  <meta property="og:locale:alternate" content="zh_CN" />
-  <meta property="og:locale:alternate" content="fr_FR" />
-  <meta property="og:locale:alternate" content="de_DE" />
-  <meta property="og:locale:alternate" content="ja_JP" />
-  <meta property="og:locale:alternate" content="ru_RU" />
-  <meta property="og:locale:alternate" content="ar_AR" />
-  <meta property="og:locale:alternate" content="fa_IR" />
-  <meta property="og:locale:alternate" content="it_IT" />
-  <meta property="og:locale:alternate" content="hi_IN" />
-  <meta property="og:locale:alternate" content="tr_TR" />
-  <meta property="og:locale:alternate" content="ko_KR" />
-  <meta property="og:locale:alternate" content="pt_BR" />
-  <meta property="og:locale:alternate" content="he_IL" />
-  <meta property="og:locale:alternate" content="ur_PK" />
-  <meta property="og:locale:alternate" content="bn_IN" />
-  <meta property="og:locale:alternate" content="id_ID" />
-  <meta property="og:locale:alternate" content="ta_IN" />
-  <meta property="og:locale:alternate" content="th_TH" />
-  <meta property="og:locale:alternate" content="sw_KE" />
   <meta property="og:site_name" content="SoifGo" />
 
   <!-- ============ TWITTER ============ -->
@@ -85,7 +65,7 @@
     "softwareVersion": "1.42",
     "datePublished": "2025-01-01",
     "dateModified": "2026-06-01",
-    "inLanguage": ["en","es","zh-CN","fr","de","ja","ru","ar","fa","it","hi","tr","ko","pt","he","ckb","ur","bn","id","ta","th","sw"],
+    "inLanguage": ["en"],
     "isAccessibleForFree": true,
     "author": {
       "@type": "Person",
@@ -1247,28 +1227,6 @@
       .feature-card { padding: 18px 16px; }
       .feature-card h3 { font-size: 1.1rem; }
     }
-  
-  #languages { margin-top: 2.5rem; }
-  #languages .lang-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 12px;
-    margin-top: 16px;
-  }
-  #languages .lang-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 14px 16px;
-    font-size: 0.9rem;
-    line-height: 1.8;
-  }
-  #languages .lang-card strong {
-    display: block;
-    margin-bottom: 6px;
-    color: var(--primary);
-  }
-  #languages .lang-card p { margin: 0; }
   </style>
 </head>
 
@@ -2321,120 +2279,6 @@
       </div>
     </section>
 
-  
-    <section id="languages" class="ignore">
-  <h2>🌐 SoifGo — 22 languages</h2>
-
-  <div class="lang-grid">
-
-    <div class="lang-card" lang="es">
-      <strong>Español</strong>
-      <p>SoifGo es una plataforma gratuita para Android que permite crear controladores de hardware para Arduino, ESP32 e IoT con HTML y JavaScript: Bluetooth, MQTT y sensores del teléfono, funciona sin conexión y sin código nativo de Android.</p>
-    </div>
-
-    <div class="lang-card" lang="zh-CN">
-      <strong>简体中文</strong>
-      <p>SoifGo 是一个免费的安卓平台，使用 HTML 和 JavaScript 为 Arduino、ESP32 和物联网制作硬件控制器，支持蓝牙、MQTT 和手机传感器，可离线使用，无需原生安卓开发。</p>
-    </div>
-
-    <div class="lang-card" lang="fr">
-      <strong>Français</strong>
-      <p>SoifGo est une plateforme Android gratuite pour créer des contrôleurs matériels pour Arduino, ESP32 et l'IoT avec HTML et JavaScript : Bluetooth, MQTT et capteurs du téléphone, utilisable hors ligne, sans code Android natif.</p>
-    </div>
-
-    <div class="lang-card" lang="de">
-      <strong>Deutsch</strong>
-      <p>SoifGo ist eine kostenlose Android-Plattform, mit der Sie Hardware-Steuerungen für Arduino, ESP32 und IoT mit HTML und JavaScript erstellen: Bluetooth, MQTT und Handy-Sensoren, offline nutzbar, ohne nativen Android-Code.</p>
-    </div>
-
-    <div class="lang-card" lang="ja">
-      <strong>日本語</strong>
-      <p>SoifGo は、HTML と JavaScript で Arduino、ESP32、IoT 向けのハードウェアコントローラーを作れる無料の Android プラットフォームです。Bluetooth、MQTT、スマートフォンのセンサーに対応し、オフラインで動作し、ネイティブ Android 開発は不要です。</p>
-    </div>
-
-    <div class="lang-card" lang="ru">
-      <strong>Русский</strong>
-      <p>SoifGo — бесплатная платформа для Android, позволяющая создавать контроллеры для Arduino, ESP32 и IoT на HTML и JavaScript: Bluetooth, MQTT и датчики телефона, работает офлайн, без нативного кода Android.</p>
-    </div>
-
-    <div class="lang-card" lang="ar" dir="rtl">
-      <strong>العربية</strong>
-      <p>SoifGo منصة أندرويد مجانية لإنشاء وحدات تحكم في الأجهزة لـ Arduino وESP32 وإنترنت الأشياء باستخدام HTML وJavaScript، مع دعم البلوتوث وMQTT وحساسات الهاتف، وتعمل دون اتصال بالإنترنت ودون كتابة كود أندرويد أصلي.</p>
-    </div>
-
-    <div class="lang-card" lang="fa" dir="rtl">
-      <strong>فارسی</strong>
-      <p>SoifGo یک پلتفرم رایگان اندروید برای ساخت کنترلر سخت‌افزاری آردوینو، ESP32 و IoT با HTML و جاوااسکریپت است؛ با پشتیبانی از بلوتوث، MQTT و سنسورهای گوشی، قابل استفاده آفلاین و بدون نیاز به کدنویسی native اندروید.</p>
-    </div>
-
-    <div class="lang-card" lang="it">
-      <strong>Italiano</strong>
-      <p>SoifGo è una piattaforma Android gratuita per creare controller hardware per Arduino, ESP32 e IoT con HTML e JavaScript: Bluetooth, MQTT e sensori del telefono, funziona offline e senza codice Android nativo.</p>
-    </div>
-
-    <div class="lang-card" lang="hi">
-      <strong>हिन्दी</strong>
-      <p>SoifGo एक मुफ़्त Android प्लेटफ़ॉर्म है, जिससे आप HTML और JavaScript के ज़रिए Arduino, ESP32 और IoT के लिए हार्डवेयर कंट्रोलर बना सकते हैं। यह ब्लूटूथ, MQTT और फ़ोन सेंसर का समर्थन करता है, ऑफ़लाइन चलता है और इसमें नेटिव Android कोड की ज़रूरत नहीं है।</p>
-    </div>
-
-    <div class="lang-card" lang="tr">
-      <strong>Türkçe</strong>
-      <p>SoifGo, HTML ve JavaScript ile Arduino, ESP32 ve IoT için donanım kontrolcüleri oluşturmanızı sağlayan ücretsiz bir Android platformudur: Bluetooth, MQTT ve telefon sensörleri, çevrimdışı çalışır, yerel Android kodu gerektirmez.</p>
-    </div>
-
-    <div class="lang-card" lang="ko">
-      <strong>한국어</strong>
-      <p>SoifGo는 HTML과 JavaScript로 Arduino, ESP32, IoT용 하드웨어 컨트롤러를 만들 수 있는 무료 Android 플랫폼입니다. 블루투스, MQTT, 휴대폰 센서를 지원하며 오프라인에서 작동하고 네이티브 Android 코드가 필요 없습니다.</p>
-    </div>
-
-    <div class="lang-card" lang="pt">
-      <strong>Português</strong>
-      <p>O SoifGo é uma plataforma Android gratuita para criar controladores de hardware para Arduino, ESP32 e IoT com HTML e JavaScript: Bluetooth, MQTT e sensores do celular, funciona offline e sem código Android nativo.</p>
-    </div>
-
-    <div class="lang-card" lang="he" dir="rtl">
-      <strong>עברית</strong>
-      <p>SoifGo היא פלטפורמת אנדרואיד חינמית ליצירת בקרי חומרה עבור Arduino, ESP32 ו-IoT באמצעות HTML ו-JavaScript, עם תמיכה ב-Bluetooth, ב-MQTT ובחיישני הטלפון. היא פועלת במצב לא מקוון וללא צורך בקוד אנדרואיד מקורי.</p>
-    </div>
-
-    <div class="lang-card" lang="ckb" dir="rtl">
-      <strong>کوردی</strong>
-      <p>SoifGo پلاتفۆرمێکی ئەندرۆیدی بێبەرامبەرە بۆ دروستکردنی کۆنتڕۆڵەری ھاردوێر بۆ Arduino، ESP32 و IoT بە HTML و JavaScript، لەگەڵ پشتگیری بلوتوس، MQTT و هەستەوەرەکانی مۆبایل. بەبێ ئینتەرنێت کار دەکات و پێویستی بە کۆدی ئەندرۆیدی ناتیڤ نییە.</p>
-    </div>
-
-    <div class="lang-card" lang="ur" dir="rtl">
-      <strong>اردو</strong>
-      <p>SoifGo ایک مفت اینڈرائیڈ پلیٹ فارم ہے جس کی مدد سے HTML اور JavaScript کے ذریعے Arduino، ESP32 اور IoT کے لیے ہارڈویئر کنٹرولر بنائے جا سکتے ہیں۔ یہ بلوٹوتھ، MQTT اور فون سینسرز کو سپورٹ کرتا ہے، آف لائن کام کرتا ہے اور اس میں نیٹو اینڈرائیڈ کوڈ کی ضرورت نہیں۔</p>
-    </div>
-
-    <div class="lang-card" lang="bn">
-      <strong>বাংলা</strong>
-      <p>SoifGo একটি বিনামূল্যের Android প্ল্যাটফর্ম, যা দিয়ে HTML ও JavaScript ব্যবহার করে Arduino, ESP32 এবং IoT-এর জন্য হার্ডওয়্যার কন্ট্রোলার তৈরি করা যায়। এটি ব্লুটুথ, MQTT ও ফোনের সেন্সর সমর্থন করে, অফলাইনে কাজ করে এবং নেটিভ Android কোডের প্রয়োজন হয় না।</p>
-    </div>
-
-    <div class="lang-card" lang="id">
-      <strong>Bahasa Indonesia</strong>
-      <p>SoifGo adalah platform Android gratis untuk membuat pengontrol perangkat keras bagi Arduino, ESP32, dan IoT dengan HTML dan JavaScript: Bluetooth, MQTT, dan sensor ponsel, bisa digunakan offline, tanpa kode Android native.</p>
-    </div>
-
-    <div class="lang-card" lang="ta">
-      <strong>தமிழ்</strong>
-      <p>SoifGo என்பது HTML மற்றும் JavaScript மூலம் Arduino, ESP32 மற்றும் IoT-க்கான ஹார்டுவேர் கட்டுப்பாட்டாளர்களை உருவாக்க உதவும் இலவச Android தளம். இது புளூடூத், MQTT மற்றும் தொலைபேசி சென்சார்களை ஆதரிக்கிறது, ஆஃப்லைனில் இயங்குகிறது, நேட்டிவ் Android குறியீடு தேவையில்லை.</p>
-    </div>
-
-    <div class="lang-card" lang="th">
-      <strong>ไทย</strong>
-      <p>SoifGo เป็นแพลตฟอร์ม Android ฟรีสำหรับสร้างตัวควบคุมฮาร์ดแวร์สำหรับ Arduino, ESP32 และ IoT ด้วย HTML และ JavaScript รองรับบลูทูธ, MQTT และเซนเซอร์ของโทรศัพท์ ใช้งานแบบออฟไลน์ได้ และไม่ต้องเขียนโค้ด Android แบบเนทีฟ</p>
-    </div>
-
-    <div class="lang-card" lang="sw">
-      <strong>Kiswahili</strong>
-      <p>SoifGo ni jukwaa la Android lisilo na malipo la kutengeneza vidhibiti vya vifaa kwa ajili ya Arduino, ESP32 na IoT kwa kutumia HTML na JavaScript: Bluetooth, MQTT na vihisi vya simu, hufanya kazi bila mtandao, na haihitaji msimbo asilia wa Android.</p>
-    </div>
-
-  </div>
-</section>
-
   </main>
 
   <footer>
@@ -2705,53 +2549,6 @@
       currentLangLabel.textContent = LANGUAGES[DEFAULT_LANG].label;
       return null;
     }
-
-    // Auto language selection (runs before the saved-language restore below)
-    // Priority: 1) ?lang=xxx  2) referrer from /intro/xx/  3) browser language (first visit only)
-    (function () {
-      try {
-        var MAP = { es:'spanish', zh:'chinese_simplified', fr:'french', de:'deutsch', ja:'japanese',
-                    ru:'russian', ar:'arabic', fa:'persian', it:'italian', hi:'hindi', tr:'turkish',
-                    ko:'korean', pt:'portuguese', he:'hebrew', iw:'hebrew', ckb:'kurdish_sorani',
-                    ur:'urdu', bn:'bengali', id:'indonesian', 'in':'indonesian', ta:'tamil',
-                    th:'thai', sw:'swahili' };
-        var chosen = null;
-
-        // 1) explicit ?lang=persian / ?lang=english
-        var q = new URLSearchParams(location.search).get('lang');
-        if (q && LANGUAGES.hasOwnProperty(q)) { chosen = q; }
-
-        // 2) visitor came from one of our intro pages: /intro/fa/ -> persian
-        if (!chosen && document.referrer && document.referrer.indexOf(location.origin) === 0) {
-          var m = document.referrer.match(/\/intro\/([a-z-]+)\/?/i);
-          if (m && MAP[m[1].toLowerCase()]) { chosen = MAP[m[1].toLowerCase()]; }
-        }
-
-        // 3) first visit only: use the browser's preferred language
-        if (!chosen && !localStorage.getItem('soifgo-lang') && !localStorage.getItem('soifgo-lang-auto')) {
-          var list = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || 'en'];
-          for (var i = 0; i < list.length; i++) {
-            var l = String(list[i]).toLowerCase();
-            var base = l.split('-')[0];
-            if (base === 'en') { break; }                         // English stays English
-            if (base === 'zh' && /^zh-(tw|hk|mo|hant)/.test(l)) { break; }   // no Traditional Chinese version
-            if (MAP[base]) { chosen = MAP[base]; break; }
-          }
-        }
-
-        localStorage.setItem('soifgo-lang-auto', '1');            // never auto-detect again
-        if (chosen === 'english') { localStorage.removeItem('soifgo-lang'); }
-        else if (chosen) { localStorage.setItem('soifgo-lang', chosen); }
-      } catch (e) {}
-      // keep the address bar clean: drop ?lang= after it has been read
-      try {
-        var u = new URL(location.href);
-        if (u.searchParams.has('lang')) {
-          u.searchParams.delete('lang');
-          history.replaceState(null, '', u.pathname + u.search + u.hash);
-        }
-      } catch (e) {}
-    })();
 
     buildLanguageList();
     var restored = restoreLanguageUI();
