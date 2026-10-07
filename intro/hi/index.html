@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="hi">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SoifGo - ساخت اپ و ابزار دلخواه اندروید با HTML | کنترلر آردوینو و MQTT</title>
-  <meta name="description" content="SoifGo پلتفرم رایگان اندروید برای ساخت ابزار دلخواه با HTML و جاوااسکریپت است: ماشین‌حساب، داشبورد، ابزار آموزشی و کنترلر بلوتوث و MQTT برای آردوینو و ESP32 بدون نیاز به کدنویسی native." />
-  <link rel="canonical" href="https://soifgo.github.io/soifgo/intro/fa/" />
+  <title>SoifGo - HTML के साथ कस्टम एंड्रॉइड टूल बनाएं | Arduino और MQTT नियंत्रण</title>
+  <meta name="description" content="SoifGo HTML और JavaScript का उपयोग करके अपने स्वयं के टूल बनाने के लिए एक निःशुल्क एंड्रॉइड ऐप है: कैलकुलेटर, डैशबोर्ड, शिक्षण उपकरण और Arduino और ESP32 के लिए ब्लूटूथ और MQTT नियंत्रण।" />
+  <link rel="canonical" href="https://soifgo.github.io/soifgo/intro/hi/" />
   
   <!-- Open Graph / Social -->
-  <meta property="og:title" content="SoifGo - ساخت اپ و ابزار دلخواه اندروید با HTML و کنترلر سخت‌افزار" />
-  <meta property="og:description" content="ماشین‌حساب، ابزار آموزشی، داشبورد و کنترلر سخت‌افزار را با HTML بسازید و روی اندروید اجرا کنید. رایگان، آفلاین و بدون تبلیغات." />
+  <meta property="og:title" content="SoifGo - HTML के साथ कस्टम एंड्रॉइड टूल और हार्डवेयर नियंत्रण" />
+  <meta property="og:description" content="HTML के साथ कैलकुलेटर, डैशबोर्ड और हार्डवेयर नियंत्रण बनाएं और उन्हें एंड्रॉइड पर चलाएं। निःशुल्क, विज्ञापन-मुक्त और ऑफ़लाइन काम करता है।" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://soifgo.github.io/soifgo/intro/fa/" />
+  <meta property="og:url" content="https://soifgo.github.io/soifgo/intro/hi/" />
   <meta property="og:image" content="https://soifgo.github.io/soifgo/soifgo-logo.png" />
-  <meta property="og:locale" content="fa_IR" />
+  <meta property="og:locale" content="hi_IN" />
 
   <style>
     :root { --bg:#0f172a; --card:#1e293b; --text:#e2e8f0; --muted:#94a3b8; --primary:#38bdf8; --border:#334155; }
@@ -21,7 +21,7 @@
       :root { --bg:#f8fafc; --card:#ffffff; --text:#0f172a; --muted:#475569; --primary:#0369a1; --border:#e2e8f0; }
     }
     * { box-sizing:border-box; margin:0; padding:0; }
-    body { background:var(--bg); color:var(--text); line-height:1.9; font-family:Vazirmatn,Tahoma,"Segoe UI",sans-serif; }
+    body { background:var(--bg); color:var(--text); line-height:1.9; font-family:Tahoma, "Segoe UI", sans-serif; }
     .wrap { max-width:860px; margin:0 auto; padding:24px 18px 48px; }
     header { text-align:center; padding:24px 0 8px; }
     header img.logo { width:84px; height:84px; border-radius:18px; }
@@ -29,7 +29,7 @@
     h2 { font-size:1.3rem; margin:36px 0 12px; color:var(--primary); }
     .lead { color:var(--muted); font-size:1.05rem; }
     p { margin-bottom:10px; }
-    .shots { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:22px 0 4px; direction:ltr; }
+    .shots { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:22px 0 4px; }
     .shots img { width:100%; border-radius:12px; border:1px solid var(--border); }
     .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; }
     .card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:14px 16px; }
@@ -37,10 +37,10 @@
     .card p { color:var(--muted); font-size:.93rem; margin:0; }
     ul.use { padding-inline-start:22px; }
     ul.use li { margin-bottom:6px; }
-    details { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:12px 16px; margin-bottom:10px; }
+    details { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:14px 16px; margin-bottom:10px; }
     summary { cursor:pointer; font-weight:bold; }
     details p { margin:8px 0 0; color:var(--muted); }
-    code { direction:ltr; unicode-bidi:isolate; background:var(--card); border:1px solid var(--border); border-radius:6px; padding:1px 6px; font-size:.9em; }
+    code { background:var(--card); border:1px solid var(--border); border-radius:6px; padding:1px 6px; font-size:.9em; }
     .cta { text-align:center; margin-top:40px; }
     .btn { display:inline-block; background:var(--primary); color:#fff; text-decoration:none; font-weight:bold; padding:14px 34px; border-radius:12px; font-size:1.1rem; }
     .btn:hover { opacity:.9; }
@@ -54,93 +54,93 @@
 <div class="wrap">
 
   <header>
-    <img class="logo" src="../../soifgo-logo.png" alt="لوگوی SoifGo" />
-    <h1>هر ابزاری که در ذهن دارید را با HTML بسازید و روی اندروید اجرا کنید</h1>
-    <p class="lead">SoifGo یک اپ رایگان اندروید برای ساخت و بایگانی ابزار دلخواه است: ماشین‌حساب، شبیه‌ساز، ابزار آموزشی، داشبورد و حتی کنترلر سخت‌افزار، بدون نوشتن کد native اندروید.</p>
+    <img class="logo" src="../../soifgo-logo.png" alt="SoifGo लोगो" />
+    <h1>HTML के साथ अपनी पसंद का कोई भी टूल बनाएं और उसे एंड्रॉइड पर चलाएं</h1>
+    <p class="lead">SoifGo कस्टम टूल बनाने और संग्रहीत करने के लिए एक निःशुल्क एंड्रॉइड ऐप है: कैलकुलेटर, सिमुलेटर, शिक्षण उपकरण, डैशबोर्ड और हार्डवेयर नियंत्रक - किसी मूल (native) एंड्रॉइड प्रोग्रामिंग की आवश्यकता नहीं है।</p>
   </header>
 
   <div class="shots">
-    <img src="../../icon/pic1.jpg" alt="اسکرین‌شات ۱ از SoifGo" loading="lazy" />
-    <img src="../../icon/pic2.jpg" alt="اسکرین‌شات ۲ از SoifGo" loading="lazy" />
-    <img src="../../icon/pic3.jpg" alt="اسکرین‌شات ۳ از SoifGo" loading="lazy" />
+    <img src="../../icon/pic1.jpg" alt="SoifGo स्क्रीनशॉट 1" loading="lazy" />
+    <img src="../../icon/pic2.jpg" alt="SoifGo स्क्रीनशॉट 2" loading="lazy" />
+    <img src="../../icon/pic3.jpg" alt="SoifGo स्क्रीनशॉट 3" loading="lazy" />
   </div>
 
-  <h2>SoifGo؛ اپ اندرویدی سریع و بهینه، برای چه کاری؟</h2>
-  <p>این روزها بیشتر نیازها، از محاسبات و شبیه‌سازی گرفته تا کنترلرها، داشبوردها، پنل‌های خاص و حتی اپ دلخواه، روی پلتفرم‌های زیادی قابل اجراست. ما به معایب آن‌ها نمی‌پردازیم؛ سراغ قابلیت‌های SoifGo می‌رویم.</p>
-  <p>SoifGo ابزارهای شما را به‌صورت HTML اجرا و در پوشه‌ها بایگانی می‌کند. چون HTML هر چیزی را که در یک صفحه‌ی وب ممکن است پشتیبانی می‌کند، دامنه‌ی کاربردش گسترده است: از ماشین‌حساب و شبیه‌ساز تا ابزار آموزشی و داشبورد، و در صورت نیاز، کنترل سخت‌افزار از طریق بلوتوث و MQTT. اگر می‌توانید یک صفحه‌ی وب بنویسید، یا خواسته‌تان را به یک دستیار هوش مصنوعی بگویید، می‌توانید ابزار خودتان را بسازید.</p>
+  <h2>SoifGo; एक तेज़ और कुशल एंड्रॉइड ऐप, यह किसके लिए है?</h2>
+  <p>आजकल, अधिकांश आवश्यकताएं - गणनाओं और सिमुलेशन से लेकर डैशबोर्ड और कस्टम नियंत्रण पैनल तक - आसानी से कार्यान्वित की जा सकती हैं। आइए SoifGo की ताकत पर ध्यान केंद्रित करें।</p>
+  <p>SoifGo आपके टूल को HTML प्रारूप में चलाता है और उन्हें फ़ोल्डर्स में व्यवस्थित करता है। चूँकि HTML वेब पेजों पर संभव हर चीज़ का समर्थन करता है, इसलिए इसका उपयोग क्षेत्र बेहद व्यापक है: कैलकुलेटर और सिमुलेशन से लेकर शिक्षण उपकरणों, डैशबोर्ड और आवश्यक होने पर ब्लूटूथ और MQTT के माध्यम से हार्डवेयर नियंत्रण तक। यदि आप एक वेब पेज लिख सकते हैं या किसी AI सहायक को अपनी ज़रूरतें बता सकते हैं, तो आप अपना खुद का टूल बना सकते हैं।</p>
 
-  <h2>SoifGo برای چه کسانی است؟</h2>
+  <h2>SoifGo किसके लिए डिज़ाइन किया गया है?</h2>
   <div class="grid">
-    <div class="card"><h3>📐 ریاضی‌دان‌ها و دانشجوها</h3><p>ماشین‌حساب‌های تخصصی، رسم نمودار و توابع، شبیه‌سازی و ابزار حل مسئله، دقیقاً مطابق نیاز خودتان.</p></div>
-    <div class="card"><h3>🎓 معلم‌ها و مدرس‌ها</h3><p>ابزار تعاملی برای کلاس، تمرین و آزمون. فایل را برای دانش‌آموزان و کارآموزان بفرستید تا خودشان اجرا کنند.</p></div>
-    <div class="card"><h3>🏗️ مهندس‌های همه‌ی رشته‌ها</h3><p>ماشین‌حساب مهندسی، تبدیل واحد و جدول‌های محاسباتی شخصی که در محل کار و بدون اینترنت هم در دسترس‌اند.</p></div>
-    <div class="card"><h3>🔌 مکرها و الکترونیک‌کارها</h3><p>کنترلر و داشبورد بلوتوث و MQTT برای آردوینو، ESP32، ESP8266 و Raspberry Pi.</p></div>
-    <div class="card"><h3>💡 هر کسی که ایده‌ای دارد</h3><p>ایده را به یک دستیار هوش مصنوعی بگویید، کد HTML بگیرید و در SoifGo اجرا کنید.</p></div>
+    <div class="card"><h3>📐 गणितज्ञ और छात्र</h3><p>विशिष्ट कैलकुलेटर, ग्राफ़ और फ़ंक्शन, सिमुलेशन और समस्या-समाधान टूल जो आपकी आवश्यकताओं के अनुसार अनुकूलित हैं।</p></div>
+    <div class="card"><h3>🎓 शिक्षक और प्रशिक्षक</h3><p>कक्षा के लिए इंटरैक्टिव टूल, अभ्यास और क्विज़। फ़ाइल को छात्रों या प्रशिक्षुओं को भेजें ताकि वे इसे सीधे चला सकें।</p></div>
+    <div class="card"><h3>🏗️ सभी क्षेत्रों के इंजीनियर</h3><p>इंजीनियरिंग कैलकुलेटर, यूनिट कन्वर्टर और व्यक्तिगत स्प्रेडशीट जो काम पर और ऑफ़लाइन हमेशा उपलब्ध रहते हैं।</p></div>
+    <div class="card"><h3>🔌 हॉबीस्ट और इलेक्ट्रॉनिक्स डेवलपर</h3><p>Arduino, ESP32, ESP8266 और Raspberry Pi के लिए नियंत्रण पैनल और ब्लूटूथ और MQTT मॉड्यूल।</p></div>
+    <div class="card"><h3>💡 विचार रखने वाला कोई भी व्यक्ति</h3><p>AI सहायक को अपना विचार बताएं, HTML कोड प्राप्त करें और इसे SoifGo में चलाएं।</p></div>
   </div>
 
-  <h2>بایگانی پوشه و صفحه</h2>
-  <p>SoifGo به شما پوشه و صفحه می‌دهد تا کارهایتان را مرتب بایگانی کنید. در هر صفحه <strong>۴۰ دکمه</strong> و <strong>۱۰ اسلایدر</strong> دارید و هر دکمه را می‌توانید برای رفتارهای تعریف‌شده تنظیم کنید؛ از جمله پیمایش بین پوشه‌ها و صفحه‌های SoifGo. به این ترتیب می‌توانید منوهای زیادی بسازید.</p>
-  <p>دکمه‌ها طراحی اولیه‌ی آماده دارند: رنگ، آیکون، نام، فونت، صدا و ویبره. با درگ‌ودراپ هم جابه‌جا می‌شوند. هر دکمه می‌تواند رفتارهای اولیه‌ای مثل ارسال و دریافت داشته باشد.</p>
+  <h2>फ़ोल्डर और पेज प्रबंधन</h2>
+  <p>SoifGo आपके काम को बड़े करीने से व्यवस्थित करने के लिए फ़ोल्डर और पेज प्रदान करता है। प्रत्येक पेज पर आपके पास <strong>40 बटन</strong> और <strong>10 स्लाइडर</strong> होते हैं, और आप मल्टी-लेवल मेनू बनाने के लिए SoifGo फ़ोल्डर्स और पेजों के बीच नेविगेशन सहित विशिष्ट व्यवहारों के लिए प्रत्येक बटन को कॉन्फ़िगर कर सकते हैं।</p>
+  <p>बटन में पूर्व-परिभाषित डिज़ाइन विकल्प होते हैं: रंग, आइकन, नाम, फ़ॉन्ट, ध्वनि, कंपन और ड्रैग-एंड-ड्रॉप समर्थन। प्रत्येक बटन बुनियादी इनपुट और आउटपुट कार्य कर सकता है।</p>
 
-  <h2>رفتار وب، هم آنلاین و هم آفلاین</h2>
-  <p>«رفتار وب» (WebView) به شما کمک می‌کند ایده‌ها و خواسته‌هایتان را با بیشترین قابلیت و به‌صورت HTML داشته باشید، چه آنلاین و چه آفلاین. کافی است خواسته‌تان را به یک دستیار هوش مصنوعی بگویید و کد HTML بخواهید. بعد دو راه دارید:</p>
+  <h2>वेब व्यवहार, ऑनलाइन और ऑफ़लाइन</h2>
+  <p>"वेब व्यवहार" (WebView) आपको ऑनलाइन या ऑफ़लाइन होने पर, HTML प्रारूप में अधिकतम लचीलेपन के साथ अपने विचारों और आवश्यकताओं को महसूस करने में मदद करता है। बस AI सहायक को अपनी आवश्यकता बताएं और HTML कोड का अनुरोध करें। फिर आपके पास दो विकल्प हैं:</p>
   <ul class="use">
-    <li>فایل را دانلود کنید و با رفتار وب آفلاین در SoifGo بارگذاری (ریلود) کنید.</li>
-    <li>یا کد را کپی کنید و در ویرایشگر HTML خود SoifGo پیست کنید.</li>
+    <li>फ़ाइल डाउनलोड करें और SoifGo में ऑफ़लाइन वेब व्यवहार का उपयोग करके इसे लोड (री-लोड) करें।</li>
+    <li>या कोड को कॉपी करें और इसे SoifGo के अंतर्निहित HTML संपादक में पेस्ट करें।</li>
   </ul>
-  <p>هر دو روش جواب می‌دهد و وب‌اپ شما در پوشه‌ی SoifGo بایگانی می‌شود. چه یک ماشین‌حساب باشد، چه یک کنترلر بلوتوث، چه مانیتورینگ اینترنت اشیا یا هر چیز دلخواه دیگر.</p>
+  <p>दोनों विधियाँ काम करती हैं, और आपका वेब ऐप SoifGo फ़ोल्डर में संग्रहीत हो जाता है; चाहे वह कैलकुलेटर हो, ब्लूटूथ नियंत्रक हो, IoT मॉनिटरिंग हो या कोई अन्य कस्टम टूल हो।</p>
 
-  <h2>۴۰ وب‌اپ متفاوت در هر صفحه</h2>
-  <p>می‌توانید در هر صفحه ۴۰ وب‌اپ متفاوت داشته باشید. لازم نیست هر بار آن‌ها را از دستیار هوش مصنوعی بخواهید و در حالت آفلاین هم می‌توانید با آن‌ها کار کنید. حتی می‌توانید آن‌ها را برای همکاران، دوستان یا کارآموزان بفرستید تا دانلود و اجرایشان کنند.</p>
+  <h2>प्रति पेज 40 अलग-अलग वेब ऐप्स</h2>
+  <p>आपके पास प्रत्येक पेज पर अधिकतम 40 अलग-अलग वेब ऐप्स हो सकते हैं। आपको AI सहायक से बार-बार पूछने की आवश्यकता नहीं है, और आप उनके साथ ऑफ़लाइन काम कर सकते हैं। आप उन्हें डाउनलोड करने और चलाने के लिए सहकर्मियों, दोस्तों या प्रशिक्षुओं के साथ भी साझा कर सकते हैं।</p>
 
-  <h2>قابلیت‌ها</h2>
+  <h2>विशेषताएँ</h2>
   <div class="grid">
-    <div class="card"><h3>🌐 WebView کامل</h3><p>موتور مرورگر مدرن: Canvas، SVG، WebGL و کتابخانه‌هایی مثل Chart.js، D3 و Three.js برای نمودار، شبیه‌سازی و نمایش سه‌بعدی.</p></div>
-    <div class="card"><h3>🧩 حالت کلاسیک</h3><p>دکمه و اسلایدر آماده، بدون هیچ کدی، برای کنترل‌ها و منوهای ساده.</p></div>
-    <div class="card"><h3>💾 ذخیره‌سازی محلی</h3><p>نگه‌داری داده‌ها با <code>localStorage</code> حتی بعد از بستن برنامه.</p></div>
-    <div class="card"><h3>🟢 سنسورهای گوشی</h3><p>نور محیط، حرکت (شتاب‌سنج) و مغناطیس‌سنج به‌صورت زنده.</p></div>
-    <div class="card"><h3>🎤 میکروفون و تشخیص گفتار</h3><p>تبدیل گفتار به متن و استفاده از آن در ابزارهایتان یا ارسال به دستگاه‌ها.</p></div>
-    <div class="card"><h3>🔵 بلوتوث سریال</h3><p>ارسال و دریافت متن با HC-05، HC-06، JDY-31، آردوینو، ESP32 و Raspberry Pi.</p></div>
-    <div class="card"><h3>🟣 کلاینت MQTT</h3><p>اتصال به هر بروکر (tcp یا ssl)، publish و subscribe و بررسی وضعیت اتصال.</p></div>
-    <div class="card"><h3>🟠 HTTP API</h3><p>ارسال JSON به هر آدرس و دریافت و استخراج مقدار از پاسخ.</p></div>
+    <div class="card"><h3>🌐 पूर्ण WebView</h3><p>आधुनिक ब्राउज़र इंजन: ग्राफ़, सिमुलेशन और 3D विज़ुअलाइज़ेशन के लिए Canvas, SVG, WebGL और Chart.js, D3 और Three.js जैसी लाइब्रेरी।</p></div>
+    <div class="card"><h3>🧩 क्लासिक मोड</h3><p>सरल नियंत्रण और मेनू के लिए बिना किसी कोड के तैयार बटन और स्लाइडर।</p></div>
+    <div class="card"><h3>💾 स्थानीय संग्रहण (LocalStorage)</h3><p>ऐप बंद होने के बाद भी <code>localStorage</code> का उपयोग करके डेटा बनाए रखना।</p></div>
+    <div class="card"><h3>🟢 फोन सेंसर</h3><p>लाइव और वास्तविक समय में परिवेशी प्रकाश, गति (एक्सीलरोमीटर) और मैग्नेटोमीटर।</p></div>
+    <div class="card"><h3>🎤 माइक्रोफ़ोन और वाक् पहचान</h3><p>भाषण को पाठ में बदलें और इसे अपने टूल में उपयोग करें या उपकरणों को भेजें।</p></div>
+    <div class="card"><h3>🔵 ब्लूटूथ सीरियल</h3><p>HC-05, HC-06, JDY-31, Arduino, ESP32 और Raspberry Pi के साथ टेक्स्ट भेजना और प्राप्त करना।</p></div>
+    <div class="card"><h3>🟣 MQTT क्लाइंट</h3><p>किसी भी ब्रोकर (tcp या ssl) से कनेक्शन, पब्लिश और सब्सक्राइबर, और कनेक्शन स्थिति की निगरानी।</p></div>
+    <div class="card"><h3>🟠 HTTP API</h3><p>किसी भी पते पर JSON भेजना, प्रतिक्रिया से मान प्राप्त करना और निकालना।</p></div>
   </div>
 
-  <h2>چه چیزهایی می‌توان ساخت؟</h2>
+  <h2>क्या बनाया जा सकता है?</h2>
   <ul class="use">
-    <li>ماشین‌حساب و ابزارهای محاسباتی تخصصی</li>
-    <li>رسم نمودار، شبیه‌سازی و تصویرسازی داده</li>
-    <li>ابزار آموزشی تعاملی، تمرین و آزمون</li>
-    <li>نمایش سه‌بعدی و ابزارهای علمی</li>
-    <li>داشبورد و پنل‌های خاص برای کار خودتان</li>
-    <li>کنترل LED، موتور، رله و ربات با بلوتوث، و پل ارتباطی بلوتوث به MQTT</li>
-    <li>کنترل صوتی دستگاه‌ها با گفتار</li>
+    <li>विशिष्ट कैलकुलेटर और गणना उपकरण</li>
+    <li>ग्राफ़, सिमुलेशन और डेटा विज़ुअलाइज़ेशन</li>
+    <li>इंटरैक्टिव शिक्षण उपकरण, अभ्यास और क्विज़</li>
+    <li>3D प्रस्तुतियाँ और वैज्ञानिक उपकरण</li>
+    <li>आपके काम के लिए डैशबोर्ड और कस्टम नियंत्रण पैनल</li>
+    <li>ब्लूटूथ और ब्लूटूथ से MQTT ब्रिज के माध्यम से लाइट (LED), मोटर, रिले और रोबोट का नियंत्रण</li>
+    <li>बोले गए आदेशों द्वारा उपकरणों का ध्वनि नियंत्रण</li>
   </ul>
 
-  <h2>سؤالات متداول</h2>
+  <h2>अक्सर पूछे जाने वाले प्रश्न (FAQ)</h2>
   <details>
-    <summary>آیا SoifGo فقط برای آردوینو و الکترونیک است؟</summary>
-    <p>خیر. اتصال به سخت‌افزار فقط یکی از قابلیت‌هاست. چون ابزارها HTML هستند، هر چیزی که در یک صفحه‌ی وب ممکن است، مثل محاسبه، نمودار، شبیه‌سازی و ابزار آموزشی، در SoifGo هم قابل اجراست.</p>
+    <summary>क्या SoifGo केवल Arduino और इलेक्ट्रॉनिक्स के लिए है?</summary>
+    <p>नहीं। हार्डवेयर कनेक्शन केवल एक विशेषता है। चूँकि टूल HTML पर आधारित हैं, वेब पेजों पर जो संभव है (जैसे गणना, ग्राफ़, सिमुलेशन और शिक्षण उपकरण) वह SoifGo में भी सुचारू रूप से काम करता है।</p>
   </details>
   <details>
-    <summary>آیا SoifGo رایگان است؟</summary>
-    <p>بله. رایگان است و تبلیغات و خرید درون‌برنامه‌ای ندارد.</p>
+    <summary>क्या SoifGo ऐप निःशुल्क है?</summary>
+    <p>हाँ, यह पूरी तरह से निःशुल्क है, इसमें कोई विज्ञापन या इन-ऐप खरीदारी नहीं है।</p>
   </details>
   <details>
-    <summary>آیا بدون اینترنت کار می‌کند؟</summary>
-    <p>ابزارهای HTML، بلوتوث و سنسورهای گوشی بدون اینترنت کار می‌کنند. فقط MQTT و HTTP به اینترنت یا شبکه نیاز دارند.</p>
+    <summary>क्या यह ऑफ़लाइन काम करता है?</summary>
+    <p>HTML टूल, ब्लूटूथ और फोन सेंसर ऑफ़लाइन काम करते हैं। केवल MQTT और HTTP के लिए इंटरनेट या स्थानीय नेटवर्क कनेक्शन की आवश्यकता होती है।</p>
   </details>
   <details>
-    <summary>اگر بخواهم به سخت‌افزار وصل کنم، با چه چیزی سازگار است؟</summary>
-    <p>هر دستگاهی که از بلوتوث SPP (مثل HC-05 و HC-06)، MQTT یا HTTP REST استفاده کند؛ از جمله آردوینو، ESP32، ESP8266 و Raspberry Pi.</p>
+    <summary>हार्डवेयर कनेक्शन के लिए कौन से सिस्टम संगत हैं?</summary>
+    <p>कोई भी डिवाइस जो ब्लूटूथ SPP (जैसे HC-05 और HC-06), MQTT या HTTP REST का समर्थन करता है; जिसमें Arduino, ESP32, ESP8266 और Raspberry Pi शामिल हैं।</p>
   </details>
   <details>
-    <summary>برای شروع به چه چیزی نیاز دارم؟</summary>
-    <p>دانش پایه‌ی HTML کافی است. حتی بدون آن هم می‌توانید خواسته‌تان را به یک دستیار هوش مصنوعی بگویید و کد HTML بگیرید. آموزش‌ها و نمونه‌های آماده در صفحه‌ی اصلی موجودند.</p>
+    <summary>शुरू करने के लिए मुझे क्या चाहिए?</summary>
+    <p>HTML का बुनियादी ज्ञान पर्याप्त है। इसके बिना भी, आप AI सहायक से HTML कोड मांग सकते हैं। होम पेज पर ट्यूटोरियल और तैयार उदाहरण उपलब्ध हैं।</p>
   </details>
 
   <div class="cta">
-    <a class="btn" href="https://soifgo.github.io/soifgo/?lang=persian" data-lang="persian">ورود به SoifGo ←</a>
-    <small>صفحه‌ی اصلی با دانلود، آموزش‌ها و مستندات باز می‌شود و ترجمه‌ی فارسی خودکار فعال است.</small>
+    <a class="btn" href="https://soifgo.github.io/soifgo/?lang=hindi" data-lang="hindi">SoifGo पर जाएं ←</a>
+    <small>होम पेज डाउनलोड, ट्यूटोरियल और दस्तावेज़ीकरण के साथ खुलता है, साथ ही स्वचालित हिंदी अनुवाद सक्षम होता है।</small>
   </div>
 
   <footer>
@@ -149,8 +149,6 @@
 
 </div>
 <script>
-  // Remember the chosen language for the main page.
-  // Both pages share one origin (soifgo.github.io), so localStorage is shared.
   (function () {
     function remember(lang) {
       try {

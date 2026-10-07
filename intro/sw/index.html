@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="sw">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SoifGo - ساخت اپ و ابزار دلخواه اندروید با HTML | کنترلر آردوینو و MQTT</title>
-  <meta name="description" content="SoifGo پلتفرم رایگان اندروید برای ساخت ابزار دلخواه با HTML و جاوااسکریپت است: ماشین‌حساب، داشبورد، ابزار آموزشی و کنترلر بلوتوث و MQTT برای آردوینو و ESP32 بدون نیاز به کدنویسی native." />
-  <link rel="canonical" href="https://soifgo.github.io/soifgo/intro/fa/" />
+  <title>SoifGo - Unda Zana za Android Maalum kwa HTML | Udhibiti wa Arduino na MQTT</title>
+  <meta name="description" content="SoifGo ni programu ya bure ya Android ya kuunda zana zako mwenyewe kwa kutumia HTML na JavaScript: vikokotoo, dashibodi, zana za elimu, na udhibiti wa Bluetooth na MQTT kwa ajili ya Arduino na ESP32." />
+  <link rel="canonical" href="https://soifgo.github.io/soifgo/intro/sw/" />
   
   <!-- Open Graph / Social -->
-  <meta property="og:title" content="SoifGo - ساخت اپ و ابزار دلخواه اندروید با HTML و کنترلر سخت‌افزار" />
-  <meta property="og:description" content="ماشین‌حساب، ابزار آموزشی، داشبورد و کنترلر سخت‌افزار را با HTML بسازید و روی اندروید اجرا کنید. رایگان، آفلاین و بدون تبلیغات." />
+  <meta property="og:title" content="SoifGo - Zana za Android Maalum na Udhibiti wa Vifaa kwa HTML" />
+  <meta property="og:description" content="Unda vikokotoo, dashibodi, na udhibiti wa vifaa kwa kutumia HTML kisha uviendeshe kwenye Android. Bure, bila matangazo, na hufanya kazi nje ya mtandao." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://soifgo.github.io/soifgo/intro/fa/" />
+  <meta property="og:url" content="https://soifgo.github.io/soifgo/intro/sw/" />
   <meta property="og:image" content="https://soifgo.github.io/soifgo/soifgo-logo.png" />
-  <meta property="og:locale" content="fa_IR" />
+  <meta property="og:locale" content="sw_TZ" />
 
   <style>
     :root { --bg:#0f172a; --card:#1e293b; --text:#e2e8f0; --muted:#94a3b8; --primary:#38bdf8; --border:#334155; }
@@ -21,7 +21,7 @@
       :root { --bg:#f8fafc; --card:#ffffff; --text:#0f172a; --muted:#475569; --primary:#0369a1; --border:#e2e8f0; }
     }
     * { box-sizing:border-box; margin:0; padding:0; }
-    body { background:var(--bg); color:var(--text); line-height:1.9; font-family:Vazirmatn,Tahoma,"Segoe UI",sans-serif; }
+    body { background:var(--bg); color:var(--text); line-height:1.9; font-family:Tahoma, "Segoe UI", sans-serif; }
     .wrap { max-width:860px; margin:0 auto; padding:24px 18px 48px; }
     header { text-align:center; padding:24px 0 8px; }
     header img.logo { width:84px; height:84px; border-radius:18px; }
@@ -29,7 +29,7 @@
     h2 { font-size:1.3rem; margin:36px 0 12px; color:var(--primary); }
     .lead { color:var(--muted); font-size:1.05rem; }
     p { margin-bottom:10px; }
-    .shots { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:22px 0 4px; direction:ltr; }
+    .shots { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:22px 0 4px; }
     .shots img { width:100%; border-radius:12px; border:1px solid var(--border); }
     .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; }
     .card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:14px 16px; }
@@ -37,10 +37,10 @@
     .card p { color:var(--muted); font-size:.93rem; margin:0; }
     ul.use { padding-inline-start:22px; }
     ul.use li { margin-bottom:6px; }
-    details { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:12px 16px; margin-bottom:10px; }
+    details { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:14px 16px; margin-bottom:10px; }
     summary { cursor:pointer; font-weight:bold; }
     details p { margin:8px 0 0; color:var(--muted); }
-    code { direction:ltr; unicode-bidi:isolate; background:var(--card); border:1px solid var(--border); border-radius:6px; padding:1px 6px; font-size:.9em; }
+    code { background:var(--card); border:1px solid var(--border); border-radius:6px; padding:1px 6px; font-size:.9em; }
     .cta { text-align:center; margin-top:40px; }
     .btn { display:inline-block; background:var(--primary); color:#fff; text-decoration:none; font-weight:bold; padding:14px 34px; border-radius:12px; font-size:1.1rem; }
     .btn:hover { opacity:.9; }
@@ -54,93 +54,94 @@
 <div class="wrap">
 
   <header>
-    <img class="logo" src="../../soifgo-logo.png" alt="لوگوی SoifGo" />
-    <h1>هر ابزاری که در ذهن دارید را با HTML بسازید و روی اندروید اجرا کنید</h1>
-    <p class="lead">SoifGo یک اپ رایگان اندروید برای ساخت و بایگانی ابزار دلخواه است: ماشین‌حساب، شبیه‌ساز، ابزار آموزشی، داشبورد و حتی کنترلر سخت‌افزار، بدون نوشتن کد native اندروید.</p>
+    <img class="logo" src="../../soifgo-logo.png" alt="Nembo ya SoifGo" />
+    <h1>Unda zana yoyote unayofikiria kwa kutumia HTML na uiendeshe kwenye Android</h1>
+    <p class="lead">SoifGo ni programu ya bure ya Android ya kuunda na kuhifadhi zana maalum: vikokotoo, viigizaji, zana za elimu, dashibodi, na vidhibiti vya vifaa – bila kuhitaji ujuzi wa programu asili (native) za Android.</p>
   </header>
 
   <div class="shots">
-    <img src="../../icon/pic1.jpg" alt="اسکرین‌شات ۱ از SoifGo" loading="lazy" />
-    <img src="../../icon/pic2.jpg" alt="اسکرین‌شات ۲ از SoifGo" loading="lazy" />
-    <img src="../../icon/pic3.jpg" alt="اسکرین‌شات ۳ از SoifGo" loading="lazy" />
+    <img src="../../icon/pic1.jpg" alt="Picha ya skrini ya SoifGo 1" loading="lazy" />
+    <img src="../../icon/pic2.jpg" alt="Picha ya skrini ya SoifGo 2" loading="lazy" />
+    <img src="../../icon/pic3.jpg" alt="Picha ya skrini ya SoifGo 3" loading="lazy" />
   </div>
 
-  <h2>SoifGo؛ اپ اندرویدی سریع و بهینه، برای چه کاری؟</h2>
-  <p>این روزها بیشتر نیازها، از محاسبات و شبیه‌سازی گرفته تا کنترلرها، داشبوردها، پنل‌های خاص و حتی اپ دلخواه، روی پلتفرم‌های زیادی قابل اجراست. ما به معایب آن‌ها نمی‌پردازیم؛ سراغ قابلیت‌های SoifGo می‌رویم.</p>
-  <p>SoifGo ابزارهای شما را به‌صورت HTML اجرا و در پوشه‌ها بایگانی می‌کند. چون HTML هر چیزی را که در یک صفحه‌ی وب ممکن است پشتیبانی می‌کند، دامنه‌ی کاربردش گسترده است: از ماشین‌حساب و شبیه‌ساز تا ابزار آموزشی و داشبورد، و در صورت نیاز، کنترل سخت‌افزار از طریق بلوتوث و MQTT. اگر می‌توانید یک صفحه‌ی وب بنویسید، یا خواسته‌تان را به یک دستیار هوش مصنوعی بگویید، می‌توانید ابزار خودتان را بسازید.</p>
+  <h2>SoifGo; programu ya haraka na yenye ufanisi ya Android, ni ya nani?</h2>
+  <p>Leo, mahitaji mengi – kuanzia mahesabu na uigizaji hadi dashibodi na vidhibiti maalum – yanaweza kutekelezwa kwa urahisi. Hebu tuangalie nguvu za SoifGo.</p>
+  <p>SoifGo huendesha zana zako katika muundo wa HTML na kuzipanga katika folda. Kwa sababu HTML inasaidia kila kitu kinachowezekana kwenye kurasa za wavuti, uwanja wake wa matumizi ni mpana sana: kuanzia vikokotoo na uigizaji hadi zana za kujifunzia, dashibodi, na ikiwa inahitajika, udhibiti wa vifaa kupitia Bluetooth na MQTT. Ikiwa unaweza kuandika ukurasa wa wavuti au kumweleza msaidizi wa AI mahitaji yako, unaweza kujenga zana yako mwenyewe.</p>
 
-  <h2>SoifGo برای چه کسانی است؟</h2>
+  <h2>SoifGo imeundwa kwa ajili ya nani?</h2>
   <div class="grid">
-    <div class="card"><h3>📐 ریاضی‌دان‌ها و دانشجوها</h3><p>ماشین‌حساب‌های تخصصی، رسم نمودار و توابع، شبیه‌سازی و ابزار حل مسئله، دقیقاً مطابق نیاز خودتان.</p></div>
-    <div class="card"><h3>🎓 معلم‌ها و مدرس‌ها</h3><p>ابزار تعاملی برای کلاس، تمرین و آزمون. فایل را برای دانش‌آموزان و کارآموزان بفرستید تا خودشان اجرا کنند.</p></div>
-    <div class="card"><h3>🏗️ مهندس‌های همه‌ی رشته‌ها</h3><p>ماشین‌حساب مهندسی، تبدیل واحد و جدول‌های محاسباتی شخصی که در محل کار و بدون اینترنت هم در دسترس‌اند.</p></div>
-    <div class="card"><h3>🔌 مکرها و الکترونیک‌کارها</h3><p>کنترلر و داشبورد بلوتوث و MQTT برای آردوینو، ESP32، ESP8266 و Raspberry Pi.</p></div>
-    <div class="card"><h3>💡 هر کسی که ایده‌ای دارد</h3><p>ایده را به یک دستیار هوش مصنوعی بگویید، کد HTML بگیرید و در SoifGo اجرا کنید.</p></div>
+    <div class="card"><h3>📐 Wataalamu wa Hisabati na Wanafunzi</h3><p>Vikokotoo maalum, grafu na vipengele, uigizaji, na zana za kutatua matatizo zilizorekebishwa kulingana na mahitaji yako.</p></div>
+    <div class="card"><h3>🎓 Walimu na Wakufunzi</h3><p>Zana shirikishi za darasani, mazoezi, na maswali. Tuma faili kwa wanafunzi au wakufunzi ili waweze kuziendesha moja kwa moja.</p></div>
+    <div class="card"><h3>🏗️ Wahandisi wa Nyanja Zote</h3><p>Vikokotoo vya uhandisi, vigeuzi vya vipimo, na lahajedwali za kibinafsi zinazopatikana kila wakati kazini na nje ya mtandao.</p></div>
+    <div class="card"><h3>🔌 Wapenzi na Watengenezaji wa Vifaa vya Kielektroniki</h3><p>Paneli za udhibiti na moduli za Bluetooth na MQTT kwa ajili ya Arduino, ESP32, ESP8266, na Raspberry Pi.</p></div>
+    <div class="card"><h3>💡 Mtu Yeyote Mwenye Wazo</h3><p>Shiriki wazo lako na msaidizi wa AI, pata msimbo wa HTML na uiuendeshe kwenye SoifGo.</p></div>
   </div>
 
-  <h2>بایگانی پوشه و صفحه</h2>
-  <p>SoifGo به شما پوشه و صفحه می‌دهد تا کارهایتان را مرتب بایگانی کنید. در هر صفحه <strong>۴۰ دکمه</strong> و <strong>۱۰ اسلایدر</strong> دارید و هر دکمه را می‌توانید برای رفتارهای تعریف‌شده تنظیم کنید؛ از جمله پیمایش بین پوشه‌ها و صفحه‌های SoifGo. به این ترتیب می‌توانید منوهای زیادی بسازید.</p>
-  <p>دکمه‌ها طراحی اولیه‌ی آماده دارند: رنگ، آیکون، نام، فونت، صدا و ویبره. با درگ‌ودراپ هم جابه‌جا می‌شوند. هر دکمه می‌تواند رفتارهای اولیه‌ای مثل ارسال و دریافت داشته باشد.</p>
+  <h2>Usimamizi wa Folda na Kurasa</h2>
+  <p>SoifGo inakupa folda na kurasa za kupanga kazi yako kwa usafi. Kila ukurasa una <strong>vifungo 40 (buttons)</strong> na <strong>vitelezi 10 (sliders)</strong>, na unaweza kusanidi kila kitufe kwa tabia maalum – ikiwa ni pamoja na urambazaji kati ya folda na kurasa za SoifGo ili kuunda menyu za ngazi nyingi.</p>
+  <p>Vifungo vina chaguo za muundo zilizofafanuliwa awali: rangi, aikoni, jina, fonti, sauti, mtetemo, na usaidizi wa kuburuta na kuachia (drag-and-drop). Kila kitufe kinaweza kufanya kazi za kimsingi za kuingiza na kutoa taarifa.</p>
 
-  <h2>رفتار وب، هم آنلاین و هم آفلاین</h2>
-  <p>«رفتار وب» (WebView) به شما کمک می‌کند ایده‌ها و خواسته‌هایتان را با بیشترین قابلیت و به‌صورت HTML داشته باشید، چه آنلاین و چه آفلاین. کافی است خواسته‌تان را به یک دستیار هوش مصنوعی بگویید و کد HTML بخواهید. بعد دو راه دارید:</p>
+  <h2>Tabia ya Wavuti, Mtandaoni na Nje ya Mtandao</h2>
+  <p>"Tabia ya Wavuti" (WebView) inakusaidia kutimiza mawazo na mahitaji yako kwa urahisi mkubwa katika muundo wa HTML, ukiwa mtandaoni au nje ya mtandao. Toa tu ombi lako kwa msaidizi wa AI na uombe msimbo wa HTML. Kisha una chaguo mbili:</p>
   <ul class="use">
-    <li>فایل را دانلود کنید و با رفتار وب آفلاین در SoifGo بارگذاری (ریلود) کنید.</li>
-    <li>یا کد را کپی کنید و در ویرایشگر HTML خود SoifGo پیست کنید.</li>
+    <li>Pakua faili na uipakie (uipakie upya) kwa kutumia tabia ya wavuti ya nje ya mtandao katika SoifGo.</li>
+    <li>Au nakili msimbo na ubandike kwenye kihariri cha HTML kilichojengwa ndani ya SoifGo.</li>
   </ul>
-  <p>هر دو روش جواب می‌دهد و وب‌اپ شما در پوشه‌ی SoifGo بایگانی می‌شود. چه یک ماشین‌حساب باشد، چه یک کنترلر بلوتوث، چه مانیتورینگ اینترنت اشیا یا هر چیز دلخواه دیگر.</p>
-
-  <h2>۴۰ وب‌اپ متفاوت در هر صفحه</h2>
-  <p>می‌توانید در هر صفحه ۴۰ وب‌اپ متفاوت داشته باشید. لازم نیست هر بار آن‌ها را از دستیار هوش مصنوعی بخواهید و در حالت آفلاین هم می‌توانید با آن‌ها کار کنید. حتی می‌توانید آن‌ها را برای همکاران، دوستان یا کارآموزان بفرستید تا دانلود و اجرایشان کنند.</p>
-
-  <h2>قابلیت‌ها</h2>
-  <div class="grid">
-    <div class="card"><h3>🌐 WebView کامل</h3><p>موتور مرورگر مدرن: Canvas، SVG، WebGL و کتابخانه‌هایی مثل Chart.js، D3 و Three.js برای نمودار، شبیه‌سازی و نمایش سه‌بعدی.</p></div>
-    <div class="card"><h3>🧩 حالت کلاسیک</h3><p>دکمه و اسلایدر آماده، بدون هیچ کدی، برای کنترل‌ها و منوهای ساده.</p></div>
-    <div class="card"><h3>💾 ذخیره‌سازی محلی</h3><p>نگه‌داری داده‌ها با <code>localStorage</code> حتی بعد از بستن برنامه.</p></div>
-    <div class="card"><h3>🟢 سنسورهای گوشی</h3><p>نور محیط، حرکت (شتاب‌سنج) و مغناطیس‌سنج به‌صورت زنده.</p></div>
-    <div class="card"><h3>🎤 میکروفون و تشخیص گفتار</h3><p>تبدیل گفتار به متن و استفاده از آن در ابزارهایتان یا ارسال به دستگاه‌ها.</p></div>
-    <div class="card"><h3>🔵 بلوتوث سریال</h3><p>ارسال و دریافت متن با HC-05، HC-06، JDY-31، آردوینو، ESP32 و Raspberry Pi.</p></div>
-    <div class="card"><h3>🟣 کلاینت MQTT</h3><p>اتصال به هر بروکر (tcp یا ssl)، publish و subscribe و بررسی وضعیت اتصال.</p></div>
-    <div class="card"><h3>🟠 HTTP API</h3><p>ارسال JSON به هر آدرس و دریافت و استخراج مقدار از پاسخ.</p></div>
-  </div>
-
-  <h2>چه چیزهایی می‌توان ساخت؟</h2>
-  <ul class="use">
-    <li>ماشین‌حساب و ابزارهای محاسباتی تخصصی</li>
-    <li>رسم نمودار، شبیه‌سازی و تصویرسازی داده</li>
-    <li>ابزار آموزشی تعاملی، تمرین و آزمون</li>
-    <li>نمایش سه‌بعدی و ابزارهای علمی</li>
-    <li>داشبورد و پنل‌های خاص برای کار خودتان</li>
-    <li>کنترل LED، موتور، رله و ربات با بلوتوث، و پل ارتباطی بلوتوث به MQTT</li>
-    <li>کنترل صوتی دستگاه‌ها با گفتار</li>
+  <p>Njia zote mbili zinafanya kazi, na programu yako ya wavuti inahifadhiwa kwenye folda ya SoifGo; ikiwa ni kikokotoo, kidhibiti cha Bluetooth, ufuatiliaji wa IoT, au zana nyingine yoyote maalum.</p></li>
   </ul>
 
-  <h2>سؤالات متداول</h2>
+  <h2>Programu 40 tofauti za wavuti kwenye kila ukurasa</h2>
+  <p>Unaweza kuwa na hadi programu 40 tofauti za wavuti kwenye kila ukurasa. Huna haja ya kuuliza msaidizi wa AI mara kwa mara, na unaweza kufanya kazi nazo nje ya mtandao. Unaweza hata kuzishiriki na wenzako, marafiki, au wakufunzi ili waweze kuzipakua na kuziendesha.</p>
+
+  <h2>Vipengele</h2>
+  <div class="grid">
+    <div class="card"><h3>🌐 WebView Kamili</h3><p>Injini ya kisasa ya kivinjari: Canvas, SVG, WebGL na maktaba kama Chart.js, D3, na Three.js kwa ajili ya grafu, uigizaji, na taswira za 3D.</p></div>
+    <div class="card"><h3>🧩 Hali ya Kawaida (Classic Mode)</h3><p>Vifungo na vitelezi vilivyo tayari kutumika bila msimbo wowote kwa ajili ya udhibiti rahisi na menyu za haraka.</p></div>
+    <div class="card"><h3>💾 Uhifadhi wa Ndani (LocalStorage)</h3><p>Kuhifadhi data kwa kutumia <code>localStorage</code> hata baada ya programu kufungwa.</p></div>
+    <div class="card"><h3>🟢 Vihisi vya Simu</h3><p>Nuru ya mazingira, mwendo (accelerometer), na kipimo cha sumaku (magnetometer) moja kwa moja na kwa wakati halisi.</p></div>
+    <div class="card"><h3>🎤 Kipaza sauti na Utambuzi wa Sauti</h3><p>Geuza maneno kuwa maandishi ili kuyatumia katika zana zako au kuyatuma kwa vifaa.</p></div>
+    <div class="card"><h3>🔵 Bluetooth Serial</h3><p>Kutuma na kupokea maandishi na HC-05, HC-06, JDY-31, Arduino, ESP32, na Raspberry Pi.</p></div>
+    <div class="card"><h3>🟣 Mteja wa MQTT</h3><p>Kuunganisha kwa wakala yeyote (tcp au ssl), kuchapisha na kujiandikisha (publish & subscribe), na ufuatiliaji wa hali ya muunganisho.</p></div>
+    <div class="card"><h3>🟠 API ya HTTP</h3><p>Kutuma JSON kwa anwani yoyote, kupokea na kuchomoa thamani kutoka kwa jibu (response).</p></div>
+  </div>
+
+  <h2>Nini kinaweza kujengwa?</h2>
+  <ul class="use">
+    <li>Vikokotoo maalum na zana za mahesabu</li>
+    <li>Grafu, uigizaji, na taswira ya data</li>
+    <li>Zana shirikishi za elimu, mazoezi, na maswali</li>
+    <li>Maonyesho ya 3D na zana za kisayansi</li>
+    <li>Dashibodi na paneli za udhibiti maalum kwa ajili ya kazi yako</li>
+    <li>Udhibiti wa taa (LED), mota, relay, na roboti kupitia Bluetooth na daraja la Bluetooth hadi MQTT</li>
+    <li>Udhibiti wa sauti kwa vifaa kupitia amri za kusemwa</li>
+  </ul>
+
+  <h2>Maswali Yanayoulizwa Mara kwa Mara (FAQ)</h2>
   <details>
-    <summary>آیا SoifGo فقط برای آردوینو و الکترونیک است؟</summary>
-    <p>خیر. اتصال به سخت‌افزار فقط یکی از قابلیت‌هاست. چون ابزارها HTML هستند، هر چیزی که در یک صفحه‌ی وب ممکن است، مثل محاسبه، نمودار، شبیه‌سازی و ابزار آموزشی، در SoifGo هم قابل اجراست.</p>
+    <summary>Je, SoifGo ni kwa ajili ya Arduino na vifaa vya kielektroniki pekee?</summary>
+    <p>Hapana. Muunganisho wa vifaa ni kipengele kimoja tu. Kwa sababu zana zinategemea HTML, kila kitu kinachowezekana kwenye kurasa za wavuti (kama vile mahesabu, grafu, uigizaji, na zana za elimu) hufanya kazi vizuri pia kwenye SoifGo.</p>
   </details>
   <details>
-    <summary>آیا SoifGo رایگان است؟</summary>
-    <p>بله. رایگان است و تبلیغات و خرید درون‌برنامه‌ای ندارد.</p>
+    <summary>Je, programu ya SoifGo ni ya bure?</summary>
+    <p>Ndiyo, ni bure kabisa, bila matangazo au ununuzi ndani ya programu.</p>
   </details>
   <details>
-    <summary>آیا بدون اینترنت کار می‌کند؟</summary>
-    <p>ابزارهای HTML، بلوتوث و سنسورهای گوشی بدون اینترنت کار می‌کنند. فقط MQTT و HTTP به اینترنت یا شبکه نیاز دارند.</p>
+    <summary>Je, inafanya kazi nje ya mtandao?</summary>
+    <p>Zana za HTML, Bluetooth, na vihisi vya simu hufanya kazi nje ya mtandao. MQTT na HTTP pekee ndizo zinazohitaji intaneti au muunganisho wa mtandao wa ndani.</p>
   </details>
   <details>
-    <summary>اگر بخواهم به سخت‌افزار وصل کنم، با چه چیزی سازگار است؟</summary>
-    <p>هر دستگاهی که از بلوتوث SPP (مثل HC-05 و HC-06)، MQTT یا HTTP REST استفاده کند؛ از جمله آردوینو، ESP32، ESP8266 و Raspberry Pi.</p>
+    <summary>Ni mifumo gani inayooana kwa ajili ya muunganisho wa vifaa?</summary>
+    <p>Kifaa chochote kinachounga mkono Bluetooth SPP (kama HC-05 na HC-06), MQTT, au HTTP REST; ikijumuisha Arduino, ESP32, ESP8266, na Raspberry Pi.</p>
   </details>
   <details>
-    <summary>برای شروع به چه چیزی نیاز دارم؟</summary>
-    <p>دانش پایه‌ی HTML کافی است. حتی بدون آن هم می‌توانید خواسته‌تان را به یک دستیار هوش مصنوعی بگویید و کد HTML بگیرید. آموزش‌ها و نمونه‌های آماده در صفحه‌ی اصلی موجودند.</p>
+    <summary>Ninahitaji nini ili kuanza?</summary>
+    <p>Ujuzi wa msingi wa HTML unatosha. Hata bila hiyo, unaweza kumwomba msaidizi wa AI msimbo wa HTML. Ukurasa mkuu una mafunzo na mifano iliyo tayari.</p>
   </details>
 
   <div class="cta">
-    <a class="btn" href="https://soifgo.github.io/soifgo/?lang=persian" data-lang="persian">ورود به SoifGo ←</a>
-    <small>صفحه‌ی اصلی با دانلود، آموزش‌ها و مستندات باز می‌شود و ترجمه‌ی فارسی خودکار فعال است.</small>
+    <a class="btn" href="https://soifgo.github.io/soifgo/?lang=swahili" data-lang="swahili">Nenda kwenye SoifGo ←</a>
+    <small>Ukurasa mkuu unafungua kwa upakuaji, mafunzo, na nyaraka, huku ukiamsha tafsiri ya moja kwa moja ya Kiswahili.</small>
   </div>
 
   <footer>
@@ -149,8 +150,6 @@
 
 </div>
 <script>
-  // Remember the chosen language for the main page.
-  // Both pages share one origin (soifgo.github.io), so localStorage is shared.
   (function () {
     function remember(lang) {
       try {
