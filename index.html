@@ -384,6 +384,35 @@
       box-shadow: 0 15px 30px rgba(79, 140, 255, 0.6);
     }
 
+    .cta-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.cta-button.cta-zip {
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  box-shadow: 0 10px 25px rgba(249, 115, 22, 0.45);
+}
+.cta-button.cta-zip:hover {
+  background: linear-gradient(135deg, #fb923c, #f97316);
+  box-shadow: 0 15px 30px rgba(249, 115, 22, 0.6);
+}
+
+.cta-button.cta-apkpure {
+  background: linear-gradient(135deg, #4ade80, #22c55e);
+  color: #052e16;
+  box-shadow: 0 10px 25px rgba(74, 222, 128, 0.4);
+}
+.cta-button.cta-apkpure:hover {
+  background: linear-gradient(135deg, #86efac, #4ade80);
+  color: #052e16;
+  box-shadow: 0 15px 30px rgba(74, 222, 128, 0.55);
+}
+
     .hero-trust {
       margin-top: 22px;
       font-size: 0.9rem;
@@ -1246,6 +1275,8 @@
       .examples-mini-grid { grid-template-columns: 1fr; }
       .feature-card { padding: 18px 16px; }
       .feature-card h3 { font-size: 1.1rem; }
+      .cta-row { flex-direction: column; gap: 10px; }
+      .cta-row .cta-button { width: 100%; max-width: 320px; }
     }
   
   #languages { margin-top: 2.5rem; }
@@ -1329,7 +1360,16 @@
         No native Android development required.
       </p>
 
-      <a href="soifgo.zip" class="cta-button">Download SoifGo for Android</a>
+      <div class="cta-row">
+  <a href="soifgo.zip" class="cta-button cta-zip" download>
+    📦 Download ZIP
+  </a>
+  <a href="https://apkpure.com/soifgo/soifgo.saeidmoghadam"
+     target="_blank" rel="noopener noreferrer"
+     class="cta-button cta-apkpure">
+    ⬇️ Get it on APKPure
+  </a>
+</div>
 
       <div class="hero-trust">
         <span>Free</span> &nbsp;&nbsp;
