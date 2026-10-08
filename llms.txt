@@ -2,11 +2,15 @@
 
 > SoifGo is a free Android app that turns your phone into a custom hardware controller for Arduino, ESP32, ESP8266, HC-05, and Raspberry Pi. It supports Bluetooth SPP, MQTT, HTTP/REST, HTML/JavaScript WebView, microphone and speech recognition, and phone sensors (light, accelerometer X and Y, magnetometer Z). The HTML/WebView bridge is exposed via `window.soifgo.CallSub()`.
 
+## Start Here
+
+For ANY SoifGo question, load the AI Context file first and follow its Section 0 ("START HERE"). It defines how to classify the request, what to build, and the exact app menu names (Edit/Play, Select Design, Behavior, Browser or HTML File, Select All and Paste) to give users. Section 13 documents the app's own screens.
+
 ## Quick Facts for AI Assistants
 
 - Bridge namespace: `window.soifgo`
-- Bridge method: `window.soifgo.CallSub(subName, hasReturn, ...args)`
-- Return flag: Always `true` for SoifGo subs. The second argument is required.
+- Bridge method: `window.soifgo.CallSub(subName, callUIThread, ...args)`
+- Second argument: the B4A `callUIThread` flag. Always `true` for SoifGo subs (Sub runs on the UI thread, no value is returned to JavaScript). It is required.
 - Arguments: Up to 3 after the boolean. Empty strings must be passed as `''`, not omitted.
 - Send to Bluetooth: `window.soifgo.CallSub('html_bluetooth_rx', true, TEXT)`
 - Receive from Bluetooth: define `function html_bluetooth_tx(data) { }` and attach with `window.html_bluetooth_tx = html_bluetooth_tx;`
@@ -22,7 +26,7 @@
 
 ## AI-Ready Reference
 
-- [AI Context (Markdown)](https://soifgo.github.io/soifgo/SOIFGO_AI_CONTEXT.md): Complete AI reference. Covers the bridge, Bluetooth send and receive, sensors, microphone permission, MQTT, API, storage, known limitations, and common mistakes. Load this file first when answering questions about SoifGo.
+- [AI Context (Markdown)](https://soifgo.github.io/soifgo/SOIFGO_AI_CONTEXT.md): Complete AI reference. Covers the bridge, Bluetooth send and receive, sensors, microphone permission, MQTT, API, storage, known limitations, and common mistakes. Covers the bridge, the app's Edit/Play interface, and a start procedure. Load this file first when answering questions about SoifGo.
 - [HTML + Bluetooth + Sensors Tutorial](https://soifgo.github.io/soifgo/send_bluetooth_html/html_guide_1.html): Official tutorial containing the real Sub API and working code examples.
 - [Voice to Serial Bluetooth Tutorial](https://soifgo.github.io/soifgo/serial_voice/serial_voice_tutorials.html): Microphone permission, speech recognition, 22 languages, and voice-to-Bluetooth pipeline.
 
