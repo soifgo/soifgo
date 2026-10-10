@@ -73,7 +73,7 @@
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "name": "SoifGo",
-    "alternateName": "SoifGo Android Hardware Control Platform",
+    "alternateName": ["SoifGo Android Hardware Control Platform", "So If Go"],
     "operatingSystem": "Android 7.0+",
     "applicationCategory": "DeveloperApplication",
     "applicationSubCategory": "Hardware Control Platform",
@@ -131,7 +131,7 @@
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "SoifGo",
-    "alternateName": "SoifGo Android Hardware Control Platform",
+    "alternateName": ["SoifGo Android Hardware Control Platform", "So If Go"],
     "url": "https://soifgo.github.io/soifgo/",
     "inLanguage": "en",
     "publisher": {
@@ -350,6 +350,20 @@
       color: var(--text-main);
       font-weight: 800;
       line-height: 1.2;
+    }
+
+    .brand-pron {
+      text-align: center;
+      margin: -12px 0 18px;
+      font-size: 0.95rem;
+      opacity: 0.8;
+      letter-spacing: 0.04em;
+    }
+    .brand-pron b { color: var(--text-main); font-weight: 700; }
+
+    .name-note {
+      font-size: 0.95rem;
+      opacity: 0.85;
     }
 
     .hero-tagline {
@@ -1322,6 +1336,7 @@
         <img src="soifgo-logo.png" alt="SoifGo Android Hardware Control Platform Logo" />
         <div class="brand-name ignore">SoifGo</div>
       </div>
+      <div class="brand-pron">pronounced <b class="ignore">So&middot;If&middot;Go</b> &mdash; so, if you have an idea, go.</div>
 
       <div class="carousel-container hero-carousel">
         <div class="carousel-slides" id="carouselSlides">
@@ -1446,6 +1461,15 @@
         <p>
           Combined with AI assistants, anyone — from hardware engineers to young beginners — can describe
           their idea, get the code, and run it instantly inside SoifGo without dealing with complex native Android development.
+        </p>
+
+        <p>
+          <strong>Why the name?</strong> Say it out loud: <strong class="ignore">So&hellip; if you have an idea, go.</strong>
+          That is the whole point of <span class="ignore">SoifGo</span> (<span class="ignore">So&middot;If&middot;Go</span>): an idea is enough to start.
+        </p>
+
+        <p class="name-note">
+          A happy accident: in French, <em class="ignore">soif</em> means &ldquo;thirst&rdquo; &mdash; a thirst to build.
         </p>
 
         <div class="story-highlight">
