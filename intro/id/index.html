@@ -1,153 +1,434 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" dir="ltr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SoifGo - Buat Alat Android Kustom dengan HTML | Kontrol Arduino & MQTT</title>
-  <meta name="description" content="SoifGo adalah aplikasi Android gratis untuk membuat alat Anda sendiri dengan HTML dan JavaScript: kalkulator, dasbor, alat edukasi, serta kontrol Bluetooth dan MQTT untuk Arduino dan ESP32." />
+
+  <title>SoifGo — Buat Aplikasi Android dengan HTML | Kontrol Arduino &amp; MQTT</title>
+  <meta name="description" content="SoifGo adalah platform Android gratis untuk membuat aplikasi dan alat kustom Anda sendiri dengan HTML dan JavaScript: kalkulator, dasbor, alat pendidikan, serta pengendali Bluetooth dan MQTT untuk Arduino dan ESP32, tanpa kode native." />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+
   <link rel="canonical" href="https://soifgo.github.io/soifgo/intro/id/" />
-  
-  <!-- Open Graph / Social -->
-  <meta property="og:title" content="SoifGo - Alat Android Kustom & Kontrol Perangkat Keras dengan HTML" />
-  <meta property="og:description" content="Buat kalkulator, dasbor, dan kontrol perangkat keras dengan HTML lalu jalankan di Android. Gratis, bebas iklan, dan dapat digunakan secara offline." />
+  <link rel="alternate" hreflang="x-default" href="https://soifgo.github.io/soifgo/" />
+  <link rel="alternate" hreflang="en" href="https://soifgo.github.io/soifgo/" />
+  <link rel="alternate" hreflang="id" href="https://soifgo.github.io/soifgo/intro/id/" />
+  <link rel="alternate" hreflang="fa" href="https://soifgo.github.io/soifgo/intro/fa/" />
+  <link rel="alternate" hreflang="ar" href="https://soifgo.github.io/soifgo/intro/ar/" />
+  <link rel="alternate" hreflang="es" href="https://soifgo.github.io/soifgo/intro/es/" />
+  <link rel="alternate" hreflang="zh-CN" href="https://soifgo.github.io/soifgo/intro/zh/" />
+  <link rel="alternate" hreflang="fr" href="https://soifgo.github.io/soifgo/intro/fr/" />
+  <link rel="alternate" hreflang="de" href="https://soifgo.github.io/soifgo/intro/de/" />
+  <link rel="alternate" hreflang="ja" href="https://soifgo.github.io/soifgo/intro/ja/" />
+  <link rel="alternate" hreflang="ru" href="https://soifgo.github.io/soifgo/intro/ru/" />
+  <link rel="alternate" hreflang="it" href="https://soifgo.github.io/soifgo/intro/it/" />
+  <link rel="alternate" hreflang="pt" href="https://soifgo.github.io/soifgo/intro/pt/" />
+  <link rel="alternate" hreflang="ko" href="https://soifgo.github.io/soifgo/intro/ko/" />
+  <link rel="alternate" hreflang="hi" href="https://soifgo.github.io/soifgo/intro/hi/" />
+  <link rel="alternate" hreflang="bn" href="https://soifgo.github.io/soifgo/intro/bn/" />
+  <link rel="alternate" hreflang="ta" href="https://soifgo.github.io/soifgo/intro/ta/" />
+  <link rel="alternate" hreflang="th" href="https://soifgo.github.io/soifgo/intro/th/" />
+  <link rel="alternate" hreflang="he" href="https://soifgo.github.io/soifgo/intro/he/" />
+  <link rel="alternate" hreflang="ur" href="https://soifgo.github.io/soifgo/intro/ur/" />
+  <link rel="alternate" hreflang="ckb" href="https://soifgo.github.io/soifgo/intro/ckb/" />
+  <link rel="alternate" hreflang="tr" href="https://soifgo.github.io/soifgo/intro/tr/" />
+  <link rel="alternate" hreflang="sw" href="https://soifgo.github.io/soifgo/intro/sw/" />
+
+  <meta property="og:title" content="SoifGo — Buat Aplikasi Android dengan HTML" />
+  <meta property="og:description" content="Kalkulator, alat pendidikan, dasbor, dan kontrol perangkat keras dengan HTML di Android. Gratis, offline, dan tanpa iklan." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://soifgo.github.io/soifgo/intro/id/" />
   <meta property="og:image" content="https://soifgo.github.io/soifgo/soifgo-logo.png" />
   <meta property="og:locale" content="id_ID" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <meta property="og:site_name" content="SoifGo" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="SoifGo — Buat Aplikasi Android dengan HTML" />
+  <meta name="twitter:description" content="Alat, dasbor, dan kontrol perangkat keras dengan HTML. Gratis dan offline." />
+  <meta name="twitter:image" content="https://soifgo.github.io/soifgo/soifgo-logo.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "SoifGo",
+    "operatingSystem": "Android 7.0+",
+    "applicationCategory": "DeveloperApplication",
+    "description": "Platform Android untuk membuat aplikasi dan alat kustom dengan HTML, CSS, dan JavaScript; dilengkapi pengendali Bluetooth dan MQTT untuk Arduino, ESP32, dan ESP8266.",
+    "url": "https://soifgo.github.io/soifgo/intro/id/",
+    "downloadUrl": "https://soifgo.github.io/soifgo/soifgo.zip",
+    "installUrl": "https://apkpure.com/soifgo/soifgo.saeidmoghadam",
+    "softwareVersion": "1.42",
+    "inLanguage": "id",
+    "isAccessibleForFree": true,
+    "author": {
+      "@type": "Person",
+      "name": "Saeid Moghadam",
+      "email": "ssmqqmss@gmail.com"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "SoifGo",
+      "url": "https://soifgo.github.io/soifgo/"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock"
+    },
+    "featureList": [
+      "WebView lengkap dengan dukungan HTML/CSS/JS",
+      "Pengendali Bluetooth serial (HC-05, HC-06, JDY-31)",
+      "Klien MQTT dengan publish dan subscribe",
+      "Kirim dan terima HTTP API",
+      "Sensor ponsel: cahaya, gerakan, magnetometer",
+      "Mikrofon dan pengenalan suara",
+      "40 tombol dan 10 slider per halaman",
+      "Pengarsipan folder dan halaman",
+      "Gratis, offline, dan tanpa iklan"
+    ],
+    "screenshot": [
+      "https://soifgo.github.io/soifgo/icon/pic9.jpg",
+      "https://soifgo.github.io/soifgo/icon/pic7.jpg",
+      "https://soifgo.github.io/soifgo/icon/pic12.jpg"
+    ],
+    "softwareRequirements": "Android 7.0 (Nougat) atau lebih tinggi"
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "inLanguage": "id",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Apakah SoifGo hanya untuk Arduino dan elektronik?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Tidak. Koneksi perangkat keras hanyalah salah satu fitur. Karena alat dibuat dengan HTML, semua yang mungkin di halaman web — perhitungan, grafik, simulasi, dan alat pendidikan — juga mungkin di SoifGo."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Apakah SoifGo gratis?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Ya. Sepenuhnya gratis, tanpa iklan atau pembelian dalam aplikasi."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Apakah berfungsi tanpa koneksi internet?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Alat HTML, Bluetooth, dan sensor ponsel berfungsi tanpa internet. Hanya MQTT dan HTTP yang memerlukan koneksi jaringan."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Perangkat keras apa yang kompatibel dengan SoifGo?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Perangkat apa pun yang menggunakan Bluetooth SPP (seperti HC-05 dan HC-06), MQTT, atau HTTP REST, termasuk Arduino, ESP32, ESP8266, dan Raspberry Pi."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Apa yang saya perlukan untuk memulai?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Pengetahuan HTML dasar sudah cukup. Bahkan tanpa itu, Anda dapat menjelaskan kebutuhan Anda kepada asisten AI dan mendapatkan kode HTML."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "SoifGo",
+        "item": "https://soifgo.github.io/soifgo/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Perkenalan Bahasa Indonesia",
+        "item": "https://soifgo.github.io/soifgo/intro/id/"
+      }
+    ]
+  }
+  </script>
 
   <style>
-    :root { --bg:#0f172a; --card:#1e293b; --text:#e2e8f0; --muted:#94a3b8; --primary:#38bdf8; --border:#334155; }
+    :root {
+      --bg:#0f172a; --card:#1e293b; --text:#e2e8f0; --muted:#94a3b8;
+      --primary:#38bdf8; --primary-strong:#0ea5e9; --border:#334155;
+      --success:#4ade80;
+    }
     @media (prefers-color-scheme: light) {
-      :root { --bg:#f8fafc; --card:#ffffff; --text:#0f172a; --muted:#475569; --primary:#0369a1; --border:#e2e8f0; }
+      :root {
+        --bg:#f8fafc; --card:#ffffff; --text:#0f172a; --muted:#475569;
+        --primary:#0369a1; --primary-strong:#0284c7; --border:#e2e8f0;
+        --success:#16a34a;
+      }
     }
     * { box-sizing:border-box; margin:0; padding:0; }
-    body { background:var(--bg); color:var(--text); line-height:1.9; font-family:Tahoma, "Segoe UI", sans-serif; }
+    html { scroll-behavior:smooth; }
+    body {
+      background:var(--bg); color:var(--text); line-height:1.75;
+      font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,sans-serif;
+      font-size:17px;
+    }
     .wrap { max-width:860px; margin:0 auto; padding:24px 18px 48px; }
     header { text-align:center; padding:24px 0 8px; }
     header img.logo { width:84px; height:84px; border-radius:18px; }
-    h1 { font-size:1.7rem; line-height:1.5; margin:14px 0 10px; }
-    h2 { font-size:1.3rem; margin:36px 0 12px; color:var(--primary); }
+    h1 { font-size:1.7rem; line-height:1.4; margin:14px 0 10px; }
     .lead { color:var(--muted); font-size:1.05rem; }
     p { margin-bottom:10px; }
-    .shots { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:22px 0 4px; }
-    .shots img { width:100%; border-radius:12px; border:1px solid var(--border); }
+    .top-cta { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin:20px 0 4px; }
+    .top-cta .btn { padding:10px 22px; font-size:.95rem; }
+    .top-cta .btn.ghost { background:transparent; color:var(--primary); border:2px solid var(--primary); }
+    .top-cta .btn.ghost:hover { background:var(--primary); color:#fff; }
+    h2 { font-size:1.3rem; margin:36px 0 12px; color:var(--primary); line-height:1.5; }
+    h2 .kw { color:var(--text); }
+    .shots { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:22px 0 4px; direction:ltr; }
+    .shots figure { margin:0; }
+    .shots img { width:100%; border-radius:12px; border:1px solid var(--border); display:block; }
+    .shots figcaption { font-size:.82rem; color:var(--muted); text-align:center; margin-top:6px; line-height:1.5; }
     .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; }
     .card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:14px 16px; }
     .card h3 { font-size:1rem; margin-bottom:4px; }
     .card p { color:var(--muted); font-size:.93rem; margin:0; }
     ul.use { padding-inline-start:22px; }
     ul.use li { margin-bottom:6px; }
-    details { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:14px 16px; margin-bottom:10px; }
+    details { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:12px 16px; margin-bottom:10px; }
     summary { cursor:pointer; font-weight:bold; }
     details p { margin:8px 0 0; color:var(--muted); }
-    code { background:var(--card); border:1px solid var(--border); border-radius:6px; padding:1px 6px; font-size:.9em; }
-    .cta { text-align:center; margin-top:40px; }
-    .btn { display:inline-block; background:var(--primary); color:#fff; text-decoration:none; font-weight:bold; padding:14px 34px; border-radius:12px; font-size:1.1rem; }
-    .btn:hover { opacity:.9; }
+    code { direction:ltr; unicode-bidi:isolate; background:var(--card); border:1px solid var(--border); border-radius:6px; padding:1px 6px; font-size:.9em; }
+    .cta { text-align:center; margin-top:40px; padding:28px 20px; background:var(--card); border:1px solid var(--border); border-radius:16px; }
+    .cta h2 { margin-top:0; }
+    .btn { display:inline-block; background:var(--primary); color:#fff; text-decoration:none; font-weight:bold; padding:14px 34px; border-radius:12px; font-size:1.1rem; transition:background .2s, transform .15s; }
+    .btn:hover { background:var(--primary-strong); transform:translateY(-2px); }
+    .btn.secondary { background:transparent; color:var(--primary); border:2px solid var(--primary); padding:12px 30px; font-size:1rem; }
+    .btn.secondary:hover { background:var(--primary); color:#fff; }
     .cta small { display:block; margin-top:10px; color:var(--muted); }
-    footer { text-align:center; margin-top:32px; color:var(--muted); font-size:.9rem; }
-    footer a { color:var(--primary); }
-    @media (max-width:560px) { h1 { font-size:1.4rem; } }
+    .mid-cta { text-align:center; margin:26px 0 6px; padding:18px; background:linear-gradient(135deg, rgba(56,189,248,.08), rgba(56,189,248,.02)); border:1px solid var(--border); border-radius:12px; }
+    .mid-cta p { color:var(--muted); margin:0 0 12px; }
+    .trust { display:flex; justify-content:center; gap:18px; flex-wrap:wrap; margin-top:14px; font-size:.88rem; color:var(--muted); }
+    .trust span::before { content:"✓ "; color:var(--success); font-weight:800; }
+    footer { text-align:center; margin-top:32px; color:var(--muted); font-size:.9rem; padding-top:20px; border-top:1px solid var(--border); }
+    footer a { color:var(--primary); text-decoration:none; }
+    footer a:hover { text-decoration:underline; }
+    @media (max-width:560px) {
+      h1 { font-size:1.4rem; }
+      .shots { grid-template-columns:1fr 1fr; }
+      .shots figure:nth-child(3) { grid-column:1 / -1; }
+      .shots figure:nth-child(3) img { max-width:60%; margin:0 auto; }
+      .top-cta .btn { width:100%; max-width:320px; }
+    }
+    @media (max-width:380px) {
+      .shots { grid-template-columns:1fr; }
+      .shots figure:nth-child(3) img { max-width:100%; }
+    }
   </style>
 </head>
 <body>
 <div class="wrap">
 
   <header>
-    <img class="logo" src="../../soifgo-logo.png" alt="Logo SoifGo" />
-    <h1>Buat alat apa pun yang Anda inginkan dengan HTML dan jalankan di Android</h1>
-    <p class="lead">SoifGo adalah aplikasi Android gratis untuk membuat dan mengarsipkan alat kustom: kalkulator, simulator, alat edukasi, dasbor, dan pengendali perangkat keras – tanpa memerlukan pemrograman Android asli (native).</p>
+    <img class="logo" src="../../soifgo-logo.png" alt="Logo SoifGo — platform untuk membuat aplikasi Android dengan HTML" />
+    <h1>SoifGo — Buat alat apa pun yang Anda bayangkan dengan HTML dan jalankan di Android</h1>
+    <p class="lead">
+      SoifGo adalah aplikasi Android gratis untuk membuat dan mengarsipkan alat kustom:
+      kalkulator, simulator, alat pendidikan, dasbor, bahkan pengendali perangkat keras,
+      tanpa menulis kode Android native.
+    </p>
+
+    <div class="top-cta">
+      <a class="btn" href="https://soifgo.github.io/soifgo/?lang=indonesian" data-lang="indonesian">
+        Unduh SoifGo
+      </a>
+      <a class="btn ghost" href="#features">Lihat fitur</a>
+    </div>
+
+    <div class="trust">
+      <span>Gratis</span>
+      <span>Offline</span>
+      <span>Tanpa iklan</span>
+      <span>22 bahasa</span>
+    </div>
   </header>
 
   <div class="shots">
-    <img src="../../icon/pic1.jpg" alt="Tangkapan Layar SoifGo 1" loading="lazy" />
-    <img src="../../icon/pic2.jpg" alt="Tangkapan Layar SoifGo 2" loading="lazy" />
-    <img src="../../icon/pic3.jpg" alt="Tangkapan Layar SoifGo 3" loading="lazy" />
+    <figure>
+      <img src="../../icon/pic9.jpg" alt="Panel industri SoifGo — kontrol tangki, pompa, dan katup" loading="eager" />
+      <figcaption>Panel industri — tangki, pompa, katup</figcaption>
+    </figure>
+    <figure>
+      <img src="../../icon/pic7.jpg" alt="Rumah pintar SoifGo — kontrol lampu, kipas, AC" loading="lazy" />
+      <figcaption>Rumah pintar — lampu, kipas, AC</figcaption>
+    </figure>
+    <figure>
+      <img src="../../icon/pic12.jpg" alt="Waterpas digital SoifGo — menggunakan sensor ponsel" loading="lazy" />
+      <figcaption>Waterpas digital — sensor ponsel</figcaption>
+    </figure>
   </div>
 
-  <h2>SoifGo; aplikasi Android yang cepat dan efisien, untuk siapa ini?</h2>
-  <p>Saat ini, sebagian besar kebutuhan – mulai dari perhitungan dan simulasi hingga dasbor dan panel kontrol kustom – dapat diimplementasikan dengan mudah. Mari kita fokus pada keunggulan SoifGo.</p>
-  <p>SoifGo menjalankan alat Anda dalam format HTML dan mengaturnya dalam folder. Karena HTML mendukung segala hal yang dimungkinkan di halaman web, bidang penerapannya sangat luas: dari kalkulator dan simulasi hingga alat pembelajaran, dasbor, dan bila diperlukan, kontrol perangkat keras melalui Bluetooth dan MQTT. Jika Anda dapat menulis halaman web atau memberi tahu asisten AI tentang kebutuhan Anda, Anda dapat membangun alat Anda sendiri.</p>
+  <h2><span class="kw">Buat aplikasi Android dengan HTML</span> — tanpa kode native</h2>
+  <p>
+    Semua yang mungkin di halaman web juga mungkin di SoifGo.
+    SoifGo menjalankan alat Anda sebagai HTML dan mengarsipkannya dalam folder.
+    Dari kalkulator dan simulator, hingga alat pendidikan dan dasbor,
+    dan bila perlu, kontrol perangkat keras melalui Bluetooth dan MQTT.
+  </p>
+  <p>
+    Jika Anda bisa menulis halaman web, atau menjelaskan kebutuhan Anda kepada asisten AI,
+    Anda bisa membuat alat Anda sendiri.
+  </p>
 
-  <h2>Untuk siapa SoifGo dirancang?</h2>
+  <h2>Untuk siapa SoifGo?</h2>
   <div class="grid">
-    <div class="card"><h3>📐 Matematikawan & Pelajar</h3><p>Kalkulator khusus, grafik dan fungsi, simulasi, serta alat pemecahan masalah yang disesuaikan dengan kebutuhan Anda.</p></div>
-    <div class="card"><h3>🎓 Guru & Instruktur</h3><p>Alat interaktif untuk kelas, latihan, dan kuis. Kirimkan file kepada siswa atau peserta agar dapat langsung dijalankan.</p></div>
-    <div class="card"><h3>🏗️ Insinyur di Berbagai Bidang</h3><p>Kalkulator teknik, konverter satuan, dan spreadsheet pribadi yang selalu tersedia saat bekerja dan secara offline.</p></div>
-    <div class="card"><h3>🔌 Penghobi & Pengembang Elektronik</h3><p>Panel kontrol serta modul Bluetooth dan MQTT untuk Arduino, ESP32, ESP8266, dan Raspberry Pi.</p></div>
-    <div class="card"><h3>💡 Siapa Saja yang Memiliki Ide</h3><p>Sampaikan ide Anda kepada asisten AI, dapatkan kode HTML, dan jalankan di SoifGo.</p></div>
+    <div class="card"><h3>📐 Matematikawan dan mahasiswa</h3><p>Kalkulator khusus, grafik dan fungsi, simulasi dan alat pemecahan masalah, persis sesuai kebutuhan Anda.</p></div>
+    <div class="card"><h3>🎓 Guru dan instruktur</h3><p>Alat interaktif untuk kelas, latihan, dan ujian. Kirim file ke siswa agar mereka menjalankannya sendiri.</p></div>
+    <div class="card"><h3>🏗️ Insinyur segala bidang</h3><p>Kalkulator teknik, konversi satuan, dan tabel perhitungan pribadi yang tersedia di tempat kerja dan offline.</p></div>
+    <div class="card"><h3>🔌 Maker dan pegiat elektronik</h3><p>Pengendali dan dasbor Bluetooth dan MQTT untuk Arduino, ESP32, ESP8266, dan Raspberry Pi.</p></div>
+    <div class="card"><h3>💡 Siapa saja yang punya ide</h3><p>Jelaskan ide kepada asisten AI, dapatkan kode HTML, dan jalankan di SoifGo.</p></div>
   </div>
 
-  <h2>Manajemen Folder dan Halaman</h2>
-  <p>SoifGo menyediakan folder dan halaman untuk mengatur pekerjaan Anda dengan rapi. Di setiap halaman, Anda memiliki <strong>40 tombol (buttons)</strong> dan <strong>10 penggeser (sliders)</strong>, dan Anda dapat mengonfigurasi setiap tombol untuk perilaku tertentu – termasuk navigasi antara folder dan halaman SoifGo untuk membuat menu bertingkat.</p>
-  <p>Tombol memiliki opsi desain bawaan: warna, ikon, nama, fon, suara, getaran, serta dukungan seret-dan-lepas (drag-and-drop). Setiap tombol dapat melakukan tugas input dan output dasar.</p>
+  <div class="mid-cta">
+    <p>Siap membuat alat pertama Anda?</p>
+    <a class="btn" href="https://soifgo.github.io/soifgo/?lang=indonesian" data-lang="indonesian">
+      Unduh SoifGo →
+    </a>
+  </div>
 
-  <h2>Perilaku Web, Online dan Offline</h2>
-  <p>"Perilaku Web" (WebView) membantu Anda mewujudkan ide dan kebutuhan Anda dengan fleksibilitas maksimum dalam format HTML, baik saat online maupun offline. Cukup sampaikan kebutuhan Anda kepada asisten AI dan minta kode HTML-nya. Kemudian Anda memiliki dua pilihan:</p>
+  <h2><span class="kw">Kontrol Arduino dan ESP32</span> via Bluetooth dan MQTT dari ponsel Android</h2>
+  <p>
+    Perangkat apa pun yang menggunakan Bluetooth SPP (seperti <code>HC-05</code> dan <code>HC-06</code>),
+    MQTT, atau HTTP REST bekerja dengan SoifGo:
+    Arduino, ESP32, ESP8266, dan Raspberry Pi.
+  </p>
+  <p>
+    Kirim perintah LED, motor, dan relai via Bluetooth, buat jembatan Bluetooth ke MQTT,
+    atau buat dasbor langsung untuk sensor — semuanya dengan HTML, tanpa kode native.
+  </p>
+
+  <h2>Pengarsipan folder dan halaman</h2>
+  <p>
+    SoifGo memberi Anda folder dan halaman untuk mengarsipkan pekerjaan Anda secara tertata.
+    Di setiap halaman Anda memiliki <strong>40 tombol</strong> dan <strong>10 slider</strong>, dan setiap tombol
+    dapat dikonfigurasi untuk perilaku yang ditentukan, termasuk navigasi antar folder dan halaman.
+    Dengan cara ini Anda bisa membuat banyak menu.
+  </p>
+  <p>
+    Tombol memiliki desain siap pakai: warna, ikon, nama, font, suara, dan getaran.
+    Juga dapat dipindahkan dengan drag and drop. Setiap tombol dapat memiliki perilaku dasar seperti kirim dan terima.
+  </p>
+
+  <h2>Perilaku web, online dan offline</h2>
+  <p>
+    «Perilaku web» (WebView) membantu Anda mewujudkan ide dengan kemampuan maksimal dan dalam HTML,
+    baik online maupun offline. Cukup jelaskan kebutuhan Anda kepada asisten AI dan minta kode HTML. Lalu ada dua jalan:
+  </p>
   <ul class="use">
-    <li>Unduh file dan muat (muat ulang) menggunakan perilaku web offline di SoifGo.</li>
-    <li>Atau salin kode dan tempel (paste) ke dalam editor HTML bawaan SoifGo.</li>
+    <li>Unduh file dan muat (muat ulang) dengan perilaku web offline di SoifGo.</li>
+    <li>Atau salin kode dan tempel di editor HTML di dalam SoifGo.</li>
   </ul>
-  <p>Kedua metode tersebut berfungsi, dan aplikasi web Anda diarsipkan di dalam folder SoifGo; baik itu kalkulator, pengendali Bluetooth, pemantauan IoT, atau alat kustom lainnya.</p>
+  <p>
+    Kedua metode bekerja dan aplikasi web Anda diarsipkan di folder SoifGo.
+    Entah kalkulator, pengendali Bluetooth, pemantauan IoT, atau apa pun.
+  </p>
 
-  <h2>40 Aplikasi Web Berbeda di Setiap Halaman</h2>
-  <p>Anda dapat memiliki hingga 40 aplikasi web berbeda di setiap halaman. Anda tidak perlu meminta asisten AI berulang kali, dan Anda dapat bekerja dengannya secara offline. Anda bahkan dapat membagikannya kepada rekan kerja, teman, atau peserta agar mereka dapat mengunduh dan menjalankannya.</p>
+  <h2>40 aplikasi web berbeda per halaman</h2>
+  <p>
+    Anda dapat memiliki 40 aplikasi web berbeda per halaman. Tidak perlu meminta
+    kepada asisten AI setiap kali, dan Anda dapat menggunakannya secara offline.
+    Anda bahkan bisa mengirimkannya ke kolega dan teman agar mereka mengunduh dan menjalankannya.
+  </p>
 
-  <h2>Fitur-Fitur</h2>
+  <h2 id="features">Fitur SoifGo</h2>
   <div class="grid">
-    <div class="card"><h3>🌐 WebView Penuh</h3><p>Mesin browser modern: Canvas, SVG, WebGL, dan pustaka seperti Chart.js, D3, dan Three.js untuk grafik, simulasi, serta visualisasi 3D.</p></div>
-    <div class="card"><h3>🧩 Mode Klasik</h3><p>Tombol dan penggeser siap pakai tanpa kode apa pun untuk kontrol sederhana dan menu.</p></div>
-    <div class="card"><h3>💾 Penyimpanan Lokal (LocalStorage)</h3><p>Persistensi data menggunakan <code>localStorage</code> bahkan setelah aplikasi ditutup.</p></div>
-    <div class="card"><h3>🟢 Sensor Ponsel</h3><p>Cahaya sekitar, gerakan (akselerometer), dan magnetometer secara langsung dan real-time.</p></div>
-    <div class="card"><h3>🎤 Mikrofon & Pengenalan Suara</h3><p>Ubah ucapan menjadi teks untuk digunakan dalam alat Anda atau dikirimkan ke perangkat.</p></div>
-    <div class="card"><h3>🔵 Bluetooth Serial</h3><p>Mengirim dan menerima teks dengan HC-05, HC-06, JDY-31, Arduino, ESP32, dan Raspberry Pi.</p></div>
-    <div class="card"><h3>🟣 Klien MQTT</h3><p>Koneksi ke broker mana pun (tcp atau ssl), publikasi dan langganan (publish & subscribe), serta pemantauan status koneksi.</p></div>
-    <div class="card"><h3>🟠 HTTP API</h3><p>Mengirim JSON ke alamat mana pun, menerima dan mengekstrak nilai dari respons.</p></div>
+    <div class="card"><h3>🌐 WebView lengkap</h3><p>Mesin browser modern: Canvas, SVG, WebGL, dan pustaka seperti Chart.js, D3, dan Three.js untuk grafik, simulasi, dan tampilan 3D.</p></div>
+    <div class="card"><h3>🧩 Mode klasik</h3><p>Tombol dan slider siap pakai, tanpa kode, untuk kontrol dan menu sederhana.</p></div>
+    <div class="card"><h3>💾 Penyimpanan lokal</h3><p>Menyimpan data dengan <code>localStorage</code> bahkan setelah aplikasi ditutup.</p></div>
+    <div class="card"><h3>🟢 Sensor ponsel</h3><p>Cahaya sekitar, gerakan (akselerometer), dan magnetometer secara real-time.</p></div>
+    <div class="card"><h3>🎤 Mikrofon dan pengenalan suara</h3><p>Mengubah suara menjadi teks dan menggunakannya di alat Anda atau mengirim ke perangkat.</p></div>
+    <div class="card"><h3>🔵 Bluetooth serial</h3><p>Mengirim dan menerima teks dengan HC-05, HC-06, JDY-31, Arduino, ESP32, dan Raspberry Pi.</p></div>
+    <div class="card"><h3>🟣 Klien MQTT</h3><p>Terhubung ke broker mana pun (tcp atau ssl), publish dan subscribe, serta memeriksa status.</p></div>
+    <div class="card"><h3>🟠 HTTP API</h3><p>Kirim JSON ke alamat apa pun dan terima serta ekstrak nilai dari respons.</p></div>
   </div>
 
-  <h2>Apa yang Dapat Dibangun?</h2>
+  <h2>Apa yang bisa dibuat?</h2>
   <ul class="use">
-    <li>Kalkulator khusus dan alat perhitungan</li>
+    <li>Kalkulator dan alat perhitungan khusus</li>
     <li>Grafik, simulasi, dan visualisasi data</li>
-    <li>Alat edukasi interaktif, latihan, dan kuis</li>
-    <li>Presentasi 3D dan alat ilmiah</li>
-    <li>Dasbor dan panel kontrol kustom untuk pekerjaan Anda</li>
-    <li>Kontrol lampu (LED), motor, relai, dan robot melalui Bluetooth serta jembatan Bluetooth ke MQTT</li>
-    <li>Kontrol suara untuk perangkat melalui perintah lisan</li>
+    <li>Alat pendidikan interaktif, latihan, dan ujian</li>
+    <li>Tampilan 3D dan alat ilmiah</li>
+    <li>Dasbor dan panel khusus untuk pekerjaan Anda</li>
+    <li>Kontrol LED, motor, relai, dan robot via Bluetooth, serta jembatan Bluetooth ke MQTT</li>
+    <li>Kontrol perangkat dengan suara</li>
   </ul>
 
-  <h2>Pertanyaan yang Sering Diajukan (FAQ)</h2>
+  <h2>Pertanyaan yang sering diajukan</h2>
   <details>
-    <summary>Apakah SoifGo hanya untuk Arduino dan elektronika?</summary>
-    <p>Tidak. Koneksi perangkat keras hanyalah salah satu fitur. Karena alat berbasis HTML, segala hal yang dimungkinkan di halaman web (seperti perhitungan, grafik, simulasi, dan alat edukasi) juga berfungsi dengan lancar di SoifGo.</p>
+    <summary>Apakah SoifGo hanya untuk Arduino dan elektronik?</summary>
+    <p>Tidak. Koneksi perangkat keras hanyalah salah satu fitur. Karena alat dibuat dengan HTML, semua yang mungkin di halaman web — perhitungan, grafik, simulasi, dan alat pendidikan — juga mungkin di SoifGo.</p>
   </details>
   <details>
-    <summary>Apakah aplikasi SoifGo gratis?</summary>
-    <p>Ya, sepenuhnya gratis tanpa iklan atau pembelian dalam aplikasi.</p>
+    <summary>Apakah SoifGo gratis?</summary>
+    <p>Ya. Sepenuhnya gratis, tanpa iklan atau pembelian dalam aplikasi.</p>
   </details>
   <details>
-    <summary>Apakah aplikasi ini berfungsi secara offline?</summary>
-    <p>Alat HTML, Bluetooth, dan sensor ponsel berfungsi secara offline. Hanya MQTT dan HTTP yang membutuhkan koneksi internet atau jaringan lokal.</p>
+    <summary>Apakah berfungsi tanpa koneksi internet?</summary>
+    <p>Alat HTML, Bluetooth, dan sensor ponsel berfungsi tanpa internet. Hanya MQTT dan HTTP yang memerlukan koneksi jaringan.</p>
   </details>
   <details>
-    <summary>Sistem apa saja yang kompatibel untuk koneksi perangkat keras?</summary>
-    <p>Perangkat apa pun yang mendukung Bluetooth SPP (seperti HC-05 dan HC-06), MQTT, atau HTTP REST; termasuk Arduino, ESP32, ESP8266, dan Raspberry Pi.</p>
+    <summary>Perangkat keras apa yang kompatibel dengan SoifGo?</summary>
+    <p>Perangkat apa pun yang menggunakan Bluetooth SPP (seperti HC-05 dan HC-06), MQTT, atau HTTP REST, termasuk Arduino, ESP32, ESP8266, dan Raspberry Pi.</p>
   </details>
   <details>
-    <summary>Apa yang saya perlukan untuk mulai?</summary>
-    <p>Pengetahuan dasar tentang HTML sudah cukup. Bahkan tanpa itu, Anda dapat meminta kode HTML kepada asisten AI. Tutorial dan contoh siap pakai tersedia di halaman utama.</p>
+    <summary>Apa yang saya perlukan untuk memulai?</summary>
+    <p>Pengetahuan HTML dasar sudah cukup. Bahkan tanpa itu, Anda dapat menjelaskan kebutuhan Anda kepada asisten AI dan mendapatkan kode HTML. Tutorial dan contoh siap pakai tersedia di halaman utama.</p>
   </details>
 
   <div class="cta">
-    <a class="btn" href="https://soifgo.github.io/soifgo/?lang=indonesian" data-lang="indonesian">Buka SoifGo ←</a>
-    <small>Halaman utama terbuka dengan unduhan, tutorial, dan dokumentasi, serta pengaktifan terjemahan otomatis bahasa Indonesia.</small>
+    <h2>Siap memulai?</h2>
+    <p style="color:var(--muted); margin-bottom:18px;">
+      Halaman utama terbuka dengan unduhan, tutorial, dan dokumentasi, serta terjemahan Bahasa Indonesia diaktifkan otomatis.
+    </p>
+    <a class="btn" href="https://soifgo.github.io/soifgo/?lang=indonesian" data-lang="indonesian">
+      Masuk ke SoifGo →
+    </a>
+    <div style="margin-top:14px;">
+      <a class="btn secondary" href="https://soifgo.github.io/soifgo/docs.html">
+        Dokumentasi teknis (Inggris)
+      </a>
+    </div>
+    <small>Gratis, offline, tanpa iklan — untuk Android 7 ke atas</small>
   </div>
 
   <footer>
-    <p><a href="../../?lang=english" hreflang="en" lang="en" data-lang="english">English version</a></p>
+    <p>
+      <a href="../../?lang=english" hreflang="en" lang="en" data-lang="english">English version</a>
+      &nbsp;|&nbsp;
+      <a href="mailto:ssmqqmss@gmail.com">Dukungan</a>
+      &nbsp;|&nbsp;
+      <a href="../../policy_soifgo.html">Privasi</a>
+    </p>
+    <p style="margin-top:8px;">&copy; 2026 SoifGo — Dibuat oleh Saeid Moghadam</p>
   </footer>
 
 </div>
+
 <script>
   (function () {
     function remember(lang) {

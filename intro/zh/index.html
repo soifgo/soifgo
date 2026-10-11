@@ -1,154 +1,434 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN" dir="ltr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SoifGo - 使用 HTML 创建自定义 Android 工具 | Arduino 和 MQTT 控制</title>
-  <meta name="description" content="SoifGo 是一款免费的 Android 应用，允许您使用 HTML 和 JavaScript 创建自己的工具（计算器、仪表板、教育工具以及适用于 Arduino 和 ESP32 的蓝牙和 MQTT 控制）。" />
+
+  <title>SoifGo — 用 HTML 构建安卓应用 | 控制 Arduino 和 MQTT</title>
+  <meta name="description" content="SoifGo 是一个免费的安卓平台，用 HTML 和 JavaScript 构建自定义应用和工具：计算器、仪表盘、教学工具，以及 Arduino 和 ESP32 的蓝牙与 MQTT 控制器，无需原生代码。" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+
   <link rel="canonical" href="https://soifgo.github.io/soifgo/intro/zh/" />
-  
-  <!-- Open Graph / Social -->
-  <meta property="og:title" content="SoifGo - 使用 HTML 的自定义 Android 工具与硬件控制" />
-  <meta property="og:description" content="使用 HTML 创建计算器、仪表板和硬件控制器，并在 Android 上运行。免费、无广告且可离线运行。" />
+  <link rel="alternate" hreflang="x-default" href="https://soifgo.github.io/soifgo/" />
+  <link rel="alternate" hreflang="en" href="https://soifgo.github.io/soifgo/" />
+  <link rel="alternate" hreflang="zh-CN" href="https://soifgo.github.io/soifgo/intro/zh/" />
+  <link rel="alternate" hreflang="fa" href="https://soifgo.github.io/soifgo/intro/fa/" />
+  <link rel="alternate" hreflang="ar" href="https://soifgo.github.io/soifgo/intro/ar/" />
+  <link rel="alternate" hreflang="es" href="https://soifgo.github.io/soifgo/intro/es/" />
+  <link rel="alternate" hreflang="he" href="https://soifgo.github.io/soifgo/intro/he/" />
+  <link rel="alternate" hreflang="ur" href="https://soifgo.github.io/soifgo/intro/ur/" />
+  <link rel="alternate" hreflang="ckb" href="https://soifgo.github.io/soifgo/intro/ckb/" />
+  <link rel="alternate" hreflang="fr" href="https://soifgo.github.io/soifgo/intro/fr/" />
+  <link rel="alternate" hreflang="de" href="https://soifgo.github.io/soifgo/intro/de/" />
+  <link rel="alternate" hreflang="it" href="https://soifgo.github.io/soifgo/intro/it/" />
+  <link rel="alternate" hreflang="pt" href="https://soifgo.github.io/soifgo/intro/pt/" />
+  <link rel="alternate" hreflang="ru" href="https://soifgo.github.io/soifgo/intro/ru/" />
+  <link rel="alternate" hreflang="ja" href="https://soifgo.github.io/soifgo/intro/ja/" />
+  <link rel="alternate" hreflang="ko" href="https://soifgo.github.io/soifgo/intro/ko/" />
+  <link rel="alternate" hreflang="hi" href="https://soifgo.github.io/soifgo/intro/hi/" />
+  <link rel="alternate" hreflang="bn" href="https://soifgo.github.io/soifgo/intro/bn/" />
+  <link rel="alternate" hreflang="ta" href="https://soifgo.github.io/soifgo/intro/ta/" />
+  <link rel="alternate" hreflang="th" href="https://soifgo.github.io/soifgo/intro/th/" />
+  <link rel="alternate" hreflang="id" href="https://soifgo.github.io/soifgo/intro/id/" />
+  <link rel="alternate" hreflang="tr" href="https://soifgo.github.io/soifgo/intro/tr/" />
+  <link rel="alternate" hreflang="sw" href="https://soifgo.github.io/soifgo/intro/sw/" />
+
+  <meta property="og:title" content="SoifGo — 用 HTML 构建安卓应用" />
+  <meta property="og:description" content="计算器、教学工具、仪表盘、硬件控制器，用 HTML 在安卓上运行。免费、离线、无广告。" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://soifgo.github.io/soifgo/intro/zh/" />
   <meta property="og:image" content="https://soifgo.github.io/soifgo/soifgo-logo.png" />
   <meta property="og:locale" content="zh_CN" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <meta property="og:site_name" content="SoifGo" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="SoifGo — 用 HTML 构建安卓应用" />
+  <meta name="twitter:description" content="工具、仪表盘、硬件控制器，用 HTML。免费、离线。" />
+  <meta name="twitter:image" content="https://soifgo.github.io/soifgo/soifgo-logo.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "SoifGo",
+    "operatingSystem": "Android 7.0+",
+    "applicationCategory": "DeveloperApplication",
+    "description": "安卓平台，用 HTML、CSS 和 JavaScript 构建自定义应用和工具；带有 Arduino、ESP32 和 ESP8266 的蓝牙与 MQTT 控制器。",
+    "url": "https://soifgo.github.io/soifgo/intro/zh/",
+    "downloadUrl": "https://soifgo.github.io/soifgo/soifgo.zip",
+    "installUrl": "https://apkpure.com/soifgo/soifgo.saeidmoghadam",
+    "softwareVersion": "1.42",
+    "inLanguage": "zh-CN",
+    "isAccessibleForFree": true,
+    "author": {
+      "@type": "Person",
+      "name": "Saeid Moghadam",
+      "email": "ssmqqmss@gmail.com"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "SoifGo",
+      "url": "https://soifgo.github.io/soifgo/"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock"
+    },
+    "featureList": [
+      "完整 WebView，支持 HTML/CSS/JS",
+      "串口蓝牙控制器（HC-05, HC-06, JDY-31）",
+      "MQTT 客户端，支持 publish 和 subscribe",
+      "HTTP API 发送与接收",
+      "手机传感器：光线、运动、磁力计",
+      "麦克风和语音识别",
+      "每页 40 个按钮和 10 个滑块",
+      "文件夹和页面归档",
+      "免费、离线、无广告"
+    ],
+    "screenshot": [
+      "https://soifgo.github.io/soifgo/icon/pic9.jpg",
+      "https://soifgo.github.io/soifgo/icon/pic7.jpg",
+      "https://soifgo.github.io/soifgo/icon/pic12.jpg"
+    ],
+    "softwareRequirements": "Android 7.0（Nougat）或更高"
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "inLanguage": "zh-CN",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "SoifGo 只适用于 Arduino 和电子设备吗？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "不是。硬件连接只是其中一项功能。因为工具是用 HTML 构建的，网页上能做到的一切 —— 计算、图表、模拟和教学工具 —— 在 SoifGo 中也能实现。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "SoifGo 免费吗？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "是的。完全免费，无广告，无应用内购买。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "断网时可以使用吗？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "HTML 工具、蓝牙和手机传感器无需联网即可使用。只有 MQTT 和 HTTP 需要网络连接。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "SoifGo 兼容哪些硬件？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "任何使用蓝牙 SPP（如 HC-05 和 HC-06）、MQTT 或 HTTP REST 的设备，包括 Arduino、ESP32、ESP8266 和树莓派。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "开始使用需要什么？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "基础 HTML 知识就够了。即使没有，也可以向 AI 助手描述你的需求并获取 HTML 代码。"
+        }
+      }
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "SoifGo",
+        "item": "https://soifgo.github.io/soifgo/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "简体中文介绍",
+        "item": "https://soifgo.github.io/soifgo/intro/zh/"
+      }
+    ]
+  }
+  </script>
 
   <style>
-    :root { --bg:#0f172a; --card:#1e293b; --text:#e2e8f0; --muted:#94a3b8; --primary:#38bdf8; --border:#334155; }
+    :root {
+      --bg:#0f172a; --card:#1e293b; --text:#e2e8f0; --muted:#94a3b8;
+      --primary:#38bdf8; --primary-strong:#0ea5e9; --border:#334155;
+      --success:#4ade80;
+    }
     @media (prefers-color-scheme: light) {
-      :root { --bg:#f8fafc; --card:#ffffff; --text:#0f172a; --muted:#475569; --primary:#0369a1; --border:#e2e8f0; }
+      :root {
+        --bg:#f8fafc; --card:#ffffff; --text:#0f172a; --muted:#475569;
+        --primary:#0369a1; --primary-strong:#0284c7; --border:#e2e8f0;
+        --success:#16a34a;
+      }
     }
     * { box-sizing:border-box; margin:0; padding:0; }
-    body { background:var(--bg); color:var(--text); line-height:1.9; font-family:Tahoma, "Segoe UI", sans-serif; }
+    html { scroll-behavior:smooth; }
+    body {
+      background:var(--bg); color:var(--text); line-height:1.8;
+      font-family:"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif;
+      font-size:17px;
+    }
     .wrap { max-width:860px; margin:0 auto; padding:24px 18px 48px; }
     header { text-align:center; padding:24px 0 8px; }
     header img.logo { width:84px; height:84px; border-radius:18px; }
-    h1 { font-size:1.7rem; line-height:1.5; margin:14px 0 10px; }
-    h2 { font-size:1.3rem; margin:36px 0 12px; color:var(--primary); }
+    h1 { font-size:1.7rem; line-height:1.4; margin:14px 0 10px; }
     .lead { color:var(--muted); font-size:1.05rem; }
     p { margin-bottom:10px; }
-    .shots { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:22px 0 4px; }
-    .shots img { width:100%; border-radius:12px; border:1px solid var(--border); }
+    .top-cta { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin:20px 0 4px; }
+    .top-cta .btn { padding:10px 22px; font-size:.95rem; }
+    .top-cta .btn.ghost { background:transparent; color:var(--primary); border:2px solid var(--primary); }
+    .top-cta .btn.ghost:hover { background:var(--primary); color:#fff; }
+    h2 { font-size:1.3rem; margin:36px 0 12px; color:var(--primary); line-height:1.5; }
+    h2 .kw { color:var(--text); }
+    .shots { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:22px 0 4px; direction:ltr; }
+    .shots figure { margin:0; }
+    .shots img { width:100%; border-radius:12px; border:1px solid var(--border); display:block; }
+    .shots figcaption { font-size:.82rem; color:var(--muted); text-align:center; margin-top:6px; line-height:1.5; }
     .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; }
     .card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:14px 16px; }
     .card h3 { font-size:1rem; margin-bottom:4px; }
     .card p { color:var(--muted); font-size:.93rem; margin:0; }
     ul.use { padding-inline-start:22px; }
     ul.use li { margin-bottom:6px; }
-    details { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:14px 16px; margin-bottom:10px; }
+    details { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:12px 16px; margin-bottom:10px; }
     summary { cursor:pointer; font-weight:bold; }
     details p { margin:8px 0 0; color:var(--muted); }
-    code { background:var(--card); border:1px solid var(--border); border-radius:6px; padding:1px 6px; font-size:.9em; }
-    .cta { text-align:center; margin-top:40px; }
-    .btn { display:inline-block; background:var(--primary); color:#fff; text-decoration:none; font-weight:bold; padding:14px 34px; border-radius:12px; font-size:1.1rem; }
-    .btn:hover { opacity:.9; }
+    code { direction:ltr; unicode-bidi:isolate; background:var(--card); border:1px solid var(--border); border-radius:6px; padding:1px 6px; font-size:.9em; }
+    .cta { text-align:center; margin-top:40px; padding:28px 20px; background:var(--card); border:1px solid var(--border); border-radius:16px; }
+    .cta h2 { margin-top:0; }
+    .btn { display:inline-block; background:var(--primary); color:#fff; text-decoration:none; font-weight:bold; padding:14px 34px; border-radius:12px; font-size:1.1rem; transition:background .2s, transform .15s; }
+    .btn:hover { background:var(--primary-strong); transform:translateY(-2px); }
+    .btn.secondary { background:transparent; color:var(--primary); border:2px solid var(--primary); padding:12px 30px; font-size:1rem; }
+    .btn.secondary:hover { background:var(--primary); color:#fff; }
     .cta small { display:block; margin-top:10px; color:var(--muted); }
-    footer { text-align:center; margin-top:32px; color:var(--muted); font-size:.9rem; }
-    footer a { color:var(--primary); }
-    @media (max-width:560px) { h1 { font-size:1.4rem; } }
+    .mid-cta { text-align:center; margin:26px 0 6px; padding:18px; background:linear-gradient(135deg, rgba(56,189,248,.08), rgba(56,189,248,.02)); border:1px solid var(--border); border-radius:12px; }
+    .mid-cta p { color:var(--muted); margin:0 0 12px; }
+    .trust { display:flex; justify-content:center; gap:18px; flex-wrap:wrap; margin-top:14px; font-size:.88rem; color:var(--muted); }
+    .trust span::before { content:"✓ "; color:var(--success); font-weight:800; }
+    footer { text-align:center; margin-top:32px; color:var(--muted); font-size:.9rem; padding-top:20px; border-top:1px solid var(--border); }
+    footer a { color:var(--primary); text-decoration:none; }
+    footer a:hover { text-decoration:underline; }
+    @media (max-width:560px) {
+      h1 { font-size:1.4rem; }
+      .shots { grid-template-columns:1fr 1fr; }
+      .shots figure:nth-child(3) { grid-column:1 / -1; }
+      .shots figure:nth-child(3) img { max-width:60%; margin:0 auto; }
+      .top-cta .btn { width:100%; max-width:320px; }
+    }
+    @media (max-width:380px) {
+      .shots { grid-template-columns:1fr; }
+      .shots figure:nth-child(3) img { max-width:100%; }
+    }
   </style>
 </head>
 <body>
 <div class="wrap">
 
   <header>
-    <img class="logo" src="../../soifgo-logo.png" alt="SoifGo 标志" />
-    <h1>使用 HTML 创建您想象的任何工具并在 Android 上运行</h1>
-    <p class="lead">SoifGo 是一款免费的 Android 应用程序，用于创建和存档自定义工具（如计算器、模拟器、教育工具、仪表板和硬件控制器），无需具备原生 Android 编程知识。</p>
+    <img class="logo" src="../../soifgo-logo.png" alt="SoifGo 标志 — 用 HTML 构建安卓应用的平台" />
+    <h1>SoifGo — 用 HTML 构建你想象中的任何工具，在安卓上运行</h1>
+    <p class="lead">
+      SoifGo 是一个免费的安卓应用，用于构建和归档自定义工具：
+      计算器、模拟器、教学工具、仪表盘，甚至硬件控制器，
+      无需编写原生安卓代码。
+    </p>
+
+    <div class="top-cta">
+      <a class="btn" href="https://soifgo.github.io/soifgo/?lang=chinese_simplified" data-lang="chinese_simplified">
+        下载 SoifGo
+      </a>
+      <a class="btn ghost" href="#features">查看功能</a>
+    </div>
+
+    <div class="trust">
+      <span>免费</span>
+      <span>离线</span>
+      <span>无广告</span>
+      <span>22 种语言</span>
+    </div>
   </header>
 
   <div class="shots">
-    <img src="../../icon/pic1.jpg" alt="SoifGo 截图 1" loading="lazy" />
-    <img src="../../icon/pic2.jpg" alt="SoifGo 截图 2" loading="lazy" />
-    <img src="../../icon/pic3.jpg" alt="SoifGo 3" loading="lazy" />
+    <figure>
+      <img src="../../icon/pic9.jpg" alt="SoifGo 工业面板 — 控制水箱、泵和阀门" loading="eager" />
+      <figcaption>工业面板 — 水箱、泵、阀门</figcaption>
+    </figure>
+    <figure>
+      <img src="../../icon/pic7.jpg" alt="SoifGo 智能家居 — 控制灯光、风扇和空调" loading="lazy" />
+      <figcaption>智能家居 — 灯光、风扇、空调</figcaption>
+    </figure>
+    <figure>
+      <img src="../../icon/pic12.jpg" alt="SoifGo 数字水平仪 — 使用手机传感器" loading="lazy" />
+      <figcaption>数字水平仪 — 手机传感器</figcaption>
+    </figure>
   </div>
 
-  <h2>SoifGo；一款快速高效的 Android 应用，它适合谁？</h2>
-  <p>如今，大多数需求——从计算和模拟到自定义仪表板和控制面板——都可以轻松实现。让我们聚焦于 SoifGo 的优势。</p>
-  <p>SoifGo 以 HTML 格式运行您的工具并将其组织到文件夹中。由于 HTML 支持网页上可能的一切，其应用领域极其广泛：从计算器和模拟器到学习工具、仪表板，以及在需要时通过蓝牙和 MQTT 进行硬件控制。如果您会编写网页，或者能向 AI 助手解释您的需求，您就可以构建自己的工具。</p>
+  <h2><span class="kw">用 HTML 构建安卓应用</span> — 无需原生代码</h2>
+  <p>
+    网页上能做到的一切，在 SoifGo 中也能做到。
+    SoifGo 以 HTML 运行你的工具，并将它们归档到文件夹中。
+    从计算器和模拟器，到教学工具和仪表盘，
+    必要时还可以通过蓝牙和 MQTT 控制硬件。
+  </p>
+  <p>
+    如果你会写网页，或者向 AI 助手描述你的需求，
+    就能构建自己的工具。
+  </p>
 
-  <h2>SoifGo 是为谁设计的？</h2>
+  <h2>SoifGo 适合谁？</h2>
   <div class="grid">
-    <div class="card"><h3>📐 数学家和学生</h3><p>根据您的需求量身定制的专用计算器、图表和函数、模拟以及问题解决工具。</p></div>
-    <div class="card"><h3>🎓 教师和培训师</h3><p>用于课堂的互动工具、练习和测验。将文件发送给学生或学员，让他们直接运行。</p></div>
-    /div>
-    <div class="card"><h3>🏗️ 各领域工程师</h3><p>工程计算器、单位转换器和个人电子表格，在工作和离线时随时可用。</p></div>
-    <div class="card"><h3>🔌 电子爱好者和开发人员</h3><p>用于 Arduino、ESP32、ESP8266 和 Raspberry Pi 的控制面板以及蓝牙和 MQTT 模块。</p></div>
-    <div class="card"><h3>💡 任何有想法的人</h3><p>与 AI 助手分享您的想法，获取 HTML 代码并在 SoifGo 中运行。</p></div>
+    <div class="card"><h3>📐 数学家和学生</h3><p>专业计算器、绘图和函数、模拟和解题工具，完全按你的需求定制。</p></div>
+    <div class="card"><h3>🎓 教师和培训师</h3><p>用于课堂、练习和测验的互动工具。把文件发给学生，让他们自己运行。</p></div>
+    <div class="card"><h3>🏗️ 各专业的工程师</h3><p>工程计算器、单位换算和个人计算表格，在工作场所和离线时都能使用。</p></div>
+    <div class="card"><h3>🔌 创客和电子爱好者</h3><p>用于 Arduino、ESP32、ESP8266 和树莓派的蓝牙和 MQTT 控制器与仪表盘。</p></div>
+    <div class="card"><h3>💡 任何有想法的人</h3><p>向 AI 助手描述你的想法，获取 HTML 代码，在 SoifGo 中运行。</p></div>
   </div>
 
-  <h2>文件夹和页面管理</h2>
-  <p>SoifGo 提供文件夹和页面，帮助您整洁地组织工作。每个页面上有 <strong>40 个按钮 (buttons)</strong> 和 <strong>10 个滑块 (sliders)</strong>，您可以为特定行为配置每个按钮——包括在 SoifGo 文件夹和页面之间导航以创建多级菜单。</p>
-  <p>按钮具有预定义的选项：颜色、图标、名称、字体、声音、振动和拖放 (drag-and-drop) 支持。每个按钮都可以执行基本的输入和输出任务。</p>
+  <div class="mid-cta">
+    <p>准备好构建你的第一个工具了吗？</p>
+    <a class="btn" href="https://soifgo.github.io/soifgo/?lang=chinese_simplified" data-lang="chinese_simplified">
+      下载 SoifGo →
+    </a>
+  </div>
 
-  <h2>网页行为（在线和离线）</h2>
-  <p>“网页行为”(WebView) 帮助您在在线或离线时，以 HTML 格式最大程度地灵活实现您的想法和需求。只需向 AI 助手提出您的请求并索取 HTML 代码。然后您有两种选择：</p>
+  <h2><span class="kw">从安卓手机控制 Arduino 和 ESP32</span>（蓝牙和 MQTT）</h2>
+  <p>
+    任何使用蓝牙 SPP（如 <code>HC-05</code> 和 <code>HC-06</code>）、
+    MQTT 或 HTTP REST 的设备都能与 SoifGo 配合：
+    Arduino、ESP32、ESP8266 和树莓派。
+  </p>
+  <p>
+    通过蓝牙发送 LED、电机和继电器命令，创建蓝牙到 MQTT 的桥接，
+    或构建实时传感器仪表盘 —— 全部用 HTML，无需原生代码。
+  </p>
+
+  <h2>文件夹和页面归档</h2>
+  <p>
+    SoifGo 提供文件夹和页面，让你有序地归档工作。
+    每页有 <strong>40 个按钮</strong>和 <strong>10 个滑块</strong>，每个按钮
+    都可以配置为定义的行为，包括在文件夹和页面之间导航。
+    这样就可以创建许多菜单。
+  </p>
+  <p>
+    按钮有现成的设计：颜色、图标、名称、字体、声音和振动。
+    还可以拖放移动。每个按钮都可以有发送和接收等基本行为。
+  </p>
+
+  <h2>网页行为，在线和离线都可以</h2>
+  <p>
+    「网页行为」（WebView）帮助你以最大的能力、用 HTML 实现你的想法，
+    无论在线还是离线。只需向 AI 助手描述你的需求，索取 HTML 代码。然后有两条路：
+  </p>
   <ul class="use">
-    <li>下载文件并在 SoifGo 中使用离线网页行为加载（重新加载）它。</li>
-    <li>或者复制代码并将其粘贴到 SoifGo 内置的 HTML 编辑器中。</li>
+    <li>下载文件，用 SoifGo 的离线网页行为加载（重新加载）。</li>
+    <li>或者复制代码，粘贴到 SoifGo 内的 HTML 编辑器中。</li>
   </ul>
-  <p>这两种方法都有效，您的网页应用将存档在 SoifGo 文件夹中；无论是计算器、蓝牙控制器、物联网监控还是任何其他自定义工具。</p>
+  <p>
+    两种方法都有效，你的网页应用会归档到 SoifGo 的文件夹中。
+    无论是计算器、蓝牙控制器、物联网监控还是任何其他东西。
+  </p>
 
-  <h2>每个页面多达 40 个不同的网页应用</h2>
-  <p>您可以在每个页面上拥有多达 40 个不同的网页应用。您无需反复询问 AI 助手，并且可以离线使用它们。您甚至可以与同事、朋友或学员分享它们以供下载和运行。</p>
+  <h2>每页 40 个不同的网页应用</h2>
+  <p>
+    每页可以有 40 个不同的网页应用。不必每次都向
+    AI 助手索取，离线时也可以使用它们。
+    甚至可以把它们发给同事和朋友，让他们下载并运行。
+  </p>
 
-  <h2>功能特性</h2>
+  <h2 id="features">SoifGo 功能</h2>
   <div class="grid">
-    <div class="card"><h3>🌐 完整 WebView</h3><p>现代浏览器引擎：Canvas、SVG、WebGL 以及用于图表、模拟和 3D 可视化的库（如 Chart.js、D3、Three.js）。</p></div>
-    <div class="card"><h3>🧩 经典模式 (Classic Mode)</h3><p>无需任何代码的现成按钮和滑块，用于简单控制和快捷菜单。</p></div>
-    <div class="card"><h3>💾 本地存储 (LocalStorage)</h3><p>即使在关闭应用程序后，也使用 <code>localStorage</code> 保持数据持久性。</p></div>
-    <div class="card"><h3>🟢 手机传感器</h3><p>实时且现场的环境光、运动（加速度计）和磁力计。</p></div>
-    <div class="card"><h3>🎤 麦克风和语音识别</h3><p>将语音转换为文本，以便在您的工具中使用或发送到设备。</p></div>
-    <div class="card"><h3>🔵 蓝牙串口 (Bluetooth Serial)</h3><p>通过 HC-05、HC-06、JDY-31、Arduino、ESP32 和 Raspberry Pi 发送和接收文本。</p></div>
-    <div class="card"><h3>🟣 MQTT 客户端</h3><p>连接到任何代理（tcp 或 ssl）、发布和订阅 (publish & subscribe) 以及连接状态监控。</p></div>
-    <div class="card"><h3>🟠 HTTP API</h3><p>向任何地址发送 JSON，接收并从响应 (response) 中提取值。</p></div>
+    <div class="card"><h3>🌐 完整 WebView</h3><p>现代浏览器引擎：Canvas、SVG、WebGL，以及 Chart.js、D3 和 Three.js 等库，用于图表、模拟和 3D 显示。</p></div>
+    <div class="card"><h3>🧩 经典模式</h3><p>现成的按钮和滑块，无需任何代码，用于简单的控制和菜单。</p></div>
+    <div class="card"><h3>💾 本地存储</h3><p>用 <code>localStorage</code> 保存数据，即使关闭应用后仍然保留。</p></div>
+    <div class="card"><h3>🟢 手机传感器</h3><p>环境光、运动（加速度计）和磁力计，实时更新。</p></div>
+    <div class="card"><h3>🎤 麦克风和语音识别</h3><p>将语音转换为文本，用于你的工具或发送到设备。</p></div>
+    <div class="card"><h3>🔵 串口蓝牙</h3><p>与 HC-05、HC-06、JDY-31、Arduino、ESP32 和树莓派发送和接收文本。</p></div>
+    <div class="card"><h3>🟣 MQTT 客户端</h3><p>连接到任何 broker（tcp 或 ssl）、publish 和 subscribe，并检查连接状态。</p></div>
+    <div class="card"><h3>🟠 HTTP API</h3><p>向任何地址发送 JSON，接收并从响应中提取值。</p></div>
   </div>
 
   <h2>可以构建什么？</h2>
   <ul class="use">
-    <li>专用计算器和计算工具</li>
+    <li>计算器和专业计算工具</li>
     <li>图表、模拟和数据可视化</li>
-    <li>互动教育工具、练习和测验</li>
-    <li>3D 演示文稿和科学工具</li>
-    <li>适用于您工作的仪表板和自定义控制面板</li>
-    <li>通过蓝牙和蓝牙转 MQTT 网桥控制灯光（LED）、电机、继电器和机器人</li>
-    <li>通过语音命令对设备进行语音控制</li>
+    <li>互动教学工具、练习和测验</li>
+    <li>3D 显示和科学工具</li>
+    <li>用于你工作的特定仪表盘和面板</li>
+    <li>通过蓝牙控制 LED、电机、继电器和机器人，以及蓝牙到 MQTT 桥接</li>
+    <li>用语音进行设备语音控制</li>
   </ul>
 
-  <h2>常见问题 (FAQ)</h2>
+  <h2>常见问题</h2>
   <details>
-    <summary>SoifGo 仅适用于 Arduino 和电子产品吗？</summary>
-    <p>不是。硬件连接只是功能之一。由于工具基于 HTML，网页上可能的一切（如计算、图表、模拟和教育工具）在 SoifGo 中也能完美运行。</p>
+    <summary>SoifGo 只适用于 Arduino 和电子设备吗？</summary>
+    <p>不是。硬件连接只是其中一项功能。因为工具是用 HTML 构建的，网页上能做到的一切 —— 计算、图表、模拟和教学工具 —— 在 SoifGo 中也能实现。</p>
   </details>
   <details>
-    <summary>SoifGo 应用是免费的吗？</summary>
-    <p>是的，完全免费，没有广告或内购。</p>
+    <summary>SoifGo 免费吗？</summary>
+    <p>是的。完全免费，无广告，无应用内购买。</p>
   </details>
   <details>
-    <summary>它能离线工作吗？</summary>
-    <p>HTML 工具、蓝牙和手机传感器可以离线工作。只有 MQTT 和 HTTP 需要互联网或本地网络连接。</p>
+    <summary>断网时可以使用吗？</summary>
+    <p>HTML 工具、蓝牙和手机传感器无需联网即可使用。只有 MQTT 和 HTTP 需要网络连接。</p>
   </details>
   <details>
-    <summary>哪些系统兼容硬件连接？</summary>
-    <p>任何支持蓝牙 SPP（如 HC-05 和 HC-06）、MQTT 或 HTTP REST 的设备；包括 Arduino、ESP32、ESP8266 和 Raspberry Pi。</p>
+    <summary>SoifGo 兼容哪些硬件？</summary>
+    <p>任何使用蓝牙 SPP（如 HC-05 和 HC-06）、MQTT 或 HTTP REST 的设备，包括 Arduino、ESP32、ESP8266 和树莓派。</p>
   </details>
   <details>
     <summary>开始使用需要什么？</summary>
-    <p>基本的 HTML 知识就足够了。即使没有，您也可以向 AI 助手索取 HTML 代码。主页上有教程和现成的示例。</p>
+    <p>基础 HTML 知识就够了。即使没有，也可以向 AI 助手描述你的需求并获取 HTML 代码。教程和现成示例在主页上。</p>
   </details>
 
   <div class="cta">
-    <a class="btn" href="https://soifgo.github.io/soifgo/?lang=chinese" data-lang="chinese">前往 SoifGo ←</a>
-    <small>主页打开时带有下载、教程和文档，并自动启用中文翻译。</small>
+    <h2>准备好开始了吗？</h2>
+    <p style="color:var(--muted); margin-bottom:18px;">
+      主页打开时有下载、教程和文档，中文翻译自动激活。
+    </p>
+    <a class="btn" href="https://soifgo.github.io/soifgo/?lang=chinese_simplified" data-lang="chinese_simplified">
+      进入 SoifGo →
+    </a>
+    <div style="margin-top:14px;">
+      <a class="btn secondary" href="https://soifgo.github.io/soifgo/docs.html">
+        技术文档（英文）
+      </a>
+    </div>
+    <small>免费、离线、无广告 — 支持 Android 7 及以上</small>
   </div>
 
   <footer>
-    <p><a href="../../?lang=english" hreflang="en" lang="en" data-lang="english">English version</a></p>
+    <p>
+      <a href="../../?lang=english" hreflang="en" lang="en" data-lang="english">English version</a>
+      &nbsp;|&nbsp;
+      <a href="mailto:ssmqqmss@gmail.com">支持</a>
+      &nbsp;|&nbsp;
+      <a href="../../policy_soifgo.html">隐私</a>
+    </p>
+    <p style="margin-top:8px;">&copy; 2026 SoifGo — 由 Saeid Moghadam 制作</p>
   </footer>
 
 </div>
+
 <script>
   (function () {
     function remember(lang) {

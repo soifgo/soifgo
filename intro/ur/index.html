@@ -3,151 +3,432 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SoifGo - HTML کے ساتھ حسب ضرورت اینڈرائیڈ ٹولز بنائیں | Arduino اور MQTT کنٹرول</title>
-  <meta name="description" content="SoifGo ایک مفت اینڈرائیڈ ایپ ہے جس کی مدد سے آپ HTML اور JavaScript کا استعمال کرتے ہوئے اپنے ٹولز (کیلکولیٹر، ڈیش بورڈ، تعلیمی ٹولز، اور Arduino اور ESP32 کے لیے بلوٹوتھ اور MQTT کنٹرول) بنا سکتے ہیں۔" />
+
+  <title>SoifGo — HTML سے اینڈرائیڈ ایپ بنائیں | Arduino اور MQTT کنٹرول</title>
+  <meta name="description" content="SoifGo ایک مفت اینڈرائیڈ پلیٹ فارم ہے جس سے آپ HTML اور JavaScript میں اپنی ایپس اور ٹولز بنا سکتے ہیں: کیلکولیٹر، ڈیش بورڈ، تعلیمی ٹولز، اور Arduino اور ESP32 کے لیے Bluetooth اور MQTT کنٹرولر، نیٹو کوڈ کے بغیر۔" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+
   <link rel="canonical" href="https://soifgo.github.io/soifgo/intro/ur/" />
-  
-  <!-- Open Graph / Social -->
-  <meta property="og:title" content="SoifGo - HTML کے ساتھ حسب ضرورت اینڈرائیڈ ٹولز اور ہارڈویئر کنٹرول" />
-  <meta property="og:description" content="HTML کا استعمال کرتے ہوئے کیلکولیٹر، ڈیش بورڈز اور ہارڈویئر کنٹرولز بنائیں اور انہیں اینڈرائیڈ پر چلائیں۔ مفت، اشتہارات کے بغیر، اور آف لائن کام کرتا ہے۔" />
+  <link rel="alternate" hreflang="x-default" href="https://soifgo.github.io/soifgo/" />
+  <link rel="alternate" hreflang="en" href="https://soifgo.github.io/soifgo/" />
+  <link rel="alternate" hreflang="ur" href="https://soifgo.github.io/soifgo/intro/ur/" />
+  <link rel="alternate" hreflang="fa" href="https://soifgo.github.io/soifgo/intro/fa/" />
+  <link rel="alternate" hreflang="ar" href="https://soifgo.github.io/soifgo/intro/ar/" />
+  <link rel="alternate" hreflang="es" href="https://soifgo.github.io/soifgo/intro/es/" />
+  <link rel="alternate" hreflang="zh-CN" href="https://soifgo.github.io/soifgo/intro/zh/" />
+  <link rel="alternate" hreflang="fr" href="https://soifgo.github.io/soifgo/intro/fr/" />
+  <link rel="alternate" hreflang="de" href="https://soifgo.github.io/soifgo/intro/de/" />
+  <link rel="alternate" hreflang="ja" href="https://soifgo.github.io/soifgo/intro/ja/" />
+  <link rel="alternate" hreflang="ru" href="https://soifgo.github.io/soifgo/intro/ru/" />
+  <link rel="alternate" hreflang="it" href="https://soifgo.github.io/soifgo/intro/it/" />
+  <link rel="alternate" hreflang="pt" href="https://soifgo.github.io/soifgo/intro/pt/" />
+  <link rel="alternate" hreflang="ko" href="https://soifgo.github.io/soifgo/intro/ko/" />
+  <link rel="alternate" hreflang="hi" href="https://soifgo.github.io/soifgo/intro/hi/" />
+  <link rel="alternate" hreflang="bn" href="https://soifgo.github.io/soifgo/intro/bn/" />
+  <link rel="alternate" hreflang="ta" href="https://soifgo.github.io/soifgo/intro/ta/" />
+  <link rel="alternate" hreflang="th" href="https://soifgo.github.io/soifgo/intro/th/" />
+  <link rel="alternate" hreflang="id" href="https://soifgo.github.io/soifgo/intro/id/" />
+  <link rel="alternate" hreflang="tr" href="https://soifgo.github.io/soifgo/intro/tr/" />
+  <link rel="alternate" hreflang="sw" href="https://soifgo.github.io/soifgo/intro/sw/" />
+  <link rel="alternate" hreflang="he" href="https://soifgo.github.io/soifgo/intro/he/" />
+  <link rel="alternate" hreflang="ckb" href="https://soifgo.github.io/soifgo/intro/ckb/" />
+
+  <meta property="og:title" content="SoifGo — HTML سے اینڈرائیڈ ایپ بنائیں" />
+  <meta property="og:description" content="کیلکولیٹر، تعلیمی ٹولز، ڈیش بورڈ اور ہارڈویئر کنٹرول HTML میں اینڈرائیڈ پر۔ مفت، آف لائن اور اشتہارات کے بغیر۔" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://soifgo.github.io/soifgo/intro/ur/" />
   <meta property="og:image" content="https://soifgo.github.io/soifgo/soifgo-logo.png" />
   <meta property="og:locale" content="ur_PK" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <meta property="og:site_name" content="SoifGo" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="SoifGo — HTML سے اینڈرائیڈ ایپ بنائیں" />
+  <meta name="twitter:description" content="ٹولز، ڈیش بورڈ اور ہارڈویئر کنٹرول HTML میں۔ مفت اور آف لائن۔" />
+  <meta name="twitter:image" content="https://soifgo.github.io/soifgo/soifgo-logo.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "SoifGo",
+    "operatingSystem": "Android 7.0+",
+    "applicationCategory": "DeveloperApplication",
+    "description": "HTML، CSS اور JavaScript میں اپنی ایپس اور ٹولز بنانے کے لیے اینڈرائیڈ پلیٹ فارم؛ Arduino، ESP32 اور ESP8266 کے لیے Bluetooth اور MQTT کنٹرولر کے ساتھ۔",
+    "url": "https://soifgo.github.io/soifgo/intro/ur/",
+    "downloadUrl": "https://soifgo.github.io/soifgo/soifgo.zip",
+    "installUrl": "https://apkpure.com/soifgo/soifgo.saeidmoghadam",
+    "softwareVersion": "1.42",
+    "inLanguage": "ur",
+    "isAccessibleForFree": true,
+    "author": {
+      "@type": "Person",
+      "name": "Saeid Moghadam",
+      "email": "ssmqqmss@gmail.com"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "SoifGo",
+      "url": "https://soifgo.github.io/soifgo/"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock"
+    },
+    "featureList": [
+      "HTML/CSS/JS کی معاونت کے ساتھ مکمل WebView",
+      "سیریل Bluetooth کنٹرولر (HC-05, HC-06, JDY-31)",
+      "publish اور subscribe کے ساتھ MQTT کلائنٹ",
+      "HTTP API بھیجنا اور وصول کرنا",
+      "فون سینسرز: روشنی، حرکت، میگنیٹومیٹر",
+      "مائیکروفون اور تقریر کی شناخت",
+      "فی صفحہ 40 بٹن اور 10 سلائیڈرز",
+      "فولڈر اور صفحہ آرکائیو",
+      "مفت، آف لائن اور اشتہارات کے بغیر"
+    ],
+    "screenshot": [
+      "https://soifgo.github.io/soifgo/icon/pic9.jpg",
+      "https://soifgo.github.io/soifgo/icon/pic7.jpg",
+      "https://soifgo.github.io/soifgo/icon/pic12.jpg"
+    ],
+    "softwareRequirements": "Android 7.0 (Nougat) یا اس سے اوپر"
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "inLanguage": "ur",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "کیا SoifGo صرف Arduino اور الیکٹرانکس کے لیے ہے؟",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "نہیں۔ ہارڈویئر کنکشن صرف ایک خصوصیت ہے۔ چونکہ ٹولز HTML میں بنے ہیں، ویب صفحے پر جو کچھ ممکن ہے — حساب، گراف، نقلیں اور تعلیمی ٹولز — وہ SoifGo میں بھی ممکن ہے۔"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "کیا SoifGo مفت ہے؟",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "ہاں۔ مکمل طور پر مفت، اشتہارات اور ایپ کے اندر خریداری کے بغیر۔"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "کیا یہ انٹرنیٹ کے بغیر کام کرتا ہے؟",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "HTML ٹولز، Bluetooth اور فون سینسرز انٹرنیٹ کے بغیر کام کرتے ہیں۔ صرف MQTT اور HTTP کو نیٹ ورک کنکشن درکار ہے۔"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "SoifGo کس ہارڈویئر کے ساتھ مطابقت رکھتا ہے؟",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "کوئی بھی آلہ جو Bluetooth SPP (جیسے HC-05 اور HC-06)، MQTT یا HTTP REST استعمال کرتا ہے، بشمول Arduino، ESP32، ESP8266 اور Raspberry Pi۔"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "شروع کرنے کے لیے کیا درکار ہے؟",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "بنیادی HTML علم کافی ہے۔ اس کے بغیر بھی، آپ AI اسسٹنٹ کو اپنی ضرورت بتا کر HTML کوڈ حاصل کر سکتے ہیں۔"
+        }
+      }
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "SoifGo",
+        "item": "https://soifgo.github.io/soifgo/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "اردو تعارف",
+        "item": "https://soifgo.github.io/soifgo/intro/ur/"
+      }
+    ]
+  }
+  </script>
 
   <style>
-    :root { --bg:#0f172a; --card:#1e293b; --text:#e2e8f0; --muted:#94a3b8; --primary:#38bdf8; --border:#334155; }
+    :root {
+      --bg:#0f172a; --card:#1e293b; --text:#e2e8f0; --muted:#94a3b8;
+      --primary:#38bdf8; --primary-strong:#0ea5e9; --border:#334155;
+      --success:#4ade80;
+    }
     @media (prefers-color-scheme: light) {
-      :root { --bg:#f8fafc; --card:#ffffff; --text:#0f172a; --muted:#475569; --primary:#0369a1; --border:#e2e8f0; }
+      :root {
+        --bg:#f8fafc; --card:#ffffff; --text:#0f172a; --muted:#475569;
+        --primary:#0369a1; --primary-strong:#0284c7; --border:#e2e8f0;
+        --success:#16a34a;
+      }
     }
     * { box-sizing:border-box; margin:0; padding:0; }
-    body { background:var(--bg); color:var(--text); line-height:1.9; font-family:Tahoma, "Jameel Noori Nastaleeq", "Segoe UI", sans-serif; text-align:right; }
+    html { scroll-behavior:smooth; }
+    body {
+      background:var(--bg); color:var(--text); line-height:2;
+      font-family:"Noto Nastaliq Urdu","Jameel Noori Nastaleeq","Segoe UI",Tahoma,sans-serif;
+      font-size:17px;
+    }
     .wrap { max-width:860px; margin:0 auto; padding:24px 18px 48px; }
     header { text-align:center; padding:24px 0 8px; }
     header img.logo { width:84px; height:84px; border-radius:18px; }
-    h1 { font-size:1.7rem; line-height:1.5; margin:14px 0 10px; }
-    h2 { font-size:1.3rem; margin:36px 0 12px; color:var(--primary); }
+    h1 { font-size:1.6rem; line-height:1.9; margin:14px 0 10px; }
     .lead { color:var(--muted); font-size:1.05rem; }
     p { margin-bottom:10px; }
-    .shots { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:22px 0 4px; }
-    .shots img { width:100%; border-radius:12px; border:1px solid var(--border); }
+    .top-cta { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin:20px 0 4px; }
+    .top-cta .btn { padding:10px 22px; font-size:.95rem; }
+    .top-cta .btn.ghost { background:transparent; color:var(--primary); border:2px solid var(--primary); }
+    .top-cta .btn.ghost:hover { background:var(--primary); color:#fff; }
+    h2 { font-size:1.25rem; margin:36px 0 12px; color:var(--primary); line-height:1.9; }
+    h2 .kw { color:var(--text); }
+    .shots { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:22px 0 4px; direction:ltr; }
+    .shots figure { margin:0; }
+    .shots img { width:100%; border-radius:12px; border:1px solid var(--border); display:block; }
+    .shots figcaption { font-size:.82rem; color:var(--muted); text-align:center; margin-top:6px; line-height:1.6; }
     .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; }
     .card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:14px 16px; }
     .card h3 { font-size:1rem; margin-bottom:4px; }
     .card p { color:var(--muted); font-size:.93rem; margin:0; }
     ul.use { padding-inline-start:22px; }
     ul.use li { margin-bottom:6px; }
-    details { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:14px 16px; margin-bottom:10px; }
+    details { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:12px 16px; margin-bottom:10px; }
     summary { cursor:pointer; font-weight:bold; }
     details p { margin:8px 0 0; color:var(--muted); }
-    code { background:var(--card); border:1px solid var(--border); border-radius:6px; padding:1px 6px; font-size:.9em; direction:ltr; display:inline-block; }
-    .cta { text-align:center; margin-top:40px; }
-    .btn { display:inline-block; background:var(--primary); color:#fff; text-decoration:none; font-weight:bold; padding:14px 34px; border-radius:12px; font-size:1.1rem; }
-    .btn:hover { opacity:.9; }
+    code { direction:ltr; unicode-bidi:isolate; background:var(--card); border:1px solid var(--border); border-radius:6px; padding:1px 6px; font-size:.9em; font-family:monospace; }
+    .cta { text-align:center; margin-top:40px; padding:28px 20px; background:var(--card); border:1px solid var(--border); border-radius:16px; }
+    .cta h2 { margin-top:0; }
+    .btn { display:inline-block; background:var(--primary); color:#fff; text-decoration:none; font-weight:bold; padding:14px 34px; border-radius:12px; font-size:1.1rem; transition:background .2s, transform .15s; font-family:"Segoe UI",Tahoma,sans-serif; }
+    .btn:hover { background:var(--primary-strong); transform:translateY(-2px); }
+    .btn.secondary { background:transparent; color:var(--primary); border:2px solid var(--primary); padding:12px 30px; font-size:1rem; }
+    .btn.secondary:hover { background:var(--primary); color:#fff; }
     .cta small { display:block; margin-top:10px; color:var(--muted); }
-    footer { text-align:center; margin-top:32px; color:var(--muted); font-size:.9rem; }
-    footer a { color:var(--primary); }
-    @media (max-width:560px) { h1 { font-size:1.4rem; } }
+    .mid-cta { text-align:center; margin:26px 0 6px; padding:18px; background:linear-gradient(135deg, rgba(56,189,248,.08), rgba(56,189,248,.02)); border:1px solid var(--border); border-radius:12px; }
+    .mid-cta p { color:var(--muted); margin:0 0 12px; }
+    .trust { display:flex; justify-content:center; gap:18px; flex-wrap:wrap; margin-top:14px; font-size:.88rem; color:var(--muted); }
+    .trust span::before { content:"✓ "; color:var(--success); font-weight:800; }
+    footer { text-align:center; margin-top:32px; color:var(--muted); font-size:.9rem; padding-top:20px; border-top:1px solid var(--border); }
+    footer a { color:var(--primary); text-decoration:none; }
+    footer a:hover { text-decoration:underline; }
+    @media (max-width:560px) {
+      h1 { font-size:1.3rem; }
+      .shots { grid-template-columns:1fr 1fr; }
+      .shots figure:nth-child(3) { grid-column:1 / -1; }
+      .shots figure:nth-child(3) img { max-width:60%; margin:0 auto; }
+      .top-cta .btn { width:100%; max-width:320px; }
+    }
+    @media (max-width:380px) {
+      .shots { grid-template-columns:1fr; }
+      .shots figure:nth-child(3) img { max-width:100%; }
+    }
   </style>
 </head>
 <body>
 <div class="wrap">
 
   <header>
-    <img class="logo" src="../../soifgo-logo.png" alt="SoifGo لوگو" />
-    <h1>HTML کا استعمال کرتے ہوئے اپنی مرضی کا کوئی بھی ٹول بنائیں اور اسے اینڈرائیڈ پر چلائیں</h1>
-    <p class="lead">SoifGo بغیر کسی نوٹیو اینڈرائیڈ پروگرامنگ کی ضرورت کے حسب ضرورت ٹولز (کیلکولیٹر، سمیلیٹر، تعلیمی ٹولز، ڈیش بورڈز، اور ہارڈویئر کنٹرولرز) بنانے اور آرکائیو کرنے کے لیے ایک مفت اینڈرائیڈ ایپ ہے۔</p>
+    <img class="logo" src="../../soifgo-logo.png" alt="SoifGo لوگو — HTML سے اینڈرائیڈ ایپ بنانے کا پلیٹ فارم" />
+    <h1>SoifGo — جو ٹول بھی آپ کے ذہن میں ہے، HTML میں بنائیں اور اینڈرائیڈ پر چلائیں</h1>
+    <p class="lead">
+      SoifGo ایک مفت اینڈرائیڈ ایپ ہے جس سے آپ اپنے ٹولز بنا اور محفوظ کر سکتے ہیں:
+      کیلکولیٹر، سمیولیٹر، تعلیمی ٹول، ڈیش بورڈ، اور یہاں تک کہ ہارڈویئر کنٹرولر،
+      نیٹو اینڈرائیڈ کوڈ لکھے بغیر۔
+    </p>
+
+    <div class="top-cta">
+      <a class="btn" href="https://soifgo.github.io/soifgo/?lang=urdu" data-lang="urdu">
+        SoifGo ڈاؤن لوڈ کریں
+      </a>
+      <a class="btn ghost" href="#features">خصوصیات دیکھیں</a>
+    </div>
+
+    <div class="trust">
+      <span>مفت</span>
+      <span>آف لائن</span>
+      <span>اشتہارات کے بغیر</span>
+      <span>22 زبانیں</span>
+    </div>
   </header>
 
   <div class="shots">
-    <img src="../../icon/pic1.jpg" alt="SoifGo اسکرین شاٹ 1" loading="lazy" />
-    <img src="../../icon/pic2.jpg" alt="SoifGo اسکرین شاٹ 2" loading="lazy" />
-    <img src="../../icon/pic3.jpg" alt="SoifGo اسکرین شاٹ 3" loading="lazy" />
+    <figure>
+      <img src="../../icon/pic9.jpg" alt="SoifGo صنعتی پینل — ٹینک، پمپ اور والو کنٹرول" loading="eager" />
+      <figcaption>صنعتی پینل — ٹینک، پمپ، والو</figcaption>
+    </figure>
+    <figure>
+      <img src="../../icon/pic7.jpg" alt="SoifGo سمارٹ ہوم — لائٹ، پنکھا، ایئر کنڈیشنر کنٹرول" loading="lazy" />
+      <figcaption>سمارٹ ہوم — لائٹ، پنکھا، ایئر</figcaption>
+    </figure>
+    <figure>
+      <img src="../../icon/pic12.jpg" alt="SoifGo ڈیجیٹل لیول — فون سینسرز کا استعمال" loading="lazy" />
+      <figcaption>ڈیجیٹل لیول — فون سینسرز</figcaption>
+    </figure>
   </div>
 
-  <h2>SoifGo؛ ایک تیز اور موثر اینڈرائیڈ ایپ، یہ کس کے لیے ہے؟</h2>
-  <p>آجکل زیادہ تر ضروریات — کیلکولیشن اور سمیلیشن سے لے کر حسب ضرورت ڈیش بورڈز اور کنٹرول پینلز تک — آسانی سے پوری کی جا سکتی ہیں۔ آئیے SoifGo کی طاقتوں پر توجہ مرکوز کریں۔</p>
-  <p>SoifGo آپ کے ٹولز کو HTML فارمیٹ میں چلاتے ہوئے فولڈرز میں ترتیب دیتا ہے۔ چونکہ HTML ویب پیجز پر ممکنہ ہر چیز کو سپورٹ کرتا ہے، اس کا دائرہ کار انتہائی وسیع ہے: کیلکولیٹر اور سمیلیشنز سے لے کر سیکھنے کے ٹولز، ڈیش بورڈز، اور ضرورت پڑنے پر بلوٹوتھ اور MQTT کے ذریعے ہارڈویئر کنٹرول تک۔ اگر آپ کو ویب پیج لکھنا آتا ہے یا آپ اپنی ضروریات کسی AI اسسٹنٹ کو سمجھا سکتے ہیں، تو آپ اپنا ٹول خود بنا سکتے ہیں۔</p>
+  <h2><span class="kw">HTML سے اینڈرائیڈ ایپ بنائیں</span> — نیٹو کوڈ کے بغیر</h2>
+  <p>
+    ویب صفحے پر جو کچھ ممکن ہے، SoifGo میں بھی ممکن ہے۔
+    SoifGo آپ کے ٹولز کو HTML میں چلاتا ہے اور فولڈرز میں محفوظ کرتا ہے۔
+    کیلکولیٹر اور سمیولیٹر سے لے کر تعلیمی ٹول اور ڈیش بورڈ تک،
+    اور اگر ضروری ہو تو، Bluetooth اور MQTT کے ذریعے ہارڈویئر کنٹرول۔
+  </p>
+  <p>
+    اگر آپ ویب صفحہ لکھ سکتے ہیں، یا AI اسسٹنٹ کو اپنی ضرورت بتا سکتے ہیں،
+    تو آپ اپنا ٹول بنا سکتے ہیں۔
+  </p>
 
-  <h2>SoifGo کس کے لیے ڈیزائن کیا گیا ہے؟</h2>
+  <h2>SoifGo کس کے لیے ہے؟</h2>
   <div class="grid">
-    <div class="card"><h3>📐 ریاضی دان اور طلباء</h3><p>آپ کی ضروریات کے مطابق خصوصی کیلکولیٹر، گراف اور فنکشنز، سمیلیشنز، اور مسائل حل کرنے کے ٹولز۔</p></div>
-    <div class="card"><h3>🎓 اساتذہ اور ٹرینرز</h3><p>کلاس روم کے لیے انٹرایکٹو ٹولز، مشقیں، اور کوئز۔ طلباء یا ٹرینیز کو براہ راست چلانے کے لیے فائل بھیجیں۔</p></div>
-    <div class="card"><h3>🏗️ تمام شعبوں کے انجینئرز</h3><p>انجینئرنگ کیلکولیٹر، یونٹ کنورٹرز، اور ذاتی اسپریڈ شیٹس جو کام پر اور آف لائن ہمیشہ دستیاب رہتی ہیں۔</p></div>
-    <div class="card"><h3>🔌 ہابسٹ اور الیکٹرانکس ڈویلپرز</h3><p>Arduino, ESP32, ESP8266، اور Raspberry Pi کے لیے کنٹرول پینلز اور بلوٹوتھ و MQTT ماڈیولز۔</p></div>
-    <div class="card"><h3>💡 آئیڈیا رکھنے والا ہر شخص</h3><p>اپنا آئیڈیا AI اسسٹنٹ کے ساتھ شیئر کریں، HTML کوڈ حاصل کریں اور اسے SoifGo میں چلائیں۔</p></div>
+    <div class="card"><h3>📐 ریاضی دان اور طلباء</h3><p>خصوصی کیلکولیٹر، گراف اور فنکشن، سمیولیشن اور مسئلہ حل کرنے والے ٹولز، بالکل آپ کی ضرورت کے مطابق۔</p></div>
+    <div class="card"><h3>🎓 اساتذہ اور ٹرینرز</h3><p>کلاس، مشق اور امتحان کے لیے انٹرایکٹو ٹولز۔ فائل طلباء کو بھیجیں تاکہ خود چلائیں۔</p></div>
+    <div class="card"><h3>🏗️ ہر شعبے کے انجینئرز</h3><p>انجینئرنگ کیلکولیٹر، یونٹ کنورژن اور ذاتی حساب کی میزیں، کام پر اور آف لائن دستیاب۔</p></div>
+    <div class="card"><h3>🔌 میکر اور الیکٹرانکس کے شوقین</h3><p>Arduino، ESP32، ESP8266 اور Raspberry Pi کے لیے Bluetooth اور MQTT کنٹرولر اور ڈیش بورڈ۔</p></div>
+    <div class="card"><h3>💡 ہر وہ شخص جس کے پاس آئیڈیا ہے</h3><p>AI اسسٹنٹ کو آئیڈیا بتائیں، HTML کوڈ حاصل کریں اور SoifGo میں چلائیں۔</p></div>
   </div>
 
-  <h2>فولڈرز اور صفحات کا انتظام</h2>
-  <p>SoifGo آپ کے کام کو صاف ستھرا ترتیب دینے کے لیے فولڈرز اور صفحات فراہم کرتا ہے۔ ہر صفحے پر آپ کے پاس <strong>40 بٹنز (buttons)</strong> اور <strong>10 سلائیڈرز (sliders)</strong> ہوتے ہیں، اور آپ ملٹی لیول مینیوز بنانے کے لیے SoifGo کے فولڈرز اور صفحات کے درمیان نیویگیشن سمیت مخصوص رویوں کے لیے ہر بٹن کو ترتیب دے سکتے ہیں۔</p>
-  <p>بٹنز میں پہلے سے طے شدہ ڈیزائن کے اختیارات شامل ہیں: رنگ، آئیکن، نام، فونٹ، آواز، وائبریشن، اور ڈریگ اینڈ ڈراپ (drag-and-drop) سپورٹ۔ ہر بٹن بنیادی ان پٹ اور آؤٹ پٹ کے کام انجام دے سکتا ہے۔</p>
+  <div class="mid-cta">
+    <p>اپنا پہلا ٹول بنانے کے لیے تیار ہیں؟</p>
+    <a class="btn" href="https://soifgo.github.io/soifgo/?lang=urdu" data-lang="urdu">
+      SoifGo ڈاؤن لوڈ کریں →
+    </a>
+  </div>
 
-  <h2>ویب کا رویہ (آن لائن اور آف لائن)</h2>
-  <p>"ویب بیہیویر" (WebView) آپ کو آن لائن یا آف لائن ہونے کی صورت میں HTML فارمیٹ میں زیادہ سے زیادہ لچک کے ساتھ اپنے خیالات اور ضروریات کو حقیقت کا روپ دینے میں مدد کرتا ہے۔ بس اپنی درخواست AI اسسٹنٹ کے سامنے رکھیں اور HTML کوڈ مانگیں۔ اس کے بعد آپ کے پاس دو راستے ہیں:</p>
+  <h2><span class="kw">Arduino اور ESP32 کنٹرول کریں</span> Bluetooth اور MQTT سے اینڈرائیڈ فون سے</h2>
+  <p>
+    کوئی بھی آلہ جو Bluetooth SPP (جیسے <code>HC-05</code> اور <code>HC-06</code>)،
+    MQTT یا HTTP REST استعمال کرتا ہے، SoifGo کے ساتھ کام کرتا ہے:
+    Arduino، ESP32، ESP8266 اور Raspberry Pi۔
+  </p>
+  <p>
+    Bluetooth سے LED، موٹر اور ریلے کے احکامات بھیجیں، Bluetooth سے MQTT کا پل بنائیں،
+    یا سینسرز کے لیے لائیو ڈیش بورڈ بنائیں — سب کچھ HTML میں، نیٹو کوڈ کے بغیر۔
+  </p>
+
+  <h2>فولڈر اور صفحہ آرکائیو</h2>
+  <p>
+    SoifGo آپ کو فولڈرز اور صفحات دیتا ہے تاکہ آپ اپنے کام کو منظم طریقے سے محفوظ کر سکیں۔
+    ہر صفحے پر آپ کے پاس <strong>40 بٹن</strong> اور <strong>10 سلائیڈرز</strong> ہیں، اور ہر بٹن
+    کو مقرر کردہ رویوں کے لیے ترتیب دیا جا سکتا ہے، بشمول فولڈرز اور صفحات کے درمیان نیویگیشن۔
+    اس طرح آپ بہت سے مینو بنا سکتے ہیں۔
+  </p>
+  <p>
+    بٹنوں کا ڈیزائن تیار ہے: رنگ، آئیکن، نام، فونٹ، آواز اور وائبریشن۔
+    ڈریگ اینڈ ڈراپ سے منتقل بھی کیے جا سکتے ہیں۔ ہر بٹن میں بھیجنے اور وصول کرنے جیسے بنیادی رویے ہو سکتے ہیں۔
+  </p>
+
+  <h2>ویب رویہ، آن لائن اور آف لائن دونوں</h2>
+  <p>
+    «ویب رویہ» (WebView) آپ کے آئیڈیاز کو زیادہ سے زیادہ صلاحیت کے ساتھ HTML میں حقیقت میں بدلنے میں مدد کرتا ہے،
+    چاہے آن لائن ہو یا آف لائن۔ بس AI اسسٹنٹ کو اپنی ضرورت بتائیں اور HTML کوڈ مانگیں۔ پھر آپ کے پاس دو راستے ہیں:
+  </p>
   <ul class="use">
-    <li>فائل ڈاؤن لوڈ کریں اور SoifGo میں آف لائن ویب بیہیویر کا استعمال کرتے ہوئے اسے لوڈ (دوبارہ لوڈ) کریں۔</li>
-    <li>یا کوڈ کاپی کریں اور اسے SoifGo کے بلٹ ان HTML ایڈیٹر میں پیسٹ کریں۔</li>
+    <li>فائل ڈاؤن لوڈ کریں اور SoifGo میں آف لائن ویب رویے سے لوڈ (ری لوڈ) کریں۔</li>
+    <li>یا کوڈ کاپی کریں اور SoifGo کے HTML ایڈیٹر میں پیسٹ کریں۔</li>
   </ul>
-  <p>دونوں طریقے کام کرتے ہیں، اور آپ کی ویب ایپ SoifGo فولڈر میں محفوظ ہو جاتی ہے؛ چاہے وہ کیلکولیٹر ہو، بلوٹوتھ کنٹرولر ہو، IoT مانیٹرنگ ہو، یا کوئی اور حسب ضرورت ٹول۔</p>
+  <p>
+    دونوں طریقے کام کرتے ہیں اور آپ کی ویب ایپ SoifGo فولڈر میں محفوظ ہو جاتی ہے۔
+    چاہے کیلکولیٹر ہو، Bluetooth کنٹرولر ہو، IoT مانیٹرنگ ہو یا کچھ اور۔
+  </p>
 
-  <h2>ہر صفحے پر 40 مختلف ویب ایپس</h2>
-  <p>آپ ہر صفحے پر 40 تک مختلف ویب ایپس رکھ سکتے ہیں۔ آپ کو بار بار AI اسسٹنٹ سے پوچھنے کی ضرورت نہیں ہے، اور آپ ان کے ساتھ آف لائن کام کر سکتے ہیں۔ یہاں تک کہ آپ انہیں ڈاؤن لوڈ اور چلانے کے لیے اپنے ساتھیوں، دوستوں یا ٹرینیز کے ساتھ شیئر بھی کر سکتے ہیں۔</p>
+  <h2>فی صفحہ 40 مختلف ویب ایپس</h2>
+  <p>
+    ہر صفحے پر آپ کے پاس 40 مختلف ویب ایپس ہو سکتی ہیں۔ ہر بار AI اسسٹنٹ سے
+    مانگنے کی ضرورت نہیں، اور آف لائن بھی استعمال کر سکتے ہیں۔
+    یہاں تک کہ ساتھیوں اور دوستوں کو بھیج سکتے ہیں تاکہ ڈاؤن لوڈ کر کے چلائیں۔
+  </p>
 
-  <h2>خصوصیات</h2>
+  <h2 id="features">SoifGo کی خصوصیات</h2>
   <div class="grid">
-    <div class="card"><h3>🌐 مکمل WebView</h3><p>جدید براؤزر انجن: گرافس، سمیلیشنز اور 3D ویژولائزیشن کے لیے Canvas, SVG, WebGL اور Chart.js, D3, Three.js جیسی لائبریریز۔</p></div>
-    <div class="card"><h3>🧩 کلاسک موڈ (Classic Mode)</h3><p>سادہ کنٹرولز اور فوری مینیوز کے لیے بغیر کسی کوڈ کے تیار شدہ بٹنز اور سلائیڈرز۔</p></div>
-    <div class="card"><h3>💾 مقامی اسٹوریج (LocalStorage)</h3><p>ایپ بند کرنے کے بعد بھی <code>localStorage</code> کا استعمال کرتے ہوئے ڈیٹا کا برقرار رہنا۔</p></div>
-    <div class="card"><h3>🟢 فون کے سینسرز</h3><p>اردگرد کی روشنی، حرکت (ایکسیلومیٹر)، اور مقناطیسی میدان لائیو اور حقیقی وقت میں۔</p></div>
-    <div class="card"><h3>🎤 مائیکروفون اور اسپیچ ریکگنیشن</h3><p>اپنے ٹولز میں استعمال کرنے یا ڈیوائسز کو بھیجنے کے لیے آواز کو متن میں تبدیل کریں۔</p></div>
-    <div class="card"><h3>🔵 بلوٹوتھ سیریل (Bluetooth Serial)</h3><p>HC-05, HC-06, JDY-31, Arduino, ESP32، اور Raspberry Pi کے ساتھ ٹیکسٹ بھیجنا اور وصول کرنا۔</p></div>
-    <div class="card"><h3>🟣 MQTT کلائنٹ</h3><p>کسی بھی بروکرم (tcp یا ssl) سے کنکشن، پبلش اور سبسکرائب (publish & subscribe)، اور کنکشن کی حالت کی نگرانی۔</p></div>
-    <div class="card"><h3>🟠 HTTP API</h3><p>کسی بھی پتے پر JSON بھیجنا، رسپانس (response) سے اقدار حاصل کرنا اور نکالنا۔</p></div>
+    <div class="card"><h3>🌐 مکمل WebView</h3><p>جدید براؤزر انجن: Canvas، SVG، WebGL اور Chart.js، D3 اور Three.js جیسی لائبریریاں گراف، سمیولیشن اور 3D ڈسپلے کے لیے۔</p></div>
+    <div class="card"><h3>🧩 کلاسک موڈ</h3><p>تیار بٹن اور سلائیڈرز، بغیر کوڈ کے، سادہ کنٹرولز اور مینو کے لیے۔</p></div>
+    <div class="card"><h3>💾 لوکل اسٹوریج</h3><p><code>localStorage</code> سے ڈیٹا محفوظ کریں، ایپ بند کرنے کے بعد بھی رہے۔</p></div>
+    <div class="card"><h3>🟢 فون سینسرز</h3><p>محیطی روشنی، حرکت (ایکسلیرومیٹر) اور میگنیٹومیٹر ریئل ٹائم میں۔</p></div>
+    <div class="card"><h3>🎤 مائیکروفون اور تقریر کی شناخت</h3><p>آواز کو متن میں بدلیں اور اپنے ٹولز میں استعمال کریں یا آلات کو بھیجیں۔</p></div>
+    <div class="card"><h3>🔵 سیریل Bluetooth</h3><p>HC-05، HC-06، JDY-31، Arduino، ESP32 اور Raspberry Pi کے ساتھ متن بھیجیں اور وصول کریں۔</p></div>
+    <div class="card"><h3>🟣 MQTT کلائنٹ</h3><p>کسی بھی بروکر (tcp یا ssl) سے جڑیں، publish اور subscribe اور کنکشن کی حالت چیک کریں۔</p></div>
+    <div class="card"><h3>🟠 HTTP API</h3><p>کسی بھی پتے پر JSON بھیجیں اور جواب سے قیمت وصول اور نکالیں۔</p></div>
   </div>
 
-  <h2>کیا بنایا جا سکتا ہے؟</h2>
+  <h2>کیا کیا بنا سکتے ہیں؟</h2>
   <ul class="use">
-    <li>خصوصی کیلکولیٹر اور حساب کتاب کے ٹولز</li>
-    <li>گرافس، سمیلیشنز، اور ڈیٹا ویژولائزیشن</li>
-    <li>انٹرایکٹو تعلیمی ٹولز، مشقیں، اور کوئز</li>
-    <li>3D پریزنٹیشنز اور سائنسی ٹولز</li>
-    <li>آپ کے کام کے لیے ڈیش بورڈز اور حسب ضرورت کنٹرول پینلز</li>
-    <li>بلوٹوتھ اور بلوٹوتھ سے MQTT برج کے ذریعے لائٹس (LED)، موٹرز، ریلے، اور روبوٹس کا کنٹرول</li>
-    <li>بولے گئے احکامات کے ذریعے آلات کا وائس کنٹرول</li>
+    <li>کیلکولیٹر اور خصوصی حساب کے ٹولز</li>
+    <li>گراف، سمیولیشن اور ڈیٹا ویژولائزیشن</li>
+    <li>انٹرایکٹو تعلیمی ٹولز، مشقیں اور امتحانات</li>
+    <li>3D ڈسپلے اور سائنسی ٹولز</li>
+    <li>آپ کے کام کے لیے مخصوص ڈیش بورڈ اور پینل</li>
+    <li>Bluetooth سے LED، موٹر، ریلے اور روبوٹ کنٹرول، اور Bluetooth سے MQTT پل</li>
+    <li>آواز سے آلات کا صوتی کنٹرول</li>
   </ul>
 
-  <h2>اکثر پوچھے گئے سوالات (FAQ)</h2>
+  <h2>اکثر پوچھے جانے والے سوالات</h2>
   <details>
     <summary>کیا SoifGo صرف Arduino اور الیکٹرانکس کے لیے ہے؟</summary>
-    <p>نہیں۔ ہارڈویئر کنکشن صرف ایک فیچر ہے۔ چونکہ ٹولز HTML پر مبنی ہیں، اس لیے ویب پیجز پر جو کچھ بھی ممکن ہے (جیسے کیلکولیشن، گرافس، سمیلیشنز، اور تعلیمی ٹولز) وہ سب SoifGo میں بھی بہترین طریقے سے کام کرتا ہے۔</p>
+    <p>نہیں۔ ہارڈویئر کنکشن صرف ایک خصوصیت ہے۔ چونکہ ٹولز HTML میں بنے ہیں، ویب صفحے پر جو کچھ ممکن ہے — حساب، گراف، نقلیں اور تعلیمی ٹولز — وہ SoifGo میں بھی ممکن ہے۔</p>
   </details>
   <details>
-    <summary>کیا SoifGo ایپ مفت ہے؟</summary>
-    <p>ہاں، یہ مکمل طور پر مفت ہے، اشتہارات یا درون ایپ خریداریوں کے بغیر۔</p>
+    <summary>کیا SoifGo مفت ہے؟</summary>
+    <p>ہاں۔ مکمل طور پر مفت، اشتہارات اور ایپ کے اندر خریداری کے بغیر۔</p>
   </details>
   <details>
-    <summary>کیا یہ آف لائن کام کرتا ہے؟</summary>
-    <p>HTML ٹولز، بلوٹوتھ، اور فون کے سینسرز آف لائن کام کرتے ہیں۔ صرف MQTT اور HTTP کے لیے انٹرنیٹ یا لوکل نیٹ ورک کنکشن کی ضرورت ہوتی ہے۔</p>
+    <summary>کیا یہ انٹرنیٹ کے بغیر کام کرتا ہے؟</summary>
+    <p>HTML ٹولز، Bluetooth اور فون سینسرز انٹرنیٹ کے بغیر کام کرتے ہیں۔ صرف MQTT اور HTTP کو نیٹ ورک کنکشن درکار ہے۔</p>
   </details>
   <details>
-    <summary>ہارڈویئر کنکشن کے لیے کون سے سسٹمز مطابقت رکھتے ہیں؟</summary>
-    <p>کوئی بھی ڈیوائس جو بلوٹوتھ SPP (جیسے HC-05 اور HC-06)، MQTT، یا HTTP REST کو سپورٹ کرتی ہے؛ بشمول Arduino, ESP32, ESP8266، اور Raspberry Pi۔</p>
+    <summary>SoifGo کس ہارڈویئر کے ساتھ مطابقت رکھتا ہے؟</summary>
+    <p>کوئی بھی آلہ جو Bluetooth SPP (جیسے HC-05 اور HC-06)، MQTT یا HTTP REST استعمال کرتا ہے، بشمول Arduino، ESP32، ESP8266 اور Raspberry Pi۔</p>
   </details>
   <details>
-    <summary>شروع کرنے کے لیے مجھے کیا چاہیے؟</summary>
-    <p>HTML کا بنیادی علم کافی ہے۔ اس کے بغیر بھی، آپ کسی AI اسسٹنٹ سے HTML کوڈ مانگ سکتے ہیں۔ ہوم پیج پر ٹیوٹوریلز اور تیار شدہ مثالیں موجود ہیں۔</p>
+    <summary>شروع کرنے کے لیے کیا درکار ہے؟</summary>
+    <p>بنیادی HTML علم کافی ہے۔ اس کے بغیر بھی، آپ AI اسسٹنٹ کو اپنی ضرورت بتا کر HTML کوڈ حاصل کر سکتے ہیں۔ ٹیوٹوریلز اور تیار مثالیں مرکزی صفحے پر دستیاب ہیں۔</p>
   </details>
 
   <div class="cta">
-    <a class="btn" href="https://soifgo.github.io/soifgo/?lang=urdu" data-lang="urdu">SoifGo پر جائیں ←</a>
-    <small>ہوم پیج ڈاؤن لوڈز، ٹیوٹوریلز اور دستاویزات کے ساتھ کھلتا ہے، اور اردو ترجمہ خود بخود فعال ہو جاتا ہے۔</small>
+    <h2>شروع کرنے کے لیے تیار ہیں؟</h2>
+    <p style="color:var(--muted); margin-bottom:18px;">
+      مرکزی صفحہ ڈاؤن لوڈ، ٹیوٹوریلز اور دستاویزات کے ساتھ کھلتا ہے، اور اردو ترجمہ خودکار طور پر فعال ہو جاتا ہے۔
+    </p>
+    <a class="btn" href="https://soifgo.github.io/soifgo/?lang=urdu" data-lang="urdu">
+      SoifGo میں داخل ہوں →
+    </a>
+    <div style="margin-top:14px;">
+      <a class="btn secondary" href="https://soifgo.github.io/soifgo/docs.html">
+        تکنیکی دستاویزات (انگریزی)
+      </a>
+    </div>
+    <small>مفت، آف لائن، اشتہارات کے بغیر — Android 7 اور اوپر کے لیے</small>
   </div>
 
   <footer>
-    <p><a href="../../?lang=english" hreflang="en" lang="en" data-lang="english">English version</a></p>
+    <p>
+      <a href="../../?lang=english" hreflang="en" lang="en" data-lang="english">English version</a>
+      &nbsp;|&nbsp;
+      <a href="mailto:ssmqqmss@gmail.com">سپورٹ</a>
+      &nbsp;|&nbsp;
+      <a href="../../policy_soifgo.html">رازداری</a>
+    </p>
+    <p style="margin-top:8px;">&copy; 2026 SoifGo — Saeid Moghadam کی تخلیق</p>
   </footer>
 
 </div>
+
 <script>
   (function () {
     function remember(lang) {

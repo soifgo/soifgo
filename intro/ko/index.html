@@ -1,153 +1,434 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" dir="ltr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SoifGo - HTML로 맞춤형 Android 도구 제작 | Arduino 및 MQTT 제어</title>
-  <meta name="description" content="SoifGo는 HTML과 JavaScript를 사용하여 자신만의 도구(계산기, 대시보드, 교육 도구, Arduino 및 ESP32용 블루투스 및 MQTT 제어)를 만들 수 있는 무료 안드로이드 앱입니다." />
+
+  <title>SoifGo — HTML로 안드로이드 앱 만들기 | Arduino &amp; MQTT 제어</title>
+  <meta name="description" content="SoifGo는 HTML과 JavaScript로 나만의 앱과 도구를 만들 수 있는 무료 안드로이드 플랫폼입니다: 계산기, 대시보드, 교육 도구, 그리고 Arduino와 ESP32용 Bluetooth 및 MQTT 컨트롤러, 네이티브 코드 없이." />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+
   <link rel="canonical" href="https://soifgo.github.io/soifgo/intro/ko/" />
-  
-  <!-- Open Graph / Social -->
-  <meta property="og:title" content="SoifGo - HTML을 이용한 맞춤형 Android 도구 및 하드웨어 제어" />
-  <meta property="og:description" content="HTML로 계산기, 대시보드, 하드웨어 제어 도구를 만들어 안드로이드에서 실행하세요. 무료, 광고 없음, 오프라인 지원." />
+  <link rel="alternate" hreflang="x-default" href="https://soifgo.github.io/soifgo/" />
+  <link rel="alternate" hreflang="en" href="https://soifgo.github.io/soifgo/" />
+  <link rel="alternate" hreflang="ko" href="https://soifgo.github.io/soifgo/intro/ko/" />
+  <link rel="alternate" hreflang="fa" href="https://soifgo.github.io/soifgo/intro/fa/" />
+  <link rel="alternate" hreflang="ar" href="https://soifgo.github.io/soifgo/intro/ar/" />
+  <link rel="alternate" hreflang="es" href="https://soifgo.github.io/soifgo/intro/es/" />
+  <link rel="alternate" hreflang="zh-CN" href="https://soifgo.github.io/soifgo/intro/zh/" />
+  <link rel="alternate" hreflang="fr" href="https://soifgo.github.io/soifgo/intro/fr/" />
+  <link rel="alternate" hreflang="de" href="https://soifgo.github.io/soifgo/intro/de/" />
+  <link rel="alternate" hreflang="ja" href="https://soifgo.github.io/soifgo/intro/ja/" />
+  <link rel="alternate" hreflang="ru" href="https://soifgo.github.io/soifgo/intro/ru/" />
+  <link rel="alternate" hreflang="it" href="https://soifgo.github.io/soifgo/intro/it/" />
+  <link rel="alternate" hreflang="pt" href="https://soifgo.github.io/soifgo/intro/pt/" />
+  <link rel="alternate" hreflang="he" href="https://soifgo.github.io/soifgo/intro/he/" />
+  <link rel="alternate" hreflang="ur" href="https://soifgo.github.io/soifgo/intro/ur/" />
+  <link rel="alternate" hreflang="ckb" href="https://soifgo.github.io/soifgo/intro/ckb/" />
+  <link rel="alternate" hreflang="hi" href="https://soifgo.github.io/soifgo/intro/hi/" />
+  <link rel="alternate" hreflang="bn" href="https://soifgo.github.io/soifgo/intro/bn/" />
+  <link rel="alternate" hreflang="ta" href="https://soifgo.github.io/soifgo/intro/ta/" />
+  <link rel="alternate" hreflang="th" href="https://soifgo.github.io/soifgo/intro/th/" />
+  <link rel="alternate" hreflang="id" href="https://soifgo.github.io/soifgo/intro/id/" />
+  <link rel="alternate" hreflang="tr" href="https://soifgo.github.io/soifgo/intro/tr/" />
+  <link rel="alternate" hreflang="sw" href="https://soifgo.github.io/soifgo/intro/sw/" />
+
+  <meta property="og:title" content="SoifGo — HTML로 안드로이드 앱 만들기" />
+  <meta property="og:description" content="계산기, 교육 도구, 대시보드, 하드웨어 제어를 HTML로 안드로이드에서. 무료, 오프라인, 광고 없음." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://soifgo.github.io/soifgo/intro/ko/" />
   <meta property="og:image" content="https://soifgo.github.io/soifgo/soifgo-logo.png" />
   <meta property="og:locale" content="ko_KR" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <meta property="og:site_name" content="SoifGo" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="SoifGo — HTML로 안드로이드 앱 만들기" />
+  <meta name="twitter:description" content="도구, 대시보드, 하드웨어 제어를 HTML로. 무료, 오프라인." />
+  <meta name="twitter:image" content="https://soifgo.github.io/soifgo/soifgo-logo.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "SoifGo",
+    "operatingSystem": "Android 7.0+",
+    "applicationCategory": "DeveloperApplication",
+    "description": "HTML, CSS, JavaScript로 나만의 앱과 도구를 만드는 안드로이드 플랫폼. Arduino, ESP32, ESP8266용 Bluetooth 및 MQTT 컨트롤러 포함.",
+    "url": "https://soifgo.github.io/soifgo/intro/ko/",
+    "downloadUrl": "https://soifgo.github.io/soifgo/soifgo.zip",
+    "installUrl": "https://apkpure.com/soifgo/soifgo.saeidmoghadam",
+    "softwareVersion": "1.42",
+    "inLanguage": "ko",
+    "isAccessibleForFree": true,
+    "author": {
+      "@type": "Person",
+      "name": "Saeid Moghadam",
+      "email": "ssmqqmss@gmail.com"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "SoifGo",
+      "url": "https://soifgo.github.io/soifgo/"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock"
+    },
+    "featureList": [
+      "HTML/CSS/JS 지원 완전한 WebView",
+      "시리얼 Bluetooth 컨트롤러 (HC-05, HC-06, JDY-31)",
+      "publish 및 subscribe 지원 MQTT 클라이언트",
+      "HTTP API 송수신",
+      "휴대폰 센서: 조도, 움직임, 자기장",
+      "마이크 및 음성 인식",
+      "페이지당 40개 버튼, 10개 슬라이더",
+      "폴더 및 페이지 아카이빙",
+      "무료, 오프라인, 광고 없음"
+    ],
+    "screenshot": [
+      "https://soifgo.github.io/soifgo/icon/pic9.jpg",
+      "https://soifgo.github.io/soifgo/icon/pic7.jpg",
+      "https://soifgo.github.io/soifgo/icon/pic12.jpg"
+    ],
+    "softwareRequirements": "Android 7.0 (Nougat) 이상"
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "inLanguage": "ko",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "SoifGo는 Arduino와 전자공학 전용인가요?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "아니요. 하드웨어 연결은 기능 중 하나일 뿐입니다. 도구가 HTML로 만들어지기 때문에 웹 페이지에서 가능한 모든 것 — 계산, 그래프, 시뮬레이션, 교육 도구 — 이 SoifGo에서도 가능합니다."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "SoifGo는 무료인가요?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "네. 완전히 무료이며 광고나 앱 내 구매가 없습니다."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "인터넷 없이 작동하나요?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "HTML 도구, Bluetooth, 휴대폰 센서는 인터넷 없이 작동합니다. MQTT와 HTTP만 네트워크 연결이 필요합니다."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "어떤 하드웨어와 호환되나요?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Bluetooth SPP(예: HC-05, HC-06), MQTT 또는 HTTP REST를 사용하는 모든 장치. Arduino, ESP32, ESP8266, Raspberry Pi 포함."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "시작하려면 무엇이 필요한가요?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "기본적인 HTML 지식이면 충분합니다. 없어도 AI 어시스턴트에게 요구 사항을 설명하고 HTML 코드를 받을 수 있습니다."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "SoifGo",
+        "item": "https://soifgo.github.io/soifgo/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "한국어 소개",
+        "item": "https://soifgo.github.io/soifgo/intro/ko/"
+      }
+    ]
+  }
+  </script>
 
   <style>
-    :root { --bg:#0f172a; --card:#1e293b; --text:#e2e8f0; --muted:#94a3b8; --primary:#38bdf8; --border:#334155; }
+    :root {
+      --bg:#0f172a; --card:#1e293b; --text:#e2e8f0; --muted:#94a3b8;
+      --primary:#38bdf8; --primary-strong:#0ea5e9; --border:#334155;
+      --success:#4ade80;
+    }
     @media (prefers-color-scheme: light) {
-      :root { --bg:#f8fafc; --card:#ffffff; --text:#0f172a; --muted:#475569; --primary:#0369a1; --border:#e2e8f0; }
+      :root {
+        --bg:#f8fafc; --card:#ffffff; --text:#0f172a; --muted:#475569;
+        --primary:#0369a1; --primary-strong:#0284c7; --border:#e2e8f0;
+        --success:#16a34a;
+      }
     }
     * { box-sizing:border-box; margin:0; padding:0; }
-    body { background:var(--bg); color:var(--text); line-height:1.9; font-family:Tahoma, "Segoe UI", sans-serif; }
+    html { scroll-behavior:smooth; }
+    body {
+      background:var(--bg); color:var(--text); line-height:1.85;
+      font-family:"Malgun Gothic","Apple SD Gothic Neo","Segoe UI",sans-serif;
+      font-size:17px;
+    }
     .wrap { max-width:860px; margin:0 auto; padding:24px 18px 48px; }
     header { text-align:center; padding:24px 0 8px; }
     header img.logo { width:84px; height:84px; border-radius:18px; }
     h1 { font-size:1.7rem; line-height:1.5; margin:14px 0 10px; }
-    h2 { font-size:1.3rem; margin:36px 0 12px; color:var(--primary); }
     .lead { color:var(--muted); font-size:1.05rem; }
     p { margin-bottom:10px; }
-    .shots { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:22px 0 4px; }
-    .shots img { width:100%; border-radius:12px; border:1px solid var(--border); }
+    .top-cta { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin:20px 0 4px; }
+    .top-cta .btn { padding:10px 22px; font-size:.95rem; }
+    .top-cta .btn.ghost { background:transparent; color:var(--primary); border:2px solid var(--primary); }
+    .top-cta .btn.ghost:hover { background:var(--primary); color:#fff; }
+    h2 { font-size:1.3rem; margin:36px 0 12px; color:var(--primary); line-height:1.55; }
+    h2 .kw { color:var(--text); }
+    .shots { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:22px 0 4px; direction:ltr; }
+    .shots figure { margin:0; }
+    .shots img { width:100%; border-radius:12px; border:1px solid var(--border); display:block; }
+    .shots figcaption { font-size:.82rem; color:var(--muted); text-align:center; margin-top:6px; line-height:1.5; }
     .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; }
     .card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:14px 16px; }
     .card h3 { font-size:1rem; margin-bottom:4px; }
     .card p { color:var(--muted); font-size:.93rem; margin:0; }
     ul.use { padding-inline-start:22px; }
     ul.use li { margin-bottom:6px; }
-    details { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:14px 16px; margin-bottom:10px; }
+    details { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:12px 16px; margin-bottom:10px; }
     summary { cursor:pointer; font-weight:bold; }
     details p { margin:8px 0 0; color:var(--muted); }
-    code { background:var(--card); border:1px solid var(--border); border-radius:6px; padding:1px 6px; font-size:.9em; }
-    .cta { text-align:center; margin-top:40px; }
-    .btn { display:inline-block; background:var(--primary); color:#fff; text-decoration:none; font-weight:bold; padding:14px 34px; border-radius:12px; font-size:1.1rem; }
-    .btn:hover { opacity:.9; }
+    code { direction:ltr; unicode-bidi:isolate; background:var(--card); border:1px solid var(--border); border-radius:6px; padding:1px 6px; font-size:.9em; }
+    .cta { text-align:center; margin-top:40px; padding:28px 20px; background:var(--card); border:1px solid var(--border); border-radius:16px; }
+    .cta h2 { margin-top:0; }
+    .btn { display:inline-block; background:var(--primary); color:#fff; text-decoration:none; font-weight:bold; padding:14px 34px; border-radius:12px; font-size:1.1rem; transition:background .2s, transform .15s; }
+    .btn:hover { background:var(--primary-strong); transform:translateY(-2px); }
+    .btn.secondary { background:transparent; color:var(--primary); border:2px solid var(--primary); padding:12px 30px; font-size:1rem; }
+    .btn.secondary:hover { background:var(--primary); color:#fff; }
     .cta small { display:block; margin-top:10px; color:var(--muted); }
-    footer { text-align:center; margin-top:32px; color:var(--muted); font-size:.9rem; }
-    footer a { color:var(--primary); }
-    @media (max-width:560px) { h1 { font-size:1.4rem; } }
+    .mid-cta { text-align:center; margin:26px 0 6px; padding:18px; background:linear-gradient(135deg, rgba(56,189,248,.08), rgba(56,189,248,.02)); border:1px solid var(--border); border-radius:12px; }
+    .mid-cta p { color:var(--muted); margin:0 0 12px; }
+    .trust { display:flex; justify-content:center; gap:18px; flex-wrap:wrap; margin-top:14px; font-size:.88rem; color:var(--muted); }
+    .trust span::before { content:"✓ "; color:var(--success); font-weight:800; }
+    footer { text-align:center; margin-top:32px; color:var(--muted); font-size:.9rem; padding-top:20px; border-top:1px solid var(--border); }
+    footer a { color:var(--primary); text-decoration:none; }
+    footer a:hover { text-decoration:underline; }
+    @media (max-width:560px) {
+      h1 { font-size:1.4rem; }
+      .shots { grid-template-columns:1fr 1fr; }
+      .shots figure:nth-child(3) { grid-column:1 / -1; }
+      .shots figure:nth-child(3) img { max-width:60%; margin:0 auto; }
+      .top-cta .btn { width:100%; max-width:320px; }
+    }
+    @media (max-width:380px) {
+      .shots { grid-template-columns:1fr; }
+      .shots figure:nth-child(3) img { max-width:100%; }
+    }
   </style>
 </head>
 <body>
 <div class="wrap">
 
   <header>
-    <img class="logo" src="../../soifgo-logo.png" alt="SoifGo 로고" />
-    <h1>HTML로 원하는 도구를 직접 만들고 안드로이드에서 실행하세요</h1>
-    <p class="lead">SoifGo는 네이티브 안드로이드 프로그래밍 지식 없이도 계산기, 시뮬레이터, 교육용 도구, 대시보드, 하드웨어 컨트롤러 등의 맞춤형 도구를 만들고 보관할 수 있는 무료 안드로이드 앱입니다.</p>
+    <img class="logo" src="../../soifgo-logo.png" alt="SoifGo 로고 — HTML로 안드로이드 앱을 만드는 플랫폼" />
+    <h1>SoifGo — 머릿속에 있는 모든 도구를 HTML로 만들고 안드로이드에서 실행하세요</h1>
+    <p class="lead">
+      SoifGo는 나만의 도구를 만들고 보관할 수 있는 무료 안드로이드 앱입니다:
+      계산기, 시뮬레이터, 교육 도구, 대시보드, 심지어 하드웨어 컨트롤러까지,
+      네이티브 안드로이드 코드를 작성하지 않고도.
+    </p>
+
+    <div class="top-cta">
+      <a class="btn" href="https://soifgo.github.io/soifgo/?lang=korean" data-lang="korean">
+        SoifGo 다운로드
+      </a>
+      <a class="btn ghost" href="#features">기능 보기</a>
+    </div>
+
+    <div class="trust">
+      <span>무료</span>
+      <span>오프라인</span>
+      <span>광고 없음</span>
+      <span>22개 언어</span>
+    </div>
   </header>
 
   <div class="shots">
-    <img src="../../icon/pic1.jpg" alt="SoifGo 스크린샷 1" loading="lazy" />
-    <img src="../../icon/pic2.jpg" alt="SoifGo 스크린샷 2" loading="lazy" />
-    <img src="../../icon/pic3.jpg" alt="SoifGo 스크린샷 3" loading="lazy" />
+    <figure>
+      <img src="../../icon/pic9.jpg" alt="SoifGo 산업 패널 — 탱크, 펌프, 밸브 제어" loading="eager" />
+      <figcaption>산업 패널 — 탱크, 펌프, 밸브</figcaption>
+    </figure>
+    <figure>
+      <img src="../../icon/pic7.jpg" alt="SoifGo 스마트 홈 — 조명, 선풍기, 에어컨 제어" loading="lazy" />
+      <figcaption>스마트 홈 — 조명, 선풍기, 에어컨</figcaption>
+    </figure>
+    <figure>
+      <img src="../../icon/pic12.jpg" alt="SoifGo 디지털 수평계 — 스마트폰 센서 사용" loading="lazy" />
+      <figcaption>디지털 수평계 — 스마트폰 센서</figcaption>
+    </figure>
   </div>
 
-  <h2>SoifGo란 무엇이며 누구를 위한 앱인가요?</h2>
-  <p>오늘날 계산 및 시뮬레이션부터 맞춤형 대시보드 및 제어판에 이르기까지 대부분의 요구 사항을 손쉽게 구현할 수 있습니다. SoifGo의 강점에 주목해 보세요.</p>
-  <p>SoifGo는 HTML 형식으로 도구를 실행하고 폴더별로 정리합니다. HTML은 웹페이지에서 가능한 모든 기능을 지원하므로 계산기와 시뮬레이션부터 학습 도구, 대시보드, 필요에 따라 블루투스 및 MQTT를 통한 하드웨어 제어까지 응용 범위가 매우 넓습니다. 웹페이지를 작성할 수 있거나 AI 어시스턴트에게 요구사항을 설명할 수 있다면 누구나 자신만의 도구를 구축할 수 있습니다.</p>
+  <h2><span class="kw">HTML로 안드로이드 앱 만들기</span> — 네이티브 코드 없이</h2>
+  <p>
+    웹 페이지에서 가능한 모든 것은 SoifGo에서도 가능합니다.
+    SoifGo는 당신의 도구를 HTML로 실행하고 폴더에 보관합니다.
+    계산기와 시뮬레이터부터 교육 도구와 대시보드까지,
+    필요하면 Bluetooth와 MQTT를 통한 하드웨어 제어까지.
+  </p>
+  <p>
+    웹 페이지를 작성할 수 있거나 AI 어시스턴트에게 요구 사항을 설명할 수 있다면,
+    자신만의 도구를 만들 수 있습니다.
+  </p>
 
-  <h2>SoifGo는 어떤 분들을 위해 설계되었나요?</h2>
+  <h2>SoifGo는 누구를 위한 것인가요?</h2>
   <div class="grid">
-    <div class="card"><h3>📐 수학자 및 학생</h3><p>요구사항에 맞게 맞춤화된 특수 계산기, 그래프 및 함수, 시뮬레이션, 문제 해결 도구.</p></div>
-    <div class="card"><h3>🎓 교사 및 강사</h3><p>수업용 대화형 도구, 연습 문제, 퀴즈. 파일을 학생이나 교육생에게 보내어 직접 실행하게 할 수 있습니다.</p></div>
-    <div class="card"><h3>🏗️ 모든 분야의 엔지니어</h3><p>업무 중이나 오프라인에서도 항상 사용할 수 있는 엔지니어링 계산기, 단위 변환기, 개인 스프레드시트.</p></div>
-    <div class="card"><h3>🔌 취미 및 전자 개발자</h3><p>Arduino, ESP32, ESP8266, Raspberry Pi를 위한 제어판, 블루투스 및 MQTT 모듈.</p></div>
-    <div class="card"><h3>💡 아이디어가 있는 모든 분</h3><p>AI 어시스턴트와 아이디어를 공유하고 HTML 코드를 얻어 SoifGo에서 실행하세요.</p></div>
+    <div class="card"><h3>📐 수학자와 학생</h3><p>전문 계산기, 그래프와 함수, 시뮬레이션과 문제 해결 도구, 정확히 당신의 필요에 맞게.</p></div>
+    <div class="card"><h3>🎓 교사와 강사</h3><p>수업, 연습, 시험용 인터랙티브 도구. 학생들에게 파일을 보내 직접 실행하게 하세요.</p></div>
+    <div class="card"><h3>🏗️ 모든 분야의 엔지니어</h3><p>공학 계산기, 단위 변환, 개인 계산 표. 직장에서도 오프라인에서도 사용 가능.</p></div>
+    <div class="card"><h3>🔌 메이커와 전자공학자</h3><p>Arduino, ESP32, ESP8266, Raspberry Pi용 Bluetooth 및 MQTT 컨트롤러와 대시보드.</p></div>
+    <div class="card"><h3>💡 아이디어가 있는 모든 사람</h3><p>AI 어시스턴트에게 아이디어를 설명하고 HTML 코드를 받아 SoifGo에서 실행하세요.</p></div>
   </div>
 
-  <h2>폴더 및 페이지 관리</h2>
-  <p>SoifGo는 작업을 깔끔하게 정리할 수 있도록 폴더와 페이지 기능을 제공합니다. 각 페이지에는 <strong>40개의 버튼</strong>과 <strong>10개의 슬라이더</strong>가 있으며, 다단 메뉴를 만들기 위한 SoifGo 폴더 및 페이지 간 이동을 포함하여 특정 동작에 맞게 각 버튼을 설정할 수 있습니다.</p>
-  <p>버튼에는 색상, 아이콘, 이름, 글꼴, 사운드, 진동, 드래그앤드롭 지원 등 미리 정의된 디자인 옵션이 포함되어 있습니다. 각 버튼은 기본적인 입력 및 출력 작업을 수행할 수 있습니다.</p>
+  <div class="mid-cta">
+    <p>첫 번째 도구를 만들 준비가 되셨나요?</p>
+    <a class="btn" href="https://soifgo.github.io/soifgo/?lang=korean" data-lang="korean">
+      SoifGo 다운로드 →
+    </a>
+  </div>
 
-  <h2>웹 동작 (온라인 및 오프라인)</h2>
-  <p>"웹 동작"(WebView)을 사용하면 온라인이든 오프라인이든 HTML 형식으로 최대의 유연성을 발휘하여 아이디어와 요구사항을 실현할 수 있습니다. AI 어시스턴트에게 요청사항을 전달하고 HTML 코드를 요청하기만 하면 됩니다. 이후 두 가지 방법 중 선택할 수 있습니다.</p>
+  <h2><span class="kw">안드로이드 폰에서 Arduino와 ESP32 제어</span> (Bluetooth 및 MQTT)</h2>
+  <p>
+    Bluetooth SPP(예: <code>HC-05</code>, <code>HC-06</code>),
+    MQTT 또는 HTTP REST를 사용하는 모든 장치가 SoifGo와 작동합니다:
+    Arduino, ESP32, ESP8266, Raspberry Pi.
+  </p>
+  <p>
+    Bluetooth로 LED, 모터, 릴레이 명령을 보내고, Bluetooth에서 MQTT로의 브리지를 만들고,
+    또는 센서의 실시간 대시보드를 구축하세요 — 모두 HTML로, 네이티브 코드 없이.
+  </p>
+
+  <h2>폴더 및 페이지 아카이빙</h2>
+  <p>
+    SoifGo는 작업을 정리해 보관할 수 있는 폴더와 페이지를 제공합니다.
+    각 페이지에는 <strong>40개 버튼</strong>과 <strong>10개 슬라이더</strong>가 있고, 각 버튼은
+    정의된 동작으로 설정할 수 있습니다. 폴더와 페이지 간의 탐색도 포함됩니다.
+    이렇게 많은 메뉴를 만들 수 있습니다.
+  </p>
+  <p>
+    버튼에는 미리 만들어진 디자인이 있습니다: 색상, 아이콘, 이름, 글꼴, 소리, 진동.
+    드래그 앤 드롭으로 이동할 수도 있습니다. 각 버튼은 보내기와 받기 같은 기본 동작을 가질 수 있습니다.
+  </p>
+
+  <h2>웹 동작, 온라인과 오프라인 모두</h2>
+  <p>
+    «웹 동작»(WebView)은 당신의 아이디어를 최대한의 기능으로 HTML로 실현하도록 도와줍니다,
+    온라인이든 오프라인이든. AI 어시스턴트에게 요구 사항을 설명하고 HTML 코드를 요청하기만 하면 됩니다. 그런 다음 두 가지 길이 있습니다:
+  </p>
   <ul class="use">
-    <li>파일을 다운로드하여 SoifGo의 오프라인 웹 동작 기능을 사용하여 로드(새로 고침)합니다.</li>
-    <li>또는 코드를 복사하여 SoifGo에 내장된 HTML 편집기에 붙여넣습니다.</li>
+    <li>파일을 다운로드하고 SoifGo의 오프라인 웹 동작으로 로드(새로 고침)합니다.</li>
+    <li>또는 코드를 복사해 SoifGo 내 HTML 편집기에 붙여넣습니다.</li>
   </ul>
-  <p>두 방법 모두 작동하며, 계산기, 블루투스 컨트롤러, IoT 모니터링 또는 기타 맞춤형 도구 등 웹 앱이 SoifGo 폴더에 안전하게 보관됩니다.</p>
+  <p>
+    두 방법 모두 작동하며 웹 앱은 SoifGo 폴더에 보관됩니다.
+    계산기든, Bluetooth 컨트롤러든, IoT 모니터링이든, 무엇이든.
+  </p>
 
-  <h2>페이지당 최대 40개의 서로 다른 웹 앱</h2>
-  <p>각 페이지마다 최대 40개의 서로 다른 웹 앱을 가질 수 있습니다. AI 어시스턴트에게 반복해서 물어볼 필요 없이 오프라인에서도 작업할 수 있으며, 동료, 친구, 교육생에게 공유하여 다운로드하고 실행하도록 할 수 있습니다.</p>
+  <h2>페이지당 40개의 서로 다른 웹 앱</h2>
+  <p>
+    페이지당 40개의 서로 다른 웹 앱을 가질 수 있습니다. 매번 AI 어시스턴트에게
+    요청할 필요가 없고, 오프라인에서도 사용할 수 있습니다.
+    동료와 친구에게 보내 다운로드하고 실행하게 할 수도 있습니다.
+  </p>
 
-  <h2>주요 기능</h2>
+  <h2 id="features">SoifGo 기능</h2>
   <div class="grid">
-    <div class="card"><h3>🌐 완전한 WebView</h3><p>최신 브라우저 엔진 탑재: 그래프, 시뮬레이션, 3D 시각화를 위한 Canvas, SVG, WebGL 및 Chart.js, D3, Three.js 같은 라이브러리 지원.</p></div>
-    <div class="card"><h3>🧩 클래식 모드</h3><p>간단한 제어와 빠른 메뉴를 위해 코드가 전혀 필요 없는 사전 준비된 버튼과 슬라이더.</p></div>
-    <div class="card"><h3>💾 로컬 저장소 (LocalStorage)</h3><p>앱을 종료한 후에도 <code>localStorage</code>를 사용하여 데이터 영구 유지.</p></div>
-    <div class="card"><h3>🟢 스마트폰 센서</h3><p>주위 조도, 움직임(가속도계), 자기장 센서를 라이브 및 실시간으로 활용.</p></div>
-    <div class="card"><h3>🎤 마이크 및 음성 인식</h3><p>음성을 텍스트로 변환하여 도구에서 사용하거나 장치로 전송.</p></div>
-    <div class="card"><h3>🔵 블루투스 시리얼</h3><p>HC-05, HC-06, JDY-31, Arduino, ESP32, Raspberry Pi와 텍스트 송수신.</p></div>
-    <div class="card"><h3>🟣 MQTT 클라이언트</h3><p>모든 브로커(tcp 또는 ssl) 연결, 발행 및 구독(publish & subscribe), 연결 상태 모니터링.</p></div>
-    <div class="card"><h3>🟠 HTTP API</h3><p>임의의 주소로 JSON 전송, 응답에서 값 수신 및 추출.</p></div>
+    <div class="card"><h3>🌐 완전한 WebView</h3><p>최신 브라우저 엔진: Canvas, SVG, WebGL 및 Chart.js, D3, Three.js 같은 라이브러리로 그래프, 시뮬레이션, 3D 표시.</p></div>
+    <div class="card"><h3>🧩 클래식 모드</h3><p>미리 만들어진 버튼과 슬라이더, 코드 없이, 간단한 제어와 메뉴용.</p></div>
+    <div class="card"><h3>💾 로컬 저장소</h3><p><code>localStorage</code>로 데이터 저장, 앱을 닫아도 유지.</p></div>
+    <div class="card"><h3>🟢 휴대폰 센서</h3><p>주변광, 움직임(가속도계), 자기장 센서를 실시간으로.</p></div>
+    <div class="card"><h3>🎤 마이크 및 음성 인식</h3><p>음성을 텍스트로 변환해 도구에 사용하거나 장치로 전송.</p></div>
+    <div class="card"><h3>🔵 시리얼 Bluetooth</h3><p>HC-05, HC-06, JDY-31, Arduino, ESP32, Raspberry Pi와 텍스트 송수신.</p></div>
+    <div class="card"><h3>🟣 MQTT 클라이언트</h3><p>모든 브로커(tcp 또는 ssl)에 연결, publish 및 subscribe, 연결 상태 확인.</p></div>
+    <div class="card"><h3>🟠 HTTP API</h3><p>모든 주소로 JSON을 보내고 응답에서 값 받기 및 추출.</p></div>
   </div>
 
-  <h2>어떤 것을 만들 수 있나요?</h2>
+  <h2>무엇을 만들 수 있나요?</h2>
   <ul class="use">
-    <li>특수 계산기 및 연산 도구</li>
-    <li>그래프, 시뮬레이션 및 데이터 시각화</li>
-    <li>상호작용형 교육 도구, 연습 문제, 퀴즈</li>
-    <li>3D 프레젠테이션 및 과학 도구</li>
-    <li>업무용 대시보드 및 맞춤형 제어판</li>
-    <li>블루투스 및 블루투스-MQTT 브리지를 통한 전등(LED), 모터, 릴레이, 로봇 제어</li>
-    <li>음성 명령을 통한 기기 음성 제어</li>
+    <li>계산기와 전문 계산 도구</li>
+    <li>그래프, 시뮬레이션, 데이터 시각화</li>
+    <li>인터랙티브 교육 도구, 연습, 시험</li>
+    <li>3D 표시와 과학 도구</li>
+    <li>당신의 작업에 특화된 대시보드와 패널</li>
+    <li>Bluetooth로 LED, 모터, 릴레이, 로봇 제어, Bluetooth에서 MQTT로의 브리지</li>
+    <li>음성으로 장치 음성 제어</li>
   </ul>
 
-  <h2>자주 묻는 질문 (FAQ)</h2>
+  <h2>자주 묻는 질문</h2>
   <details>
-    <summary>SoifGo는 아두이노와 전자기기 전용인가요?</summary>
-    <p>아닙니다. 하드웨어 연결은 기능 중 일부일 뿐입니다. 도구가 HTML 기반이므로 웹페이지에서 가능한 모든 것(계산, 그래프, 시뮬레이션, 교육 도구 등)이 SoifGo에서도 원활하게 작동합니다.</p>
+    <summary>SoifGo는 Arduino와 전자공학 전용인가요?</summary>
+    <p>아니요. 하드웨어 연결은 기능 중 하나일 뿐입니다. 도구가 HTML로 만들어지기 때문에 웹 페이지에서 가능한 모든 것 — 계산, 그래프, 시뮬레이션, 교육 도구 — 이 SoifGo에서도 가능합니다.</p>
   </details>
   <details>
-    <summary>SoifGo 앱은 무료인가요?</summary>
-    <p>네, 광고나 인앱 결제 없이 완전히 무료입니다.</p>
+    <summary>SoifGo는 무료인가요?</summary>
+    <p>네. 완전히 무료이며 광고나 앱 내 구매가 없습니다.</p>
   </details>
   <details>
-    <summary>오프라인에서도 작동하나요?</summary>
-    <p>HTML 도구, 블루투스, 스마트폰 센서는 오프라인에서 작동합니다. MQTT와 HTTP만 인터넷 또는 로컬 네트워크 연결이 필요합니다.</p>
+    <summary>인터넷 없이 작동하나요?</summary>
+    <p>HTML 도구, Bluetooth, 휴대폰 센서는 인터넷 없이 작동합니다. MQTT와 HTTP만 네트워크 연결이 필요합니다.</p>
   </details>
   <details>
-    <summary>하드웨어 연결과 호환되는 시스템은 무엇인가요?</summary>
-    <p>블루투스 SPP(HC-05, HC-06 등), MQTT, HTTP REST를 지원하는 모든 기기(Arduino, ESP32, ESP8266, Raspberry Pi 포함)와 호환됩니다.</p>
+    <summary>어떤 하드웨어와 호환되나요?</summary>
+    <p>Bluetooth SPP(예: HC-05, HC-06), MQTT 또는 HTTP REST를 사용하는 모든 장치. Arduino, ESP32, ESP8266, Raspberry Pi 포함.</p>
   </details>
   <details>
     <summary>시작하려면 무엇이 필요한가요?</summary>
-    <p>기본적인 HTML 지식이면 충분합니다. 지식이 없더라도 AI 어시스턴트에세 HTML 코드를 요청하면 됩니다. 홈페이지에 튜토리얼과 준비된 예제가 있습니다.</p>
+    <p>기본적인 HTML 지식이면 충분합니다. 없어도 AI 어시스턴트에게 요구 사항을 설명하고 HTML 코드를 받을 수 있습니다. 튜토리얼과 준비된 예제는 메인 페이지에 있습니다.</p>
   </details>
 
   <div class="cta">
-    <a class="btn" href="https://soifgo.github.io/soifgo/?lang=korean" data-lang="korean">SoifGo로 이동 ←</a>
-    <small>홈페이지는 다운로드, 튜토리얼, 문서와 함께 열리며 한국어 자동 번역이 활성화됩니다.</small>
+    <h2>시작할 준비가 되셨나요?</h2>
+    <p style="color:var(--muted); margin-bottom:18px;">
+      메인 페이지가 다운로드, 튜토리얼, 문서와 함께 열리고 한국어 번역이 자동으로 활성화됩니다.
+    </p>
+    <a class="btn" href="https://soifgo.github.io/soifgo/?lang=korean" data-lang="korean">
+      SoifGo 입장 →
+    </a>
+    <div style="margin-top:14px;">
+      <a class="btn secondary" href="https://soifgo.github.io/soifgo/docs.html">
+        기술 문서 (영어)
+      </a>
+    </div>
+    <small>무료, 오프라인, 광고 없음 — Android 7 이상</small>
   </div>
 
   <footer>
-    <p><a href="../../?lang=english" hreflang="en" lang="en" data-lang="english">English version</a></p>
+    <p>
+      <a href="../../?lang=english" hreflang="en" lang="en" data-lang="english">English version</a>
+      &nbsp;|&nbsp;
+      <a href="mailto:ssmqqmss@gmail.com">지원</a>
+      &nbsp;|&nbsp;
+      <a href="../../policy_soifgo.html">개인정보</a>
+    </p>
+    <p style="margin-top:8px;">&copy; 2026 SoifGo — Saeid Moghadam 제작</p>
   </footer>
 
 </div>
+
 <script>
   (function () {
     function remember(lang) {
