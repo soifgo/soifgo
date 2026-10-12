@@ -3,6 +3,7 @@
 **Purpose:** Comprehensive AI-readable reference for the SoifGo Android application and its official website resources. When a user asks about SoifGo, this file serves as the primary source of truth for all documentation, tutorials, native bridges, and ecosystem components.
 
 **SoifGo Version:** 1.42 (VersionCode 142)
+**Document revision:** 2 — added Section 14 (complete runnable examples, incl. Arduino), Section 15 (troubleshooting), sensor clarifications, and the editor "wait for highlighting" warning.
 **Platform:** Android (built with B4A / Basic4Android)
 **Official Website:** https://soifgo.github.io/soifgo/
 **GitHub:** https://github.com/soifgo/soifgo
@@ -14,6 +15,18 @@
 ## 0. START HERE — Mandatory Operating Instructions for AI Assistants
 
 **Read this section first. It defines how you begin every SoifGo conversation. Sections 1–12 are reference material for HTML/WebView development. Section 13 describes the app's own screens and menus; use it whenever you tell a user where to tap.**
+
+### 0.0 How This File Is Organized (read once)
+
+| Part | What it is | Use it for |
+|---|---|---|
+| Section 0 | Operating rules | How to start, classify, deliver |
+| Sections 1–9 | Reference | Subs, receivers, formats, limits |
+| Section 13 | App screens and menus | Telling users where to tap |
+| **Section 14** | **Complete, runnable examples** | **Start every WebView answer from the closest example here. Copy its structure instead of writing from memory.** |
+| Section 15 | Troubleshooting table | Debugging broken pages |
+
+**Rule:** the examples in Section 14 are verified patterns. Reuse their exact Sub names, receiver names, argument order and guards, then adapt the UI and logic.
 
 ### 0.1 Your Role
 
@@ -59,6 +72,7 @@ You are a SoifGo expert assistant. You help users build SoifGo projects: HTML pa
    - Use **HTML file** when the page is created or pasted inside SoifGo (most common for AI-generated code).
    - Use **Online** when the page lives on a web server.
    - This step only **DEFINES** the WebView. It does **not** open the code editor.
+   - Older tutorials on the website word this path as **Behavior → Web → Web Offline HTML → Create**. It is the same feature. Use the names in this file, but if the user's screen shows the other wording, follow what their screen shows.
 4. **To paste your HTML code into the WebView, follow this exact order every time:**
 
    **FIRST TIME ONLY (defining the WebView):**
@@ -78,6 +92,7 @@ You are a SoifGo expert assistant. You help users build SoifGo projects: HTML pa
      (There is **no Behavior dialog** here — you are already inside the WebView's own menu.)
    - The **code editor** opens. In its top-left menu → **Select All and Paste**.
      Your clipboard replaces the entire file.
+   - ⚠️ **Before tapping X, wait until the code changes from plain black to colored** (syntax highlighting has finished loading). Closing too early can lose the pasted code.
    - Tap the **yellow X (close icon)** at the top to close and **save**.
      The WebView **reloads automatically** with the new code.
    - **Repeat this exact order every time you change the code:**
@@ -93,10 +108,12 @@ You are a SoifGo expert assistant. You help users build SoifGo projects: HTML pa
 4. Register every receiver on `window` (`window.html_bluetooth_tx = html_bluetooth_tx;`).
 5. Compare MQTT status with `=== 'true'` (it arrives as a string).
 6. `api_recive` needs **both** `address` and `key`; `api_rx` may deliver a plain value or a B4A Map string — use `extractValue()` from Section 8.
-7. Activate sensors / request microphone permission inside `window.onload`.
+7. Activate sensors and request microphone permission inside `window.onload`. If a page uses **any** phone sensor, call **all three** activation Subs: `sensor_light`, `sensor_move`, `sensor_magno`.
 8. Wrap `localStorage` access in `try/catch`.
 9. For polling APIs respect the rate limits in Section 8 and provide a **Stop** button.
 10. No external libraries unless the user asks; plain HTML/CSS/JS works offline.
+11. Start from the closest example in Section 14; do not write bridge code from memory.
+12. Every sensor receiver gets **one value as a string**. Never assume `(x, y, z)` tuples, `data.x`, or a vector. The magnetometer is one value (Section 9). Never invent a Sub called `Connect_Phone_Sensor`; that is the name of a **Classic** button behavior, not a bridge Sub.
 
 ### 0.5 Minimal Starter Template
 
@@ -136,8 +153,11 @@ window.html_bluetooth_tx = html_bluetooth_tx;
 
 window.onload = function () {
   if (window.soifgo) {
-    // Activate only what you need:
+    // Phone sensors: if the page uses ANY sensor, activate ALL THREE (see 14.3):
     // window.soifgo.CallSub('sensor_light', true);
+    // window.soifgo.CallSub('sensor_move', true);
+    // window.soifgo.CallSub('sensor_magno', true);
+    // Microphone (see 14.4):
     // window.soifgo.CallSub('request_mic_perm', true, null);
   }
 };
@@ -148,7 +168,7 @@ window.onload = function () {
 
 ### 0.6 Pre-Send Checklist
 
-Every `CallSub` name exists in Section 6 · second argument is `true` · max 3 arguments · every receiver is registered on `window` · bridge is guarded · hardware sketch and HTML use the same protocol and baud rate · menu names match Section 13 exactly · answer is in the user's language.
+Every `CallSub` name exists in Section 6 · second argument is `true` · max 3 arguments · every receiver is registered on `window` · bridge is guarded · hardware sketch and HTML use the same protocol and baud rate · menu names match Section 13 exactly · if sensors are used, all three are activated · the page was based on a Section 14 example · answer is in the user's language.
 
 ### 0.7 Common Opening Cases
 
@@ -234,6 +254,9 @@ All official documentation is hosted at `https://soifgo.github.io/soifgo/`.
   - Sensor Readout
   - Speed Control
   - Phone Sensors
+- **Download all examples (ZIP):** https://soifgo.github.io/soifgo/send_bluetooth_html/html_sample.zip
+- Per-example code pages: `.../send_bluetooth_html/01-led-blink/code.html`, `02-sensor-readout/code.html`, `03-speed-control/code.html`, `04-phone-sensors/code.html` (all under `https://soifgo.github.io/soifgo/`). Complete versions of the same patterns are also inside this file in Section 14.
+
 ## 3. The Bridge Architecture — `window.soifgo.CallSub`
 
 Communication from local or remote web scripts back to the native B4A environment relies on a standardized syntax:
@@ -303,7 +326,7 @@ window.soifgo.CallSub('sensor_magno', true);
 
 Activates the magnetic sensor. SoifGo starts sending data to `html_sensor_magno`.
 
-> **Note:** Call all three to activate all sensors. Typically called inside `window.onload`.
+> **Note:** To activate the sensors you must call **all three** (`sensor_light`, `sensor_move`, `sensor_magno`) — the official guide requires it. Call them inside `window.onload`.
 
 ---
 
@@ -449,7 +472,7 @@ Called when Bluetooth data arrives.
 #### `html_sensor_light(data)` — light sensor value
 #### `html_sensor_movex(data)` — movement sensor X-axis
 #### `html_sensor_movey(data)` — movement sensor Y-axis
-#### `html_sensor_magno(data)` — magnetic sensor value
+#### `html_sensor_magno(data)` — magnetic sensor value (ONE value, string; no components)
 
 ```js
 function html_sensor_light(data) { /* ... */ }
@@ -691,8 +714,10 @@ Always include a **Stop** button so the user can halt polling.
 
 ### Sensors (WebView bridge)
 
-- Light arrives as an integer; accelerometer X and Y have 3 decimals; magnetometer Z has 2 decimals. All values arrive as **strings**.
-- Accelerometer **Z** and magnetometer **X/Y** are **not forwarded**. A 3-axis compass or 3-axis spirit level cannot be built inside the WebView.
+- There are four receivers and **each one receives a single value as a string**: light (integer), move X (3 decimals), move Y (3 decimals), magneto (2 decimals).
+- The magnetometer has **no components at all**. After `sensor_magno` is activated, `html_sensor_magno` delivers **one single value** (a string). Never destructure it into x/y/z, never use `data.x`, never expect a tuple, vector or object. Show it as-is, or use it for a threshold, graph or alarm.
+- Accelerometer **Z** is **not forwarded**, and the magnetometer has no axes. A compass (heading) or a 3-axis spirit level cannot be built inside the WebView. A 2-axis tilt level using Move X / Move Y is possible.
+- There is **no** `Connect_Phone_Sensor` Sub. `Connect Phone Sensor` is a Classic button behavior (Section 13.4). In WebView use `sensor_light`, `sensor_move`, `sensor_magno`.
 
 ### Microphone
 
@@ -809,10 +834,6 @@ SoifGo is not a single application — it is an ecosystem of interrelated compon
 
 ---
 
-**End of SOIFGO_AI_CONTEXT.md**
-
----
-
 ## 13. SoifGo App Interface Guide (Screens, Menus, Behaviors)
 
 Use this section to tell users **where to tap**. Use the exact English menu names shown here. Anything marked *Not covered* is not documented in this file — send the user to the Complete User Guide instead of guessing.
@@ -870,7 +891,7 @@ Reset · **Send** · **Receive** · **Browser or HTML File** · Image · Note ·
 - SMS is send-only. Sliders never receive; only buttons receive.
 - *Connect Phone Sensor* works like *Receive ... Value*, but the data source is the **phone's own sensor**, not an external device (see below). It unlocks **Effects** too.
 
-**Connect Phone Sensor setup screen** (titled *read_phone_sensor*): **Input MAX Value** (for example `100`), a **Sensor** selector (a *Select Effect* list: **Light**, **Motion X**, **Motion Y**, **Magnetic**), and **Show Value On/Off**. There are no Start/End words, because the value comes straight from the sensor. Some sensors give integers (Light) and some give decimals (Motion X/Y, Magnetic), so use **Math Formula** (for example `Math.round(val)`) or the Rotation/Size effects with a suitable Input MAX Value. Accelerometer Z and magnetometer X/Y are not available.
+**Connect Phone Sensor setup screen** (titled *read_phone_sensor*): **Input MAX Value** (for example `100`), a **Sensor** selector (a *Select Effect* list: **Light**, **Motion X**, **Motion Y**, **Magnetic**), and **Show Value On/Off**. There are no Start/End words, because the value comes straight from the sensor. Some sensors give integers (Light) and some give decimals (Motion X/Y, Magnetic), so use **Math Formula** (for example `Math.round(val)`) or the Rotation/Size effects with a suitable Input MAX Value. Accelerometer Z is not available, and Magnetic is a single value with no components.
 
 **Receive ... Value setup screen** (example: Receive Bluetooth Value):
 - **Input MAX Value** — the maximum of the expected range (for example `100`).
@@ -950,6 +971,7 @@ Behavior **Browser or HTML File** makes the button host a WebView. Every button 
      HexVisualizer ON/OFF, Text Size, Line Numbers, WrapLine,
      Add Send Function, and **Select All and Paste**.
    - Choose **Select All and Paste** — the clipboard replaces the whole file.
+   - ⚠️ **Wait until the code changes from plain black to colored** (syntax highlighting finished) before closing.
    - Tap the **yellow X (close icon)** at the top to close and save.
      The WebView **reloads automatically** with the new code.
    - **Repeat this exact order every time you change the code.**
@@ -1010,3 +1032,601 @@ A **Note** is a text page owned by a button that can also **send its lines as co
 ### 13.8 Not Covered Here (do not guess)
 
 Exact behavior of each Note send option (delay, loop, wait-for-word, manual mode), the end of the Add Send Function list, and each Effect's individual settings. For these, point the user to https://soifgo.github.io/soifgo/soifgo_info/soifgo_info.html and the website Effects section.
+
+---
+
+## 14. Complete Working Examples (copy these patterns)
+
+All examples are self-contained single HTML files for the SoifGo WebView. Paste via **Play → WebView button → WebView menu → Edit → Select All and Paste → wait for colors → yellow X**.
+
+| User wants | Start from |
+|---|---|
+| Send text/commands over Bluetooth | 14.1 |
+| Show Bluetooth data / labelled values | 14.2 |
+| Phone sensors (light, motion, magnetic) | 14.3 |
+| Voice → Bluetooth | 14.4 |
+| MQTT control panel | 14.5 |
+| Bluetooth ↔ MQTT relay | 14.6 |
+| REST API / prices, with Start/Stop | 14.7 |
+| Save settings / lists | 14.8 |
+| Arduino LED + sensor dashboard (HTML + sketch) | 14.9 |
+
+### 14.1 Bluetooth — Send
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Send Command</title>
+<style>
+  body { font-family: sans-serif; background: #111; color: #eee; padding: 16px; text-align: center; }
+  input, button { padding: 12px; font-size: 18px; border-radius: 8px; border: 0; margin: 6px; }
+  button { background: #2196f3; color: #fff; }
+</style>
+</head>
+<body>
+  <h3>📤 Send to Bluetooth</h3>
+  <input id="txt" placeholder="Enter text...">
+  <button onclick="sendBT()">Send</button>
+  <div id="msg"></div>
+
+<script>
+function setMsg(t) { document.getElementById('msg').textContent = t; }
+
+function sendBT() {
+  var t = document.getElementById('txt').value;
+  if (window.soifgo) {
+    window.soifgo.CallSub('html_bluetooth_rx', true, t);
+    setMsg('Sent: ' + t);
+  } else {
+    setMsg('Not running inside SoifGo');
+  }
+}
+</script>
+</body>
+</html>
+```
+
+### 14.2 Bluetooth — Receive (raw text + labelled values)
+
+Use when the device sends text such as `temp=23` or `A0=512`. Each chunk is scanned for `name=number` pairs.
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BT Receive</title>
+<style>
+  body { font-family: sans-serif; background: #111; color: #eee; padding: 16px; }
+  .box { background: #222; border-radius: 10px; padding: 14px; margin: 8px 0; font-size: 20px; }
+  #raw { font-family: monospace; font-size: 14px; word-break: break-all; min-height: 40px; }
+</style>
+</head>
+<body>
+  <div class="box">Raw: <div id="raw">waiting for data...</div></div>
+  <div class="box" id="values">No values yet</div>
+
+<script>
+var latest = {};
+
+function html_bluetooth_tx(data) {
+  var s = String(data);
+  document.getElementById('raw').textContent = s;
+
+  var re = /([A-Za-z_]\w*)\s*=\s*(-?\d+(?:\.\d+)?)/g, m;
+  while ((m = re.exec(s)) !== null) {
+    latest[m[1]] = parseFloat(m[2]);
+  }
+  var out = [];
+  for (var k in latest) { out.push(k + ' = ' + latest[k]); }
+  if (out.length) document.getElementById('values').innerHTML = out.join('<br>');
+}
+window.html_bluetooth_tx = html_bluetooth_tx;
+</script>
+</body>
+</html>
+```
+
+### 14.3 Phone Sensors (all three activated)
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phone Sensors</title>
+<style>
+  body { font-family: sans-serif; background: #111; color: #eee; padding: 16px; }
+  .box { background: #222; border-radius: 10px; padding: 14px; margin: 8px 0; font-size: 22px; }
+  #info { opacity: .7; font-size: 14px; }
+</style>
+</head>
+<body>
+  <div class="box" id="light">Light: waiting...</div>
+  <div class="box" id="movex">Move X: waiting...</div>
+  <div class="box" id="movey">Move Y: waiting...</div>
+  <div class="box" id="magno">Magneto: waiting...</div>
+  <div id="info"></div>
+
+<script>
+// Each receiver gets ONE value as a STRING.
+function html_sensor_light(data) { document.getElementById('light').textContent = 'Light: ' + data; }
+function html_sensor_movex(data) { document.getElementById('movex').textContent = 'Move X: ' + data; }
+function html_sensor_movey(data) { document.getElementById('movey').textContent = 'Move Y: ' + data; }
+function html_sensor_magno(data) { document.getElementById('magno').textContent = 'Magneto: ' + data; }
+
+window.html_sensor_light = html_sensor_light;
+window.html_sensor_movex = html_sensor_movex;
+window.html_sensor_movey = html_sensor_movey;
+window.html_sensor_magno = html_sensor_magno;
+
+window.onload = function () {
+  if (window.soifgo) {
+    // Call ALL THREE to activate the sensors.
+    window.soifgo.CallSub('sensor_light', true);
+    window.soifgo.CallSub('sensor_move', true);
+    window.soifgo.CallSub('sensor_magno', true);
+  } else {
+    document.getElementById('info').textContent = 'Not running inside SoifGo';
+  }
+};
+</script>
+</body>
+</html>
+```
+
+To use a value numerically: `var v = parseFloat(data);` (values arrive as strings).
+
+### 14.4 Voice → Bluetooth
+
+Speech recognition availability depends on the device. For the full 22-language tutorial see https://soifgo.github.io/soifgo/serial_voice/serial_voice_tutorials.html
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Voice to Bluetooth</title>
+<style>
+  body { font-family: sans-serif; background: #111; color: #eee; padding: 16px; text-align: center; }
+  button { padding: 16px 28px; font-size: 20px; border-radius: 12px; border: 0; background: #e91e63; color: #fff; }
+  #out { margin-top: 16px; font-size: 20px; }
+</style>
+</head>
+<body>
+  <button id="micBtn">🎤 Start</button>
+  <div id="out">Say something...</div>
+
+<script>
+var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+var rec = SR ? new SR() : null;
+if (rec) rec.lang = 'en-US';   // change the language code as needed
+
+window.onload = function () {
+  if (window.soifgo) { window.soifgo.CallSub('request_mic_perm', true, null); }
+};
+
+document.getElementById('micBtn').addEventListener('click', function () {
+  if (!rec) { document.getElementById('out').textContent = 'Speech recognition not available'; return; }
+  rec.start();
+});
+
+if (rec) {
+  rec.onresult = function (e) {
+    var text = e.results[0][0].transcript;
+    document.getElementById('out').textContent = text;
+    if (text.trim() && window.soifgo) {
+      window.soifgo.CallSub('html_bluetooth_rx', true, text);
+    }
+  };
+  rec.onerror = function (e) { document.getElementById('out').textContent = 'Error: ' + e.error; };
+}
+</script>
+</body>
+</html>
+```
+
+### 14.5 MQTT Control Panel (connect, publish, receive, status)
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MQTT Control</title>
+<style>
+  body { font-family: sans-serif; background: #1e1e1e; color: #e0e0e0; padding: 16px; }
+  input, button { padding: 10px; border-radius: 6px; border: 1px solid #444; background: #2b2b2b;
+                  color: #fff; font-size: 16px; margin: 4px 0; width: 100%; box-sizing: border-box; }
+  button { background: #9b59b6; border: 0; font-weight: 600; }
+  button.on { background: #27ae60; } button.off { background: #c0392b; } button.chk { background: #f39c12; color: #111; }
+  .row { display: flex; gap: 8px; } .row button { flex: 1; }
+  .status { padding: 10px; border-radius: 6px; margin: 10px 0; font-weight: 600; }
+  .status.connected { background: #1a2a1a; color: #4caf50; border: 1px solid #4caf50; }
+  .status.disconnected { background: #2a1a1a; color: #e74c3c; border: 1px solid #e74c3c; }
+  #log { background: #111; padding: 10px; border-radius: 8px; height: 200px; overflow-y: auto;
+         font-family: monospace; font-size: 13px; margin-top: 10px; }
+  label { font-size: 12px; color: #888; display: block; margin-top: 6px; }
+</style>
+</head>
+<body>
+  <h3>🟣 MQTT Control Panel</h3>
+  <label>Broker URL</label><input id="broker" value="tcp://test.mosquitto.org:1883">
+  <label>Client ID (empty = auto)</label><input id="cid" placeholder="myTest_001">
+  <label>Username (optional)</label><input id="user">
+  <label>Password (optional)</label><input id="pass" type="password">
+  <label>QoS (0, 1, 2)</label><input id="qos" value="0">
+
+  <div class="row">
+    <button onclick="doConnect()">Connect</button>
+    <button class="chk" onclick="doStatus()">Check</button>
+    <button onclick="doDisconnect()">Disconnect</button>
+  </div>
+  <div id="status" class="status disconnected">Disconnected</div>
+
+  <label>Topic</label><input id="topic" value="soifgo/demo/tx">
+  <label>Message</label><input id="msg" value="ON">
+  <div class="row">
+    <button class="on" onclick="pub('ON')">Publish ON</button>
+    <button class="off" onclick="pub('OFF')">Publish OFF</button>
+  </div>
+  <button onclick="pub()">Send custom message</button>
+  <div id="log"></div>
+
+<script>
+function log(t) {
+  var el = document.getElementById('log');
+  el.innerHTML += '<div>[' + new Date().toLocaleTimeString() + '] ' + t + '</div>';
+  el.scrollTop = el.scrollHeight;
+}
+function setStatus(ok) {
+  var el = document.getElementById('status');
+  el.className = 'status ' + (ok ? 'connected' : 'disconnected');
+  el.textContent = ok ? 'Connected' : 'Disconnected';
+}
+function noBridge() { log('Not running inside SoifGo'); }
+
+function doConnect() {
+  if (!window.soifgo) return noBridge();
+  var broker = document.getElementById('broker').value.trim();
+  var cid = document.getElementById('cid').value.trim();
+  var user = document.getElementById('user').value.trim();
+  var pass = document.getElementById('pass').value;
+  log('Connect -> ' + broker);
+  window.soifgo.CallSub('connecte_mqtt_ai', true, broker, cid);      // step 1
+  if (user || pass) {
+    window.soifgo.CallSub('connecte_mqtt_up', true, user, pass);     // step 2 (optional)
+  }
+}
+function doDisconnect() {
+  if (!window.soifgo) return noBridge();
+  window.soifgo.CallSub('mqtt_Disconnect', true);
+  setStatus(false);
+}
+function doStatus() {
+  if (!window.soifgo) return noBridge();
+  window.soifgo.CallSub('mqtt_status', true);
+}
+function pub(preset) {
+  if (!window.soifgo) return noBridge();
+  var topic = document.getElementById('topic').value.trim();
+  var qos = document.getElementById('qos').value.trim() || '0';
+  var text = (preset !== undefined) ? preset : document.getElementById('msg').value;
+  if (!topic) { alert('Enter a topic'); return; }
+  log('TX ' + topic + ' : ' + text);
+  window.soifgo.CallSub('mqtt_publish', true, topic, text, qos);     // also auto-subscribes
+}
+
+function mqtt_rx(topic, message) { log('RX ' + topic + ' : ' + message); }
+window.mqtt_rx = mqtt_rx;
+
+function html_mqtt_status(connected) {
+  var ok = (connected === true || connected === 'true');   // arrives as a STRING
+  setStatus(ok);
+  log('Status: ' + (ok ? 'CONNECTED' : 'DISCONNECTED'));
+}
+window.html_mqtt_status = html_mqtt_status;
+</script>
+</body>
+</html>
+```
+
+### 14.6 Bluetooth ↔ MQTT Relay (JS part)
+
+```javascript
+// Bluetooth -> MQTT   (connect MQTT first, as in 14.5)
+function html_bluetooth_tx(data) {
+  if (window.soifgo) window.soifgo.CallSub('mqtt_publish', true, 'soifgo/relay/from_bt', String(data), '0');
+}
+window.html_bluetooth_tx = html_bluetooth_tx;
+
+// MQTT -> Bluetooth
+function mqtt_rx(topic, message) {
+  if (window.soifgo) window.soifgo.CallSub('html_bluetooth_rx', true, message);
+}
+window.mqtt_rx = mqtt_rx;
+```
+
+### 14.7 API — Price with Start / Stop
+
+Works with both response formats (plain value and B4A Map). To switch provider change `API_URL`, `API_KEY`, `FIELD`, `INTERVAL`.
+
+| Provider | `API_URL` | `API_KEY` | `FIELD` | `INTERVAL` |
+|---|---|---|---|---|
+| DIA (flat JSON) | `https://api.diadata.org/v1/assetQuotation/Bitcoin/0x0000000000000000000000000000000000000000` | `Price` | `Price` | 5000 |
+| CoinGecko (nested) | `https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd` | `bitcoin` | `usd` | 10000 or more |
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BTC Price</title>
+<style>
+  body { font-family: sans-serif; background: #1e1e1e; color: #e0e0e0; padding: 20px; text-align: center; }
+  h2, .price { color: #f7931a; }
+  .price { font-size: 2.5rem; font-weight: bold; margin: 20px 0; min-height: 3rem; }
+  button { background: #f7931a; color: #fff; border: 0; padding: 14px 30px; border-radius: 8px; font-size: 16px; margin: 6px; }
+  button.stop { background: #c0392b; }
+  #raw { background: #111; padding: 10px; border-radius: 8px; font-family: monospace; font-size: 12px;
+         text-align: left; word-break: break-all; max-height: 120px; overflow-y: auto; margin-top: 12px; }
+  #state { font-size: 14px; color: #888; }
+</style>
+</head>
+<body>
+  <h2>₿ Bitcoin Price</h2>
+  <div class="price" id="price">--</div>
+  <div id="state">Stopped</div>
+  <div>
+    <button onclick="startPoll()">▶ Start</button>
+    <button class="stop" onclick="stopPoll()">■ Stop</button>
+  </div>
+  <div id="raw"></div>
+
+<script>
+var API_URL  = 'https://api.diadata.org/v1/assetQuotation/Bitcoin/0x0000000000000000000000000000000000000000';
+var API_KEY  = 'Price';   // key SoifGo extracts (REQUIRED)
+var FIELD    = 'Price';   // field used by extractValue
+var INTERVAL = 5000;      // ms, respect rate limits (Section 8)
+var timer = null;
+
+function startPoll() {
+  stopPoll();
+  fetchNow();
+  timer = setInterval(fetchNow, INTERVAL);
+  document.getElementById('state').textContent = 'Live, every ' + (INTERVAL / 1000) + 's';
+}
+function stopPoll() {
+  if (timer) { clearInterval(timer); timer = null; }
+  document.getElementById('state').textContent = 'Stopped';
+}
+function fetchNow() {
+  if (window.soifgo) {
+    window.soifgo.CallSub('api_recive', true, API_URL, API_KEY);
+  } else {
+    document.getElementById('state').textContent = 'Not running inside SoifGo';
+    stopPoll();
+  }
+}
+
+function extractValue(raw, fieldName) {
+  var s = String(raw).trim();
+  if (/^-?\d+(\.\d+)?$/.test(s)) return s;                                   // plain number
+  var m = s.match(new RegExp(fieldName + '[=:]\\s*([^,}\\s]+)', 'i'));       // {usd=86750}
+  if (m) return m[1];
+  try { var o = JSON.parse(s); if (o[fieldName] !== undefined) return o[fieldName]; } catch (e) {}
+  var n = s.match(/-?\d+(\.\d+)?/);                                          // fallback
+  return n ? n[0] : null;
+}
+
+function api_rx(number) {
+  document.getElementById('raw').textContent = String(number);
+  var v = parseFloat(extractValue(number, FIELD));
+  document.getElementById('price').textContent = isNaN(v)
+    ? 'Parse error'
+    : '$' + v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+window.api_rx = api_rx;
+</script>
+</body>
+</html>
+```
+
+To send data to a server (POST `{"key":"value"}`): `window.soifgo.CallSub('api_send', true, address, key, value);`
+
+### 14.8 Save & Reload (localStorage)
+
+`alert()`, `confirm()`, `prompt()` work natively. Always use try/catch around storage and escape user text before putting it in `innerHTML`.
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Save & Reload</title>
+<style>
+  body { font-family: sans-serif; background: #1e1e1e; color: #e0e0e0; padding: 16px; }
+  input, button { padding: 10px; border-radius: 6px; border: 1px solid #444; background: #2b2b2b; color: #fff; font-size: 16px; }
+  button { background: #3498db; border: 0; } button.danger { background: #c0392b; }
+  .item { padding: 8px 12px; background: #2b2b2b; border-radius: 6px; margin: 4px 0; display: flex; justify-content: space-between; align-items: center; }
+</style>
+</head>
+<body>
+  <h3>💾 Save & Reload</h3>
+  <input id="name" placeholder="Enter name...">
+  <button onclick="addItem()">Save</button>
+  <button class="danger" onclick="clearAll()">Clear</button>
+  <div id="out"></div>
+
+<script>
+var KEY = 'my_data';   // use a unique key per page
+
+function load() {
+  try { return JSON.parse(localStorage.getItem(KEY)) || []; }
+  catch (e) { return []; }
+}
+function persist(list) {
+  try { localStorage.setItem(KEY, JSON.stringify(list)); }
+  catch (e) { alert('Could not save. Storage may be full.'); }
+}
+function esc(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+function render() {
+  var list = load(), out = document.getElementById('out');
+  if (!list.length) { out.innerHTML = '<p style="color:#888">No items saved yet.</p>'; return; }
+  out.innerHTML = list.map(function (x, i) {
+    return '<div class="item"><span>' + (i + 1) + '. ' + esc(x.name) + '</span>' +
+           '<button class="danger" onclick="removeItem(' + i + ')">×</button></div>';
+  }).join('');
+}
+function addItem() {
+  var n = document.getElementById('name').value.trim();
+  if (!n) { alert('Please enter a name.'); return; }
+  var list = load(); list.push({ name: n, time: Date.now() });
+  persist(list); render();
+  document.getElementById('name').value = '';
+}
+function removeItem(i) { var l = load(); l.splice(i, 1); persist(l); render(); }
+function clearAll() {
+  if (!confirm('Delete all saved items?')) return;
+  try { localStorage.removeItem(KEY); } catch (e) {}
+  render();
+}
+window.onload = render;
+</script>
+</body>
+</html>
+```
+
+### 14.9 Arduino + Bluetooth Dashboard (LED control + sensor readout)
+
+**Protocol (both sides must match):**
+- Baud rate: **9600** (HC-05 / HC-06 default data mode).
+- Phone → Arduino: `ON` or `OFF`, each ending with a newline (`\n`). The sketch ignores empty lines, so it works whether or not SoifGo appends its own line ending.
+- Arduino → phone: `A0=<number>` followed by a newline, every 500 ms.
+
+**Wiring (Arduino Uno + HC-05):** HC-05 TX → pin 10, HC-05 RX → pin 11 (through a voltage divider, 5 V → 3.3 V), VCC 5 V, GND common. Pair the module in Android Settings first (default PIN is usually `1234` or `0000`).
+
+**Arduino sketch:**
+
+```cpp
+#include <SoftwareSerial.h>
+
+SoftwareSerial bt(10, 11);   // RX, TX
+const int LED_PIN = 13;
+String line = "";
+unsigned long lastSend = 0;
+
+void setup() {
+  pinMode(LED_PIN, OUTPUT);
+  bt.begin(9600);
+}
+
+void handleCommand(String cmd) {
+  cmd.trim();
+  if (cmd.length() == 0) return;          // ignore empty lines
+  if (cmd == "ON")  digitalWrite(LED_PIN, HIGH);
+  if (cmd == "OFF") digitalWrite(LED_PIN, LOW);
+}
+
+void loop() {
+  while (bt.available()) {
+    char c = bt.read();
+    if (c == '\n' || c == '\r') { handleCommand(line); line = ""; }
+    else line += c;
+  }
+  if (millis() - lastSend >= 500) {
+    lastSend = millis();
+    bt.print("A0=");
+    bt.println(analogRead(A0));
+  }
+}
+```
+
+**ESP32 variant:** replace the SoftwareSerial parts with `#include "BluetoothSerial.h"`, `BluetoothSerial bt;`, `bt.begin("ESP32_SoifGo");` and use the same `bt.available() / bt.read() / bt.print` calls. Pair "ESP32_SoifGo" in Android Settings.
+
+**HTML page:**
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arduino Dashboard</title>
+<style>
+  body { font-family: sans-serif; background: #111; color: #eee; padding: 16px; text-align: center; }
+  button { padding: 16px 28px; font-size: 20px; margin: 6px; border-radius: 12px; border: 0; color: #fff; }
+  .on { background: #27ae60; } .off { background: #c0392b; }
+  .box { background: #222; border-radius: 10px; padding: 14px; margin: 12px 0; font-size: 28px; }
+  #bar { height: 14px; background: #333; border-radius: 7px; overflow: hidden; }
+  #fill { height: 100%; width: 0; background: #2196f3; }
+  #info { opacity: .7; font-size: 14px; }
+</style>
+</head>
+<body>
+  <h3>Arduino Dashboard</h3>
+  <button class="on" onclick="send('ON')">LED ON</button>
+  <button class="off" onclick="send('OFF')">LED OFF</button>
+  <div class="box">A0: <span id="a0">--</span><div id="bar"><div id="fill"></div></div></div>
+  <div id="info">Waiting...</div>
+
+<script>
+function send(cmd) {
+  if (window.soifgo) {
+    window.soifgo.CallSub('html_bluetooth_rx', true, cmd + '\n');
+    document.getElementById('info').textContent = 'Sent: ' + cmd;
+  } else {
+    document.getElementById('info').textContent = 'Not running inside SoifGo';
+  }
+}
+
+function html_bluetooth_tx(data) {
+  var re = /A0\s*=\s*(\d+)/g, m, last = null;
+  while ((m = re.exec(String(data))) !== null) { last = parseInt(m[1], 10); }
+  if (last !== null) {
+    document.getElementById('a0').textContent = last;
+    document.getElementById('fill').style.width = Math.min(100, last * 100 / 1023) + '%';
+  }
+}
+window.html_bluetooth_tx = html_bluetooth_tx;
+</script>
+</body>
+</html>
+```
+
+---
+
+## 15. Troubleshooting Table
+
+| Symptom | Likely cause | Fix |
+|---|---|---|
+| Nothing happens when a button is tapped | Page opened in a normal browser, or bridge not guarded | `window.soifgo` only exists inside SoifGo. Use `if (window.soifgo)` |
+| Receiver never fires | Not registered on `window` | `window.myReceiver = myReceiver;` |
+| Sensors show nothing | Not all three activation Subs called, or not called in `window.onload` | Call `sensor_light`, `sensor_move`, `sensor_magno` in `window.onload` (14.3) |
+| Code works for light/move but magnetic looks wrong | Code expects x/y/z | Magneto is a single string value; use `parseFloat(data)` |
+| `CallSub` does nothing | Second argument is not `true`, empty arg omitted, or more than 3 args | Pass `true`, use `''` for empty args, max 3 args |
+| MQTT shows "Connected" when it is not | `'false'` string is truthy | Compare `=== 'true'` |
+| MQTT messages never arrive | Never published/subscribed to that topic, or topic case differs | Publish once to the topic (auto-subscribes); topics are case-sensitive |
+| `api_recive` silently fails | Missing `key` | Pass both `address` and `key` |
+| `api_rx` shows `{usd=86750}` or fails `JSON.parse` | B4A Map format | Use `extractValue()` (14.7) |
+| HTTP 429 from an API | Polling too fast | Increase interval (Section 8), keep a Stop button |
+| Pasted code vanished | Editor closed before highlighting finished, or pasted in the Behavior screen | Wait until code turns colored, then yellow X. Paste only in the WebView editor from **Play** |
+| Bluetooth list is empty | Module not paired | Pair in Android Settings first |
+| Headphones/speaker not usable | SoifGo supports data devices only | Use HC-05, HC-06, JDY-31, ESP32, etc. |
+| Microphone features fail | Permission denied | Call `request_mic_perm`, or enable the Microphone permission in Android Settings → Apps → SoifGo |
+| Arduino ignores commands | Baud/protocol mismatch | Use the same baud rate and the exact `ON` / `OFF` + newline protocol (14.9) |
+
+---
+
+**End of SOIFGO_AI_CONTEXT.md**
