@@ -3,7 +3,7 @@
 **Purpose:** Comprehensive AI-readable reference for the SoifGo Android application and its official website resources. When a user asks about SoifGo, this file serves as the primary source of truth for all documentation, tutorials, native bridges, and ecosystem components.
 
 **SoifGo Version:** 1.42 (VersionCode 142)
-**Document revision:** 2 — added Section 14 (complete runnable examples, incl. Arduino), Section 15 (troubleshooting), sensor clarifications, and the editor "wait for highlighting" warning.
+**Document revision:** 3 — added Section 14.10 (AC Clamp Meter).
 **Platform:** Android (built with B4A / Basic4Android)
 **Official Website:** https://soifgo.github.io/soifgo/
 **GitHub:** https://github.com/soifgo/soifgo
@@ -1050,6 +1050,7 @@ All examples are self-contained single HTML files for the SoifGo WebView. Paste 
 | REST API / prices, with Start/Stop | 14.7 |
 | Save settings / lists | 14.8 |
 | Arduino LED + sensor dashboard (HTML + sketch) | 14.9 |
+| Measure AC current with the phone magnetometer | 14.10 |
 
 ### 14.1 Bluetooth — Send
 
@@ -1603,6 +1604,57 @@ window.html_bluetooth_tx = html_bluetooth_tx;
 </script>
 </body>
 </html>
+```
+
+---
+
+### 14.10 AC Clamp Meter (Phone Magnetometer)
+
+Uses the phone's **magnetic sensor** as a free AC clamp meter — no extra
+hardware, no external clamp, no soldering. The magnetometer picks up the
+alternating magnetic field around a mains wire and turns it into a current
+reading, live on screen.
+
+**How it works (5 steps):**
+
+1. **Decimal → integer.** Multiply the raw magnetometer value by `10`
+   (`raw = parseFloat(data) * 10`) to get a better numeric sample.
+2. **Take 50 samples.** Fill a rolling buffer with the last 50 readings of
+   the alternating field.
+3. **Find the peak.** Track the highest and the lowest value in the buffer
+   (after removing the zero-offset).
+4. **Peak-to-peak.** `peak = max − min` — the field's amplitude.
+5. **Divide by calibration.** `current = peak / calFactor` — the result is
+   the current in Amperes.
+
+**Calibration (`calFactor`):** the default `420` is an **experimental value**
+measured by the author on his own phone at **1 Ampere**. Every phone will
+give a different number. Calibrate with a known load (for example a 1 kW
+heater ≈ 4.35 A at 230 V), compare with a reference ammeter, and adjust the
+**CAL FACTOR** field in the app until the reading matches.
+
+**Bridge usage:** the page needs only **one** receiver
+(`html_sensor_magno`) — but all **three** activation Subs must still be
+called, per Section 0.4 rule 7:
+
+```js
+function html_sensor_magno(data) {
+  var raw = parseFloat(data) * 10;          // decimal -> integer
+  // buffer.push(raw)
+  // peak-to-peak over the buffer
+  // currentA = peak / calFactor
+  // update the display
+}
+window.html_sensor_magno = html_sensor_magno;
+
+window.onload = function () {
+  if (window.soifgo) {
+    // Call ALL THREE (Section 0.4 rule 7)
+    window.soifgo.CallSub('sensor_light', true);
+    window.soifgo.CallSub('sensor_move', true);
+    window.soifgo.CallSub('sensor_magno', true);
+  }
+};
 ```
 
 ---
