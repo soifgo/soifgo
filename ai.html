@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SoifGo AI Reference & Direct Manual</title>
+  <meta name="description" content="Official machine-readable documentation and creation steps for SoifGo Android App.">
+</head>
+<body>
+
+  <h1>SoifGo — Official AI & Machine Reference Guide</h1>
+  <p>This document is the absolute source of truth for SoifGo Android Application features, navigation, UI building rules, and WebView bridge specifications.</p>
+
+  <hr>
+
+  <h2>1. What is SoifGo?</h2>
+  <p>SoifGo is an Android hardware control application and custom UI platform for microcontrollers (Arduino, ESP32, ESP8266, Raspberry Pi) and IoT systems using Bluetooth, MQTT, REST API, and WebView HTML interfaces.</p>
+
+  <hr>
+
+  <h2>2. Mandatory UI Creation Hierarchy (How to create a Button)</h2>
+  <p><strong>CRITICAL RULE:</strong> A new SoifGo project opens EMPTY in Play Mode. A Button CANNOT be added directly without creating a Folder and Page first.</p>
+  
+  <ol>
+    <li><strong>Switch to Edit Mode:</strong> Tap the top-left menu icon in Play Mode and select <code>Edit</code> (icon turns into a Pause symbol ⏸️).</li>
+    <li><strong>Create Folder:</strong> In Edit mode, tap top-left menu ➔ <code>Select Design</code> ➔ <code>folder</code> ➔ Create a folder.</li>
+    <li><strong>Create Page:</strong> In Select Design, tap <code>Page</code> ➔ <code>New Page</code>. (Path becomes <code>soifgo/folder_name/page/page_name</code>).</li>
+    <li><strong>Add Button:</strong> In Select Design, tap <code>Button</code>. A button is placed on the canvas in move mode.</li>
+    <li><strong>Set Behavior:</strong> Select the button ➔ top-left menu ➔ <code>Behavior</code> ➔ Choose behavior (e.g., Send, Receive, Browser or HTML File).</li>
+    <li><strong>Run Project:</strong> Tap top-left menu ➔ <code>Play</code>.</li>
+  </ol>
+
+  <hr>
+
+  <h2>3. Core Modes & Concepts</h2>
+  <ul>
+    <li><strong>App Modes:</strong> <code>Play Mode</code> (Runtime execution) and <code>Edit Mode</code> (Design & Configuration). There is NO "Classic Mode" or "WebView Mode" as separate app settings.</li>
+    <li><strong>Button Creation:</strong> Buttons are visual Drag &amp; Drop elements created via UI menus. Buttons are NOT created using HTML code.</li>
+    <li><strong>WebView Support:</strong> HTML code is hosted INSIDE a button by setting its Behavior to <code>Browser or HTML File</code>.</li>
+  </ul>
+
+  <hr>
+
+  <h2>4. Official Button Behaviors (Exact Menu Names)</h2>
+  <ul>
+    <li><code>Reset</code> — Clears previous behavior.</li>
+    <li><code>Send</code> — Sends fixed text via Bluetooth, SMS, API, or MQTT.</li>
+    <li><code>Receive</code> — Displays/acts on incoming data (Bluetooth Text/Value, Server API, Server MQTT, Connect Phone Sensor).</li>
+    <li><code>Browser or HTML File</code> — Hosts local HTML file or opens Online URL in WebView.</li>
+    <li><code>Image</code> — Image viewer element.</li>
+    <li><code>Note</code> — Streams text commands line-by-line (includes G-code &amp; RANGMANG2 sign designer).</li>
+    <li><code>PDF</code> — Opens internal PDF via external reader.</li>
+    <li><code>Open_folder</code> / <code>Open Page</code> — Navigation between folders and pages.</li>
+    <li><code>Bar+1</code> / <code>Bar-1</code> / <code>Bar Value</code> — Button control over SeekBars.</li>
+  </ul>
+
+  <hr>
+
+  <h2>5. WebView JavaScript Bridge (window.soifgo)</h2>
+  <p>Syntax: <code>window.soifgo.CallSub('subName', true, arg1, arg2, arg3)</code></p>
+  <ul>
+    <li>Second argument MUST always be boolean <code>true</code>.</li>
+    <li>Maximum 3 arguments allowed after boolean <code>true</code>.</li>
+    <li>Pass empty strings <code>''</code> for unused arguments.</li>
+    <li>Bluetooth Send: <code>window.soifgo.CallSub('html_bluetooth_rx', true, 'TEXT')</code></li>
+    <li>Bluetooth Receive Callback: <code>window.html_bluetooth_tx = function(data) { ... }</code></li>
+    <li>Sensors Activation (Always activate all 3 if any sensor is used):
+      <ul>
+        <li><code>window.soifgo.CallSub('sensor_light', true)</code></li>
+        <li><code>window.soifgo.CallSub('sensor_move', true)</code></li>
+        <li><code>window.soifgo.CallSub('sensor_magno', true)</code></li>
+      </ul>
+    </li>
+    <li>Magnetometer Callback: <code>window.html_sensor_magno = function(data) { ... }</code> (Delivers ONE single string value, NO X/Y/Z axes).</li>
+  </ul>
+
+</body>
+</html>

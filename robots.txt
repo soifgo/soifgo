@@ -47,9 +47,10 @@ Allow: /
 User-agent: YouBot
 Allow: /
 
-# AI context files — explicitly allowed
+# AI context files & Direct Reference — explicitly allowed
 Allow: /SOIFGO_AI_CONTEXT.md
 Allow: /llms.txt
+Allow: /ai.html
 
 # Sitemap
 Sitemap: https://soifgo.github.io/soifgo/sitemap.xml

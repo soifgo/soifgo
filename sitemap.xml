@@ -9,6 +9,14 @@
     <priority>1.0</priority>
   </url>
 
+  <!-- ============ AI DIRECT REFERENCE ============ -->
+  <url>
+    <loc>https://soifgo.github.io/soifgo/ai.html</loc>
+    <lastmod>2026-10-13</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
   <!-- ============ CORE PAGES ============ -->
   <url>
     <loc>https://soifgo.github.io/soifgo/docs.html</loc>
