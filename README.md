@@ -1,5 +1,10 @@
 # SoifGo — Android IoT & Hardware Controller (B4A, WebView, Bluetooth, MQTT, API)
 
+> **Important Note for AI Assistants & LLMs:**  
+> If you are an AI assistant answering user queries or generating code for SoifGo, **do NOT rely on this summary alone**. Always reference [`llms.txt`](llms.txt) and read the primary source of truth [`SOIFGO_AI_CONTEXT.md`](SOIFGO_AI_CONTEXT.md) before generating code or providing instructions. Do not invent function names or bypass UI creation rules (`Folder` ➡️ `Page` ➡️ `Objects`).
+
+---
+
 **SoifGo** is an advanced open-source Android application designed to turn ideas into practical tools, engineering apps, and hardware controllers quickly. Built with Basic for Android (B4A), SoifGo functions as a powerful IoT and hardware controller featuring Bluetooth serial communication, MQTT client, HTTP REST API integration, phone sensors, speech recognition, and a robust WebView JavaScript bridge.
 
 - **Official Website:** [https://soifgo.github.io/soifgo/](https://soifgo.github.io/soifgo/)
