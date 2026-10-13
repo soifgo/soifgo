@@ -157,6 +157,7 @@ A button with no Behavior (`None`) shows no Behavior window.
 
 **Right after adding (move mode is active):**
 - The button follows the finger anywhere on the page.
+- While **Touch Motion** is active, a bar titled **Touch Button** (with a hand icon) and a red **X** (the close icon) appears at the top, plus a small label with the button number (example: `Button8`). The red **X** ends the move mode.
 - **Do NOT touch the button itself to move it.** Touch an **empty area** of the page: the button jumps under the finger and moves with it.
 - Move mode stays active until the user does one of these (all of them lock the button in place and prevent accidental touches):
   1. taps the **button**,
@@ -252,6 +253,10 @@ A Button is essentially a **label**: it can send, receive, show values and run e
 | Precise ±1 adjustment of a slider with a large range, or showing a slider's value | Buttons with **Bar+1** / **Bar-1**, and **Bar Value** as a label (Section 13.5) |
 | A second button designed like an existing one | **Copy Properties** on the finished button, then **Paste Properties** on the target (everything except position is copied) |
 | A slider that sends 0–max | Not a Button. Use **SeekBar** (sender only) |
+
+#### Classic mode vs WebView (how to advise users)
+
+The **classic mode** (Buttons, SeekBars, Send, Receive, Effects, Note) covers **basic, simple needs** and is especially useful **offline**, without internet or an AI assistant. It is **maintained but no longer being extended**. Anything more complex than a simple control panel (custom dashboards, logic, charts, animations) should be built with a **WebView** (HTML) page, which can do whatever a web page can. Do not promise classic features that are not described in this file.
 
 #### Minimal template for the AI's answer
 
@@ -1079,6 +1084,8 @@ Use this section to tell users **where to tap**. Use the exact English menu name
 - **Option** (Edit menu) currently only has two switches: *MENU Sounds* and *Screen Alive* (keep screen on). Minor; do not teach it unless asked.
 - When an object (button/slider) is selected in Edit, the menu also shows: Copy Properties, Paste Properties, Delete Object, Background, Name, Size, Move, Behavior, Audio, Vibra — and **Effects** (last item, appears only after the button's behavior is set to a *Receive ... Value* option).
 
+**The red X (Close) helper:** in many places SoifGo shows a red **X** (close icon) at the top of the screen as a helper, depending on what the user is doing (for example during Touch Motion, Fine Motion, Corner or color panels, and in the WebView toolbar). Its job is always to **close or stop that operation**. If a user is "stuck" in a move or setting mode, look for the red X at the top (or press the phone **Back** button).
+
 ### 13.2 Select Design — Items Appear Step by Step
 
 The *Select Design* list grows as the project grows (to avoid clutter):
@@ -1125,7 +1132,7 @@ Reset · **Send** · **Receive** · **Browser or HTML File** · Image · Note ·
 - Example: the microcontroller sends `temp=25cg`, Start Word is `temp=`, End Word is `cg`, Max is `100` → SoifGo reads `25`.
 
 **Effects** (last menu item, only after a *Receive ... Value* behavior):
-Reset · Size · Circular · Move · Rotation · Color · Graph · Math Formula · Alarm.
+Reset · Size · Circular · Move · Rotation · Color · Graph · Math Formula · Alarm. (**Reset** clears the Effect set on the button, like **Behavior → Reset**.)
 Effects can be **combined on one button**; each has its own settings. All Effects are described below; each also has a video on the website (https://soifgo.github.io/soifgo/Effect/effects.html). The website tutorial uses the names **Circle** (= Circular), **Rotate** (= Rotation), **Formula** (= Math Formula) and **ALARM** (= Alarm). If the user's screen shows other wording, follow the screen.
 
 **Math Formula** — an internal script that pre-processes the received number before the other effects use it (useful when you cannot change what the sender transmits, for example to remove decimals or rescale so a dial turns correctly).
@@ -1175,24 +1182,35 @@ Effects can be **combined on one button**; each has its own settings. All Effect
 - If a needle in the button's background cannot reach the wanted position, rotate the needle/background image itself (adjust its initial rotation after setting the background).
 - Uses: clocks, pressure / temperature / current / voltage gauges, speedometers. See the gauge/needle recipe above.
 
-**Color effect** — changes the button's color from preset schemes: **battery, cooling, brightness, red, green, blue, yellow**. Each preset has its own purpose: for example **battery** shows depletion, and **red** gets more intense from the minimum to the maximum input.
+**Color effect** — changes the button's color between the **minimum input and the maximum input** using ready-made presets. The **Select Effect** dialog lists: **None, Battery, Cooling, Light W, Light R, Light G, Light B, Light Y** (the letters stand for white, red, green, blue, yellow; the website calls them brightness, red, green, blue and yellow). Each preset defines the color at the minimum and at the maximum input. For example **Battery** shows depletion, **Cooling** a cold-to-hot style change, and the **Light** presets increase the intensity of one color from minimum to maximum input.
 
 **Graph effect** — draws a **line graph** of the incoming values on the button.
 - Settings: **line color** and **line thickness**.
-- **Trigger** has four options: **phone/internal timing with saving**, **internal timing without saving**, **external trigger with saving**, **external trigger without saving**.
-- With an **external trigger**, each received value is stored together with its **time**, so the sender must transmit at the right rhythm (for example every second or every hour); sending errors distort the recorded times.
-- Two sliders at the bottom: the **first** sets the internal timing from **100 ms to 48 s**; the **second** sets the line thickness.
-- Graphs are saved in the SoifGo folder (**SoifGo/graph**) and can be shared or moved. In Play the user can **zoom** and **browse history pages**.
+- **Drawing is always time-based.** The graph is drawn at the interval set by the timing slider. (An older method that drew a point each time data arrived — the "external trigger" options still mentioned in the website tutorial — was **removed** because it was not standard. Do not offer it.)
+- Two sliders: the **first** sets the drawing interval from **100 ms to 60 s**; the **second** sets the line thickness.
+- **Saving:** with **Save Page**, each graph page is saved as a **text file** in the SoifGo folder (**SoifGo/graph**); the file name contains the **button name** and the **date**. The files can be shared or moved. With **None : Save Page** (no saving), **nothing is saved** in the graph folder. In Play the user can **zoom** and **browse history pages**.
 - **New graph / new group on the same button:** rename the button in Edit; a new name starts fresh graphs. Renaming it back to the old name shows the earlier graphs again. Old graphs stay in **SoifGo/graph** under their names, even if the user forgets the name.
+- **Availability:** the Graph effect (like all Effects) is available when the button's Behavior is a numeric *Receive ... Value* option — **Bluetooth, MQTT or API** alike.
+- **Graph settings screen (as seen on screen):** R, G, B, A sliders and a color picker for the **line color**; a **preview line** showing the chosen color and thickness; two sliders with `<` and `>` buttons (the **upper** one sets the **drawing interval**, the **lower** one the **line thickness**); and a wide **button at the bottom** showing the current save choice (example label: `None : Save Page`). Tapping it opens a dialog titled **Select Effect** with **Reset**, **Save Page** and **None : Save Page**: this is where the user chooses between **saving** the graph pages (**Save Page**) and **not saving** (**None : Save Page**, nothing is written to the graph folder). Settings the user controls here: line color, line thickness, drawing time, and **save / no save**.
+- **In Play:** the graph is drawn **on the button, whatever its size** — make the button large (for example a big rectangle with a two-color background) so the graph is readable. The button also shows the **current value** (for example `137`) in its center. Graphs are drawn for the **input defined on that button**.
+- **Graph panel in Play:** tapping the graph button opens a dialog titled **Select?** with four items: **Run**, **Stop**, **View**, **Graph Select**. **View** opens the graph viewer for browsing: a label at the top (example `Empty 1`), a dashed vertical marker line, and a bottom navigation bar with a **green left arrow**, a **blue right arrow** and a **slider** over a miniature of the recorded graph (zoom / history pages). **Graph Select** is for choosing among the saved graphs.
 
 **Alarm effect** — shows a **text notification and plays a sound** when the value becomes **greater or less** than a threshold.
+- **Alarm settings screen (as seen on screen):** two rows. **Alarm Set** — a bar that shows the current condition and threshold (example: `Alarm > 23`); **tapping the bar chooses greater-than or less-than**, and the **input below it holds the threshold value** (example: `23`). **Alarm Text** — a text input for the message shown when the alarm triggers (example: `alarm ?????`). Example use: alarm when the value is **less than 50** or **greater than 50**.
+- **Sound:** if a sound is set on the button (**Audio** menu item), that sound plays when the alarm triggers in Play.
 - **Alarm Value** — the numeric threshold.
 - **Alarm Message** — the text shown when the alarm triggers.
 - **Alarm Option** — choose **greater than** or **less than**.
 - **Delay setting** — a delay bar at the bottom controls how often **consecutive alarms** can repeat.
 - **Sound** — uses the same sound configured for the button (the **Audio** menu item).
 
-**btnstartup** (older feature): runs selected buttons automatically in sequence when the app starts. Each selected button has a ticked checkbox and a delay; delays are consecutive. Example: buttons 4, 6, 8 with 2 s each → button 4 is clicked after 2 s, button 6 after 2 more seconds, button 8 after 2 more. Do not suggest it to beginners.
+**btnstartup** (older feature): runs buttons **automatically, one after another, when Play starts**. Open it from **Select Design → btnstartup** (it appears once a page exists).
+- The screen is a table with **one row per button** (B1, B2, ...): a **number input (seconds)** on the left, the **button name** in the middle and a **checkbox** on the right.
+- A button takes part only when its checkbox is **ticked and a seconds value is set**. Unticked buttons are skipped even if they hold a number (in the example screenshot B1 has `6` but is unticked, so it is ignored; B2 = `6` and B6 = `8` are ticked).
+- When Play starts, the loop begins: the first ticked button counts its seconds, is then **clicked automatically**, and the loop moves on to the next ticked button. It is a **sequential queue; earlier buttons have priority**, and each delay starts after the previous button has run.
+- Example: B2 = 6 s, B6 = 8 s → B2 is clicked automatically after 6 seconds, then B6 after 8 more seconds.
+- The sequence runs **once** per Play start; it does **not repeat by itself**. To run it again, the user **leaves Play and returns to Play** (exiting Play is the condition for the next start).
+- Do not suggest it to beginners.
 
 **Note** is a full feature (see 13.7). The remaining behaviors and menu items are short:
 
@@ -1284,6 +1302,7 @@ The built-in editor above is the intended path.
 A **Note** is a text page owned by a button that can also **send its lines as commands** and **receive text into itself**. Like WebView, it is set up in Edit and opened in Play:
 
 1. In Edit, select a button → **Behavior** → **Note**, then create a new note, pick one from the phone, or pick a saved one from SoifGo's Note folder.
+   Each button has its **own, separate note**. Notes are saved in SoifGo's **Note** folder.
 2. In Play, tap the button to open the note.
 
 **Note editor menu:** Rename Note, Save as Note, Color, Text Size, Left Mid Right (text alignment), **Note out**, Find, Find & Replace, Line Numbers, WrapLine, Font, **DateTime:Now** (inserts the current date and time — handy for reports and logs), **Gcod** (G-code designer, see below) and **RANGMANG2** (WS2812 pixel-sign designer, see below). The red X closes and saves.

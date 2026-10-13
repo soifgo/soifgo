@@ -623,7 +623,7 @@
         <li><strong>Create the button:</strong> Set behavior to numeric input (Bluetooth, API, or MQTT).</li>
         <li><strong>Maximum:</strong> <code>1024</code>.</li>
         <li><strong>Enable simulator:</strong> Use <em>simulation input value</em> in Play to generate values <code>1 → 1024</code>.</li>
-        <li><strong>Edit mode:</strong> Click the button and open <em>Effects</em>. Options include Size, Circle, Move, Rotate, Color, Graph, Formula, and ALARM.</li>
+        <li><strong>Edit mode:</strong> Click the button and open <em>Effects</em>. Options include Size, Circle, Move, Rotate, Color, Graph, Formula, and ALARM. In the app menu the same effects may be labeled Circular, Rotation, Math Formula and Alarm.</li>
       </ul>
     </div>
 
@@ -673,8 +673,10 @@
     <h2 id="color">🎨 Color</h2>
     <div class="card">
       <p>
-        Predefined options include battery, cooling, brightness, red, green, blue, and yellow. Each has specific use cases—for example,
-        battery visualizes depletion, and red increases in intensity from minimum to maximum input.
+        Choose a preset from the <em>Select Effect</em> list: <strong>Battery</strong>, <strong>Cooling</strong>, <strong>Light W</strong>
+        (white / brightness), <strong>Light R</strong>, <strong>Light G</strong>, <strong>Light B</strong> and <strong>Light Y</strong>
+        (red, green, blue, yellow), or <strong>None</strong>. Each preset sets the button color for the minimum and maximum input—for
+        example, Battery visualizes depletion, and the Light presets increase the intensity of their color from minimum to maximum input.
       </p>
     </div>
 
@@ -688,25 +690,25 @@
     <h2 id="graph">📈 Graph</h2>
     <div class="card">
       <p>
-        Draws a line graph for the input on the button. In settings, select graph line color and thickness. In the trigger section you have
-        four options:
+        Draws a line graph of the input on the button. In the settings, select the graph line color and thickness. Drawing is always
+        time-based: the graph is drawn at the interval you set. At the bottom, two sliders are available: the first sets the drawing
+        interval from <code>100 ms</code> to <code>60 s</code>; the second controls the graph line thickness.
+      </p>
+      <p>
+        A button at the bottom of the settings shows the save mode and opens a <em>Select Effect</em> list:
       </p>
       <ul>
-        <li><strong>Phone/internal timing with saving</strong></li>
-        <li><strong>Internal timing without saving</strong></li>
-        <li><strong>External trigger with saving</strong></li>
-        <li><strong>External trigger without saving</strong></li>
+        <li><strong>Save Page:</strong> each graph page is saved as a text file in the <strong>SoifGo/graph</strong> folder. The file name contains the button name and the date. Saved graphs can be shared or transferred.</li>
+        <li><strong>None : Save Page:</strong> nothing is saved in the graph folder.</li>
       </ul>
       <p>
-        For external triggers, each input stores both the value and time—ensure your sending cadence is correct (e.g., per second or hourly),
-        since transmission errors affect recorded time. At the bottom, two sliders are available: the first sets internal timing from
-        <code>100 ms</code> to <code>48 s</code>; the second controls graph line thickness. Graphs are saved in the SoifGo folder and can
-        be shared or transferred. In Play, you can zoom and navigate history pages.
+        In Play, the graph is drawn on the button at any button size (a larger button is easier to read). Tap the button to open the graph
+        panel (<em>Run</em>, <em>Stop</em>, <em>View</em>, <em>Graph Select</em>), where you can zoom and navigate history pages.
       </p>
       <p>
         If you want to create another graph or a new group using the same button, simply change the button name in the <em>Edit</em> section.
         With the new name, fresh graphs will be recorded. To revisit a previous graph, rename the button back to its former name.
-        Don't worry if you forget—graphs are stored under their names in the <strong>SoifGo/graph</strong> folder. Use your file manager to
+        Don't worry if you forget—saved graphs are stored under their names in the <strong>SoifGo/graph</strong> folder. Use your file manager to
         browse and access them anytime.
       </p>
     </div>
@@ -777,9 +779,8 @@
         The alarm provides both text and sound notifications. It is triggered when the measured value becomes greater or less than the configured threshold.
       </p>
       <ul>
-        <li><strong>Alarm Value:</strong> The numeric threshold that activates the alarm.</li>
-        <li><strong>Alarm Message:</strong> The text notification displayed when the alarm is triggered.</li>
-        <li><strong>Alarm Option:</strong> Can be enabled for either "greater than" or "less than" conditions.</li>
+        <li><strong>Alarm Set:</strong> A bar shows the condition and the threshold (for example <code>Alarm &gt; 23</code>). Tap the bar to choose "greater than" or "less than"; the input below it holds the threshold value.</li>
+        <li><strong>Alarm Text:</strong> The text notification displayed when the alarm is triggered.</li>
         <li><strong>Delay Setting:</strong> A configurable delay bar is available at the bottom to manage consecutive alarms.</li>
         <li><strong>Sound Notification:</strong> The alarm sound uses the same configuration as the button sound setting.</li>
       </ul>
