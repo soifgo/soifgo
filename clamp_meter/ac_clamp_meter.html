@@ -15,7 +15,6 @@
   h2 { margin: 4px 0 12px; font-size: 18px; font-weight: 600;
        color: #4dd0e1; letter-spacing: 1px; }
 
-  /* ---- Digital display ---- */
   .digital {
     background: #041410; border: 2px solid #0d5c4a; border-radius: 14px;
     padding: 14px 28px; margin-bottom: 16px; width: 100%; max-width: 340px;
@@ -29,11 +28,9 @@
   .digital .unit { font-size: 22px; color: #0a8f6f; margin-left: 6px; }
   .digital .sub { font-size: 12px; color: #3d8f7a; margin-top: 6px; letter-spacing: 1px; }
 
-  /* ---- Analog gauge ---- */
   .gauge-wrap { position: relative; width: 300px; height: 300px; margin-bottom: 6px; }
   .gauge-wrap svg { width: 100%; height: 100%; display: block; }
 
-  /* range badge under the gauge */
   #rangeBadge {
     font-family: monospace; font-size: 13px; color: #4dd0e1;
     letter-spacing: 1px; margin-bottom: 14px;
@@ -41,7 +38,6 @@
     border: 1px solid #1d2c38;
   }
 
-  /* ---- Info row ---- */
   .info {
     display: flex; gap: 10px; width: 100%; max-width: 340px;
     margin-bottom: 12px;
@@ -52,7 +48,6 @@
   }
   .info .card b { display: block; font-size: 18px; color: #e6edf3; margin-top: 2px; }
 
-  /* ---- Controls ---- */
   .controls { width: 100%; max-width: 340px; display: flex; flex-direction: column; gap: 10px; }
   .row { display: flex; gap: 10px; }
   button {
@@ -81,38 +76,30 @@
 
   <h2>⚡ AC CLAMP METER</h2>
 
-  <!-- Digital -->
   <div class="digital">
     <div><span class="val" id="amps">0.00</span><span class="unit">A</span></div>
     <div class="sub">AC CURRENT (RMS EST.)</div>
   </div>
 
-  <!-- Analog gauge -->
   <div class="gauge-wrap">
     <svg viewBox="0 0 300 300">
-      <!-- background track -->
       <path id="arcTrack" fill="none" stroke="#1a232e" stroke-width="16"
             stroke-linecap="round"/>
-      <!-- colored progress arc -->
       <path id="arcFill" fill="none" stroke="#00ffb3" stroke-width="16"
             stroke-linecap="round"/>
-      <!-- ticks -->
       <g id="ticks" stroke="#3d4b5a" stroke-width="2"></g>
-      <!-- tick labels -->
       <g id="tickLabels" fill="#7d8b99" font-size="12" text-anchor="middle"
          font-family="monospace"></g>
     </svg>
   </div>
   <div id="rangeBadge">RANGE · 0 – 5 A</div>
 
-  <!-- Info -->
   <div class="info">
     <div class="card">MAX<b id="maxVal">0.00</b></div>
     <div class="card">MIN<b id="minVal">0.00</b></div>
-    <div class="card">P-P RAW<b id="ppVal">0</b></div>
+    <div class="card">SPIKES<b id="spikeCount">0</b></div>
   </div>
 
-  <!-- Controls -->
   <div class="controls">
     <div class="row">
       <button class="btn-zero"  onclick="zeroNow()">🎯 ZERO / TARE</button>
@@ -127,33 +114,73 @@
 
 <script>
 /* ============================================================
-   AC CLAMP METER for SoifGo WebView
-   Based on Section 14.3 (Phone Sensors) — verified pattern.
-   Magnetometer returns ONE value as a STRING (no axes).
+   AC CLAMP METER - Fast + Stable
+   ------------------------------------------------------------
+   Delays tuned down from ~4s to ~1.2s while keeping stability:
+     BUFFER_SIZE  50 -> 25   (pp window)
+     VOTE_SIZE    10 -> 7    (still strong)
+     EWMA_ALPHA  0.25 -> 0.45 (faster response)
+     HYST_DELTA  0.05 -> 0.03
+     SPIKE_MAX    30 -> 10   (faster spike exit)
+     SPIKE_RETURN 0.15 -> 0.20 (earlier return detection)
    ============================================================ */
 
-// ---------- Tunables ----------
-var BUFFER_SIZE   = 50;     // sample buffer
-var SCALE         = 10;     // multiply reading by 10 (decimal -> integer)
-var DEFAULT_CAL   = 420;    // sensor reading at 1 A (calibrate per phone)
+var BUFFER_SIZE   = 25;
+var SCALE         = 10;
+var DEFAULT_CAL   = 420;
 
-// ---------- Gauge geometry ----------
-// 0 A  = -210° (7 o'clock),  full scale = +30° (5 o'clock)  => 240° total sweep
+// ---- Vote filter ----
+var VOTE_SIZE     = 7;
+var VOTE_TOL      = 0.30;
+
+// ---- EWMA ----
+var EWMA_ALPHA    = 0.45;
+
+// ---- Hysteresis ----
+var HYST_DELTA    = 0.03;
+
+// ---- Spike detection ----
+var SPIKE_DEV     = 0.35;
+var SPIKE_RETURN  = 0.20;
+var SPIKE_MAX     = 10;
+
+// ---- Adaptive tolerance ----
+var TOL_MIN       = 0.20;
+var TOL_MAX       = 1.20;
+
 var START_ANGLE = -210;
 var END_ANGLE   =   30;
-var TOTAL_ARC   = END_ANGLE - START_ANGLE;   // 240°
-var CX = 150, CY = 150;                      // center
-var R  = 120;                                // arc radius
+var TOTAL_ARC   = END_ANGLE - START_ANGLE;
+var CX = 150, CY = 150;
+var R  = 120;
 
-// Auto-ranging steps (Amps)
 var RANGES = [5, 10, 20];
 var currentRange = RANGES[0];
 
+// ---------- State ----------
+var buffer       = [];
+var voteBuffer   = [];
+var zeroOffset   = 0;
+var currentA     = 0;
+var votedA       = 0;
+var ewmaA        = 0;
+var filteredA    = 0;
+var maxSeen      = 0;
+var minSeen      = Infinity;
+var calFactor    = DEFAULT_CAL;
+var lastPeak     = 0;
+
+var baseline     = 0;
+var spikeMode    = false;
+var spikeLen     = 0;
+var spikeCount   = 0;
+var baselineInit = false;
+
+// ---------- Geometry ----------
 function angleToXY(deg, radius) {
   var a = deg * Math.PI / 180;
   return { x: CX + radius * Math.cos(a), y: CY + radius * Math.sin(a) };
 }
-
 function arcPath(degFrom, degTo, radius) {
   var p1 = angleToXY(degFrom, radius);
   var p2 = angleToXY(degTo,   radius);
@@ -164,17 +191,8 @@ function arcPath(degFrom, degTo, radius) {
          ' A ' + radius + ' ' + radius + ' 0 ' + largeArc + ' ' + sweep +
          ' ' + p2.x + ' ' + p2.y;
 }
+function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
 
-// ---------- State ----------
-var buffer      = [];
-var zeroOffset  = 0;
-var currentA    = 0;
-var maxSeen     = 0;
-var minSeen     = Infinity;
-var calFactor   = DEFAULT_CAL;
-var lastPeak    = 0;
-
-// ---------- Build gauge (ticks + labels + arcs) ----------
 function buildGauge() {
   var full = arcPath(START_ANGLE, END_ANGLE, R);
   document.getElementById('arcTrack').setAttribute('d', full);
@@ -187,8 +205,7 @@ function buildGauge() {
   ticksG.innerHTML = '';
   labG.innerHTML   = '';
 
-  var steps = 10;   // 10 major ticks across the range
-
+  var steps = 10;
   for (var i = 0; i <= steps; i++) {
     var frac = i / steps;
     var deg  = START_ANGLE + frac * TOTAL_ARC;
@@ -204,7 +221,6 @@ function buildGauge() {
     var txt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
     txt.setAttribute('x', pl.x);
     txt.setAttribute('y', pl.y + 4);
-    // Format labels: 0, 1, 2, ... nice numbers
     var lbl = currentRange * frac;
     txt.textContent = (currentRange >= 10) ? lbl.toFixed(0) : lbl.toFixed(1);
     labG.appendChild(txt);
@@ -214,9 +230,6 @@ function buildGauge() {
     'RANGE · 0 – ' + currentRange + ' A';
 }
 
-// ---------- Helpers ----------
-function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
-
 function setArc(amps) {
   var frac = clamp(amps / currentRange, 0, 1);
   var arcLen = (2 * Math.PI * R) * (TOTAL_ARC / 360);
@@ -225,26 +238,180 @@ function setArc(amps) {
 }
 
 function refreshReadout() {
-  document.getElementById('amps').textContent = currentA.toFixed(2);
-  document.getElementById('maxVal').textContent = (maxSeen === 0 && minSeen === Infinity)
-        ? '0.00' : maxSeen.toFixed(2);
-  document.getElementById('minVal').textContent = (minSeen === Infinity)
-        ? '0.00' : minSeen.toFixed(2);
-  document.getElementById('ppVal').textContent = Math.round(lastPeak);
-  setArc(currentA);
+  document.getElementById('amps').textContent = filteredA.toFixed(2);
+  document.getElementById('maxVal').textContent =
+        (maxSeen === 0 && minSeen === Infinity) ? '0.00' : maxSeen.toFixed(2);
+  document.getElementById('minVal').textContent =
+        (minSeen === Infinity) ? '0.00' : minSeen.toFixed(2);
+  document.getElementById('spikeCount').textContent = spikeCount;
+  setArc(filteredA);
 }
 
-// ---------- Auto-ranging ----------
-// Pick the smallest range that still fits the current reading.
-// If reading goes above 5 -> jump to 10; above 10 -> jump to 20.
 function pickRange(amps) {
   for (var i = 0; i < RANGES.length; i++) {
     if (amps <= RANGES[i]) return RANGES[i];
   }
-  return RANGES[RANGES.length - 1];   // clamp at max
+  return RANGES[RANGES.length - 1];
 }
 
-// ---------- Actions ----------
+function adaptiveTol(arr) {
+  if (arr.length < 2) return VOTE_TOL;
+  var mx = -Infinity, mn = Infinity;
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i] > mx) mx = arr[i];
+    if (arr[i] < mn) mn = arr[i];
+  }
+  var spread = mx - mn;
+  var t = VOTE_TOL + spread * 0.5;
+  return clamp(t, TOL_MIN, TOL_MAX);
+}
+
+function weightedVote(arr, tol) {
+  if (arr.length === 0) return 0;
+  if (arr.length === 1) return arr[0];
+
+  var bestVal   = arr[0];
+  var bestScore = -1;
+
+  for (var i = 0; i < arr.length; i++) {
+    var score = 0;
+    for (var j = 0; j < arr.length; j++) {
+      var d = Math.abs(arr[i] - arr[j]);
+      if (d <= tol) score += 1 / (1 + d);
+    }
+    if (score > bestScore) {
+      bestScore = score;
+      bestVal   = arr[i];
+    }
+  }
+
+  var sumW = 0, sumWV = 0;
+  for (var k = 0; k < arr.length; k++) {
+    var dk = Math.abs(arr[k] - bestVal);
+    if (dk <= tol) {
+      var w = 1 / (1 + dk);
+      sumW  += w;
+      sumWV += w * arr[k];
+    }
+  }
+  return sumW > 0 ? sumWV / sumW : bestVal;
+}
+
+/* ============================================================
+   SPIKE FILTER (arc removal)
+   ============================================================ */
+function spikeFilter(val) {
+  if (!baselineInit) {
+    baseline = val;
+    baselineInit = true;
+    return { value: val, blocked: false };
+  }
+
+  if (spikeMode) {
+    spikeLen++;
+    var back = Math.abs(val - baseline);
+
+    if (back <= SPIKE_RETURN || spikeLen >= SPIKE_MAX) {
+      spikeMode = false;
+      spikeLen  = 0;
+      baseline = 0.7 * baseline + 0.3 * val;
+      return { value: val, blocked: true };
+    }
+    return { value: val, blocked: true };
+  }
+
+  var dev = Math.abs(val - baseline);
+  if (dev > SPIKE_DEV) {
+    spikeMode  = true;
+    spikeLen   = 1;
+    spikeCount++;
+    return { value: val, blocked: true };
+  }
+
+  baseline = 0.9 * baseline + 0.1 * val;
+  return { value: val, blocked: false };
+}
+
+function hysteresisFilter(newVal) {
+  if (Math.abs(newVal - filteredA) > HYST_DELTA) return newVal;
+  return filteredA;
+}
+
+/* ============================================================
+   MAIN SENSOR HANDLER
+   ============================================================ */
+function html_sensor_magno(data) {
+  var raw = parseFloat(data);
+  if (isNaN(raw)) return;
+
+  raw = raw * SCALE;
+  buffer.push(raw);
+  if (buffer.length > BUFFER_SIZE) buffer.shift();
+  if (buffer.length < BUFFER_SIZE) {
+    document.getElementById('status').textContent =
+      'buffering ' + buffer.length + '/' + BUFFER_SIZE;
+    return;
+  }
+
+  var mx = -Infinity, mn = Infinity;
+  for (var i = 0; i < buffer.length; i++) {
+    var v = buffer[i] - zeroOffset;
+    if (v > mx) mx = v;
+    if (v < mn) mn = v;
+  }
+  var pp = mx - mn;
+  lastPeak = pp;
+
+  currentA = pp / calFactor;
+
+  var sf = spikeFilter(currentA);
+  if (sf.blocked) {
+    refreshReadout();
+    document.getElementById('status').textContent =
+      'SPIKE BLOCKED · raw ' + currentA.toFixed(2) +
+      ' · baseline ' + baseline.toFixed(2) +
+      ' · len ' + spikeLen +
+      ' · spikes ' + spikeCount;
+    return;
+  }
+
+  var cleanA = sf.value;
+
+  voteBuffer.push(cleanA);
+  if (voteBuffer.length > VOTE_SIZE) voteBuffer.shift();
+
+  if (voteBuffer.length === VOTE_SIZE) {
+    var tol = adaptiveTol(voteBuffer);
+    votedA  = weightedVote(voteBuffer, tol);
+  } else {
+    votedA = cleanA;
+  }
+
+  if (ewmaA === 0) ewmaA = votedA;
+  else ewmaA = EWMA_ALPHA * votedA + (1 - EWMA_ALPHA) * ewmaA;
+
+  filteredA = hysteresisFilter(ewmaA);
+
+  if (filteredA > maxSeen) maxSeen = filteredA;
+  if (filteredA < minSeen) minSeen = filteredA;
+
+  var newRange = pickRange(filteredA);
+  if (newRange !== currentRange) {
+    currentRange = newRange;
+    buildGauge();
+  }
+
+  refreshReadout();
+  document.getElementById('status').textContent =
+    'live · raw ' + currentA.toFixed(2) +
+    ' · clean ' + cleanA.toFixed(2) +
+    ' · voted ' + votedA.toFixed(2) +
+    ' · out ' + filteredA.toFixed(2) +
+    ' · base ' + baseline.toFixed(2) +
+    ' · spikes ' + spikeCount;
+}
+window.html_sensor_magno = html_sensor_magno;
+
 function zeroNow() {
   if (buffer.length === 0) return;
   var sum = 0;
@@ -255,11 +422,13 @@ function zeroNow() {
 
 function resetAll() {
   buffer = [];
+  voteBuffer = [];
   zeroOffset = 0;
-  currentA = 0;
-  maxSeen = 0;
-  minSeen = Infinity;
+  currentA = 0; votedA = 0; ewmaA = 0; filteredA = 0;
+  maxSeen = 0; minSeen = Infinity;
   lastPeak = 0;
+  baseline = 0; baselineInit = false;
+  spikeMode = false; spikeLen = 0; spikeCount = 0;
   currentRange = RANGES[0];
   buildGauge();
   refreshReadout();
@@ -271,55 +440,6 @@ document.getElementById('calFactor').addEventListener('input', function () {
   if (!isNaN(v) && v > 0) calFactor = v;
 });
 
-// ---------- Sensor receiver (ONE value, a STRING) ----------
-function html_sensor_magno(data) {
-  var raw = parseFloat(data);
-  if (isNaN(raw)) return;
-
-  // 1) convert decimal -> integer
-  raw = raw * SCALE;
-
-  // 2) push into rolling buffer
-  buffer.push(raw);
-  if (buffer.length > BUFFER_SIZE) buffer.shift();
-  if (buffer.length < BUFFER_SIZE) {
-    document.getElementById('status').textContent =
-      'buffering ' + buffer.length + '/' + BUFFER_SIZE;
-    return;
-  }
-
-  // 3) peak-to-peak over the buffer (after removing zero offset)
-  var mx = -Infinity, mn = Infinity;
-  for (var i = 0; i < buffer.length; i++) {
-    var v = buffer[i] - zeroOffset;
-    if (v > mx) mx = v;
-    if (v < mn) mn = v;
-  }
-  var pp = mx - mn;
-  lastPeak = pp;
-
-  // 4) divide by calibration factor -> Amps
-  currentA = pp / calFactor;
-
-  // 5) track session max/min
-  if (currentA > maxSeen) maxSeen = currentA;
-  if (currentA < minSeen) minSeen = currentA;
-
-  // 6) auto-range: rebuild gauge only when the range actually changes
-  var newRange = pickRange(currentA);
-  if (newRange !== currentRange) {
-    currentRange = newRange;
-    buildGauge();
-  }
-
-  refreshReadout();
-  document.getElementById('status').textContent =
-    'live · buffer ' + buffer.length + ' · cal ' + calFactor +
-    ' · range ' + currentRange + 'A';
-}
-window.html_sensor_magno = html_sensor_magno;
-
-// ---------- Startup ----------
 window.onload = function () {
   buildGauge();
   refreshReadout();
