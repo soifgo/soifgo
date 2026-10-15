@@ -840,7 +840,7 @@
     <div class="badges">
       <span class="badge">Version 1.0</span>
       <span class="badge badge-green">Open Source Hardware</span>
-      <span class="badge badge-yellow">ATmega8 / 88 / 328</span>
+      <span class="badge badge-yellow">ATmega8 / 88P / 328</span>
     </div>
   </div>
 
@@ -862,13 +862,12 @@
       <li><a href="#s13">Hardware</a></li>
       <li><a href="#s14">Current Sensing with Hall Sensor</a></li>
       <li><a href="#s15">8-Hour Temperature Logger</a></li>
-      <li><a href="#s16">Timing Parameters</a></li>
-      <li><a href="#s17">Debugging</a></li>
-      <li><a href="#s18">Building &amp; Programming</a></li>
-      <li><a href="#s19">Downloads &amp; Links</a></li>
-      <li><a href="#s20">Test Videos</a></li>
-      <li><a href="#s21">Changelog</a></li>
-      <li><a href="#s22">About &amp; License</a></li>
+      <li><a href="#s16">Debugging</a></li>
+      <li><a href="#s17">Building &amp; Programming</a></li>
+      <li><a href="#s18">Downloads &amp; Links</a></li>
+      <li><a href="#s19">Test Videos</a></li>
+      <li><a href="#s20">Changelog</a></li>
+      <li><a href="#s21">About &amp; License</a></li>
     </ol>
   </div>
 
@@ -876,7 +875,7 @@
     <h2>1. Project Overview</h2>
     <p>
       <strong>TEMP209</strong> is a compact, open-source digital temperature controller designed for the
-      <strong>ATmega</strong> microcontroller family (ATmega8 / 88 / 328). It reads temperature from a
+      <strong>ATmega</strong> microcontroller family (ATmega8 / 88P / 328). It reads temperature from a
       <strong>DS18B20</strong> sensor, displays it on a multiplexed <strong>2-digit 7-segment display</strong>,
       and manages thermal and user-defined outputs.
     </p>
@@ -901,7 +900,7 @@
         <li>Outputs: <code>Out1</code> (reserved), <code>Temp_out</code> (thermal control)</li>
         <li>Safety: Dedicated <strong>Fault input</strong> (PORTC.3) with adjustable delay</li>
         <li>Storage: <strong>EEPROM</strong> for settings and data logging</li>
-        <li>MCU Support: <strong>ATmega8, ATmega88, ATmega328</strong></li>
+        <li>MCU Support: <strong>ATmega8, ATmega88P, ATmega328</strong></li>
       </ul>
     </div>
   </div>
@@ -983,8 +982,8 @@
 
     <h3>🛡️ Safety &amp; Fault</h3>
     <ul>
-      <li><strong>Fault input</strong> (PORTC.3) — always active</li>
-      <li>Adjustable fault reaction delay (0–9 seconds)</li>
+      <li><strong>Fault input</strong> (PORTC.3) — configurable reaction delay</li>
+      <li>F=0 disables fault monitoring · F=1..9 adds 1–9 second delay</li>
       <li>Displays blinking "FF" on fault</li>
       <li>Sends <code>Fault</code> on serial</li>
       <li>Sensor disconnection detection</li>
@@ -1000,7 +999,7 @@
 
     <h3>📡 Serial Communication</h3>
     <ul>
-      <li>UART at <strong>9600 baud</strong></li>
+      <li>UART at <strong>9600 baud</strong> — the standard default for common Bluetooth modules</li>
       <li>Simple text commands</li>
       <li>Live debug output</li>
       <li>Mobile app integration (<span class="ignore">SoifGo</span>)</li>
@@ -1008,7 +1007,6 @@
 
     <h3>🔋 Stability</h3>
     <ul>
-      <li>Built-in Watchdog (2048 ms)</li>
       <li>Auto-save setpoint</li>
       <li>Restores state after power loss</li>
       <li>Compatible with 3 MCU models</li>
@@ -1024,20 +1022,16 @@
           <tr><th>MCU</th><th>Flash</th><th>SRAM</th><th>EEPROM</th><th>Status</th></tr>
         </thead>
         <tbody>
-          <tr><td><strong>ATmega8</strong></td><td>8 KB</td><td>1 KB</td><td>512 B</td><td>Primary target</td></tr>
-          <tr><td><strong>ATmega88</strong></td><td>8 KB</td><td>1 KB</td><td>512 B</td><td>Drop-in alternative</td></tr>
-          <tr><td><strong>ATmega328</strong></td><td>32 KB</td><td>2 KB</td><td>1 KB</td><td><strong>Recommended</strong></td></tr>
+          <tr><td><strong>ATmega8</strong></td><td>8 KB</td><td>1 KB</td><td>512 B</td><td>Supported</td></tr>
+          <tr><td><strong>ATmega88P</strong></td><td>8 KB</td><td>1 KB</td><td>512 B</td><td>Current source target</td></tr>
+          <tr><td><strong>ATmega328</strong></td><td>32 KB</td><td>2 KB</td><td>1 KB</td><td>Supported</td></tr>
         </tbody>
       </table>
     </div>
 
     <div class="note-info">
-      <strong>Migration Notes:</strong>
-      <ul>
-        <li>Update <code>$regfile</code> to match your MCU</li>
-        <li>Remove <code>$prog</code> directive and configure fuses manually</li>
-        <li>Disable <code>CKDIV8</code> fuse for ATmega88/328</li>
-      </ul>
+      <strong>Separate firmware for each MCU:</strong>
+      A dedicated HEX file is provided for each of the three microcontrollers. Download the one that matches your chip and program it directly — no modification needed.
     </div>
   </div>
 
@@ -1276,7 +1270,7 @@ command2=22</code></pre>
 
   <div class="card card-blue" id="s8">
     <h2>8. Serial Commands</h2>
-    <p>9600 baud, 8N1.</p>
+    <p>9600 baud, 8N1 — the standard default for common Bluetooth modules.</p>
 
     <div class="table-wrap">
       <table>
@@ -1301,6 +1295,7 @@ command2=22</code></pre>
     <div class="note-info">
       <strong>Serial Output Example:</strong>
       <pre class="line-numbers"><code class="language-bash">Temp209
+relay=1
 temp=25
 Address=3142
 command1=735
@@ -1405,20 +1400,17 @@ end</code></pre>
         <div class="param-icon pi-f">F</div>
         <div>
           <div class="param-title">Fault Delay</div>
-          <div class="param-sub">Reaction delay to fault — always active</div>
+          <div class="param-sub">Reaction delay to fault input</div>
         </div>
       </div>
-      <p><strong>What:</strong> Delays the controller's reaction to a fault signal.</p>
-      <p><strong>Why:</strong> Motors with high inrush current may briefly trigger the fault input on startup. This delay prevents false trips while still providing protection.</p>
+      <p><strong>What:</strong> Controls how the controller reacts to the fault input (PORTC.3).</p>
+      <p><strong>Why:</strong> Motors with high inrush current may briefly trigger the fault input on startup. A small delay prevents false trips while still providing protection.</p>
       <p><strong>Range:</strong></p>
       <ul>
-        <li><code>0</code> = fastest reaction (immediate fault detection)</li>
-        <li><code>1-9</code> = delay in seconds before reacting to fault</li>
+        <li><code>0</code> = fault monitoring <strong>disabled</strong></li>
+        <li><code>1-9</code> = delay in <strong>seconds</strong> before reacting to the fault signal</li>
       </ul>
-      <div class="note-danger">
-        <strong>Always active:</strong> The fault delay is always enabled and cannot be turned off. <code>0</code> gives the fastest reaction, <code>1-9</code> adds seconds of delay for motors with high startup current.
-      </div>
-      <p><strong>Visual indication:</strong> When a fault occurs, the display shows <strong>"FF" blinking</strong> (eyes-catching alert).</p>
+      <p><strong>Visual indication:</strong> When a fault occurs, the display shows <strong>"FF" blinking</strong> (eye-catching alert).</p>
     </div>
 
     <div class="param">
@@ -1568,7 +1560,7 @@ End Sub</code></pre>
     </div>
 
     <h3>🔌 Bluetooth Connection</h3>
-    <p>Pair your phone with the controller's Bluetooth module and connect.</p>
+    <p>Pair your phone with the controller's Bluetooth module and connect. The module communicates at the standard default <strong>9600 baud</strong>.</p>
 
     <h3>📺 Live Display (Top)</h3>
     <ul>
@@ -1657,10 +1649,9 @@ command2=22</code></pre>
     <p>Fault clears when the signal returns LOW or the device is reset.</p>
 
     <h3>Fault Delay (F Parameter)</h3>
-    <p>The fault reaction delay is always active:</p>
     <ul>
-      <li><code>0</code> = fastest possible reaction (immediate fault detection)</li>
-      <li><code>1-9</code> = delay in seconds before reacting to fault</li>
+      <li><code>0</code> = fault monitoring <strong>disabled</strong> (no fault reaction)</li>
+      <li><code>1-9</code> = delay in <strong>seconds</strong> before reacting to the fault signal</li>
     </ul>
     <p>This is useful for motors with high inrush current that may briefly trigger the fault input on startup, preventing false trips.</p>
 
@@ -1854,37 +1845,24 @@ end</code></pre>
     </p>
   </div>
 
-  <div class="card card-purple" id="s16">
-    <h2>16. Timing Parameters</h2>
-    <ul>
-      <li><strong>Timer2:</strong> 8-bit, prescaler 8 → 1 µs per tick</li>
-      <li><strong>Overflow:</strong> 256 ticks = 256 µs</li>
-      <li><strong>1 second:</strong> 3906 overflows</li>
-      <li><strong>1 minute:</strong> 234,360 overflows</li>
-      <li><strong>Temperature print:</strong> every ~1 second (3906 overflows)</li>
-      <li><strong>Data logging:</strong> every 1 minute (234,360 overflows)</li>
-      <li><strong>Setpoint save:</strong> after 2000 ticks (~512 ms)</li>
-      <li><strong>Menu timeout:</strong> 8000 ticks (~2 s)</li>
-      <li><strong>IR wait timeout:</strong> 222 ticks (~56 ms)</li>
-    </ul>
-  </div>
-
-  <div class="card card-green" id="s17">
-    <h2>17. Debugging</h2>
-    <p>Monitor serial output at <strong>9600 baud, 8N1</strong>:</p>
+  <div class="card card-green" id="s16">
+    <h2>16. Debugging</h2>
+    <p>Monitor serial output at <strong>9600 baud, 8N1</strong> — the standard default for common Bluetooth modules:</p>
     <pre class="line-numbers"><code class="language-bash">Temp209                    - Startup message
-temp=25                   - Current temperature
-Address=3142              - Remote address
-command1=735              - Primary command
-command2=22               - Secondary command
-setpoint=26               - Setpoint changed
-Fault                     - Fault condition detected
-live=240                  - Report start (reference index of newest sample)
-25                        - Temperature sample
-26                        - Temperature sample
-253                       - Position marker
-24                        - Temperature sample
-end                       - End of report stream</code></pre>
+relay=1                    - Current relay state
+temp=25                    - Current temperature
+Address=3142               - Remote address
+command1=735               - Primary command
+command2=22                - Secondary command
+setpoint=26                - Setpoint changed
+power=1                    - Power state changed
+Fault                      - Fault condition detected
+live=240                   - Report start (reference index of newest sample)
+25                         - Temperature sample
+26                         - Temperature sample
+253                        - Position marker
+24                         - Temperature sample
+end                        - End of report stream</code></pre>
 
     <h3>Common Issues</h3>
     <div class="table-wrap">
@@ -1904,13 +1882,18 @@ end                       - End of report stream</code></pre>
     </div>
   </div>
 
-  <div class="card card-green" id="s18">
-    <h2>18. Building &amp; Programming</h2>
+  <div class="card card-green" id="s17">
+    <h2>17. Building &amp; Programming</h2>
 
     <h3>🔌 On-Board Programmer Socket</h3>
     <p>
       The board includes a <strong>programmer socket</strong> for easy development and in-circuit programming. You can use any standard AVR programmer, such as <strong>USBasp</strong>.
     </p>
+
+    <h3>💾 Ready-to-Flash HEX Files</h3>
+    <div class="note-info">
+      A dedicated HEX file is provided for each of the three supported microcontrollers (ATmega8, ATmega88P, ATmega328). Download the one that matches your chip and program it directly — no modification needed.
+    </div>
 
     <h3>🔧 Not Familiar with BASCOM?</h3>
     <div class="note-success">
@@ -1919,14 +1902,12 @@ end                       - End of report stream</code></pre>
 
     <h3>Recommended Workflow</h3>
     <ol>
-      <li>Install BASCOM-AVR (or use an AI assistant to port)</li>
-      <li>Open <code>temp209_m8.bas</code></li>
-      <li>Adjust remote codes if needed</li>
-      <li>Compile</li>
+      <li>Pick the HEX file that matches your MCU</li>
       <li>Connect USBasp to the programmer socket</li>
       <li>Flash the MCU</li>
       <li>Verify via serial terminal at 9600 baud</li>
     </ol>
+    <p class="muted">Advanced users who want to modify the source can open the BASCOM project, adjust remote codes or parameters, recompile, and program the resulting HEX.</p>
 
     <div class="image-box">
       <img src="temp209_programmer.jpg" alt="On-board programmer socket" loading="lazy">
@@ -1934,8 +1915,8 @@ end                       - End of report stream</code></pre>
     </div>
   </div>
 
-<div class="card card-blue" id="s19">
-    <h2>19. Downloads &amp; Links</h2>
+  <div class="card card-blue" id="s18">
+    <h2>18. Downloads &amp; Links</h2>
 
     <h3>📦 Full Release Package</h3>
     <div class="download-grid" style="grid-template-columns: 1fr;">
@@ -1956,12 +1937,12 @@ end                       - End of report stream</code></pre>
     </div>
 
     <div class="note-info">
-      <strong>Note:</strong> The ZIP package includes BASCOM source, firmware HEX, PCB Gerbers, and schematic PDF.
+      <strong>Note:</strong> The ZIP package includes BASCOM source, HEX firmware for all three MCUs, PCB Gerbers, and schematic PDF.
     </div>
   </div>
 
-  <div class="card card-green" id="s20">
-    <h2>20. Test Videos</h2>
+  <div class="card card-green" id="s19">
+    <h2>19. Test Videos</h2>
     <p>Watch TEMP209 in action. These videos demonstrate real-world testing, menu navigation, remote control, and the fault protection system.</p>
 
     <h3>🎬 Video 1: Overview &amp; Basic Operation</h3>
@@ -1996,25 +1977,25 @@ end                       - End of report stream</code></pre>
     </div>
   </div>
 
-  <div class="card card-yellow" id="s21">
-    <h2>21. Changelog</h2>
+  <div class="card card-yellow" id="s20">
+    <h2>20. Changelog</h2>
 
     <h3>v1.0 — Initial Release</h3>
     <ul>
-      <li>ATmega8 @ 8 MHz (compatible with ATmega88 / ATmega328)</li>
+      <li>ATmega8 / ATmega88P / ATmega328 support — dedicated HEX file for each MCU</li>
       <li>DS18B20 1-Wire temperature sensor</li>
       <li>Multiplexed 2-digit 7-segment display (direct drive)</li>
       <li>RC5 infrared remote control with learnable codes</li>
-      <li>7-parameter configuration menu</li>
+      <li>6-parameter configuration menu (P, L, d, F, H, b)</li>
       <li>EEPROM settings storage</li>
       <li>8-hour circular temperature logger (480 samples)</li>
       <li>480-sample circular buffer (CCTV-style) with position marker</li>
       <li>Marker (<code>253</code>) sits right after the newest temperature sample</li>
       <li>Report stream framed by <code>live=N</code> (start) and <code>end</code> (terminator)</li>
       <li>All values 0–255 streamed without filtering — <code>255</code> = empty EEPROM cell</li>
-      <li>Fault input for over-current protection with adjustable reaction delay (always active; <code>0</code> = fastest reaction, <code>1-9</code> = delay in seconds)</li>
+      <li>Fault input for over-current protection — <code>F=0</code> disables monitoring, <code>F=1..9</code> adds 1–9 second reaction delay</li>
       <li>Sensor error detection — forces relay OFF for safety</li>
-      <li>Serial commands for automation</li>
+      <li>Serial commands for automation (9600 baud, standard Bluetooth default)</li>
       <li><span class="ignore">SoifGo</span> mobile interface with live graph</li>
       <li>Two-board split hardware design</li>
       <li>On-board programmer socket</li>
@@ -2025,8 +2006,8 @@ end                       - End of report stream</code></pre>
     </div>
   </div>
 
-  <div class="card" id="s22">
-    <h2>22. About &amp; License</h2>
+  <div class="card" id="s21">
+    <h2>21. About &amp; License</h2>
 
     <p><strong>TEMP209</strong> is an open-source educational project by <strong>Saeid Moghadam</strong>.</p>
 
