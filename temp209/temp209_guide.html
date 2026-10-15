@@ -817,6 +817,47 @@
       background: var(--code-bg) !important;
       color: var(--code-text) !important;
     }
+
+    .video-wrapper {
+  max-width: 572px;
+  margin: 1.2rem auto;
+}
+
+.image-box {
+  max-width: 506px;
+  margin: 1.2rem auto;
+}
+
+.image-box.wide {
+  max-width: 792px;
+}
+
+.image-box img {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  margin: 0 auto;
+  display: block;
+  cursor: zoom-in;
+}
+
+@media (min-width: 701px) {
+  .image-box img {
+    max-height: 462px;
+  }
+  .image-box.wide img {
+    max-height: 572px;
+  }
+}
+
+@media (max-width: 700px) {
+  .video-wrapper,
+  .image-box,
+  .image-box.wide {
+    max-width: 100%;
+  }
+}
   </style>
 </head>
 <body>
@@ -1597,12 +1638,12 @@ command2=22</code></pre>
       <div class="caption">Figure 10: Board 2 — power/relay</div>
     </div>
 
-    <div class="image-box">
+    <div class="image-box wide">
       <img src="temp209_pcb.png" alt="PCB layout" loading="lazy">
       <div class="caption">Figure 11: PCB layout</div>
     </div>
 
-    <div class="image-box">
+    <div class="image-box wide">
       <img src="temp209_schematic.png" alt="Schematic diagram" loading="lazy">
       <div class="caption">Figure 12: Schematic diagram</div>
     </div>
@@ -2207,5 +2248,11 @@ end                        - End of report stream</code></pre>
   });
 </script>
 
+<script>
+document.querySelectorAll('.image-box img').forEach(function(i){
+  i.title='Click to open full size';
+  i.addEventListener('click',function(){window.open(i.src,'_blank');});
+});
+</script>
 </body>
 </html>
