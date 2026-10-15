@@ -820,8 +820,7 @@
   </style>
 </head>
 <body>
-
-<div class="language-switcher ignore" id="languageSwitcher">
+    <div class="language-switcher ignore" id="languageSwitcher">
   <button class="lang-btn" id="langBtn" type="button" aria-label="Change language">
     🌐 <span id="currentLangLabel">English</span>
   </button>
@@ -881,8 +880,7 @@
     </p>
     <p>
       The project is written in <strong>BASCOM-AVR</strong> and released for
-      <strong>educational and open-source</strong> purposes. While its core nature is educational,
-      TEMP209 is designed with the potential for <strong>industrial optimization and mass production</strong>.
+      <strong>educational and open-source</strong> purposes.
     </p>
 
     <div class="image-box">
@@ -898,9 +896,9 @@
         <li>Display: Multiplexed 2-digit 7-segment</li>
         <li>Remote Control: <strong>RC5 infrared protocol</strong></li>
         <li>Outputs: <code>Out1</code> (reserved), <code>Temp_out</code> (thermal control)</li>
-        <li>Safety: Dedicated <strong>Fault input</strong> (PORTC.3) with adjustable delay</li>
+        <li>Safety: Fault input (PORTC.3) — can be disabled or given 1–9 s delay</li>
         <li>Storage: <strong>EEPROM</strong> for settings and data logging</li>
-        <li>MCU Support: <strong>ATmega8, ATmega88P, ATmega328</strong></li>
+        <li>MCU Support: ATmega8, ATmega88P, ATmega328 — separate firmware for each</li>
       </ul>
     </div>
   </div>
@@ -913,30 +911,28 @@
     </div>
 
     <p>
-      The answer is that TEMP209 <strong>uses thermal control as a pretext to challenge other design logics.</strong>
+      TEMP209 uses a simple thermal controller to demonstrate alternative design choices.
     </p>
 
     <h3>❓ Why no physical buttons?</h3>
     <p>
-      Implementing physical buttons cleanly has always been a significant challenge and often introduces complexity:
+      On ATmega8 and ATmega88P, the <strong>8 KB flash is fully used</strong> — there is no room left for button-handling code, and there aren't enough free pins either.
     </p>
-    <ul>
-      <li>Consumes a portion of the program for button management (matrix, analog input, etc.)</li>
-      <li>Clean implementation and execution are difficult and costly</li>
-      <li>Raises the overall cost of the device</li>
-    </ul>
-
-    <h3>✅ Why remote control?</h3>
-    <ul>
-      <li>The user can apply settings <strong>without approaching the controller</strong> — comfortably from anywhere</li>
-      <li>Example: adjusting AC temperature from the couch</li>
-      <li>Removing physical buttons → cleaner, cheaper, more robust design</li>
-    </ul>
-
-    <h3>🎁 Educational Bonus</h3>
     <p>
-      TEMP209 teaches you <strong>how to define any RC5 remote in your project</strong> — a valuable skill in itself.
+      On ATmega328, physical buttons <strong>can</strong> be added using ADC (analog keypad on a single pin).
     </p>
+    <p>
+      In this design, however, the preference is toward <strong>remote + Bluetooth control</strong> — not because buttons are impossible, but because it avoids the difficulty of button placement, wiring, and mechanical design. A ready-made, elegant, optimized IR remote offers clean remote control with zero mechanical complexity:
+    </p>
+    <ul>
+      <li>The user can apply settings <strong>without approaching the controller</strong> — comfortably from anywhere.</li>
+      <li>Example: adjusting AC temperature from the couch.</li>
+      <li>Removing physical buttons → cleaner, cheaper, more robust design.</li>
+    </ul>
+
+    <div class="note-success">
+      <strong>In the end, this is a matter of need and taste. Don't follow instructions blindly — decide based on your own requirements.</strong>
+    </div>
   </div>
 
   <div class="card card-green" id="s3">
@@ -1071,8 +1067,8 @@
     </div>
 
     <div class="image-box">
-      <img src="temp209_pinout.jpg" alt="ATmega8 pinout" loading="lazy">
-      <div class="caption">Figure 2: ATmega8 pinout</div>
+      <img src="temp209_pinout.jpg" alt="TEMP209 pinout" loading="lazy">
+      <div class="caption">Figure 2: TEMP209 pinout (ATmega8 / 88 / 328 — same DIP-28 layout)</div>
     </div>
   </div>
 
@@ -1123,7 +1119,7 @@
         <tbody>
           <tr><td>A</td><td>PORTB.1</td><td>Seg1 (tens)</td><td>PORTB.3</td></tr>
           <tr><td>B</td><td>PORTB.2</td><td>Seg2 (units)</td><td>PORTB.4</td></tr>
-          <tr><td>C</td><td>PORTD.7</td><td colspan="2" rowspan="7" style="vertical-align:middle; text-align:center;">Multiplexed<br>switching</td></tr>
+          <tr><td>C</td><td>PORTD.7</td><td colspan="2" rowspan="6" style="vertical-align:middle; text-align:center;">Multiplexed<br>switching</td></tr>
           <tr><td>D</td><td>PORTB.7</td></tr>
           <tr><td>E</td><td>PORTD.5</td></tr>
           <tr><td>F</td><td>PORTB.5</td></tr>
@@ -1156,27 +1152,10 @@
       <div class="caption">Figure 3: 2-digit 7-segment display</div>
     </div>
 
-    <h3>📄 Source: Showdigit()</h3>
-    <pre class="line-numbers"><code class="language-vbnet">Sub Showdigit(digit As Byte)
-    Select Case Digit
-        Case 0: A=0:B=0:C=0:D=0:E=0:F=0:G=1
-        Case 1: A=1:B=0:C=0:D=1:E=1:F=1:G=1
-        Case 2: A=0:B=0:C=1:D=0:E=0:F=1:G=0
-        Case 3: A=0:B=0:C=0:D=0:E=1:F=1:G=0
-        Case 4: A=1:B=0:C=0:D=1:E=1:F=0:G=0
-        Case 5: A=0:B=1:C=0:D=0:E=1:F=0:G=0
-        Case 6: A=0:B=1:C=0:D=0:E=0:F=0:G=0
-        Case 7: A=0:B=0:C=0:D=1:E=1:F=1:G=1
-        Case 8: A=0:B=0:C=0:D=0:E=0:F=0:G=0
-        Case 9: A=0:B=0:C=0:D=0:E=1:F=0:G=0
-        Case 10: A=0:B=0:C=1:D=1:E=0:F=0:G=0  ' P
-        Case 11: A=1:B=1:C=0:D=0:E=0:F=0:G=0  ' b
-        Case 12: A=1:B=0:C=0:D=0:E=0:F=1:G=0  ' d
-        Case 13: A=0:B=1:C=1:D=1:E=0:F=0:G=0  ' F
-        Case 14: A=1:B=0:C=0:D=1:E=0:F=0:G=0  ' H
-        Case 15: A=1:B=1:C=1:D=0:E=0:F=0:G=1  ' L
-    End Select
-End Sub</code></pre>
+    <div class="note-warning">
+      <strong>⚠️ If your display's pins differ:</strong>
+      If your display's pin configuration differs from this layout, you must update the <strong>pin configuration in the source</strong> to match.
+    </div>
   </div>
 
   <div class="card card-green" id="s7">
@@ -1435,58 +1414,6 @@ end</code></pre>
       <p><strong>What:</strong> Buzzer volume for key feedback and sensor-failure alarm.</p>
       <p><strong>Range:</strong> <code>0</code> = off · <code>1-9</code> = increasing volume</p>
     </div>
-
-    <h3>📄 Source: Menu Display</h3>
-    <pre class="line-numbers"><code class="language-vbnet">Sub Menudisplay()
-    Menutimer = 1
-    Reset Watchdog
-    Select Case Menunumber
-        Case 0      ' Protection Delay (P)
-            Tens = 10
-            If Menu_adder = 1 And Protectdelay &lt; 9 Then Incr Protectdelay
-            If Menu_adder = 2 And Protectdelay &gt; 0 Then Decr Protectdelay
-            Units = Protectdelay
-            If Menu_adder &lt;&gt; 0 Then Writeeeprom Protectdelay , 3
-
-        Case 1       ' Light (L)
-            Tens = 15
-            If Menu_adder = 1 And Brightness &lt; 9 Then Incr Brightness
-            If Menu_adder = 2 And Brightness &gt; 0 Then Decr Brightness
-            Units = Brightness
-            If Menu_adder &lt;&gt; 0 Then Writeeeprom Brightness , 4
-
-        Case 2      ' Deltatemp (d)
-            Tens = 12
-            If Menu_adder = 1 And Deltatemp &lt; 9 Then Incr Deltatemp
-            If Menu_adder = 2 And Deltatemp &gt; 0 Then Decr Deltatemp
-            Units = Deltatemp
-            If Menu_adder &lt;&gt; 0 Then Writeeeprom Deltatemp , 5
-
-        Case 3      ' Fault Delay (F)
-            Tens = 13
-            If Menu_adder = 1 And Faultdelay &lt; 9 Then Incr Faultdelay
-            If Menu_adder = 2 And Faultdelay &gt; 0 Then Decr Faultdelay
-            Units = Faultdelay
-            If Menu_adder &lt;&gt; 0 Then Writeeeprom Faultdelay , 6
-
-        Case 4      ' Heatcoolmode (H)
-            Tens = 14
-            If Menu_adder = 1 Then Heatcoolmode = 1
-            If Menu_adder = 2 Then Heatcoolmode = 0
-            Units = Heatcoolmode
-            If Menu_adder &lt;&gt; 0 Then Writeeeprom Heatcoolmode , 7
-
-        Case 5       ' beep(b)
-            Tens = 11
-            If Menu_adder = 1 And Beep &lt; 9 Then Incr Beep
-            If Menu_adder = 2 And Beep &gt; 0 Then Decr Beep
-            Units = Beep
-            If Menu_adder &lt;&gt; 0 Then Writeeeprom Beep , 8
-            Call Beepvolume()
-    End Select
-
-    If Menu_adder &gt; 0 Then Menu_adder = 0
-End Sub</code></pre>
   </div>
 
   <div class="card card-orange" id="s10">
@@ -1499,52 +1426,6 @@ End Sub</code></pre>
       <li><strong>Sensor Error Override:</strong> If <code>Sensorerr = 1</code>, the relay is forced OFF for safety</li>
       <li><strong>Fault Override:</strong> If fault input is active (after the configured Fault Delay), <code>Temp_out = 0</code> and display shows blinking <strong>"FF"</strong></li>
     </ul>
-
-    <h3>📄 Source: Heat/Cool Control</h3>
-    <pre class="line-numbers"><code class="language-vbnet">Sub Heat_cool()
-    Disable Interrupts
-
-    Tempthreshold = Settemp + Deltatemp
-
-    If Protectdelay = 0 Then Protect_delay_flag = 1
-
-    If Heatcoolmode = 1 Then
-        ' Heating Mode
-        If Currenttemp &lt; Settemp Then
-            If Protect_delay_flag = 1 And Faultstatus = 0 And Sensorerr = 0 Then Temp_out = 1
-            Blink_show = 1
-        Elseif Currenttemp &gt; Tempthreshold Then
-            Temp_out = 0
-            Blink_show = 0
-        End If
-    End If
-
-    If Heatcoolmode = 0 Then
-        ' Cooling Mode
-        If Currenttemp &gt; Tempthreshold Then
-            If Protect_delay_flag = 1 And Faultstatus = 0 And Sensorerr = 0 Then Temp_out = 1
-            Blink_show = 1
-        Elseif Currenttemp &lt; Settemp Then
-            Temp_out = 0
-            Blink_show = 0
-        End If
-    End If
-
-    If Temp_out = 1 Then
-        Temp_out_step = 0
-    Else
-        If Temp_out_step = 0 Then Temp_out_step = 1
-    End If
-
-    If Protectdelay &gt; 0 And Temp_out_step = 1 Then
-        Protect_delay_tick = 1
-        Temp_out_step = 2
-        Protect_delay_flag = 0
-    End If
-
-    Enable Interrupts
-    Heatcoolstate = 0
-End Sub</code></pre>
   </div>
 
   <div class="card card-blue" id="s11">
@@ -1658,6 +1539,13 @@ command2=22</code></pre>
     <h3>Hall Sensor Interface</h3>
     <p>The Fault input is typically driven by the Hall-sensor current comparator (see Section 14). Any over-current triggers a fault, cutting the relay for protection.</p>
 
+    <p><strong>The choice of detection method is yours.</strong> You can either:</p>
+    <ul>
+      <li>Use a <strong>UGN503 Hall sensor</strong> with a washer and <strong>8-turn wire coil</strong> (the method used here), or</li>
+      <li>Use a <strong>ready-made ACS-series current sensor module</strong> (ACS712, ACS724, etc.)</li>
+    </ul>
+    <p><strong>Recommendation:</strong> The <strong>ACS series</strong> is the better choice — compact, high accuracy, and stable output.</p>
+
     <div class="note-danger">
       <strong>⚠️ Critical Safety Warning:</strong>
       <ul style="margin-top:8px;">
@@ -1675,8 +1563,8 @@ command2=22</code></pre>
     <h3>Two-Board Design</h3>
     <p>TEMP209 is designed as <strong>two separate boards</strong>:</p>
     <ul>
-      <li><strong>Board 1:</strong> Motor / relay / power</li>
-      <li><strong>Board 2:</strong> Display / control / sensor</li>
+      <li><strong>Board 1:</strong> Display / control / sensor (controller)</li>
+      <li><strong>Board 2:</strong> Motor / relay / power</li>
     </ul>
 
     <h3>Mounting Options</h3>
@@ -1700,13 +1588,13 @@ command2=22</code></pre>
     </div>
 
     <div class="image-box">
-      <img src="temp209_board1.jpg" alt="Board 1 — power/relay" loading="lazy">
-      <div class="caption">Figure 9: Board 1 — power/relay</div>
+      <img src="temp209_board1.jpg" alt="Board 1 — controller" loading="lazy">
+      <div class="caption">Figure 9: Board 1 — controller</div>
     </div>
 
     <div class="image-box">
-      <img src="temp209_board2.jpg" alt="Board 2 — display/control" loading="lazy">
-      <div class="caption">Figure 10: Board 2 — display/control</div>
+      <img src="temp209_board2.jpg" alt="Board 2 — power/relay" loading="lazy">
+      <div class="caption">Figure 10: Board 2 — power/relay</div>
     </div>
 
     <div class="image-box">
@@ -1745,7 +1633,7 @@ command2=22</code></pre>
     <h4>Hardware Setup</h4>
     <ul>
       <li>Hall sensor sandwiched between two metal washers</li>
-      <li>5 turns of wire wound around it</li>
+      <li>8 turns of wire wound around it</li>
       <li>Hall output with <strong>2.56V offset</strong></li>
     </ul>
 
@@ -1783,8 +1671,15 @@ command2=22</code></pre>
       <img src="temp209_opamp.jpg" alt="Comparator op-amp circuit" loading="lazy">
       <div class="caption">Figure 14: Comparator op-amp circuit</div>
     </div>
-  </div>
 
+    <div class="note-warning">
+      <strong>⚠️ Educational Note</strong>
+      <p>This method (UGN503 + metal washer + wire coil) is <strong>educational</strong> and may introduce some design error.</p>
+      <p><strong>Recommended:</strong> Use an <strong>ACS-series current sensor</strong> instead — cleaner and more reliable.</p>
+      <p>Both methods produce the <strong>same type of output</strong> (analog voltage proportional to current) — only the scaling values differ.</p>
+      <p><strong>Main drawback of the UGN503 method:</strong> A UGN503 with a core and wire coil is <strong>more sensitive to nearby magnetic fields</strong> compared to an ACS sensor.</p>
+    </div>
+  </div>
   <div class="card card-blue" id="s15">
     <h2>15. 8-Hour Temperature Logger</h2>
 
@@ -1889,6 +1784,9 @@ end                        - End of report stream</code></pre>
     <p>
       The board includes a <strong>programmer socket</strong> for easy development and in-circuit programming. You can use any standard AVR programmer, such as <strong>USBasp</strong>.
     </p>
+    <div class="note-warning">
+      <strong>Note:</strong> Due to space and layout constraints, the on-board socket is a <strong>single-row 6-pin header</strong>, while the USBasp programmer uses a <strong>2×3 (two-row, 6-pin)</strong> connector. To bridge the difference, use <strong>male-to-female jumper wires</strong>, or build your own <strong>socket adapter</strong>.
+    </div>
 
     <h3>💾 Ready-to-Flash HEX Files</h3>
     <div class="note-info">
@@ -1903,7 +1801,7 @@ end                        - End of report stream</code></pre>
     <h3>Recommended Workflow</h3>
     <ol>
       <li>Pick the HEX file that matches your MCU</li>
-      <li>Connect USBasp to the programmer socket</li>
+      <li>Connect USBasp to the programmer socket (use jumper wires if needed)</li>
       <li>Flash the MCU</li>
       <li>Verify via serial terminal at 9600 baud</li>
     </ol>
@@ -1918,13 +1816,11 @@ end                        - End of report stream</code></pre>
   <div class="card card-blue" id="s18">
     <h2>18. Downloads &amp; Links</h2>
 
-    <h3>📦 Full Release Package</h3>
-    <div class="download-grid" style="grid-template-columns: 1fr;">
-      <a class="download-item" href="../releases/latest" download>
-        <div class="di-icon">📦</div>
-        <div class="di-name">Download Latest Release</div>
-        <div class="di-desc">Full package (ZIP) — source, firmware, PCB, schematic</div>
-      </a>
+    <h2 style="margin-top: 20px;">PCB and Schematic Files Atmega 328P</h2>
+    <a href="https://mega.nz/file/OCJFWLwC#Yg_A5iWNvNnVr_h4c1H-7Gmg_3H9j2o9N2FYVSVCIdQ"
+       class="download-link"
+       target="_blank"
+       rel="noopener">📦 Download All File (MEGA)</a>
     </div>
 
     <h3>🔗 External Links</h3>
@@ -1943,37 +1839,51 @@ end                        - End of report stream</code></pre>
 
   <div class="card card-green" id="s19">
     <h2>19. Test Videos</h2>
-    <p>Watch TEMP209 in action. These videos demonstrate real-world testing, menu navigation, remote control, and the fault protection system.</p>
+    <p>Watch TEMP209 in action. These videos demonstrate real-world testing, programming, remote setup, logging, and fault protection.</p>
 
-    <h3>🎬 Video 1: Overview &amp; Basic Operation</h3>
+    <h3>🎬 Video 1: Programming &amp; Flashing</h3>
+    <div class="video-wrapper">
+      <iframe src="https://mega.nz/embed/6SwRWQLD#8trK-qNfnoRPilDuEp3SeyoC467oX83K_bi9nqSOJQk"
+              allowfullscreen
+              loading="lazy"></iframe>
+    </div>
     <div class="image-box">
-      <video controls preload="metadata">
-        <source src="temp209_test1.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-      <div class="caption">Video 1: TEMP209 Overview &amp; Basic Operation</div>
+      <div class="caption">Video 1: Programming &amp; Flashing</div>
     </div>
 
-    <h3>🎬 Video 2: Menu Navigation &amp; Remote Control</h3>
+    <h3>🎬 Video 2: Setting Up a Different RC5 Remote (Example)</h3>
+    <div class="video-wrapper">
+      <iframe src="https://mega.nz/embed/vDAiSAYb#5fK02I-VtwOqWHDZGloyF2v2JT8RyBhCPbmMEr9Wsf8"
+              allowfullscreen
+              loading="lazy"></iframe>
+    </div>
     <div class="image-box">
-      <video controls preload="metadata">
-        <source src="temp209_test2.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-      <div class="caption">Video 2: Menu Navigation &amp; Remote Control</div>
+      <div class="caption">Video 2: Setting Up a Different RC5 Remote (Example)</div>
     </div>
 
-    <h3>🎬 Video 3: Fault Protection &amp; Hall Sensor Test</h3>
+    <h3>🎬 Video 3: Temperature Logging &amp; SoifGo Connection</h3>
+    <div class="video-wrapper">
+      <iframe src="https://mega.nz/embed/Db5A2Ygb#DI1HgVuJ14K8DhaoX-I6I9qmujb05xNzjVsjTRos0BY"
+              allowfullscreen
+              loading="lazy"></iframe>
+    </div>
     <div class="image-box">
-      <video controls preload="metadata">
-        <source src="temp209_test3.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-      <div class="caption">Video 3: Fault Protection &amp; Hall Sensor Test</div>
+      <div class="caption">Video 3: Temperature Logging &amp; SoifGo Connection</div>
+    </div>
+
+    <h3>🎬 Video 4: Fault Potentiometer Calibration (Example)</h3>
+    <div class="video-wrapper">
+      <iframe src="https://mega.nz/embed/Lbp3lLAZ#t_xhUnfdIFIVrQZUf-NV2hmLfCAWkjFFjRrVLp4Ej2w"
+              allowfullscreen
+              loading="lazy"></iframe>
+    </div>
+    <div class="image-box">
+      <div class="caption">Video 4: Fault Potentiometer Calibration (Example)</div>
     </div>
 
     <div class="note-success">
-      <strong>📁 Local videos:</strong> Make sure the video files (<code>temp209_test1.mp4</code>, <code>temp209_test2.mp4</code>, <code>temp209_test3.mp4</code>) are placed in the same folder as this HTML file.
+      <strong>📹 Videos are hosted on MEGA and streamed directly via embed player.</strong>
+      If a video does not load, check your internet connection or open the MEGA link directly in your browser.
     </div>
   </div>
 
@@ -2014,12 +1924,6 @@ end                        - End of report stream</code></pre>
     <h3>License</h3>
     <p>Open Source — Educational Purpose.</p>
 
-    <h3>Contact</h3>
-    <ul>
-      <li>Email: <a href="mailto:YOUR_EMAIL">YOUR_EMAIL</a></li>
-      <li>GitHub: <a href="https://github.com/USERNAME" target="_blank" rel="noopener">github.com/USERNAME</a></li>
-    </ul>
-
     <h3>Credits</h3>
     <ul>
       <li>Design &amp; firmware: Saeid Moghadam</li>
@@ -2030,6 +1934,10 @@ end                        - End of report stream</code></pre>
     <div class="note-success">
       <strong>Contributions welcome!</strong> Fork, improve, and share back.
     </div>
+
+    <p class="muted" style="margin-top:12px; font-size:0.88rem;">
+      For contact and more tutorials, see the main <span class="ignore">SoifGo</span> page.
+    </p>
   </div>
 
   <div class="footer">
