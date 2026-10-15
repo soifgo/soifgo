@@ -337,7 +337,7 @@ When a user says "how do I start" or "how do I add a button", answer in the user
 4. Register every receiver on `window` (`window.html_bluetooth_tx = html_bluetooth_tx;`).
 5. Compare MQTT status with `=== 'true'` (it arrives as a string).
 6. `api_recive` needs **both** `address` and `key`; `api_rx` may deliver a plain value or a B4A Map string — use `extractValue()` from Section 8.
-7. Activate sensors and request microphone permission inside `window.onload`. If a page uses **any** phone sensor, call **all three** activation Subs: `sensor_light`, `sensor_move`, `sensor_magno`.
+7. Activate sensors and request microphone permission inside `window.onload`. The three sensor activation Subs (`sensor_light`, `sensor_move`, `sensor_magno`) are **fully independent** — activate **only** the ones the page actually uses; none depends on another.
 8. Wrap `localStorage` access in `try/catch`.
 9. For polling APIs respect the rate limits in Section 8 and provide a **Stop** button.
 10. No external libraries unless the user asks; plain HTML/CSS/JS works offline.
@@ -382,7 +382,7 @@ window.html_bluetooth_tx = html_bluetooth_tx;
 
 window.onload = function () {
   if (window.soifgo) {
-    // Phone sensors: if the page uses ANY sensor, activate ALL THREE (see 14.3):
+    // Phone sensors: each activation Sub is independent — call only the ones you use (see 14.3):
     // window.soifgo.CallSub('sensor_light', true);
     // window.soifgo.CallSub('sensor_move', true);
     // window.soifgo.CallSub('sensor_magno', true);
@@ -397,7 +397,7 @@ window.onload = function () {
 
 ### 0.6 Pre-Send Checklist
 
-Every `CallSub` name exists in Section 6 · second argument is `true` · max 3 arguments · every receiver is registered on `window` · bridge is guarded · hardware sketch and HTML use the same protocol and baud rate · menu names match Section 13 exactly · if sensors are used, all three are activated · the page was based on a Section 14 example · answer is in the user's language.
+Every `CallSub` name exists in Section 6 · second argument is `true` · max 3 arguments · every receiver is registered on `window` · bridge is guarded · hardware sketch and HTML use the same protocol and baud rate · menu names match Section 13 exactly · each sensor the page uses is activated with its own Sub (they are independent; no need to activate the others) · the page was based on a Section 14 example · answer is in the user's language.
 
 ### 0.7 Common Opening Cases
 
@@ -555,7 +555,7 @@ window.soifgo.CallSub('sensor_magno', true);
 
 Activates the magnetic sensor. SoifGo starts sending data to `html_sensor_magno`.
 
-> **Note:** To activate the sensors you must call **all three** (`sensor_light`, `sensor_move`, `sensor_magno`) — the official guide requires it. Call them inside `window.onload`.
+> **Note:** The three activation Subs (`sensor_light`, `sensor_move`, `sensor_magno`) are **independent of each other**. Call only the Sub(s) for the sensor(s) your page needs — for example, only `sensor_magno` if you just need the magnetic sensor. Calling one does not require or trigger the others. Call them inside `window.onload`.
 
 ---
 
@@ -1426,7 +1426,7 @@ window.html_bluetooth_tx = html_bluetooth_tx;
 </html>
 ```
 
-### 14.3 Phone Sensors (all three activated)
+### 14.3 Phone Sensors (each activated independently)
 
 ```html
 <!DOCTYPE html>
@@ -1462,7 +1462,8 @@ window.html_sensor_magno = html_sensor_magno;
 
 window.onload = function () {
   if (window.soifgo) {
-    // Call ALL THREE to activate the sensors.
+    // Each Sub is independent. This demo shows all sensors, so it calls all three;
+    // in your own page call only the ones you need.
     window.soifgo.CallSub('sensor_light', true);
     window.soifgo.CallSub('sensor_move', true);
     window.soifgo.CallSub('sensor_magno', true);
@@ -1928,8 +1929,8 @@ heater ≈ 4.35 A at 230 V), compare with a reference ammeter, and adjust the
 **CAL FACTOR** field in the app until the reading matches.
 
 **Bridge usage:** the page needs only **one** receiver
-(`html_sensor_magno`) — but all **three** activation Subs must still be
-called, per Section 0.4 rule 7:
+(`html_sensor_magno`) — and therefore only **one** activation Sub,
+`sensor_magno` (the sensor Subs are independent, Section 0.4 rule 7):
 
 ```js
 function html_sensor_magno(data) {
@@ -1943,9 +1944,7 @@ window.html_sensor_magno = html_sensor_magno;
 
 window.onload = function () {
   if (window.soifgo) {
-    // Call ALL THREE (Section 0.4 rule 7)
-    window.soifgo.CallSub('sensor_light', true);
-    window.soifgo.CallSub('sensor_move', true);
+    // Only the magnetic sensor is needed here (Subs are independent)
     window.soifgo.CallSub('sensor_magno', true);
   }
 };
@@ -1959,7 +1958,7 @@ window.onload = function () {
 |---|---|---|
 | Nothing happens when a button is tapped | Page opened in a normal browser, or bridge not guarded | `window.soifgo` only exists inside SoifGo. Use `if (window.soifgo)` |
 | Receiver never fires | Not registered on `window` | `window.myReceiver = myReceiver;` |
-| Sensors show nothing | Not all three activation Subs called, or not called in `window.onload` | Call `sensor_light`, `sensor_move`, `sensor_magno` in `window.onload` (14.3) |
+| Sensors show nothing | The activation Sub for that specific sensor was not called, or not called in `window.onload` | Call the matching Sub (`sensor_light`, `sensor_move` or `sensor_magno`) in `window.onload` (14.3); each sensor is activated independently |
 | Code works for light/move but magnetic looks wrong | Code expects x/y/z | Magneto is a single string value; use `parseFloat(data)` |
 | `CallSub` does nothing | Second argument is not `true`, empty arg omitted, or more than 3 args | Pass `true`, use `''` for empty args, max 3 args |
 | MQTT shows "Connected" when it is not | `'false'` string is truthy | Compare `=== 'true'` |

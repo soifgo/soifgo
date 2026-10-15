@@ -64,7 +64,7 @@
     <li>Pass empty strings <code>''</code> for unused arguments.</li>
     <li>Bluetooth Send: <code>window.soifgo.CallSub('html_bluetooth_rx', true, 'TEXT')</code></li>
     <li>Bluetooth Receive Callback: <code>window.html_bluetooth_tx = function(data) { ... }</code></li>
-    <li>Sensors Activation (Always activate all 3 if any sensor is used):
+    <li>Sensors Activation (each Sub is independent; call only the one(s) for the sensor(s) you use):
       <ul>
         <li><code>window.soifgo.CallSub('sensor_light', true)</code></li>
         <li><code>window.soifgo.CallSub('sensor_move', true)</code></li>

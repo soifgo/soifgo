@@ -1203,12 +1203,12 @@ window.soifgo.CallSub('api_recive', true, address, key);</code></pre>
     </ul>
 
     <div class="note-warning">
-      <strong>⚠️ IMPORTANT:</strong> To activate sensors, you must call ALL THREE commands:
+      <strong>⚠️ IMPORTANT:</strong> Each sensor has its own activation command, and the three are <strong>independent</strong> — call only the one(s) for the sensor(s) you use. This demo page shows all three sensors, so it calls all three:
       <pre style="background:var(--pre-bg); color:var(--pre-text); padding:12px; border-radius:6px; margin:10px 0;"><code>window.soifgo.CallSub('sensor_light', true);   // Activate light sensor
 window.soifgo.CallSub('sensor_move', true);    // Activate movement sensor
 window.soifgo.CallSub('sensor_magno', true);   // Activate magneto sensor</code></pre>
       <p style="margin-top:8px;">
-        These 3 commands are called inside <code>window.onload</code> to auto-start sensors when the page loads.
+        In this demo the 3 commands are called inside <code>window.onload</code> to auto-start the sensors when the page loads. If you only need, for example, the magnetic sensor, call just <code>sensor_magno</code>.
       </p>
     </div>
 
