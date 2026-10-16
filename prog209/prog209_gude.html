@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes" />
+  <meta name="theme-color" content="#0f172a" />
+  <meta name="color-scheme" content="light dark" />
+
+  <title>PROG209 — Wireless AI-Driven Self-Programming Smart PLC | ATmega128 & SoifGo</title>
+  <meta name="description" content="PROG209 — Open-source wireless self-programming Smart PLC based on ATmega128. Generates logic via AI, transmits via Bluetooth through SoifGo app, and flashes target MCU via ISP programmer." />
+  <meta name="keywords" content="PROG209, Smart PLC, ATmega128, self-programming, wireless ISP, SoifGo, AI generated firmware, embedded system, open source hardware" />
+
+  <meta property="og:title" content="PROG209 — Wireless AI-Driven Self-Programming Smart PLC" />
+  <meta property="og:description" content="Open-source wireless self-programming Smart PLC based on ATmega128 using AI and SoifGo." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://soifgo.github.io/soifgo/tutorials/prog209/" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="SoifGo Tutorials" />
+
+  <script>
+    (function() {
+      var savedTheme = localStorage.getItem('soifgo-theme');
+      if (savedTheme === 'light' || savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet" />
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root,
+    [data-theme="dark"] {
+      --primary: #4f8cff;
+      --primary-light: #6aa0ff;
+      --purple: #9b59b6;
+      --purple-light: #c084fc;
+      --green: #34d399;
+      --yellow: #fbbf24;
+      --pink: #f472b6;
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --text: #e8edf5;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --border: rgba(255, 255, 255, 0.07);
+      --shadow: rgba(0, 0, 0, 0.35);
+      --hover-bg: rgba(255, 255, 255, 0.04);
+      --code-bg: rgba(79, 140, 255, 0.12);
+      --code-text: #a5b4fc;
+      --pre-bg: #0f172a;
+      --pre-text: #e2e8f0;
+      --radius: 14px;
+      --radius-sm: 10px;
+      --transition: 0.25s ease;
+    }
+
+    [data-theme="light"] {
+      --primary: #2563eb;
+      --primary-light: #3b82f6;
+      --purple: #9333ea;
+      --purple-light: #a855f7;
+      --green: #059669;
+      --yellow: #d97706;
+      --pink: #db2777;
+      --bg: #f8fafc;
+      --bg-card: #ffffff;
+      --text: #1e293b;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: rgba(15, 23, 42, 0.08);
+      --shadow: rgba(15, 23, 42, 0.08);
+      --hover-bg: rgba(37, 99, 235, 0.06);
+      --code-bg: rgba(37, 99, 235, 0.1);
+      --code-text: #1e40af;
+      --pre-bg: #0f172a;
+      --pre-text: #e2e8f0;
+    }
+
+    .ignore { }
+
+    body {
+      font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      min-height: 100vh;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .container { max-width: 900px; margin: 0 auto; padding: 20px 16px 60px; }
+
+    h1 {
+      font-size: 1.8rem;
+      color: var(--primary-light);
+      text-align: center;
+      margin: 1rem 0 1.5rem;
+      font-weight: 700;
+    }
+
+    h2 {
+      font-size: 1.35rem;
+      color: var(--text-main);
+      margin: 0 0 0.75rem;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+
+    h3 {
+      font-size: 1.15rem;
+      color: var(--primary-light);
+      margin: 1.2rem 0 0.5rem;
+      font-weight: 600;
+    }
+
+    p { margin: 0.75em 0; color: var(--text); }
+    a { color: var(--primary); text-decoration: none; transition: color var(--transition); }
+    a:hover { text-decoration: underline; }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.2rem 1.4rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 20px var(--shadow);
+    }
+
+    pre {
+      border-radius: var(--radius-sm);
+      max-height: 500px;
+      overflow: auto;
+      margin: 0.8rem 0;
+      background: var(--pre-bg) !important;
+      padding: 1rem;
+      font-size: 0.9rem;
+      border: 1px solid var(--border);
+    }
+
+    pre code {
+      background: transparent !important;
+      color: var(--pre-text) !important;
+      font-family: 'JetBrains Mono', Consolas, monospace;
+    }
+
+    code {
+      padding: 0.2em 0.6em;
+      border-radius: 6px;
+      font-size: 0.88em;
+      font-family: 'JetBrains Mono', Consolas, monospace;
+      color: var(--code-text);
+      background: var(--code-bg);
+    }
+
+    ul, ol { padding-left: 1.4em; margin: 0.5em 0; }
+    li { margin-bottom: 0.4em; }
+
+    .header {
+      background: linear-gradient(145deg, #1a2a4a, #1e3a6a);
+      padding: 32px 24px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .header h1 { font-size: 2.4rem; color: #fff; margin-bottom: 8px; }
+    .header .sub { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 16px; }
+
+    .badges { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+    .badge {
+      background: rgba(79, 140, 255, 0.15);
+      color: var(--primary-light);
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .badge-green { background: rgba(52, 211, 153, 0.15); color: var(--green); }
+
+    .toc {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin-bottom: 20px;
+    }
+    .toc h2 { color: var(--primary-light); font-size: 1.2rem; margin-bottom: 12px; border: none; padding: 0; }
+    .toc ol { padding-left: 1.6em; }
+    .toc li { margin-bottom: 4px; }
+    .toc a { color: var(--text-muted); }
+
+    .language-switcher {
+      position: fixed; top: 16px; left: 16px; z-index: 1001; direction: ltr;
+    }
+    .lang-btn {
+      background: var(--bg-card); border: 1px solid var(--border); color: var(--text);
+      padding: 8px 16px; border-radius: 24px; font-size: 0.9rem; font-weight: 600; cursor: pointer;
+      display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    }
+    .lang-dropdown {
+      display: none; position: absolute; top: 48px; left: 0; background: var(--bg-card);
+      border: 1px solid var(--border); border-radius: 12px; min-width: 220px; max-height: 400px;
+      overflow-y: auto; box-shadow: 0 8px 24px rgba(0,0,0,0.35); padding: 8px 0; direction: ltr;
+    }
+    .lang-dropdown.show { display: block; }
+    .lang-item {
+      display: block; padding: 10px 18px; color: var(--text); text-decoration: none; font-size: 0.92rem;
+    }
+    .lang-item:hover { background: var(--hover-bg); color: var(--primary); }
+
+    .theme-toggle {
+      position: fixed; top: 16px; right: 16px; z-index: 1000; width: 46px; height: 46px;
+      border-radius: 50%; background: var(--bg-card); border: 1px solid var(--border); color: var(--text);
+      font-size: 1.3rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+    }
+    .theme-toggle:hover { background: var(--primary); color: #fff; }
+
+    .footer { text-align: center; color: var(--text-muted); font-size: 0.85rem; padding: 24px 0; border-top: 1px solid var(--border); margin-top: 32px; }
+    .footer .dev { color: var(--primary-light); }
+  </style>
+</head>
+<body>
+
+<div class="language-switcher ignore" id="languageSwitcher">
+  <button class="lang-btn" id="langBtn" type="button">🌐 <span id="currentLangLabel">English</span></button>
+  <div class="lang-dropdown" id="langDropdown"></div>
+</div>
+
+<button class="theme-toggle" id="themeToggle" type="button">
+  <span id="themeIcon">☀️</span>
+</button>
+
+<div class="container">
+
+  <div class="header">
+    <h1>PROG209</h1>
+    <div class="sub">Wireless AI-Driven Self-Programming Smart PLC</div>
+    <div class="badges">
+      <span class="badge">Version 1.0</span>
+      <span class="badge badge-green">ATmega128 & SoifGo</span>
+    </div>
+  </div>
+
+  <div class="toc ignore">
+    <h2>📑 Table of Contents</h2>
+    <ol>
+      <li><a href="#s1">Project Concept &amp; Architecture</a></li>
+      <li><a href="#s2">Workflow: From AI to Flash</a></li>
+      <li><a href="#s3">Programmer MCU Firmware</a></li>
+      <li><a href="#s4">SoifGo Mobile Integration</a></li>
+    </ol>
+  </div>
+
+  <div class="card" id="s1">
+    <h2>1. Project Concept &amp; Architecture</h2>
+    <p>
+      <strong>PROG209</strong> is a wireless, self-programming Smart PLC system built around the <strong>ATmega128</strong> microcontroller.
+      Instead of manual programming via cables or relying on heavy onboard compilers, PROG209 splits the workload intelligently between the cloud AI, the SoifGo mobile app, and a dedicated hardware programmer MCU.
+    </p>
+    <ul>
+      <li><strong>AI &amp; Mobile Layer:</strong> AI generates high-level logic and bytecode. The SoifGo app acts as the transport bridge.</li>
+      <li><strong>Programmer MCU Layer:</strong> A secondary microcontroller receives packets via Bluetooth and executes low-level ISP bit-banging to write directly to the target ATmega128 flash memory.</li>
+    </ul>
+  </div>
+
+  <div class="card" id="s2">
+    <h2>2. Workflow: From AI to Flash</h2>
+    <ol>
+      <li><strong>AI Generation:</strong> You describe your logic to the AI (e.g., "turn on a pin after 3 seconds upon reset"). The AI prepares the compiled binary structure.</li>
+      <li><strong>Paste &amp; Transport:</strong> Paste the generated hex/binary packet into the <strong>SoifGo</strong> mobile application.</li>
+      <li><strong>Wireless Transmission:</strong> SoifGo transmits the packet wirelessly via Bluetooth (UART 115200 baud) to the programmer microcontroller.</li>
+      <li><strong>Direct Flashing:</strong> The programmer MCU takes the received binary data and flashes the target microcontroller via standard ISP pins (MOSI, MISO, SCK, RESET).</li>
+    </ol>
+  </div>
+
+  <div class="card" id="s3">
+    <h2>3. Programmer MCU Firmware</h2>
+    <p>Sample BASCOM-AVR skeleton for the programmer microcontroller handling Bluetooth serial input and ISP flashing:</p>
+    <pre class="line-numbers"><code class="language-vbnet">$regfile = "m128def.dat"
+$crystal = 11059200
+$baud = 115200
+
+Config Portb.0 = Output : Isp_sck Alias Portb.0
+Config Portb.1 = Output : Isp_mosi Alias Portb.1
+Config Portb.2 = Input  : Isp_miso Alias Pinb.2
+Config Portb.3 = Output : Isp_reset Alias Portb.3
+
+Config Serialin = Buffered, Size = 254, Bytematch = 13
+Enable Interrupts
+
+Dim Rx_text As String * 254
+Print "Wireless ISP Programmer Ready."
+
+Do
+   ' Wait for incoming packets from SoifGo via Bluetooth
+Loop
+
+Serial0charmatch:
+   Input Rx_text Noecho
+   If Instr(rx_text, "PROG_START") > 0 Then
+      Reset Isp_reset ' Enter programming mode
+      Print "ISP_MODE_ON"
+   End If
+Return
+</code></pre>
+  </div>
+
+  <div class="card" id="s4">
+    <h2>4. SoifGo Mobile Integration</h2>
+    <p>
+      The <strong>SoifGo</strong> app provides the wireless terminal interface to paste, manage, and transmit binary update packets directly to the hardware programmer module.
+    </p>
+  </div>
+
+  <div class="footer">
+    <p><strong>PROG209</strong> — Wireless Smart PLC System</p>
+    <p>Developed by <span class="dev">Saeid Moghadam</span> · SoifGo Ecosystem</p>
+  </div>
+
+</div>
+
+<script>
+  (function() {
+    var themeToggle = document.getElementById('themeToggle');
+    var themeIcon = document.getElementById('themeIcon');
+    function updateIcon(theme) {
+      themeIcon.textContent = theme === 'light' ? '🌙' : '☀️';
+      themeToggle.title = theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode';
+    }
+    var currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+    updateIcon(currentTheme);
+    themeToggle.addEventListener('click', function() {
+      var current = document.documentElement.getAttribute('data-theme');
+      var next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('soifgo-theme', next);
+      updateIcon(next);
+    });
+  })();
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-vbnet.min.js"></script>
+<script src="https://cdn.staticfile.net/translate.js/3.18.66/translate.js"></script>
+
+<script>
+(function() {
+  'use strict';
+  var LANGUAGES = {
+    'english': { label: 'English', dir: 'ltr' },
+    'persian': { label: 'فارسی', dir: 'rtl' },
+    'spanish': { label: 'Español', dir: 'ltr' }
+  };
+  var langBtn = document.getElementById('langBtn');
+  var langDropdown = document.getElementById('langDropdown');
+  var currentLangLabel = document.getElementById('currentLangLabel');
+
+  function buildLanguageList() {
+    var html = '';
+    for (var code in LANGUAGES) {
+      html += '<a href="javascript:void(0)" class="lang-item ignore" data-lang="' + code + '">' + LANGUAGES[code].label + '</a>';
+    }
+    langDropdown.innerHTML = html;
+    langDropdown.querySelectorAll('.lang-item').forEach(function(item) {
+      item.addEventListener('click', function(e) {
+        e.preventDefault();
+        var code = this.getAttribute('data-lang');
+        currentLangLabel.textContent = LANGUAGES[code].label;
+        langDropdown.classList.remove('show');
+        if(code === 'persian') {
+          document.documentElement.setAttribute('dir', 'rtl');
+          document.documentElement.setAttribute('lang', 'fa');
+        } else {
+          document.documentElement.setAttribute('dir', 'ltr');
+          document.documentElement.setAttribute('lang', 'en');
+        }
+      });
+    });
+  }
+  langBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    langDropdown.classList.toggle('show');
+  });
+  document.addEventListener('click', function() {
+    langDropdown.classList.remove('show');
+  });
+  buildLanguageList();
+})();
+</script>
+
+</body>
+</html>
