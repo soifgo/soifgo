@@ -572,6 +572,21 @@
       border-left: 4px solid #f5a623;
       padding: 1rem 1.2rem; border-radius: 8px; margin: 1rem 0;
     }
+    /* ===== real test section ===== */
+    .test-table { max-width: 640px; }
+    .test-setup { font-size: 0.9rem; }
+    .test-shots {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 0.8rem; margin: 0.8rem 0 1.4rem;
+    }
+    .test-shots figure { margin: 0; text-align: center; }
+    .test-shots img {
+      display: block; width: 100%; height: auto; min-height: 140px;
+      border: 1px dashed var(--border); border-radius: 8px;
+      background: var(--card-bg); color: var(--muted); font-size: 0.8rem;
+    }
+    .test-shots figcaption { font-size: 0.8rem; color: var(--muted); margin-top: 0.3rem; }
   </style>
 </head>
 <body>
@@ -597,6 +612,7 @@
       <a href="#video">Video</a>
       <a href="#code">Code</a>
       <a href="#faq">FAQ</a>
+      <a href="#real-test">Real test</a>
     </div>
   </nav>
 
@@ -1545,6 +1561,97 @@ window.onload = function () {
 
       <h3>How accurate is a phone current meter?</h3>
       <p>It is a calibrated estimate, not a certified instrument. Accuracy depends on your phone's sensor, the distance from the conductor (keep it identical for every measurement) and your calibration.</p>
+    </div>
+
+    <div class="card" id="real-test">
+      <h2>Real test: phone vs. Kyoritsu clamp meter</h2>
+      <p>
+        A real measurement made with a hair dryer on three heat/fan settings.
+        The reference is a <strong>Kyoritsu KEW SNAP 2007A</strong> clamp meter.
+        Table 1 shows the single wire (one conductor separated from the cable),
+        Table 2 shows the whole two-core cable.
+      </p>
+
+      <h3>Table 1: Single wire, phone vs. clamp meter</h3>
+      <p class="test-setup">
+        Phone: <strong>Samsung Galaxy A31</strong> · SoifGo app · AC mode · SINGLE · CAL = 440<br>
+        Reference: Kyoritsu KEW SNAP 2007A
+      </p>
+      <div style="overflow-x:auto;">
+        <table class="cal-table test-table">
+          <thead><tr><th>Hair dryer setting</th><th>Kyoritsu (A)</th><th>Phone (A)</th><th>Error</th></tr></thead>
+          <tbody>
+            <tr><td><b>1</b></td><td>1.9</td><td>1.83</td><td>-3%</td></tr>
+            <tr><td><b>2</b></td><td>2.7</td><td>2.71</td><td>1%</td></tr>
+            <tr><td><b>3</b></td><td>7.2</td><td>7.18</td><td>-1%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="test-setup">No load: Kyoritsu 0.0 A, phone 0.02 A.</p>
+
+      <!-- TABLE 1 PHOTOS: replace each src with your image link (order = settings 1, 2, 3) -->
+      <div class="test-shots">
+        <figure>
+          <img src="pic1.jpg" alt="Single wire test, setting 1: Kyoritsu 1.9 A, phone 1.85 A" loading="lazy">
+          <figcaption>Setting 1: 1.9 A / 1.83 A</figcaption>
+        </figure>
+        <figure>
+          <img src="pic2.jpg" alt="Single wire test, setting 2: Kyoritsu 2.7 A, phone 2.51 A" loading="lazy">
+          <figcaption>Setting 2: 2.7 A / 2.71 A</figcaption>
+        </figure>
+        <figure>
+          <img src="pic3.jpg" alt="Single wire test, setting 3: Kyoritsu 7.2 A, phone 7.03 A" loading="lazy">
+          <figcaption>Setting 3: 7.2 A / 7.18 A</figcaption>
+        </figure>
+      </div>
+
+      <h3>Table 2: Pair wire (whole two-core cable of the hair dryer)</h3>
+      <p class="test-setup">
+        Phone: <strong>Samsung Galaxy A31</strong> · SoifGo app · AC mode · PAIR · CAL = 48
+      </p>
+      <div style="overflow-x:auto;">
+        <table class="cal-table test-table">
+          <thead><tr><th>Hair dryer setting</th><th>Kyoritsu around the whole cable (A)</th><th>Phone (A)</th></tr></thead>
+          <tbody>
+            <tr><td><b>1</b></td><td>0</td><td>2.10</td></tr>
+            <tr><td><b>2</b></td><td>0</td><td>1.89</td></tr>
+            <tr><td><b>3</b></td><td>0</td><td>9.07</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="test-setup">
+        The clamp meter reads 0 because the opposite currents of the two cores cancel inside its jaw.
+        The phone still senses the small residual field, and its reading rises with the heater setting.
+      </p>
+
+      <!-- TABLE 2 PHOTOS: replace each src with your image link (order = settings 1, 2, 3) -->
+      <div class="test-shots">
+        <figure>
+          <img src="pic4.jpg" alt="Pair wire test, setting 1: Kyoritsu 0 A, phone 2.11 A" loading="lazy">
+          <figcaption>Setting 1: 0 A / 2.10 A</figcaption>
+        </figure>
+        <figure>
+          <img src="pic5.jpg" alt="Pair wire test, setting 2: Kyoritsu 0 A, phone 2.64 A" loading="lazy">
+          <figcaption>Setting 2: 0 A / 1.89 A</figcaption>
+        </figure>
+        <figure>
+          <img src="pic6.jpg" alt="Pair wire test, setting 3: Kyoritsu 0 A, phone 8.88 A" loading="lazy">
+          <figcaption>Setting 3: 0 A / 9.07 A</figcaption>
+        </figure>
+      </div>
+
+      <div class="note-box">
+        <h3>Test conditions and limits</h3>
+        <ul>
+<li>One phone, one clamp meter, one session. This is a first test, not a proof for every phone.</li>
+<li>The default CAL for AC single wire is 480; 440 was set by the author. The pair factor is the default 48.</li>
+<li>A hair dryer is not a pure resistive load. Results are an estimate, not a certified measurement.</li>
+<li>Repeat the test on your own phone and share your result.</li>
+<li>Some models may not produce these results due to their design or sensor. It is better to calibrate your own number accurately using a calibrated 1&nbsp;A source.</li>
+<li>Note that in this test, the measurement is highly dependent and sensitive to the distance between the phone and the current source or the current-carrying wire. Changing the distance will greatly change the results, especially in the paired-wire mode.</li>
+<li>This story does not tell you that a phone can replace a clamp meter, nor does it make any claim of superiority.</li>
+        </ul>
+      </div>
     </div>
 
     <hr>
